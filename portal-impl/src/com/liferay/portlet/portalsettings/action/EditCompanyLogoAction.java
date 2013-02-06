@@ -15,6 +15,8 @@
 package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -38,8 +41,8 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.awt.Rectangle;
@@ -132,14 +135,14 @@ public class EditCompanyLogoAction extends PortletAction {
 			String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 			if (cmd.equals(Constants.GET_TEMP)) {
-				String folderName = getTempImageFilePath(resourceRequest);
+				FileEntry tempFileEntry = getTempImageFileEntry(
+					resourceRequest);
 
-				InputStream tempImageStream = getTempImageStream(folderName);
-
-				if (tempImageStream != null) {
-					serveTempImageFile(resourceResponse, tempImageStream);
-				}
+				serveTempImageFile(
+					resourceResponse, tempFileEntry.getContentStream());
 			}
+		}
+		catch (NoSuchFileEntryException nsfee) {
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -155,27 +158,29 @@ public class EditCompanyLogoAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String contentType = uploadPortletRequest.getContentType("fileName");
+
+		if (!MimeTypesUtil.isWebImage(contentType)) {
+			throw new ImageTypeException();
+		}
+
+		try {
+			TempFileUtil.deleteTempFile(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				getTempImageFileName(portletRequest), getTempImageFolderName());
+		}
+		catch (Exception e) {
+		}
+
 		InputStream inputStream = null;
 
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("fileName");
 
-			String mimeType = MimeTypesUtil.getContentType(inputStream, null);
-
-			if (!MimeTypesUtil.isWebImage(mimeType)) {
-				throw new ImageTypeException();
-			}
-
 			TempFileUtil.addTempFile(
-				themeDisplay.getUserId(), getTempImageFileName(portletRequest),
-				getTempImageFolderName(), inputStream);
-		}
-		catch (DuplicateFileException dfe) {
-			TempFileUtil.deleteTempFile(getTempImageFilePath(portletRequest));
-
-			TempFileUtil.addTempFile(
-				themeDisplay.getUserId(), getTempImageFileName(portletRequest),
-				getTempImageFolderName(), inputStream);
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				getTempImageFileName(portletRequest), getTempImageFolderName(),
+				inputStream, contentType);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -197,22 +202,22 @@ public class EditCompanyLogoAction extends PortletAction {
 			x, y, croppedRectangle.width, croppedRectangle.height);
 	}
 
+	protected FileEntry getTempImageFileEntry(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return TempFileUtil.getTempFile(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			getTempImageFileName(portletRequest), getTempImageFolderName());
+	}
+
 	protected String getTempImageFileName(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return String.valueOf(themeDisplay.getCompanyId());
-	}
-
-	protected String getTempImageFilePath(PortletRequest portletRequest)
-		throws Exception {
-
-	ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-		WebKeys.THEME_DISPLAY);
-
-	return TempFileUtil.getTempFileName(
-		themeDisplay.getUserId(), getTempImageFileName(portletRequest),
-		getTempImageFolderName());
 	}
 
 	protected String getTempImageFolderName() {
@@ -221,27 +226,17 @@ public class EditCompanyLogoAction extends PortletAction {
 		return clazz.getName();
 	}
 
-	protected InputStream getTempImageStream(String tempFilePath) {
-		try {
-			return TempFileUtil.getTempFileAsStream(tempFilePath);
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-
 	protected void saveTempImageFile(ActionRequest actionRequest)
 		throws Exception {
 
-		String tempFilePath = getTempImageFilePath(actionRequest);
+		FileEntry tempFileEntry = null;
+
 		InputStream tempImageStream = null;
 
 		try {
-			tempImageStream = getTempImageStream(tempFilePath);
+			tempFileEntry = getTempImageFileEntry(actionRequest);
 
-			if (tempImageStream == null) {
-				throw new UploadException();
-			}
+			tempImageStream = tempFileEntry.getContentStream();
 
 			ImageBag imageBag = ImageToolUtil.read(tempImageStream);
 
@@ -268,9 +263,15 @@ public class EditCompanyLogoAction extends PortletAction {
 
 			saveTempImageFile(actionRequest, bytes);
 		}
+		catch (NoSuchFileEntryException nsfee) {
+			throw new UploadException(nsfee);
+		}
 		finally {
-			TempFileUtil.deleteTempFile(tempFilePath);
 			StreamUtil.cleanUp(tempImageStream);
+
+			if (tempFileEntry != null) {
+				TempFileUtil.deleteTempFile(tempFileEntry.getFileEntryId());
+			}
 		}
 	}
 
@@ -296,8 +297,8 @@ public class EditCompanyLogoAction extends PortletAction {
 		byte[] bytes = ImageToolUtil.getBytes(
 			imageBag.getRenderedImage(), imageBag.getType());
 
-		String contentType = MimeTypesUtil.getContentType(
-			"A." + imageBag.getType());
+		String contentType = MimeTypesUtil.getContentTypeFromExtension(
+			imageBag.getType());
 
 		mimeResponse.setContentType(contentType);
 

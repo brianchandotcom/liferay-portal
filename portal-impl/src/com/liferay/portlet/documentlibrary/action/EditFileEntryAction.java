@@ -301,23 +301,25 @@ public class EditFileEntryAction extends PortletAction {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-		String contentType = MimeTypesUtil.getContentType(selectedFileName);
 		String description = ParamUtil.getString(actionRequest, "description");
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
-		String tempFileName = TempFileUtil.getTempFileName(
-			themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+		FileEntry tempFileEntry = null;
 
 		try {
-			InputStream inputStream = TempFileUtil.getTempFileAsStream(
-				tempFileName);
-			long size = TempFileUtil.getTempFileSize(tempFileName);
+			tempFileEntry = TempFileUtil.getTempFile(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				selectedFileName, _TEMP_FOLDER_NAME);
+
+			String mimeType = tempFileEntry.getMimeType();
+			InputStream inputStream = tempFileEntry.getContentStream();
+			long size = tempFileEntry.getSize();
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-				repositoryId, folderId, selectedFileName, contentType,
+				repositoryId, folderId, selectedFileName, mimeType,
 				selectedFileName, description, changeLog, inputStream, size,
 				serviceContext);
 
@@ -340,7 +342,9 @@ public class EditFileEntryAction extends PortletAction {
 				new KeyValuePair(selectedFileName, errorMessage));
 		}
 		finally {
-			TempFileUtil.deleteTempFile(tempFileName);
+			if (tempFileEntry != null) {
+				TempFileUtil.deleteTempFile(tempFileEntry.getFileEntryId());
+			}
 		}
 	}
 
@@ -361,9 +365,11 @@ public class EditFileEntryAction extends PortletAction {
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
+			String contentType = uploadPortletRequest.getContentType("file");
+
 			DLAppServiceUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, sourceFileName,
-				_TEMP_FOLDER_NAME, inputStream);
+				_TEMP_FOLDER_NAME, inputStream, contentType);
 		}
 		catch (Exception e) {
 			UploadException uploadException =

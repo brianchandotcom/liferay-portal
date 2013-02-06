@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alexander Chow
  */
 public interface PortletFileRepository {
 
@@ -40,13 +41,14 @@ public interface PortletFileRepository {
 
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, File file, String fileName)
+			String portletId, long folderId, File file, String fileName,
+			String mimeType)
 		throws PortalException, SystemException;
 
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
-			String fileName)
+			String fileName, String mimeType)
 		throws PortalException, SystemException;
 
 	public void deleteFolder(long folderId)

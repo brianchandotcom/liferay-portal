@@ -53,6 +53,7 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @author Alexander Chow
  */
 public class PortletFileRepositoryImpl implements PortletFileRepository {
 
@@ -66,15 +67,34 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			ObjectValuePair<String, InputStream> inputStreamOVP =
 				inputStreamOVPs.get(i);
 
-			addPortletFileEntry(
-				groupId, userId, className, classPK, portletId, folderId,
-				inputStreamOVP.getValue(), inputStreamOVP.getKey());
+			InputStream is = inputStreamOVP.getValue();
+			String fileName = inputStreamOVP.getKey();
+
+			File file = null;
+
+			try {
+				file = FileUtil.createTempFile(is);
+
+				String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+				addPortletFileEntry(
+					groupId, userId, className, classPK, portletId, folderId,
+					file, fileName, mimeType);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(
+					"Unable to write temporary file", ioe);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 	}
 
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, File file, String fileName)
+			String portletId, long folderId, File file, String fileName,
+			String mimeType)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -89,8 +109,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		long repositoryId = getPortletRepositoryId(
 			groupId, portletId, serviceContext);
 
-		String contentType = MimeTypesUtil.getContentType(file);
-
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
@@ -100,7 +118,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			return DLAppLocalServiceUtil.addFileEntry(
-				userId, repositoryId, folderId, fileName, contentType, fileName,
+				userId, repositoryId, folderId, fileName, mimeType, fileName,
 				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
 		}
 		finally {
@@ -111,7 +129,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
-			String fileName)
+			String fileName, String mimeType)
 		throws PortalException, SystemException {
 
 		if (inputStream == null) {
@@ -135,9 +153,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		long repositoryId = getPortletRepositoryId(
 			groupId, portletId, serviceContext);
 
-		String contentType = MimeTypesUtil.getContentType(
-			inputStream, fileName);
-
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
@@ -147,7 +162,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			return DLAppLocalServiceUtil.addFileEntry(
-				userId, repositoryId, folderId, fileName, contentType, fileName,
+				userId, repositoryId, folderId, fileName, mimeType, fileName,
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 		}
 		finally {

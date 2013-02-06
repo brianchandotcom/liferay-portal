@@ -269,15 +269,18 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		String tempFileName = TempFileUtil.getTempFileName(
-			themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+		FileEntry tempFileEntry = null;
 
 		try {
-			InputStream inputStream = TempFileUtil.getTempFileAsStream(
-				tempFileName);
+			tempFileEntry = TempFileUtil.getTempFile(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				selectedFileName, _TEMP_FOLDER_NAME);
+
+			InputStream inputStream = tempFileEntry.getContentStream();
+			String mimeType = tempFileEntry.getMimeType();
 
 			WikiPageServiceUtil.addPageAttachment(
-				nodeId, title, selectedFileName, inputStream);
+				nodeId, title, selectedFileName, inputStream, mimeType);
 
 			validFileNames.add(selectedFileName);
 		}
@@ -291,7 +294,9 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			invalidFileNameKVPs.add(invalidFileNameKVP);
 		}
 		finally {
-			TempFileUtil.deleteTempFile(tempFileName);
+			if (tempFileEntry != null) {
+				TempFileUtil.deleteTempFile(tempFileEntry.getFileEntryId());
+			}
 		}
 	}
 
@@ -309,8 +314,11 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
+			String mimeType = uploadPortletRequest.getContentType("file");
+
 			WikiPageServiceUtil.addTempPageAttachment(
-				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream);
+				nodeId, sourceFileName, _TEMP_FOLDER_NAME, inputStream,
+				mimeType);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

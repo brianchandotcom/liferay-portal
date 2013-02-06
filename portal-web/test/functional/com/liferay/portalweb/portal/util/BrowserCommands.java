@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.browsercommands;
-
-import com.liferay.portalweb.portal.util.TestPropsValues;
+package com.liferay.portalweb.portal.util;
 
 /**
  * @author Brian Wing Shun Chan

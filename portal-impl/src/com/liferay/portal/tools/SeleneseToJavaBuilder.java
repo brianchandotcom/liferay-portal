@@ -464,9 +464,9 @@ public class SeleneseToJavaBuilder {
 		sb.append("import com.liferay.portal.kernel.util.StringPool;\n");
 		sb.append("import com.liferay.portalweb.portal.BaseTestCase;\n");
 		sb.append(
+			"import com.liferay.portalweb.portal.util.BrowserCommands;\n");
+		sb.append(
 			"import com.liferay.portalweb.portal.util.RuntimeVariables;\n");
-		sb.append("import com.liferay.portalweb.portal.util.browsercommands.");
-		sb.append("BrowserCommands;\n");
 
 		sb.append("public class ");
 		sb.append(testName);

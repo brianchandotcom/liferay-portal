@@ -6,6 +6,8 @@ AUI.add(
 		var HistoryManager = Liferay.HistoryManager;
 		var UploaderQueue = A.Uploader.Queue;
 
+		var DOC = A.config.doc;
+
 		var UA = A.UA;
 
 		var LString = Lang.String;
@@ -17,19 +19,13 @@ AUI.add(
 
 		var CSS_COLUMN_CONTENT = '.aui-column-content';
 
-		var CSS_DRAG_HIGHLIGHT = 'drag-highlight';
-
 		var CSS_ENTRY_DISPLAY_STYLE = 'entry-display-style';
-
-		var CSS_ENTRY_ROW_CLASS = CSS_APP_VIEW_ENTRY + ' ' + CSS_ENTRY_DISPLAY_STYLE + ' results-row ';
 
 		var CSS_ICON = 'icon';
 
 		var CSS_PORTLET_SECTION_BODY = 'portlet-section-body';
 
 		var CSS_PORTLET_SECTION_ALT = 'alt portlet-section-alternate';
-
-		var SELECTOR_OVERLAY_MASK = '.aui-overlaymask';
 
 		var CSS_TAGLIB_ICON = 'taglib-icon';
 
@@ -61,27 +57,17 @@ AUI.add(
 
 		var SELECTOR_DISPLAY_ICON = '.display-icon';
 
-		var SELECTOR_DOCUMENT_CONTAINER = '.document-container';
-
 		var SELECTOR_DOCUMENT_ENTRIES_PAGINATOR = '.document-entries-paginator';
 
 		var SELECTOR_ENTRIES_EMPTY = '.entries-empty';
 
 		var SELECTOR_ENTRY_LINK = '.entry-link';
 
-		var SELECTOR_ENTRY_THUMBNAIL = '.entry-thumbnail';
-
-		var SELECTOR_ENTRY_TITLE = '.entry-title';
-
 		var SELECTOR_ENTRY_TITLE_TEXT = '.entry-title-text';
 
 		var SELECTOR_HEADER_ROW = '.lfr-header-row';
 
-		var SELECTOR_HIDDEN = '.aui-helper-hidden';
-
 		var SELECTOR_IMAGE_ICON = 'img.icon';
-
-		var SELECTOR_TEMPLATE_ROW = 'tr.lfr-template';
 
 		var SELECTOR_SEARCH_CONTAINER = '.aui-searchcontainer';
 
@@ -94,8 +80,6 @@ AUI.add(
 		var STR_BOUNDING_BOX = 'boundingBox';
 
 		var STR_CONTENT_BOX = 'contentBox';
-
-		var STR_DATA_FOLDER_ID = 'data-folder-id';
 
 		var STR_EXTENSION_PDF = '.pdf';
 
@@ -127,8 +111,6 @@ AUI.add(
 
 		var UPLOADER_TYPE = A.Uploader.TYPE || 'none';
 
-		var UPLOADING = A.Uploader.Queue.UPLOADING;
-
 		var TPL_ENTRY_ROW_TITLE = '<span class="' + CSS_APP_VIEW_ENTRY + ' ' + CSS_ENTRY_DISPLAY_STYLE + '">' +
 			'<a class="' + CSS_TAGLIB_ICON + '">' +
 				'<img alt="" class="' + CSS_ICON + '" src="' + PATH_THEME_IMAGES + '/file_system/small/page.png" />' +
@@ -154,6 +136,14 @@ AUI.add(
 		DocumentLibraryUpload.NAME = 'documentlibraryupload';
 
 		DocumentLibraryUpload.prototype = {
+			initializer: function() {
+				var instance = this;
+
+				if (themeDisplay.isSignedIn()) {
+					instance._initDLUpload();
+				}
+			},
+
 			destructor: function() {
 				var instance = this;
 
@@ -198,7 +188,7 @@ AUI.add(
 			_attachEventHandlers: function() {
 				var instance = this;
 
-				var docElement = A.one(document.documentElement);
+				var docElement = A.one(DOC.documentElement);
 
 				var entriesContainer = instance._entriesContainer;
 
@@ -469,7 +459,7 @@ AUI.add(
 					}
 				).render();
 
-				overlay.get(STR_BOUNDING_BOX).addClass('upload-mask');
+				overlay.get(STR_BOUNDING_BOX).addClass('portlet-document-library-upload-mask');
 
 				return overlay;
 			},
@@ -529,9 +519,9 @@ AUI.add(
 
 				var currentUploadData = instance._getCurrentUploadData();
 
-				if (!currentUploadData.folder) {
-					var fileList = currentUploadData.fileList;
+				var fileList = currentUploadData.fileList;
 
+				if (!currentUploadData.folder) {
 					AArray.each(
 						fileList,
 						function(item, index, collection) {

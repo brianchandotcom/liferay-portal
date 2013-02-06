@@ -46,7 +46,9 @@ public class ConfigurePortletBlogsDisplayTemplateFullContentTest
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForVisible("//div[@class='display-template']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//select[@id='_86_displayStyle']	");
 		selenium.select("//select[@id='_86_displayStyle']	",
 			RuntimeVariables.replace("Full Content"));
 		selenium.clickAt("//input[@value='Save']",

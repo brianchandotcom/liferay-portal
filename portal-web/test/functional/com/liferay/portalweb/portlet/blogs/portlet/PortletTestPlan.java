@@ -43,11 +43,9 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletBlogsSiteTests.suite());
 		testSuite.addTest(
 			ConfigurePortletBlogsDisplayTemplateBasicTests.suite());
-		testSuite.addTest(
-			ConfigurePortletBlogsScopeCurrentPageTests.suite());
+		testSuite.addTest(ConfigurePortletBlogsScopeCurrentPageTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleAbstractTests.suite());
-		testSuite.addTest(
-			ConfigurePortletDisplayStyleFullContentTests.suite());
+		testSuite.addTest(ConfigurePortletDisplayStyleFullContentTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleTests.suite());
 		testSuite.addTest(ConfigurePortletRemoveAllPermissionTests.suite());
 

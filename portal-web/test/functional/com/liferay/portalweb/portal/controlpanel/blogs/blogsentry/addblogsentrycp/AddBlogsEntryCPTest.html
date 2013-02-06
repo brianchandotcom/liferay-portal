@@ -64,14 +64,19 @@
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
-	<td>typeFrame</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
-	<td>Blogs Entry Content</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>Blogs Entry Content</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

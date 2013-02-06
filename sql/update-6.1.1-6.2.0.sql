@@ -296,6 +296,7 @@ alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
 
 alter table DLFileRank add active_ BOOLEAN;
+alter table DLFileRank add uuid_ VARCHAR(75) null;
 
 COMMIT_TRANSACTION;
 

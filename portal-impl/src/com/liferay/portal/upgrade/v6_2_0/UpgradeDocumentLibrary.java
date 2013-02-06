@@ -14,20 +14,51 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.DateUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.FullNameGenerator;
+import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.upgrade.v6_2_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_2_0.util.DLSyncTable;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * @author Dennis Ju
+ * @author Mate Thurzo
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+
+		// DLFileRank
+
+		try {
+			runSQL("alter table DLFileRank add userName STRING");
+
+			runSQL("alter table DLFileRank add modifiedDate DATE");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
+				DLFileRankTable.TABLE_SQL_CREATE,
+				DLFileRankTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		updateFileRanks();
+
+		// DLSync
+
 		UpgradeColumn createDateColumn = new DateUpgradeColumnImpl(
 			"createDate");
 		UpgradeColumn modifiedDateColumn = new DateUpgradeColumnImpl(
@@ -41,6 +72,94 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		upgradeTable.setIndexesSQL(DLSyncTable.TABLE_SQL_ADD_INDEXES);
 
 		upgradeTable.updateTable();
+	}
+
+	protected String getFullName(long userId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select firstName, middleName, lastName from user_" +
+					" where userId = ?");
+
+			ps.setLong(1, userId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String firstName = rs.getString("firstName");
+				String middleName = rs.getString("middleName");
+				String lastName = rs.getString("lastName");
+
+				FullNameGenerator fullNameGenerator =
+					FullNameGeneratorFactory.getInstance();
+
+				return fullNameGenerator.getFullName(
+					firstName, middleName, lastName);
+			}
+
+			return StringPool.BLANK;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateFileRank(
+			long fileRankId, String fullName, Timestamp createDate)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DLFileRank set userName = ?, modifiedDate = ?" +
+					" where fileRankId = ?");
+
+			ps.setString(1, fullName);
+			ps.setTimestamp(2, createDate);
+			ps.setLong(3, fileRankId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateFileRanks() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select fileRankId, userId, createDate from DLFileRank");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileRankId = rs.getLong("fileRankId");
+				long userId = rs.getLong("userId");
+				Timestamp createDate = rs.getTimestamp("createDate");
+
+				String fullName = getFullName(userId);
+
+				updateFileRank(fileRankId, fullName, createDate);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 }

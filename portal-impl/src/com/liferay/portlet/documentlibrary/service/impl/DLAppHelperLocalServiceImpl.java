@@ -334,7 +334,7 @@ public class DLAppHelperLocalServiceImpl
 
 	public void getFileAsStream(
 			long userId, FileEntry fileEntry, boolean incrementCounter)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if (!incrementCounter) {
 			return;

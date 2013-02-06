@@ -284,7 +284,7 @@
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
-	<entity name="DLFileRank" human-name="document library file rank" local-service="true" remote-service="false">
+	<entity name="DLFileRank" human-name="document library file rank" uuid="true" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -298,7 +298,9 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
+		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

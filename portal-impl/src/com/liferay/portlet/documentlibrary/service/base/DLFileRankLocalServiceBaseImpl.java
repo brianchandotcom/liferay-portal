@@ -250,6 +250,20 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file rank with the UUID in the group.
+	 *
+	 * @param uuid the UUID of document library file rank
+	 * @param groupId the group id of the document library file rank
+	 * @return the document library file rank
+	 * @throws PortalException if a document library file rank with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileRank getDLFileRankByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return dlFileRankPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the document library file ranks.
 	 *
 	 * <p>

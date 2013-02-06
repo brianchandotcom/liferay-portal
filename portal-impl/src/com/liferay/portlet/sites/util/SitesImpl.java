@@ -633,6 +633,58 @@ public class SitesImpl implements Sites {
 		return parameterMap;
 	}
 
+	public int getMergeFailCount(LayoutPrototype layoutPrototype)
+		throws PortalException, SystemException {
+
+		if (layoutPrototype == null) {
+			throw new IllegalArgumentException(
+				"LayoutPrototype has to be not null");
+		}
+
+		if (layoutPrototype.getLayoutPrototypeId() == 0) {
+			throw new IllegalArgumentException(
+				"layoutSetPrototype has to have non-zero layoutPrototypeId: " +
+				layoutPrototype.getLayoutPrototypeId());
+		}
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			prototypeTypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+
+		return mergeFailCount;
+	}
+
+	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
+		throws PortalException, SystemException {
+
+		if (layoutSetPrototype == null) {
+			throw new IllegalArgumentException(
+				"LayoutSetPrototype has to be not null");
+		}
+
+		if (layoutSetPrototype.getLayoutSetPrototypeId() == 0) {
+			throw new IllegalArgumentException(
+				"LayoutSetPrototype has to have non-zero " +
+				"layoutSetPrototypeId: " +
+				layoutSetPrototype.getLayoutSetPrototypeId());
+		}
+
+		LayoutSet layoutSetPrototypeLayoutSet =
+			layoutSetPrototype.getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeSettingsProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+
+		return mergeFailCount;
+	}
+
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -1113,6 +1165,13 @@ public class SitesImpl implements Sites {
 		LayoutLocalServiceUtil.updateLayout(layout);
 
 		LayoutSet layoutSet = layout.getLayoutSet();
+
+		resetPrototype(layoutSet);
+	}
+
+	public void resetPrototype(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -1122,6 +1181,37 @@ public class SitesImpl implements Sites {
 			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+	}
+
+	public void setMergeFailCount(
+		Layout layoutPrototypeLayout, int newMergeFailCount) {
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		if (newMergeFailCount == 0) {
+			prototypeTypeSettingsProperties.remove(MERGE_FAIL_COUNT);
+		}
+		else {
+			prototypeTypeSettingsProperties.setProperty(
+				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
+		}
+	}
+
+	public void setMergeFailCount(
+		LayoutSet layoutSetPrototypeLayoutSet, int newMergeFailCount) {
+
+		UnicodeProperties settingsProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		if (newMergeFailCount == 0) {
+
+			settingsProperties.remove(MERGE_FAIL_COUNT);
+		}
+		else {
+			settingsProperties.setProperty(
+				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
+		}
 	}
 
 	public void updateLayoutScopes(

@@ -23,13 +23,16 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -48,6 +51,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  * @author Máté Thurzó
+ * @author Josef Sustacek
  */
 public class EditLayoutSetPrototypeAction extends PortletAction {
 
@@ -65,6 +69,9 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteLayoutSetPrototypes(actionRequest);
+			}
+			else if (cmd.equals(Constants.RESET_MERGE_FAIL_COUNT)) {
+				resetMergeFailCount(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -131,6 +138,28 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
 				layoutSetPrototypeId);
 		}
+	}
+
+	protected void resetMergeFailCount(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		LayoutSet layoutSetPrototypeLayoutSet =
+			layoutSetPrototype.getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeLayoutSetSettingsProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		layoutSetPrototypeLayoutSetSettingsProperties.remove(
+			SitesUtil.MERGE_FAIL_COUNT);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetPrototypeLayoutSet);
 	}
 
 	protected void updateLayoutSetPrototype(ActionRequest actionRequest)

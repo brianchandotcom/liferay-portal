@@ -50,16 +50,16 @@ public class PermissionsShoppingItemGuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@name='16_ACTION_VIEW']");
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		selenium.uncheck("//input[@name='16_ACTION_VIEW']");
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");
+		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
+		selenium.uncheck("//input[@id='guest_ACTION_VIEW']");
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 	}
 }

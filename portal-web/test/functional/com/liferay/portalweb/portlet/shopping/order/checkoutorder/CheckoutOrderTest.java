@@ -87,6 +87,8 @@ public class CheckoutOrderTest extends BaseTestCase {
 					RuntimeVariables.replace("Visa"));
 				selenium.type("//input[@id='_34_ccNumber']",
 					RuntimeVariables.replace("4111111111111111"));
+				selenium.select("//select[@id='_34_ccExpMonth']",
+					RuntimeVariables.replace("January"));
 				selenium.select("//select[@id='_34_ccExpYear']",
 					RuntimeVariables.replace("2014"));
 				selenium.type("//textarea[@id='_34_comments']",

@@ -237,7 +237,7 @@ public class ViewConfigurePortletStateTaxTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Expiration Date:"),
 					selenium.getText(
 						"//form[@id='_34_fm']/table[2]/tbody/tr[4]/td[1]"));
-				assertEquals(RuntimeVariables.replace("January, 2014"),
+				assertEquals(RuntimeVariables.replace("March, 2014"),
 					selenium.getText(
 						"//form[@id='_34_fm']/table[2]/tbody/tr[4]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Comments"),

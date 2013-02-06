@@ -43,7 +43,7 @@ public class ViewInvoiceOrderTest extends BaseTestCase {
 				"Shopping Category Item Comments"));
 		selenium.clickAt("//input[@value='Invoice']",
 			RuntimeVariables.replace("Invoice"));
-		selenium.waitForPopUp("Shopping", RuntimeVariables.replace("30000"));
+		Thread.sleep(1000);
 		selenium.selectWindow("title=Shopping");
 		selenium.waitForText("//form[@id='_34_fm']/span/strong", "Invoice");
 		assertEquals(RuntimeVariables.replace("Order #:"),

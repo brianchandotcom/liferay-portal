@@ -14,10 +14,13 @@
 
 package com.liferay.portal.increment;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 
 import java.io.Serializable;
@@ -81,6 +84,10 @@ public class BufferedIncrementRunnable implements Runnable {
 				}
 			}
 		}
+
+		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -36,7 +36,7 @@ public class AddEventDisplayDays2SOTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_8_startDateDay']",
+		selenium.select("//select[@id='_8_startdateday']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("dayNumber")));
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Calendar Event Title"));

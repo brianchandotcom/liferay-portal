@@ -230,67 +230,219 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	/**
+	* Subscribes the user to the entity, notifying him the instant the entity
+	* is created, deleted, or modified.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription
+	* @throws PortalException if a matching user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
 		long groupId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Subscribes the user to the entity, notifying him at the given frequency.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @param frequency the frequency for notifications
+	* @return the subscription
+	* @throws PortalException if a matching user or group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String frequency)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Deletes the user's subscription to the entity. A social activity with the
+	* unsubscribe action is created.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @throws PortalException if a matching user or subscription could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	public void deleteSubscription(long userId, java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Deletes all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public void deleteSubscriptions(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Deletes all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public void deleteSubscriptions(long companyId, java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the subscription of the user to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription of the user to the entity
+	* @throws PortalException if a matching subscription could not be found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Subscription getSubscription(
 		long companyId, long userId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all the subscriptions of the user to the entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return the subscriptions of the user to the entities
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
 		long companyId, long userId, java.lang.String className, long[] classPKs)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscriptions to the entity
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
 		long companyId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns an ordered range of all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param
+	* @return the range of subscriptions of the user
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all the subscriptions of the user to the entities with the class
+	* name.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @return the subscriptions of the user to the entities with the class name
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the number of subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @return the number of subscriptions of the user
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSubscriptionsCount(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSubscribed(long companyId, long userId,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns <code>true</code> if the user is subscribed to any of the
+	* entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return <code>true</code> if the user is subscribed to any of the
+	entities; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSubscribed(long companyId, long userId,
 		java.lang.String className, long[] classPKs)

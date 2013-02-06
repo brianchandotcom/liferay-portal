@@ -1701,6 +1701,10 @@
 		<put name="portlet_content" value="/portlet/wiki/search.jsp" />
 	</definition>
 
+	<definition name="portlet.wiki.select_version" extends="portlet.wiki">
+		<put name="portlet_content" value="/portlet/wiki/select_version.jsp" />
+	</definition>
+
 	<definition name="portlet.wiki.view" extends="portlet.wiki">
 		<put name="portlet_content" value="/portlet/wiki/view.jsp" />
 	</definition>

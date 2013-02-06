@@ -15,6 +15,7 @@
 package com.liferay.portalweb.plugins.testmisc;
 
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
@@ -35,7 +36,7 @@ public class ViewActionResponseNormalStateMiscTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download File"),
 			selenium.getText("//p[2]/a"));
 		selenium.clickAt("//p[2]/a", RuntimeVariables.replace("Download File"));
-		selenium.downloadTempFile("logo.png");
+		BrowserCommands.downloadTempFile("logo.png");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));

@@ -325,6 +325,13 @@ public class PortletPreferencesLocalServiceWrapper
 			portletId);
 	}
 
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByLikePortletId(
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _portletPreferencesLocalService.getPortletPreferencesByLikePortletId(portletId);
+	}
+
 	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPlid(
 		long plid) throws com.liferay.portal.kernel.exception.SystemException {
 		return _portletPreferencesLocalService.getPortletPreferencesByPlid(plid);

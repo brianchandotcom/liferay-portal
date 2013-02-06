@@ -96,6 +96,8 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</liferay-ui:error>
 </c:if>
 
+<liferay-ui:error key="templateMergeFailedSeeLogsForDetails" message="template-merge-failed-see-logs-for-details" />
+
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= !group.isLayoutPrototype() %>">
@@ -136,11 +138,24 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<%
 		LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
+
+		boolean layoutPrototypeLinkEnabled = selLayout.isLayoutPrototypeLinkEnabled();
 		%>
 
 		<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
 
-		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
+		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" onChange="toggleLayoutPrototypePropagationBox()" type="checkbox" value="<%= layoutPrototypeLinkEnabled %>" />
+
+		<div class='<%= layoutPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>layoutPrototypeLinkEnabledPropagationBox">
+
+			<%
+			request.setAttribute("details.jsp-layoutPrototype", layoutPrototype);
+			request.setAttribute("details.jsp-layout", selLayout);
+			request.setAttribute("details.jsp-forceMergeNow", true);
+			%>
+
+			<liferay-util:include page="/html/portlet/layouts_admin/layout/template_merge_fail_reset.jsp" />
+		</div>
 	</c:if>
 
 	<aui:select name="type">
@@ -187,6 +202,27 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</div>
 
 </aui:fieldset>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'toggleLayoutPrototypePropagationBox',
+		function() {
+
+			var A = AUI();
+
+			var checkbox = A.one('#<portlet:namespace />layoutPrototypeLinkEnabledCheckbox');
+			var propagationBox = A.one('#<portlet:namespace/>layoutPrototypeLinkEnabledPropagationBox');
+
+			if (checkbox && propagationBox) {
+
+				propagationBox.toggle();
+			}
+		},
+		['aui-base']
+	);
+</aui:script>
+
 
 <aui:script use="aui-base">
 	var templateLink = A.one('#templateLink');

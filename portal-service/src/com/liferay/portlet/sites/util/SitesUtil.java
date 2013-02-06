@@ -176,6 +176,18 @@ public class SitesUtil {
 		return getSites().getLayoutSetPrototypeParameters(serviceContext);
 	}
 
+	public static int getMergeFailCount(LayoutPrototype layoutPrototype)
+		throws PortalException, SystemException {
+
+		return getSites().getMergeFailCount(layoutPrototype);
+	}
+
+	public static int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
+			throws PortalException, SystemException {
+
+		return getSites().getMergeFailCount(layoutSetPrototype);
+	}
+
 	public static Sites getSites() {
 		PortalRuntimePermission.checkGetBeanProperty(SitesUtil.class);
 
@@ -282,6 +294,25 @@ public class SitesUtil {
 		throws PortalException, SystemException {
 
 		getSites().resetPrototype(layout);
+	}
+
+	public static void resetPrototype(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		getSites().resetPrototype(layoutSet);
+	}
+
+	public static void setMergeFailCount(
+		Layout layoutPrototypeLayout, int newMergeFailCount) {
+
+		getSites().setMergeFailCount(layoutPrototypeLayout, newMergeFailCount);
+	}
+
+	public static void setMergeFailCount(
+		LayoutSet layoutSetPrototypeLayoutSet, int newMergeFailCount) {
+
+		getSites().setMergeFailCount(
+			layoutSetPrototypeLayoutSet, newMergeFailCount);
 	}
 
 	public static void updateLayoutScopes(

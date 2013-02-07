@@ -8,7 +8,7 @@ AUI().add(
 		var TPL_TOKEN = A.Template(
 			'<tpl for=".">',
 				'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
-					'<span class="lfr-token-text">{text}</span>',
+					'<span class="lfr-token-text">{[ ("html" in values) ? values.html : A.Escape.html(values.text) ]}</span>',
 					'<a class="aui-icon aui-icon-close lfr-token-close" href="javascript:;"></a>',
 				'</span>',
 			'</tpl>'
@@ -109,6 +109,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template']
+		requires: ['aui-base', 'aui-template', 'escape']
 	}
 );

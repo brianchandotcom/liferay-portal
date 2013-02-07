@@ -96,7 +96,7 @@ private void _buildCategoriesNavigation(String[] assetCategoryIdsOrNames, boolea
 		if (ArrayUtil.contains(assetCategoryIdsOrNames, term)) {
 			sb.append(" current-term");
 
-			ScriptTag.doTag(null, "liferay-token-list", "Liferay.Search.tokenList.add({clearFields: '" + UnicodeFormatter.toString(clearFields) + "', text: '" + UnicodeFormatter.toString(assetCategoryName) + "'});", null, pageContext);
+			ScriptTag.doTag(null, "liferay-token-list", "Liferay.Search.tokenList.add({clearFields: '" + clearFields + "', text: '" + HtmlUtil.escapeJS(assetCategoryName) + "'});", null, pageContext);
 		}
 
 		sb.append("\"><a href=\"#\" data-value=\"");

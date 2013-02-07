@@ -63,8 +63,8 @@ if (dataJSONObject.has("values")) {
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-							text: '<%= UnicodeFormatter.toString(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
+							clearFields: '<%= renderResponse.getNamespace() + facet.getFieldName() %>',
+							text: '<%= HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
 						}
 					);
 				</aui:script>

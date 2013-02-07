@@ -39,9 +39,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
-		// Membership policy
-
-		checkAddGroupRoles(new long[] {userId}, groupId, roleIds);
+		checkAddUserGroupRolesMembershipPolicy(
+			new long[]{userId}, groupId, roleIds);
 
 		userGroupRoleLocalService.addUserGroupRoles(userId, groupId, roleIds);
 	}
@@ -52,9 +51,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		// Membership policy
-
-		checkAddGroupRoles(userIds, groupId, new long[] {roleId});
+		checkAddUserGroupRolesMembershipPolicy(
+			userIds, groupId, new long[]{roleId});
 
 		userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
 	}
@@ -67,9 +65,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				getPermissionChecker(), groupId, roleId);
 		}
 
-		// Membership policy
-
-		checkDeleteGroupRoles(new long[] {userId}, groupId, roleIds);
+		checkDeleteUserGroupRolesMembershipPolicy(
+			new long[]{userId}, groupId, roleIds);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, groupId, roleIds);
@@ -81,15 +78,14 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		// Membership policy
-
-		checkDeleteGroupRoles(userIds, groupId, new long[] {roleId});
+		checkDeleteUserGroupRolesMembershipPolicy(
+			userIds, groupId, new long[]{roleId});
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, roleId);
 	}
 
-	protected void checkAddGroupRoles(
+	protected void checkAddUserGroupRolesMembershipPolicy(
 			long[] userIds, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
@@ -129,7 +125,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
-	protected void checkDeleteGroupRoles(
+	protected void checkDeleteUserGroupRolesMembershipPolicy(
 			long[] userIds, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 

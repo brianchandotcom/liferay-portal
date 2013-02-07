@@ -112,7 +112,7 @@ public class TempFileUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		long repositoryId = PortletFileRepositoryUtil.getPortletRepository(
+		long repositoryId = PortletFileRepositoryUtil.getPortletRepositoryId(
 			groupId, PortletKeys.DOCUMENT_LIBRARY, serviceContext);
 
 		Folder userFolder = PortletFileRepositoryUtil.getPortletFolder(

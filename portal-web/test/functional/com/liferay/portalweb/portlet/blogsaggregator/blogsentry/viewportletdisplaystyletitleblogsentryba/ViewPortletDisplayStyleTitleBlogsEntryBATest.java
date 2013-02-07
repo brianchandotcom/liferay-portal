@@ -39,9 +39,9 @@ public class ViewPortletDisplayStyleTitleBlogsEntryBATest extends BaseTestCase {
 			"Blogs Entry Title");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		selenium.waitForText("//div[@class='entry-body']/p",
+		selenium.waitForText("//div[@class='entry-body']/div/p",
 			"Blogs Entry Content");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

@@ -14,20 +14,17 @@
 
 package com.liferay.portlet.dynamicdatamapping.lar;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,14 +34,10 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -52,21 +45,16 @@ import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -106,330 +94,12 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		return content;
 	}
 
-	public static void exportStructure(
-			PortletDataContext portletDataContext, Element structuresElement,
-			DDMStructure structure)
-		throws Exception {
-
-		String path = getStructurePath(portletDataContext, structure);
-
-		exportStructure(portletDataContext, structuresElement, path, structure);
-	}
-
-	public static void exportStructure(
-			PortletDataContext portletDataContext, Element structuresElement,
-			String path, DDMStructure structure)
-		throws Exception {
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		Element structureElement = structuresElement.addElement("structure");
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			structure.getCompanyId());
-
-		if (defaultUserId == structure.getUserId()) {
-			structureElement.addAttribute("preloaded", "true");
-		}
-
-		portletDataContext.addClassedModel(
-			structureElement, path, structure, NAMESPACE);
-	}
-
-	public static void exportTemplate(
-			PortletDataContext portletDataContext, Element templatesElement,
-			DDMTemplate template)
-		throws Exception {
-
-		String path = getTemplatePath(portletDataContext, template);
-
-		exportTemplate(portletDataContext, templatesElement, path, template);
-	}
-
-	public static void exportTemplate(
-			PortletDataContext portletDataContext, Element templatesElement,
-			Element dlFileEntryTypesElement, Element dlFoldersElement,
-			Element dlFileEntriesElement, Element dlFileRanksElement,
-			Element dlRepositoriesElement, Element dlRepositoryEntriesElement,
-			String path, DDMTemplate template)
-		throws Exception {
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		// Clone this template to make sure changes to its content are never
-		// persisted
-
-		template = (DDMTemplate)template.clone();
-
-		Element templateElement = templatesElement.addElement("template");
-
-		if (template.isSmallImage()) {
-			Image smallImage = ImageUtil.fetchByPrimaryKey(
-				template.getSmallImageId());
-
-			if (Validator.isNotNull(template.getSmallImageURL())) {
-				String smallImageURL = exportReferencedContent(
-					portletDataContext, dlFileEntryTypesElement,
-					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-					dlRepositoriesElement, dlRepositoryEntriesElement,
-					templateElement,
-					template.getSmallImageURL().concat(StringPool.SPACE));
-
-				template.setSmallImageURL(smallImageURL);
-			}
-			else if (smallImage != null) {
-				String smallImagePath = getTemplateSmallImagePath(
-					portletDataContext, template);
-
-				templateElement.addAttribute(
-					"small-image-path", smallImagePath);
-
-				template.setSmallImageType(smallImage.getType());
-
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "embedded-assets")) {
-
-			String content = exportReferencedContent(
-				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, dlRepositoriesElement,
-				dlRepositoryEntriesElement, templateElement,
-				template.getScript());
-
-			template.setScript(content);
-		}
-
-		portletDataContext.addClassedModel(
-			templateElement, path, template, NAMESPACE);
-	}
-
-	public static void exportTemplate(
-			PortletDataContext portletDataContext, Element templatesElement,
-			String path, DDMTemplate template)
-		throws Exception {
-
-		exportTemplate(
-			portletDataContext, templatesElement, null, null, null, null, null,
-			null, path, template);
-	}
-
-	public static void importStructure(
-			PortletDataContext portletDataContext, Element structureElement)
-		throws Exception {
-
-		String path = structureElement.attributeValue("path");
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		DDMStructure structure =
-			(DDMStructure)portletDataContext.getZipEntryAsObject(
-				structureElement, path);
-
-		prepareLanguagesForImport(structure);
-
-		long userId = portletDataContext.getUserId(structure.getUserUuid());
-
-		Map<Long, Long> structureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			structureElement, structure, NAMESPACE);
-
-		DDMStructure importedStructure = null;
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			boolean preloaded = GetterUtil.getBoolean(
-				structureElement.attributeValue("preloaded"));
-
-			DDMStructure existingStructure = null;
-
-			if (!preloaded) {
-				existingStructure = DDMStructureUtil.fetchByUUID_G(
-					structure.getUuid(), portletDataContext.getScopeGroupId());
-			}
-			else {
-				existingStructure = DDMStructureUtil.fetchByG_C_S(
-					portletDataContext.getScopeGroupId(),
-					structure.getClassNameId(), structure.getStructureKey());
-			}
-
-			if (existingStructure == null) {
-				serviceContext.setUuid(structure.getUuid());
-
-				importedStructure = DDMStructureLocalServiceUtil.addStructure(
-					userId, portletDataContext.getScopeGroupId(),
-					structure.getParentStructureId(),
-					structure.getClassNameId(), structure.getStructureKey(),
-					structure.getNameMap(), structure.getDescriptionMap(),
-					structure.getXsd(), structure.getStorageType(),
-					structure.getType(), serviceContext);
-			}
-			else {
-				importedStructure =
-					DDMStructureLocalServiceUtil.updateStructure(
-						existingStructure.getStructureId(),
-						structure.getParentStructureId(),
-						structure.getNameMap(), structure.getDescriptionMap(),
-						structure.getXsd(), serviceContext);
-			}
-		}
-		else {
-			importedStructure = DDMStructureLocalServiceUtil.addStructure(
-				userId, portletDataContext.getScopeGroupId(),
-				structure.getParentStructureId(), structure.getClassNameId(),
-				structure.getStructureKey(), structure.getNameMap(),
-				structure.getDescriptionMap(), structure.getXsd(),
-				structure.getStorageType(), structure.getType(),
-				serviceContext);
-		}
-
-		portletDataContext.importClassedModel(
-			structure, importedStructure, NAMESPACE);
-
-		structureIds.put(
-			structure.getStructureId(), importedStructure.getStructureId());
-	}
-
-	public static void importTemplate(
-			PortletDataContext portletDataContext, Element templateElement)
-		throws Exception {
-
-		String path = templateElement.attributeValue("path");
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		DDMTemplate template =
-			(DDMTemplate)portletDataContext.getZipEntryAsObject(
-				templateElement, path);
-
-		long userId = portletDataContext.getUserId(template.getUserUuid());
-
-		Map<Long, Long> structureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
-
-		long classPK = MapUtil.getLong(
-			structureIds, template.getClassPK(), template.getClassPK());
-
-		File smallFile = null;
-
-		if (template.isSmallImage()) {
-			String smallImagePath = templateElement.attributeValue(
-				"small-image-path");
-
-			if (Validator.isNotNull(template.getSmallImageURL())) {
-				String smallImageURL =
-					JournalPortletDataHandler.importReferencedContent(
-						portletDataContext, templateElement,
-						template.getSmallImageURL());
-
-				template.setSmallImageURL(smallImageURL);
-			}
-			else if (Validator.isNotNull(smallImagePath)) {
-				byte[] bytes = portletDataContext.getZipEntryAsByteArray(
-					smallImagePath);
-
-				if (bytes != null) {
-					smallFile = FileUtil.createTempFile(
-						template.getSmallImageType());
-
-					FileUtil.write(smallFile, bytes);
-				}
-			}
-		}
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			templateElement, template, NAMESPACE);
-
-		DDMTemplate importedTemplate = null;
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			DDMTemplate existingTemplate = DDMTemplateUtil.fetchByUUID_G(
-				template.getUuid(), portletDataContext.getScopeGroupId());
-
-			if (existingTemplate == null) {
-				serviceContext.setUuid(template.getUuid());
-
-				importedTemplate = addTemplate(
-					userId, portletDataContext.getScopeGroupId(), template,
-					classPK, smallFile, serviceContext);
-			}
-			else {
-				importedTemplate = DDMTemplateLocalServiceUtil.updateTemplate(
-					existingTemplate.getTemplateId(), template.getNameMap(),
-					template.getDescriptionMap(), template.getType(),
-					template.getMode(), template.getLanguage(),
-					template.getScript(), template.isCacheable(),
-					template.isSmallImage(), template.getSmallImageURL(),
-					smallFile, serviceContext);
-			}
-		}
-		else {
-			importedTemplate = addTemplate(
-				userId, portletDataContext.getScopeGroupId(), template, classPK,
-				smallFile, serviceContext);
-		}
-
-		portletDataContext.importClassedModel(
-			template, importedTemplate, NAMESPACE);
-	}
-
 	public DDMPortletDataHandler() {
 		setAlwaysExportable(true);
 		setDataLocalized(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "structures", true, true),
 			new PortletDataHandlerBoolean(NAMESPACE, "templates"));
-	}
-
-	protected static DDMTemplate addTemplate(
-			long userId, long groupId, DDMTemplate template, long classPK,
-			File smallFile, ServiceContext serviceContext)
-		throws Exception {
-
-		DDMTemplate newTemplate = null;
-
-		try {
-			return DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, template.getClassNameId(), classPK,
-				template.getTemplateKey(), template.getNameMap(),
-				template.getDescriptionMap(), template.getType(),
-				template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(),
-				template.isSmallImage(), template.getSmallImageURL(), smallFile,
-				serviceContext);
-		}
-		catch (TemplateDuplicateTemplateKeyException tdtke) {
-			newTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-				userId, groupId, template.getClassNameId(), classPK, null,
-				template.getNameMap(), template.getDescriptionMap(),
-				template.getType(), template.getMode(), template.getLanguage(),
-				template.getScript(), template.isCacheable(),
-				template.isSmallImage(), template.getSmallImageURL(), smallFile,
-				serviceContext);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"A template with the key " + template.getTemplateKey() +
-						" already exists. The new generated key is " +
-							newTemplate.getTemplateKey());
-			}
-		}
-
-		return newTemplate;
 	}
 
 	protected static String exportDLFileEntries(
@@ -941,69 +611,6 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		return content;
 	}
 
-	protected static String getStructurePath(
-		PortletDataContext portletDataContext, DDMStructure structure) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/structures/");
-		sb.append(structure.getStructureId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static String getTemplatePath(
-		PortletDataContext portletDataContext, DDMTemplate template) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/templates/");
-		sb.append(template.getTemplateId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static String getTemplateSmallImagePath(
-			PortletDataContext portletDataContext, DDMTemplate template)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/templates/thumbnail-");
-		sb.append(template.getTemplateId());
-		sb.append(StringPool.PERIOD);
-		sb.append(template.getSmallImageType());
-
-		return sb.toString();
-	}
-
-	protected static void prepareLanguagesForImport(DDMStructure structure)
-		throws PortalException {
-
-		Locale structureDefaultLocale = LocaleUtil.fromLanguageId(
-			structure.getDefaultLanguageId());
-
-		Locale[] structureAvailableLocales = LocaleUtil.fromLanguageIds(
-			structure.getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			DDMStructure.class.getName(), structure.getPrimaryKey(),
-			structureDefaultLocale, structureAvailableLocales);
-
-		structure.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
 	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
@@ -1049,7 +656,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			if (portletDataContext.isWithinDateRange(
 					structure.getModifiedDate())) {
 
-				exportStructure(
+				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, structuresElement, structure);
 			}
 		}
@@ -1065,7 +672,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 				if (portletDataContext.isWithinDateRange(
 						template.getModifiedDate())) {
 
-					exportTemplate(
+					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, templatesElement, template);
 				}
 			}
@@ -1095,7 +702,8 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			"structure");
 
 		for (Element structureElement : structureElements) {
-			importStructure(portletDataContext, structureElement);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, structureElement);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "templates")) {
@@ -1105,7 +713,8 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 				"template");
 
 			for (Element templateElement : templateElements) {
-				importTemplate(portletDataContext, templateElement);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, templateElement);
 			}
 		}
 

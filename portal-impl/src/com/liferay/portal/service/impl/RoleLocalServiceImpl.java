@@ -245,8 +245,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		for (Role role : roles) {
 			if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				unsetUserRoles(
-					user.getUserId(), new long[] {role.getRoleId()});
+				unsetUserRoles(user.getUserId(), new long[] {role.getRoleId()});
 			}
 		}
 

@@ -401,6 +401,20 @@ COMMIT_TRANSACTION;
 
 update SocialActivityCounter set active_ = TRUE;
 
+alter table SocialActivity add activityGroupId LONG;
+
+create table SocialActivityGroup (
+	activityGroupId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	modifiedDate LONG,
+	classNameId LONG,
+	classPK LONG,
+	type_ INTEGER
+);
+
 create table TrashEntry (
 	entryId LONG not null primary key,
 	groupId LONG,

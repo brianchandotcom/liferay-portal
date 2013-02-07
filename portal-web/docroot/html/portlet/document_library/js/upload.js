@@ -1126,7 +1126,7 @@ AUI.add(
 
 				instance._detachSubscriptions();
 
-				instance._dellocateEntry();
+				instance._destroyEntry();
 
 				var dataSet = instance._getDataSet();
 

@@ -71,9 +71,7 @@ public class User1_AddUser2JSONTest extends BaseTestCase {
 			selenium.getText(
 				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
 		selenium.waitForVisible("//pre[@class='lfr-code-block']");
-		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"exception\":\"com.liferay.portal.security.auth.PrincipalException\""));
-		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
+				"\"com.liferay.portal.security.auth.PrincipalException\""));
 	}
 }

@@ -70,9 +70,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 			selenium.getText(
 				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
 		selenium.waitForVisible("//pre[@class='lfr-code-block']");
-		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"exception\":\"Please sign in to invoke this method\""));
-		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
+				"\"Authenticated access required\""));
 	}
 }

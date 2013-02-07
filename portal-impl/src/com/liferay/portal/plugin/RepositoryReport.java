@@ -44,7 +44,7 @@ public class RepositoryReport implements Serializable {
 			sb.append(ppe.getCause().getMessage());
 		}
 
-		if (sb.length() == 0) {
+		if (sb.index() == 0) {
 			sb.append(ppe.toString());
 		}
 

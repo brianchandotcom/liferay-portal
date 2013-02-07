@@ -167,7 +167,7 @@ public class SeleneseToJavaBuilder {
 			}
 		}
 
-		if (_reportDuplicates && (sb.length() > 0)) {
+		if (_reportDuplicates && (sb.index() > 0)) {
 			System.out.println(
 				"There are " + duplicateTestHtmlCount +
 					" duplicate tests out of " + testHtmlCount +

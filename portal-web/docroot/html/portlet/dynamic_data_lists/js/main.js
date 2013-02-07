@@ -23,7 +23,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						window[Liferay.Util.getPortletNamespace('15') + 'selectDocumentLibrary'] = A.bind(instance._selectFileEntry, instance);
+						window[Liferay.Util.getPortletNamespace('15') + 'selectDocumentLibrary'] = A.bind('_selectFileEntry', instance);
 					},
 
 					getElementsValue: function() {
@@ -39,7 +39,7 @@ AUI.add(
 
 						instance.toolbar.add(
 							{
-								handler: A.bind(instance._handleChooseEvent, instance),
+								handler: A.bind('_handleChooseEvent', instance),
 								label: Liferay.Language.get('choose')
 							},
 							1

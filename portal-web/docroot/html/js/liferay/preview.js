@@ -369,15 +369,15 @@ AUI.add(
 								contentBox: instance.get('toolbar'),
 								children: [
 									{
-										handler: A.bind(instance._updateIndex, instance, -1),
+										handler: A.bind('_updateIndex', instance, -1),
 										icon: 'arrow-1-l'
 									},
 									{
-										handler: A.bind(instance._maximizePreview, instance),
+										handler: A.bind('_maximizePreview', instance),
 										icon: 'zoomin'
 									},
 									{
-										handler: A.bind(instance._updateIndex, instance, 1),
+										handler: A.bind('_updateIndex', instance, 1),
 										icon: 'arrow-1-r'
 									}
 								]

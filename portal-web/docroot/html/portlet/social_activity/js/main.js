@@ -461,7 +461,7 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						instance.actionsNode.delegate('click', A.rbind(instance._toggleField, instance, false), SELECTOR_SETTINGS_FIELD, instance);
+						instance.actionsNode.delegate('click', A.rbind('_toggleField', instance, false), SELECTOR_SETTINGS_FIELD, instance);
 
 						instance.bodyNode.delegate('click', instance._onBodyNodeClick, [SELECTOR_SETTINGS_ICON_CLOSE, SELECTOR_SETTINGS_ICON_TOGGLE].join(), instance);
 

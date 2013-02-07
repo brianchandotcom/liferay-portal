@@ -270,7 +270,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 	var buttons = A.all('.delete-templates-button');
 
 	if (buttons.size()) {
-		var toggleDisabled = A.bind(Liferay.Util.toggleDisabled, Liferay.Util, ':button');
+		var toggleDisabled = A.bind('toggleDisabled', Liferay.Util, ':button');
 
 		var resultsGrid = A.one('.results-grid');
 

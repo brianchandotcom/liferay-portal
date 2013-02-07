@@ -129,7 +129,7 @@ AUI.add(
 							instance.on('savePage', A.bind('_savePage', instance));
 							instance.on('cancelPage', instance._cancelPage);
 
-							navBlock.delegate('keypress', A.bind(instance._onKeypress, instance), 'input');
+							navBlock.delegate('keypress', A.bind('_onKeypress', instance), 'input');
 						}
 					},
 
@@ -258,13 +258,13 @@ AUI.add(
 
 							navBlock.delegate(
 								'mouseenter',
-								A.rbind(instance._toggleDeleteButton, instance, 'removeClass'),
+								A.rbind('_toggleDeleteButton', instance, 'removeClass'),
 								'li'
 							);
 
 							navBlock.delegate(
 								'mouseleave',
-								A.rbind(instance._toggleDeleteButton, instance, 'addClass'),
+								A.rbind('_toggleDeleteButton', instance, 'addClass'),
 								'li'
 							);
 
@@ -303,7 +303,7 @@ AUI.add(
 											}
 										);
 
-										currentLink.on('mouseleave', A.bind(currentSpan.setStyle, currentSpan, 'cursor', 'pointer'));
+										currentLink.on('mouseleave', A.bind('setStyle', currentSpan, 'cursor', 'pointer'));
 
 										currentSpan.on(
 											'click',
@@ -515,7 +515,7 @@ AUI.add(
 
 				Util.focusFormField(comboField.get('node'));
 
-				var realign = A.bind(optionsOverlay.fire, optionsOverlay, 'align');
+				var realign = A.bind('fire', optionsOverlay, 'align');
 
 				optionsOverlay.on('visibleChange', realign);
 

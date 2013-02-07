@@ -280,7 +280,7 @@
 						else {
 							toolbar.add(
 								{
-									handler: A.bind(instance._handleDownloadEvent, instance),
+									handler: A.bind('_handleDownloadEvent', instance),
 									id: 'downloadEvent',
 									label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 								}
@@ -296,7 +296,7 @@
 								if (structureField.required === 'false') {
 									toolbar.add(
 										{
-											handler: A.bind(instance._handleDeleteEvent, instance),
+											handler: A.bind('_handleDeleteEvent', instance),
 											id: 'deleteEvent',
 											label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
 										}

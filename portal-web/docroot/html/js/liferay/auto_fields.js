@@ -275,7 +275,7 @@ AUI.add(
 					_attachSubmitListener: function() {
 						var instance = this;
 
-						Liferay.on('submitForm', A.bind(Liferay.fire, Liferay, 'saveAutoFields'));
+						Liferay.on('submitForm', A.bind('fire', Liferay, 'saveAutoFields'));
 
 						AutoFields.prototype._attachSubmitListener = Lang.emptyFn;
 					},

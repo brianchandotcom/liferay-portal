@@ -46,7 +46,7 @@ AUI.add(
 						instance._portletNamespace = instance.get('portletNamespace');
 						instance._randomNamespace = instance.get('randomNamespace');
 
-						window[instance._portletNamespace + 'changeLogo'] = A.bind(instance._changeLogo, instance);
+						window[instance._portletNamespace + 'changeLogo'] = A.bind('_changeLogo', instance);
 					},
 
 					renderUI: function() {

@@ -118,8 +118,8 @@ AUI.add(
 							instance.get(STR_RESTORE_ENTRY_URL),
 							{
 								after: {
-									failure: A.rbind(instance._afterCheckEntryFailure, instance),
-									success: A.rbind(instance._afterCheckEntrySuccess, instance)
+									failure: A.rbind('_afterCheckEntryFailure', instance),
+									success: A.rbind('_afterCheckEntrySuccess', instance)
 								},
 								arguments: uri,
 								data: {
@@ -148,7 +148,7 @@ AUI.add(
 								A.Plugin.IO,
 								{
 									after: {
-										success: A.bind(instance._initializeRestorePopup, instance)
+										success: A.bind('_initializeRestorePopup', instance)
 									},
 									autoLoad: false
 								}
@@ -199,8 +199,8 @@ AUI.add(
 								instance.get(STR_RESTORE_ENTRY_URL),
 								{
 									after: {
-										failure: A.rbind(instance._afterPopupCheckEntryFailure, instance),
-										success: A.rbind(instance._afterPopupCheckEntrySuccess, instance)
+										failure: A.rbind('_afterPopupCheckEntryFailure', instance),
+										success: A.rbind('_afterPopupCheckEntrySuccess', instance)
 									},
 									arguments: form,
 									data: {

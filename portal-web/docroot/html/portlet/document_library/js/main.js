@@ -183,7 +183,7 @@ AUI.add(
 
 						instance._repositoriesData = {};
 
-						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
+						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind('destructor', instance)));
 
 						var searchFormNode = instance.one('#fm1');
 

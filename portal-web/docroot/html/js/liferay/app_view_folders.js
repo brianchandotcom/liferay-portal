@@ -148,16 +148,16 @@ AUI.add(
 						instance._repositoriesData = {};
 
 						var eventHandles = [
-							Liferay.after(instance._eventDataRequest, instance._afterDataRequest, instance),
-							Liferay.on(instance._dataRetrieveFailure, instance._onDataRetrieveFailure, instance),
-							Liferay.on(instance._eventDataRequest, instance._onDataRequest, instance)
+							Liferay.after(instance._eventDataRequest, A.bind('_afterDataRequest', instance)),
+							Liferay.on(instance._dataRetrieveFailure, A.bind('_onDataRetrieveFailure', instance)),
+							Liferay.on(instance._eventDataRequest, A.bind('_onDataRequest', instance))
 						];
 
 						instance._eventHandles = eventHandles;
 
 						portletContainer.delegate(
 							STR_CLICK,
-							A.bind(instance._onPortletContainerClick, instance),
+							A.bind('_onPortletContainerClick', instance),
 							formatSelectorNS(instance.NS, '#entriesContainer a[data-folder=true], #breadcrumbContainer a')
 						);
 
@@ -262,7 +262,7 @@ AUI.add(
 							}
 						);
 
-						var sendIOResponse = A.bind(instance._sendIOResponse, instance, ioRequest);
+						var sendIOResponse = A.bind('_sendIOResponse', instance, ioRequest);
 
 						ioRequest.after(['failure', STR_SUCCESS], sendIOResponse);
 

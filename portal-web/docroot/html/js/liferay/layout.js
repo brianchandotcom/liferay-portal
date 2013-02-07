@@ -37,8 +37,8 @@ AUI.add(
 			bindDragDropListeners: function() {
 				var layoutHandler = Layout.getLayoutHandler();
 
-				layoutHandler.on('drag:end', A.bind(Layout._onPortletDragEnd, Layout));
-				layoutHandler.on('drag:start', A.bind(Layout._onPortletDragStart, Layout));
+				layoutHandler.on('drag:end', A.bind('_onPortletDragEnd', Layout));
+				layoutHandler.on('drag:start', A.bind('_onPortletDragStart', Layout));
 			},
 
 			closeNestedPortlets: function(portlet) {

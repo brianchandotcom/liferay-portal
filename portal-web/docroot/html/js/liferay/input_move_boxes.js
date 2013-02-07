@@ -72,19 +72,19 @@ AUI.add(
 						var leftReorderToolbar = instance._leftReorderToolbar;
 
 						if (leftReorderToolbar) {
-							leftReorderToolbar.after('buttonitem:click', A.rbind(instance._afterOrderClick, instance, instance._leftBox));
+							leftReorderToolbar.after('buttonitem:click', A.rbind('_afterOrderClick', instance, instance._leftBox));
 						}
 
 						var rightReorderToolbar = instance._rightReorderToolbar;
 
 						if (rightReorderToolbar) {
-							rightReorderToolbar.after('buttonitem:click', A.rbind(instance._afterOrderClick, instance, instance._rightBox));
+							rightReorderToolbar.after('buttonitem:click', A.rbind('_afterOrderClick', instance, instance._rightBox));
 						}
 
 						instance._moveToolbar.on('buttonitem:click', instance._afterMoveClick, instance);
 
-						instance._leftBox.on('focus', A.rbind(instance._onSelectFocus, instance, instance._rightBox));
-						instance._rightBox.on('focus', A.rbind(instance._onSelectFocus, instance, instance._leftBox));
+						instance._leftBox.on('focus', A.rbind('_onSelectFocus', instance, instance._rightBox));
+						instance._rightBox.on('focus', A.rbind('_onSelectFocus', instance, instance._leftBox));
 					},
 
 					_afterMoveClick: function(event) {

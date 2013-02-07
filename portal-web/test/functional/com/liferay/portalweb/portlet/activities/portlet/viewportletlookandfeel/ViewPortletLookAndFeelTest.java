@@ -28,15 +28,18 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]"));
+		selenium.click(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]");
 		selenium.waitForVisible("link=Portlet Configuration");
 		selenium.clickAt("link=Portlet Configuration",
 			RuntimeVariables.replace("Portlet Configuration"));
@@ -51,8 +54,8 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 				"//input[@id='_113_use-custom-titleCheckbox']"));
 		assertEquals("Current Page",
 			selenium.getSelectedLabel("//select[@id='_113_lfr-point-links']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_113_show-bordersCheckbox']"));
+		selenium.select("//select[@id='_113_show-borders']",
+			RuntimeVariables.replace("Yes"));
 		selenium.clickAt("link=Text Styles",
 			RuntimeVariables.replace("Text Styles"));
 		selenium.waitForVisible("//select[@id='_113_lfr-font-family']");
@@ -134,7 +137,7 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 			RuntimeVariables.replace("Advanced Styling"));
 		selenium.waitForVisible("//p[@id='lfr-portlet-info']");
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
-				"Your current portlet information is as follows::\nPortlet ID: #portlet_116\nPortlet Classes: .portlet"));
+				"Your current portlet information is as follows:"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",
 				"Portlet ID: #portlet_116"));
 		assertTrue(selenium.isPartialText("//p[@id='lfr-portlet-info']",

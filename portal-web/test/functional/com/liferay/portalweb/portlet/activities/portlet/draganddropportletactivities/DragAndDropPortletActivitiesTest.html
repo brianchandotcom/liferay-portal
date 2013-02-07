@@ -40,13 +40,33 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>dragAndDropToObject</td>
+	<td>mouseDown</td>
 	<td>//span[@class='portlet-title-text']</td>
-	<td>//div[@id='column-2']</td>
+	<td>Activities</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='column-1_shim']</td>
+	<td>Column 1 Shim</td>
+</tr>
+<tr>
+	<td>mouseMoveAt</td>
+	<td>//div[@id='column-2_shim']</td>
+	<td>0,80</td>
+</tr>
+<tr>
+	<td>mouseUp</td>
+	<td>//div[@id='column-2_shim']</td>
+	<td>Column 2 - Portlet</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

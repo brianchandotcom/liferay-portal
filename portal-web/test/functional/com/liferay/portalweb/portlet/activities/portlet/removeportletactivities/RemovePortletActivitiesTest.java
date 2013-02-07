@@ -25,7 +25,6 @@ public class RemovePortletActivitiesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/group/joebloggs/home/");
-		selenium.waitForVisible("link=Activities Test Page");
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -36,9 +36,13 @@ public class DragAndDropPortletActivitiesTest extends BaseTestCase {
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//span[@class='portlet-title-text']",
 			RuntimeVariables.replace("Activities"));
-		Thread.sleep(5000);
-		selenium.dragAndDropToObject("//span[@class='portlet-title-text']",
-			"//div[@id='column-2']");
+		Thread.sleep(1000);
+		selenium.mouseDown("//span[@class='portlet-title-text']");
+		Thread.sleep(1000);
+		selenium.waitForElementPresent("//div[@id='column-1_shim']");
+		selenium.mouseMoveAt("//div[@id='column-2_shim']",
+			RuntimeVariables.replace("0,80"));
+		selenium.mouseUp("//div[@id='column-2_shim']");
 		selenium.waitForVisible(
 			"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]");
 		assertTrue(selenium.isVisible(

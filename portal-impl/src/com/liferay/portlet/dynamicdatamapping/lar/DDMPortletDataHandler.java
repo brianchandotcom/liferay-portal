@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.dynamicdatamapping.lar;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -45,12 +48,11 @@ import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetActionableDynamicQuery;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -634,7 +636,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
+			final PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -647,36 +649,61 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		Element structuresElement = rootElement.addElement("structures");
+		final Element structuresElement = rootElement.addElement("structures");
 
-		List<DDMStructure> ddmStructures = DDMStructureUtil.findByGroupId(
+		ActionableDynamicQuery structuresActionableDynamicQuery =
+			new DDLRecordSetActionableDynamicQuery() {
+
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+				@Override
+				protected void performAction(Object object)
+					throws PortalException {
+
+					DDMStructure structure = (DDMStructure)object;
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, structuresElement, structure);
+				}
+
+		};
+
+		structuresActionableDynamicQuery.setGroupId(
 			portletDataContext.getScopeGroupId());
 
-		for (DDMStructure structure : ddmStructures) {
-			if (portletDataContext.isWithinDateRange(
-					structure.getModifiedDate())) {
+		structuresActionableDynamicQuery.performActions();
 
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, structuresElement, structure);
-			}
-		}
+		final Element templatesElement = rootElement.addElement("templates");
 
-		Element templatesElement = rootElement.addElement("templates");
+		ActionableDynamicQuery templatesActionableDynamicQuery =
+			new DDLRecordSetActionableDynamicQuery() {
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "templates")) {
-			List<DDMTemplate> templates = DDMTemplateUtil.findByG_C(
-				portletDataContext.getScopeGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class));
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
 
-			for (DDMTemplate template : templates) {
-				if (portletDataContext.isWithinDateRange(
-						template.getModifiedDate())) {
+				@Override
+				protected void performAction(Object object)
+					throws PortalException {
+
+					DDMTemplate template = (DDMTemplate)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, templatesElement, template);
 				}
-			}
-		}
+
+		};
+
+		templatesActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
+		templatesActionableDynamicQuery.performActions();
 
 		return rootElement.formattedString();
 	}

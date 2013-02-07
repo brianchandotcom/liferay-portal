@@ -785,7 +785,9 @@ public class EditArticleAction extends PortletAction {
 				if (curArticle.isTemplateDriven()) {
 					DDMStructure ddmStructure =
 						DDMStructureLocalServiceUtil.getStructure(
-							groupId, structureId);
+							groupId,
+							PortalUtil.getClassNameId(JournalArticle.class),
+							structureId);
 
 					Fields newFields = DDMUtil.getFields(
 						ddmStructure.getStructureId(), serviceContext);

@@ -107,6 +107,7 @@
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openDDMPortlet(
 			{
+				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				ddmResource: '<%= ddmResource %>',
 				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {

@@ -601,7 +601,7 @@ public class JournalConverterUtil {
 	static {
 		_ddmDataTypes.put("boolean", "boolean");
 		_ddmDataTypes.put("document_library", "document-library");
-		_ddmDataTypes.put("image", "file-upload");
+		_ddmDataTypes.put("image", "image");
 		_ddmDataTypes.put("link_to_layout", "link-to-page");
 		_ddmDataTypes.put("list", "string");
 		_ddmDataTypes.put("multi-list", "string");
@@ -617,16 +617,16 @@ public class JournalConverterUtil {
 
 		_ddmTypesToJournalTypes.put("checkbox", "boolean");
 		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
-		_ddmTypesToJournalTypes.put("ddm-fileupload", "image_gallery");
 		_ddmTypesToJournalTypes.put("ddm-link-to-page", "link_to_layout");
 		_ddmTypesToJournalTypes.put("ddm-text-html", "text_area");
 		_ddmTypesToJournalTypes.put("select", "list");
 		_ddmTypesToJournalTypes.put("text", "text");
 		_ddmTypesToJournalTypes.put("textarea", "text_box");
+		_ddmTypesToJournalTypes.put("wcm-image", "image");
 
 		_journalTypesToDDMTypes.put("boolean", "checkbox");
 		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
-		_journalTypesToDDMTypes.put("image", "ddm-fileupload");
+		_journalTypesToDDMTypes.put("image", "wcm-image");
 		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
 		_journalTypesToDDMTypes.put("list", "select");
 		_journalTypesToDDMTypes.put("multi-list", "select");

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseModel;
@@ -60,6 +62,8 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureModifiedD
 import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateIdComparator;
 import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDateComparator;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -499,6 +503,30 @@ public class DDMImpl implements DDM {
 
 				if (fieldValueDate != null) {
 					fieldValue = String.valueOf(fieldValueDate.getTime());
+				}
+			}
+			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
+					 Validator.isNull(fieldValue)) {
+
+				HttpServletRequest request = serviceContext.getRequest();
+
+				if (!(request instanceof UploadRequest)) {
+					return null;
+				}
+
+				UploadRequest uploadRequest = (UploadRequest)request;
+
+				File file = uploadRequest.getFile(fieldNameValue);
+
+				try {
+					byte[] bytes = FileUtil.getBytes(file);
+
+					if ((bytes != null) && (bytes.length > 0)) {
+						fieldValue = UnicodeFormatter.bytesToHex(bytes);
+					}
+				}
+				catch (IOException e) {
+					return null;
 				}
 			}
 

@@ -828,8 +828,19 @@ AUI.add(
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
 				}
+			],
+
+			WCM_STRUCTURE: [
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'aui-form-builder-field-icon lfr-wcm-image lfr-wcm-image-icon',
+					label: Liferay.Language.get('image'),
+					type: 'wcm-image'
+				}
 			]
 		};
+
+		LiferayFormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE = LiferayFormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE.concat(LiferayFormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE);
 
 		Liferay.FormBuilder = LiferayFormBuilder;
 	},

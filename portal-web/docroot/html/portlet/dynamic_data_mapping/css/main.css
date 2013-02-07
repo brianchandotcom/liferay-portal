@@ -107,6 +107,16 @@
 		}
 	}
 
+	.lfr-wcm-image {
+		background: url(@theme_image_path@/aui/image.png) 0 20px no-repeat;
+		padding-top: 35px;
+	}
+
+	.lfr-wcm-image-icon {
+		background-position: 50% 50%;
+		padding: 0;
+	}
+
 	.editor-toolbar {
 		background-color: #DDD;
 		border: 1px solid #CCC;
@@ -128,7 +138,7 @@
 	.aui-form-builder-source-wrapper {
 		height: 600px;
 		position: relative;
-		
+
 		.aui-form-builder-source {
 			position: relative;
 		}

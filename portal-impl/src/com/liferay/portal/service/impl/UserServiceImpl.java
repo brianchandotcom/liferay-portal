@@ -125,8 +125,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		// Membership policy
-
 		checkAddGroupUsersMembershipPolicy(groupId, userIds);
 
 		userLocalService.addGroupUsers(groupId, userIds);
@@ -150,8 +148,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
 		validateOrganizationUsers(userIds);
-
-		// Membership policy
 
 		checkAddOrganizationUsersMembershipPolicy(organizationId, userIds);
 
@@ -193,8 +189,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
-
-		// Membership policy
 
 		checkAddRoleUsersMembershipPolicy(roleId, userIds);
 
@@ -398,8 +392,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
-
-		// Membership policy
 
 		checkAddUserGroupUsersMembershipPolicy(userGroupId, userIds);
 
@@ -983,6 +975,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
+		checkSetRoleUsersMembershipPolicy(roleId, userIds);
+
 		userLocalService.setRoleUsers(roleId, userIds);
 	}
 
@@ -1002,9 +996,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
 
-		// Membership policy
-
-		checkAddUserGroupUsersMembershipPolicy(userGroupId, userIds);
+		checkSetUserGroupUsersMembershipPolicy(userGroupId, userIds);
 
 		userLocalService.setUserGroupUsers(userGroupId, userIds);
 	}
@@ -1077,8 +1069,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		// Membership policy
-
 		checkUnsetGroupUsersMembershipPolicy(groupId, userIds);
 
 		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
@@ -1098,8 +1088,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
-
-		// Membership policy
 
 		checkUnsetOrganizationUsersMembershipPolicy(organizationId, userIds);
 
@@ -1140,8 +1128,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		// Membership policy
-
 		checkUnsetRoleUsersMembershipPolicy(roleId, userIds);
 
 		userLocalService.unsetRoleUsers(roleId, userIds);
@@ -1179,8 +1165,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
-
-		// Membership policy
 
 		checkUnsetUserGroupUsersMembershipPolicy(userGroupId, userIds);
 
@@ -2117,6 +2101,48 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		return roleIds;
+	}
+
+	protected void checkSetRoleUsersMembershipPolicy(
+			long roleId, long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] unsetUserIds = new long[userIds.length];
+
+		List<User> oldUsers = userLocalService.getRoleUsers(roleId);
+
+		for (int i = 0; i < oldUsers.size(); i++) {
+			User user = oldUsers.get(i);
+
+			if (!ArrayUtil.contains(userIds, user.getUserId())) {
+				unsetUserIds[i] = user.getUserId();
+			}
+		}
+
+		checkUnsetRoleUsersMembershipPolicy(roleId, unsetUserIds);
+
+		checkAddRoleUsersMembershipPolicy(roleId, userIds);
+	}
+
+	protected void checkSetUserGroupUsersMembershipPolicy(
+			long userGroupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] unsetUserIds = new long[userIds.length];
+
+		List<User> oldUsers = userLocalService.getUserGroupUsers(userGroupId);
+
+		for (int i = 0; i < oldUsers.size(); i++) {
+			User user = oldUsers.get(i);
+
+			if (!ArrayUtil.contains(userIds, user.getUserId())) {
+				unsetUserIds[i] = user.getUserId();
+			}
+		}
+
+		checkUnsetUserGroupUsersMembershipPolicy(userGroupId, unsetUserIds);
+
+		checkAddUserGroupUsersMembershipPolicy(userGroupId, userIds);
 	}
 
 	protected void checkUnsetGroupUsersMembershipPolicy(

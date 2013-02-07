@@ -2991,12 +2991,16 @@ public class JournalArticleLocalServiceImpl
 		DDMStructure structure = null;
 
 		try {
-			structure = ddmStructurePersistence.findByG_S(
-				article.getGroupId(), article.getStructureId());
+			structure = ddmStructurePersistence.findByG_C_S(
+				article.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				article.getStructureId());
 		}
 		catch (NoSuchStructureException nsse) {
-			structure = ddmStructurePersistence.findByG_S(
-				companyGroup.getGroupId(), article.getStructureId());
+			structure = ddmStructurePersistence.findByG_C_S(
+				companyGroup.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				article.getStructureId());
 		}
 
 		String content = GetterUtil.getString(article.getContent());
@@ -3394,15 +3398,18 @@ public class JournalArticleLocalServiceImpl
 		long classTypeId = 0;
 
 		try {
-			DDMStructure ddmStructure = ddmStructurePersistence.fetchByG_S(
-				article.getGroupId(), article.getStructureId());
+			long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
+			DDMStructure ddmStructure = ddmStructurePersistence.fetchByG_C_S(
+				article.getGroupId(), classNameId, article.getStructureId());
 
 			if (ddmStructure == null) {
 				Group companyGroup = groupLocalService.getCompanyGroup(
 					article.getCompanyId());
 
-				ddmStructure = ddmStructurePersistence.fetchByG_S(
-					companyGroup.getGroupId(), article.getStructureId());
+				ddmStructure = ddmStructurePersistence.fetchByG_C_S(
+					companyGroup.getGroupId(), classNameId,
+					article.getStructureId());
 			}
 
 			if (ddmStructure != null) {
@@ -3891,12 +3898,15 @@ public class JournalArticleLocalServiceImpl
 			DDMStructure ddmStructure = null;
 
 			try {
-				ddmStructure = ddmStructurePersistence.findByG_S(
-					groupId, structureId);
+				ddmStructure = ddmStructurePersistence.findByG_C_S(
+					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					structureId);
 			}
 			catch (NoSuchStructureException nsse) {
-				ddmStructure = ddmStructurePersistence.findByG_S(
-					companyGroup.getGroupId(), structureId);
+				ddmStructure = ddmStructurePersistence.findByG_C_S(
+					companyGroup.getGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class),
+					structureId);
 			}
 
 			DDMTemplate ddmTemplate = null;

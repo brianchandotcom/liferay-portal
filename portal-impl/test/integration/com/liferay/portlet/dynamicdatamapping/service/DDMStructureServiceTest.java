@@ -150,7 +150,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertNotNull(
 			DDMStructureLocalServiceUtil.fetchStructure(
-				structure.getGroupId(), structure.getStructureKey()));
+				structure.getGroupId(), _classNameId,
+				structure.getStructureKey()));
 	}
 
 	@Test

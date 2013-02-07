@@ -259,9 +259,9 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 					structure.getUuid(), portletDataContext.getScopeGroupId());
 			}
 			else {
-				existingStructure = DDMStructureUtil.fetchByG_S(
+				existingStructure = DDMStructureUtil.fetchByG_C_S(
 					portletDataContext.getScopeGroupId(),
-					structure.getStructureKey());
+					structure.getClassNameId(), structure.getStructureKey());
 			}
 
 			if (existingStructure == null) {

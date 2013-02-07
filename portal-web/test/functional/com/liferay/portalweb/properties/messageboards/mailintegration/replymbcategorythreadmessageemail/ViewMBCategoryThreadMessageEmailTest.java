@@ -59,7 +59,8 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Re: MB Message Subject"),
+		assertEquals(RuntimeVariables.replace(
+				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText("//tr[2]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Message Subject"),
 			selenium.getText("xPath=(//div[@class='subject'])[1]/a/strong"));
@@ -67,7 +68,8 @@ public class ViewMBCategoryThreadMessageEmailTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='thread-body'])[1]"));
 		assertTrue(selenium.isPartialText(
 				"xPath=(//span[@class='user-name'])[1]", "Joe Bloggs"));
-		assertEquals(RuntimeVariables.replace("Re: MB Message Subject"),
+		assertEquals(RuntimeVariables.replace(
+				"Re: [MB Category Name] MB Message Subject"),
 			selenium.getText("xPath=(//div[@class='subject'])[2]/a/strong"));
 		assertTrue(selenium.isPartialText(
 				"xPath=(//div[@class='thread-body'])[2]",

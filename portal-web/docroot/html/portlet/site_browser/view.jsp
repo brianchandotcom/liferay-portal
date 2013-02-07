@@ -25,6 +25,7 @@ boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 String callback = ParamUtil.getString(request, "callback");
 String target = ParamUtil.getString(request, "target");
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -36,6 +37,7 @@ portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 portletURL.setParameter("callback", callback);
 portletURL.setParameter("target", target);
+portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -111,6 +113,17 @@ portletURL.setParameter("target", target);
 
 				if (Validator.isNotNull(filter)) {
 					groups = _filterGroups(groups, filter);
+				}
+
+				total = groups.size();
+			}
+			else if (type.equals("layoutScopes")) {
+				groups = new ArrayList<Group>();
+
+				for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(groupId, privateLayout)) {
+					if (curLayout.hasScopeGroup()) {
+						groups.add(curLayout.getScopeGroup());
+					}
 				}
 
 				total = groups.size();

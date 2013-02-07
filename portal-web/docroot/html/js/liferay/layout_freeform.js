@@ -166,7 +166,7 @@ AUI.add(
 					_setupNodeStack: function(node) {
 						var instance = this;
 
-						node.on('mousedown', A.bind(instance._onPortletMouseDown, instance));
+						node.on('mousedown', A.bind('_onPortletMouseDown', instance));
 					},
 
 					_syncProxyNodeSize: function() {

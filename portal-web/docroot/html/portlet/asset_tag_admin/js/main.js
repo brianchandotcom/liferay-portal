@@ -419,7 +419,7 @@ AUI.add(
 										{
 											tagIds: checkedItemsIds
 										},
-										A.bind(instance._processActionResult, instance)
+										A.bind('_processActionResult', instance)
 									);
 								}
 							}
@@ -733,7 +733,7 @@ AUI.add(
 								{
 									label: Liferay.Language.get('ok'),
 									on: {
-										click: A.bind(instance._onTagMergeClick, instance)
+										click: A.bind('_onTagMergeClick', instance)
 									}
 								}
 							);
@@ -1082,7 +1082,7 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-tag'))) {
 							instance._deleteTag(
 								instance._selectedTagId,
-								A.bind(instance._processActionResult, instance)
+								A.bind('_processActionResult', instance)
 							);
 						}
 					},
@@ -1214,7 +1214,7 @@ AUI.add(
 									tagsIds,
 									targetTagId,
 									overrideProperties,
-									A.bind(instance._processActionResult, instance)
+									A.bind('_processActionResult', instance)
 								);
 							}
 						}
@@ -1525,7 +1525,7 @@ AUI.add(
 							tagPanelAdd._syncUIPosAlign();
 
 							var afterSuccess = A.bind(
-								instance._initializeTagPanelAdd,
+								'_initializeTagPanelAdd',
 								instance,
 								function() {
 									instance._focusTagPanelAdd();

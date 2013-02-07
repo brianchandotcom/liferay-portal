@@ -184,10 +184,10 @@ AUI.add(
 								container: instance._portletContainer,
 								nodes: SELECTOR_DRAGGABLE_NODES,
 								on: {
-									'drag:drophit': A.bind(instance._onDragDropHit, instance),
-									'drag:enter': A.bind(instance._onDragEnter, instance),
-									'drag:exit': A.bind(instance._onDragExit, instance),
-									'drag:start': A.bind(instance._onDragStart, instance)
+									'drag:drophit': A.bind('_onDragDropHit', instance),
+									'drag:enter': A.bind('_onDragEnter', instance),
+									'drag:exit': A.bind('_onDragExit', instance),
+									'drag:start': A.bind('_onDragStart', instance)
 								}
 							}
 						);

@@ -48,7 +48,7 @@ AUI.add(
 					if (!event.hideHistory) {
 						layoutRevisionToolbar.add(
 							{
-								handler: A.bind(instance._onViewHistory, instance),
+								handler: A.bind('_onViewHistory', instance),
 								icon: 'clock',
 								label: Liferay.Language.get('history')
 							}
@@ -62,7 +62,7 @@ AUI.add(
 
 					StagingBar.redoButton = new A.ButtonItem(
 						{
-							handler: A.bind(instance._onRevisionChange, instance, 'redo'),
+							handler: A.bind('_onRevisionChange', instance, 'redo'),
 							icon: 'arrowreturnthick-1-r',
 							label: redoText,
 							title: redoText
@@ -71,7 +71,7 @@ AUI.add(
 
 					StagingBar.undoButton = new A.ButtonItem(
 						{
-							handler: A.bind(instance._onRevisionChange, instance, 'undo'),
+							handler: A.bind('_onRevisionChange', instance, 'undo'),
 							icon: 'arrowreturnthick-1-b',
 							label: undoText,
 							title: undoText
@@ -114,7 +114,7 @@ AUI.add(
 						);
 					}
 
-					eventHandles.push(Liferay.on(event.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
+					eventHandles.push(Liferay.on(event.portletId + ':portletRefreshed', A.bind('destructor', instance)));
 
 					instance._eventHandles = eventHandles;
 				},

@@ -67,7 +67,7 @@ AUI.add(
 							if (srcHover) {
 								var src = element.getAttribute('data-src');
 
-								var hoverFn = A.bind(instance._onMouseHover, instance);
+								var hoverFn = A.bind('_onMouseHover', instance);
 
 								item.hover(hoverFn, hoverFn);
 							}

@@ -215,7 +215,7 @@ AUI.add(
 
 								var newTreeNode = {
 									after: {
-										checkedChange: A.bind(instance._onCheckedChange, instance)
+										checkedChange: A.bind('_onCheckedChange', instance)
 									},
 									checked: checked,
 									id: treeId,
@@ -331,7 +331,7 @@ AUI.add(
 							instance._searchResultsNode = searchResults;
 
 							var processSearchResults = A.bind(
-								instance._processSearchResults,
+								'_processSearchResults',
 								instance,
 								searchResults
 							);
@@ -598,7 +598,7 @@ AUI.add(
 								children: [vocabularyRootNode],
 								io: {
 									cfg: {
-										data: A.bind(instance._formatRequestData, instance),
+										data: A.bind('_formatRequestData', instance),
 										on: {
 											success: function(event) {
 												var treeViews = instance.TREEVIEWS;
@@ -615,7 +615,7 @@ AUI.add(
 											}
 										}
 									},
-									formatter: A.bind(instance._formatJSONResult, instance),
+									formatter: A.bind('_formatJSONResult', instance),
 									url: themeDisplay.getPathMain() + '/asset/get_categories'
 								},
 								paginator: paginatorConfig

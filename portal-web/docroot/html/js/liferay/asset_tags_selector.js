@@ -241,7 +241,7 @@ AUI.add(
 
 							instance._initSearch();
 
-							var onCheckboxClick = A.bind(instance._onCheckboxClick, instance);
+							var onCheckboxClick = A.bind('_onCheckboxClick', instance);
 
 							entriesNode.delegate('click', onCheckboxClick, 'input[type=checkbox]');
 						}

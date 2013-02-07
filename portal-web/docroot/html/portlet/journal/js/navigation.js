@@ -172,7 +172,7 @@ AUI.add(
 
 						journalContainer.delegate(
 							STR_CLICK,
-							A.bind(instance._onOpenAdvancedSearch, instance),
+							A.bind('_onOpenAdvancedSearch', instance),
 							'.article-advanced-search-icon'
 						);
 
@@ -180,7 +180,7 @@ AUI.add(
 
 						instance._eventHandles = eventHandles;
 
-						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
+						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind('destructor', instance)));
 
 						var searchFormNode = instance.one('#fm1');
 

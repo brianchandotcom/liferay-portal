@@ -317,7 +317,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 </aui:layout>
 
 <aui:script use="liferay-workflow-tasks">
-	var onTaskClickFn = A.rbind(Liferay.WorkflowTasks.onTaskClick, Liferay.WorkflowTasks, '');
+	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');
 
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignToMeLink', onTaskClickFn);
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignLink', onTaskClickFn);

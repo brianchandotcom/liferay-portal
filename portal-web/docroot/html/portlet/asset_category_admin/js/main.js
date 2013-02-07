@@ -846,7 +846,7 @@ AUI.add(
 								{
 									categoryIds: categoryIds
 								},
-								A.bind(instance._processCategoryDeletion, instance)
+								A.bind('_processCategoryDeletion', instance)
 							);
 						}
 					},
@@ -862,7 +862,7 @@ AUI.add(
 								{
 									vocabularyIds: vocabularyIds
 								},
-								A.bind(instance._processVocabularyDeletion, instance)
+								A.bind('_processVocabularyDeletion', instance)
 							);
 						}
 					},
@@ -1711,7 +1711,7 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-category'))) {
 							instance._deleteCategory(
 								instance._selectedCategoryId,
-								A.bind(instance._processCategoryDeletion, instance)
+								A.bind('_processCategoryDeletion', instance)
 							);
 						}
 					},
@@ -2338,7 +2338,7 @@ AUI.add(
 
 						instance._currentCategoryPanelAddIOHandle = categoryPanelAdd.io.after(
 							STR_SUCCESS,
-							A.bind(instance._initializeCategoryPanelAdd, instance, action)
+							A.bind('_initializeCategoryPanelAdd', instance, action)
 						);
 
 						categoryPanelAdd.io.start();
@@ -2472,7 +2472,7 @@ AUI.add(
 							vocabularyPanelAdd._syncUIPosAlign();
 
 							var afterSuccess = A.bind(
-								instance._initializeVocabularyPanelAdd,
+								'_initializeVocabularyPanelAdd',
 								instance,
 								function() {
 									instance._focusVocabularyPanelAdd();

@@ -1010,15 +1010,17 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				DDMPortletDataHandler.class, "deleteData")) {
 
-			DDMTemplateLocalServiceUtil.deleteTemplates(
-				portletDataContext.getScopeGroupId());
-
-			DDMStructureLocalServiceUtil.deleteStructures(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
+
+		DDMTemplateLocalServiceUtil.deleteTemplates(
+			portletDataContext.getScopeGroupId());
+
+		DDMStructureLocalServiceUtil.deleteStructures(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -1033,9 +1035,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.dynamicdatamapping",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("ddm-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -1071,7 +1071,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

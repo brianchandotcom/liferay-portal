@@ -94,9 +94,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		portletDataContext.addPermissions(
 			"com.liferay.portlet.polls", portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("polls-display-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -109,7 +107,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 			portletDataContext, questionsElement, choicesElement, votesElement,
 			question);
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

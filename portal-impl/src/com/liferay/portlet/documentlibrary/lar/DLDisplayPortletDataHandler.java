@@ -74,10 +74,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 			"com.liferay.portlet.documentlibrary",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement(
-			"documentlibrary-display-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -133,7 +130,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 				repositoriesElement, repositoryEntriesElement, folder, true);
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

@@ -81,17 +81,19 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				BlogsPortletDataHandler.class, "deleteData")) {
 
-			BlogsEntryLocalServiceUtil.deleteEntries(
-				portletDataContext.getScopeGroupId());
-
-			BlogsStatsUserLocalServiceUtil.deleteStatsUserByGroupId(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		BlogsEntryLocalServiceUtil.deleteEntries(
+			portletDataContext.getScopeGroupId());
+
+		BlogsStatsUserLocalServiceUtil.deleteStatsUserByGroupId(
+			portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -103,9 +105,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.addPermissions(
 			"com.liferay.portlet.blogs", portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("blogs-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -133,7 +133,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				dlRepositoriesElement, dlRepositoryEntriesElement, entry);
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		MBMessageLocalServiceUtil.deleteDiscussionMessages(
 			Layout.class.getName(), portletDataContext.getPlid());
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override
@@ -62,9 +62,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.pagecomments",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("page-comments-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -76,7 +74,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 				Layout.class, portletDataContext.getPlid());
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

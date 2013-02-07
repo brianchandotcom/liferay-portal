@@ -1601,18 +1601,20 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				JournalPortletDataHandler.class, "deleteData")) {
 
-			JournalArticleLocalServiceUtil.deleteArticles(
-				portletDataContext.getScopeGroupId());
-
-			DDMTemplateLocalServiceUtil.deleteTemplates(
-				portletDataContext.getScopeGroupId());
-
-			DDMStructureLocalServiceUtil.deleteStructures(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
+
+		JournalArticleLocalServiceUtil.deleteArticles(
+			portletDataContext.getScopeGroupId());
+
+		DDMTemplateLocalServiceUtil.deleteTemplates(
+			portletDataContext.getScopeGroupId());
+
+		DDMStructureLocalServiceUtil.deleteStructures(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -1627,9 +1629,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.journal",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("journal-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -1734,7 +1734,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

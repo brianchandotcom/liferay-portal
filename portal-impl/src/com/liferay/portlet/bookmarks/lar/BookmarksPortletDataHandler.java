@@ -72,7 +72,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.addPrimaryKey(
 				BookmarksPortletDataHandler.class, "deleteData")) {
 
-			return null;
+			return portletPreferences;
 		}
 
 		BookmarksFolderLocalServiceUtil.deleteFolders(
@@ -82,7 +82,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override
@@ -95,9 +95,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.bookmarks",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("bookmarks-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -155,7 +153,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 		entriesActionableDynamicQuery.performActions();
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

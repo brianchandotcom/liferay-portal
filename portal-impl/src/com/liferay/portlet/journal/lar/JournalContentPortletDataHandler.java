@@ -166,14 +166,12 @@ public class JournalContentPortletDataHandler
 			}
 		}
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("journal-content-data");
+		Element rootElement = addExportRootElement();
 
 		if (article == null) {
 			portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-			return document.formattedString();
+			return rootElement.formattedString();
 		}
 
 		String path = JournalPortletDataHandler.getArticlePath(
@@ -223,7 +221,7 @@ public class JournalContentPortletDataHandler
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

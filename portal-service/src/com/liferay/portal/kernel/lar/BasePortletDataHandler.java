@@ -183,7 +183,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		return null;
+		return portletPreferences;
 	}
 
 	protected String doExportData(

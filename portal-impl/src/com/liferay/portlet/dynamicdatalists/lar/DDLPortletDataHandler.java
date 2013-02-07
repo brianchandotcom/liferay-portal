@@ -71,9 +71,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.dynamicdatalist",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("ddl-data");
+		Element rootElement = addExportRootElement();
 
 		final Element recordSetsElement = rootElement.addElement("record-sets");
 
@@ -102,7 +100,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		actionableDynamicQuery.performActions();
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

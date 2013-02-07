@@ -68,7 +68,9 @@ if (browseUp) {
 		</c:choose>
 
 		<span class="entry-title">
-			<%= entryTitle %>
+			<span class="entry-title-text">
+				<%= entryTitle %>
+			</span>
 		</span>
 	</a>
 </li>

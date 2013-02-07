@@ -42,6 +42,10 @@
 	@include box-shadow(inset 0 0 2px #224FA8);
 }
 
+.portlet-document-library-upload-mask .aui-overlaymask-content {
+	@include border-radius(5px);
+}
+
 .lfr-search-combobox-item, .portlet-journal .lfr-search-combobox .search input {
 	@include border-radius(1px);
 }
@@ -265,10 +269,16 @@ body:first-of-type {
 	@include lfr-drop-active;
 }
 
-.upload-drop-intent .lfr-upload-container .upload-target {
-	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
+.upload-drop-active {
+	.lfr-upload-container .upload-target {
+		@include experimental(animation, none);
+	}
+
+	.portlet-document-library .document-container {
+		@include box-shadow(inset 0 0 5px #B8C1D1);
+	}
 }
 
-.upload-drop-active .lfr-upload-container .upload-target {
-	@include experimental(animation, none);
+.upload-drop-intent .lfr-upload-container .upload-target {
+	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
 }

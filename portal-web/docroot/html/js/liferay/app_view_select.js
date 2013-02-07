@@ -9,7 +9,7 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_RESULT_ROW = '.results-row';
+		var CSS_RESULT_ROW = '.results-row.selectable';
 
 		var CSS_SELECTED = 'selected';
 

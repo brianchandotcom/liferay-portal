@@ -389,6 +389,46 @@
 			clear: left;
 		}
 	}
+
+	.app-view-entry-taglib {
+		.entry-result-icon {
+			background: url() no-repeat 50%;
+			display: none;
+			height: 16px;
+			position: absolute;
+			right: 5px;
+			vertical-align: middle;
+			width: 16px;
+		}
+	}
+
+	.app-view-entry-taglib.entry-display-style.display-icon {
+		.entry-title {
+			position: relative;
+		}
+
+		.entry-title-text {
+			background: url() no-repeat 0 50%;
+		}
+
+		&.upload-error, &.upload-success, &.upload-warning {
+			.entry-title-text {
+				padding-left: 20px;
+			}
+		}
+
+		&.upload-error .entry-title-text {
+			background-image: url(@theme_image_path@/messages/error.png);
+		}
+
+		&.upload-success .entry-title-text {
+			background-image: url(@theme_image_path@/messages/success.png);
+		}
+
+		&.upload-warning .entry-title-text {
+			background-image: url(@theme_image_path@/messages/alert.png);
+		}
+	}
 }
 
 .portlet-document-library, .portlet-document-library-display, .portlet-trash {
@@ -538,6 +578,12 @@
 			.lfr-panel-titlebar {
 				border-bottom-width: 0;
 			}
+		}
+	}
+
+	.upload-drop-active &, .upload-drop-intent & {
+		.document-container {
+			background-color: #EEF4FF;
 		}
 	}
 }

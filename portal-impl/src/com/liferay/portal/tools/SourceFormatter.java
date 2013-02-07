@@ -473,6 +473,7 @@ public class SourceFormatter {
 					languageKey.endsWith(StringPool.UNDERLINE) ||
 					languageKey.startsWith(StringPool.DASH) ||
 					languageKey.startsWith(StringPool.OPEN_BRACKET) ||
+					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
 					languageKey.startsWith(StringPool.UNDERLINE)) {
 

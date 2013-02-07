@@ -20,28 +20,34 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationTest extends BaseTestCase {
-	public void testConfiguration() throws Exception {
+public class ViewPortletSLOptionsTest extends BaseTestCase {
+	public void testViewPortletSLOptions() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Sample LAR Test Page");
 		selenium.clickAt("link=Sample LAR Test Page",
 			RuntimeVariables.replace("Sample LAR Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertTrue(selenium.isTextPresent(
 				"This is the Sample LAR Portlet. This was made to demonstrate the portlet LAR plugin feature."));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-		selenium.waitForVisible("link=Export / Import");
-		selenium.click(RuntimeVariables.replace("link=Export / Import"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");
+		assertEquals(RuntimeVariables.replace("Export / Import"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
+			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//input[@id='_86_exportFileName']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Export']"));
-		selenium.click(RuntimeVariables.replace("link=Import"));
+		assertTrue(selenium.isVisible("//input[@id='_86_exportFileName']"));
+		assertTrue(selenium.isVisible("//input[@value='Export']"));
+		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"//input[@id='_86_importFileName']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Import']"));
+		assertTrue(selenium.isVisible("//input[@id='_86_importFileName']"));
+		assertTrue(selenium.isVisible("//input[@value='Import']"));
 	}
 }

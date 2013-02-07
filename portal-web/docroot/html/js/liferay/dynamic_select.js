@@ -63,6 +63,10 @@ AUI.add(
 							prevSelectVal
 						);
 
+						if (select.attr('name') == '') {
+							select.attr('name', id);
+						}
+
 						select.on(
 							'change',
 							function() {

@@ -45,10 +45,10 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@class=' taglib-icon']/span[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForElementPresent(
-					"//textarea[@id='_33_editor' and @style='display: none;']");
 				selenium.waitForVisible(
-					"//td[@id='cke_contents__33_editor']/iframe");
+					"//a[contains(@class,'cke_button_disabled')]");
+				selenium.waitForVisible(
+					"//iframe[contains(@title,'Rich Text Editor')]");
 
 				boolean tagsVisible = selenium.isVisible(
 						"//input[@class='lfr-tag-selector-input aui-field-input-text']");

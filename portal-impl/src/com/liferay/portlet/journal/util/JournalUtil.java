@@ -993,7 +993,7 @@ public class JournalUtil {
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			groupId, templateId);
+			groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId);
 
 		return getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}

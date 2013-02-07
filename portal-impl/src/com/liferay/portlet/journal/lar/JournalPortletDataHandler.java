@@ -196,7 +196,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		if (Validator.isNotNull(article.getTemplateId())) {
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				article.getGroupId(), article.getTemplateId(), true);
+				article.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				article.getTemplateId(), true);
 
 			articleElement.addAttribute(
 				"ddm-template-uuid", ddmTemplate.getUuid());
@@ -572,8 +574,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					article.getTemplateId());
 
 				if (Validator.isNotNull(newTemplateId)) {
-					existingDDMTemplate = DDMTemplateUtil.fetchByG_T(
-						portletDataContext.getScopeGroupId(), newTemplateId);
+					existingDDMTemplate = DDMTemplateUtil.fetchByG_C_T(
+						portletDataContext.getScopeGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						newTemplateId);
 				}
 
 				if (existingDDMTemplate == null) {

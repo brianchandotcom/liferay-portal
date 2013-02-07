@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
@@ -206,7 +208,9 @@ public class JournalContentPortletDataHandler
 			!defaultTemplateId.equals(preferenceTemplateId)) {
 
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				article.getGroupId(), preferenceTemplateId, true);
+				article.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				preferenceTemplateId, true);
 
 			String ddmTemplatePath =
 				JournalPortletDataHandler.getDDMTemplatePath(

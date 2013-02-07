@@ -133,7 +133,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertNotNull(
 			DDMTemplateLocalServiceUtil.fetchTemplate(
-				template.getGroupId(), template.getTemplateKey()));
+				template.getGroupId(), _classNameId,
+				template.getTemplateKey()));
 	}
 
 	@Test

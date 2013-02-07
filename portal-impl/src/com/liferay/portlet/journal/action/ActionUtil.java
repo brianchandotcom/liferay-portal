@@ -386,7 +386,8 @@ public class ActionUtil {
 
 		if (Validator.isNotNull(templateId)) {
 			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
-				groupId, templateId);
+				groupId, PortalUtil.getClassNameId(DDMStructure.class),
+				templateId);
 		}
 
 		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);

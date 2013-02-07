@@ -227,7 +227,7 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -257,7 +257,7 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -281,7 +281,7 @@ public interface DDMTemplateService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey,
+		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeGlobalTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

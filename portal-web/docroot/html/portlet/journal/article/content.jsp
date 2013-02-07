@@ -68,7 +68,7 @@ if ((ddmStructure == null) && Validator.isNotNull(templateId)) {
 	DDMTemplate ddmTemplate = null;
 
 	try {
-		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
+		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId, true);
 	}
 	catch (NoSuchTemplateException nste) {
 	}
@@ -694,7 +694,7 @@ if (Validator.isNotNull(content)) {
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>',
 
 						<%
-						DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, templateId);
+						DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId);
 						%>
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

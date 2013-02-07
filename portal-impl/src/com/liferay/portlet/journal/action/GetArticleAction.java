@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
@@ -149,7 +150,8 @@ public class GetArticleAction extends Action {
 
 			try {
 				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), templateId);
+					article.getGroupId(),
+					PortalUtil.getClassNameId(DDMStructure.class), templateId);
 
 				if (Validator.equals(
 						ddmTemplate.getLanguage(),

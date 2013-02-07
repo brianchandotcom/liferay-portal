@@ -268,11 +268,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         template
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate fetchTemplate(long groupId, String templateKey)
+	public DDMTemplate fetchTemplate(
+			long groupId, long classNameId, String templateKey)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-			groupId, templateKey);
+			groupId, classNameId, templateKey);
 
 		if (ddmTemplate != null) {
 			DDMTemplatePermission.check(
@@ -309,11 +310,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @throws PortalException if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate getTemplate(long groupId, String templateKey)
+	public DDMTemplate getTemplate(
+			long groupId, long classNameId, String templateKey)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-			groupId, templateKey);
+			groupId, classNameId, templateKey);
 
 		DDMTemplatePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
@@ -340,11 +342,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate getTemplate(
-			long groupId, String templateKey, boolean includeGlobalTemplates)
+			long groupId, long classNameId, String templateKey,
+			boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-			groupId, templateKey, includeGlobalTemplates);
+			groupId, classNameId, templateKey, includeGlobalTemplates);
 
 		DDMTemplatePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);

@@ -332,6 +332,8 @@ public class DDMTemplatePersistenceTest {
 
 		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
 			existingDDMTemplateModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingDDMTemplateModelImpl.getClassNameId(),
+			existingDDMTemplateModelImpl.getOriginalClassNameId());
 		Assert.assertTrue(Validator.equals(
 				existingDDMTemplateModelImpl.getTemplateKey(),
 				existingDDMTemplateModelImpl.getOriginalTemplateKey()));

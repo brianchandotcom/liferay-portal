@@ -30,7 +30,9 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
@@ -172,11 +174,14 @@ public class JournalContentPortletLayoutListener
 
 			try {
 				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-					scopeGroupId, article.getTemplateId());
+					scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class),
+					article.getTemplateId());
 			}
 			catch (NoSuchTemplateException nste) {
 				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-					group.getGroupId(), article.getTemplateId());
+					group.getGroupId(),
+					PortalUtil.getClassNameId(DDMStructure.class),
+					article.getTemplateId());
 			}
 
 			portletIds.addAll(getRuntimePortletIds(ddmTemplate.getScript()));

@@ -184,8 +184,8 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		validate(
-			groupId, templateKey, nameMap, script, smallImage, smallImageURL,
-			smallImageFile, smallImageBytes);
+			groupId, classNameId, templateKey, nameMap, script, smallImage,
+			smallImageURL, smallImageFile, smallImageBytes);
 
 		long templateId = counterLocalService.increment();
 
@@ -436,12 +436,14 @@ public class DDMTemplateLocalServiceImpl
 	 *         template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate fetchTemplate(long groupId, String templateKey)
+	public DDMTemplate fetchTemplate(
+			long groupId, long classNameId, String templateKey)
 		throws SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
 
-		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
+		return ddmTemplatePersistence.fetchByG_C_T(
+			groupId, classNameId, templateKey);
 	}
 
 	/**
@@ -464,13 +466,14 @@ public class DDMTemplateLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate fetchTemplate(
-			long groupId, String templateKey, boolean includeGlobalTemplates)
+			long groupId, long classNameId, String templateKey,
+			boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
 
-		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
-			groupId, templateKey);
+		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
+			groupId, classNameId, templateKey);
 
 		if ((template != null) || !includeGlobalTemplates) {
 			return template;
@@ -481,8 +484,8 @@ public class DDMTemplateLocalServiceImpl
 		Group companyGroup = groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
-		return ddmTemplatePersistence.fetchByG_T(
-			companyGroup.getGroupId(), templateKey);
+		return ddmTemplatePersistence.fetchByG_C_T(
+			companyGroup.getGroupId(), classNameId, templateKey);
 	}
 
 	/**
@@ -523,12 +526,14 @@ public class DDMTemplateLocalServiceImpl
 	 * @throws PortalException if a matching template could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public DDMTemplate getTemplate(long groupId, String templateKey)
+	public DDMTemplate getTemplate(
+			long groupId, long classNameId, String templateKey)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
 
-		return ddmTemplatePersistence.findByG_T(groupId, templateKey);
+		return ddmTemplatePersistence.findByG_C_T(
+			groupId, classNameId, templateKey);
 	}
 
 	/**
@@ -550,13 +555,14 @@ public class DDMTemplateLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMTemplate getTemplate(
-			long groupId, String templateKey, boolean includeGlobalTemplates)
+			long groupId, long classNameId, String templateKey,
+			boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
 
-		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
-			groupId, templateKey);
+		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
+			groupId, classNameId, templateKey);
 
 		if (template != null) {
 			return template;
@@ -572,8 +578,8 @@ public class DDMTemplateLocalServiceImpl
 		Group companyGroup = groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
-		return ddmTemplatePersistence.findByG_T(
-			companyGroup.getGroupId(), templateKey);
+		return ddmTemplatePersistence.findByG_C_T(
+			companyGroup.getGroupId(), classNameId, templateKey);
 	}
 
 	/**
@@ -1140,15 +1146,15 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, String templateKey, Map<Locale, String> nameMap,
-			String script, boolean smallImage, String smallImageURL,
-			File smallImageFile, byte[] smallImageBytes)
+			long groupId, long classNameId, String templateKey,
+			Map<Locale, String> nameMap, String script, boolean smallImage,
+			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
 		templateKey = templateKey.trim().toUpperCase();
 
-		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
-			groupId, templateKey);
+		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
+			groupId, classNameId, templateKey);
 
 		if (template != null) {
 			throw new TemplateDuplicateTemplateKeyException();

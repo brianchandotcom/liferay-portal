@@ -255,10 +255,12 @@ public class DDMTemplateServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap fetchTemplate(
-		long groupId, java.lang.String templateKey) throws RemoteException {
+		long groupId, long classNameId, java.lang.String templateKey)
+		throws RemoteException {
 		try {
 			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.fetchTemplate(groupId, templateKey);
+				DDMTemplateServiceUtil.fetchTemplate(groupId, classNameId,
+					templateKey);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -303,10 +305,12 @@ public class DDMTemplateServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap getTemplate(
-		long groupId, java.lang.String templateKey) throws RemoteException {
+		long groupId, long classNameId, java.lang.String templateKey)
+		throws RemoteException {
 		try {
 			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.getTemplate(groupId, templateKey);
+				DDMTemplateServiceUtil.getTemplate(groupId, classNameId,
+					templateKey);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -336,12 +340,12 @@ public class DDMTemplateServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap getTemplate(
-		long groupId, java.lang.String templateKey,
+		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeGlobalTemplates) throws RemoteException {
 		try {
 			com.liferay.portlet.dynamicdatamapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.getTemplate(groupId, templateKey,
-					includeGlobalTemplates);
+				DDMTemplateServiceUtil.getTemplate(groupId, classNameId,
+					templateKey, includeGlobalTemplates);
 
 			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}

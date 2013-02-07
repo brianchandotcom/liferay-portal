@@ -62,7 +62,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-			groupId, templateKey);
+			groupId, classNameId, templateKey);
 
 		if (ddmTemplate != null) {
 			return;
@@ -109,7 +109,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 				DDMTemplate ddmTemplate =
 					DDMTemplateLocalServiceUtil.fetchTemplate(
-						groupId, templateKey);
+						groupId, classNameId, templateKey);
 
 				if (ddmTemplate != null) {
 					continue;

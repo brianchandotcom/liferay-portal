@@ -37,6 +37,7 @@ import com.liferay.portlet.journal.FeedContentFieldException;
 import com.liferay.portlet.journal.FeedIdException;
 import com.liferay.portlet.journal.FeedNameException;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFeedConstants;
 import com.liferay.portlet.journal.service.base.JournalFeedLocalServiceBaseImpl;
@@ -338,7 +339,10 @@ public class JournalFeedLocalServiceImpl
 		else {
 			try {
 				DDMStructure ddmStructure =
-					ddmStructureLocalService.getStructure(groupId, structureId);
+					ddmStructureLocalService.getStructure(
+						groupId,
+						PortalUtil.getClassNameId(JournalArticle.class),
+						structureId);
 
 				Document document = SAXReaderUtil.read(ddmStructure.getXsd());
 

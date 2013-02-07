@@ -28,11 +28,13 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
@@ -145,11 +147,13 @@ public class EditFileEntryTypeAction extends PortletAction {
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.fetchStructure(
 						dlFileEntryType.getGroupId(),
+						PortalUtil.getClassNameId(DLFileEntry.class),
 						DLUtil.getDDMStructureKey(dlFileEntryType));
 
 				if (ddmStructure == null) {
 					ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 						dlFileEntryType.getGroupId(),
+						PortalUtil.getClassNameId(DLFileEntry.class),
 						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
 				}
 

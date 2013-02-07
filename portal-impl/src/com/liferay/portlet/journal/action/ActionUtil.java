@@ -181,7 +181,8 @@ public class ActionUtil {
 
 			try {
 				ddmStructure = DDMStructureServiceUtil.getStructure(
-					groupId, structureId);
+					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					structureId);
 			}
 			catch (NoSuchStructureException nsse1) {
 				if (groupId == themeDisplay.getCompanyGroupId()) {
@@ -190,7 +191,9 @@ public class ActionUtil {
 
 				try {
 					ddmStructure = DDMStructureServiceUtil.getStructure(
-						themeDisplay.getCompanyGroupId(), structureId);
+						themeDisplay.getCompanyGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						structureId);
 				}
 				catch (NoSuchStructureException nsse2) {
 					return;
@@ -346,13 +349,14 @@ public class ActionUtil {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
+		long classNameId = ParamUtil.getLong(request, "classNameId");
 		String structureId = ParamUtil.getString(request, "structureId");
 
 		DDMStructure ddmStructure = null;
 
 		if (Validator.isNotNull(structureId)) {
 			ddmStructure = DDMStructureServiceUtil.getStructure(
-				groupId, structureId);
+				groupId, classNameId, structureId);
 		}
 
 		request.setAttribute(WebKeys.JOURNAL_STRUCTURE, ddmStructure);

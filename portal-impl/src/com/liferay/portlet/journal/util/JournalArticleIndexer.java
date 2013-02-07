@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -280,7 +281,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (Validator.isNotNull(article.getStructureId())) {
 			try {
 				ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-					article.getGroupId(), article.getStructureId(), true);
+					article.getGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class),
+					article.getStructureId(), true);
 			}
 			catch (NoSuchStructureException nsse) {
 			}

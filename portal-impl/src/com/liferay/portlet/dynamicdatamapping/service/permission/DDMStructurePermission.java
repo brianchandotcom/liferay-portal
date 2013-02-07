@@ -37,21 +37,24 @@ public class DDMStructurePermission {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long structureId,
-			String actionId)
+			PermissionChecker permissionChecker, long groupId, long classNameId,
+			String structureKey, String actionId)
 		throws PortalException, SystemException {
 
-		if (!contains(permissionChecker, structureId, actionId)) {
+		if (!contains(
+				permissionChecker, groupId, classNameId, structureKey,
+				actionId)) {
+
 			throw new PrincipalException();
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long groupId,
-			String structureKey, String actionId)
+			PermissionChecker permissionChecker, long structureId,
+			String actionId)
 		throws PortalException, SystemException {
 
-		if (!contains(permissionChecker, groupId, structureKey, actionId)) {
+		if (!contains(permissionChecker, structureId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -73,23 +76,23 @@ public class DDMStructurePermission {
 	}
 
 	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, long classNameId,
+			String structureKey, String actionId)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			groupId, classNameId, structureKey);
+
+		return contains(permissionChecker, structure, actionId);
+	}
+
+	public static boolean contains(
 			PermissionChecker permissionChecker, long structureId,
 			String actionId)
 		throws PortalException, SystemException {
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			structureId);
-
-		return contains(permissionChecker, structure, actionId);
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			String structureKey, String actionId)
-		throws PortalException, SystemException {
-
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-			groupId, structureKey);
 
 		return contains(permissionChecker, structure, actionId);
 	}

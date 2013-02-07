@@ -312,6 +312,8 @@ public class DDMStructurePersistenceTest {
 
 		Assert.assertEquals(existingDDMStructureModelImpl.getGroupId(),
 			existingDDMStructureModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingDDMStructureModelImpl.getClassNameId(),
+			existingDDMStructureModelImpl.getOriginalClassNameId());
 		Assert.assertTrue(Validator.equals(
 				existingDDMStructureModelImpl.getStructureKey(),
 				existingDDMStructureModelImpl.getOriginalStructureKey()));

@@ -145,11 +145,13 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getGroupId(),
+			PortalUtil.getClassNameId(DLFileEntry.class),
 			DLUtil.getDDMStructureKey(dlFileEntryType));
 
 		if (ddmStructure == null) {
 			ddmStructure = ddmStructureLocalService.fetchStructure(
 				dlFileEntryType.getGroupId(),
+				PortalUtil.getClassNameId(DLFileEntry.class),
 				DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
 		}
 
@@ -464,7 +466,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws SystemException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			groupId, DLUtil.getDeprecatedDDMStructureKey(fileEntryTypeId));
+			groupId, PortalUtil.getClassNameId(DLFileEntry.class),
+			DLUtil.getDeprecatedDDMStructureKey(fileEntryTypeId));
 
 		if (ddmStructure != null) {
 			ddmStructure.setStructureKey(
@@ -530,7 +533,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		String xsd = ParamUtil.getString(serviceContext, "xsd");
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			groupId, ddmStructureKey);
+			groupId, PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+			ddmStructureKey);
 
 		if ((ddmStructure != null) && Validator.isNull(xsd)) {
 			xsd = ddmStructure.getXsd();

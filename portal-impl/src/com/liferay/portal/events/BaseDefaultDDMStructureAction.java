@@ -65,7 +65,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, ddmStructureKey);
+					groupId, classNameId, ddmStructureKey);
 
 			if (ddmStructure != null) {
 				continue;

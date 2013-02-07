@@ -50,6 +50,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -208,7 +209,9 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		DDMStructure tikaRawMetadataStructure =
 			DDMStructureLocalServiceUtil.fetchStructure(
-				group.getGroupId(), "TikaRawMetadata");
+				group.getGroupId(),
+				PortalUtil.getClassNameId(DLFileEntry.class),
+				"TikaRawMetadata");
 
 		if (tikaRawMetadataStructure != null) {
 			ddmStructuresSet.add(tikaRawMetadataStructure);

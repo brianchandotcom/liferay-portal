@@ -59,20 +59,6 @@ public class SocialActivityGroupLocalServiceImpl
 		socialActivityLocalService.updateSocialActivity(activity);
 	}
 
-	public void addGroupActivity(
-			SocialActivityGroup activityGroup, SocialActivity activity)
-		throws SystemException {
-
-		activityGroup.setModifiedDate(activity.getCreateDate());
-
-		socialActivityGroupLocalService.updateSocialActivityGroup(
-			activityGroup);
-
-		activity.setActivityGroupId(activityGroup.getActivityGroupId());
-
-		socialActivityLocalService.updateSocialActivity(activity);
-	}
-
 	public List<SocialActivityGroup> getActivityGroups(
 			long classNameId, long classPK, int start, int end)
 		throws SystemException {
@@ -106,6 +92,20 @@ public class SocialActivityGroupLocalServiceImpl
 
 		return socialActivityGroupPersistence.findByG_U_C_C_T(
 			groupId, userId, classNameId, classPK, type, start, end);
+	}
+
+	public void updateActivityGroup(
+			SocialActivityGroup activityGroup, SocialActivity activity)
+		throws SystemException {
+
+		activityGroup.setModifiedDate(activity.getCreateDate());
+
+		socialActivityGroupLocalService.updateSocialActivityGroup(
+			activityGroup);
+
+		activity.setActivityGroupId(activityGroup.getActivityGroupId());
+
+		socialActivityLocalService.updateSocialActivity(activity);
 	}
 
 }

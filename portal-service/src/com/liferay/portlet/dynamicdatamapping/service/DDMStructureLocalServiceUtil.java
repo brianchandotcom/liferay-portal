@@ -510,15 +510,17 @@ public class DDMStructureLocalServiceUtil {
 	* </p>
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
 	* @param structureKey the unique string identifying the structure
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void deleteStructure(long groupId,
+	public static void deleteStructure(long groupId, long classNameId,
 		java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteStructure(groupId, structureKey);
+		getService().deleteStructure(groupId, classNameId, structureKey);
 	}
 
 	/**
@@ -555,23 +557,25 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* Returns the structure matching the structure key and group.
+	* Returns the structure matching the structure key, classNameId and group.
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
 	* @param structureKey the unique string identifying the structure
 	* @return the matching structure, or <code>null</code> if a matching
 	structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
-		long groupId, java.lang.String structureKey)
+		long groupId, long classNameId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchStructure(groupId, structureKey);
+		return getService().fetchStructure(groupId, classNameId, structureKey);
 	}
 
 	/**
-	* Returns the structure matching the structure key and group, optionally in
-	* the global scope.
+	* Returns the structure matching the structure key, classNameId and group,
+	* optionally in the global scope.
 	*
 	* <p>
 	* This method first searches in the group. If the structure is still not
@@ -580,6 +584,8 @@ public class DDMStructureLocalServiceUtil {
 	* </p>
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
 	* @param structureKey the unique string identifying the structure
 	* @param includeGlobalStructures whether to include the global scope in
 	the search
@@ -589,12 +595,12 @@ public class DDMStructureLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
-		long groupId, java.lang.String structureKey,
+		long groupId, long classNameId, java.lang.String structureKey,
 		boolean includeGlobalStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .fetchStructure(groupId, structureKey,
+				   .fetchStructure(groupId, classNameId, structureKey,
 			includeGlobalStructures);
 	}
 
@@ -735,24 +741,26 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* Returns the structure matching the structure key and group.
+	* Returns the structure matching the structure key, classNameId and group.
 	*
 	* @param groupId the primary key of the structure's group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
 	* @param structureKey the unique string identifying the structure
 	* @return the matching structure
 	* @throws PortalException if a matching structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
-		long groupId, java.lang.String structureKey)
+		long groupId, long classNameId, java.lang.String structureKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getStructure(groupId, structureKey);
+		return getService().getStructure(groupId, classNameId, structureKey);
 	}
 
 	/**
-	* Returns the structure matching the structure key and group, optionally in
-	* the global scope.
+	* Returns the structure matching the structure key, classNameId and group,
+	* optionally in the global scope.
 	*
 	* <p>
 	* This method first searches in the group. If the structure is still not
@@ -761,6 +769,8 @@ public class DDMStructureLocalServiceUtil {
 	* </p>
 	*
 	* @param groupId the primary key of the structure's group
+	* @param classNameId the primary key of the class name for the structure's
+	related model
 	* @param structureKey the unique string identifying the structure
 	* @param includeGlobalStructures whether to include the global scope in
 	the search
@@ -769,12 +779,13 @@ public class DDMStructureLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
-		long groupId, java.lang.String structureKey,
+		long groupId, long classNameId, java.lang.String structureKey,
 		boolean includeGlobalStructures)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getStructure(groupId, structureKey, includeGlobalStructures);
+				   .getStructure(groupId, classNameId, structureKey,
+			includeGlobalStructures);
 	}
 
 	/**
@@ -1131,6 +1142,40 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
+	* Updates the structure matching the structure key, classNameId and group,
+	* replacing its old parent structure, name map, description map, and XSD
+	* with new ones.
+	*
+	* @param groupId the primary key of the group
+	* @param parentStructureId the primary key of the new parent structure
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @param structureKey unique string identifying the structure
+	* @param nameMap the structure's new locales and localized names
+	* @param descriptionMap the structure's new locales and localized
+	descriptions
+	* @param xsd the structure's new XML schema definition
+	* @param serviceContext the service context to be applied. Can set the
+	modification date
+	* @return the updated structure
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
+		long groupId, long parentStructureId, long classNameId,
+		java.lang.String structureKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStructure(groupId, parentStructureId, classNameId,
+			structureKey, nameMap, descriptionMap, xsd, serviceContext);
+	}
+
+	/**
 	* Updates the structure replacing its old parent structure, name map,
 	* description map, and XSD with new ones.
 	*
@@ -1157,36 +1202,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService()
 				   .updateStructure(structureId, parentStructureId, nameMap,
 			descriptionMap, xsd, serviceContext);
-	}
-
-	/**
-	* Updates the structure matching the structure key and group, replacing its
-	* old parent structure, name map, description map, and XSD with new ones.
-	*
-	* @param groupId the primary key of the group
-	* @param parentStructureId the primary key of the new parent structure
-	* @param structureKey unique string identifying the structure
-	* @param nameMap the structure's new locales and localized names
-	* @param descriptionMap the structure's new locales and localized
-	descriptions
-	* @param xsd the structure's new XML schema definition
-	* @param serviceContext the service context to be applied. Can set the
-	modification date
-	* @return the updated structure
-	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
-		long groupId, long parentStructureId, java.lang.String structureKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String xsd,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateStructure(groupId, parentStructureId, structureKey,
-			nameMap, descriptionMap, xsd, serviceContext);
 	}
 
 	public static DDMStructureLocalService getService() {

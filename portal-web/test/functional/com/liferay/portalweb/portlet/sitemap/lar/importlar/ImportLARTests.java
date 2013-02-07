@@ -16,8 +16,10 @@ package com.liferay.portalweb.portlet.sitemap.lar.importlar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.addportletchildpage.AddChildPageTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPageSMTest;
 import com.liferay.portalweb.portlet.sitemap.portlet.addportletsm.AddPortletSMTest;
+import com.liferay.portalweb.portlet.sitemap.portlet.configureportletrootlayout.ConfigurePortletSMRootLayoutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +33,7 @@ public class ImportLARTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageSMTest.class);
 		testSuite.addTestSuite(AddPortletSMTest.class);
 		testSuite.addTestSuite(AddChildPageTest.class);
-		testSuite.addTestSuite(ConfigurePortletRootLayoutTest.class);
+		testSuite.addTestSuite(ConfigurePortletSMRootLayoutTest.class);
 		testSuite.addTestSuite(ImportLARTest.class);
 		testSuite.addTestSuite(AssertImportLARTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

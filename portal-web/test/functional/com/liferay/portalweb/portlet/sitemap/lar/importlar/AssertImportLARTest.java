@@ -29,10 +29,10 @@ public class AssertImportLARTest extends BaseTestCase {
 			RuntimeVariables.replace("Site Map Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Welcome"),
-			selenium.getText("//section/div/div/div/ul/li[1]/a"));
+			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Page"),
-			selenium.getText("//section/div/div/div/ul/li[2]/a"));
+			selenium.getText("xPath=(//div[@class='portlet-body']/ul/li/a)[2]"));
 		assertEquals(RuntimeVariables.replace("Site Map Test Child Page"),
-			selenium.getText("//div/ul/li[2]/ul/li/a"));
+			selenium.getText("//div[@class='portlet-body']/ul/li/ul/li/a"));
 	}
 }

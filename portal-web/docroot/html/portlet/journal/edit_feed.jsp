@@ -68,7 +68,7 @@ if ((ddmStructure == null) && Validator.isNotNull(templateId)) {
 	DDMTemplate ddmTemplate = null;
 
 	try {
-		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, templateId, true);
+		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId, true);
 	}
 	catch (NoSuchTemplateException nste) {
 	}

@@ -47,12 +47,12 @@ public class AddTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='toggleDueDate']",
 			RuntimeVariables.replace("Add Due Date"));
 		selenium.waitForVisible(
-			"//select[@id='_1_WAR_tasksportlet_dueDateMonth']");
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateMonth']",
+			"//select[@id='_1_WAR_tasksportlet_duedatemonth']");
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedatemonth']",
 			RuntimeVariables.replace("label=March"));
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateDay']",
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedateday']",
 			RuntimeVariables.replace("label=16"));
-		selenium.select("//select[@id='_1_WAR_tasksportlet_dueDateYear']",
+		selenium.select("//select[@id='_1_WAR_tasksportlet_duedateyear']",
 			RuntimeVariables.replace("label=2016"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

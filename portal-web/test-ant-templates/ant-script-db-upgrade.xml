@@ -4,8 +4,8 @@
 	<import file="../../build-test-db-upgrade.xml" />
 
 	<propertycopy name="db-upgrade.build" from="db-upgrade.${test.ant.script.version}.build" silent="true" />
+	<propertycopy name="db-upgrade.bundled.tomcat.dir.name" from="db-upgrade.${test.ant.script.version}.bundled.tomcat.dir.name" silent="true" />
 	<propertycopy name="db-upgrade.file.name" from="db-upgrade.${test.ant.script.version}.file.name" silent="true" />
-	<propertycopy name="db-upgrade.tomcat.folder.dir" from="db-upgrade.${test.ant.script.version}.tomcat.folder.dir" silent="true" />
 
 	<target name="test-${test.ant.script.command}-${test.ant.script.version}-tomcat-db2-firefox">
 		<antcall target="print-scm-revision" />
@@ -27,14 +27,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-db2">
@@ -68,14 +68,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-mysql">
@@ -112,14 +112,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-oracle-10">
@@ -160,14 +160,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-oracle-11">
@@ -208,14 +208,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-8.4">
@@ -256,14 +256,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-9.0">
@@ -304,14 +304,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-sql-server-2005">
@@ -352,14 +352,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2008-common">
@@ -400,14 +400,14 @@
 		</antcall>
 
 		<antcall target="run-versioned-upgrade-test">
-			<param name="file.name" value="${db-upgrade.file.name}" />
-			<param name="legacy.theme.ids" value="classic,controlpanel" />
-			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			<param name="bundled.tomcat.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="file.name" value="${db-upgrade.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
-			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
 
 		<antcall target="prepare-versioned-sybase">

@@ -3,9 +3,9 @@
 <project name="portal-test-${test.ant.script.command}" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-test.xml" />
 
+	<propertycopy name="db-upgrade.bundled.tomcat.dir.name" from="db-upgrade.$${lp.version}.bundled.tomcat.dir.name" silent="true" />
 	<propertycopy name="db-upgrade.file.name" from="db-upgrade.$${lp.version}.file.name" silent="true" />
 	<propertycopy name="db-upgrade.plugins.dir" from="db-upgrade.$${lp.version}.plugins.dir" silent="true" />
-	<propertycopy name="db-upgrade.tomcat.folder.dir" from="db-upgrade.$${lp.version}.tomcat.folder.dir" silent="true" />
 
 	<if>
 		<not>
@@ -39,6 +39,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
+			<property name="bundled.tomcat.dir.name" value="$${db-upgrade.bundled.tomcat.dir.name}" />
 			<property name="file.name" value="$${db-upgrade.file.name}" />
 			<property name="legacy.theme.ids" value="classic,controlpanel" />
 			<property name="lp.plugins.dir" value="$${db-upgrade.plugins.dir}" />
@@ -47,7 +48,6 @@
 			<property name="skip.rebuild-database" value="true" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
-			<property name="tomcat.folder.dir" value="$${db-upgrade.tomcat.folder.dir}" />
 		</ant>
 	</target>
 
@@ -81,6 +81,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
+			<property name="bundled.tomcat.dir.name" value="$${db-upgrade.bundled.tomcat.dir.name}" />
 			<property name="file.name" value="$${db-upgrade.file.name}" />
 			<property name="legacy.theme.ids" value="classic,controlpanel" />
 			<property name="lp.plugins.dir" value="$${db-upgrade.plugins.dir}" />
@@ -89,7 +90,6 @@
 			<property name="skip.rebuild-database" value="true" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
-			<property name="tomcat.folder.dir" value="$${db-upgrade.tomcat.folder.dir}" />
 		</ant>
 
 		<antcall target="stop-vm">

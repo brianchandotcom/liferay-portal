@@ -157,7 +157,7 @@ web.server.display.node=true</echo>
 
 		<unzip src="${app.server.parent.dir}/${file.name}" dest="${app.server.parent.dir}" />
 
-		<echo file="app.server.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/${tomcat.folder.dir}</echo>
+		<echo file="app.server.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/${bundled.tomcat.dir.name}</echo>
 
 		<antcall target="revert-test-properties" />
 

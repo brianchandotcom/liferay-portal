@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,7 +100,6 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -923,14 +923,14 @@ public class LayoutImporter {
 		Element structureElement = layoutElement.element("structure");
 
 		if (structureElement != null) {
-			DDMPortletDataHandler.importStructure(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, structureElement);
 		}
 
 		Element templateElement = layoutElement.element("template");
 
 		if (templateElement != null) {
-			DDMPortletDataHandler.importTemplate(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, templateElement);
 		}
 

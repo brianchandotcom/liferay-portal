@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -247,14 +247,14 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		List<Element> structureElements = rootElement.elements("structure");
 
 		for (Element structureElement : structureElements) {
-			DDMPortletDataHandler.importStructure(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, structureElement);
 		}
 
 		List<Element> templateElements = rootElement.elements("template");
 
 		for (Element templateElement : templateElements) {
-			DDMPortletDataHandler.importTemplate(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, templateElement);
 		}
 

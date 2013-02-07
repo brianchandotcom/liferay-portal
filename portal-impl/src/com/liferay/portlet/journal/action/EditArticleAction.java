@@ -781,6 +781,27 @@ public class EditArticleAction extends PortletAction {
 					}
 				}
 			}
+			else {
+				if (curArticle.isTemplateDriven()) {
+					DDMStructure ddmStructure =
+						DDMStructureLocalServiceUtil.getStructure(
+							groupId,
+							PortalUtil.getClassNameId(JournalArticle.class),
+							structureId);
+
+					Fields newFields = DDMUtil.getFields(
+						ddmStructure.getStructureId(), serviceContext);
+
+					Fields existingFields = JournalConverterUtil.getDDMFields(
+						ddmStructure, curArticle.getContent());
+
+					Fields mergedFields = DDMUtil.mergeFields(
+						newFields, existingFields);
+
+					content = JournalConverterUtil.getXML(
+						ddmStructure, mergedFields);
+				}
+			}
 
 			// Update article
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -61,6 +62,10 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 			trashEntry.getClassPK());
 
 		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
 
 		WikiNode duplicateNode = WikiNodeLocalServiceUtil.fetchWikiNode(
 			node.getGroupId(), originalTitle);

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -63,6 +64,10 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		}
 
 		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
 
 		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
 			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);

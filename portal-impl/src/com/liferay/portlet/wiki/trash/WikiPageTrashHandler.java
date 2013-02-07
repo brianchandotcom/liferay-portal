@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -69,6 +70,10 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 
 		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
 
 		WikiPageResource pageResource =
 			WikiPageResourceLocalServiceUtil.fetchPageResource(

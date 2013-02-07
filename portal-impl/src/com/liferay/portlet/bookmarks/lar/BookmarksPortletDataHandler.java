@@ -95,9 +95,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.bookmarks",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("bookmarks-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -155,7 +153,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 		entriesActionableDynamicQuery.performActions();
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

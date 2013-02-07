@@ -485,9 +485,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.addPermissions(
 			"com.liferay.portlet.wiki", portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("wiki-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -502,7 +500,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			exportNode(portletDataContext, nodesElement, pagesElement, node);
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

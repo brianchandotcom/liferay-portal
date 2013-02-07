@@ -1033,9 +1033,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.dynamicdatamapping",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("ddm-data");
+		Element rootElement = addExportRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -1071,7 +1069,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

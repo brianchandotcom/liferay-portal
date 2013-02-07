@@ -52,13 +52,11 @@ public class PortletDisplayTemplatePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("portlet-display-templates");
+		Element rootElement = addExportRootElement();
 
 		exportPortletDisplayTemplates(portletDataContext, rootElement);
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

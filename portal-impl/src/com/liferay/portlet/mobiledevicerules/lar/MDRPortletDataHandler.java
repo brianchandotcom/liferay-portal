@@ -100,9 +100,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.mobiledevicerules",
 			portletDataContext.getScopeGroupId());
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("mobiledevicerules-data");
+		Element rootElement = addExportRootElement();
 
 		Element ruleGroupsElement = rootElement.addElement("rule-groups");
 
@@ -126,7 +124,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 				ruleGroupInstance);
 		}
 
-		return document.formattedString();
+		return rootElement.formattedString();
 	}
 
 	@Override

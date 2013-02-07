@@ -46,7 +46,7 @@ public class ViewImportLARCPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Test Entry"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("This is a test entry."),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 		assertEquals(RuntimeVariables.replace("This is a test entry comment."),
 			selenium.getText("//div[@Class='lfr-discussion-message']"));
 	}

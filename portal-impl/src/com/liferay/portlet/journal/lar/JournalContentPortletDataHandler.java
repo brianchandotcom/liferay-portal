@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
@@ -208,15 +208,14 @@ public class JournalContentPortletDataHandler
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				article.getGroupId(), preferenceTemplateId, true);
 
-			String ddmTemplatePath =
-				JournalPortletDataHandler.getDDMTemplatePath(
-					portletDataContext, ddmTemplate);
-
-			DDMPortletDataHandler.exportTemplate(
-				portletDataContext, rootElement, dlFileEntryTypesElement,
-				dlFoldersElement, dlFilesElement, dlFileRanksElement,
-				dlRepositoriesElement, dlRepositoryEntriesElement,
-				ddmTemplatePath, ddmTemplate);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext,
+				new Element[] {
+					rootElement, dlFileEntryTypesElement, dlFoldersElement,
+					dlFilesElement, dlFileRanksElement, dlRepositoriesElement,
+					dlRepositoryEntriesElement
+				},
+				ddmTemplate);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
@@ -258,7 +257,7 @@ public class JournalContentPortletDataHandler
 		Element structureElement = rootElement.element("structure");
 
 		if (structureElement != null) {
-			DDMPortletDataHandler.importStructure(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, structureElement);
 		}
 
@@ -266,7 +265,7 @@ public class JournalContentPortletDataHandler
 
 		if (templateElements != null) {
 			for (Element templateElement : templateElements) {
-				DDMPortletDataHandler.importTemplate(
+				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, templateElement);
 			}
 		}

@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatalists.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -23,7 +24,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetUtil;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
@@ -60,7 +60,7 @@ public class DDLRecordSetStagedModelDataHandler
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		DDMPortletDataHandler.exportStructure(
+		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, ddmStructuresElement, ddmStructure);
 
 		Element ddmTemplatesElement = recordSetElement.addElement(
@@ -69,7 +69,7 @@ public class DDLRecordSetStagedModelDataHandler
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			DDMPortletDataHandler.exportTemplate(
+			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, ddmTemplatesElement, ddmTemplate);
 		}
 	}
@@ -150,7 +150,7 @@ public class DDLRecordSetStagedModelDataHandler
 			ddmStructureReferencesElement.elements("structure");
 
 		for (Element ddmStructureElement : ddmStructureElements) {
-			DDMPortletDataHandler.importStructure(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, ddmStructureElement);
 		}
 	}
@@ -164,7 +164,7 @@ public class DDLRecordSetStagedModelDataHandler
 			ddmTemplateReferencesElement.elements("template");
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
-			DDMPortletDataHandler.importTemplate(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, ddmTemplateElement);
 		}
 	}

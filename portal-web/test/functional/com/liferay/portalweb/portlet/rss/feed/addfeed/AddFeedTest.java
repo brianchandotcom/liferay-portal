@@ -25,26 +25,32 @@ public class AddFeedTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=RSS Test Page");
 		selenium.clickAt("link=RSS Test Page",
 			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
-		selenium.waitForVisible("//div[2]/span/span/button[1]");
-		selenium.click("//div[2]/span/span/button[1]");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//button[contains(@class,'add-row')]/span");
+		selenium.click("//button[contains(@class,'add-row')]/span");
 		selenium.waitForVisible("//input[@id='_86_url3']");
 		selenium.type("//input[@id='_86_url3']",
-			RuntimeVariables.replace("http://feeds.digg.com/digg/popular.rss"));
+			RuntimeVariables.replace("http://digg.com/rss/topstories.xml"));
 		selenium.select("//select[@id='_86_entriesPerFeed']",
 			RuntimeVariables.replace("4"));
 		selenium.clickAt("//input[@value='Save']",
@@ -53,13 +59,15 @@ public class AddFeedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=RSS Test Page");
 		selenium.clickAt("link=RSS Test Page",
 			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//a[@href='http://feeds.digg.com']");
-		assertEquals(RuntimeVariables.replace("Stories(Opens New Window)"),
-			selenium.getText("//a[@href='http://feeds.digg.com']"));
+		selenium.waitForVisible(
+			"//a[@href='http://digg.com/rss/topstories.xml']");
+		assertEquals(RuntimeVariables.replace(
+				"Digg Top Stories(Opens New Window)"),
+			selenium.getText("//a[@href='http://digg.com/rss/topstories.xml']"));
 	}
 }

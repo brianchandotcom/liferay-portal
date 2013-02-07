@@ -14,16 +14,16 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=RSS Test Page</td>
 	<td>RSS Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='portlet-content']/div/div/p</td>
 	<td>WC WebContent Content</td>
@@ -34,49 +34,54 @@
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//input[@id='_86_removeButton'])[2]</td>
-	<td>Remove</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>RSS - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//input[@id='_86_removeButton'])[2]</td>
+	<td>Remove Footer Web Content</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@id='_86_removeButton'])[2]</td>
-	<td>Remove</td>
+	<td>Remove Footer Web Content</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -89,8 +94,13 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
+	<td>assertTextNotPresent</td>
+	<td>WC WebContent Title</td>
+	<td></td>
+</tr>
+<tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,9 +109,19 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -109,19 +129,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=RSS Test Page</td>
-	<td>RSS Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=RSS Test Page</td>
 	<td>RSS Test Page</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

@@ -48,9 +48,9 @@ public class AddPortletRSS2Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='RSS']/p/a");
 		selenium.clickAt("//li[@title='RSS']/p/a",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//section");
-		assertTrue(selenium.isVisible("//section"));
-		selenium.waitForVisible("//div[2]/div/section");
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 	}
 }

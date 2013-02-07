@@ -30,7 +30,7 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
-				"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
+				"//nav[@id='breadcrumbs']/ul/li[@class='only']/span/a"));
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div[@class='portlet-body']/ul/li[@class='first']/span/a"));

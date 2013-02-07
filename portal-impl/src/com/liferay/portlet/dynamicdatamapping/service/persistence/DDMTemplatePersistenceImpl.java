@@ -5172,264 +5172,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 = "ddmTemplate.classNameId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_T",
-			new String[] { Long.class.getName(), String.class.getName() },
-			DDMTemplateModelImpl.GROUPID_COLUMN_BITMASK |
-			DDMTemplateModelImpl.TEMPLATEKEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the d d m template where groupId = &#63; and templateKey = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param templateKey the template key
-	 * @return the matching d d m template
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate findByG_T(long groupId, String templateKey)
-		throws NoSuchTemplateException, SystemException {
-		DDMTemplate ddmTemplate = fetchByG_T(groupId, templateKey);
-
-		if (ddmTemplate == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", templateKey=");
-			msg.append(templateKey);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchTemplateException(msg.toString());
-		}
-
-		return ddmTemplate;
-	}
-
-	/**
-	 * Returns the d d m template where groupId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param templateKey the template key
-	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate fetchByG_T(long groupId, String templateKey)
-		throws SystemException {
-		return fetchByG_T(groupId, templateKey, true);
-	}
-
-	/**
-	 * Returns the d d m template where groupId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param templateKey the template key
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate fetchByG_T(long groupId, String templateKey,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, templateKey };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_T,
-					finderArgs, this);
-		}
-
-		if (result instanceof DDMTemplate) {
-			DDMTemplate ddmTemplate = (DDMTemplate)result;
-
-			if ((groupId != ddmTemplate.getGroupId()) ||
-					!Validator.equals(templateKey, ddmTemplate.getTemplateKey())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-			boolean bindTemplateKey = false;
-
-			if (templateKey == null) {
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_1);
-			}
-			else if (templateKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_3);
-			}
-			else {
-				bindTemplateKey = true;
-
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindTemplateKey) {
-					qPos.add(templateKey);
-				}
-
-				List<DDMTemplate> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T,
-						finderArgs, list);
-				}
-				else {
-					DDMTemplate ddmTemplate = list.get(0);
-
-					result = ddmTemplate;
-
-					cacheResult(ddmTemplate);
-
-					if ((ddmTemplate.getGroupId() != groupId) ||
-							(ddmTemplate.getTemplateKey() == null) ||
-							!ddmTemplate.getTemplateKey().equals(templateKey)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T,
-							finderArgs, ddmTemplate);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_T,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DDMTemplate)result;
-		}
-	}
-
-	/**
-	 * Removes the d d m template where groupId = &#63; and templateKey = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param templateKey the template key
-	 * @return the d d m template that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMTemplate removeByG_T(long groupId, String templateKey)
-		throws NoSuchTemplateException, SystemException {
-		DDMTemplate ddmTemplate = findByG_T(groupId, templateKey);
-
-		return remove(ddmTemplate);
-	}
-
-	/**
-	 * Returns the number of d d m templates where groupId = &#63; and templateKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param templateKey the template key
-	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int countByG_T(long groupId, String templateKey)
-		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T;
-
-		Object[] finderArgs = new Object[] { groupId, templateKey };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_T_GROUPID_2);
-
-			boolean bindTemplateKey = false;
-
-			if (templateKey == null) {
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_1);
-			}
-			else if (templateKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_3);
-			}
-			else {
-				bindTemplateKey = true;
-
-				query.append(_FINDER_COLUMN_G_T_TEMPLATEKEY_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindTemplateKey) {
-					qPos.add(templateKey);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_T_TEMPLATEKEY_1 = "ddmTemplate.templateKey IS NULL";
-	private static final String _FINDER_COLUMN_G_T_TEMPLATEKEY_2 = "ddmTemplate.templateKey = ?";
-	private static final String _FINDER_COLUMN_G_T_TEMPLATEKEY_3 = "(ddmTemplate.templateKey IS NULL OR ddmTemplate.templateKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
@@ -6377,6 +6119,291 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_CLASSPK_2 = "ddmTemplate.classPK = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			DDMTemplateModelImpl.GROUPID_COLUMN_BITMASK |
+			DDMTemplateModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			DDMTemplateModelImpl.TEMPLATEKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param templateKey the template key
+	 * @return the matching d d m template
+	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate findByG_C_T(long groupId, long classNameId,
+		String templateKey) throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = fetchByG_C_T(groupId, classNameId, templateKey);
+
+		if (ddmTemplate == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", templateKey=");
+			msg.append(templateKey);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTemplateException(msg.toString());
+		}
+
+		return ddmTemplate;
+	}
+
+	/**
+	 * Returns the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param templateKey the template key
+	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate fetchByG_C_T(long groupId, long classNameId,
+		String templateKey) throws SystemException {
+		return fetchByG_C_T(groupId, classNameId, templateKey, true);
+	}
+
+	/**
+	 * Returns the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param templateKey the template key
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate fetchByG_C_T(long groupId, long classNameId,
+		String templateKey, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { groupId, classNameId, templateKey };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_C_T,
+					finderArgs, this);
+		}
+
+		if (result instanceof DDMTemplate) {
+			DDMTemplate ddmTemplate = (DDMTemplate)result;
+
+			if ((groupId != ddmTemplate.getGroupId()) ||
+					(classNameId != ddmTemplate.getClassNameId()) ||
+					!Validator.equals(templateKey, ddmTemplate.getTemplateKey())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_DDMTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_T_CLASSNAMEID_2);
+
+			boolean bindTemplateKey = false;
+
+			if (templateKey == null) {
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_1);
+			}
+			else if (templateKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_3);
+			}
+			else {
+				bindTemplateKey = true;
+
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindTemplateKey) {
+					qPos.add(templateKey);
+				}
+
+				List<DDMTemplate> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T,
+						finderArgs, list);
+				}
+				else {
+					DDMTemplate ddmTemplate = list.get(0);
+
+					result = ddmTemplate;
+
+					cacheResult(ddmTemplate);
+
+					if ((ddmTemplate.getGroupId() != groupId) ||
+							(ddmTemplate.getClassNameId() != classNameId) ||
+							(ddmTemplate.getTemplateKey() == null) ||
+							!ddmTemplate.getTemplateKey().equals(templateKey)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T,
+							finderArgs, ddmTemplate);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DDMTemplate)result;
+		}
+	}
+
+	/**
+	 * Removes the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param templateKey the template key
+	 * @return the d d m template that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMTemplate removeByG_C_T(long groupId, long classNameId,
+		String templateKey) throws NoSuchTemplateException, SystemException {
+		DDMTemplate ddmTemplate = findByG_C_T(groupId, classNameId, templateKey);
+
+		return remove(ddmTemplate);
+	}
+
+	/**
+	 * Returns the number of d d m templates where groupId = &#63; and classNameId = &#63; and templateKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param templateKey the template key
+	 * @return the number of matching d d m templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_T(long groupId, long classNameId, String templateKey)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_T;
+
+		Object[] finderArgs = new Object[] { groupId, classNameId, templateKey };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_DDMTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_T_CLASSNAMEID_2);
+
+			boolean bindTemplateKey = false;
+
+			if (templateKey == null) {
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_1);
+			}
+			else if (templateKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_3);
+			}
+			else {
+				bindTemplateKey = true;
+
+				query.append(_FINDER_COLUMN_G_C_T_TEMPLATEKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindTemplateKey) {
+					qPos.add(templateKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_T_GROUPID_2 = "ddmTemplate.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_T_CLASSNAMEID_2 = "ddmTemplate.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_1 = "ddmTemplate.templateKey IS NULL";
+	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_2 = "ddmTemplate.templateKey = ?";
+	private static final String _FINDER_COLUMN_G_C_T_TEMPLATEKEY_3 = "(ddmTemplate.templateKey IS NULL OR ddmTemplate.templateKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_T = new FinderPath(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateModelImpl.FINDER_CACHE_ENABLED, DDMTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
@@ -9317,9 +9344,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			new Object[] { ddmTemplate.getUuid(), ddmTemplate.getGroupId() },
 			ddmTemplate);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T,
-			new Object[] { ddmTemplate.getGroupId(), ddmTemplate.getTemplateKey() },
-			ddmTemplate);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T,
+			new Object[] {
+				ddmTemplate.getGroupId(), ddmTemplate.getClassNameId(),
+				ddmTemplate.getTemplateKey()
+			}, ddmTemplate);
 
 		ddmTemplate.resetOriginalValues();
 	}
@@ -9405,12 +9434,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				ddmTemplate);
 
 			args = new Object[] {
-					ddmTemplate.getGroupId(), ddmTemplate.getTemplateKey()
+					ddmTemplate.getGroupId(), ddmTemplate.getClassNameId(),
+					ddmTemplate.getTemplateKey()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_T, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_T, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T, args,
 				ddmTemplate);
 		}
 		else {
@@ -9429,14 +9459,15 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			}
 
 			if ((ddmTemplateModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_T.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_G_C_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmTemplate.getGroupId(), ddmTemplate.getTemplateKey()
+						ddmTemplate.getGroupId(), ddmTemplate.getClassNameId(),
+						ddmTemplate.getTemplateKey()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_T, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C_T, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_T, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C_T, args,
 					ddmTemplate);
 			}
 		}
@@ -9464,21 +9495,23 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 
 		args = new Object[] {
-				ddmTemplate.getGroupId(), ddmTemplate.getTemplateKey()
+				ddmTemplate.getGroupId(), ddmTemplate.getClassNameId(),
+				ddmTemplate.getTemplateKey()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_T, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T, args);
 
 		if ((ddmTemplateModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_T.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_C_T.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					ddmTemplateModelImpl.getOriginalGroupId(),
+					ddmTemplateModelImpl.getOriginalClassNameId(),
 					ddmTemplateModelImpl.getOriginalTemplateKey()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_T, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C_T, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_C_T, args);
 		}
 	}
 

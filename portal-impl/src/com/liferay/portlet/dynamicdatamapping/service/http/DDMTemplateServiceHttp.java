@@ -296,7 +296,8 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateKey)
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
+		java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -304,7 +305,7 @@ public class DDMTemplateServiceHttp {
 					"fetchTemplate", _fetchTemplateParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateKey);
+					classNameId, templateKey);
 
 			Object returnObj = null;
 
@@ -370,7 +371,8 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateKey)
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
+		java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -378,7 +380,7 @@ public class DDMTemplateServiceHttp {
 					"getTemplate", _getTemplateParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateKey);
+					classNameId, templateKey);
 
 			Object returnObj = null;
 
@@ -407,7 +409,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		HttpPrincipal httpPrincipal, long groupId,
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		java.lang.String templateKey, boolean includeGlobalTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -416,7 +418,7 @@ public class DDMTemplateServiceHttp {
 					"getTemplate", _getTemplateParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					templateKey, includeGlobalTemplates);
+					classNameId, templateKey, includeGlobalTemplates);
 
 			Object returnObj = null;
 
@@ -940,16 +942,16 @@ public class DDMTemplateServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _fetchTemplateParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getTemplateParameterTypes7 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getTemplateParameterTypes8 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getTemplateParameterTypes9 = new Class[] {
-			long.class, java.lang.String.class, boolean.class
+			long.class, long.class, java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _getTemplatesParameterTypes10 = new Class[] {
 			long.class, long.class

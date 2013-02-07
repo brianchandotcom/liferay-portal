@@ -232,10 +232,11 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.fetchTemplate(groupId, templateKey);
+		return _ddmTemplateService.fetchTemplate(groupId, classNameId,
+			templateKey);
 	}
 
 	/**
@@ -264,10 +265,10 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.getTemplate(groupId, templateKey);
+		return _ddmTemplateService.getTemplate(groupId, classNameId, templateKey);
 	}
 
 	/**
@@ -289,12 +290,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey,
+		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeGlobalTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateService.getTemplate(groupId, templateKey,
-			includeGlobalTemplates);
+		return _ddmTemplateService.getTemplate(groupId, classNameId,
+			templateKey, includeGlobalTemplates);
 	}
 
 	/**

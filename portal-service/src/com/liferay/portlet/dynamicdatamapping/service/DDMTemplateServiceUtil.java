@@ -241,10 +241,10 @@ public class DDMTemplateServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchTemplate(groupId, templateKey);
+		return getService().fetchTemplate(groupId, classNameId, templateKey);
 	}
 
 	/**
@@ -273,10 +273,10 @@ public class DDMTemplateServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey)
+		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTemplate(groupId, templateKey);
+		return getService().getTemplate(groupId, classNameId, templateKey);
 	}
 
 	/**
@@ -298,12 +298,13 @@ public class DDMTemplateServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
-		long groupId, java.lang.String templateKey,
+		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeGlobalTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getTemplate(groupId, templateKey, includeGlobalTemplates);
+				   .getTemplate(groupId, classNameId, templateKey,
+			includeGlobalTemplates);
 	}
 
 	/**

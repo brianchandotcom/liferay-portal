@@ -72,6 +72,10 @@
 		}
 	}
 
+	.lfr-ddm-small-image-content img {
+		margin-right: 1em;
+	}
+
 	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
 		background-image: url(@theme_image_path@/aui/textarea.png);
 	}

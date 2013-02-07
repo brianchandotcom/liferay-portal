@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
@@ -192,35 +192,26 @@ if (Validator.isNotNull(structureAvailableFields)) {
 								<aui:input name="smallImage" />
 							</div>
 							<div class="lfr-ddm-small-image-content aui-toggler-content-collapsed">
-								<table>
-									<tr>
-										<th>
-											<c:if test="<%= smallImage && (template != null) %>">
-												<img alt="<liferay-ui:message key="preview" />" class="lfr-ddm-small-image-preview" src="<%= Validator.isNotNull(template.getSmallImageURL()) ? template.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId()) %>" />
-											</c:if>
-										</th>
-										<td>
-											<table>
-												<tr>
-													<th>
-														<aui:input inputCssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
-													</th>
-													<td>
-														<aui:input inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" />
-													</td>
-												</tr>
-												<tr>
-													<th>
-														<aui:input inputCssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
-													</th>
-													<td>
-														<aui:input inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
+								<aui:layout>
+									<c:if test="<%= smallImage && (template != null) %>">
+										<aui:column>
+											<img alt="<liferay-ui:message key="preview" />" class="lfr-ddm-small-image-preview" src="<%= Validator.isNotNull(template.getSmallImageURL()) ? template.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId()) %>" />
+										</aui:column>
+									</c:if>
+
+									<aui:column>
+										<aui:fieldset>
+											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
+
+											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" />
+										</aui:fieldset>
+										<aui:fieldset>
+											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
+
+											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
+										</aui:fieldset>
+									</aui:column>
+								</aui:layout>
 							</div>
 						</div>
 					</c:otherwise>

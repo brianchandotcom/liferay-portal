@@ -1010,15 +1010,17 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				DDMPortletDataHandler.class, "deleteData")) {
 
-			DDMTemplateLocalServiceUtil.deleteTemplates(
-				portletDataContext.getScopeGroupId());
-
-			DDMStructureLocalServiceUtil.deleteStructures(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
+
+		DDMTemplateLocalServiceUtil.deleteTemplates(
+			portletDataContext.getScopeGroupId());
+
+		DDMStructureLocalServiceUtil.deleteStructures(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}

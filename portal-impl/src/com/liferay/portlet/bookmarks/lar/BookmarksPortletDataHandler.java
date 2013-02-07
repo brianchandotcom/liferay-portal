@@ -72,7 +72,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.addPrimaryKey(
 				BookmarksPortletDataHandler.class, "deleteData")) {
 
-			return null;
+			return portletPreferences;
 		}
 
 		BookmarksFolderLocalServiceUtil.deleteFolders(
@@ -82,7 +82,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override

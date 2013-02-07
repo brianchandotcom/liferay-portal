@@ -1601,18 +1601,20 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				JournalPortletDataHandler.class, "deleteData")) {
 
-			JournalArticleLocalServiceUtil.deleteArticles(
-				portletDataContext.getScopeGroupId());
-
-			DDMTemplateLocalServiceUtil.deleteTemplates(
-				portletDataContext.getScopeGroupId());
-
-			DDMStructureLocalServiceUtil.deleteStructures(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
+
+		JournalArticleLocalServiceUtil.deleteArticles(
+			portletDataContext.getScopeGroupId());
+
+		DDMTemplateLocalServiceUtil.deleteTemplates(
+			portletDataContext.getScopeGroupId());
+
+		DDMStructureLocalServiceUtil.deleteStructures(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}

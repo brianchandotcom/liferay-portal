@@ -1797,14 +1797,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				DLPortletDataHandler.class, "deleteData")) {
 
-			DLAppLocalServiceUtil.deleteAll(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		DLAppLocalServiceUtil.deleteAll(portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override

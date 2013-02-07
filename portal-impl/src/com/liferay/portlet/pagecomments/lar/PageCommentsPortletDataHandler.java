@@ -49,7 +49,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		MBMessageLocalServiceUtil.deleteDiscussionMessages(
 			Layout.class.getName(), portletDataContext.getPlid());
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override

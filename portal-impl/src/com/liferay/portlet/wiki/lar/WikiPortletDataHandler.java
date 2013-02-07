@@ -466,14 +466,16 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				WikiPortletDataHandler.class, "deleteData")) {
 
-			WikiNodeLocalServiceUtil.deleteNodes(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		WikiNodeLocalServiceUtil.deleteNodes(
+			portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override

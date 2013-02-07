@@ -44,7 +44,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		RatingsStatsLocalServiceUtil.deleteStats(
 			Layout.class.getName(), portletDataContext.getPlid());
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override

@@ -323,14 +323,16 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				PollsPortletDataHandler.class, "deleteData")) {
 
-			PollsQuestionLocalServiceUtil.deleteQuestions(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		PollsQuestionLocalServiceUtil.deleteQuestions(
+			portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override

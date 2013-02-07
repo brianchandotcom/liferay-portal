@@ -98,24 +98,26 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				MBPortletDataHandler.class, "deleteData")) {
 
-			MBBanLocalServiceUtil.deleteBansByGroupId(
-				portletDataContext.getScopeGroupId());
-
-			MBCategoryLocalServiceUtil.deleteCategories(
-				portletDataContext.getScopeGroupId());
-
-			MBStatsUserLocalServiceUtil.deleteStatsUsersByGroupId(
-				portletDataContext.getScopeGroupId());
-
-			MBThreadLocalServiceUtil.deleteThreads(
-				portletDataContext.getScopeGroupId(),
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+			return portletPreferences;
 		}
 
-		return null;
+		MBBanLocalServiceUtil.deleteBansByGroupId(
+			portletDataContext.getScopeGroupId());
+
+		MBCategoryLocalServiceUtil.deleteCategories(
+			portletDataContext.getScopeGroupId());
+
+		MBStatsUserLocalServiceUtil.deleteStatsUsersByGroupId(
+			portletDataContext.getScopeGroupId());
+
+		MBThreadLocalServiceUtil.deleteThreads(
+			portletDataContext.getScopeGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		return portletPreferences;
 	}
 
 	@Override

@@ -81,17 +81,19 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				BlogsPortletDataHandler.class, "deleteData")) {
 
-			BlogsEntryLocalServiceUtil.deleteEntries(
-				portletDataContext.getScopeGroupId());
-
-			BlogsStatsUserLocalServiceUtil.deleteStatsUserByGroupId(
-				portletDataContext.getScopeGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		BlogsEntryLocalServiceUtil.deleteEntries(
+			portletDataContext.getScopeGroupId());
+
+		BlogsStatsUserLocalServiceUtil.deleteStatsUserByGroupId(
+			portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override

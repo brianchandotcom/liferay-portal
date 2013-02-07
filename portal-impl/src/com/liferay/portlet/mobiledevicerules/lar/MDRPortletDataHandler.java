@@ -77,17 +77,19 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		if (!portletDataContext.addPrimaryKey(
+		if (portletDataContext.addPrimaryKey(
 				MDRPortletDataHandler.class, "deleteData")) {
 
-			MDRRuleGroupInstanceLocalServiceUtil.deleteGroupRuleGroupInstances(
-				portletDataContext.getScopeGroupId());
-
-			MDRRuleGroupLocalServiceUtil.deleteRuleGroups(
-				portletDataContext.getGroupId());
+			return portletPreferences;
 		}
 
-		return null;
+		MDRRuleGroupInstanceLocalServiceUtil.deleteGroupRuleGroupInstances(
+			portletDataContext.getScopeGroupId());
+
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroups(
+			portletDataContext.getGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override

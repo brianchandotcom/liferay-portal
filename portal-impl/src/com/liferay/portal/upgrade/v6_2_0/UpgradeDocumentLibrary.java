@@ -25,6 +25,7 @@ import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileRankTable;
 import com.liferay.portal.upgrade.v6_2_0.util.DLSyncTable;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +36,7 @@ import java.sql.Timestamp;
 /**
  * @author Dennis Ju
  * @author Mate Thurzo
+ * @author Alexander Chow
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
@@ -72,6 +74,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		upgradeTable.setIndexesSQL(DLSyncTable.TABLE_SQL_ADD_INDEXES);
 
 		upgradeTable.updateTable();
+
+		// Temp Files
+
+		updateTempFiles();
 	}
 
 	protected String getUserName(long userId) throws Exception {
@@ -157,6 +163,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateTempFiles() {
+		try {
+			DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
+		}
+		catch (Exception e) {
 		}
 	}
 

@@ -28,7 +28,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,29 +66,14 @@ public class DLAppUtil {
 	}
 
 	public static String getMimeType(
-		String sourceFileName, String mimeType, String title, File file,
-		InputStream is) {
+		String sourceFileName, String mimeType, String title, File file) {
 
 		if (Validator.isNull(mimeType) ||
-			!mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 
-			return mimeType;
-		}
+			String extension = getExtension(title, sourceFileName);
 
-		if (Validator.isNull(title)) {
-			title = sourceFileName;
-		}
-
-		String extension = getExtension(title, sourceFileName);
-
-		String titleWithExtension = DLUtil.getTitleWithExtension(
-			title, extension);
-
-		if (file != null) {
-			mimeType = MimeTypesUtil.getContentType(file, titleWithExtension);
-		}
-		else {
-			mimeType = MimeTypesUtil.getContentType(is, titleWithExtension);
+			mimeType = MimeTypesUtil.getContentType(file, "A." + extension);
 		}
 
 		return mimeType;

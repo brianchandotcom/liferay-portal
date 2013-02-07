@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -178,8 +181,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				description, changeLog, null, 0, serviceContext);
 		}
 
-		mimeType = DLAppUtil.getMimeType(
-			sourceFileName, mimeType, title, file, null);
+		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
@@ -240,8 +242,34 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			size = 0;
 		}
 
-		mimeType = DLAppUtil.getMimeType(
-			sourceFileName, mimeType, title, null, is);
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			String extension = DLAppUtil.getExtension(title, sourceFileName);
+
+			if (size == 0) {
+				mimeType = MimeTypesUtil.getContentTypeFromExtension(extension);
+			}
+			else {
+				File file = null;
+
+				try {
+					file = FileUtil.createTempFile(is);
+
+					return addFileEntry(
+						userId, repositoryId, folderId, sourceFileName,
+						mimeType, title, description, changeLog, file,
+						serviceContext);
+				}
+				catch (IOException ioe) {
+					throw new SystemException(
+						"Unable to write temporary file", ioe);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
+			}
+		}
 
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
@@ -934,8 +962,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				description, changeLog, majorVersion, null, 0, serviceContext);
 		}
 
-		mimeType = DLAppUtil.getMimeType(
-			sourceFileName, mimeType, title, file, null);
+		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 
@@ -996,8 +1023,34 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		mimeType = DLAppUtil.getMimeType(
-			sourceFileName, mimeType, title, null, is);
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			String extension = DLAppUtil.getExtension(title, sourceFileName);
+
+			if (size == 0) {
+				mimeType = MimeTypesUtil.getContentTypeFromExtension(extension);
+			}
+			else {
+				File file = null;
+
+				try {
+					file = FileUtil.createTempFile(is);
+
+					return updateFileEntry(
+						userId, fileEntryId, sourceFileName, mimeType, title,
+						description, changeLog, majorVersion, file,
+						serviceContext);
+				}
+				catch (IOException ioe) {
+					throw new SystemException(
+						"Unable to write temporary file", ioe);
+				}
+				finally {
+					FileUtil.delete(file);
+				}
+			}
+		}
 
 		LocalRepository localRepository = getLocalRepository(0, fileEntryId, 0);
 

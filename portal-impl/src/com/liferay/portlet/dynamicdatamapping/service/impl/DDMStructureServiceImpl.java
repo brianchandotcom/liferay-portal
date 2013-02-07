@@ -513,6 +513,43 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the structure matching the structure key, classNameId and group,
+	 * replacing the old parent structure ID, name map, description map, and XSD
+	 * with the new values.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  parentStructureId the new parent structure primary key
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
+	 * @param  nameMap the structure's new locales and localized names
+	 * @param  descriptionMap the structure's new locales and localized
+	 *         description
+	 * @param  xsd the new XML schema definition of the structure
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date.
+	 * @return the updated structure
+	 * @throws PortalException if the user did not have permission to update the
+	 *         structure or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructure updateStructure(
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String xsd,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), groupId, classNameId, structureKey,
+			ActionKeys.UPDATE);
+
+		return ddmStructureLocalService.updateStructure(
+			groupId, parentStructureId, classNameId, structureKey, nameMap,
+			descriptionMap, xsd, serviceContext);
+	}
+
+	/**
 	 * Updates the structure replacing its old parent structure, name map,
 	 * description map, and XSD with new ones.
 	 *
@@ -541,43 +578,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructureLocalService.updateStructure(
 			structureId, parentStructureId, nameMap, descriptionMap, xsd,
 			serviceContext);
-	}
-
-	/**
-	 * Updates the structure matching the structure key, classNameId and group,
-	 * replacing the old parent structure ID, name map, description map, and XSD
-	 * with the new values.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentStructureId the new parent structure primary key
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @param  structureKey the unique string identifying the structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  xsd the new XML schema definition of the structure
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
-	 * @return the updated structure
-	 * @throws PortalException if the user did not have permission to update the
-	 *         structure or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructure updateStructure(
-			long groupId, long parentStructureId, long classNameId, 
-			String structureKey, Map<Locale, String> nameMap, 
-			Map<Locale, String> descriptionMap, String xsd,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		DDMStructurePermission.check(
-			getPermissionChecker(), groupId, classNameId, structureKey,
-			ActionKeys.UPDATE);
-
-		return ddmStructureLocalService.updateStructure(
-			groupId, parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, xsd, serviceContext);
 	}
 
 }

@@ -1128,36 +1128,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates the structure replacing its old parent structure, name map,
-	 * description map, and XSD with new ones.
-	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  parentStructureId the primary key of the new parent structure
-	 * @param  nameMap the structure's new locales and localized names
-	 * @param  descriptionMap the structure's new locales and localized
-	 *         description
-	 * @param  xsd the structure's new XML schema definition
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
-	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public DDMStructure updateStructure(
-			long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String xsd, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
-
-		return doUpdateStructure(
-			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
-			structure);
-	}
-
-	/**
 	 * Updates the structure matching the structure key, classNameId and group,
 	 * replacing its old parent structure, name map, description map, and XSD
 	 * with new ones.
@@ -1188,6 +1158,36 @@ public class DDMStructureLocalServiceImpl
 
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
+
+		return doUpdateStructure(
+			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
+			structure);
+	}
+
+	/**
+	 * Updates the structure replacing its old parent structure, name map,
+	 * description map, and XSD with new ones.
+	 *
+	 * @param  structureId the primary key of the structure
+	 * @param  parentStructureId the primary key of the new parent structure
+	 * @param  nameMap the structure's new locales and localized names
+	 * @param  descriptionMap the structure's new locales and localized
+	 *         description
+	 * @param  xsd the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date.
+	 * @return the updated structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructure updateStructure(
+			long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String xsd, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
 
 		return doUpdateStructure(
 			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,

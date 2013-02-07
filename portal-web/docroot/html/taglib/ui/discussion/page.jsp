@@ -189,7 +189,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						</c:if>
 
 						<aui:button-row>
-							<aui:button cssClass="aui-button-input-reply" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value="<%= postReplyButtonLabel %>" />
+							<aui:button cssClass="aui-button-reply" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value="<%= postReplyButtonLabel %>" />
 
 							<%
 							String taglibCancel = "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
@@ -612,11 +612,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			function(form, refreshPage) {
 				var A = AUI();
 
-				var uri = form.getAttribute('action');
-
 				var fm = A.one(form);
 
-				var postReplyButton = fm.one('.aui-button-input-reply input');
+				var postReplyButton = fm.one('.aui-button-reply input');
+
+				var uri = form.getAttribute('action');
 
 				A.io.request(
 					uri,

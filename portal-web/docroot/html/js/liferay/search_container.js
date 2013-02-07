@@ -158,8 +158,10 @@ AUI.add(
 					addRow: function(arr, id) {
 						var instance = this;
 
+						var row;
+
 						if (id) {
-							var row = instance._table.one('.' + CSS_TEMPLATE);
+							row = instance._table.one('.' + CSS_TEMPLATE);
 
 							if (row) {
 								row = row.clone();
@@ -198,6 +200,8 @@ AUI.add(
 								}
 							);
 						}
+
+						return row;
 					},
 
 					deleteRow: function(obj, id) {

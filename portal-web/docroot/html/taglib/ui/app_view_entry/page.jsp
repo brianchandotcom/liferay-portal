@@ -71,7 +71,9 @@ String shortTitle = StringUtil.shorten(title, 60);
 				</div>
 
 				<span class="entry-title">
-					<%= HtmlUtil.escape(shortTitle) %>
+					<span class="entry-title-text">
+						<%= HtmlUtil.escape(shortTitle) %>
+					</span>
 
 					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
 
@@ -83,6 +85,8 @@ String shortTitle = StringUtil.shorten(title, 60);
 							(<liferay-ui:message key="<%= statusLabel %>" />)
 						</span>
 					</c:if>
+
+					<span class="entry-result-icon"></span>
 				</span>
 			</a>
 		</div>
@@ -103,7 +107,9 @@ String shortTitle = StringUtil.shorten(title, 60);
 				</div>
 
 				<span class="entry-title">
-					<%= HtmlUtil.escape(title) %>
+					<span class="entry-title-text">
+						<%= HtmlUtil.escape(title) %>
+					</span>
 
 					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
 
@@ -115,6 +121,8 @@ String shortTitle = StringUtil.shorten(title, 60);
 							(<liferay-ui:message key="<%= statusLabel %>" />)
 						</span>
 					</c:if>
+
+					<span class="entry-result-icon"></span>
 				</span>
 
 				<span class="entry-description">

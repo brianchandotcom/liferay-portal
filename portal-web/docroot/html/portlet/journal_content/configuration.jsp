@@ -71,7 +71,7 @@ type = ParamUtil.getString(request, "type", type);
 		long ddmStructureGroupId = groupId;
 
 		if (Validator.isNotNull(structureId)) {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(groupId, structureId);
+			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(groupId, PortalUtil.getClassNameId(JournalArticle.class), structureId);
 
 			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 

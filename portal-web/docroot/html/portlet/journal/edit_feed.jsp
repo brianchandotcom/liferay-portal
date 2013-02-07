@@ -36,7 +36,7 @@ String ddmStructureName = StringPool.BLANK;
 
 if (Validator.isNotNull(structureId)) {
 	try {
-		ddmStructure = DDMStructureLocalServiceUtil.getStructure(groupId, structureId, true);
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(groupId, PortalUtil.getClassNameId(JournalArticle.class), structureId, true);
 
 		ddmStructureId = ddmStructure.getStructureId();
 

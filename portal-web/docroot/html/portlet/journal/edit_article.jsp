@@ -74,7 +74,7 @@ if (ddmStructureId > 0) {
 }
 else if (Validator.isNotNull(structureId)) {
 	try {
-		ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, structureId);
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), structureId);
 
 		ddmStructureGroupId = ddmStructure.getGroupId();
 	}

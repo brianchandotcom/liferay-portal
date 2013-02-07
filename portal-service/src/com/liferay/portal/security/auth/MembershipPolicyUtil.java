@@ -48,20 +48,19 @@ public class MembershipPolicyUtil {
 		return membershipPolicy.getForbiddenRoles(group, user);
 	}
 
-	public static Set<Role> getForbiddenRoles(
-		Organization organization, User user) {
-
-		MembershipPolicy membershipPolicy =
-			MembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		return membershipPolicy.getForbiddenRoles(organization, user);
-	}
-
 	public static Set<Role> getForbiddenRoles(User user) {
 		MembershipPolicy membershipPolicy =
 			MembershipPolicyFactoryUtil.getMembershipPolicy();
 
 		return membershipPolicy.getForbiddenRoles(user);
+	}
+
+	public static Set<Role> getForbiddenRoles(
+		User user, Organization organization) {
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactoryUtil.getMembershipPolicy();
+
+		return membershipPolicy.getForbiddenRoles(organization, user);
 	}
 
 	public static Set<UserGroup> getForbiddenUserGroups(User user) {
@@ -143,6 +142,23 @@ public class MembershipPolicyUtil {
 			MembershipPolicyFactoryUtil.getMembershipPolicy();
 
 		return membershipPolicy.isMembershipAllowed(role, user);
+	}
+
+	public static boolean isMembershipAllowed(
+		Role role, User user, Group group) {
+
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactoryUtil.getMembershipPolicy();
+
+		return membershipPolicy.isMembershipAllowed(role, user, group);
+	}
+
+	public static boolean isMembershipAllowed(
+		Role role, User user, Organization organization) {
+		MembershipPolicy membershipPolicy =
+			MembershipPolicyFactoryUtil.getMembershipPolicy();
+
+		return membershipPolicy.isMembershipAllowed(role, user, organization);
 	}
 
 	public static boolean isMembershipAllowed(UserGroup userGroup, User user) {

@@ -369,6 +369,16 @@ public class GroupLocalServiceUtil {
 		getService().checkCompanyGroup(companyId);
 	}
 
+	/**
+	* Removes the user from any forbidden groups and adds the user to all
+	* mandatory groups, if the user does not belong to them.
+	*
+	* @param user the user
+	* @throws PortalException if the user cannot be added or removed from any
+	groups.
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.events.MembershipPolicyAction
+	*/
 	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().checkMembershipPolicy(user);

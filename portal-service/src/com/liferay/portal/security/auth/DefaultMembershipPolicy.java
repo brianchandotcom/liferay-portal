@@ -92,6 +92,16 @@ public class DefaultMembershipPolicy implements MembershipPolicy {
 		return true;
 	}
 
+	public boolean isMembershipAllowed(Role role, User user, Group group) {
+		return true;
+	}
+
+	public boolean isMembershipAllowed(
+		Role role, User user, Organization organization) {
+
+		return true;
+	}
+
 	public boolean isMembershipAllowed(UserGroup userGroup, User user) {
 		return true;
 	}

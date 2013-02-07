@@ -29,6 +29,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -251,6 +252,8 @@ public class DLFileEntryFinderTest {
 	public void testFindByNoAssets() throws Exception {
 		AssetEntryLocalServiceUtil.deleteEntry(
 			DLFileEntry.class.getName(), _dlFileVersion.getFileEntryId());
+
+		LastSessionRecorderUtil.syncLastSessionState();
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryFinderUtil.findByNoAssets();

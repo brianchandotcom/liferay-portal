@@ -32,19 +32,19 @@ public class RepositoryReport implements Serializable {
 	public static final String SUCCESS = "success";
 
 	public void addError(String repositoryURL, PluginPackageException ppe) {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
 		if (Validator.isNotNull(ppe.getMessage())) {
 			sb.append(ppe.getMessage());
 		}
 
 		if ((ppe.getCause() != null) &&
-			Validator.isNull(ppe.getCause().getMessage())) {
+			Validator.isNotNull(ppe.getCause().getMessage())) {
 
 			sb.append(ppe.getCause().getMessage());
 		}
 
-		if (sb.length() == 0) {
+		if (sb.index() == 0) {
 			sb.append(ppe.toString());
 		}
 

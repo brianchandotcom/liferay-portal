@@ -567,7 +567,7 @@ public class PluginsSummaryBuilder {
 		String value = GetterUtil.getString(
 			properties.getProperty(key), defaultValue);
 
-		if (sb.length() > 0) {
+		if (sb.index() > 0) {
 			sb.append(StringPool.NEW_LINE);
 		}
 

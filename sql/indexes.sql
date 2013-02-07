@@ -739,6 +739,7 @@ create index IX_F474FD89 on ShoppingOrder (ppTxnId);
 
 create index IX_B5F82C7A on ShoppingOrderItem (orderId);
 
+create index IX_46B7D619 on SocialActivity (activityGroupId);
 create index IX_82E39A0C on SocialActivity (classNameId);
 create index IX_A853C757 on SocialActivity (classNameId, classPK);
 create index IX_64B1BC66 on SocialActivity (companyId);
@@ -761,6 +762,15 @@ create index IX_A4B9A23B on SocialActivityCounter (classNameId, classPK);
 create unique index IX_1B7E3B67 on SocialActivityCounter (groupId, classNameId, classPK, name, ownerType, endPeriod);
 create unique index IX_374B35AE on SocialActivityCounter (groupId, classNameId, classPK, name, ownerType, startPeriod);
 create index IX_926CDD04 on SocialActivityCounter (groupId, classNameId, classPK, ownerType);
+
+create index IX_FEDB9EC5 on SocialActivityGroup (classNameId);
+create index IX_D23302BE on SocialActivityGroup (classNameId, classPK);
+create index IX_6E259B5F on SocialActivityGroup (companyId);
+create index IX_ACCB6DA1 on SocialActivityGroup (groupId);
+create index IX_A12520F0 on SocialActivityGroup (groupId, userId, classNameId, classPK);
+create index IX_D9255AE5 on SocialActivityGroup (groupId, userId, classNameId, classPK, type_);
+create index IX_8CDA9622 on SocialActivityGroup (groupId, userId, classNameId, type_);
+create index IX_84E8E463 on SocialActivityGroup (userId);
 
 create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);

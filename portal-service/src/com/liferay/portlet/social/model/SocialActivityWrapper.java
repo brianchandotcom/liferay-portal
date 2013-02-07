@@ -50,6 +50,7 @@ public class SocialActivityWrapper implements SocialActivity,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("activityGroupId", getActivityGroupId());
 		attributes.put("mirrorActivityId", getMirrorActivityId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -89,6 +90,12 @@ public class SocialActivityWrapper implements SocialActivity,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long activityGroupId = (Long)attributes.get("activityGroupId");
+
+		if (activityGroupId != null) {
+			setActivityGroupId(activityGroupId);
 		}
 
 		Long mirrorActivityId = (Long)attributes.get("mirrorActivityId");
@@ -254,6 +261,24 @@ public class SocialActivityWrapper implements SocialActivity,
 	*/
 	public void setCreateDate(long createDate) {
 		_socialActivity.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the activity group ID of this social activity.
+	*
+	* @return the activity group ID of this social activity
+	*/
+	public long getActivityGroupId() {
+		return _socialActivity.getActivityGroupId();
+	}
+
+	/**
+	* Sets the activity group ID of this social activity.
+	*
+	* @param activityGroupId the activity group ID of this social activity
+	*/
+	public void setActivityGroupId(long activityGroupId) {
+		_socialActivity.setActivityGroupId(activityGroupId);
 	}
 
 	/**

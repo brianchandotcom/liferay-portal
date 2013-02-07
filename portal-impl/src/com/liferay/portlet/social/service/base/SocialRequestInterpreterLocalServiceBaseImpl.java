@@ -31,6 +31,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import com.liferay.portlet.social.service.SocialActivityAchievementLocalService;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
+import com.liferay.portlet.social.service.SocialActivityGroupLocalService;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalService;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalService;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
@@ -44,6 +45,7 @@ import com.liferay.portlet.social.service.persistence.SocialActivityAchievementP
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
+import com.liferay.portlet.social.service.persistence.SocialActivityGroupPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
@@ -223,6 +225,44 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	public void setSocialActivityCounterFinder(
 		SocialActivityCounterFinder socialActivityCounterFinder) {
 		this.socialActivityCounterFinder = socialActivityCounterFinder;
+	}
+
+	/**
+	 * Returns the social activity group local service.
+	 *
+	 * @return the social activity group local service
+	 */
+	public SocialActivityGroupLocalService getSocialActivityGroupLocalService() {
+		return socialActivityGroupLocalService;
+	}
+
+	/**
+	 * Sets the social activity group local service.
+	 *
+	 * @param socialActivityGroupLocalService the social activity group local service
+	 */
+	public void setSocialActivityGroupLocalService(
+		SocialActivityGroupLocalService socialActivityGroupLocalService) {
+		this.socialActivityGroupLocalService = socialActivityGroupLocalService;
+	}
+
+	/**
+	 * Returns the social activity group persistence.
+	 *
+	 * @return the social activity group persistence
+	 */
+	public SocialActivityGroupPersistence getSocialActivityGroupPersistence() {
+		return socialActivityGroupPersistence;
+	}
+
+	/**
+	 * Sets the social activity group persistence.
+	 *
+	 * @param socialActivityGroupPersistence the social activity group persistence
+	 */
+	public void setSocialActivityGroupPersistence(
+		SocialActivityGroupPersistence socialActivityGroupPersistence) {
+		this.socialActivityGroupPersistence = socialActivityGroupPersistence;
 	}
 
 	/**
@@ -621,6 +661,10 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
 	@BeanReference(type = SocialActivityCounterFinder.class)
 	protected SocialActivityCounterFinder socialActivityCounterFinder;
+	@BeanReference(type = SocialActivityGroupLocalService.class)
+	protected SocialActivityGroupLocalService socialActivityGroupLocalService;
+	@BeanReference(type = SocialActivityGroupPersistence.class)
+	protected SocialActivityGroupPersistence socialActivityGroupPersistence;
 	@BeanReference(type = SocialActivityInterpreterLocalService.class)
 	protected SocialActivityInterpreterLocalService socialActivityInterpreterLocalService;
 	@BeanReference(type = SocialActivityLimitLocalService.class)

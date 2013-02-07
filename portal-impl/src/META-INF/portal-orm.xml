@@ -3337,6 +3337,7 @@
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="createDate" />
+			<basic name="activityGroupId" />
 			<basic name="mirrorActivityId" />
 			<basic name="classNameId" />
 			<basic name="classPK" />
@@ -3389,6 +3390,26 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivityGroupModelImpl">
+		<attributes>
+			<id name="activityGroupId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate" />
+			<basic name="modifiedDate" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<transient name="className" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl">
@@ -4418,6 +4439,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" name="SocialActivityCounter">
 		<table name="SocialActivityCounter" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.social.model.impl.SocialActivityGroupImpl" name="SocialActivityGroup">
+		<table name="SocialActivityGroup" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" name="SocialActivityLimit">

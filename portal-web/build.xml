@@ -832,6 +832,29 @@
 		</antcall>
 	</target>
 
+	<target name="build-selenium-user-extensions">
+		<property file="${project.dir}/test.${user.name}.properties" />
+		<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
+		<property file="${project.dir}/test.${env.HOST}.properties" />
+		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
+		<property file="${project.dir}/test.properties" />
+
+		<propertyregex
+			property="basedir.double.slash"
+			input="${basedir}"
+			regexp="\\"
+			replace="\\\\\\\\"
+		/>
+
+		<loadfile property="ide.js.content" srcfile="${project.dir}/tools/selenium/extensions/ide.js">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+
+		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
+	</target>
+
 	<target name="build-themes">
 		<antcall target="build-alloy" />
 

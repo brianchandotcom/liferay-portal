@@ -52,6 +52,8 @@ public class SeleniumBuilderContext {
 			if (fileName.endsWith(".action")) {
 				_actionFileNames.add(fileName);
 
+				_actionNames.add(_getName(fileName));
+
 				_actionRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".function")) {
@@ -59,12 +61,16 @@ public class SeleniumBuilderContext {
 
 				_functionFileNames.add(fileName);
 
+				_functionNames.add(_getName(fileName));
+
 				_functionRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".macro")) {
 				_macroClassNames.add(_getClassName(fileName));
 
 				_macroFileNames.add(fileName);
+
+				_macroNames.add(_getName(fileName));
 
 				_macroRootElements.put(fileName, _getRootElement(fileName));
 			}
@@ -75,6 +81,8 @@ public class SeleniumBuilderContext {
 
 				_pathFileNames.add(fileName);
 
+				_pathNames.add(_getName(fileName));
+
 				_pathRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testcase")) {
@@ -82,12 +90,16 @@ public class SeleniumBuilderContext {
 
 				_testCaseFileNames.add(fileName);
 
+				_testCaseNames.add(_getName(fileName));
+
 				_testCaseRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testsuite")) {
 				_testSuiteClassNames.add(_getClassName(fileName));
 
 				_testSuiteFileNames.add(fileName);
+
+				_testSuiteNames.add(_getName(fileName));
 
 				_testSuiteRootElements.put(fileName, _getRootElement(fileName));
 			}
@@ -103,6 +115,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getActionFileNames() {
 		return _actionFileNames;
+	}
+
+	public Set<String> getActionNames() {
+		return _actionNames;
 	}
 
 	public Element getActionRootElement(String fileName) {
@@ -125,6 +141,10 @@ public class SeleniumBuilderContext {
 		return _functionFileNames;
 	}
 
+	public Set<String> getFunctionNames() {
+		return _functionNames;
+	}
+
 	public Element getFunctionRootElement(String fileName) {
 		return _functionRootElements.get(fileName);
 	}
@@ -139,6 +159,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getMacroFileNames() {
 		return _macroFileNames;
+	}
+
+	public Set<String> getMacroNames() {
+		return _macroNames;
 	}
 
 	public Element getMacroRootElement(String fileName) {
@@ -157,6 +181,10 @@ public class SeleniumBuilderContext {
 		return _pathFileNames;
 	}
 
+	public Set<String> getPathNames() {
+		return _pathNames;
+	}
+
 	public Element getPathRootElement(String fileName) {
 		return _pathRootElements.get(fileName);
 	}
@@ -171,6 +199,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getTestCaseFileNames() {
 		return _testCaseFileNames;
+	}
+
+	public Set<String> getTestCaseNames() {
+		return _testCaseNames;
 	}
 
 	public Element getTestCaseRootElement(String fileName) {
@@ -189,6 +221,10 @@ public class SeleniumBuilderContext {
 		return _testSuiteFileNames;
 	}
 
+	public Set<String> getTestSuiteNames() {
+		return _testSuiteNames;
+	}
+
 	public Element getTestSuiteRootElement(String fileName) {
 		return _testSuiteRootElements.get(fileName);
 	}
@@ -205,6 +241,10 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
 	}
 
+	private String _getName(String fileName) {
+		return _seleniumBuilderFileUtil.getName(fileName);
+	}
+
 	private Element _getRootElement(String fileName) throws Exception {
 		return _seleniumBuilderFileUtil.getRootElement(fileName);
 	}
@@ -215,28 +255,34 @@ public class SeleniumBuilderContext {
 
 	private Set<String> _actionClassNames = new HashSet<String>();
 	private Set<String> _actionFileNames = new HashSet<String>();
+	private Set<String> _actionNames = new HashSet<String>();
 	private Map<String, Element> _actionRootElements =
 		new HashMap<String, Element>();
 	private String _baseDir;
 	private Set<String> _functionClassNames = new HashSet<String>();
 	private Set<String> _functionFileNames = new HashSet<String>();
+	private Set<String> _functionNames = new HashSet<String>();
 	private Map<String, Element> _functionRootElements =
 		new HashMap<String, Element>();
 	private Set<String> _macroClassNames = new HashSet<String>();
 	private Set<String> _macroFileNames = new HashSet<String>();
+	private Set<String> _macroNames = new HashSet<String>();
 	private Map<String, Element> _macroRootElements =
 		new HashMap<String, Element>();
 	private Set<String> _pathClassNames = new HashSet<String>();
 	private Set<String> _pathFileNames = new HashSet<String>();
+	private Set<String> _pathNames = new HashSet<String>();
 	private Map<String, Element> _pathRootElements =
 		new HashMap<String, Element>();
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Set<String> _testCaseClassNames = new HashSet<String>();
 	private Set<String> _testCaseFileNames = new HashSet<String>();
+	private Set<String> _testCaseNames = new HashSet<String>();
 	private Map<String, Element> _testCaseRootElements =
 		new HashMap<String, Element>();
 	private Set<String> _testSuiteClassNames = new HashSet<String>();
 	private Set<String> _testSuiteFileNames = new HashSet<String>();
+	private Set<String> _testSuiteNames = new HashSet<String>();
 	private Map<String, Element> _testSuiteRootElements =
 		new HashMap<String, Element>();
 

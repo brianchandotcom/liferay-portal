@@ -54,11 +54,16 @@ public class SeleniumBuilderFileUtil {
 		String packagePath = StringUtil.replace(
 			fileName.substring(0, x + 1), StringPool.SLASH, StringPool.PERIOD);
 
-		int y = fileName.indexOf(CharPool.PERIOD);
-
-		String simpleClassName = fileName.substring(x + 1, y) + classSuffix;
+		String simpleClassName = getName(fileName) + classSuffix;
 
 		return packagePath + simpleClassName;
+	}
+
+	public String getName(String fileName) {
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+		int y = fileName.indexOf(CharPool.PERIOD);
+
+		return fileName.substring(x + 1, y);
 	}
 
 	public String getNormalizedContent(String fileName) throws Exception {

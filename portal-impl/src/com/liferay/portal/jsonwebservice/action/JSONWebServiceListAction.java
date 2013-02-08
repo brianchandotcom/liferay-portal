@@ -180,6 +180,10 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			return "object";
 		}
 
+		if (type.equals(Object.class)) {
+			return "object";
+		}
+
 		String typeName = type.getName();
 
 		if (type.equals(List.class)) {

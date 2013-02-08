@@ -20,6 +20,10 @@
 List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGroups");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="user-groups" />
+
+<liferay-ui:membership-policy-error />
+
 <liferay-util:buffer var="removeUserGroupIcon">
 	<liferay-ui:icon
 		image="unlink"

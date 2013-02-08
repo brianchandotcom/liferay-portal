@@ -22,6 +22,10 @@ User selUser = (User)request.getAttribute("user.selUser");
 List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="sites" />
+
+<liferay-ui:membership-policy-error />
+
 <liferay-util:buffer var="removeGroupIcon">
 	<liferay-ui:icon
 		image="unlink"

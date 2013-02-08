@@ -32,6 +32,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.
 portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 %>
 
+<liferay-ui:membership-policy-error />
+
 <aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
 <aui:input name="addRoleIds" type="hidden" />
 <aui:input name="removeRoleIds" type="hidden" />

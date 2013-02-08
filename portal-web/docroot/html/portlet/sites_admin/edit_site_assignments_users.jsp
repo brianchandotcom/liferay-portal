@@ -53,6 +53,8 @@ UserSearch userSearch = new UserSearch(renderRequest, viewUsersURL);
 userSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
+<liferay-ui:membership-policy-error />
+
 <aui:input name="tabs1" type="hidden" value="users" />
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />

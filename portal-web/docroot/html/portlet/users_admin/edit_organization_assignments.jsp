@@ -41,6 +41,8 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 	title="<%= organization.getName() %>"
 />
 
+<liferay-ui:membership-policy-error />
+
 <portlet:actionURL var="editAssignmentsURL">
 	<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
 </portlet:actionURL>

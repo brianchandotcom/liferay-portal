@@ -22,6 +22,10 @@ User selUser = (User)request.getAttribute("user.selUser");
 List<Organization> organizations = (List<Organization>)request.getAttribute("user.organizations");
 %>
 
+<liferay-ui:error-marker key="errorSection" value="organizations" />
+
+<liferay-ui:membership-policy-error />
+
 <liferay-util:buffer var="removeOrganizationIcon">
 	<liferay-ui:icon
 		image="unlink"

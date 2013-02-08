@@ -49,6 +49,12 @@ public class ModuleFrameworkServlet extends HttpServlet
 
 	@Override
 	public void destroy() {
+		Framework framework = ModuleFrameworkUtil.getFramework();
+
+		if (framework == null) {
+			return;
+		}
+
 		_serviceTracker.close();
 	}
 

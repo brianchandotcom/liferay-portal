@@ -22,11 +22,11 @@ Selenium.prototype.doGotoIf = function(condition, label) {
 };
 
 Selenium.prototype.doGotolabel = function(label) {
-	if(gotoLabels[label] == undefined) {
+	if (gotoLabels[label] == undefined) {
 		throw new Error("Specified label '" + label + "' is not found.");
 	}
 
-	this.continueFromRow(gotoLabels[ label ]);
+	this.continueFromRow(gotoLabels[label]);
 };
 
 Selenium.prototype.doLabel = function() {
@@ -77,26 +77,6 @@ Selenium.prototype.firstNumber = function(value) {
 	return parseInt(value.replace(/.*?(\d+).*$/, '$1'), 10);
 };
 
-Selenium.prototype.getFirstNumber = function(locator) {
-	var locationValue = this.getText(locator);
-
-	return this.firstNumber(locationValue);
-};
-
-Selenium.prototype.getFirstNumberIncrement = function(locator) {
-	var locationValue = this.getText(locator);
-
-	return this.firstNumber(locationValue) + 1;
-};
-
-Selenium.prototype.getNumberDecrement = function(expression) {
-	return parseInt(expression) - 1;
-};
-
-Selenium.prototype.getNumberIncrement = function(expression) {
-	return parseInt(expression) + 1;
-};
-
 Selenium.prototype.getCurrentDay = function() {
 	var date = new Date();
 
@@ -128,6 +108,26 @@ Selenium.prototype.getCurrentYear = function() {
 	var date = new Date();
 
 	return date.getFullYear();
+};
+
+Selenium.prototype.getFirstNumber = function(locator) {
+	var locationValue = this.getText(locator);
+
+	return this.firstNumber(locationValue);
+};
+
+Selenium.prototype.getFirstNumberIncrement = function(locator) {
+	var locationValue = this.getText(locator);
+
+	return this.firstNumber(locationValue) + 1;
+};
+
+Selenium.prototype.getNumberDecrement = function(expression) {
+	return parseInt(expression) - 1;
+};
+
+Selenium.prototype.getNumberIncrement = function(expression) {
+	return parseInt(expression) + 1;
 };
 
 Selenium.prototype.initialiseLabels = function() {

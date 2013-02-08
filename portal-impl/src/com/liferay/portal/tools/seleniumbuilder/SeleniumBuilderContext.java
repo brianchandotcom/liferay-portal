@@ -50,56 +50,98 @@ public class SeleniumBuilderContext {
 			fileName = _normalizeFileName(fileName);
 
 			if (fileName.endsWith(".action")) {
+				String actionName = _getName(fileName);
+
+				if (_actionNames.contains(actionName)) {
+					throw new Exception(
+						"Duplicate name " + actionName + " at " + fileName);
+				}
+
 				_actionFileNames.add(fileName);
 
-				_actionNames.add(_getName(fileName));
+				_actionNames.add(actionName);
 
 				_actionRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".function")) {
+				String functionName = _getName(fileName);
+
+				if (_functionNames.contains(functionName)) {
+					throw new Exception(
+						"Duplicate name " + functionName + " at " + fileName);
+				}
+
 				_functionClassNames.add(_getClassName(fileName));
 
 				_functionFileNames.add(fileName);
 
-				_functionNames.add(_getName(fileName));
+				_functionNames.add(functionName);
 
 				_functionRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".macro")) {
+				String macroName = _getName(fileName);
+
+				if (_macroNames.contains(macroName)) {
+					throw new Exception(
+						"Duplicate name " + macroName + " at " + fileName);
+				}
+
 				_macroClassNames.add(_getClassName(fileName));
 
 				_macroFileNames.add(fileName);
 
-				_macroNames.add(_getName(fileName));
+				_macroNames.add(macroName);
 
 				_macroRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".path")) {
+				String pathName = _getName(fileName);
+
+				if (_pathNames.contains(pathName)) {
+					throw new Exception(
+						"Duplicate name " + pathName + " at " + fileName);
+				}
+
 				_actionClassNames.add(_getClassName(fileName, "Action"));
 
 				_pathClassNames.add(_getClassName(fileName));
 
 				_pathFileNames.add(fileName);
 
-				_pathNames.add(_getName(fileName));
+				_pathNames.add(pathName);
 
 				_pathRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testcase")) {
+				String testCaseName = _getName(fileName);
+
+				if (_testCaseNames.contains(testCaseName)) {
+					throw new Exception(
+						"Duplicate name " + testCaseName + " at " + fileName);
+				}
+
 				_testCaseClassNames.add(_getClassName(fileName));
 
 				_testCaseFileNames.add(fileName);
 
-				_testCaseNames.add(_getName(fileName));
+				_testCaseNames.add(testCaseName);
 
 				_testCaseRootElements.put(fileName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testsuite")) {
+				String testSuiteName = _getName(fileName);
+
+				if (_testSuiteNames.contains(testSuiteName)) {
+					throw new Exception(
+						"Duplicate name " + testSuiteName + " at " + fileName);
+				}
+
 				_testSuiteClassNames.add(_getClassName(fileName));
 
 				_testSuiteFileNames.add(fileName);
 
-				_testSuiteNames.add(_getName(fileName));
+				_testSuiteNames.add(testSuiteName);
 
 				_testSuiteRootElements.put(fileName, _getRootElement(fileName));
 			}

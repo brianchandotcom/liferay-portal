@@ -15,7 +15,10 @@
 package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentfilterstructurewcl.ViewWCWebContentFilterStructureWCLTests;
 import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl.ViewWCWebContentScopeGlobalWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeliferaywcl.ViewWCWebContentScopeLiferayWCLTests;
+import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopemysitewcl.ViewWCWebContentScopeMySiteWCLTests;
 import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentwcl.ViewWCWebContentWCLTests;
 
 import junit.framework.Test;
@@ -29,7 +32,10 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(ViewWCWebContentFilterStructureWCLTests.suite());
 		testSuite.addTest(ViewWCWebContentScopeGlobalWCLTests.suite());
+		testSuite.addTest(ViewWCWebContentScopeLiferayWCLTests.suite());
+		testSuite.addTest(ViewWCWebContentScopeMySiteWCLTests.suite());
 		testSuite.addTest(ViewWCWebContentWCLTests.suite());
 
 		return testSuite;

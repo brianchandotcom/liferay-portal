@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl;
+package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopemysitewcl;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWCWebContentScopeGlobalWCLTest extends BaseTestCase {
-	public void testViewWCWebContentScopeGlobalWCL() throws Exception {
+public class ViewWCWebContentScopeMySiteWCLTest extends BaseTestCase {
+	public void testViewWCWebContentScopeMySiteWCL() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -37,17 +37,17 @@ public class ViewWCWebContentScopeGlobalWCLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Author"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[3]"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Global Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent MySite Title"),
 			selenium.getText(
-				"//tr[contains(.,'WC WebContent Global Title')]/td[1]/a"));
+				"//tr[contains(.,'WC WebContent MySite Title')]/td[1]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC WebContent Global Title')]/td[2]/a"));
+				"//tr[contains(.,'WC WebContent MySite Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
-				"//tr[contains(.,'WC WebContent Global Title')]/td[3]/a"));
+				"//tr[contains(.,'WC WebContent MySite Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
+		assertFalse(selenium.isTextPresent("WC WebContent Global Title"));
 		assertFalse(selenium.isTextPresent("WC WebContent Liferay Title"));
-		assertFalse(selenium.isTextPresent("WC WebContent MySite Title"));
 	}
 }

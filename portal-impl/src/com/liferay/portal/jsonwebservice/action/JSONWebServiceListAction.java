@@ -97,7 +97,7 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 	private Map<String, Object> _buildServicesMap() throws PortalException {
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(
-				StringPool.BLANK);
+				_contextPath);
 
 		Map<String, Object> services =
 			new LinkedHashMap<String, Object>(

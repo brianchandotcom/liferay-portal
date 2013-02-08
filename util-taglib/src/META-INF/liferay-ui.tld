@@ -2217,6 +2217,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>membership-policy-error</name>
+		<tag-class>com.liferay.taglib.ui.MembershipPolicyErrorTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>message</name>
 		<tag-class>com.liferay.taglib.ui.MessageTag</tag-class>
 		<body-content>JSP</body-content>

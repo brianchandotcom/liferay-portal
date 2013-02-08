@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
+import com.liferay.portal.jsonwebservice.action.JSONWebServiceListAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -105,6 +106,9 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		try {
 			if (path.equals("/invoke")) {
 				jsonWebServiceAction = new JSONWebServiceInvokerAction(request);
+			}
+			else if (request.getParameter("list") != null) {
+				jsonWebServiceAction = new JSONWebServiceListAction(request);
 			}
 			else {
 				jsonWebServiceAction =

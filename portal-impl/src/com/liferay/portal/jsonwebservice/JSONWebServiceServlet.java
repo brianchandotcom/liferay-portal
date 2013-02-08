@@ -74,8 +74,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 		}
 
 		String path = GetterUtil.getString(request.getPathInfo());
+		String listParameter = request.getParameter("list");
 
-		if (!path.equals(StringPool.SLASH) && !path.equals(StringPool.BLANK)) {
+		if ((!path.equals(StringPool.SLASH) &&
+				!path.equals(StringPool.BLANK)) || (listParameter != null)) {
+
 			try {
 				ServicePreAction servicePreAction =
 					(ServicePreAction)InstancePool.get(

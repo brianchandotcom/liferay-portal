@@ -38,6 +38,7 @@ public class ViewImportLARCPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//tr[contains(.,'Test Entry')]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("Test Entry"),
 			selenium.getText("//tr[contains(.,'Test Entry')]/td[2]/a"));
 		selenium.clickAt("//tr[contains(.,'Test Entry')]/td[2]/a",

@@ -44,13 +44,28 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[@id='_160_groupSelectorButton']/span</td>
+	<td>Liferay</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//a[@id='_160_groupSelectorButton']/span</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -169,9 +184,19 @@
 	<td>top</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

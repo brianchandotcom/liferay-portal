@@ -24,8 +24,6 @@ public class TearDownRoleWebContentEditorTest extends BaseTestCase {
 	public void testTearDownRoleWebContentEditor() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));

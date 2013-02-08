@@ -41,12 +41,16 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForVisible("link=Site Name");
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
+				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
+					RuntimeVariables.replace("Liferay"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("link=Site Name"));
-				selenium.clickAt("link=Site Name",
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
@@ -111,6 +115,8 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				selenium.selectFrame("relative=top");
+
 			case 100:
 				label = -1;
 			}

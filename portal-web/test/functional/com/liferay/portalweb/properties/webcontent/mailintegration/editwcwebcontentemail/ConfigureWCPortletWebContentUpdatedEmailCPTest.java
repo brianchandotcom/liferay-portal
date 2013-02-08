@@ -100,6 +100,7 @@ public class ConfigureWCPortletWebContentUpdatedEmailCPTest extends BaseTestCase
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_emailArticleUpdatedEnabledCheckbox']"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

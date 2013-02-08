@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -75,7 +76,6 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutUti
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -775,7 +775,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 			ddmStructureUuids[i] = ddmStructure.getUuid();
 
-			DDMPortletDataHandler.exportStructure(
+			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, fileEntryTypeElement, ddmStructure);
 		}
 
@@ -1353,7 +1353,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			"structure");
 
 		for (Element structureElement : structureElements) {
-			DDMPortletDataHandler.importStructure(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, structureElement);
 		}
 

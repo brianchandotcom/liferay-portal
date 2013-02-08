@@ -17,13 +17,13 @@ package com.liferay.portlet.portletdisplaytemplate.lar;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
@@ -72,7 +72,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		List<Element> ddmTemplateElements = rootElement.elements("template");
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
-			DDMPortletDataHandler.importTemplate(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, ddmTemplateElement);
 		}
 
@@ -93,9 +93,8 @@ public class PortletDisplayTemplatePortletDataHandler
 					portletDataContext.getScopeGroupId(), classNameId);
 
 			for (DDMTemplate ddmTemplate : ddmTemplates) {
-				DDMPortletDataHandler.exportTemplate(
+				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, portletDisplayTemplatesElement,
-					getTemplatePath(portletDataContext, ddmTemplate),
 					ddmTemplate);
 			}
 		}

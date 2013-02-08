@@ -185,20 +185,20 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					%>
 
 					<%
-					PortletURL layoutScopesBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+					PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
-					layoutScopesBrowserURL.setParameter("struts_action", "/site_browser/view");
-					layoutScopesBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-					layoutScopesBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
-					layoutScopesBrowserURL.setParameter("type", "layoutScopes");
-					layoutScopesBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
-					layoutScopesBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
-					layoutScopesBrowserURL.setPortletMode(PortletMode.VIEW);
-					layoutScopesBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+					layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
+					layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+					layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+					layoutSiteBrowserURL.setParameter("type", "layoutScopes");
+					layoutSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
+					layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
+					layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
+					layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-					String layoutScopesBrowserURLString = HttpUtil.addParameter(layoutScopesBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+					String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-					String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-layout-scopes") + "', uri:'" + HtmlUtil.escapeURL(layoutScopesBrowserURLString) + "'});";
+					String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
 
 					boolean hasScopeLayout = false;
 
@@ -215,7 +215,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 						<liferay-ui:icon
 							cssClass="highlited"
 							image="add"
-							message='<%= LanguageUtil.get(pageContext, "layout-scopes") + StringPool.TRIPLE_PERIOD %>'
+							message='<%= LanguageUtil.get(pageContext, "layouts") + StringPool.TRIPLE_PERIOD %>'
 							url="<%= taglibLayoutSiteBrowserURL %>"
 						/>
 					</c:if>

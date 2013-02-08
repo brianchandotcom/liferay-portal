@@ -90,8 +90,8 @@ portletURL.setParameter("keywords", keywords);
 
 		PortletURL hitURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/wiki/view");
-		portletURL.setParameter("redirect", currentURL);
+		hitURL.setParameter("struts_action", "/wiki/view");
+		hitURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:search-container-results

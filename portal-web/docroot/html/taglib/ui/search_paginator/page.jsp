@@ -40,15 +40,24 @@ if (iteratorURL != null) {
 }
 %>
 
-<liferay-ui:page-iterator
-	cur="<%= searchContainer.getCur() %>"
-	curParam="<%= searchContainer.getCurParam() %>"
-	delta="<%= searchContainer.getDelta() %>"
-	deltaConfigurable="<%= searchContainer.isDeltaConfigurable() %>"
-	deltaParam="<%= searchContainer.getDeltaParam() %>"
-	id="<%= id %>"
-	maxPages="<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>"
-	total="<%= searchContainer.getTotal() %>"
-	type="<%= type %>"
-	url="<%= url %>"
-/>
+<c:choose>
+	<c:when test="<%= searchContainer.getTotal() > 0 %>">
+		<liferay-ui:page-iterator
+			cur="<%= searchContainer.getCur() %>"
+			curParam="<%= searchContainer.getCurParam() %>"
+			delta="<%= searchContainer.getDelta() %>"
+			deltaConfigurable="<%= searchContainer.isDeltaConfigurable() %>"
+			deltaParam="<%= searchContainer.getDeltaParam() %>"
+			id="<%= id %>"
+			maxPages="<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>"
+			total="<%= searchContainer.getTotal() %>"
+			type="<%= type %>"
+			url="<%= url %>"
+		/>
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(searchContainer.getEmptyResultsMessage()) %>">
+		<div class="portlet-msg-info">
+			<%= searchContainer.getEmptyResultsMessage() %>
+		</div>
+	</c:when>
+</c:choose>

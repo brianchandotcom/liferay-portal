@@ -76,8 +76,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		PortletURL hitURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/blogs/view_entry");
-		portletURL.setParameter("redirect", currentURL);
+		hitURL.setParameter("struts_action", "/blogs/view_entry");
+		hitURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:search-container-results

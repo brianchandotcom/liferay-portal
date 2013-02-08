@@ -2148,6 +2148,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="social-office-smoke" />
+			<param name="test.ant.script.evaluate.logs" value="false" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeSmokeTestSuite" />
 		</antcall>

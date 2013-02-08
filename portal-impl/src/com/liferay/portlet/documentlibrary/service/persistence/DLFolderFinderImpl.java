@@ -761,8 +761,8 @@ public class DLFolderFinderImpl
 			},
 			new String[] {
 				getFolderId(folderId, "DLFileEntry"),
-				getFolderId(folderId, "DLFileVersion"),
 				getFolderId(folderId, "DLFileShortcut"),
+				getFolderId(folderId, "DLFileVersion"),
 				getFolderId(folderId, "DLFolder")
 			});
 

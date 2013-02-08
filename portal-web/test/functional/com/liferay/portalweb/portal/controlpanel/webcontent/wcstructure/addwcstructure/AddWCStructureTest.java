@@ -25,6 +25,10 @@ public class AddWCStructureTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,33 +39,106 @@ public class AddWCStructureTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Structures",
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+			RuntimeVariables.replace("Manage"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+		assertEquals(RuntimeVariables.replace("Structures"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/store.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add Structure']",
-			RuntimeVariables.replace("Add Structure"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_15_name_en_US']",
+		Thread.sleep(5000);
+		selenium.waitForVisible("//input[@id='_166_name_en_US']");
+		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("WC Structure Name"));
-		selenium.type("//textarea[@id='_15_description_en_US']",
+		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Description"));
-		selenium.clickAt("//input[@value='Add Row']",
-			RuntimeVariables.replace("Add Row"));
-		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_15_structure_el0_type']",
-			RuntimeVariables.replace("Text"));
-		selenium.type("//input[@id='_15_structure_el0_name']",
-			RuntimeVariables.replace("text"));
+		assertEquals(RuntimeVariables.replace("Boolean"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Date"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Decimal"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("File Upload"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("HTML"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Integer"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Link to Page"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Number"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Radio"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Description"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+		selenium.selectFrame("relative=top");
 	}
 }

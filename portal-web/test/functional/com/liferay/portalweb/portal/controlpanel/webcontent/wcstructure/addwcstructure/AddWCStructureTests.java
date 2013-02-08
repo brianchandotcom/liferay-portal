@@ -27,8 +27,6 @@ public class AddWCStructureTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCStructureTest.class);
 		testSuite.addTestSuite(ViewWCStructureTest.class);
-		testSuite.addTestSuite(ViewWCStructureRecentTest.class);
-		testSuite.addTestSuite(ViewWCStructureXMLSchemaDefinitionTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

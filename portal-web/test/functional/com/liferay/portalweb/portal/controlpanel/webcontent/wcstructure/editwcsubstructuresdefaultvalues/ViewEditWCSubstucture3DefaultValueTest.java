@@ -40,50 +40,59 @@ public class ViewEditWCSubstucture3DefaultValueTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//span[@title='Add']/ul/li/strong/a/span");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure3 Name')]/a",
-			"WC Substructure3 Name");
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+			RuntimeVariables.replace("Manage"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+		assertEquals(RuntimeVariables.replace("Structures"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+			RuntimeVariables.replace("Structures"));
+		selenium.waitForVisible(
+			"//iframe[contains(@src,'_166_scopeStructureName')]");
+		selenium.selectFrame(
+			"//iframe[contains(@src,'_166_scopeStructureName')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/store.js')]");
+		assertTrue(selenium.isVisible("//input[@name='_166_keywords']"));
+		selenium.type("//input[@name='_166_keywords']",
+			RuntimeVariables.replace("Substructure3"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForVisible(
+			"//tr[contains(.,'WC Substructure3 Name')]/td[2]/a");
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Substructure3 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Substructure3 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure3 Name')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'WC Substructure3 Name')]/a",
-			RuntimeVariables.replace("WC Substructure3 Name"));
+				"//tr[contains(.,'WC Substructure3 Name')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Substructure3 Name')]/td[4]/a"));
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Give the Web Content a Name"),
-			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("WC Substructure3 Name"),
-			selenium.getText("//span[@id='_15_structureNameLabel']"));
-		assertEquals(RuntimeVariables.replace("Title (Required)"),
-			selenium.getText("//label[@for='_15_null_en_US']"));
-		assertEquals("Give the Web Content a Name",
-			selenium.getValue("//input[@id='_15_title_en_US']"));
-		assertEquals(RuntimeVariables.replace("Head"),
-			selenium.getText("//label[@for='Head']"));
-		assertEquals("Article's Title Here",
-			selenium.getValue("//input[@id='Head']"));
-		assertEquals(RuntimeVariables.replace("Subtitle"),
-			selenium.getText("//label[@for='Subtitle']"));
-		assertEquals("Article's Subtitle Here",
-			selenium.getValue("//input[@id='Subtitle']"));
-		assertEquals(RuntimeVariables.replace("Content"),
-			selenium.getText("//label[@for='Content']"));
-		assertEquals("Enter Article Content",
-			selenium.getValue("//textarea[@id='Content']"));
-		assertEquals(RuntimeVariables.replace("ImageBox"),
-			selenium.getText("//label[@for='ImageBox']"));
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText("//label[@for='Image']"));
-		assertEquals(RuntimeVariables.replace("Summary"),
-			selenium.getText("//label[@for='Summary']"));
-		assertEquals(RuntimeVariables.replace("Photographer"),
-			selenium.getText("//label[@for='Photographer']"));
-		assertEquals(RuntimeVariables.replace("Documents and Media"),
-			selenium.getText("//label[@for='Documents and Media']"));
-		assertEquals(RuntimeVariables.replace("Extra"),
-			selenium.getText("//label[@for='Extra']"));
+		assertEquals("WC Substructure3 Name",
+			selenium.getValue("//input[@id='_166_name_en_US']"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+		assertEquals("Extra",
+			selenium.getValue(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
 	}
 }

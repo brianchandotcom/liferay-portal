@@ -29,7 +29,6 @@ public class AdvancedSearchWCStructureTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCStructureTest.class);
 		testSuite.addTestSuite(AdvancedSearchWCStructureDescriptionTest.class);
-		testSuite.addTestSuite(AdvancedSearchWCStructureIDTest.class);
 		testSuite.addTestSuite(AdvancedSearchWCStructureNameTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 

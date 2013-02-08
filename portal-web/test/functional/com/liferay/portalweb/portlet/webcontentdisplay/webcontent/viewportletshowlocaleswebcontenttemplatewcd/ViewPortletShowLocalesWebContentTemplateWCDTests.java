@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewportletsh
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplate.addwctemplate.TearDownWCTemplateTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplatestructure.addwctemplatestructure.TearDownWCTemplateStructureTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcstructurewebcontentlocalized.AddStructureLocalizedTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcstructurewebcontentlocalized.AddTemplateLocalizedTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
@@ -53,7 +53,7 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTests
 		testSuite.addTestSuite(TearDownLanguageTest.class);
 		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
-		testSuite.addTestSuite(TearDownWCTemplateTest.class);
+		testSuite.addTestSuite(TearDownWCTemplateStructureTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

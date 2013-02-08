@@ -45,9 +45,8 @@ public class TearDownWCStructureTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage"),
-					selenium.getText(
-						"//span[@title='Manage']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 					RuntimeVariables.replace("Manage"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");

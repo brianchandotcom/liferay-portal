@@ -49,8 +49,11 @@ public class AddSettingsWebsiteUrlInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("label=Public"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("//div[@role='alert']");
+		selenium.waitForVisible("xPath=(//div[@class='portlet-msg-error'])[1]");
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
 		assertEquals(RuntimeVariables.replace("Please enter a valid URL."),
-			selenium.getText("//div[@role='alert']"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

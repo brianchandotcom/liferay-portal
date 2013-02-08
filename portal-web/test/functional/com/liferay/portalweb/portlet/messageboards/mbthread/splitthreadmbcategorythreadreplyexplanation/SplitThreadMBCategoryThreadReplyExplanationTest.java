@@ -74,12 +74,13 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace(
 				"MB Category Thread Message Explanation Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and contains(@style,'display: none;')]");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body",
-			"The new thread can be found at ${newThreadURL}.");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
+		assertEquals(RuntimeVariables.replace(
+				"The new thread can be found at ${newThreadURL}."),
+			selenium.getText("//body"));
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");

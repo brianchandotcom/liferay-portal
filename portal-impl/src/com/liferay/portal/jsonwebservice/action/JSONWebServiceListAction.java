@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -47,20 +48,17 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 	public JSONWebServiceListAction(HttpServletRequest request) {
 		String list = request.getParameter("list");
 
-		if (list.length() == 0) {
+		if (Validator.isNull(list)) {
 			_filters = null;
 		}
 		else {
 			_filters = StringUtil.split(list, ',');
 		}
 
-		_contextPath = request.getContextPath();
-
 		_basePath = request.getServletPath();
-
 		_baseURL = request.getRequestURL().toString();
-
-		_types = new ArrayList<Class>();
+		_contextPath = request.getContextPath();
+		_types = new ArrayList<Class<?>>();
 	}
 
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping() {
@@ -68,22 +66,21 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 	}
 
 	public Object invoke() throws Exception {
+		Map<String, Object> resultsMap = new LinkedHashMap<String, Object>();
 
-		final Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-		result.put("context", _contextPath);
-		result.put("basePath", _basePath);
-		result.put("baseUrl", _baseURL);
+		resultsMap.put("context", _contextPath);
+		resultsMap.put("basePath", _basePath);
+		resultsMap.put("baseUrl", _baseURL);
 
 		if (_filters != null) {
-			result.put("filters", Arrays.toString(_filters));
+			resultsMap.put("filters", Arrays.toString(_filters));
 		}
 
 		Map<String, Object> servicesMap = _buildServicesMap();
 
-		result.put("methods", servicesMap);
+		resultsMap.put("methods", servicesMap);
 
-		return result;
+		return resultsMap;
 	}
 
 	private boolean _acceptPath(String path) {
@@ -91,7 +88,12 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			return true;
 		}
 
-		return Wildcard.matchOne(path, _filters) != -1;
+		if (Wildcard.matchOne(path, _filters) != -1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private Map<String, Object> _buildServicesMap() throws PortalException {
@@ -99,12 +101,11 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(
 				_contextPath);
 
-		Map<String, Object> services =
-			new LinkedHashMap<String, Object>(
-				jsonWebServiceActionMappings.size());
+		Map<String, Object> servicesMap = new LinkedHashMap<String, Object>(
+			jsonWebServiceActionMappings.size());
 
-		for (JSONWebServiceActionMapping
-			jsonWebServiceActionMapping : jsonWebServiceActionMappings) {
+		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
+				jsonWebServiceActionMappings) {
 
 			String path = jsonWebServiceActionMapping.getPath();
 
@@ -112,7 +113,8 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 				continue;
 			}
 
-			Map<String, Object> action = new LinkedHashMap<String, Object>();
+			Map<String, Object> actionsMap =
+				new LinkedHashMap<String, Object>();
 
 			Method actionMethod = jsonWebServiceActionMapping.getActionMethod();
 
@@ -123,8 +125,7 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 				methodParameters.length);
 
 			for (MethodParameter methodParameter : methodParameters) {
-
-				Class[] genericTypes = null;
+				Class<?>[] genericTypes = null;
 
 				try {
 					genericTypes = methodParameter.getGenericTypes();
@@ -138,19 +139,17 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 					_formatType(methodParameter.getType(), genericTypes));
 			}
 
-			action.put("path", path);
+			actionsMap.put(
+				"httpMethod", jsonWebServiceActionMapping.getMethod());
+			actionsMap.put("parameters", parameters);
+			actionsMap.put("path", path);
+			actionsMap.put(
+				"response", _formatType(actionMethod.getReturnType(), null));
 
-			action.put("parameters", parameters);
-
-			action.put("httpMethod", jsonWebServiceActionMapping.getMethod());
-
-			action.put("response", _formatType(
-				actionMethod.getReturnType(), null));
-
-			services.put(path, action);
+			servicesMap.put(path, actionsMap);
 		}
 
-		return services;
+		return servicesMap;
 	}
 
 	private String _formatType(Class<?> type, Class<?>[] genericTypes) {
@@ -164,23 +163,15 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			return type.getSimpleName();
 		}
 
-		if (type.equals(String.class)) {
-			return "string";
-		}
-
-		if (type.equals(Locale.class)) {
-			return "string";
-		}
-
 		if (type.equals(Date.class)) {
 			return "long";
 		}
 
-		if (type.equals(Serializable.class)) {
-			return "object";
+		if (type.equals(Locale.class) || type.equals(String.class)) {
+			return "string";
 		}
 
-		if (type.equals(Object.class)) {
+		if (type.equals(Object.class) || type.equals(Serializable.class)) {
 			return "object";
 		}
 
@@ -196,34 +187,33 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			_types.add(type);
 		}
 
-		if (genericTypes != null) {
-			StringBundler genericTypesString = new StringBundler(
-				2 + genericTypes.length * 2);
-
-			genericTypesString.append(StringPool.LESS_THAN);
-
-			for (int i = 0; i < genericTypes.length; i++) {
-				Class<?> genericType = genericTypes[i];
-
-				if (i != 0) {
-					genericTypesString.append(StringPool.COMMA);
-				}
-
-				genericTypesString.append(_formatType(genericType, null));
-			}
-
-			genericTypesString.append(StringPool.GREATER_THAN);
-
-			return typeName + genericTypesString.toString();
+		if (genericTypes == null) {
+			return "object<" + typeName + ">";
 		}
 
-		return "object<" + typeName + ">";
+		StringBundler sb = new StringBundler(genericTypes.length * 2 + 2);
+
+		sb.append(StringPool.LESS_THAN);
+
+		for (int i = 0; i < genericTypes.length; i++) {
+			Class<?> genericType = genericTypes[i];
+
+			if (i != 0) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(_formatType(genericType, null));
+		}
+
+		sb.append(StringPool.GREATER_THAN);
+
+		return typeName + sb.toString();
 	}
 
 	private String _basePath;
 	private String _baseURL;
 	private String _contextPath;
 	private String[] _filters;
-	private List<Class> _types;
+	private List<Class<?>> _types;
 
 }

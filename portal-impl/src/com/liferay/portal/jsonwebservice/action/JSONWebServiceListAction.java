@@ -191,7 +191,7 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			return "object<" + typeName + ">";
 		}
 
-		StringBundler sb = new StringBundler(genericTypes.length * 2 + 2);
+		StringBundler sb = new StringBundler(genericTypes.length * 2 + 1);
 
 		sb.append(StringPool.LESS_THAN);
 

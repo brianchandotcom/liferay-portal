@@ -148,6 +148,7 @@
 	<import class="com.liferay.portlet.social.model.SocialActivity" />
 	<import class="com.liferay.portlet.social.model.SocialActivityAchievement" />
 	<import class="com.liferay.portlet.social.model.SocialActivityCounter" />
+	<import class="com.liferay.portlet.social.model.SocialActivityGroup" />
 	<import class="com.liferay.portlet.social.model.SocialActivityInterpreter" />
 	<import class="com.liferay.portlet.social.model.SocialActivityLimit" />
 	<import class="com.liferay.portlet.social.model.SocialActivitySetting" />
@@ -2399,6 +2400,7 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="activityGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="mirrorActivityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -2435,6 +2437,20 @@
 		<property name="startPeriod" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="endPeriod" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.liferay.portlet.social.model.impl.SocialActivityGroupImpl" table="SocialActivityGroup">
+		<cache usage="read-write" />
+		<id name="activityGroupId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" table="SocialActivityLimit">
 		<cache usage="read-write" />

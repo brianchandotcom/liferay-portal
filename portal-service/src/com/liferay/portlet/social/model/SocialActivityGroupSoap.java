@@ -25,28 +25,26 @@ import java.util.List;
  * @author    Brian Wing Shun Chan
  * @generated
  */
-public class SocialActivitySoap implements Serializable {
-	public static SocialActivitySoap toSoapModel(SocialActivity model) {
-		SocialActivitySoap soapModel = new SocialActivitySoap();
+public class SocialActivityGroupSoap implements Serializable {
+	public static SocialActivityGroupSoap toSoapModel(SocialActivityGroup model) {
+		SocialActivityGroupSoap soapModel = new SocialActivityGroupSoap();
 
-		soapModel.setActivityId(model.getActivityId());
+		soapModel.setActivityGroupId(model.getActivityGroupId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setActivityGroupId(model.getActivityGroupId());
-		soapModel.setMirrorActivityId(model.getMirrorActivityId());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setType(model.getType());
-		soapModel.setExtraData(model.getExtraData());
-		soapModel.setReceiverUserId(model.getReceiverUserId());
 
 		return soapModel;
 	}
 
-	public static SocialActivitySoap[] toSoapModels(SocialActivity[] models) {
-		SocialActivitySoap[] soapModels = new SocialActivitySoap[models.length];
+	public static SocialActivityGroupSoap[] toSoapModels(
+		SocialActivityGroup[] models) {
+		SocialActivityGroupSoap[] soapModels = new SocialActivityGroupSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -55,14 +53,15 @@ public class SocialActivitySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialActivitySoap[][] toSoapModels(SocialActivity[][] models) {
-		SocialActivitySoap[][] soapModels = null;
+	public static SocialActivityGroupSoap[][] toSoapModels(
+		SocialActivityGroup[][] models) {
+		SocialActivityGroupSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new SocialActivitySoap[models.length][models[0].length];
+			soapModels = new SocialActivityGroupSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new SocialActivitySoap[0][0];
+			soapModels = new SocialActivityGroupSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -72,33 +71,34 @@ public class SocialActivitySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static SocialActivitySoap[] toSoapModels(List<SocialActivity> models) {
-		List<SocialActivitySoap> soapModels = new ArrayList<SocialActivitySoap>(models.size());
+	public static SocialActivityGroupSoap[] toSoapModels(
+		List<SocialActivityGroup> models) {
+		List<SocialActivityGroupSoap> soapModels = new ArrayList<SocialActivityGroupSoap>(models.size());
 
-		for (SocialActivity model : models) {
+		for (SocialActivityGroup model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new SocialActivitySoap[soapModels.size()]);
+		return soapModels.toArray(new SocialActivityGroupSoap[soapModels.size()]);
 	}
 
-	public SocialActivitySoap() {
+	public SocialActivityGroupSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _activityId;
+		return _activityGroupId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setActivityId(pk);
+		setActivityGroupId(pk);
 	}
 
-	public long getActivityId() {
-		return _activityId;
+	public long getActivityGroupId() {
+		return _activityGroupId;
 	}
 
-	public void setActivityId(long activityId) {
-		_activityId = activityId;
+	public void setActivityGroupId(long activityGroupId) {
+		_activityGroupId = activityGroupId;
 	}
 
 	public long getGroupId() {
@@ -133,20 +133,12 @@ public class SocialActivitySoap implements Serializable {
 		_createDate = createDate;
 	}
 
-	public long getActivityGroupId() {
-		return _activityGroupId;
+	public long getModifiedDate() {
+		return _modifiedDate;
 	}
 
-	public void setActivityGroupId(long activityGroupId) {
-		_activityGroupId = activityGroupId;
-	}
-
-	public long getMirrorActivityId() {
-		return _mirrorActivityId;
-	}
-
-	public void setMirrorActivityId(long mirrorActivityId) {
-		_mirrorActivityId = mirrorActivityId;
+	public void setModifiedDate(long modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getClassNameId() {
@@ -173,32 +165,13 @@ public class SocialActivitySoap implements Serializable {
 		_type = type;
 	}
 
-	public String getExtraData() {
-		return _extraData;
-	}
-
-	public void setExtraData(String extraData) {
-		_extraData = extraData;
-	}
-
-	public long getReceiverUserId() {
-		return _receiverUserId;
-	}
-
-	public void setReceiverUserId(long receiverUserId) {
-		_receiverUserId = receiverUserId;
-	}
-
-	private long _activityId;
+	private long _activityGroupId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private long _createDate;
-	private long _activityGroupId;
-	private long _mirrorActivityId;
+	private long _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private int _type;
-	private String _extraData;
-	private long _receiverUserId;
 }

@@ -852,7 +852,7 @@
 			</filterchain>
 		</loadfile>
 
-		<echo file="${project.dir}/tools/selenium/extensions/ide-generated.js">${ide.js.content}</echo>
+		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
 	<target name="build-themes">

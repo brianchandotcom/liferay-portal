@@ -199,7 +199,7 @@ _sass_cache_*.css
 /tools/liferay-doclet
 
 /tools/selenium/*.exe
-/tools/selenium/extensions/ide-generated.js
+/tools/selenium/extensions/ide.*.js
 
 /tools/tck
 

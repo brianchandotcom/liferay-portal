@@ -228,9 +228,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(
-				sql, folderId, queryDefinition.getStatus(),
-				includeMountFolders);
+			sql = updateSQL(sql, folderId, includeMountFolders);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -299,9 +297,7 @@ public class DLFolderFinderImpl
 				COUNT_FE_BY_G_F, groupId, null, queryDefinition,
 				inlineSQLHelper);
 
-			sql = StringUtil.replace(
-				sql, "[$FILE_ENTRY_FOLDER_ID$]",
-				getFolderId(folderId, DLFileEntryImpl.TABLE_NAME));
+			sql = updateSQL(sql, folderId, false);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -361,7 +357,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql, folderId, queryDefinition.getStatus(), false);
+			sql = updateSQL(sql, folderId, false);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -451,20 +447,8 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			if (includeMountFolders) {
-				sql = StringUtil.replace(
-					sql, "(DLFolder.mountPoint = ?) AND", StringPool.BLANK);
-			}
+			sql = updateSQL(sql, folderId, includeMountFolders);
 
-			sql = StringUtil.replace(
-				sql, "[$FOLDER_PARENT_FOLDER_ID$]",
-				getFolderId(folderId, "DLFolder"));
-			sql = StringUtil.replace(
-				sql, "[$FILE_ENTRY_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileEntry"));
-			sql = StringUtil.replace(
-				sql, "[$FILE_SHORTCUT_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileShortcut"));
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -574,12 +558,7 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = StringUtil.replace(
-				sql, "[$FILE_ENTRY_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileEntry"));
-			sql = StringUtil.replace(
-				sql, "[$FILE_SHORTCUT_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileShortcut"));
+			sql = updateSQL(sql, folderId, false);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -773,7 +752,7 @@ public class DLFolderFinderImpl
 	}
 
 	protected String updateSQL(
-		String sql, long folderId, int status, boolean includeMountFolders) {
+		String sql, long folderId, boolean includeMountFolders) {
 
 		if (includeMountFolders) {
 			sql = StringUtil.replace(
@@ -784,16 +763,9 @@ public class DLFolderFinderImpl
 			sql, "[$FOLDER_PARENT_FOLDER_ID$]",
 			getFolderId(folderId, "DLFolder"));
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			sql = StringUtil.replace(
-				sql, "[$FILE_ENTRY_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileEntry"));
-		}
-		else {
-			sql = StringUtil.replace(
-				sql, "[$FILE_ENTRY_FOLDER_ID$]",
-				getFolderId(folderId, "DLFileVersion"));
-		}
+		sql = StringUtil.replace(
+			sql, "[$FILE_ENTRY_FOLDER_ID$]",
+			getFolderId(folderId, "DLFileEntry"));
 
 		sql = StringUtil.replace(
 			sql, "[$FILE_VERSION_FOLDER_ID$]",

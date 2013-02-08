@@ -81,7 +81,7 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 
 		Map<String, Object> servicesMap = _buildServicesMap();
 
-		result.put("services", servicesMap);
+		result.put("methods", servicesMap);
 
 		return result;
 	}

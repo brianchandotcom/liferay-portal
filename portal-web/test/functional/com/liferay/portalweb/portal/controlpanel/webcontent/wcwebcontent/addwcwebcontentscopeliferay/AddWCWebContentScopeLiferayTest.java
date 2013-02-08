@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeliferay;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWCWebContentTest extends BaseTestCase {
-	public void testAddWCWebContent() throws Exception {
+public class AddWCWebContentScopeLiferayTest extends BaseTestCase {
+	public void testAddWCWebContentScopeLiferay() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -36,6 +36,18 @@ public class AddWCWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[@id='_160_groupSelectorButton']"));
+		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
+			RuntimeVariables.replace("Liferay"));
+		selenium.waitForVisible(
+			"xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText(
+				"xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]"));
+		selenium.clickAt("xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]",
+			RuntimeVariables.replace("Liferay"));
+		selenium.waitForText("//a[@id='_160_groupSelectorButton']", "Liferay");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
@@ -54,19 +66,20 @@ public class AddWCWebContentTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC WebContent Title"));
+			RuntimeVariables.replace("WC WebContent Liferay Title"));
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
 		selenium.typeFrame("//div[@id='cke_1_contents']/iframe",
-			RuntimeVariables.replace("WC WebContent Content"));
+			RuntimeVariables.replace("WC WebContent Liferay Content"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
-				"//div[@data-title='WC WebContent Title']/a/div/img"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//div[@data-title='WC WebContent Title']/a/span"));
+				"//div[@data-title='WC WebContent Liferay Title']/a/div/img"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Liferay Title"),
+			selenium.getText(
+				"//div[@data-title='WC WebContent Liferay Title']/a/span"));
 	}
 }

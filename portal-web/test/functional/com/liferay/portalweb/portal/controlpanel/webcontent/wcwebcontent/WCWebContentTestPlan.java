@@ -19,6 +19,19 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcst
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontents.AddWCWebContentsTests;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.editwcwebcontent.EditWCWebContentTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.movewcwebcontenttofolder.MoveWCWebContentToFolderTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.viewwcfiltermine.ViewWCFilterMineTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.viewwcfilterrecent.ViewWCFilterRecentTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.viewwcfilterstructure.ViewWCFilterStructureTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.permissionswcwebcontentguestviewoff.PermissionsWCWebContentGuestViewOffTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.localizewcwebcontent.LocalizeWCWebContentTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeglobal.AddWCWebContentScopeGlobalTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeliferay.AddWCWebContentScopeLiferayTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopemysite.AddWCWebContentScopeMySiteTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.searchwcwebcontentstructurefieldsearchable.SearchWCWebContentStructureFieldSearchableTests
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentstructure.AddWCWebContentStructureTests;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentstructurefieldsearchable.AddWCWebContentStructureFieldSearchableTests;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,6 +48,18 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWCWebContentTests.suite());
 		testSuite.addTest(AddWCWebContentsTests.suite());
 		testSuite.addTest(EditWCWebContentTests.suite());
+		testSuite.addTest(MoveWCWebContentToFolderTests.suite());
+		testSuite.addTest(ViewWCFilterMineTests.suite());
+		testSuite.addTest(ViewWCFilterRecentTests.suite());
+		testSuite.addTest(ViewWCFilterStructureTests.suite());
+		testSuite.addTest(PermissionsWCWebContentGuestViewOffTests.suite());
+		testSuite.addTest(LocalizeWCWebContentTests.suite());
+		testSuite.addTest(AddWCWebContentScopeGlobalTests.suite());
+		testSuite.addTest(AddWCWebContentScopeLiferayTests.suite());
+		testSuite.addTest(AddWCWebContentScopeMySiteTests.suite());
+		testSuite.addTest(SearchWCWebContentStructureFieldSearchableTests.suite());
+		testSuite.addTest(AddWCWebContentStructureTests.suite());
+		testSuite.addTest(AddWCWebContentStructureFieldSearchableTests.suite());
 
 		return testSuite;
 	}

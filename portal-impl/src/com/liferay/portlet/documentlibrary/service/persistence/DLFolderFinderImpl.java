@@ -745,16 +745,6 @@ public class DLFolderFinderImpl
 		return sb.toString();
 	}
 
-	protected String replaceExcludeStatus(
-		String sql, QueryDefinition queryDefinition) {
-
-		if (queryDefinition.isExcludeStatus()) {
-			sql = StringUtil.replace(sql, ".status = ?)", ".status != ?)");
-		}
-
-		return sql;
-	}
-
 	protected String updateSQL(
 		String sql, long folderId, int status, boolean includeMountFolders) {
 

@@ -20,6 +20,10 @@ package com.liferay.httpservice;
  */
 public interface HttpServicePropsKeys {
 
+	public static final String HTTP_SERVICE_ALIAS = "alias";
+
+	public static final String HTTP_SERVICE_NAME = "name";
+
 	public static final String HTTP_SERVICE_OSGI_BUNDLE = "osgi-bundle";
 
 }

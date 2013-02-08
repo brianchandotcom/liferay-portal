@@ -52,7 +52,7 @@ public class JSONWebServiceListAction implements JSONWebServiceAction {
 			_filters = null;
 		}
 		else {
-			_filters = StringUtil.split(list, ',');
+			_filters = StringUtil.split(list);
 		}
 
 		_basePath = request.getServletPath();

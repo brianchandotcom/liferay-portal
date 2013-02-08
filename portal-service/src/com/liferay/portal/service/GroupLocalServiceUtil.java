@@ -369,16 +369,6 @@ public class GroupLocalServiceUtil {
 		getService().checkCompanyGroup(companyId);
 	}
 
-	/**
-	* Removes the user from any forbidden groups and adds the user to all
-	* mandatory groups, if the user does not belong to them.
-	*
-	* @param user the user
-	* @throws PortalException if the user cannot be added or removed from any
-	groups.
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.events.MembershipPolicyAction
-	*/
 	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().checkMembershipPolicy(user);
@@ -530,7 +520,7 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the sites that are children of the parent group.
+	* Returns all the groups that are direct children of the parent group.
 	*
 	* @param companyId the primary key of the company
 	* @param parentGroupId the primary key of the parent group
@@ -543,6 +533,20 @@ public class GroupLocalServiceUtil {
 		long companyId, long parentGroupId, boolean site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroups(companyId, parentGroupId, site);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroups(companyId, className, parentGroupId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroups(companyId, className, parentGroupId, start, end);
 	}
 
 	/**
@@ -560,10 +564,26 @@ public class GroupLocalServiceUtil {
 		return getService().getGroups(groupIds);
 	}
 
+	/**
+	* Returns the number of groups that are direct children of the parent
+	* group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the number of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public static int getGroupsCount(long companyId, long parentGroupId,
 		boolean site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupsCount(companyId, parentGroupId, site);
+	}
+
+	public static int getGroupsCount(long companyId,
+		java.lang.String className, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupsCount(companyId, className, parentGroupId);
 	}
 
 	/**

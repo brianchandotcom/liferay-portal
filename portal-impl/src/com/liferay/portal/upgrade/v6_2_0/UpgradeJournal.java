@@ -124,7 +124,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	protected long addDDMTemplate(
+	protected void addDDMTemplate(
 			String uuid_, long ddmTemplateId, long groupId, long companyId,
 			long userId, String userName, Date createDate, Date modifiedDate,
 			long classNameId, long classPK, String templateKey, String name,
@@ -179,8 +179,6 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
-
-		return ddmTemplateId;
 	}
 
 	@Override
@@ -378,11 +376,13 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 				long classPK = 0;
 
 				if (Validator.isNotNull(structureId)) {
-					classPK = _ddmStructureIds.get(structureId);
+					classPK = _ddmStructureIds.get(groupId + "#" + structureId);
 				}
 
-				long ddmTemplateId = addDDMTemplate(
-					uuid_, increment(), groupId, companyId, userId, userName,
+				long ddmTemplateId = increment();
+
+				addDDMTemplate(
+					uuid_, ddmTemplateId, groupId, companyId, userId, userName,
 					createDate, modifiedDate, classNameId, classPK, templateId,
 					name, description,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,

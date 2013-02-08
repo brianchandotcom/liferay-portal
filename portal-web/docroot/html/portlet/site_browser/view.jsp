@@ -118,13 +118,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 				total = groups.size();
 			}
 			else if (type.equals("layoutScopes")) {
-				groups = new ArrayList<Group>();
-
-				for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(groupId, privateLayout)) {
-					if (curLayout.hasScopeGroup()) {
-						groups.add(curLayout.getScopeGroup());
-					}
-				}
+				groups = GroupLocalServiceUtil.getLayoutScopes(company.getCompanyId(), groupId);
 
 				total = groups.size();
 			}

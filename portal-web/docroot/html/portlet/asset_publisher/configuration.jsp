@@ -199,19 +199,9 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
 					String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
-
-					boolean hasScopeLayout = false;
-
-					for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
-						if (curLayout.hasScopeGroup()) {
-							hasScopeLayout = true;
-
-							break;
-						}
-					}
 					%>
 
-					<c:if test="<%= hasScopeLayout %>">
+					<c:if test="<%= GroupLocalServiceUtil.getLayoutScopesCount(company.getCompanyId(), layout.getGroupId()) > 0 %>">
 						<liferay-ui:icon
 							cssClass="highlited"
 							image="add"

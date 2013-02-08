@@ -1141,6 +1141,34 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId, classNameId, layoutPrototypeId);
 	}
 
+	public List<Group> getLayoutScopes(long companyId, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId);
+	}
+
+	public List<Group> getLayoutScopes(
+			long companyId, long parentGroupId, int start, int end)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId, start, end);
+	}
+
+	public int getLayoutScopesCount(long companyId, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		return groupPersistence.countByC_C_P(
+			companyId, classNameId, parentGroupId);
+	}
+
 	/**
 	 * Returns the group associated with the layout set prototype.
 	 *

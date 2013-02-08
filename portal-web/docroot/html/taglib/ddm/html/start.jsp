@@ -29,7 +29,7 @@
 					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
 					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
-					portletNamespace: '<portlet:namespace />',
+					namespace: '<portlet:namespace />',
 					repeatable: '<%= repeatable %>'
 				}
 			);

@@ -63,8 +63,8 @@ public class RenderStructureFieldAction extends Action {
 			request.setAttribute("aui:form:namespace", namespace);
 
 			String fieldHTML = DDMXSDUtil.getFieldHTMLByName(
-				pageContext, classNameId, classPK, fieldName, null, null, null,
-				readOnly, themeDisplay.getLocale());
+				pageContext, classNameId, classPK, fieldName, null, namespace,
+				null, readOnly, themeDisplay.getLocale());
 
 			response.setContentType(ContentTypes.TEXT_HTML);
 

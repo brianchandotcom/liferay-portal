@@ -195,7 +195,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							String taglibCancel = "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
 							%>
 
-							<aui:button onClick="<%= taglibCancel %>" type="cancel" />
+							<aui:button cssClass="aui-button-cancel" onClick="<%= taglibCancel %>" type="cancel" />
 						</aui:button-row>
 					</div>
 				</aui:fieldset>
@@ -610,16 +610,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			window,
 			'<portlet:namespace />sendMessage',
 			function(form, refreshPage) {
+				var Util = Liferay.Util;
+
 				var A = AUI();
 
-				var fm = A.one(form);
+				form = A.one(form);
 
-				var postReplyButton = fm.one('.aui-button-reply input');
+				var postReplyButton = form.one('.aui-button-reply input');
 
-				var uri = form.getAttribute('action');
+				var cancelButton = form.one('.aui-button-cancel input');
 
 				A.io.request(
-					uri,
+					form.attr('action'),
 					{
 						dataType: 'json',
 						form: {
@@ -628,9 +630,15 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						on: {
 							failure: function(event, id, obj) {
 								<portlet:namespace />showStatusMessage('error', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>');
+
+								Util.toggleDisabled(postReplyButton, false);
+
+								Util.toggleDisabled(cancelButton, false);
 							},
 							start: function() {
-								Liferay.Util.toggleDisabled(postReplyButton, true);
+								Util.toggleDisabled(postReplyButton, true);
+
+								Util.toggleDisabled(cancelButton, true);
 							},
 							success: function(event, id, obj) {
 								var response = this.get('responseData');
@@ -668,7 +676,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 									<portlet:namespace />showStatusMessage('error', errorKey);
 								}
-								Liferay.Util.toggleDisabled(postReplyButton, false);
+
+								Util.toggleDisabled(postReplyButton, false);
+
+								Util.toggleDisabled(cancelButton, false);
 							}
 						}
 					}

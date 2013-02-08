@@ -216,7 +216,7 @@ public class DLFolderFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 			sb.append(
-				getFileEntriesSQL(
+				getFileVersionsSQL(
 					COUNT_FE_BY_G_F, groupId, mimeTypes, queryDefinition,
 					inlineSQLHelper));
 			sb.append(") UNION ALL (");
@@ -295,7 +295,7 @@ public class DLFolderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = getFileEntriesSQL(
+			String sql = getFileVersionsSQL(
 				COUNT_FE_BY_G_F, groupId, null, queryDefinition,
 				inlineSQLHelper);
 
@@ -347,7 +347,7 @@ public class DLFolderFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = getFileEntriesSQL(
+			String sql = getFileVersionsSQL(
 				COUNT_FE_BY_G_F, groupId, mimeTypes, queryDefinition,
 				inlineSQLHelper);
 
@@ -708,6 +708,33 @@ public class DLFolderFinderImpl
 		return sb.toString();
 	}
 
+	protected String getFileVersionsSQL(
+		String id, long groupId, String[] mimeTypes,
+		QueryDefinition queryDefinition, boolean inlineSQLHelper) {
+
+		String sql = CustomSQLUtil.get(
+			id, queryDefinition, DLFileVersionImpl.TABLE_NAME);
+
+		if (inlineSQLHelper) {
+			sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql, DLFileEntry.class.getName(), "DLFileVersion.fileEntryId",
+				groupId);
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(sql);
+
+		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+			sb.append(WHERE_AND);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(getMimeTypes(mimeTypes, DLFileVersionImpl.TABLE_NAME));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return sb.toString();
+	}
+
 	protected String getFolderId(long folderId, String table) {
 		StringBundler sb = new StringBundler(4);
 
@@ -767,6 +794,10 @@ public class DLFolderFinderImpl
 				sql, "[$FILE_ENTRY_FOLDER_ID$]",
 				getFolderId(folderId, "DLFileVersion"));
 		}
+
+		sql = StringUtil.replace(
+			sql, "[$FILE_VERSION_FOLDER_ID$]",
+			getFolderId(folderId, "DLFileVersion"));
 
 		return StringUtil.replace(
 			sql, "[$FILE_SHORTCUT_FOLDER_ID$]",

@@ -39,7 +39,7 @@ public class SelectPortletScopePage2WCWebContentWCDTest extends BaseTestCase {
 				"//span[@class='icon-action icon-action-configuration']/a/span"));
 		selenium.clickAt("//span[@class='icon-action icon-action-configuration']/a/span",
 			RuntimeVariables.replace("Select Web Content"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");

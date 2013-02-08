@@ -26,7 +26,6 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -37,8 +36,9 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -60,8 +60,10 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Remove Redirect']",
 			RuntimeVariables.replace("Remove Redirect"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -75,7 +77,8 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
 		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
 		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
@@ -103,8 +106,9 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//h1[@class='header-title']/span",
@@ -120,7 +124,6 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"(Redirected from Wiki FrontPage ChildPage Title1)"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -132,8 +135,9 @@ public class RemoveRedirectWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Title Rename"),
-			selenium.getText("//tr[5]/td[1]/a"));
-		selenium.clickAt("//tr[5]/td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title Rename"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//h1[@class='header-title']/span",

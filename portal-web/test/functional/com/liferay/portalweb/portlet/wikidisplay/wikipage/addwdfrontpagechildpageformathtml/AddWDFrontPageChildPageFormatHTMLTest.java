@@ -40,12 +40,13 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//select"));
 		selenium.select("//select", RuntimeVariables.replace("HTML"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
+		Thread.sleep(5000);
 		assertEquals("HTML", selenium.getSelectedLabel("//select"));
 		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
-			"Normal");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Styles')]/a",
+			"Styles");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -60,8 +61,10 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
 		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
 			"Welcome to LIFERAY");
 		selenium.selectFrame("relative=top");
@@ -91,6 +94,6 @@ public class AddWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("HTML"),
-			selenium.getText("//tr[2]/td"));
+			selenium.getText("//tr[contains(.,'HTML')]/td[1]"));
 	}
 }

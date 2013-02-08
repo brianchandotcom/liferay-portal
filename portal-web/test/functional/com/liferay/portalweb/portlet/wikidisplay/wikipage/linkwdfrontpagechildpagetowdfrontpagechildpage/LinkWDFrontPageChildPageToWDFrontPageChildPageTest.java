@@ -27,12 +27,9 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]",
-			"Wiki FrontPage ChildPage2 Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText(
 				"//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]"));
@@ -47,9 +44,10 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
 		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Format')]/a",
 			"Format");
-		selenium.waitForText("//span[.='Source']", "Source");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -64,7 +62,8 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
 		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
 		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForPartialText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
@@ -81,7 +80,6 @@ public class LinkWDFrontPageChildPageToWDFrontPageChildPageTest
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//div[@class='wiki-body']/p/a"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

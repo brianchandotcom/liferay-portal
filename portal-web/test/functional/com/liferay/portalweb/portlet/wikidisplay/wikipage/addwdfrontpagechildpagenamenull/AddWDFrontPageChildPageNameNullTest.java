@@ -37,8 +37,10 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace(""));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//a[@title='Paragraph Format']/span", "Normal");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -67,7 +69,6 @@ public class AddWDFrontPageChildPageNameNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Please enter a valid title."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

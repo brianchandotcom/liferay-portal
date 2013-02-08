@@ -48,13 +48,9 @@ public class AddPortletWD2Test extends BaseTestCase {
 		selenium.waitForVisible("//li[@title='Wiki Display']/p/a");
 		selenium.clickAt("//li[@title='Wiki Display']/p/a",
 			RuntimeVariables.replace("Wiki Display"));
-		selenium.waitForVisible(
-			"//div[@class='portlet-layout']/div/div/div/section");
-		assertTrue(selenium.isVisible(
-				"//div[@class='portlet-layout']/div/div/div/section"));
-		selenium.waitForVisible(
-			"//div[@class='portlet-layout']/div/div/div[2]/section");
-		assertTrue(selenium.isVisible(
-				"//div[@class='portlet-layout']/div/div/div[2]/section"));
+		selenium.waitForVisible("//div[1]/section");
+		assertTrue(selenium.isVisible("//div[1]/section"));
+		selenium.waitForVisible("//div[2]/section");
+		assertTrue(selenium.isVisible("//div[2]/section"));
 	}
 }

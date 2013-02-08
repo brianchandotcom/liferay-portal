@@ -38,8 +38,10 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Format')]/a",
+			"Format");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -53,7 +55,8 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
 		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
 		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
@@ -68,6 +71,7 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -88,10 +92,10 @@ public class EditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.2 (Minor Edit)"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
-			selenium.getText("//tr[5]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[4]/a"));
 	}
 }

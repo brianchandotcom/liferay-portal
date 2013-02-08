@@ -26,10 +26,10 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.waitForText("//span[@title='Options']/ul/li/strong/a",
 			"Options");
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -64,7 +64,6 @@ public class SelectMainNodeFrontPageChildPageTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_title']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

@@ -25,7 +25,6 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.click(RuntimeVariables.replace("link=Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
@@ -33,22 +32,24 @@ public class CompareVersionEditWikiFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("link=History");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.2"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.2')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
-			selenium.getText("//tr[5]/td[4]/a"));
-		assertFalse(selenium.isChecked("//tr[3]/td[1]/input"));
-		selenium.check("//tr[3]/td[1]/input");
-		assertTrue(selenium.isChecked("//tr[3]/td[1]/input"));
-		assertFalse(selenium.isChecked("//tr[4]/td[1]/input"));
-		selenium.check("//tr[4]/td[1]/input");
-		assertTrue(selenium.isChecked("//tr[4]/td[1]/input"));
-		assertFalse(selenium.isChecked("//tr[5]/td[1]/input"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[4]/a"));
+		assertFalse(selenium.isChecked("//tr[contains(.,'1.2')]/td[1]/input"));
+		selenium.clickAt("//tr[contains(.,'1.2')]/td[1]/input",
+			RuntimeVariables.replace("1.2"));
+		assertTrue(selenium.isChecked("//tr[contains(.,'1.2')]/td[1]/input"));
+		assertFalse(selenium.isChecked("//tr[contains(.,'1.1')]/td[1]/input"));
+		selenium.clickAt("//tr[contains(.,'1.1')]/td[1]/input",
+			RuntimeVariables.replace("1.1"));
+		assertTrue(selenium.isChecked("//tr[contains(.,'1.1')]/td[1]/input"));
+		assertFalse(selenium.isChecked(
+				"//tr[contains(.,'1.0 (Minor Edit)')]/td[1]/input"));
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");

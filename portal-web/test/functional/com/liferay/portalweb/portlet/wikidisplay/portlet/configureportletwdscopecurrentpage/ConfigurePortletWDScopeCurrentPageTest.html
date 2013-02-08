@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>Wiki Display - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>Wiki Display - Configuration</td>
 </tr>
 <tr>
@@ -64,14 +64,14 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Scope</td>
 	<td>Scope</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Scope</td>
-	<td>Scope</td>
+	<td>waitForVisible</td>
+	<td>//select[@id='_86_scopeType']</td>
+	<td>Select Page</td>
 </tr>
 <tr>
 	<td>select</td>

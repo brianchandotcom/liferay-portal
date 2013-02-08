@@ -37,7 +37,8 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
 		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
 			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
@@ -73,7 +74,6 @@ public class AddWDFrontPageChildPageNameDuplicateTest extends BaseTestCase {
 				"This page does not exist yet. Use the form below to create it."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");

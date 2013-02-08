@@ -28,8 +28,9 @@ public class AddWikiFrontPage1Test extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Wiki Node1 Name");
-		selenium.clickAt("link=Wiki Node1 Name",
+		selenium.waitForVisible(
+			"//ul[@class='top-links-nodes']/li[contains(.,'Wiki Node1 Name')]/a");
+		selenium.clickAt("//ul[@class='top-links-nodes']/li[contains(.,'Wiki Node1 Name')]/a",
 			RuntimeVariables.replace("Wiki Node1 Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -39,8 +40,10 @@ public class AddWikiFrontPage1Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a",
+			"Normal");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -54,11 +57,10 @@ public class AddWikiFrontPage1Test extends BaseTestCase {
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible(
+			"//a[@class='cke_button cke_button__source cke_button_off']");
 		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
 		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p",
-			"Wiki FrontPage1 Content");
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

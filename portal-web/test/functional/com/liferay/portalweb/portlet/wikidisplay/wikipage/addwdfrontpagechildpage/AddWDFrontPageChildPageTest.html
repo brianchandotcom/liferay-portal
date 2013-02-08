@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Wiki Display Test Page</td>
-	<td>Wiki Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
@@ -40,12 +35,12 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
-	<td>Text Area</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/wikilink/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//a[@title='Paragraph Format']/span</td>
+	<td>//span[@class='cke_toolbar']/span[contains(.,'Normal')]/a</td>
 	<td>Normal</td>
 </tr>
 <tr>
@@ -97,11 +92,6 @@
 	<td>selectFrame</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body[@class='html-editor portlet portlet-wiki cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']/p</td>
-	<td>Wiki FrontPage ChildPage Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

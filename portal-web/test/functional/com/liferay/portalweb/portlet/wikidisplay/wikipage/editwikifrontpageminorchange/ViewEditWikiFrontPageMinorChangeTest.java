@@ -87,49 +87,56 @@ public class ViewEditWikiFrontPageMinorChangeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[8]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[1]/input"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.2 (Minor Edit)')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[3]/td[contains(.,'FrontPage')]/a"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[contains(.,'Approved')]/a"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1.2 (Minor Edit)"),
-			selenium.getText("//tr[3]/td[contains(.,'1.2 (Minor Edit)')]/a"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[3]/td[contains(.,'Joe Bloggs')]/a"));
-		assertTrue(selenium.isVisible("//tr[3]/td[6]/a"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[5]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.2 (Minor Edit)')]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[7]"));
 		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[3]/td[8]"));
-		assertTrue(selenium.isVisible("//tr[4]/td[1]/input"));
+			selenium.getText("//tr[contains(.,'1.2 (Minor Edit)')]/td[8]"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'1.1')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[4]/td[contains(.,'FrontPage')]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[4]/td[contains(.,'Approved')]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[contains(.,'1.1')]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[4]/td[contains(.,'Joe Bloggs')]/a"));
-		assertTrue(selenium.isVisible("//tr[4]/td[6]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[5]/a"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'1.1')]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[4]/td[7]"));
-		assertTrue(selenium.isVisible("//tr[4]/td[8]/span/a/img"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[7]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.1')]/td[8]/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[4]/td[contains(.,'Revert')]/span/a/span"));
-		assertTrue(selenium.isVisible("//tr[5]/td[1]/input"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[8]/span/a/span"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.0 (Minor Edit)')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//tr[5]/td[contains(.,'FrontPage')]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[5]/td[contains(.,'Approved')]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
-			selenium.getText("//tr[5]/td[contains(.,'1.0 (Minor Edit)')]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[5]/td[5]"));
-		assertTrue(selenium.isVisible("//tr[5]/td[6]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.0 (Minor Edit)')]/td[6]/a"));
 		assertEquals(RuntimeVariables.replace("New"),
-			selenium.getText("//tr[5]/td[7]"));
-		assertTrue(selenium.isVisible("//tr[5]/td[8]/span/a/img"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[7]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'1.0 (Minor Edit)')]/td[8]/span/a/img"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[5]/td[contains(.,'Revert')]/span/a/span"));
+			selenium.getText(
+				"//tr[contains(.,'1.0 (Minor Edit)')]/td[8]/span/a/span"));
 	}
 }

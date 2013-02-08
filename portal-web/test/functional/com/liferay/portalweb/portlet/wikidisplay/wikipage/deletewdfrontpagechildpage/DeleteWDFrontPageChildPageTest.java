@@ -47,8 +47,8 @@ public class DeleteWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertFalse(selenium.isTextPresent("Children Pages"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 	}

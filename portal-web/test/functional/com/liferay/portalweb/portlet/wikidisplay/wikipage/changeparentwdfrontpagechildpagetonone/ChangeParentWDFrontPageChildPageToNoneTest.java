@@ -26,7 +26,6 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -73,11 +72,9 @@ public class ChangeParentWDFrontPageChildPageToNoneTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Children Pages"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Wiki Display Test Page");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("link=All Pages");
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),

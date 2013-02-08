@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -247,6 +248,18 @@ public class DynamicCSSUtil {
 
 		String themeId = ParamUtil.getString(request, "themeId");
 
+		if (Validator.isNotNull(themeId)) {
+			try {
+				Theme theme = ThemeLocalServiceUtil.getTheme(
+					companyId, themeId, false);
+
+				return theme;
+			}
+				catch (SystemException se) {
+					_log.error(se, se);
+			}
+	}
+
 		String requestURI = URLDecoder.decode(
 			request.getRequestURI(), StringPool.UTF8);
 
@@ -293,7 +306,7 @@ public class DynamicCSSUtil {
 
 			return theme;
 		}
-		catch (Exception e) {
+		catch (SystemException e) {
 			_log.error(e, e);
 		}
 

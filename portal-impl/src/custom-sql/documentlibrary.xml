@@ -231,14 +231,13 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFE_ByG_F">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
 			FROM
-				DLFileEntry
-			[$JOIN$]
+				DLFileVersion
 			WHERE
-				(DLFileEntry.groupId = ?) AND
+				(DLFileVersion.groupId = ?) AND
 				([$STATUS$]) AND
-				[$FILE_ENTRY_FOLDER_ID$]
+				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFS_ByG_F_A">

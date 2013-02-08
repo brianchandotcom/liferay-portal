@@ -1425,6 +1425,12 @@ public interface PropsKeys {
 
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
 
+	public static final String LUCENE_SPELL_CHECKER_DICTIONARY = "lucene.spell.checker.dictionary";
+
+	public static final String LUCENE_SPELL_CHECKER_DIR = "lucene.spell.checker.dir";
+
+	public static final String LUCENE_SPELL_CHECKER_LOCALES = "lucene.spell.checker.locales";
+
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";
 
 	public static final String LUCENE_STORE_TYPE_FILE_FORCE_MMAP = "lucene.store.type.file.force.mmap";

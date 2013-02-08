@@ -223,7 +223,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			hits = toHits(
 				indexSearcher, new HitDocs(browseHits), query, startTime,
-				searchTime, searchContext.getStart(), searchContext.getEnd());
+				searchTime, searchContext);
 
 			Map<String, FacetAccessible> facetMap = browseResult.getFacetMap();
 
@@ -258,8 +258,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 				hits = toHits(
 					indexSearcher, new HitDocs(browseHits), query, startTime,
-					searchTime, searchContext.getStart(),
-					searchContext.getEnd());
+					searchTime, searchContext);
 
 				Map<String, FacetAccessible> facetMap = result.getFacetMap();
 
@@ -327,6 +326,10 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		org.apache.lucene.search.IndexSearcher indexSearcher = null;
 		org.apache.lucene.search.Sort luceneSort = null;
 
+		SearchContext searchContext = new SearchContext();
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+
 		try {
 			indexSearcher = LuceneHelperUtil.getSearcher(companyId, true);
 
@@ -359,7 +362,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			hits = toHits(
 				indexSearcher, new HitDocs(topFieldDocs), query, startTime,
-				searchTime, start, end);
+				searchTime, searchContext);
 		}
 		catch (BooleanQuery.TooManyClauses tmc) {
 			int maxClauseCount = BooleanQuery.getMaxClauseCount();
@@ -380,7 +383,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 				hits = toHits(
 					indexSearcher, new HitDocs(topFieldDocs), query, startTime,
-					searchTime, start, end);
+					searchTime, searchContext);
 			}
 			catch (Exception e) {
 				throw new SearchException(e);
@@ -536,10 +539,12 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 	protected Hits toHits(
 			org.apache.lucene.search.IndexSearcher indexSearcher,
 			HitDocs hitDocs, Query query, long startTime, float searchTime,
-			int start, int end)
+			SearchContext searchContext)
 		throws IOException, ParseException {
 
+		int end = searchContext.getEnd();
 		int length = hitDocs.getTotalHits();
+		int start = searchContext.getStart();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;

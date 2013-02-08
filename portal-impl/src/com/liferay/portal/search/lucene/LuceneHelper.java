@@ -96,6 +96,9 @@ public interface LuceneHelper {
 			int fragmentLength, String fragmentSuffix, Formatter formatter)
 		throws IOException;
 
+	public SpellCheckerIndexAccessor getSpellCheckerIndexAccessor()
+		throws IOException;
+
 	public Version getVersion();
 
 	public boolean isLoadIndexFromClusterEnabled();

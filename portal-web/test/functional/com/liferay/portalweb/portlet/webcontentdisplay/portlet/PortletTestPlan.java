@@ -24,6 +24,7 @@ import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportlets
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopedefault.ConfigurePortletScopeDefaultTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletscopepage2.ConfigurePortletScopePage2Tests;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletshowavailablelocales.ConfigurePortletShowAvailableLocalesTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletwcdenableprint.ConfigurePortletWCDEnablePrintTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,6 +41,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletWCDSiteTests.suite());
 		testSuite.addTest(ConfigurePortletEnableCommentRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletEnableCommentsTests.suite());
+		testSuite.addTest(ConfigurePortletWCDEnablePrintTests.suite());
 		testSuite.addTest(ConfigurePortletEnableRatingsTests.suite());
 		testSuite.addTest(ConfigurePortletScopeCurrentPageTests.suite());
 		testSuite.addTest(ConfigurePortletScopeDefaultTests.suite());

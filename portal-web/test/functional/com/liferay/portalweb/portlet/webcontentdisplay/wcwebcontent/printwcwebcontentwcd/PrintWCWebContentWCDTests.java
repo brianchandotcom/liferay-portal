@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.printwcwebcontentwcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPortletWCDTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletenablecommentratings.TearDownPortletSetupTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.portlet.configureportletwcdenableprint.ConfigurePortletWCDEnablePrintTest;
+import com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd.AddWCWebContentWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,13 +29,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWCWebContentWCDTests extends BaseTestSuite {
+public class PrintWCWebContentWCDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
-		testSuite.addTestSuite(ViewWCWebContentWCDTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCDEnablePrintTest.class);
+		testSuite.addTestSuite(PrintWCWebContentWCDTest.class);
+		testSuite.addTestSuite(TearDownPortletSetupTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

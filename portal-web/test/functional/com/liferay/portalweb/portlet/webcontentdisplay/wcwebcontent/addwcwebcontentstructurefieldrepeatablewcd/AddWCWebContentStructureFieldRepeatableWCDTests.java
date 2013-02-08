@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentwcd;
+package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcontentstructurefieldrepeatablewcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCTemplateStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructurefieldrepeatable.AddWCStructureFieldRepeatableTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructurefieldrepeatable.AddWCTemplateStructureFieldRepeatableTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;
@@ -26,14 +30,19 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWCWebContentWCDTests extends BaseTestSuite {
+public class AddWCWebContentStructureFieldRepeatableWCDTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
-		testSuite.addTestSuite(ViewWCWebContentWCDTest.class);
+		testSuite.addTestSuite(AddWCStructureFieldRepeatableTest.class);
+		testSuite.addTestSuite(AddWCTemplateStructureFieldRepeatableTest.class);
+		testSuite.addTestSuite(AddWCWebContentStructureFieldRepeatableWCDTest.class);
+		testSuite.addTestSuite(ViewWCWebContentStructureFieldRepeatableWCDTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCTemplateStructureTest.class);
+		testSuite.addTestSuite(TearDownWCStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

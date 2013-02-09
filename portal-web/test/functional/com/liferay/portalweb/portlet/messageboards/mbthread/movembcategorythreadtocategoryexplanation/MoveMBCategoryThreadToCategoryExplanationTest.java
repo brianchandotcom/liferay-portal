@@ -37,18 +37,18 @@ public class MoveMBCategoryThreadToCategoryExplanationTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace(
 				"MB Category1 Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a");
-		assertEquals(RuntimeVariables.replace("Move Thread"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
+		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move Thread')]/a",
-			RuntimeVariables.replace("Move Thread"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]",
+			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category1 Name"),
 			selenium.getText("//a[@id='_19_categoryName']"));
@@ -74,26 +74,11 @@ public class MoveMBCategoryThreadToCategoryExplanationTest extends BaseTestCase 
 		selenium.waitForVisible("//input[@id='_19_subject']");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Explanation Post Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and contains(@style,'display: none;')]");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("MB Explanation Post Body"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and contains(@style,'display: none;')]");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body", "MB Explanation Post Body");
-		selenium.selectFrame("relative=top");
 		selenium.click(RuntimeVariables.replace("//input[@value='Move Thread']"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/guest/home/");

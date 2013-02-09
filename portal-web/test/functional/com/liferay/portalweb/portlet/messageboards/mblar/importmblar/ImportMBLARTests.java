@@ -17,6 +17,7 @@ package com.liferay.portalweb.portlet.messageboards.mblar.importmblar;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.TearDownMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.replymbcategorythreadreply.ViewMBCategoryThreadReplyTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -32,7 +33,7 @@ public class ImportMBLARTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(ImportMBLARTest.class);
-		testSuite.addTestSuite(ViewImportMBLARTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadReplyTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

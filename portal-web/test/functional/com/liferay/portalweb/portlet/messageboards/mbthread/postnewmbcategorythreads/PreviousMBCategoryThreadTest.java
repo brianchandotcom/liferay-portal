@@ -47,6 +47,8 @@ public class PreviousMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='thread-navigation']/a",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"MB Category Thread2 Message Subject");
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread2 Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -55,6 +57,8 @@ public class PreviousMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='thread-navigation']/a",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"MB Category Thread3 Message Subject");
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread3 Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));

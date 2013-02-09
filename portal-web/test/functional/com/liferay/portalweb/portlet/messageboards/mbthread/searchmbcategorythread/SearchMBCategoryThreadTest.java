@@ -35,7 +35,7 @@ public class SearchMBCategoryThreadTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

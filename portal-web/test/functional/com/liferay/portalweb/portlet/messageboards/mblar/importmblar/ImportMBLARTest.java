@@ -64,7 +64,7 @@ public class ImportMBLARTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portlet\\messageboards\\dependencies\\Message_Boards-Selenium.portlet.lar"));
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_DELETE_PORTLET_DATACheckbox']"));
 		selenium.clickAt("//input[@id='_86_DELETE_PORTLET_DATACheckbox']",

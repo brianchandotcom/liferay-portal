@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,9 +69,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_19_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]</td>
+	<td>Unlink Button Disabled</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>clickAt</td>

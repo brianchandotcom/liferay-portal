@@ -44,6 +44,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.persistence.PortletPreferencesActionableDynamicQuery;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -72,6 +74,7 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
@@ -690,7 +693,22 @@ public class AssetPublisherUtil {
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 					layoutUuid, siteGroupId, privateLayout);
 
-			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
+			Group scopeIdGroup = null;
+
+			if (scopeIdLayout.hasScopeGroup()) {
+				scopeIdGroup = scopeIdLayout.getScopeGroup();
+			}
+			else {
+				long userId = PrincipalThreadLocal.getUserId();
+
+				String name = String.valueOf(scopeIdLayout.getPlid());
+
+				scopeIdGroup = GroupLocalServiceUtil.addGroup(
+					userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					Layout.class.getName(), scopeIdLayout.getPlid(),
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, null,
+					false, true, null);
+			}
 
 			return scopeIdGroup.getGroupId();
 		}
@@ -813,6 +831,45 @@ public class AssetPublisherUtil {
 		}
 
 		return key;
+	}
+
+	public static boolean isScopeIdSelectable(
+			PermissionChecker permissionChecker, String scopeId,
+			long companyGroupId, Layout layout)
+		throws PortalException, SystemException {
+
+		long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
+			scopeId, layout.getGroupId(), layout.isPrivateLayout());
+
+		if (scopeId.startsWith(
+				AssetPublisherUtil.SCOPE_ID_CHILD_GROUP_PREFIX)) {
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (!group.hasAncestor(layout.getGroupId())) {
+				return false;
+			}
+		}
+		else if (scopeId.startsWith(
+					AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+
+			Group siteGroup = layout.getGroup();
+
+			if (!siteGroup.hasAncestor(groupId)) {
+				return false;
+			}
+
+			if (!SitesUtil.isContentSharingWithChildrenEnabled(siteGroup)) {
+				return GroupPermissionUtil.contains(
+					permissionChecker, groupId, ActionKeys.UPDATE);
+			}
+		}
+		else if (groupId != companyGroupId) {
+			return GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.UPDATE);
+		}
+
+		return true;
 	}
 
 	public static boolean isSubscribed(

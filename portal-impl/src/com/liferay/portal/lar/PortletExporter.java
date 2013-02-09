@@ -1538,7 +1538,7 @@ public class PortletExporter {
 
 		Group companyGroup = company.getGroup();
 
-		String groupScopeId =
+		String companyGroupScopeId =
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 				companyGroup.getGroupId();
 
@@ -1549,7 +1549,8 @@ public class PortletExporter {
 
 			if (oldValue.startsWith(AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX)) {
 				newValues[i] = StringUtil.replace(
-					oldValue, groupScopeId, "[$GROUP_SCOPE_ID$]");
+					oldValue, companyGroupScopeId,
+					"[$COMPANY_GROUP_SCOPE_ID$]");
 			}
 			else if (oldValue.startsWith(
 						AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {

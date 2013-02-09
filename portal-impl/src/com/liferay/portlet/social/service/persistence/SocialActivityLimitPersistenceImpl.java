@@ -41,6 +41,7 @@ import com.liferay.portlet.social.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
+import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 
 import java.io.Serializable;
 

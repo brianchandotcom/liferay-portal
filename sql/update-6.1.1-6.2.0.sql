@@ -396,11 +396,26 @@ drop index IX_8DB864A9 on ResourcePermission;
 
 drop table Roles_Permissions;
 
+alter table SocialActivity add activitySetId LONG;
+
 alter table SocialActivityCounter add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
 
 update SocialActivityCounter set active_ = TRUE;
+
+create table SocialActivitySet (
+	activitySetId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate LONG,
+	modifiedDate LONG,
+	classNameId LONG,
+	classPK LONG,
+	type_ INTEGER,
+	activityCount INTEGER
+);
 
 create table TrashEntry (
 	entryId LONG not null primary key,

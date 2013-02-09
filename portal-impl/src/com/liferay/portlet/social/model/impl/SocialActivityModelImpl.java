@@ -65,6 +65,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.BIGINT },
+			{ "activitySetId", Types.BIGINT },
 			{ "mirrorActivityId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
@@ -72,7 +73,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			{ "extraData", Types.VARCHAR },
 			{ "receiverUserId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivity";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivity.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivity.createDate DESC";
@@ -88,15 +89,16 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivity"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long COMPANYID_COLUMN_BITMASK = 4L;
-	public static long CREATEDATE_COLUMN_BITMASK = 8L;
-	public static long GROUPID_COLUMN_BITMASK = 16L;
-	public static long MIRRORACTIVITYID_COLUMN_BITMASK = 32L;
-	public static long RECEIVERUSERID_COLUMN_BITMASK = 64L;
-	public static long TYPE_COLUMN_BITMASK = 128L;
-	public static long USERID_COLUMN_BITMASK = 256L;
+	public static long ACTIVITYSETID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long CLASSPK_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long MIRRORACTIVITYID_COLUMN_BITMASK = 64L;
+	public static long RECEIVERUSERID_COLUMN_BITMASK = 128L;
+	public static long TYPE_COLUMN_BITMASK = 256L;
+	public static long USERID_COLUMN_BITMASK = 512L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivity"));
 
@@ -136,6 +138,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("activitySetId", getActivitySetId());
 		attributes.put("mirrorActivityId", getMirrorActivityId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -176,6 +179,12 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long activitySetId = (Long)attributes.get("activitySetId");
+
+		if (activitySetId != null) {
+			setActivitySetId(activitySetId);
 		}
 
 		Long mirrorActivityId = (Long)attributes.get("mirrorActivityId");
@@ -309,6 +318,26 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	public long getOriginalCreateDate() {
 		return _originalCreateDate;
+	}
+
+	public long getActivitySetId() {
+		return _activitySetId;
+	}
+
+	public void setActivitySetId(long activitySetId) {
+		_columnBitmask |= ACTIVITYSETID_COLUMN_BITMASK;
+
+		if (!_setOriginalActivitySetId) {
+			_setOriginalActivitySetId = true;
+
+			_originalActivitySetId = _activitySetId;
+		}
+
+		_activitySetId = activitySetId;
+	}
+
+	public long getOriginalActivitySetId() {
+		return _originalActivitySetId;
 	}
 
 	public long getMirrorActivityId() {
@@ -487,6 +516,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		socialActivityImpl.setCompanyId(getCompanyId());
 		socialActivityImpl.setUserId(getUserId());
 		socialActivityImpl.setCreateDate(getCreateDate());
+		socialActivityImpl.setActivitySetId(getActivitySetId());
 		socialActivityImpl.setMirrorActivityId(getMirrorActivityId());
 		socialActivityImpl.setClassNameId(getClassNameId());
 		socialActivityImpl.setClassPK(getClassPK());
@@ -571,6 +601,10 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		socialActivityModelImpl._setOriginalCreateDate = false;
 
+		socialActivityModelImpl._originalActivitySetId = socialActivityModelImpl._activitySetId;
+
+		socialActivityModelImpl._setOriginalActivitySetId = false;
+
 		socialActivityModelImpl._originalMirrorActivityId = socialActivityModelImpl._mirrorActivityId;
 
 		socialActivityModelImpl._setOriginalMirrorActivityId = false;
@@ -608,6 +642,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		socialActivityCacheModel.createDate = getCreateDate();
 
+		socialActivityCacheModel.activitySetId = getActivitySetId();
+
 		socialActivityCacheModel.mirrorActivityId = getMirrorActivityId();
 
 		socialActivityCacheModel.classNameId = getClassNameId();
@@ -631,7 +667,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{activityId=");
 		sb.append(getActivityId());
@@ -643,6 +679,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", activitySetId=");
+		sb.append(getActivitySetId());
 		sb.append(", mirrorActivityId=");
 		sb.append(getMirrorActivityId());
 		sb.append(", classNameId=");
@@ -661,7 +699,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.social.model.SocialActivity");
@@ -686,6 +724,10 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>activitySetId</column-name><column-value><![CDATA[");
+		sb.append(getActivitySetId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>mirrorActivityId</column-name><column-value><![CDATA[");
@@ -735,6 +777,9 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private long _createDate;
 	private long _originalCreateDate;
 	private boolean _setOriginalCreateDate;
+	private long _activitySetId;
+	private long _originalActivitySetId;
+	private boolean _setOriginalActivitySetId;
 	private long _mirrorActivityId;
 	private long _originalMirrorActivityId;
 	private boolean _setOriginalMirrorActivityId;

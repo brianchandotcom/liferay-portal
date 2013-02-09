@@ -15,10 +15,9 @@
 package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
-import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -26,20 +25,20 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 /**
- * The cache model class for representing SocialActivity in entity cache.
+ * The cache model class for representing SocialActivitySet in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see SocialActivity
+ * @see SocialActivitySet
  * @generated
  */
-public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
+public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{activityId=");
-		sb.append(activityId);
+		sb.append("{activitySetId=");
+		sb.append(activitySetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -48,101 +47,75 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", activitySetId=");
-		sb.append(activitySetId);
-		sb.append(", mirrorActivityId=");
-		sb.append(mirrorActivityId);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", extraData=");
-		sb.append(extraData);
-		sb.append(", receiverUserId=");
-		sb.append(receiverUserId);
+		sb.append(", activityCount=");
+		sb.append(activityCount);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	public SocialActivity toEntityModel() {
-		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
+	public SocialActivitySet toEntityModel() {
+		SocialActivitySetImpl socialActivitySetImpl = new SocialActivitySetImpl();
 
-		socialActivityImpl.setActivityId(activityId);
-		socialActivityImpl.setGroupId(groupId);
-		socialActivityImpl.setCompanyId(companyId);
-		socialActivityImpl.setUserId(userId);
-		socialActivityImpl.setCreateDate(createDate);
-		socialActivityImpl.setActivitySetId(activitySetId);
-		socialActivityImpl.setMirrorActivityId(mirrorActivityId);
-		socialActivityImpl.setClassNameId(classNameId);
-		socialActivityImpl.setClassPK(classPK);
-		socialActivityImpl.setType(type);
+		socialActivitySetImpl.setActivitySetId(activitySetId);
+		socialActivitySetImpl.setGroupId(groupId);
+		socialActivitySetImpl.setCompanyId(companyId);
+		socialActivitySetImpl.setUserId(userId);
+		socialActivitySetImpl.setCreateDate(createDate);
+		socialActivitySetImpl.setModifiedDate(modifiedDate);
+		socialActivitySetImpl.setClassNameId(classNameId);
+		socialActivitySetImpl.setClassPK(classPK);
+		socialActivitySetImpl.setType(type);
+		socialActivitySetImpl.setActivityCount(activityCount);
 
-		if (extraData == null) {
-			socialActivityImpl.setExtraData(StringPool.BLANK);
-		}
-		else {
-			socialActivityImpl.setExtraData(extraData);
-		}
+		socialActivitySetImpl.resetOriginalValues();
 
-		socialActivityImpl.setReceiverUserId(receiverUserId);
-
-		socialActivityImpl.resetOriginalValues();
-
-		return socialActivityImpl;
+		return socialActivitySetImpl;
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		activityId = objectInput.readLong();
+		activitySetId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
-		activitySetId = objectInput.readLong();
-		mirrorActivityId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		type = objectInput.readInt();
-		extraData = objectInput.readUTF();
-		receiverUserId = objectInput.readLong();
+		activityCount = objectInput.readInt();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(activityId);
+		objectOutput.writeLong(activitySetId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(activitySetId);
-		objectOutput.writeLong(mirrorActivityId);
+		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeInt(type);
-
-		if (extraData == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(extraData);
-		}
-
-		objectOutput.writeLong(receiverUserId);
+		objectOutput.writeInt(activityCount);
 	}
 
-	public long activityId;
+	public long activitySetId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public long createDate;
-	public long activitySetId;
-	public long mirrorActivityId;
+	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public int type;
-	public String extraData;
-	public long receiverUserId;
+	public int activityCount;
 }

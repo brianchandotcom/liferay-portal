@@ -21,6 +21,7 @@
 
 		<!-- Other fields -->
 
+		<column name="activitySetId" type="long" />
 		<column name="mirrorActivityId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
@@ -44,6 +45,9 @@
 		</finder>
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
+		</finder>
+		<finder name="ActivitySetId" return-type="Collection">
+			<finder-column name="activitySetId" />
 		</finder>
 		<finder name="MirrorActivityId" return-type="SocialActivity">
 			<finder-column name="mirrorActivityId" />
@@ -242,6 +246,78 @@
 			<finder-column name="classPK" />
 			<finder-column name="activityType" />
 			<finder-column name="activityCounterName" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+	</entity>
+	<entity name="SocialActivitySet" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="activitySetId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="long" />
+		<column name="modifiedDate" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="type" type="int" />
+		<column name="activityCount" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ClassNameId" return-type="Collection">
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_U_C_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_U_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_U_C_C_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

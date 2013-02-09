@@ -145,6 +145,20 @@ public interface SocialActivityModel extends AttachedModel,
 	public void setCreateDate(long createDate);
 
 	/**
+	 * Returns the activity set ID of this social activity.
+	 *
+	 * @return the activity set ID of this social activity
+	 */
+	public long getActivitySetId();
+
+	/**
+	 * Sets the activity set ID of this social activity.
+	 *
+	 * @param activitySetId the activity set ID of this social activity
+	 */
+	public void setActivitySetId(long activitySetId);
+
+	/**
 	 * Returns the mirror activity ID of this social activity.
 	 *
 	 * @return the mirror activity ID of this social activity

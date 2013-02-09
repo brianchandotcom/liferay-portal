@@ -34,6 +34,7 @@ import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalService;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalService;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.portlet.social.service.SocialActivitySetLocalService;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalService;
 import com.liferay.portlet.social.service.SocialActivitySettingService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
@@ -46,6 +47,7 @@ import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersi
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivitySetPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
@@ -280,6 +282,44 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	public void setSocialActivityLimitPersistence(
 		SocialActivityLimitPersistence socialActivityLimitPersistence) {
 		this.socialActivityLimitPersistence = socialActivityLimitPersistence;
+	}
+
+	/**
+	 * Returns the social activity set local service.
+	 *
+	 * @return the social activity set local service
+	 */
+	public SocialActivitySetLocalService getSocialActivitySetLocalService() {
+		return socialActivitySetLocalService;
+	}
+
+	/**
+	 * Sets the social activity set local service.
+	 *
+	 * @param socialActivitySetLocalService the social activity set local service
+	 */
+	public void setSocialActivitySetLocalService(
+		SocialActivitySetLocalService socialActivitySetLocalService) {
+		this.socialActivitySetLocalService = socialActivitySetLocalService;
+	}
+
+	/**
+	 * Returns the social activity set persistence.
+	 *
+	 * @return the social activity set persistence
+	 */
+	public SocialActivitySetPersistence getSocialActivitySetPersistence() {
+		return socialActivitySetPersistence;
+	}
+
+	/**
+	 * Sets the social activity set persistence.
+	 *
+	 * @param socialActivitySetPersistence the social activity set persistence
+	 */
+	public void setSocialActivitySetPersistence(
+		SocialActivitySetPersistence socialActivitySetPersistence) {
+		this.socialActivitySetPersistence = socialActivitySetPersistence;
 	}
 
 	/**
@@ -627,6 +667,10 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	protected SocialActivityLimitLocalService socialActivityLimitLocalService;
 	@BeanReference(type = SocialActivityLimitPersistence.class)
 	protected SocialActivityLimitPersistence socialActivityLimitPersistence;
+	@BeanReference(type = SocialActivitySetLocalService.class)
+	protected SocialActivitySetLocalService socialActivitySetLocalService;
+	@BeanReference(type = SocialActivitySetPersistence.class)
+	protected SocialActivitySetPersistence socialActivitySetPersistence;
 	@BeanReference(type = SocialActivitySettingLocalService.class)
 	protected SocialActivitySettingLocalService socialActivitySettingLocalService;
 	@BeanReference(type = SocialActivitySettingService.class)

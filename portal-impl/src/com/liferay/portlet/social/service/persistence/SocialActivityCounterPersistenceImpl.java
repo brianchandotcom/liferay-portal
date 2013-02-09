@@ -41,6 +41,7 @@ import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
 
 import java.io.Serializable;
 

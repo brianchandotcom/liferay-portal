@@ -116,6 +116,8 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setCreateDate(ServiceTestUtil.nextLong());
 
+		newSocialActivity.setActivitySetId(ServiceTestUtil.nextLong());
+
 		newSocialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
 
 		newSocialActivity.setClassNameId(ServiceTestUtil.nextLong());
@@ -142,6 +144,8 @@ public class SocialActivityPersistenceTest {
 			newSocialActivity.getUserId());
 		Assert.assertEquals(existingSocialActivity.getCreateDate(),
 			newSocialActivity.getCreateDate());
+		Assert.assertEquals(existingSocialActivity.getActivitySetId(),
+			newSocialActivity.getActivitySetId());
 		Assert.assertEquals(existingSocialActivity.getMirrorActivityId(),
 			newSocialActivity.getMirrorActivityId());
 		Assert.assertEquals(existingSocialActivity.getClassNameId(),
@@ -311,6 +315,8 @@ public class SocialActivityPersistenceTest {
 		socialActivity.setUserId(ServiceTestUtil.nextLong());
 
 		socialActivity.setCreateDate(ServiceTestUtil.nextLong());
+
+		socialActivity.setActivitySetId(ServiceTestUtil.nextLong());
 
 		socialActivity.setMirrorActivityId(ServiceTestUtil.nextLong());
 

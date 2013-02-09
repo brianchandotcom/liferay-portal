@@ -15,8 +15,13 @@
 package com.liferay.portalweb.portal.selenium.assertions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.selenium.assertions.assertchecked.AssertCheckedTests;
+import com.liferay.portalweb.portal.selenium.assertions.assertelementpresent.AssertElementPresentTests;
+import com.liferay.portalweb.portal.selenium.assertions.assertselectedlabel.AssertSelectedLabelTests;
 import com.liferay.portalweb.portal.selenium.assertions.asserttext.AssertTextTests;
 import com.liferay.portalweb.portal.selenium.assertions.asserttextpresent.AssertTextPresentTests;
+import com.liferay.portalweb.portal.selenium.assertions.assertvalue.AssertValueTests;
+import com.liferay.portalweb.portal.selenium.assertions.assertvisible.AssertVisibleTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +34,13 @@ public class AssertionsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AssertCheckedTests.suite());
+		testSuite.addTest(AssertElementPresentTests.suite());
+		testSuite.addTest(AssertSelectedLabelTests.suite());
 		testSuite.addTest(AssertTextTests.suite());
 		testSuite.addTest(AssertTextPresentTests.suite());
+		testSuite.addTest(AssertValueTests.suite());
+		testSuite.addTest(AssertVisibleTests.suite());
 
 		return testSuite;
 	}

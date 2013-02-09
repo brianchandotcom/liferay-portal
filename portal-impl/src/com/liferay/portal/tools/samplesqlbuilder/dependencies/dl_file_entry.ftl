@@ -1,6 +1,7 @@
 <#setting number_format = "0">
 
 <#assign createDate = dataFactory.getDateString(dlFileEntry.createDate)>
+<#assign createDateLong = dataFactory.getDateLong(dlFileEntry.createDate)>
 
 insert into DLFileEntry values ('${portalUUIDUtil.generate()}', ${dlFileEntry.fileEntryId}, ${dlFileEntry.groupId}, ${dlFileEntry.companyId}, ${dlFileEntry.userId}, '', ${dlFileEntry.userId}, '', '${createDate}', '${createDate}', 0, 0, ${dlFileEntry.repositoryId}, ${dlFileEntry.folderId}, '${dlFileEntry.name}', '${dlFileEntry.extension}', '${dlFileEntry.mimeType}', '${dlFileEntry.title}','${dlFileEntry.description}', '', 0, '1.0', '${maxDLFileEntrySize}', 1,'${dlFileEntry.smallImageId}','${dlFileEntry.largeImageId}', 0, 0, FALSE);
 
@@ -14,7 +15,7 @@ insert into DLFileVersion values ('${portalUUIDUtil.generate()}', ${dlFileVersio
 
 <#assign dlSync = dataFactory.addDLSync(dlFileEntry.companyId, dlFileEntry.fileEntryId, dlFileEntry.groupId, dlFileEntry.folderId, false)>
 
-insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${createDate}', '${createDate}', ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
+insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${createDateLong}', '${createDateLong}', ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
 
 <#assign assetEntry = dataFactory.addAssetEntry(dlFileEntry.groupId, dlFileEntry.userId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, true, "text/html", dlFileEntry.title)>
 

@@ -286,7 +286,7 @@ public class ComboServlet extends HttpServlet {
 
 	protected URL getResourceURL(
 			ServletContext servletContext, String rootPath, String path)
-		throws IOException {
+		throws Exception {
 
 		URL resourceURL = servletContext.getResource(path);
 
@@ -294,7 +294,7 @@ public class ComboServlet extends HttpServlet {
 			return null;
 		}
 
-		String filePath = resourceURL.toString();
+		String filePath = ServletContextUtil.getResourcePath(resourceURL);
 
 		int pos = filePath.indexOf(
 			rootPath.concat(StringPool.SLASH).concat(_JAVASCRIPT_DIR));

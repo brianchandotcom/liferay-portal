@@ -60,7 +60,7 @@ public class ImportLARCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.uploadFile("//input[@id='_86_importFileName']",
 					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\blogs\\dependencies\\Selenium-Blogs.portlet.lar"));
+						"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portal\\controlpanel\\blogs\\dependencies\\Selenium-Blogs.portlet.lar"));
 
 				boolean deletePortletDataCheckbox = selenium.isChecked(
 						"//input[@id='_86_DELETE_PORTLET_DATACheckbox']");
@@ -97,6 +97,7 @@ public class ImportLARCPTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Import']",
 					RuntimeVariables.replace("Import"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

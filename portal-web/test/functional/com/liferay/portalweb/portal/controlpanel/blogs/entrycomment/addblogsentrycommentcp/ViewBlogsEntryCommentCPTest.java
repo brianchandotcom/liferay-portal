@@ -60,7 +60,7 @@ public class ViewBlogsEntryCommentCPTest extends BaseTestCase {
 			selenium.getText(
 				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 		assertEquals(RuntimeVariables.replace("By Joe Bloggs"),
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("1 Comment"),

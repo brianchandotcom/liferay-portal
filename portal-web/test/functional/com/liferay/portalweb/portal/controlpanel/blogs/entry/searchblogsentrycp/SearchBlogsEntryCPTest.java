@@ -44,6 +44,8 @@ public class SearchBlogsEntryCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
+			selenium.getText("//span[@class='entry-title']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
+			selenium.getText("//span[@class='entry-description']"));
 	}
 }

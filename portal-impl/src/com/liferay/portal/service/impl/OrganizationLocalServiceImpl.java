@@ -643,21 +643,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns the sub-organizations of the organization.
-	 *
-	 * @param  companyId the primary key of the organization's company
-	 * @param  organizationId the primary key of the organization
-	 * @return the sub-organizations of the organization
-	 * @throws SystemException if a system exception occurred
-	 */
-	public List<Organization> getSuborganizations(
-			long companyId, long organizationId)
-		throws SystemException {
-
-		return organizationPersistence.findByC_P(companyId, organizationId);
-	}
-
-	/**
 	 * Returns the sub-organizations of the organizations.
 	 *
 	 * @param  organizations the organizations from which to get
@@ -683,6 +668,21 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return allSuborganizations;
+	}
+
+	/**
+	 * Returns the sub-organizations of the organization.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
+	 * @return the sub-organizations of the organization
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getSuborganizations(
+			long companyId, long organizationId)
+		throws SystemException {
+
+		return organizationPersistence.findByC_P(companyId, organizationId);
 	}
 
 	/**

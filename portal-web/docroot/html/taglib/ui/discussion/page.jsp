@@ -436,7 +436,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										String taglibCancel = "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
 										%>
 
-										<aui:button onClick="<%= taglibCancel %>" type="cancel" />
+										<aui:button cssClass="aui-button-cancel" onClick="<%= taglibCancel %>" type="cancel" />
 									</aui:button-row>
 								</div>
 

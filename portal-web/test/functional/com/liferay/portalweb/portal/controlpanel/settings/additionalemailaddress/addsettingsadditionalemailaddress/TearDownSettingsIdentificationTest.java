@@ -43,25 +43,26 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.clickAt("//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2]",
+			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.clickAt("//div[8]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -88,25 +89,26 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.clickAt("//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2]",
+			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.clickAt("//div[8]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -133,25 +135,26 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.clickAt("//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2]",
+			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.clickAt("//div[8]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -178,25 +181,26 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.clickAt("//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2]",
+			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.clickAt("//div[8]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -223,25 +227,26 @@ public class TearDownSettingsIdentificationTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.clickAt("//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2]",
+			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_phoneNumbersLink']",
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.clickAt("//div[8]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_additionalEmailAddressesLink']",
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
-		selenium.clickAt("//div[9]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		assertTrue(selenium.isPartialText("//a[@id='_130_websitesLink']",
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.clickAt("//div[10]/fieldset/div[2]/div/span/span/button[2]",
+		selenium.clickAt("//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2]",
 			RuntimeVariables.replace("Delete Row"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

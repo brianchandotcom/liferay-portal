@@ -64,10 +64,10 @@ public class ViewAuthenticationGeneralTest extends BaseTestCase {
 			selenium.getText("link=Open SSO"));
 		assertEquals(RuntimeVariables.replace("SiteMinder"),
 			selenium.getText("link=SiteMinder"));
-		selenium.waitForText("//label[@for='company.security.auth.type']",
+		selenium.waitForText("//label[@for='_130_company.security.auth.type']",
 			"How do users authenticate?");
 		assertEquals(RuntimeVariables.replace("How do users authenticate?"),
-			selenium.getText("//label[@for='company.security.auth.type']"));
+			selenium.getText("//label[@for='_130_company.security.auth.type']"));
 		assertTrue(selenium.isVisible(
 				"//select[@id='_130_company.security.auth.type']"));
 		assertTrue(selenium.isChecked(

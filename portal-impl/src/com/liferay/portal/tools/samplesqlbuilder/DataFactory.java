@@ -56,14 +56,12 @@ import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
@@ -330,20 +328,6 @@ public class DataFactory {
 		dlFileEntryMetadata.setFileVersionId(fileVersionId);
 
 		return dlFileEntryMetadata;
-	}
-
-	public DLFileRank addDLFileRank(
-		long groupId, long companyId, long userId, long fileEntryId) {
-
-		DLFileRank dlFileRank = new DLFileRankImpl();
-
-		dlFileRank.setFileRankId(_counter.get());
-		dlFileRank.setGroupId(groupId);
-		dlFileRank.setCompanyId(companyId);
-		dlFileRank.setUserId(userId);
-		dlFileRank.setFileEntryId(fileEntryId);
-
-		return dlFileRank;
 	}
 
 	public DLFileVersion addDLFileVersion(DLFileEntry dlFileEntry) {

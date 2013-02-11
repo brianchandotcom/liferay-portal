@@ -30,19 +30,11 @@
 
 		insert into MBStatsUser (statsUserId, groupId, userId) values (${counter.get()}, ${mbStatsUser.groupId}, ${mbStatsUser.userId});
 
-		${writerUserCSV.write(user.getScreenName() + "," + userGroup.groupId + ",")}
-
-		<#if (userCounter.value < maxUserCount)>
-			${writerUserCSV.write("\n")}
-		</#if>
-
 		<#if (lastName_index = 0) && (firstName_index = 0)>
 			<#assign firstUserId = user.userId>
 		</#if>
 
 		<#if (userCounter.value >= maxUserCount)>
-			${writerUserCSV.write("\n")}
-
 			<#break>
 		</#if>
 	</#list>

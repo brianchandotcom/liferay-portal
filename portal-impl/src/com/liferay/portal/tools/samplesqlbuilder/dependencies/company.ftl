@@ -24,7 +24,3 @@ ${sampleSQLBuilder.insertGroup(userGroup, [], [])}
 <#assign roleIds = [dataFactory.administratorRole.roleId]>
 
 ${sampleSQLBuilder.insertUser(contact, groupIds, organizationIds, roleIds, user)}
-
-<#assign mbSystemCategory = dataFactory.addMBCategory(0, 0, 0, 0, "", "", 0, 0)>
-
-${sampleSQLBuilder.insertMBCategory(mbSystemCategory)}

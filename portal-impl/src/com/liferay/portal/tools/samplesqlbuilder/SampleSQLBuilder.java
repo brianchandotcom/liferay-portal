@@ -445,7 +445,6 @@ public class SampleSQLBuilder {
 				_writerLayoutCSV = getWriter("layout.csv");
 				_writerMessageBoardsCSV = getWriter("message_boards.csv");
 				_writerRepositoryCSV = getWriter("repository.csv");
-				_writerUserCSV = getWriter("user.csv");
 				_writerWikiCSV = getWriter("wiki.csv");
 
 				Map<String, Object> context = getContext();
@@ -459,7 +458,6 @@ public class SampleSQLBuilder {
 				_writerLayoutCSV.close();
 				_writerMessageBoardsCSV.close();
 				_writerRepositoryCSV.close();
-				_writerUserCSV.close();
 				_writerWikiCSV.close();
 			}
 
@@ -511,7 +509,6 @@ public class SampleSQLBuilder {
 		put(context, "writerLayoutCSV", _writerLayoutCSV);
 		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
 		put(context, "writerRepositoryCSV", _writerRepositoryCSV);
-		put(context, "writerUserCSV", _writerUserCSV);
 		put(context, "writerWikiCSV", _writerWikiCSV);
 
 		return context;
@@ -680,7 +677,6 @@ public class SampleSQLBuilder {
 	private Writer _writerMessageBoardsCSV;
 	private Writer _writerRepositoryCSV;
 	private Writer _writerSampleSQL;
-	private Writer _writerUserCSV;
 	private Writer _writerWikiCSV;
 
 }

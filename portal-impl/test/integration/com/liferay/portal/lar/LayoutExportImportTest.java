@@ -159,7 +159,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			group, false);
 
 		Assert.assertEquals(
-			groupLayoutsCount, layoutSetPrototypeLayoutsCount + 2);
+			layoutSetPrototypeLayoutsCount + 2, groupLayoutsCount);
 
 		if (addPage) {
 			if (!useLayoutPrototype || layoutPrototypeToLayoutSetPrototype) {
@@ -224,7 +224,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					group, false);
 
 				Assert.assertEquals(
-					groupLayoutsCount, layoutSetPrototypeLayoutsCount + 2);
+					layoutSetPrototypeLayoutsCount + 2, groupLayoutsCount);
 			}
 
 			propagateChanges(group);
@@ -234,7 +234,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 			if (layoutSetLinkEnabled) {
 				Assert.assertEquals(
-					groupLayoutsCount, layoutSetPrototypeLayoutsCount + 3);
+					layoutSetPrototypeLayoutsCount + 3, groupLayoutsCount);
 
 				if (useLayoutPrototype) {
 					if (layoutLinkEnabled) {
@@ -258,8 +258,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				if (layoutSetLinkEnabled) {
 					if (!useLayoutPrototype) {
 						Assert.assertEquals(
-							groupLayoutsCount,
-							layoutSetPrototypeLayoutsCount + 3);
+							layoutSetPrototypeLayoutsCount + 3,
+							groupLayoutsCount);
 
 						propagateChanges(group);
 					}
@@ -269,7 +269,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				}
 
 				Assert.assertEquals(
-					groupLayoutsCount, layoutSetPrototypeLayoutsCount + 2);
+					layoutSetPrototypeLayoutsCount + 2, groupLayoutsCount);
 			}
 		}
 	}

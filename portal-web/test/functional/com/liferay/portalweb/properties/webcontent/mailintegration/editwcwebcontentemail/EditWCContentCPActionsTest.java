@@ -25,75 +25,82 @@ public class EditWCContentCPActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Site Name"));
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
+		selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
+			RuntimeVariables.replace("Site Name"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
+			RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//a[@class='entry-link']/span"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC WebContent Title']/span/span/ul/li/strong/a"));
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("Web Content Name Edit"));
+			RuntimeVariables.replace("WC WebContent Title Edit"));
 		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+		selenium.waitForText("//span[@class='cke_toolbar']/span[2]/a/span",
+			"Styles");
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
-		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
-			RuntimeVariables.replace("Web Content Content Edit"));
+			"//a[@class='cke_button cke_button__source cke_button_on']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
+		selenium.type("//div[@id='cke_1_contents']/textarea",
+			RuntimeVariables.replace("WC WebContent Content Edit"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", "Web Content Content Edit");
+			"//a[@class='cke_button cke_button__source cke_button_off']");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body", "WC WebContent Content Edit");
 		selenium.selectFrame("relative=top");
-		selenium.click(RuntimeVariables.replace("//input[@value='Publish']"));
+		Thread.sleep(1000);
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Web Content Name Edit"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
+			selenium.getText("//a[@class='entry-link']/span"));
 	}
 }

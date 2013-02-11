@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -50,7 +70,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,18 +85,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_configurationIframeDialog']</td>
+	<td>Web Content - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_configurationIframeDialog']</td>
+	<td>Web Content - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/escape/escape-min.js')]</td>
+	<td>Escape Min</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -90,17 +125,27 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_86_emailArticleUpdatedEnabledCheckbox']</td>
-	<td>Enabled</td>
+	<td>emailArticleUpdatedEnabled</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${emailArticleUpdatedEnabled}</td>
+	<td>EmailArticleUpdatedEnabled</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_86_emailArticleUpdatedEnabledCheckbox']</td>
+	<td>Enabled</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>EmailArticleUpdatedEnabled</td>
 	<td>Enabled</td>
 </tr>
 <tr>
@@ -122,6 +167,11 @@
 	<td>assertChecked</td>
 	<td>//input[@id='_86_emailArticleUpdatedEnabledCheckbox']</td>
 	<td>Enabled</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

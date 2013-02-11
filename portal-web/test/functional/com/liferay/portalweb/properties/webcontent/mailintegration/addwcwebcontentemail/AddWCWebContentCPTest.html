@@ -14,6 +14,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
@@ -49,19 +69,44 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Add']</td>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>Web Content Name</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='cke_toolbar']/span[2]/a/span</td>
+	<td>Normal</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -75,18 +120,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
 	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>Web Content Content</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -99,24 +144,24 @@
 	<td>Source</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button cke_button__source cke_button_off']</td>
+	<td>Source Button Off</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//body</td>
-	<td>Web Content Content</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -134,34 +179,14 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[2]/a</td>
-	<td>Web Content ID</td>
+	<td>assertVisible</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>Web Content Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>Web Content Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[7]/a</td>
-	<td>Joe Bloggs</td>
+	<td>//a[@class='entry-link']/span</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

@@ -15,11 +15,28 @@
 package com.liferay.portalweb.properties.webcontent.mailintegration.editwcwebcontentemail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserGmailTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordGmailTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.AddRoleWebContentEditorCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.AddWCWebContentCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.AssignMembersRoleWebContentEditorUserCPActionsTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.ConfigureServerAdministrationMailTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.ConfigureWCPortletEmailFromGmailServerCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.ConfigureWCPortletWebContentAddedEmailCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.DefineRoleWebContentEditorCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.EditPortalInstanceMailDomainTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.Gmail_SignInTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.Gmail_SubscribeWCPortletCPTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.TearDownEmailConfigurationTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.TearDownRoleWebContentEditorTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.TearDownServerTest;
+import com.liferay.portalweb.properties.webcontent.mailintegration.addwcwebcontentemail.TearDownWCWebContentCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,8 +50,9 @@ public class EditWCWebContentEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureServerAdministrationMailTest.class);
 		testSuite.addTestSuite(EditPortalInstanceMailDomainTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
+		testSuite.addTestSuite(EditUserPasswordGmailTest.class);
 		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AssignMembersSiteUserTest.class);
+		testSuite.addTestSuite(AddMembersSiteUserTest.class);
 		testSuite.addTestSuite(ConfigureWCPortletEmailFromGmailServerCPTest.class);
 		testSuite.addTestSuite(ConfigureWCPortletWebContentAddedEmailCPTest.class);
 		testSuite.addTestSuite(ConfigureWCPortletWebContentUpdatedEmailCPTest.class);
@@ -49,12 +67,13 @@ public class EditWCWebContentEmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCWebContentCPTest.class);
 		testSuite.addTestSuite(EditWCContentCPActionsTest.class);
 		testSuite.addTestSuite(Gmail_ViewEditWCWebContentUpdatedEmailTest.class);
-		testSuite.addTestSuite(TearDownRoleWebContentEditorTest.class);
+		testSuite.addTestSuite(Gmail_TearDownEmailTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentCPTest.class);
+		testSuite.addTestSuite(TearDownEmailConfigurationTest.class);
+		testSuite.addTestSuite(TearDownRoleWebContentEditorTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownServerTest.class);
-		testSuite.addTestSuite(TearDownEmailConfigurationTest.class);
 
 		return testSuite;
 	}

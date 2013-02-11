@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -74,9 +94,14 @@
 	<td>label=Web Content</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']</td>
-	<td>Subscribe</td>
+	<td>subscribeChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${subscribeChecked}</td>
+	<td>SubscribeChecked</td>
 </tr>
 <tr>
 	<td>check</td>
@@ -84,9 +109,39 @@
 	<td>Subscribe</td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>SubscribeChecked</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalSUBSCRIBE']</td>
 	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalVIEW']</td>
+	<td>viewWCMChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${viewWCMChecked}</td>
+	<td>ViewWCMChecked</td>
+</tr>
+<tr>
+	<td>check</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalVIEW']</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ViewWCMChecked</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_128_rowIds' and @value='com.liferay.portlet.journalVIEW']</td>
+	<td>View</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -104,23 +159,28 @@
 	<td>Define Permissions</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
+	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>wwwwwwwww</td>
+	<td>value=regexp:.*portletResource=15&amp;.*showModelResources=0</td>
 </tr>
 <tr>
-	<td>keyPressAndWait</td>
-	<td>//select[@id='_128_add-permissions']</td>
-	<td>\13</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
-	<td>Access in Control Panel</td>
+	<td>accessCPChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${accessCPChecked}</td>
+	<td>AccessCPChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>Access in Control Panel</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>AccessCPChecked</td>
 	<td>Access in Control Panel</td>
 </tr>
 <tr>
@@ -129,13 +189,23 @@
 	<td>Access in Control Panel</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@value='15VIEW']</td>
-	<td>View</td>
+	<td>viewWCChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${viewWCChecked}</td>
+	<td>ViewWCChecked</td>
 </tr>
 <tr>
 	<td>check</td>
 	<td>//input[@value='15VIEW']</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ViewWCChecked</td>
 	<td>View</td>
 </tr>
 <tr>
@@ -155,8 +225,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[3]</td>
-	<td>Subscribe</td>
+	<td>//tr[3]/td[3]</td>
+	<td>Access in Control Panel</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -165,8 +235,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]</td>
-	<td>Access in Control Panel</td>
+	<td>//tr[5]/td[3]</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[6]/td[3]</td>
+	<td>View</td>
 </tr>
 </tbody></table>
 </body>

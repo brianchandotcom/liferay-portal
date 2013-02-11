@@ -30,56 +30,122 @@ public class TearDownWCWebContentCPTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				selenium.waitForElementPresent("link=Control Panel");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//strong/a",
-					RuntimeVariables.replace("Site Name"));
-				selenium.waitForVisible("link=Site Name");
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
+				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
+					RuntimeVariables.replace("Liferay"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("link=Site Name"));
-				selenium.clickAt("link=Site Name",
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean webContentPresent = selenium.isElementPresent(
+						"//div[@class='entry-thumbnail']");
 
-				if (!basicVisible) {
+				if (!webContentPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
-					RuntimeVariables.replace("\u00ab Basic"));
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+					RuntimeVariables.replace("Select All"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a/span");
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+					RuntimeVariables.replace("Move to the Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
 
 			case 2:
+				assertEquals(RuntimeVariables.replace(
+						"No Web Content was found."),
+					selenium.getText(
+						"//div[@class='entries-empty portlet-msg-info']"));
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+				selenium.waitForVisible("link=Control Panel");
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
+				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
+					RuntimeVariables.replace("Site Name"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+				assertEquals(RuntimeVariables.replace("Site Name"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
+					RuntimeVariables.replace("Site Name"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
 
-				boolean webContentPresent = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
 
-				if (!webContentPresent) {
+				if (!recycleBinNotEmpty) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace("Checkbox"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
+				assertEquals(RuntimeVariables.replace(
+						"The Recycle Bin is empty."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
 			case 100:
 				label = -1;
 			}

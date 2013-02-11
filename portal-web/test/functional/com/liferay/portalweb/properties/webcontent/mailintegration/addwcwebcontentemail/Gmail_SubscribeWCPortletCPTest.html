@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -24,28 +44,28 @@
 	<td>Control Panel</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//a[@id='_160_groupSelectorButton']/span</td>
+	<td>Liferay</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td>Site Name</td>
+	<td>//a[@id='_160_groupSelectorButton']/span</td>
+	<td>Liferay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Site Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -54,13 +74,28 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>Home Actions Overlay</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@class='subscribe-link']/a/span</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
 	<td>Subscribe</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//span[@class='subscribe-link']/a/span</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
 	<td>Subscribe</td>
 </tr>
 <tr>
@@ -69,11 +104,15 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//span[@class='entry-action overlay']/span/ul/li/strong/a</td>
+	<td>Home Actions Overlay</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@class='subscribe-link']/a/span</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]</td>
 	<td>Unsubscribe</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

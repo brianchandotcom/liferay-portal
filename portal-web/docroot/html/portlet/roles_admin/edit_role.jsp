@@ -129,6 +129,15 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 			</c:if>
 		</c:if>
 
+		<aui:fieldset>
+			<liferay-ui:custom-attribute-list
+				className="<%= Role.class.getName() %>"
+				classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</aui:fieldset>
+
 		<aui:button-row>
 			<aui:button type="submit" />
 

@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 
@@ -136,20 +139,24 @@ public class EditRoleAction extends PortletAction {
 		int type = ParamUtil.getInteger(
 			actionRequest, "type", RoleConstants.TYPE_REGULAR);
 		String subtype = ParamUtil.getString(actionRequest, "subtype");
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Role.class.getName(), actionRequest);
 
 		if (roleId <= 0) {
 
 			// Add role
 
 			RoleServiceUtil.addRole(
-				null, 0, name, titleMap, descriptionMap, type, subtype);
+				null, 0, name, titleMap, descriptionMap, type, subtype,
+				serviceContext);
 		}
 		else {
 
 			// Update role
 
 			RoleServiceUtil.updateRole(
-				roleId, name, titleMap, descriptionMap, subtype);
+				roleId, name, titleMap, descriptionMap, subtype,
+				serviceContext);
 		}
 	}
 

@@ -136,7 +136,7 @@ public class PermissionImporter {
 
 				role = RoleLocalServiceUtil.addRole(
 					userId, null, 0, name, titleMap, descriptionMap, type,
-					subType);
+					subType, null);
 			}
 
 			String roleName = role.getName();

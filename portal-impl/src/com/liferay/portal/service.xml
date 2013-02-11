@@ -1771,6 +1771,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="ServiceComponent" local-service="true" remote-service="false">
 

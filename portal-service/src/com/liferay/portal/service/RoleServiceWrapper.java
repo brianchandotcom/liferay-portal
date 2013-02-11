@@ -60,6 +60,9 @@ public class RoleServiceWrapper implements RoleService,
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @param subType the role's subtype (optionally <code>null</code>)
+	* @param serviceContext the role's service context (optionally
+	<code>null</code>). Can set the expando bridge attributes
+	for the role.
 	* @return the role
 	* @throws PortalException if a user with the primary key could not be
 	found, if the user did not have permission to add roles, if the
@@ -71,11 +74,12 @@ public class RoleServiceWrapper implements RoleService,
 		long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subType)
+		int type, java.lang.String subType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleService.addRole(className, classPK, name, titleMap,
-			descriptionMap, type, subType);
+			descriptionMap, type, subType, serviceContext);
 	}
 
 	/**
@@ -93,7 +97,8 @@ public class RoleServiceWrapper implements RoleService,
 	the class name or the role name were invalid, or if the role
 	is a duplicate
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addRole(String, long, String, Map, Map, int, String)}
+	* @deprecated {@link #addRole(String, long, String, Map, Map, int, String,
+	ServiceContext)}
 	*/
 	public com.liferay.portal.model.Role addRole(java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -325,6 +330,9 @@ public class RoleServiceWrapper implements RoleService,
 	* @param descriptionMap the new localized descriptions (optionally
 	<code>null</code>) to replace those existing for the role
 	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @param serviceContext the role's service context (optionally
+	<code>null</code>). Can set the expando bridge attributes for the
+	role.
 	* @return the role with the primary key
 	* @throws PortalException if the user did not have permission to update the
 	role, if a role with the primary could not be found, or if the
@@ -335,11 +343,12 @@ public class RoleServiceWrapper implements RoleService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype)
+		java.lang.String subtype,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _roleService.updateRole(roleId, name, titleMap, descriptionMap,
-			subtype);
+			subtype, serviceContext);
 	}
 
 	/**

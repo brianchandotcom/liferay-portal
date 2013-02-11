@@ -267,7 +267,7 @@ public class RoleLocalServiceUtil {
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String)}
+	String, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,
@@ -303,7 +303,7 @@ public class RoleLocalServiceUtil {
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
 	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String)}
+	String, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,
@@ -333,6 +333,9 @@ public class RoleLocalServiceUtil {
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @param subType the role's subtype (optionally <code>null</code>)
+	* @param serviceContext the roles's service context (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	role.
 	* @return the role
 	* @throws PortalException if the class name or the role name were invalid,
 	if the role is a duplicate, or if a user with the primary key
@@ -343,12 +346,13 @@ public class RoleLocalServiceUtil {
 		java.lang.String className, long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subType)
+		int type, java.lang.String subType,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addRole(userId, className, classPK, name, titleMap,
-			descriptionMap, type, subType);
+			descriptionMap, type, subType, serviceContext);
 	}
 
 	/**
@@ -1082,6 +1086,9 @@ public class RoleLocalServiceUtil {
 	* @param descriptionMap the new localized descriptions (optionally
 	<code>null</code>) to replace those existing for the role
 	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @param serviceContext the roles's service context (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	role.
 	* @return the role with the primary key
 	* @throws PortalException if a role with the primary could not be found or
 	if the role's name was invalid
@@ -1091,11 +1098,13 @@ public class RoleLocalServiceUtil {
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype)
+		java.lang.String subtype,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateRole(roleId, name, titleMap, descriptionMap, subtype);
+				   .updateRole(roleId, name, titleMap, descriptionMap, subtype,
+			serviceContext);
 	}
 
 	public static RoleLocalService getService() {

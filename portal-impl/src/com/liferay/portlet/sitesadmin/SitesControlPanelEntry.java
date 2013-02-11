@@ -39,7 +39,7 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
-			groupParams.put("site", true);
+			groupParams.put("site", Boolean.TRUE);
 			groupParams.put("usersGroups", permissionChecker.getUserId());
 
 			int count = GroupLocalServiceUtil.searchCount(

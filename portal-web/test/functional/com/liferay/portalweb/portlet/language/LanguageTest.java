@@ -125,8 +125,16 @@ public class LanguageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent(
 				"\ucd94\uac00\ud558\uc2ed\uc2dc\uc694"));
-		selenium.clickAt("//img[@alt='Norwegian Bokm\u00e5l (Norge) [Beta]']",
-			RuntimeVariables.replace("Norwegian Bokm\u00e5l (Norge) [Beta]"));
+		selenium.clickAt("//img[@alt='Lao (Laos) [Beta]']",
+			RuntimeVariables.replace("Lao (Laos) [Beta]"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isTextPresent("\u0ec0\u0e9e\u0eb5\u0ec8\u0ea1"));
+		selenium.clickAt("//img[@alt='Lietuvi\u0173 (Lietuva) [Beta]']",
+			RuntimeVariables.replace("Lietuvi\u0173 (Lietuva) [Beta]"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isTextPresent("Add"));
+		selenium.clickAt("//img[@alt='Norwegian Bokm\u00e5l (Norway) [Beta]']",
+			RuntimeVariables.replace("Norwegian Bokm\u00e5l (Norway) [Beta]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Legg til"));
 		selenium.clickAt("//img[@alt='Persian (Iran) [Beta]']",

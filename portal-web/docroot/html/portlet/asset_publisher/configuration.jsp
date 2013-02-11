@@ -100,6 +100,10 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 		availableGroups.add(company.getGroup());
 		availableGroups.add(themeDisplay.getScopeGroup());
 
+		if (layout.hasScopeGroup()) {
+			availableGroups.add(layout.getScopeGroup());
+		}
+
 		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		%>
 

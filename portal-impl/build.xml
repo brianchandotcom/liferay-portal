@@ -320,6 +320,18 @@ public class Creole10Parser]]></replacevalue>
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
 	</target>
 
+	<target name="build-properties-doc">
+		<java
+			classname="com.liferay.portal.tools.PortalPropertiesParser"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="properties.html"/>
+			<arg value="false"/>
+		</java>
+	</target>
+
 	<target name="build-releaseinfo" if="release.info">
 		<java
 			classname="com.liferay.portal.tools.ReleaseInfoBuilder"

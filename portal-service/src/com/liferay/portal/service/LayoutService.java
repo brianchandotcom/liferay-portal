@@ -121,6 +121,9 @@ public interface LayoutService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Adds a layout with single entry maps for name, title, and description to
+	* the default locale.
+	*
 	* <p>
 	* This method handles the creation of the layout including its resources,
 	* metadata, and internal data structures. It is not necessary to make

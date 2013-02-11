@@ -372,6 +372,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				toName = group.getName();
 
+				params.put("inherit", true);
 				params.put("usersGroups", classPK);
 			}
 			else if (className.equals(Organization.class.getName())) {

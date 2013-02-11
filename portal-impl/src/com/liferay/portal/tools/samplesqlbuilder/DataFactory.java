@@ -801,10 +801,6 @@ public class DataFactory {
 		return _userClassNameId;
 	}
 
-	public Object[] getUserNames() {
-		return _userNames;
-	}
-
 	public Role getUserRole() {
 		return _userRole;
 	}
@@ -1100,27 +1096,34 @@ public class DataFactory {
 	}
 
 	public void initUserNames() throws Exception {
-		if (_userNames != null) {
-			return;
-		}
-
-		_userNames = new Object[2];
-
 		String dependenciesDir =
 			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
 				"dependencies/";
 
-		List<String> firstNames = ListUtil.fromFile(
+		_firstNames = ListUtil.fromFile(
 			new File(_baseDir, dependenciesDir + "first_names.txt"));
-		List<String> lastNames = ListUtil.fromFile(
+		_lastNames = ListUtil.fromFile(
 			new File(_baseDir, dependenciesDir + "last_names.txt"));
-
-		_userNames[0] = firstNames;
-		_userNames[1] = lastNames;
 	}
 
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
+	}
+
+	public String[] nextName(long currentIndex) {
+		int firstNamesSize = _firstNames.size();
+		int lastNamesSize = _lastNames.size();
+
+		int firstNameIndex =
+			(int)(currentIndex / lastNamesSize) % firstNamesSize;
+		int lastNameIndex = (int)(currentIndex % lastNamesSize);
+
+		String[] names = new String[2];
+
+		names[0] = _firstNames.get(firstNameIndex);
+		names[1] = _lastNames.get(lastNameIndex);
+
+		return names;
 	}
 
 	protected Date newCreateDate() {
@@ -1151,13 +1154,23 @@ public class DataFactory {
 	private DLFileEntryType _defaultDLFileEntryType;
 
 	private User _defaultUser;
+
 	private SimpleCounter _dlDateCounter;
+
 	private long _dlFileEntryClassNameId;
+
+	private List<String> _firstNames;
+
 	private long _groupClassNameId;
+
 	private Group _guestGroup;
+
 	private Role _guestRole;
+
 	private long _journalArticleClassNameId;
+
 	private String _journalArticleContent;
+	private List<String> _lastNames;
 	private int _maxGroupsCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;

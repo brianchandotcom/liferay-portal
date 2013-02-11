@@ -79,43 +79,83 @@
 	<td>Attribute Sharing</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//p[6]</td>
-	<td>TestSchedulerMessageListener.isReceived=PASSED</td>
+	<td>assertText</td>
+	<td>//h3[6]</td>
+	<td>Portlet Title (Dynamic)</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
 	<td>//p[6]</td>
-	<td>TestSchedulerUtil.isReceivedBeforeSpringInitialzed=PASSED</td>
+	<td>portletDisplay.getTitle=PASSED</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p[6]/a[1]</td>
+	<td>Change</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p[6]/a[2]</td>
+	<td>Restore</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h3[7]</td>
-	<td>Servlet Request</td>
+	<td>Portlet Title (Static)</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//p[7]/a</td>
-	<td>Remote User</td>
+	<td>assertPartialText</td>
+	<td>//p[7]</td>
+	<td>PortalUtil.getPortletTitle=PASSED</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[7]</td>
+	<td>PortalUtil.getPortletDescription=PASSED</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//h3[8]</td>
+	<td>Scheduler</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[8]</td>
+	<td>TestPortletConfigMessageListener.isReceived=PASSED</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[8]</td>
+	<td>TestSpringConfigMessageListener.isReceived=PASSED</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3[9]</td>
+	<td>Servlet Request</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//p[9]/a</td>
+	<td>Remote User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h3[10]</td>
 	<td>Upload</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p[8]/a[1]</td>
+	<td>//p[10]/a[1]</td>
 	<td>Form 1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p[8]/a[2]</td>
+	<td>//p[10]/a[2]</td>
 	<td>Form 2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[3]</td>
+	<td>//p[10]/a[3]</td>
 	<td>Form 3</td>
 </tr>
 </tbody></table>

@@ -36,12 +36,17 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 
 <aui:fieldset>
 	<aui:select label="enable-recycle-bin" name="trashEnabled">
-		<aui:option label='<%= (companyTrashEnabled == TrashUtil.TRASH_ENABLED_BY_DEFAULT) ? "default-value-enabled" : "default-value-disabled" %>' selected="<%= groupTrashEnabled == TrashUtil.TRASH_DEFAULT_VALUE %>" value="<%= TrashUtil.TRASH_DEFAULT_VALUE %>" />
+		<aui:option label='<%= LanguageUtil.format(locale, "use-portal-settings-currently-x", (companyTrashEnabled == TrashUtil.TRASH_ENABLED_BY_DEFAULT) ? "enabled" : "disabled", true) %>' selected="<%= groupTrashEnabled == TrashUtil.TRASH_DEFAULT_VALUE %>" value="<%= TrashUtil.TRASH_DEFAULT_VALUE %>" />
 		<aui:option label="enabled" selected="<%= groupTrashEnabled == TrashUtil.TRASH_ENABLED %>" value="<%= TrashUtil.TRASH_ENABLED %>" />
 		<aui:option label="disabled" selected="<%= groupTrashEnabled == TrashUtil.TRASH_DISABLED %>" value="<%= TrashUtil.TRASH_DISABLED %>" />
 	</aui:select>
 
-	<aui:input label="number-of-days-that-files-will-be-kept-in-the-recycle-bin" name="trashEntriesMaxAge" type="text" value="<%= trashEntriesMaxAge %>">
+	<aui:input disabled="<%= groupTrashEnabled != TrashUtil.TRASH_ENABLED %>" label="number-of-days-that-files-will-be-kept-in-the-recycle-bin" name="trashEntriesMaxAge" type="text" value="<%= trashEntriesMaxAge %>">
 		<aui:validator name="min">1</aui:validator>
 	</aui:input>
 </aui:fieldset>
+
+
+<aui:script>
+	Liferay.Util.disableSelectBoxes('<portlet:namespace />trashEntriesMaxAge', '<%= TrashUtil.TRASH_ENABLED %>', '<portlet:namespace />trashEnabled');
+</aui:script>

@@ -52,11 +52,11 @@ public class SOUs2_AddCCMessageTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
-		assertEquals(RuntimeVariables.replace("Send Message"),
+		assertEquals(RuntimeVariables.replace("Message"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_sendMessageButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_sendMessageButton']",
-			RuntimeVariables.replace("Send Message"));
+			RuntimeVariables.replace("Message"));
 		selenium.waitForVisible(
 			"//input[@id='_1_WAR_privatemessagingportlet_to']");
 		assertEquals("Joe Bloggs <joebloggs>,",

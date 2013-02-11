@@ -1064,6 +1064,27 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.findByC_P_S(companyId, parentGroupId, site);
 	}
 
+	public List<Group> getGroups(
+			long companyId, String className, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId);
+	}
+
+	public List<Group> getGroups(
+			long companyId, String className, long parentGroupId, int start,
+			int end)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId, start, end);
+	}
+
 	/**
 	 * Returns the groups with the matching primary keys.
 	 *
@@ -1106,6 +1127,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupPersistence.countByC_P_S(companyId, parentGroupId, site);
 	}
 
+	public int getGroupsCount(
+			long companyId, String className, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.countByC_C_P(
+			companyId, classNameId, parentGroupId);
+	}
+
 	/**
 	 * Returns the group associated with the layout.
 	 *
@@ -1139,34 +1170,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		return groupPersistence.findByC_C_C(
 			companyId, classNameId, layoutPrototypeId);
-	}
-
-	public List<Group> getLayoutScopes(long companyId, long parentGroupId)
-		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		return groupPersistence.findByC_C_P(
-			companyId, classNameId, parentGroupId);
-	}
-
-	public List<Group> getLayoutScopes(
-			long companyId, long parentGroupId, int start, int end)
-		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		return groupPersistence.findByC_C_P(
-			companyId, classNameId, parentGroupId, start, end);
-	}
-
-	public int getLayoutScopesCount(long companyId, long parentGroupId)
-		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		return groupPersistence.countByC_C_P(
-			companyId, classNameId, parentGroupId);
 	}
 
 	/**

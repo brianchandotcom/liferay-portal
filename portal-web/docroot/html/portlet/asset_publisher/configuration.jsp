@@ -192,7 +192,6 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 					layoutSiteBrowserURL.setParameter("type", "layoutScopes");
 					layoutSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
-					layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 					layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
 					layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -201,7 +200,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
 					%>
 
-					<c:if test="<%= GroupLocalServiceUtil.getLayoutScopesCount(company.getCompanyId(), layout.getGroupId()) > 0 %>">
+					<c:if test="<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0 %>">
 						<liferay-ui:icon
 							cssClass="highlited"
 							image="add"

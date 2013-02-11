@@ -25,7 +25,6 @@ boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 String callback = ParamUtil.getString(request, "callback");
 String target = ParamUtil.getString(request, "target");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -37,7 +36,6 @@ portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 portletURL.setParameter("callback", callback);
 portletURL.setParameter("target", target);
-portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -118,9 +116,9 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 				total = groups.size();
 			}
 			else if (type.equals("layoutScopes")) {
-				groups = GroupLocalServiceUtil.getLayoutScopes(company.getCompanyId(), groupId);
+				groups = GroupLocalServiceUtil.getGroups(company.getCompanyId(), Layout.class.getName(), groupId, start, end);
 
-				total = groups.size();
+				total = GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), groupId);
 			}
 			else if (searchTerms.isAdvancedSearch()) {
 				groups = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), start, end, searchContainer.getOrderByComparator());

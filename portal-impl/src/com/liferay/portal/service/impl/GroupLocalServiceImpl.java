@@ -1988,8 +1988,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
@@ -2034,8 +2034,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the group's class name IDs (optionally
-	 *         <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
@@ -2092,8 +2092,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
@@ -2142,8 +2142,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the group's class name IDs (optionally
-	 *         <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
@@ -2205,8 +2205,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -2247,8 +2247,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the group's class name IDs (optionally
-	 *         <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -2297,8 +2297,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -2345,8 +2345,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the group's class name IDs (optionally
-	 *         <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -2649,8 +2649,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
@@ -2687,8 +2687,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * are not included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
@@ -2730,8 +2730,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * groups. System and staged groups are not included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         sites's name, or description (optionally <code>null</code>)
 	 * @param  params the finder params (optionally <code>null</code>). To
@@ -2759,8 +2759,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * groups and user groups. System and staged groups are not included.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  classNameIds the class names of entities to include in the search
-	 *         (optionally <code>null</code>)
+	 * @param  classNameIds the primary keys of the class names of the entities
+	 *         the groups are related to (optionally <code>null</code>)
 	 * @param  name the group's name (optionally <code>null</code>)
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)

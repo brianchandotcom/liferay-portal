@@ -381,6 +381,10 @@ public class ThemeDisplay
 		return _realUser.getUserId();
 	}
 
+	public long getRefererGroupId() {
+		return _refererGroupId;
+	}
+
 	public long getRefererPlid() {
 		return _refererPlid;
 	}
@@ -1113,6 +1117,10 @@ public class ThemeDisplay
 	public void setRealUser(User realUser) {
 		_realUser = realUser;
 	}
+	
+	public void setRefererGroupId(long refererGroupId) {
+		_refererGroupId = refererGroupId;
+	}
 
 	public void setRefererPlid(long refererPlid) {
 		_refererPlid = refererPlid;
@@ -1440,6 +1448,7 @@ public class ThemeDisplay
 	private int _realCompanyLogoHeight;
 	private int _realCompanyLogoWidth;
 	private User _realUser;
+	private long _refererGroupId;
 	private long _refererPlid;
 	private Group _scopeGroup;
 	private long _scopeGroupId;

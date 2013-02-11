@@ -106,6 +106,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 						<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
+						<portlet:param name="ddmResourceActionId" value="<%= ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE %>" />
 					</liferay-portlet:renderURL>
 
 					<%

@@ -806,13 +806,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String ddmResourceActionId = ParamUtil.getString(
 			serviceContext, "ddmResourceActionId");
 
-		if (Validator.isNull(ddmResourceActionId)) {
-			if (ddmResource.equals(_DDL_CLASS_NAME)) {
-				ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
-			}
-			else {
-				ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
-			}
+		if (Validator.isNull(ddmResourceActionId) &&
+			ddmResource.equals(_DDL_CLASS_NAME)) {
+
+			ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
 		}
 
 		return ddmResourceActionId;

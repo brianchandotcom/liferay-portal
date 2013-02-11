@@ -510,20 +510,6 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
-	* Returns the sub-organizations of the organization.
-	*
-	* @param organization the organization from which to get
-	sub-organizations
-	* @return the sub-organizations of the organization
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getSuborganizations(organization);
-	}
-
-	/**
 	* Returns the sub-organizations of the organizations.
 	*
 	* @param organizations the organizations from which to get
@@ -538,17 +524,31 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	* Returns the sub-organizations of the organization.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
+	* @return the sub-organizations of the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
+		long companyId, long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSuborganizations(companyId, organizationId);
+	}
+
+	/**
 	* Returns the count of sub-organizations of the organization.
 	*
-	* @param organization the organization from which to get
-	the count of sub-organizations
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
 	* @return the count of sub-organizations of the organization
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int getSuborganizationsCount(
-		com.liferay.portal.model.Organization organization)
+	public static int getSuborganizationsCount(long companyId,
+		long organizationId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getSuborganizationsCount(organization);
+		return getService().getSuborganizationsCount(companyId, organizationId);
 	}
 
 	/**

@@ -43,7 +43,7 @@ insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThre
 
 <#assign socialActivity = dataFactory.addSocialActivity(dlFileEntry.groupId, dlFileEntry.companyId, dlFileEntry.userId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId)>
 
-insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${stringUtil.valueOf(dateUtil.newTime())}, 0, ${socialActivity.classNameId}, ${socialActivity.classPK}, 1, '', 0);
+insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${stringUtil.valueOf(dateUtil.newTime())}, 0, 0, ${socialActivity.classNameId}, ${socialActivity.classPK}, 1, '', 0);
 
 <#assign dlFileEntryMetadata = dataFactory.addDLFileEntryMetadata(ddmContent.contentId, ddmStructure.structureId, dlFileEntry.fileEntryId, dlFileVersion.fileVersionId)>
 

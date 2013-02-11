@@ -126,30 +126,44 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				{DLFileEntry.*}
 			FROM
-				DLFileEntry
-			[$JOIN$]
-			WHERE
-				(DLFileEntry.groupId = ?) AND
-				([$STATUS$]) AND
-				[$FOLDER_ID$]
+				(
+					SELECT
+						DISTINCT DLFileEntry.fileEntryId
+					FROM
+						DLFileEntry dLFileEntry
+					[$JOIN$]
+					WHERE
+						(DLFileEntry.groupId = ?) AND
+						([$STATUS$]) AND
+						[$FOLDER_ID$]
+				) TEMP_TABLE
+				INNER JOIN
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_U_F">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				{DLFileEntry.*}
 			FROM
-				DLFileEntry
-			INNER JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
-			WHERE
-				(DLFileVersion.groupId = ?) AND
-				(DLFileVersion.userId = ?) AND
-				([$STATUS$]) AND
-				[$FOLDER_ID$]
+				(
+					SELECT
+						DISTINCT DLFileEntry.fileEntryId
+					FROM
+						DLFileEntry dLFileEntry
+					INNER JOIN
+						DLFileVersion ON
+							(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					WHERE
+						(DLFileVersion.groupId = ?) AND
+						(DLFileVersion.userId = ?) AND
+						([$STATUS$]) AND
+						[$FOLDER_ID$]
+				) TEMP_TABLE
+				INNER JOIN
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">

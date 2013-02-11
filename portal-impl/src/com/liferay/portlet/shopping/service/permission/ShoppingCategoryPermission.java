@@ -81,7 +81,7 @@ public class ShoppingCategoryPermission {
 
 		if (actionId.equals(ActionKeys.VIEW)) {
 			while (categoryId !=
-					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+						ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 				category = ShoppingCategoryLocalServiceUtil.getCategory(
 					categoryId);
@@ -109,7 +109,7 @@ public class ShoppingCategoryPermission {
 		}
 		else {
 			while (categoryId !=
-					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+						ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
 				category = ShoppingCategoryLocalServiceUtil.getCategory(
 					categoryId);

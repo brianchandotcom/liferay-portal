@@ -62,15 +62,15 @@ public class BookmarksFolderPermission {
 
 		long folderId = folder.getFolderId();
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			while (folderId !=
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			long originalFolderId = folderId;
 
-				try {
+			try {
+				while (folderId !=
+							BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
 					folder = BookmarksFolderLocalServiceUtil.getFolder(
 						folderId);
-
-					folderId = folder.getParentFolderId();
 
 					if (!permissionChecker.hasOwnerPermission(
 							folder.getCompanyId(),
@@ -85,48 +85,48 @@ public class BookmarksFolderPermission {
 						return false;
 					}
 
-					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						break;
-					}
+					folderId = folder.getParentFolderId();
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (!folder.isInTrash()) {
-						throw nsfe;
-					}
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!folder.isInTrash()) {
+					throw nsfe;
 				}
 			}
 
-			return true;
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+
+			folderId = originalFolderId;
 		}
-		else {
+
+		try {
 			while (folderId !=
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+						BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				folder = BookmarksFolderLocalServiceUtil.getFolder(folderId);
 
-				folderId = folder.getParentFolderId();
-
 				if (permissionChecker.hasOwnerPermission(
 						folder.getCompanyId(), BookmarksFolder.class.getName(),
-						folder.getFolderId(), folder.getUserId(), actionId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
+						folder.getFolderId(), folder.getUserId(), actionId) ||
+					permissionChecker.hasPermission(
 						folder.getGroupId(), BookmarksFolder.class.getName(),
 						folder.getFolderId(), actionId)) {
 
 					return true;
 				}
 
-				if (actionId.equals(ActionKeys.VIEW)) {
-					break;
-				}
+				folderId = folder.getParentFolderId();
 			}
-
-			return false;
 		}
+		catch (NoSuchFolderException nsfe) {
+			if (!folder.isInTrash()) {
+				throw nsfe;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(

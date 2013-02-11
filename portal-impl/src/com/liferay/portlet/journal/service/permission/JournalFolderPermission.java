@@ -62,7 +62,7 @@ public class JournalFolderPermission {
 
 		if (actionId.equals(ActionKeys.VIEW)) {
 			while (folderId !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
 
@@ -87,7 +87,7 @@ public class JournalFolderPermission {
 		}
 		else {
 			while (folderId !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
 

@@ -170,8 +170,12 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 								<liferay-ui:icon
 									image="edit"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "activity-wiki-update-the-page-to-version", new Object[] {socialActivityUser.getFullName(), pageTitleLink}) %>'
+									message='<%= LanguageUtil.format(pageContext, "activity-wiki-update-page", new Object[] {socialActivityUser.getFullName(), pageTitleLink}) %>'
 								/>
+
+								<c:if test="<%= socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+									<em><liferay-ui:message key="<%= WorkflowConstants.toLabel(socialActivityWikiPage.getStatus()) %>" /></em>
+								</c:if>
 
 								<c:if test="<%= Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
 									<em class="activity-summary"><%= StringPool.QUOTE + socialActivityWikiPage.getSummary() + StringPool.QUOTE %></em>
@@ -202,7 +206,7 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text name="" value=""/>
+					<liferay-ui:search-container-column-text name="" value="" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

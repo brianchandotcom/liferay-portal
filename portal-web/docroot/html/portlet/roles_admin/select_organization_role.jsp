@@ -20,12 +20,17 @@
 int step = ParamUtil.getInteger(request, "step");
 String callback = ParamUtil.getString(request, "callback", "selectRole");
 
+User selUser = PortalUtil.getSelectedUser(request);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_organization_role");
 portletURL.setParameter("callback", callback);
 
-User selUser = null;
+if (selUser != null) {
+	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+}
+
 long uniqueOrganizationId = 0;
 
 List<Organization> organizations = null;
@@ -249,24 +254,28 @@ if (step == 1) {
 					<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 					<%
-					StringBundler sb = new StringBundler(14);
+					String rowHREF = null;
 
-					sb.append("javascript:opener.");
-					sb.append(renderResponse.getNamespace());
-					sb.append(callback);
-					sb.append("('");
-					sb.append(role.getRoleId());
-					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
-					sb.append("', '");
-					sb.append("organizationRoles");
-					sb.append("', '");
-					sb.append(UnicodeFormatter.toString(organization.getGroup().getDescriptiveName(locale)));
-					sb.append("', '");
-					sb.append(organization.getGroup().getGroupId());
-					sb.append("'); window.close();");
+					if (MembershipPolicyUtil.isMembershipAllowed(organization, role, selUser)) {
+						StringBundler sb = new StringBundler(14);
 
-					String rowHREF = sb.toString();
+						sb.append("javascript:opener.");
+						sb.append(renderResponse.getNamespace());
+						sb.append(callback);
+						sb.append("('");
+						sb.append(role.getRoleId());
+						sb.append("', '");
+						sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+						sb.append("', '");
+						sb.append("organizationRoles");
+						sb.append("', '");
+						sb.append(UnicodeFormatter.toString(organization.getGroup().getDescriptiveName(locale)));
+						sb.append("', '");
+						sb.append(organization.getGroup().getGroupId());
+						sb.append("'); window.close();");
+
+						rowHREF = sb.toString();
+					}
 					%>
 
 					<liferay-ui:search-container-column-text

@@ -19,10 +19,16 @@
 <%
 String callback = ParamUtil.getString(request, "callback", "selectRole");
 
+User selUser = PortalUtil.getSelectedUser(request);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_regular_role");
 portletURL.setParameter("callback", callback);
+
+if (selUser != null) {
+	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+}
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -73,18 +79,22 @@ portletURL.setParameter("callback", callback);
 			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(role) %>" />
 
 			<%
-			StringBundler sb = new StringBundler(8);
+			String rowHREF = null;
 
-			sb.append("javascript:opener.");
-			sb.append(renderResponse.getNamespace());
-			sb.append(callback);
-			sb.append("('");
-			sb.append(role.getRoleId());
-			sb.append("', '");
-			sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
-			sb.append("', 'roles'); window.close();");
+			if (MembershipPolicyUtil.isMembershipAllowed(role, selUser)) {
+				StringBundler sb = new StringBundler(8);
 
-			String rowHREF = sb.toString();
+				sb.append("javascript:opener.");
+				sb.append(renderResponse.getNamespace());
+				sb.append(callback);
+				sb.append("('");
+				sb.append(role.getRoleId());
+				sb.append("', '");
+				sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+				sb.append("', 'roles'); window.close();");
+
+				rowHREF = sb.toString();
+			}
 			%>
 
 			<liferay-ui:search-container-column-text

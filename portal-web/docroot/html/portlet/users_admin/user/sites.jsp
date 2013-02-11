@@ -20,6 +20,8 @@
 User selUser = (User)request.getAttribute("user.selUser");
 
 List<Group> groups = (List<Group>)request.getAttribute("user.groups");
+
+Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(selUser);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="sites" />
@@ -78,7 +80,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 		</liferay-ui:search-container-column-text>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !mandatoryGroups.contains(group) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
@@ -102,7 +104,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 <aui:script>
 	function <portlet:namespace />openGroupSelector() {
-		var groupWindow = window.open('<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /></portlet:renderURL>', 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
+		var groupWindow = window.open('<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /><portlet:param name="p_u_i_d" value='<%= String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>', 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
 
 		groupWindow.focus();
 	}

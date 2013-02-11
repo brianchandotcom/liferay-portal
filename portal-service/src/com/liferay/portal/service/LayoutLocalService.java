@@ -304,7 +304,8 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Adds a layout.
+	* Adds a layout with single entry maps for name, title, and description to
+	* the default locale.
 	*
 	* <p>
 	* This method handles the creation of the layout including its resources,
@@ -824,6 +825,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	/**
 	* Returns all the layouts without resource permissions
 	*
+	* @param
 	* @return all the layouts without resource permissions
 	* @throws SystemException if a system exception occurred
 	*/

@@ -1065,6 +1065,50 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the groups that are direct children of the parent group with
+	 * the matching className.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the class name of the group
+	 * @param  parentGroupId the primary key of the parent group
+	 * @return the matching groups, or <code>null</code> if no matches were
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getGroups(
+			long companyId, String className, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId);
+	}
+
+	/**
+	 * Returns a range of all the groups that are direct children of the parent
+	 * group with the matching className.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the class name of the group
+	 * @param  parentGroupId the primary key of the parent group
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @return the range of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getGroups(
+			long companyId, String className, long parentGroupId, int start,
+			int end)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.findByC_C_P(
+			companyId, classNameId, parentGroupId, start, end);
+	}
+
+	/**
 	 * Returns the groups with the matching primary keys.
 	 *
 	 * @param  groupIds the primary keys of the groups
@@ -1104,6 +1148,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupPersistence.countByC_P_S(companyId, parentGroupId, site);
+	}
+
+	/**
+	 * Returns the number of groups that are direct children of the parent
+	 * group with the matching className.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the class name of the group
+	 * @param  parentGroupId the primary key of the parent group
+	 * @return the number of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getGroupsCount(
+			long companyId, String className, long parentGroupId)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.countByC_C_P(
+			companyId, classNameId, parentGroupId);
 	}
 
 	/**

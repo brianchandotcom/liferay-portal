@@ -481,6 +481,17 @@ public interface GroupLocalService extends BaseLocalService,
 		long companyId, long parentGroupId, boolean site)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the groups with the matching primary keys.
 	*
@@ -507,6 +518,11 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupsCount(long companyId, java.lang.String className,
+		long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

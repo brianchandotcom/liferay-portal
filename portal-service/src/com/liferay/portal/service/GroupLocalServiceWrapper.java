@@ -525,6 +525,20 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroups(companyId, parentGroupId, site);
 	}
 
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroups(companyId, className, parentGroupId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, long parentGroupId,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroups(companyId, className,
+			parentGroupId, start, end);
+	}
+
 	/**
 	* Returns the groups with the matching primary keys.
 	*
@@ -553,6 +567,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.getGroupsCount(companyId, parentGroupId, site);
+	}
+
+	public int getGroupsCount(long companyId, java.lang.String className,
+		long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroupsCount(companyId, className,
+			parentGroupId);
 	}
 
 	/**

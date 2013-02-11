@@ -645,18 +645,16 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Returns the sub-organizations of the organization.
 	 *
-	 * @param  organization the organization from which to get
-	 *         sub-organizations
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
 	 * @return the sub-organizations of the organization
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Organization> getSuborganizations(
-		Organization organization)
+			long companyId, long organizationId)
 		throws SystemException {
 
-		return organizationPersistence.findByC_P(
-			organization.getCompanyId(),
-			organization.getOrganizationId());
+		return organizationPersistence.findByC_P(companyId, organizationId);
 	}
 
 	/**
@@ -668,7 +666,7 @@ public class OrganizationLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Organization> getSuborganizations(
-		List<Organization> organizations)
+			List<Organization> organizations)
 		throws SystemException {
 
 		List<Organization> allSuborganizations = new ArrayList<Organization>();
@@ -690,18 +688,15 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Returns the count of sub-organizations of the organization.
 	 *
-	 * @param  organization the organization from which to get
-	 *         the count of sub-organizations
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
 	 * @return the count of sub-organizations of the organization
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int getSuborganizationsCount(
-		Organization organization)
+	public int getSuborganizationsCount(long companyId, long organizationId)
 		throws SystemException {
 
-		return organizationPersistence.countByC_P(
-			organization.getCompanyId(),
-			organization.getOrganizationId());
+		return organizationPersistence.countByC_P(companyId, organizationId);
 	}
 
 	/**

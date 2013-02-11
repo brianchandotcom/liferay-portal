@@ -241,9 +241,12 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure, or <code>null</code> if a matching
 	 *         structure could not be found
@@ -285,9 +288,12 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group.
+	 * Returns the structure matching the class name ID, structure key and
+	 * group.
 	 *
 	 * @param  groupId the primary key of the structure's group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure
 	 * @throws PortalException if the user did not have permission to view the
@@ -307,8 +313,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the structure matching the structure key and group, optionally in
-	 * the global scope.
+	 * Returns the structure matching the class name ID, structure key, and
+	 * group, optionally in the global scope.
 	 *
 	 * <p>
 	 * This method first searches in the group. If the structure is still not
@@ -317,6 +323,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the structure's group
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @param  includeGlobalStructures whether to include the global scope in
 	 *         the search
@@ -507,11 +515,15 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the structure replacing its old parent structure, name map,
-	 * description map, and XSD with new ones.
+	 * Updates the structure matching the class name ID, structure key, and
+	 * group, replacing its old parent structure, name map, description map, and
+	 * XSD with new ones.
 	 *
-	 * @param  structureId the primary key of the structure
+	 * @param  groupId the primary key of the group
 	 * @param  parentStructureId the primary key of the new parent structure
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  structureKey the unique string identifying the structure
 	 * @param  nameMap the structure's new locales and localized names
 	 * @param  descriptionMap the structure's new locales and localized
 	 *         description
@@ -540,13 +552,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the structure matching the structure key and group, replacing the
-	 * old parent structure ID, name map, description map, and XSD with the new
-	 * values.
+	 * Updates the structure matching the structure ID, replacing the old parent
+	 * structure ID, name map, description map, and XSD with the new values.
 	 *
-	 * @param  groupId the primary key of the group
+	 * @param  structureId the primary key of the structure
 	 * @param  parentStructureId the new parent structure primary key
-	 * @param  structureKey the unique string identifying the structure
 	 * @param  nameMap the structure's new locales and localized names
 	 * @param  descriptionMap the structure's new locales and localized
 	 *         description

@@ -191,7 +191,7 @@ if (Validator.isNotNull(script)) {
 						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
 					</aui:field-wrapper>
 
-					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
+					<c:if test="<%= Validator.isNotNull(refererWebDavToken) %>">
 						<aui:field-wrapper label="webdav-url">
 							<liferay-ui:input-resource url="<%= structure.getWebDavURL(themeDisplay, refererWebDavToken) %>" />
 						</aui:field-wrapper>

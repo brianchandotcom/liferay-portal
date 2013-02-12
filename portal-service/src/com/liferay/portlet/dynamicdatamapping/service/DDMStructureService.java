@@ -253,7 +253,7 @@ public interface DDMStructureService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the structure matching the class name ID, structure key and
+	* Returns the structure matching the class name ID, structure key, and
 	* group.
 	*
 	* @param groupId the primary key of the structure's group

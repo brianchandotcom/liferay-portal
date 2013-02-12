@@ -49,29 +49,49 @@
 	<td>Recycle Bin</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[3]/td[5]/span/ul/li/strong/a</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/span/a</td>
+	<td>Bookmark Subfolder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span	</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[3]/td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span	</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
+	<td>Restore</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The item has been restored to Home » Bookmark Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-info taglib-trash-empty']</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>The Recycle Bin is empty.</td>
 </tr>
 </tbody></table>
 </body>

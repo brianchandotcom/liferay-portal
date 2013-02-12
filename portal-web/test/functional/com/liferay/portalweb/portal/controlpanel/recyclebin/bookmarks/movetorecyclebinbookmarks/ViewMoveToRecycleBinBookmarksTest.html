@@ -50,8 +50,53 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[3]/td/span/a</td>
+	<td>//div[@class='lfr-message-info taglib-trash-empty']/form</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@class='trash-empty-link']</td>
+	<td>Empty the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@title='Search Entries']</td>
+	<td>Search Entries</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/span/a</td>
 	<td>Bookmark Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[2]</td>
+	<td>Bookmarks Folder</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[3]</td>
+	<td>Removed Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[4]</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
 </tr>
 </tbody></table>
 </body>

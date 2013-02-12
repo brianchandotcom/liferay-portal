@@ -26,13 +26,6 @@ public class ViewMoveToRecycleBinBookmarksFolderTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Bookmarks Test Page",
-			RuntimeVariables.replace("Bookmarks Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"There are no bookmarks in this folder."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(
@@ -47,8 +40,27 @@ public class ViewMoveToRecycleBinBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Recycle Bin",
 			RuntimeVariables.replace("Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin"),
+			selenium.getText(
+				"//div[@class='lfr-message-info taglib-trash-empty']/form"));
+		assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+			selenium.getText("//a[@class='trash-empty-link']"));
+		assertTrue(selenium.isVisible("//input[@title='Search Entries']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
 			selenium.getText(
-				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td/span/a"));
+				"//tr[contains(.,'Bookmark Folder Name')]/td[1]/span/a"));
+		assertEquals(RuntimeVariables.replace("Bookmarks Folder"),
+			selenium.getText("//tr[contains(.,'Bookmark Folder Name')]/td[2]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[contains(.,'Bookmark Folder Name')]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Folder Name')]/td[5]/span/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("Showing 1 result."),
+			selenium.getText("//div[@class='search-results']"));
 	}
 }

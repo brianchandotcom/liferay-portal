@@ -50,18 +50,98 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[3]/td/a</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Home')]</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Recent')]/a/span</td>
+	<td>Recent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Mine')]/a/span</td>
+	<td>Mine</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@title='Search Bookmarks']</td>
+	<td>Search Bookmarks</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-title']/span[contains(.,'Folders')]</td>
+	<td>Folders</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[1]/a/strong</td>
 	<td>Bookmark Folder Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Recycle Bin</td>
-	<td>Recycle Bin</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[2]/a</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[3]/a</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Bookmark Folder Name')]/td[4]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-asset-name']/h4</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//img[@title='Home']</td>
+	<td>Home Folder Image</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Subscribe')]</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]</td>
+	<td>Add Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Bookmark')]</td>
+	<td>Add Bookmark</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-title']/span[contains(.,'Bookmarks')]</td>
+	<td>Bookmarks</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
-	<td>The Recycle Bin is empty.</td>
+	<td>There are no bookmarks in this folder.</td>
 </tr>
 </tbody></table>
 </body>

@@ -40,17 +40,29 @@ public class RestoreBookmarksSubFolderRecycleBinTest extends BaseTestCase {
 		selenium.clickAt("link=Recycle Bin",
 			RuntimeVariables.replace("Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible(
-			"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[5]/span/ul/li/strong/a");
-		selenium.clickAt("//table[@class='taglib-search-iterator']/tbody/tr[3]/td[5]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Bookmark Subfolder Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark Subfolder Name')]/td[1]/span/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span	"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span	",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
-			RuntimeVariables.replace("Restore"));
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]");
+		assertEquals(RuntimeVariables.replace("Restore"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The item has been restored to Home \u00bb Bookmark Folder Name"),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted."),
+			selenium.getText(
+				"//div[@class='lfr-message-info taglib-trash-empty']"));
+		assertEquals(RuntimeVariables.replace("The Recycle Bin is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

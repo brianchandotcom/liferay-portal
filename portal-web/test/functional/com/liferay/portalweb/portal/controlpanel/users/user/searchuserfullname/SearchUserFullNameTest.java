@@ -59,6 +59,6 @@ public class SearchUserFullNameTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("userln"));
 		assertFalse(selenium.isTextPresent("usersn"));
 		assertEquals(RuntimeVariables.replace("No users were found."),
-			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[3]"));
 	}
 }

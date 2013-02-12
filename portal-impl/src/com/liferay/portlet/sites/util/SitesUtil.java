@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -96,6 +97,7 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -549,6 +551,20 @@ public class SitesUtil {
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), null,
 			parameterMap, null, null);
+	}
+
+	public static Long[] filterGroups(
+		List<Group> groups, String[] names) {
+
+		List<Long> groupIds = new ArrayList<Long>();
+
+		for (Group group : groups) {
+			if (!ArrayUtil.contains(names, group.getName())) {
+				groupIds.add(group.getGroupId());
+			}
+		}
+
+		return ArrayUtil.toArray(ArrayUtil.toLongArray(groupIds));
 	}
 
 	public static Layout getLayoutSetPrototypeLayout(Layout layout) {

@@ -314,6 +314,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 				Binding binding = enu.nextElement();
 
+				enu.close();
+
 				Attributes attributes = PortalLDAPUtil.getUserAttributes(
 					ldapServerId, companyId, ldapContext,
 					PortalLDAPUtil.getNameInNamespace(
@@ -958,9 +960,20 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			userGroup = UserGroupLocalServiceUtil.getUserGroup(
 				companyId, ldapGroup.getGroupName());
 
-			UserGroupLocalServiceUtil.updateUserGroup(
-				companyId, userGroup.getUserGroupId(), ldapGroup.getGroupName(),
-				ldapGroup.getDescription(), null);
+			boolean newGroupName = !userGroup.getName()
+					.equalsIgnoreCase(ldapGroup.getGroupName());
+			
+			boolean newGroupDescription = (userGroup.getDescription() != null
+					&& !userGroup.getDescription()
+						.equalsIgnoreCase(ldapGroup.getDescription()))
+						|| (userGroup.getDescription() == null
+							&& ldapGroup.getDescription() != null);
+
+			if (newGroupName || newGroupDescription) {
+				UserGroupLocalServiceUtil.updateUserGroup(
+					companyId, userGroup.getUserGroupId(), ldapGroup.getGroupName(),
+					ldapGroup.getDescription(), null);
+			}
 		}
 		catch (NoSuchUserGroupException nsuge) {
 			if (_log.isDebugEnabled()) {

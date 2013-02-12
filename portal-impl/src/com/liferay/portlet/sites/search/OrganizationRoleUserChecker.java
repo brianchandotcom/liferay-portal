@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin.search;
+package com.liferay.portlet.sites.search;
 
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.MembershipPolicyUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
-public class UserRoleChecker extends RowChecker {
+public class OrganizationRoleUserChecker extends RowChecker {
 
-	public UserRoleChecker(RenderResponse renderResponse, Role role) {
+	public OrganizationRoleUserChecker(
+		RenderResponse renderResponse, Organization organization, Role role) {
+
 		super(renderResponse);
 
+		_organization = organization;
 		_role = role;
 	}
 
@@ -42,8 +46,9 @@ public class UserRoleChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			return UserLocalServiceUtil.hasRoleUser(
-				_role.getRoleId(), user.getUserId());
+			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				user.getUserId(), _organization.getGroupId(),
+				_role.getRoleId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -56,11 +61,13 @@ public class UserRoleChecker extends RowChecker {
 	public boolean isDisabled(Object obj) {
 		User user = (User)obj;
 
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(user);
+		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
+			_organization, user);
 
-		if ((isChecked(user) && mandatoryRoles.contains(_role)) ||
-			(!isChecked(user) &&
-				!MembershipPolicyUtil.isMembershipAllowed(_role, user))) {
+		if ((!MembershipPolicyUtil.isMembershipAllowed(
+				_organization, _role, user) &&
+			!isChecked(user)) ||
+			(mandatoryRoles.contains(_role) && isChecked(user))) {
 
 			return true;
 		}
@@ -69,8 +76,10 @@ public class UserRoleChecker extends RowChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserRoleChecker.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		OrganizationRoleUserChecker.class);
 
+	private Organization _organization;
 	private Role _role;
 
 }

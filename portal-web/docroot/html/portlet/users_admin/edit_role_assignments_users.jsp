@@ -26,6 +26,8 @@ Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
 %>
 
+<liferay-ui:membership-policy-error />
+
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />
 

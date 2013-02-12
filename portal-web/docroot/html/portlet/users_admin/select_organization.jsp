@@ -20,6 +20,8 @@
 String eventName = ParamUtil.getString(request, "eventName", "selectOrganization");
 String target = ParamUtil.getString(request, "target");
 
+User selUser = PortalUtil.getSelectedUser(request);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/users_admin/select_organization");
@@ -27,6 +29,10 @@ portletURL.setParameter("eventName", eventName);
 
 if (Validator.isNotNull(target)) {
 	portletURL.setParameter("target", target);
+}
+
+if (selUser != null) {
+	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
 %>
 
@@ -122,17 +128,19 @@ if (Validator.isNotNull(target)) {
 			/>
 
 			<liferay-ui:search-container-column-text>
+				<c:if test="<%= MembershipPolicyUtil.isMembershipAllowed(organization, selUser) %>">
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("groupId", organization.getGroupId());
-				data.put("name", HtmlUtil.escape(organization.getName()));
-				data.put("organizationId", organization.getOrganizationId());
-				data.put("type", organization.getType());
-				%>
+					data.put("groupId", organization.getGroupId());
+					data.put("name", HtmlUtil.escape(organization.getName()));
+					data.put("organizationId", organization.getOrganizationId());
+					data.put("type", organization.getType());
+					%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

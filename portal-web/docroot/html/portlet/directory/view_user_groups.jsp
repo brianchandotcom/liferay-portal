@@ -43,17 +43,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
 
-		long[] groupIds = StringUtil.split(ListUtil.toString(groups, "groupId"), 0L);
-
-		for (String name : PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES) {
-			Group group = GroupLocalServiceUtil.fetchGroup(themeDisplay.getCompanyId(), name);
-
-			if (group != null) {
-				groupIds = ArrayUtil.remove(groupIds, group.getGroupId());
-			}
-		}
-
-		userGroupParams.put("userGroupsGroups", ArrayUtil.toArray(groupIds));
+		userGroupParams.put("userGroupsGroups", SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
 	}
 	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
 		userGroupParams.put("userGroupsGroups", new Long(themeDisplay.getScopeGroupId()));

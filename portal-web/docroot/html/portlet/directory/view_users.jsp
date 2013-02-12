@@ -103,17 +103,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
 
-		long[] groupIds = StringUtil.split(ListUtil.toString(groups, "groupId"), 0L);
-
-		for (String name : PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES) {
-			Group group = GroupLocalServiceUtil.fetchGroup(themeDisplay.getCompanyId(), name);
-
-			if (group != null) {
-				groupIds = ArrayUtil.remove(groupIds, group.getGroupId());
-			}
-		}
-
-		userParams.put("usersGroups", ArrayUtil.toArray(groupIds));
+		userParams.put("usersGroups", SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
 	}
 	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY) && (organizationId == 0) && (userGroupId == 0)) {
 		userParams.put("inherit", Boolean.TRUE);

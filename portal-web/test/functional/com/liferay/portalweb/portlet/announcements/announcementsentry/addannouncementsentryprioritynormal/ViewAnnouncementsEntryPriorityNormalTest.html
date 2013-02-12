@@ -39,22 +39,22 @@ ee<html>
 	<td>Announcements Entry Title Priority Normal</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_84_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__84_editor']/iframe</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>assertText</td>
 	<td>//body</td>
 	<td>Announcements Entry Content Priority Normal</td>
 </tr>

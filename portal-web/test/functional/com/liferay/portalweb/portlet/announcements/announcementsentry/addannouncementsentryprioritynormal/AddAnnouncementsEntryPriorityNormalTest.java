@@ -43,27 +43,12 @@ public class AddAnnouncementsEntryPriorityNormalTest extends BaseTestCase {
 				"Announcements Entry Title Priority Normal"));
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.liferay.com"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__84_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"Announcements Entry Content Priority Normal"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.waitForText("//body",
-			"Announcements Entry Content Priority Normal");
-		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//select[@id='_84_priority']");
 		selenium.select("//select[@id='_84_priority']",
 			RuntimeVariables.replace("Normal"));

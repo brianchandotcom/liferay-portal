@@ -56,6 +56,7 @@ public class ViewWDFrontPageChildPageIncomingLinksTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"There are no pages that link to this page."));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage2 Title')]/td[1]/a"));
 	}
 }

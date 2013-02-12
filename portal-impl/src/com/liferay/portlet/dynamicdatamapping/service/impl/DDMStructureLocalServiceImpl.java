@@ -490,7 +490,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the class name ID, structure key and
+	 * Returns the structure matching the class name ID, structure key, and
 	 * group.
 	 *
 	 * @param  groupId the primary key of the group

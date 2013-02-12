@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Juan Fernández
  */
-public class DDMWebDAVStorageImpl extends BaseWebDAVStorageImpl {
+public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 
 	@Override
 	public int deleteResource(WebDAVRequest webDavRequest)

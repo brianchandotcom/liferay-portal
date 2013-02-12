@@ -193,12 +193,7 @@ if (Validator.isNotNull(script)) {
 
 					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
 						<aui:field-wrapper label="webdav-url">
-
-							<%
-							Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-							%>
-
-							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + scopeGroup.getFriendlyURL() + "/dynamic_data_mapping/ddmStructures/" + classPK %>' />
+							<liferay-ui:input-resource url="<%= structure.getWebDavURL(themeDisplay, refererWebDavToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

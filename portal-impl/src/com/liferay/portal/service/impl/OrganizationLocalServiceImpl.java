@@ -700,6 +700,35 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
+	 * Returns the sub-organizations of the organization.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
+	 * @return the sub-organizations of the organization
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Organization> getSuborganizations(
+			long companyId, long organizationId)
+		throws SystemException {
+
+		return organizationPersistence.findByC_P(companyId, organizationId);
+	}
+
+	/**
+	 * Returns the count of sub-organizations of the organization.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
+	 * @return the count of sub-organizations of the organization
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getSuborganizationsCount(long companyId, long organizationId)
+		throws SystemException {
+
+		return organizationPersistence.countByC_P(companyId, organizationId);
+	}
+
+	/**
 	 * Returns the intersection of <code>allOrganizations</code> and
 	 * <code>availableOrganizations</code>.
 	 *

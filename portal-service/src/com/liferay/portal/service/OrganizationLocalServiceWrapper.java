@@ -532,6 +532,35 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Returns the sub-organizations of the organization.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
+	* @return the sub-organizations of the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
+		long companyId, long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getSuborganizations(companyId,
+			organizationId);
+	}
+
+	/**
+	* Returns the count of sub-organizations of the organization.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param organizationId the primary key of the organization
+	* @return the count of sub-organizations of the organization
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getSuborganizationsCount(long companyId, long organizationId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getSuborganizationsCount(companyId,
+			organizationId);
+	}
+
+	/**
 	* Returns the intersection of <code>allOrganizations</code> and
 	* <code>availableOrganizations</code>.
 	*

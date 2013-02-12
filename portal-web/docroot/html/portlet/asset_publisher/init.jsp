@@ -69,8 +69,6 @@ if (Validator.isNull(selectionStyle)) {
 	selectionStyle = "dynamic";
 }
 
-boolean defaultScope = GetterUtil.getBoolean(preferences.getValue("defaultScope", null), true);
-
 long[] groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layout);
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();

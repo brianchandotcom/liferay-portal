@@ -92,8 +92,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		preferenceMap.put(
-			"defaultScope", new String[] {Boolean.FALSE.toString()});
-		preferenceMap.put(
 			"scopeIds",
 			new String[] {
 				AssetPublisherUtil.SCOPE_ID_CHILD_GROUP_PREFIX +
@@ -103,9 +101,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
 			_layout, preferenceMap);
 
-		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			portletPreferences.getValue("defaultScope", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 		Assert.assertTrue(
 			"The child group ID should have been filtered out on import",
@@ -113,7 +108,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testDefaultScopeId() throws Exception {
+	public void testGlobalScopeId() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
@@ -122,7 +117,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Group companyGroup = company.getGroup();
 
 		preferenceMap.put(
-			"defaultScope",
+			"scopeIds",
 			new String[] {
 				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 					companyGroup.getGroupId()
@@ -134,28 +129,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 				companyGroup.getGroupId(),
-			portletPreferences.getValue("defaultScope", null));
+			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
-		Assert.assertEquals(
-			null, portletPreferences.getValue("scopeIds", null));
-	}
-
-	@Test
-	public void testGlobalScopeId() throws Exception {
-		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
-
-		preferenceMap.put(
-			"defaultScope", new String[] {Boolean.TRUE.toString()});
-
-		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
-
-		Assert.assertEquals(
-			Boolean.TRUE.toString(),
-			portletPreferences.getValue("defaultScope", null));
-		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
-		Assert.assertEquals(
-			null, portletPreferences.getValue("scopeIds", null));
 	}
 
 	@Test
@@ -165,7 +140,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
-			"defaultScope",
+			"scopeIds",
 			new String[] {
 				AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
 					_layout.getUuid()
@@ -177,10 +152,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
 				_importedLayout.getUuid(),
-			portletPreferences.getValue("defaultScope", null));
+			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
-		Assert.assertEquals(
-			null, portletPreferences.getValue("scopeIds", null));
 	}
 
 	@Test
@@ -190,7 +163,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
-			"defaultScope", new String[] {
+			"scopeIds", new String[] {
 				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
 					_layout.getLayoutId()
 			});
@@ -201,10 +174,8 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
 				_importedLayout.getUuid(),
-			portletPreferences.getValue("defaultScope", null));
+			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
-		Assert.assertEquals(
-			null, portletPreferences.getValue("scopeIds", null));
 	}
 
 	@Test
@@ -220,9 +191,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
 		addGroup(TestPropsValues.getUserId(), _layout);
-
-		preferenceMap.put(
-			"defaultScope", new String[] {Boolean.FALSE.toString()});
 
 		Group companyGroup = company.getGroup();
 
@@ -245,9 +213,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 				secondLayout.getUuid(), _importedGroup.getGroupId(),
 				_importedLayout.isPrivateLayout());
 
-		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			portletPreferences.getValue("defaultScope", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
 		StringBundler sb = new StringBundler(8);
@@ -278,8 +243,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
-			"defaultScope", new String[] {Boolean.FALSE.toString()});
-		preferenceMap.put(
 			"scopeIds",
 			new String[] {
 				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX +
@@ -296,9 +259,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 				secondLayout.getUuid(), _importedGroup.getGroupId(),
 				_importedLayout.isPrivateLayout());
 
-		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			portletPreferences.getValue("defaultScope", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
 		StringBundler sb = new StringBundler(5);

@@ -170,7 +170,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			scopeIds = ArrayUtil.append(scopeIds, scopeId);
 		}
 
-		preferences.setValue("defaultScope", Boolean.FALSE.toString());
 		preferences.setValues("scopeIds", scopeIds);
 	}
 
@@ -353,11 +352,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
-		String defaultScope = getParameter(actionRequest, "defaultScope");
 		String[] scopeIds = StringUtil.split(
 			getParameter(actionRequest, "scopeIds"));
 
-		preferences.setValue("defaultScope", defaultScope);
 		preferences.setValues("scopeIds", scopeIds);
 	}
 

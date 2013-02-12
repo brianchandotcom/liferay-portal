@@ -1824,7 +1824,7 @@ public class PortletImporter {
 
 				updateAssetPublisherClassNameIds(jxPreferences, name);
 			}
-			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
+			else if (name.equals("scopeIds")) {
 				updateAssetPublisherScopeIds(
 					jxPreferences, name, companyGroup.getGroupId(),
 					layout.getPlid());
@@ -1867,8 +1867,7 @@ public class PortletImporter {
 			String newValue = StringUtil.replace(
 				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
 
-			if (!oldValue.equals("false") && !oldValue.equals("true") &&
-				!AssetPublisherUtil.isScopeIdSelectable(
+			if (!AssetPublisherUtil.isScopeIdSelectable(
 					PermissionThreadLocal.getPermissionChecker(), newValue,
 					companyGroupId, layout)) {
 

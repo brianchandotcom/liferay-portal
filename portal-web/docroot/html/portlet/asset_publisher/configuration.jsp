@@ -68,31 +68,6 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	</liferay-util:buffer>
 
 	<liferay-util:buffer var="selectScope">
-		<aui:select label="" name="preferences--defaultScope--" onChange='<%= renderResponse.getNamespace() + "selectScope();" %>'>
-
-			<%
-			long layoutScopeGroupId = 0;
-			%>
-
-			<aui:option label="<%= _getName(themeDisplay, themeDisplay.getScopeGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getScopeGroupId() == groupIds[0]) %>" value="<%= true %>" />
-
-			<c:if test="<%= layout.hasScopeGroup() %>">
-
-				<%
-				Group layoutScopeGroup = layout.getScopeGroup();
-
-				layoutScopeGroupId = layoutScopeGroup.getGroupId();
-				%>
-
-				<aui:option label="<%= _getName(themeDisplay, layoutScopeGroup) %>" selected="<%= (groupIds.length == 1) && (layoutScopeGroupId == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(layoutScopeGroup, themeDisplay.getScopeGroupId()) %>" />
-			</c:if>
-
-			<aui:option label="<%= _getName(themeDisplay, company.getGroup()) %>" selected="<%= (groupIds.length == 1) && (themeDisplay.getCompanyGroupId() == groupIds[0]) %>" value="<%= AssetPublisherUtil.getScopeId(company.getGroup(), themeDisplay.getScopeGroupId()) %>" />
-
-			<optgroup label="----------"></optgroup>
-
-			<aui:option label='<%= LanguageUtil.get(pageContext,"advanced-selection") + StringPool.TRIPLE_PERIOD %>' selected="<%= (groupIds.length > 1) || ((groupIds.length == 1) && (groupIds[0] != themeDisplay.getScopeGroupId()) && (groupIds[0] != layoutScopeGroupId) && (groupIds[0] != themeDisplay.getCompanyGroupId())) %>" value="<%= false %>" />
-		</aui:select>
 
 		<%
 		Set<Group> availableGroups = new HashSet<Group>();
@@ -107,7 +82,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		%>
 
-		<div class="<%= defaultScope ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />scopesBoxes">
+		<div id="<portlet:namespace />scopesBoxes">
 			<liferay-ui:search-container
 				emptyResultsMessage="no-groups-were-found"
 				iteratorURL="<%= configurationRenderURL %>"
@@ -354,14 +329,6 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectScope() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'select-scope';
-
-		if (document.<portlet:namespace />fm.<portlet:namespace />defaultScope.value != 'false') {
-			submitForm(document.<portlet:namespace />fm);
-		}
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveSelectBoxes',
@@ -392,7 +359,6 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	);
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />defaultScope','false','<portlet:namespace />scopesBoxes');
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
 </aui:script>

@@ -17,12 +17,13 @@ package com.liferay.portlet.dynamicdatamapping.webdav;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
+import com.liferay.portal.kernel.webdav.BaseResourceImpl;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -30,23 +31,26 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Juan Fernández
  */
-public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
+public class DDMWebDavUtil {
 
-	@Override
-	public int deleteResource(WebDAVRequest webDavRequest)
+	public static final String TYPE_STRUCTURES = "Structures";
+
+	public static final String TYPE_TEMPLATES = "Templates";
+
+	public static int deleteResource(
+			WebDAVRequest webDavRequest, String rootPath, String token,
+			long classNameId)
 		throws WebDAVException {
 
 		try {
-			Resource resource = getResource(webDavRequest);
+			Resource resource = getResource(
+				webDavRequest, rootPath, token, classNameId);
 
 			if (resource == null) {
 				return HttpServletResponse.SC_NOT_FOUND;
@@ -81,70 +85,91 @@ public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 		}
 	}
 
-	public Resource getResource(WebDAVRequest webDavRequest) {
-		String[] pathArray = webDavRequest.getPathArray();
-
-		if (pathArray.length == 4) {
-			String type = pathArray[2];
-			String typeId = pathArray[3];
-
-			if (type.equals(_TYPE_STRUCTURES)) {
-				try {
-					DDMStructure structure =
-						DDMStructureLocalServiceUtil.getStructure(
-							Long.valueOf(typeId));
-
-					return toResource(webDavRequest, structure, false);
-				}
-				catch (Exception e) {
-					return null;
-				}
-			}
-			else if (type.equals(_TYPE_TEMPLATES)) {
-				try {
-					DDMTemplate template =
-						DDMTemplateLocalServiceUtil.getTemplate(
-							Long.valueOf(typeId));
-
-					return toResource(webDavRequest, template, false);
-				}
-				catch (Exception e) {
-					return null;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public List<Resource> getResources(WebDAVRequest webDavRequest)
+	public static Resource getResource(
+			WebDAVRequest webDavRequest, String rootPath, String token,
+			long classNameId)
 		throws WebDAVException {
 
 		try {
 			String[] pathArray = webDavRequest.getPathArray();
 
-			if (pathArray.length == 3) {
+			if (pathArray.length == 2) {
+				String path = rootPath + webDavRequest.getPath();
+
+				return new BaseResourceImpl(path, StringPool.BLANK, token);
+			}
+			else if (pathArray.length == 3) {
 				String type = pathArray[2];
 
-				if (type.equals(_TYPE_STRUCTURES)) {
-					return getStructures(webDavRequest);
+				return toResource(webDavRequest, type, rootPath, false);
+			}
+			else if (pathArray.length == 4) {
+				String type = pathArray[2];
+				String typeId = pathArray[3];
+
+				if (type.equals(TYPE_STRUCTURES)) {
+					try {
+						DDMStructure ddmStructure = null;
+
+						try {
+							ddmStructure =
+								DDMStructureLocalServiceUtil.getStructure(
+									Long.valueOf(typeId));
+						}
+						catch (NumberFormatException nfe) {
+							ddmStructure =
+								DDMStructureLocalServiceUtil.getStructure(
+									webDavRequest.getGroupId(), classNameId,
+									typeId);
+						}
+
+						return DDMWebDavUtil.toResource(
+							webDavRequest, ddmStructure, rootPath, false);
+					}
+					catch (NoSuchStructureException nsse) {
+						return null;
+					}
 				}
-				else if (type.equals(_TYPE_TEMPLATES)) {
-					return getTemplates(webDavRequest);
+				else if (type.equals(TYPE_TEMPLATES)) {
+					try {
+						DDMTemplate ddmTemplate = null;
+
+						try {
+							ddmTemplate =
+								DDMTemplateLocalServiceUtil.getTemplate(
+									Long.valueOf(typeId));
+						}
+						catch (NumberFormatException nfe) {
+							ddmTemplate =
+								DDMTemplateLocalServiceUtil.getTemplate(
+									webDavRequest.getGroupId(), classNameId,
+									typeId);
+						}
+
+						return DDMWebDavUtil.toResource(
+							webDavRequest, ddmTemplate, rootPath, false);
+					}
+					catch (NoSuchTemplateException nste) {
+						return null;
+					}
 				}
 			}
 
-			return new ArrayList<Resource>();
+			return null;
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
 		}
 	}
 
-	@Override
-	public int putResource(WebDAVRequest webDavRequest) throws WebDAVException {
+	public static int putResource(
+			WebDAVRequest webDavRequest, String rootPath, String token,
+			long classNameId)
+		throws WebDAVException {
+
 		try {
-			Resource resource = getResource(webDavRequest);
+			Resource resource = getResource(
+				webDavRequest, rootPath, token, classNameId);
 
 			if (resource == null) {
 				return HttpServletResponse.SC_NOT_FOUND;
@@ -153,7 +178,7 @@ public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 			Object model = resource.getModel();
 
 			if (model instanceof DDMStructure) {
-				DDMStructure structure = (DDMStructure)model;
+				DDMStructure ddmStructure = (DDMStructure)model;
 
 				HttpServletRequest request =
 					webDavRequest.getHttpServletRequest();
@@ -161,14 +186,17 @@ public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 				String xsd = StringUtil.read(request.getInputStream());
 
 				DDMStructureServiceUtil.updateStructure(
-					structure.getStructureId(),
-					structure.getParentStructureId(), structure.getNameMap(),
-					structure.getDescriptionMap(), xsd, new ServiceContext());
+					ddmStructure.getGroupId(),
+					ddmStructure.getParentStructureId(),
+					ddmStructure.getClassNameId(),
+					ddmStructure.getStructureKey(), ddmStructure.getNameMap(),
+					ddmStructure.getDescriptionMap(), xsd,
+					new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}
 			else if (model instanceof DDMTemplate) {
-				DDMTemplate template = (DDMTemplate)model;
+				DDMTemplate ddmTemplate = (DDMTemplate)model;
 
 				HttpServletRequest request =
 					webDavRequest.getHttpServletRequest();
@@ -176,11 +204,11 @@ public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 				String script = StringUtil.read(request.getInputStream());
 
 				DDMTemplateServiceUtil.updateTemplate(
-					template.getTemplateId(), template.getNameMap(),
-					template.getDescriptionMap(), template.getType(),
-					template.getMode(), template.getLanguage(), script,
-					template.isCacheable(), template.isSmallImage(),
-					template.getSmallImageURL(), null, new ServiceContext());
+					ddmTemplate.getTemplateId(), ddmTemplate.getNameMap(),
+					ddmTemplate.getDescriptionMap(), ddmTemplate.getType(),
+					ddmTemplate.getMode(), ddmTemplate.getLanguage(), script,
+					ddmTemplate.isCacheable(), ddmTemplate.isSmallImage(),
+					ddmTemplate.getSmallImageURL(), null, new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}
@@ -196,77 +224,53 @@ public class DDMWebDavUtil extends BaseWebDAVStorageImpl {
 		}
 	}
 
-	protected List<Resource> getStructures(WebDAVRequest webDavRequest)
-		throws Exception {
-
-		List<Resource> resources = new ArrayList<Resource>();
-
-		long groupId = webDavRequest.getGroupId();
-
-		List<DDMStructure> structures =
-			DDMStructureLocalServiceUtil.getStructures(groupId);
-
-		for (DDMStructure structure : structures) {
-			Resource resource = toResource(webDavRequest, structure, true);
-
-			resources.add(resource);
-		}
-
-		return resources;
-	}
-
-	protected List<Resource> getTemplates(WebDAVRequest webDavRequest)
-		throws Exception {
-
-		List<Resource> resources = new ArrayList<Resource>();
-
-		long groupId = webDavRequest.getGroupId();
-		long classNameId = PortalUtil.getClassNameId(
-			DDMStructure.class.getName());
-
-		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
-			groupId, classNameId);
-
-		for (DDMTemplate template : templates) {
-			Resource resource = toResource(webDavRequest, template, true);
-
-			resources.add(resource);
-		}
-
-		return resources;
-	}
-
-	protected Resource toResource(
-		WebDAVRequest webDavRequest, DDMStructure structure,
+	public static Resource toResource(
+		WebDAVRequest webDavRequest, DDMStructure structure, String rootPath,
 		boolean appendPath) {
 
-		String parentPath = getRootPath() + webDavRequest.getPath();
+		String parentPath = rootPath + webDavRequest.getPath();
 
 		String name = StringPool.BLANK;
 
 		if (appendPath) {
-			name = structure.getName();
+			name = String.valueOf(structure.getStructureId());
 		}
 
 		return new DDMStructureResourceImpl(structure, parentPath, name);
 	}
 
-	protected Resource toResource(
-		WebDAVRequest webDavRequest, DDMTemplate template, boolean appendPath) {
+	public static Resource toResource(
+		WebDAVRequest webDavRequest, DDMTemplate template, String rootPath,
+		boolean appendPath) {
 
-		String parentPath = getRootPath() + webDavRequest.getPath();
+		String parentPath = rootPath + webDavRequest.getPath();
 
 		String name = StringPool.BLANK;
 
 		if (appendPath) {
-			name = template.getName();
+			name = String.valueOf(template.getTemplateId());
 		}
 
 		return new DDMTemplateResourceImpl(template, parentPath, name);
 	}
 
-	private static final String _TYPE_STRUCTURES = "ddmStructures";
+	public static Resource toResource(
+		WebDAVRequest webDavRequest, String type, String rootPath,
+		boolean appendPath) {
 
-	private static final String _TYPE_TEMPLATES = "ddmTemplates";
+		String parentPath = rootPath + webDavRequest.getPath();
+
+		String name = StringPool.BLANK;
+
+		if (appendPath) {
+			name = type;
+		}
+
+		Resource resource = new BaseResourceImpl(parentPath, name, type);
+
+		resource.setModel(type);
+
+		return resource;
+	}
 
 }

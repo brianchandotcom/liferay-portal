@@ -1198,6 +1198,16 @@ public class DDMStructureLocalServiceImpl
 			structure);
 	}
 
+	/**
+	 * Updates the structure's XSD
+	 *
+	 * @param structureId the primary key of the structure
+	 * @param xsd the xsd content of the structure
+	 * @param serviceContext the service context to be applied.
+	 * @return the updated structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public DDMStructure updateXSD(
 			long structureId, String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1210,6 +1220,17 @@ public class DDMStructureLocalServiceImpl
 			structure.getDescriptionMap(), xsd, serviceContext, structure);
 	}
 
+	/**
+	 * Updates a structure field's metadata
+	 *
+	 * @param structureId the primary key of the structure
+	 * @param fieldName the name of the field whose metadata will be updated
+	 * @param metadataEntryName the name of the metadata entry
+	 * @param metadataEntryValue the new value for the metadata entry
+	 * @param serviceContext the service context to be applied.
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateXSDFieldMetadata(
 			long structureId, String fieldName, String metadataEntryName,
 			String metadataEntryValue, ServiceContext serviceContext)

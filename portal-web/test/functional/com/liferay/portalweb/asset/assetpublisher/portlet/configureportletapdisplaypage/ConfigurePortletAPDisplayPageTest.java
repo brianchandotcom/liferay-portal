@@ -22,48 +22,69 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ConfigurePortletAPDisplayPageTest extends BaseTestCase {
 	public void testConfigurePortletAPDisplayPage() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace("Asset Publisher Test Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
-			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
-		selenium.waitForVisible(
-			"//input[@id='_86_showOnlyLayoutAssetsCheckbox']");
-		assertFalse(selenium.isChecked(
-				"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
-		selenium.clickAt("//input[@id='_86_showOnlyLayoutAssetsCheckbox']",
-			RuntimeVariables.replace(
-				"Show only assets with Asset Publisher Test Page as its display page. "));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
-		Thread.sleep(1000);
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Asset Publisher Test Page",
+					RuntimeVariables.replace("Asset Publisher Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForElementPresent(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_showOnlyLayoutAssetsCheckbox']");
+
+				boolean displayPageNotChecked = selenium.isChecked(
+						"//input[@id='_86_showOnlyLayoutAssetsCheckbox']");
+
+				if (displayPageNotChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
+				selenium.clickAt("//input[@id='_86_showOnlyLayoutAssetsCheckbox']",
+					RuntimeVariables.replace(
+						"Show only assets with Asset Publisher Test Page as its display page. "));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_showOnlyLayoutAssetsCheckbox']"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

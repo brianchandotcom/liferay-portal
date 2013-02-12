@@ -20,13 +20,8 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,28 +35,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,24 +139,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -170,48 +160,43 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@id='_86_selectionStyle']</td>
-	<td>Asset Selection</td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_selectionStyle']</td>
+	<td>//input[@id='_86_selectionStyleManual']</td>
 	<td>Manual</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='lfr-panel-title'])[1]/span</td>
-	<td>Selection</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='lfr-panel-title'])[2]/span</td>
-	<td>Display Settings</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_selectionStyleManual']</td>
+	<td>Manual</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

@@ -66,6 +66,8 @@ public class ConfigurePortletAPEnableRatingsTest extends BaseTestCase {
 					continue;
 				}
 
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_enableRatingsCheckbox']"));
 				selenium.clickAt("//input[@id='_86_enableRatingsCheckbox']",
 					RuntimeVariables.replace("Enable Ratings"));
 

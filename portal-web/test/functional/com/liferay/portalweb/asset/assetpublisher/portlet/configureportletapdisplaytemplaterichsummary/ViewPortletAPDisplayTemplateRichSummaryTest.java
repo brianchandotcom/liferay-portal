@@ -45,6 +45,8 @@ public class ViewPortletAPDisplayTemplateRichSummaryTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.waitForVisible(
 			"//ul[contains(.,'Display Settings')]/li[2]/span/a");
 		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",

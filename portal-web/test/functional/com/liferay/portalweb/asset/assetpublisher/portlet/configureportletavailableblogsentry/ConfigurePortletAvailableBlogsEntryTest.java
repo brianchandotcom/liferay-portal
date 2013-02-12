@@ -29,7 +29,7 @@ public class ConfigurePortletAvailableBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -41,26 +41,29 @@ public class ConfigurePortletAvailableBlogsEntryTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.waitForVisible("//select[@id='_86_anyAssetType']");
 		selenium.select("//select[@id='_86_anyAssetType']",
 			RuntimeVariables.replace("Select More Than One..."));
+		assertEquals("Select More Than One...",
+			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 		selenium.waitForVisible("//select[@id='_86_currentClassNameIds']");
 		selenium.addSelection("//select[@id='_86_currentClassNameIds']",
 			RuntimeVariables.replace("Blogs Entry"));
 		selenium.waitForVisible(
-			"//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]");
-		selenium.clickAt("//fieldset[2]/div/div/div/div/div/div/div[2]/div/span/span/button[1]",
+			"//button[@title='Move selected items from Selected to Available.']");
+		selenium.clickAt("//button[@title='Move selected items from Selected to Available.']",
 			RuntimeVariables.replace("Right Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_availableClassNameIds']",
 			"Blogs Entry");
 		assertTrue(selenium.isPartialText(
 				"//select[@id='_86_availableClassNameIds']", "Blogs Entry"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

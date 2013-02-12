@@ -278,8 +278,8 @@ AUI.add(
 							);
 						}
 						else {
-							if (!portalModelResource && (themeDisplay.getParentGroupId() != themeDisplay.getCompanyGroupId())) {
-								groupIds.push(themeDisplay.getParentGroupId());
+							if (!portalModelResource && (themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId())) {
+								groupIds.push(themeDisplay.getSiteGroupId());
 							}
 
 							groupIds.push(themeDisplay.getCompanyGroupId());

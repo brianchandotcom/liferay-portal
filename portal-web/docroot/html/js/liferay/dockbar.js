@@ -818,7 +818,7 @@ AUI.add(
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_auth: Liferay.authToken,
 					p_l_id: themeDisplay.getPlid(),
-					p_v_l_s_g_id: themeDisplay.getParentGroupId()
+					p_v_l_s_g_id: themeDisplay.getSiteGroupId()
 				};
 
 				var checkboxName = checkbox.attr('name');

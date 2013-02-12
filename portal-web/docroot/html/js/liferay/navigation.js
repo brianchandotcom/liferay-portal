@@ -596,7 +596,7 @@ AUI.add(
 					var data = {
 						cmd: 'delete',
 						doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-						groupId: themeDisplay.getParentGroupId(),
+						groupId: themeDisplay.getSiteGroupId(),
 						layoutId: tab._LFR_layoutId,
 						layoutSetBranchId: instance.get('layoutSetBranchId'),
 						p_auth: Liferay.authToken,
@@ -657,7 +657,7 @@ AUI.add(
 							data = {
 								cmd: 'name',
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-								groupId: themeDisplay.getParentGroupId(),
+								groupId: themeDisplay.getSiteGroupId(),
 								languageId: themeDisplay.getLanguageId(),
 								layoutId: themeDisplay.getLayoutId(),
 								name: pageTitle,
@@ -697,7 +697,7 @@ AUI.add(
 							cmd: 'add',
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 							explicitCreation: true,
-							groupId: themeDisplay.getParentGroupId(),
+							groupId: themeDisplay.getSiteGroupId(),
 							layoutPrototypeId: layoutPrototypeId,
 							mainPath: themeDisplay.getPathMain(),
 							name: pageTitle,
@@ -786,7 +786,7 @@ AUI.add(
 				var data = {
 					cmd: 'priority',
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-					groupId: themeDisplay.getParentGroupId(),
+					groupId: themeDisplay.getSiteGroupId(),
 					layoutId: node._LFR_layoutId,
 					p_auth: Liferay.authToken,
 					priority: priority,

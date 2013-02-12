@@ -821,7 +821,7 @@ AUI.add(
 						Liferay.Service(
 							'/assettag/get-json-group-tags',
 							{
-								groupId: themeDisplay.getParentGroupId(),
+								groupId: themeDisplay.getSiteGroupId(),
 								name: query,
 								start: start,
 								end: end

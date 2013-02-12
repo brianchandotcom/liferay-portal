@@ -40,12 +40,10 @@ public class ViewAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals("Announcements Entry Title Priority Important",
 			selenium.getValue("//input[@id='_84_title']"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.waitForText("//body",
-			"Announcements Entry Content Priority Important");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Content Priority Important"),
 			selenium.getText("//body"));

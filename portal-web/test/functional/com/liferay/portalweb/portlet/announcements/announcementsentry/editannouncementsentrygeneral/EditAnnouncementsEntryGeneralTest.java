@@ -44,25 +44,11 @@ public class EditAnnouncementsEntryGeneralTest extends BaseTestCase {
 			RuntimeVariables.replace("Announcements Entry Title Edit"));
 		selenium.type("//input[@id='_84_url']",
 			RuntimeVariables.replace("http://www.alloyui.com"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__84_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Announcements Entry Content Edit"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_84_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__84_editor']/iframe");
-		selenium.waitForText("//body", "Announcements Entry Content Edit");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

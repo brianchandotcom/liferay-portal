@@ -425,6 +425,16 @@ public class SocialActivityLocalServiceImpl
 			User.class.getName(), userId);
 	}
 
+	public SocialActivity fetchFirstActivity(
+			String className, long classPK, int type)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return socialActivityPersistence.fetchByC_C_T_First(
+			classNameId, classPK, type, null);
+	}
+
 	/**
 	 * Returns a range of all the activities done on assets identified by the
 	 * class name ID.

@@ -1502,6 +1502,26 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			user.getCompanyId(), page.getGroupId(), userId,
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext);
 
+		// Social (Drafts)
+
+		if (serviceContext.getWorkflowAction() !=
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			if (!page.isMinorEdit() ||
+					PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
+
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put("version", page.getVersion());
+
+				socialActivityLocalService.addActivity(
+					userId, page.getGroupId(), WikiPage.class.getName(),
+					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
+					extraDataJSONObject.toString(), 0);
+			}
+		}
+
 		return page;
 	}
 

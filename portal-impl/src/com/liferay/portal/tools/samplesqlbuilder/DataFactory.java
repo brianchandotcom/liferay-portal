@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
@@ -915,7 +914,7 @@ public class DataFactory {
 
 		Date date = new Date();
 
-		_defaultDLFileEntryType.setUuid(PortalUUIDUtil.generate());
+		_defaultDLFileEntryType.setUuid(SequentialUUID.generate());
 		_defaultDLFileEntryType.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		_defaultDLFileEntryType.setCreateDate(date);

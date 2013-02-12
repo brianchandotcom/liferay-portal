@@ -70,7 +70,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		return _smallImageType;
 	}
 
-	public String getWebDavURL(ThemeDisplay themeDisplay) {
+	public String getWebDavURL(ThemeDisplay themeDisplay, String webDavToken) {
 		StringBundler sb = new StringBundler(11);
 
 		boolean secure = false;
@@ -94,6 +94,8 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 
 		sb.append(group.getFriendlyURL());
 
+		sb.append(StringPool.SLASH);
+		sb.append(webDavToken);
 		sb.append(StringPool.SLASH);
 		sb.append("Templates");
 		sb.append(StringPool.SLASH);

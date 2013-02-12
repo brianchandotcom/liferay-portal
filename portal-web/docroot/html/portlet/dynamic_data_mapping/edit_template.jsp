@@ -169,7 +169,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
 						<aui:field-wrapper label="webdav-url">
-							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay) %>" />
+							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay, refererWebDavToken) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

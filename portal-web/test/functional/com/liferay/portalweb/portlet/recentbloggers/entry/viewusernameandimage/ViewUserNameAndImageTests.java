@@ -16,11 +16,13 @@ package com.liferay.portalweb.portlet.recentbloggers.entry.viewusernameandimage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 import com.liferay.portalweb.portlet.recentbloggers.portlet.addportletrb.AddPageRBTest;
 import com.liferay.portalweb.portlet.recentbloggers.portlet.addportletrb.AddPortletRBTest;
+import com.liferay.portalweb.portlet.recentbloggers.portlet.configureportletdisplaystyleusernameandimage.ConfigurePortletDisplayStyleUserNameAndImageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -35,7 +37,7 @@ public class ViewUserNameAndImageTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddPageRBTest.class);
 		testSuite.addTestSuite(AddPortletRBTest.class);
-		testSuite.addTestSuite(AddEntryTest.class);
+		testSuite.addTestSuite(AddBlogsEntryTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayStyleUserNameAndImageTest.class);
 		testSuite.addTestSuite(ViewUserNameAndImageTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);

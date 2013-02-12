@@ -99,7 +99,7 @@ for (SearchResult searchResult : searchResults) {
 
 		sb.append("(&");
 		sb.append(groupFilter);
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(groupMappings.getProperty("groupName"));
 		sb.append("=");
 		sb.append(name);

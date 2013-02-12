@@ -252,7 +252,7 @@ public class ResourcePermissionFinderImpl
 
 		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < scopes.length; i++) {
 			sb.append("ResourcePermission.scope = ? ");
@@ -262,7 +262,7 @@ public class ResourcePermissionFinderImpl
 			}
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

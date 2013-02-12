@@ -107,7 +107,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append(HtmlUtil.escape(user2.getFullName()));
 	sb.append(" (");
 	sb.append(user2.getEmailAddress());
-	sb.append(")");
+	sb.append(StringPool.CLOSE_PARENTHESIS);
 
 	row.addText(sb.toString());
 

@@ -242,7 +242,7 @@ public class CalEventFinderImpl
 				}
 			}
 
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			return sb.toString();
 		}

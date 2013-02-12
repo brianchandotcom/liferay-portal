@@ -524,7 +524,7 @@ public class JavadocBuilder {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(methodElement.elementText("name"));
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		List<Element> paramElements = methodElement.elements("param");
 
@@ -535,7 +535,7 @@ public class JavadocBuilder {
 			sb.append(",");
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
@@ -544,7 +544,7 @@ public class JavadocBuilder {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(javaMethod.getName());
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -555,7 +555,7 @@ public class JavadocBuilder {
 			sb.append(",");
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

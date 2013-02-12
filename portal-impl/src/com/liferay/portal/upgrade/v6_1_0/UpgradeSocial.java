@@ -367,7 +367,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				MBThread.class);
 
 			sb.append(mbThreadClassNameId);
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			ps = con.prepareStatement(sb.toString());
 

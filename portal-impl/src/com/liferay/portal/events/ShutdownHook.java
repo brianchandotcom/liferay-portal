@@ -16,6 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class ShutdownHook implements Runnable {
 			if (thread.getThreadGroup() != null) {
 				sb.append(" (");
 				sb.append(thread.getThreadGroup().getName());
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			sb.append(", priority=");

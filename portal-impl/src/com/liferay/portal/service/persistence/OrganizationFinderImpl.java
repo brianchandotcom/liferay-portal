@@ -310,7 +310,7 @@ public class OrganizationFinderImpl
 		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 
 		sb.append(sql);
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		sql = sb.toString();
 
@@ -671,13 +671,40 @@ public class OrganizationFinderImpl
 					}
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				join = sb.toString();
 			}
 		}
 		else if (key.equals("organizationsGroups")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
+			if (value instanceof Long) {
+				join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
+			}
+			else if (value instanceof Long[]) {
+				Long[] organizationGroupIds = (Long[])value;
+
+				if (organizationGroupIds.length == 0) {
+					join = "WHERE (Groups_Orgs.groupId = -1)";
+				}
+				else {
+					StringBundler sb = new StringBundler(
+						organizationGroupIds.length * 2 + 1);
+
+					sb.append("WHERE (");
+
+					for (int i = 0; i < organizationGroupIds.length; i++) {
+						sb.append("(Groups_Orgs.groupId = ?) ");
+
+						if ((i + 1) < organizationGroupIds.length) {
+							sb.append("OR ");
+						}
+					}
+
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+
+					join = sb.toString();
+				}
+			}
 		}
 		else if (key.equals("organizationsPasswordPolicies")) {
 			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES);
@@ -703,7 +730,7 @@ public class OrganizationFinderImpl
 					}
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				join = sb.toString();
 			}

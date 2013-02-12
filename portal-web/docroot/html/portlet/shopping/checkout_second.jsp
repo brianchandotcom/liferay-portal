@@ -380,7 +380,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 			sb.append(HtmlUtil.escape(item.getName()));
 			sb.append(" (");
 			sb.append(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": "));
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			row.addText(sb.toString(), rowURL);
 		}

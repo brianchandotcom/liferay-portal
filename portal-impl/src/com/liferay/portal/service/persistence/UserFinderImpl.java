@@ -221,10 +221,22 @@ public class UserFinderImpl
 			params = _emptyLinkedHashMap;
 		}
 
-		Long groupId = (Long)params.get("usersGroups");
+		Long[] groupIds = null;
+
+		if (params.get("usersGroups") instanceof Long) {
+			Long groupId = (Long)params.get("usersGroups");
+
+			if (groupId > 0) {
+				groupIds = new Long[] {groupId};
+			}
+		}
+		else {
+			groupIds = (Long[])params.get("usersGroups");
+		}
+
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		boolean doUnion = Validator.isNotNull(groupId) && inherit;
+		boolean doUnion = Validator.isNotNull(groupIds) && inherit;
 
 		LinkedHashMap<String, Object> params1 = params;
 
@@ -234,41 +246,44 @@ public class UserFinderImpl
 
 		if (doUnion) {
 			params2 = new LinkedHashMap<String, Object>(params1);
-
-			List<Long> organizationIds = new ArrayList<Long>();
-
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if ((group != null) && group.isOrganization()) {
-				organizationIds.add(group.getOrganizationId());
-			}
-
-			List<Organization> organizations = GroupUtil.getOrganizations(
-				groupId);
-
-			for (Organization organization : organizations) {
-				organizationIds.add(organization.getOrganizationId());
-			}
+			params3 = new LinkedHashMap<String, Object>(params1);
 
 			params2.remove("usersGroups");
+			params3.remove("usersGroups");
+
+			List<Long> organizationIds = new ArrayList<Long>();
+			List<Long> userGroupIds = new ArrayList<Long>();
+
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				if ((group != null) && group.isOrganization()) {
+					organizationIds.add(group.getOrganizationId());
+				}
+
+				List<Organization> organizations = GroupUtil.getOrganizations(
+					groupId);
+
+				for (Organization organization : organizations) {
+					organizationIds.add(organization.getOrganizationId());
+				}
+
+				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
+
+				for (int i = 0; i < userGroups.size(); i++) {
+					UserGroup userGroup = userGroups.get(i);
+
+					userGroupIds.add(userGroup.getUserGroupId());
+				}
+			}
+
 			params2.put(
 				"usersOrgs",
 				organizationIds.toArray(new Long[organizationIds.size()]));
 
-			params3 = new LinkedHashMap<String, Object>(params1);
-
-			List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
-
-			Long[] userGroupIds = new Long[userGroups.size()];
-
-			for (int i = 0; i < userGroups.size(); i++) {
-				UserGroup userGroup = userGroups.get(i);
-
-				userGroupIds[i] = userGroup.getUserGroupId();
-			}
-
-			params3.remove("usersGroups");
-			params3.put("usersUserGroups", userGroupIds);
+			params3.put(
+				"usersUserGroups",
+				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
 		Session session = null;
@@ -443,10 +458,22 @@ public class UserFinderImpl
 			params = _emptyLinkedHashMap;
 		}
 
-		Long groupId = (Long)params.get("usersGroups");
+		Long[] groupIds = null;
+
+		if (params.get("usersGroups") instanceof Long) {
+			Long groupId = (Long)params.get("usersGroups");
+
+			if (groupId > 0) {
+				groupIds = new Long[] {groupId};
+			}
+		}
+		else {
+			groupIds = (Long[])params.get("usersGroups");
+		}
+
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		boolean doUnion = Validator.isNotNull(groupId) && inherit;
+		boolean doUnion = Validator.isNotNull(groupIds) && inherit;
 
 		LinkedHashMap<String, Object> params1 = params;
 
@@ -456,41 +483,44 @@ public class UserFinderImpl
 
 		if (doUnion) {
 			params2 = new LinkedHashMap<String, Object>(params1);
-
-			List<Long> organizationIds = new ArrayList<Long>();
-
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if ((group != null) && group.isOrganization()) {
-				organizationIds.add(group.getOrganizationId());
-			}
-
-			List<Organization> organizations = GroupUtil.getOrganizations(
-				groupId);
-
-			for (Organization organization : organizations) {
-				organizationIds.add(organization.getOrganizationId());
-			}
+			params3 = new LinkedHashMap<String, Object>(params1);
 
 			params2.remove("usersGroups");
+			params3.remove("usersGroups");
+
+			List<Long> organizationIds = new ArrayList<Long>();
+			List<Long> userGroupIds = new ArrayList<Long>();
+
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				if ((group != null) && group.isOrganization()) {
+					organizationIds.add(group.getOrganizationId());
+				}
+
+				List<Organization> organizations = GroupUtil.getOrganizations(
+					groupId);
+
+				for (Organization organization : organizations) {
+					organizationIds.add(organization.getOrganizationId());
+				}
+
+				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
+
+				for (int i = 0; i < userGroups.size(); i++) {
+					UserGroup userGroup = userGroups.get(i);
+
+					userGroupIds.add(userGroup.getUserGroupId());
+				}
+			}
+
 			params2.put(
 				"usersOrgs",
 				organizationIds.toArray(new Long[organizationIds.size()]));
 
-			params3 = new LinkedHashMap<String, Object>(params1);
-
-			List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
-
-			Long[] userGroupIds = new Long[userGroups.size()];
-
-			for (int i = 0; i < userGroups.size(); i++) {
-				UserGroup userGroup = userGroups.get(i);
-
-				userGroupIds[i] = userGroup.getUserGroupId();
-			}
-
-			params3.remove("usersGroups");
-			params3.put("usersUserGroups", userGroupIds);
+			params3.put(
+				"usersUserGroups",
+				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
 		Session session = null;
@@ -793,7 +823,34 @@ public class UserFinderImpl
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
 		}
 		else if (key.equals("usersGroups")) {
-			join = CustomSQLUtil.get(JOIN_BY_USERS_GROUPS);
+			if (value instanceof Long) {
+				join = CustomSQLUtil.get(JOIN_BY_USERS_GROUPS);
+			}
+			else if (value instanceof Long[]) {
+				Long[] groupIds = (Long[])value;
+
+				if (groupIds.length == 0) {
+					join = "WHERE (Users_Groups.groupId = -1)";
+				}
+				else {
+					StringBundler sb = new StringBundler(
+						groupIds.length * 2 + 1);
+
+					sb.append("WHERE (");
+
+					for (int i = 0; i < groupIds.length; i++) {
+						sb.append("(Users_Groups.groupId = ?) ");
+
+						if ((i + 1) < groupIds.length) {
+							sb.append("OR ");
+						}
+					}
+
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+
+					join = sb.toString();
+				}
+			}
 		}
 		else if (key.equals("usersOrgs")) {
 			if (value instanceof Long) {

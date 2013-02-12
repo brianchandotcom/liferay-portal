@@ -15,6 +15,7 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.comparator.JavaMethodComparator;
@@ -111,7 +112,7 @@ public class CopyInterfaceBuilder {
 				sb.append(_getDimensions(javaMethod.getReturns()));
 				sb.append(" ");
 				sb.append(methodName);
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				JavaParameter[] parameters = javaMethod.getParameters();
 
@@ -131,7 +132,7 @@ public class CopyInterfaceBuilder {
 					sb.setIndex(sb.index() - 1);
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				Type[] thrownExceptions = javaMethod.getExceptions();
 
@@ -165,7 +166,7 @@ public class CopyInterfaceBuilder {
 				sb.append(varName);
 				sb.append(".");
 				sb.append(methodName);
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int j = 0; j < parameters.length; j++) {
 					JavaParameter javaParameter = parameters[j];

@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
@@ -39,7 +40,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		sb.append("roleId from Role_ where Role_.roleId = ");
 		sb.append("ResourcePermission.roleId and Role_.type_ = ");
 		sb.append(RoleConstants.TYPE_PROVIDER);
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
 	}

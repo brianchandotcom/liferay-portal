@@ -512,7 +512,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 				hasPreviousViewableGroup = true;
 
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				if (Validator.isNull(groupIdField)) {
 					sb.append(
@@ -526,7 +526,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 
 				sb.append(groupId);
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				long[] roleIds = getRoleIds(groupId);
 
@@ -549,27 +549,27 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					sb.append(" OR ");
 
 					if (Validator.isNotNull(userIdField)) {
-						sb.append("(");
+						sb.append(StringPool.OPEN_PARENTHESIS);
 						sb.append(userIdField);
 						sb.append(" = ");
 						sb.append(userId);
-						sb.append(")");
+						sb.append(StringPool.CLOSE_PARENTHESIS);
 					}
 					else {
 						sb.append("(InlineSQLResourcePermission.ownerId = ");
 						sb.append(userId);
-						sb.append(")");
+						sb.append(StringPool.CLOSE_PARENTHESIS);
 					}
 				}
 
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 			else {
 				viewableGroupIds.add(groupId);
 			}
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (!viewableGroupIds.isEmpty()) {
 			for (Long viewableGroupId : viewableGroupIds) {
@@ -587,7 +587,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 
 				sb.append(viewableGroupId);
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 		}
 

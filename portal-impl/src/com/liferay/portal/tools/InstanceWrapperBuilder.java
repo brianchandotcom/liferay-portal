@@ -15,6 +15,7 @@
 package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -148,7 +149,7 @@ public class InstanceWrapperBuilder {
 			sb.append(_getTypeGenericsName(javaMethod.getReturns()));
 			sb.append(" ");
 			sb.append(methodName);
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -170,7 +171,7 @@ public class InstanceWrapperBuilder {
 				sb.setIndex(sb.index() - 1);
 			}
 
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			Type[] thrownExceptions = javaMethod.getExceptions();
 

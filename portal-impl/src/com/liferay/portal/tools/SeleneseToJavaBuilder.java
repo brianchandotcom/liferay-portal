@@ -607,7 +607,7 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("selenium.");
 				sb.append(param1);
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				if (param2.startsWith("${")) {
 					sb.append("RuntimeVariables.getValue(\"");
@@ -754,7 +754,7 @@ public class SeleneseToJavaBuilder {
 					sb.append("assertEquals");
 				}
 
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				if (param3.startsWith("${")) {
 					sb.append("RuntimeVariables.getValue(\"");
@@ -832,7 +832,7 @@ public class SeleneseToJavaBuilder {
 					sb.append("assertTrue");
 				}
 
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append("selenium.isVisible(\"");
 				sb.append(param2);
 				sb.append("\"));");
@@ -911,7 +911,7 @@ public class SeleneseToJavaBuilder {
 				}
 
 				sb.append(param1);
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				if (param2.startsWith("${")) {
 					sb.append("RuntimeVariables.getValue(\"");

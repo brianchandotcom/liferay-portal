@@ -335,9 +335,9 @@ public class AnnouncementsEntryFinderImpl
 			Long classNameId = entry.getKey();
 			long[] classPKs = entry.getValue();
 
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(getClassPKs(classNameId.longValue(), classPKs));
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 			sb.append(" OR ");
 		}
 
@@ -362,7 +362,7 @@ public class AnnouncementsEntryFinderImpl
 				sb.append(" OR ");
 			}
 			else {
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 		}
 

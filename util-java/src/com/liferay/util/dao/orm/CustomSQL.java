@@ -550,7 +550,7 @@ public class CustomSQL {
 
 		StringBundler oldSql = new StringBundler(4);
 
-		oldSql.append("(");
+		oldSql.append(StringPool.OPEN_PARENTHESIS);
 		oldSql.append(field);
 		oldSql.append(" = ?)");
 
@@ -564,19 +564,19 @@ public class CustomSQL {
 
 		StringBundler newSql = new StringBundler(values.length * 4 + 3);
 
-		newSql.append("(");
+		newSql.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < values.length; i++) {
 			if (i > 0) {
 				newSql.append(" OR ");
 			}
 
-			newSql.append("(");
+			newSql.append(StringPool.OPEN_PARENTHESIS);
 			newSql.append(field);
 			newSql.append(" = ?)");
 		}
 
-		newSql.append(")");
+		newSql.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (!last) {
 			newSql.append(" [$AND_OR_CONNECTOR$]");
@@ -594,7 +594,7 @@ public class CustomSQL {
 
 		StringBundler oldSql = new StringBundler(4);
 
-		oldSql.append("(");
+		oldSql.append(StringPool.OPEN_PARENTHESIS);
 		oldSql.append(field);
 		oldSql.append(" = ?)");
 
@@ -608,19 +608,19 @@ public class CustomSQL {
 
 		StringBundler newSql = new StringBundler(values.length * 4 + 3);
 
-		newSql.append("(");
+		newSql.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < values.length; i++) {
 			if (i > 0) {
 				newSql.append(" OR ");
 			}
 
-			newSql.append("(");
+			newSql.append(StringPool.OPEN_PARENTHESIS);
 			newSql.append(field);
 			newSql.append(" = ?)");
 		}
 
-		newSql.append(")");
+		newSql.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (!last) {
 			newSql.append(" [$AND_OR_CONNECTOR$]");
@@ -639,7 +639,7 @@ public class CustomSQL {
 
 		StringBundler oldSql = new StringBundler(6);
 
-		oldSql.append("(");
+		oldSql.append(StringPool.OPEN_PARENTHESIS);
 		oldSql.append(field);
 		oldSql.append(" ");
 		oldSql.append(operator);
@@ -651,21 +651,21 @@ public class CustomSQL {
 
 		StringBundler newSql = new StringBundler(values.length * 6 + 3);
 
-		newSql.append("(");
+		newSql.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < values.length; i++) {
 			if (i > 0) {
 				newSql.append(" OR ");
 			}
 
-			newSql.append("(");
+			newSql.append(StringPool.OPEN_PARENTHESIS);
 			newSql.append(field);
 			newSql.append(" ");
 			newSql.append(operator);
 			newSql.append(" ? [$AND_OR_NULL_CHECK$])");
 		}
 
-		newSql.append(")");
+		newSql.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (!last) {
 			newSql.append(" [$AND_OR_CONNECTOR$]");

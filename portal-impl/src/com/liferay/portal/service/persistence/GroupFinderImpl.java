@@ -801,9 +801,9 @@ public class GroupFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(findByC_C_SQL, params1));
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (doUnion) {
 				sb.append(" UNION (");
@@ -812,7 +812,7 @@ public class GroupFinderImpl
 				sb.append(replaceJoinAndWhere(findByC_C_SQL, params3));
 				sb.append(") UNION (");
 				sb.append(replaceJoinAndWhere(findByC_C_SQL, params4));
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (obc != null) {
@@ -1091,9 +1091,9 @@ public class GroupFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params1));
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (doUnion) {
 				sb.append(" UNION (");
@@ -1102,7 +1102,7 @@ public class GroupFinderImpl
 				sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params3));
 				sb.append(") UNION (");
 				sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params4));
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (obc != null) {
@@ -1339,7 +1339,7 @@ public class GroupFinderImpl
 				List<Group> groupsTree = (List<Group>)entry.getValue();
 
 				if (!groupsTree.isEmpty()) {
-					sb.append("(");
+					sb.append(StringPool.OPEN_PARENTHESIS);
 
 					for (int i = 0; i < groupsTree.size(); i++) {
 						sb.append("(Group_.treePath LIKE ?) ");
@@ -1356,7 +1356,7 @@ public class GroupFinderImpl
 				List<Integer> types = (List<Integer>)entry.getValue();
 
 				if (!types.isEmpty()) {
-					sb.append("(");
+					sb.append(StringPool.OPEN_PARENTHESIS);
 
 					for (int i = 0; i < types.size(); i++) {
 						sb.append("(Group_.type_ = ?) ");

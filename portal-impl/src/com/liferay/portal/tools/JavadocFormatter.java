@@ -1162,7 +1162,7 @@ public class JavadocFormatter {
 		StringBundler sb = new StringBundler();
 
 		sb.append(methodElement.elementText("name"));
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		List<Element> paramElements = methodElement.elements("param");
 
@@ -1173,7 +1173,7 @@ public class JavadocFormatter {
 			sb.append(",");
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
@@ -1182,7 +1182,7 @@ public class JavadocFormatter {
 		StringBundler sb = new StringBundler();
 
 		sb.append(javaMethod.getName());
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -1193,7 +1193,7 @@ public class JavadocFormatter {
 			sb.append(",");
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

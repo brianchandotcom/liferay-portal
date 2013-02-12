@@ -548,7 +548,7 @@ public class AssetTagFinderImpl
 
 		StringBundler sb = new StringBundler(groupIds.length * 2);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < groupIds.length; i++) {
 			sb.append("groupId = ?");

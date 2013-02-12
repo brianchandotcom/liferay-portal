@@ -101,7 +101,7 @@ for (int i = 0; i < results.size(); i++) {
 		if (pluginPackage.getContext() != null) {
 			sb.append(" (");
 			sb.append(pluginPackage.getContext());
-			sb.append(")");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 	}
 

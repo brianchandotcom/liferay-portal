@@ -599,7 +599,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			PrefsPropsUtil.getString(
 				companyId,
 				PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix));
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(groupMappings.getProperty("groupName"));
 		sb.append("=");
 		sb.append(escapeValue(userGroup.getName()));

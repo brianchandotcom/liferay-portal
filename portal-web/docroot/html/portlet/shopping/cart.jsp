@@ -319,7 +319,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 				sb.append(currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)));
 				sb.append(" (");
 				sb.append(percentFormat.format(itemPrice.getDiscount()));
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 				sb.append("</div>");
 			}
 		}

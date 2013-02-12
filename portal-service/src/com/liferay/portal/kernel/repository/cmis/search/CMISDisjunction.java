@@ -34,7 +34,7 @@ public class CMISDisjunction extends CMISJunction {
 
 		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < cmisCriterions.size(); i++) {
 			CMISCriterion cmisCriterion = cmisCriterions.get(i);
@@ -46,7 +46,7 @@ public class CMISDisjunction extends CMISJunction {
 			sb.append(cmisCriterion.toQueryFragment());
 		}
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

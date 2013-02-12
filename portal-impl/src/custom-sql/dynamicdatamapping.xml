@@ -93,6 +93,22 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_SC">
+		<![CDATA[
+			SELECT
+				{DDMTemplate.*}
+			FROM
+				DDMTemplate
+			INNER JOIN
+				DDMStructure ON
+					(DDMTemplate.classPK = DDMStructure.structureId)
+			WHERE
+				(DDMTemplate.groupId = ?) AND
+				(DDMStructure.classNameId = ?)
+			ORDER BY
+				DDMTemplate.templateId DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT

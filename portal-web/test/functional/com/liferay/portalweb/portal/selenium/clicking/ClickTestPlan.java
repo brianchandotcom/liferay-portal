@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.clicking;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickTestPlan;
+import com.liferay.portalweb.portal.selenium.clicking.check.CheckTests;
+import com.liferay.portalweb.portal.selenium.clicking.click.ClickTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
+public class ClickTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickTestPlan.suite());
+		testSuite.addTest(ClickTests.suite());
+		testSuite.addTest(CheckTests.suite());
 
 		return testSuite;
 	}

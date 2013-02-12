@@ -99,6 +99,10 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+if (Validator.isNull(refererWebDavToken)) {
+	refererWebDavToken = portletConfig.getInitParameter("refererWebDavToken");
+}
 %>
 
 <%@ include file="/html/portlet/dynamic_data_mapping/init-ext.jsp" %>

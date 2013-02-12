@@ -375,6 +375,7 @@ if (feed != null) {
 				width: 820
 			},
 			groupId: <%= groupId %>,
+			refererWebDavToken: '<%= portlet.getWebDAVStorageToken() %>',
 			saveCallback: '<portlet:namespace />selectStructure',
 			storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 			structureName: 'structure',

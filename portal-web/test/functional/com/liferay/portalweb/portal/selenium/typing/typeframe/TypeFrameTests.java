@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.typing.typeframe;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypeTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +22,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
-
+public class TypeFrameTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(TypeTestPlan.suite());
+		testSuite.addTestSuite(TypeFrame1Test.class);
+		testSuite.addTestSuite(TypeFrame2Test.class);
+		testSuite.addTestSuite(TypeFrame3Test.class);
 
 		return testSuite;
 	}
-
 }

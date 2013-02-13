@@ -46,9 +46,9 @@ pageContext.setAttribute("portletURL", portletURL);
 <form action="<%= portletURL.toString() %>" method="get" name="<%= randomNamespace %><%= namespace %>fm" onSubmit="<%= randomNamespace %><%= namespace %>search(); return false;">
 <liferay-portlet:renderURLParams varImpl="portletURL" />
 
-<input name="<%= namespace %>keywords" size="30" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+<input name="<%= namespace %>keywords" size="30" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" title="<liferay-ui:message key="search" />" />
 
-<select name="<%= namespace %>groupId">
+<select name="<%= namespace %>groupId" title="<liferay-ui:message key="scope" /> ">
 	<option value="0" <%= (groupId == 0) ? "selected" : "" %>><liferay-ui:message key="everything" /></option>
 	<option value="<%= group.getGroupId() %>" <%= (groupId != 0) ? "selected" : "" %>><liferay-ui:message key='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' /></option>
 </select>

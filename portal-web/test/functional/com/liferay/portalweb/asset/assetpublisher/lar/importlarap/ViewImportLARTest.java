@@ -28,36 +28,35 @@ public class ViewImportLARTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForVisible("//select[@id='_86_selectionStyle']");
-		assertEquals("Dynamic",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+		selenium.waitForVisible("//input[@id='_86_selectionStyleDynamic']");
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_selectionStyleDynamic']"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[1]"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
 		assertEquals(RuntimeVariables.replace("Filter"),
-			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[2]"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
 		assertEquals(RuntimeVariables.replace("Custom User Attributes"),
-			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[3]"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[3]/span"));
 		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
-			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[4]"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
-			selenium.getText("xpath=(//div[@class='lfr-panel-title'])[5]"));
+			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[4]/span"));
 		selenium.selectFrame("relative=top");
 	}
 }

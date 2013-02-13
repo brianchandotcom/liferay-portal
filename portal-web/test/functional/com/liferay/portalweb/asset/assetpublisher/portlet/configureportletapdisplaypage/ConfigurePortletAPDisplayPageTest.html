@@ -69,6 +69,16 @@
 	<td>Show only assets with Asset Publisher Test Page as its display page. </td>
 </tr>
 <tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_showOnlyLayoutAssetsCheckbox']</td>
+	<td>displayPageNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${displayPageNotChecked}</td>
+	<td>DisplayPageChecked</td>
+</tr>
+<tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_86_showOnlyLayoutAssetsCheckbox']</td>
 	<td>Show only assets with Asset Publisher Test Page as its display page. </td>
@@ -79,14 +89,14 @@
 	<td>Show only assets with Asset Publisher Test Page as its display page. </td>
 </tr>
 <tr>
+	<td>label</td>
+	<td>DisplayPageChecked</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_86_showOnlyLayoutAssetsCheckbox']</td>
 	<td>Show only assets with Asset Publisher Test Page as its display page. </td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

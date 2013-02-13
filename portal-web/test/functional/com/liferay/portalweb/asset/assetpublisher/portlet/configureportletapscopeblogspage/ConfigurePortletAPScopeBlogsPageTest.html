@@ -20,7 +20,7 @@ e<html>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,28 +60,93 @@ e<html>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
-	<td>Navigation Interaction</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@id='_86_defaultScope']</td>
-	<td>Scope</td>
+	<td>//span[@title='Select']/ul/li/strong/a/span</td>
+	<td>Select</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@id='_86_defaultScope']</td>
+	<td>assertText</td>
+	<td>//span[@title='Select']/ul/li/strong/a/span</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Select']/ul/li/strong/a/span</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Pages...')]</td>
+	<td>Pages...</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Pages...')]</td>
+	<td>Pages...</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Pages...')]</td>
+	<td>Pages...</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_86_selectGroup']</td>
+	<td>Select Pages</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_86_selectGroup']</td>
+	<td>Select Pages</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Store</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'Blogs Test Page')]/td[1]/a</td>
 	<td>Blogs Test Page</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_defaultScope']</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Blogs Test Page')]/td[1]/a</td>
 	<td>Blogs Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
+	<td>//tr[contains(.,'Blogs Test Page')]/td[1]/a</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -89,9 +154,24 @@ e<html>
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_defaultScope']</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Blogs Test Page')]/td[1]/span/span</td>
 	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Current Site (Liferay)')]/td[1]/span/span</td>
+	<td>Current Site (Liferay)</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'Current Site (Liferay)')]/td[3]/span/a/img[@title='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

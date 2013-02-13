@@ -23,50 +23,77 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletAssetSelectionDynamicTest extends BaseTestCase {
 	public void testConfigurePortletAssetSelectionDynamic()
 		throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Asset Publisher Test Page",
-			RuntimeVariables.replace("Asset Publisher Test Page"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
-			RuntimeVariables.replace("Options"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForElementPresent(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.selectFrame(
-			"//iframe[contains(@id,'configurationIframeDialog')]");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//select[@id='_86_selectionStyle']");
-		selenium.select("//select[@id='_86_selectionStyle']",
-			RuntimeVariables.replace("Dynamic"));
-		selenium.waitForText("//div[@class='lfr-panel-title']/span", "Source");
-		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Dynamic",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
-		assertEquals(RuntimeVariables.replace("Filter"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
-		assertEquals(RuntimeVariables.replace("Custom User Attributes"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[3]/span"));
-		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[4]/span"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[5]/span"));
-		selenium.selectFrame("relative=top");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Asset Publisher Test Page",
+					RuntimeVariables.replace("Asset Publisher Test Page"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Options"),
+					selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+					RuntimeVariables.replace("Options"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+				assertEquals(RuntimeVariables.replace("Configuration"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+					RuntimeVariables.replace("Configuration"));
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'configurationIframeDialog')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+				selenium.waitForVisible(
+					"//input[@id='_86_selectionStyleDynamic']");
+
+				boolean dynamicNotChecked = selenium.isChecked(
+						"//input[@id='_86_selectionStyleDynamic']");
+
+				if (dynamicNotChecked) {
+					label = 2;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@id='_86_selectionStyleDynamic']"));
+				selenium.clickAt("//input[@id='_86_selectionStyleDynamic']",
+					RuntimeVariables.replace("Dynamic"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
+				assertEquals(RuntimeVariables.replace(
+						"You have successfully updated the setup."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 2:
+				assertTrue(selenium.isChecked(
+						"//input[@id='_86_selectionStyleDynamic']"));
+				assertEquals(RuntimeVariables.replace("Source"),
+					selenium.getText(
+						"xPath=(//div[@class='lfr-panel-title'])[1]/span"));
+				assertEquals(RuntimeVariables.replace("Filter"),
+					selenium.getText(
+						"xPath=(//div[@class='lfr-panel-title'])[2]/span"));
+				assertEquals(RuntimeVariables.replace("Custom User Attributes"),
+					selenium.getText(
+						"xPath=(//div[@class='lfr-panel-title'])[3]/span"));
+				assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
+					selenium.getText(
+						"xPath=(//div[@class='lfr-panel-title'])[4]/span"));
+				selenium.selectFrame("relative=top");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

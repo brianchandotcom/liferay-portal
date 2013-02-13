@@ -20,13 +20,8 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Options']/ul/li/strong/a</td>
-	<td>Options</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,53 +35,63 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
+	<td>CK Editor Script</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@id='_86_selectionStyle']</td>
-	<td>Asset Selection</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_86_selectionStyle']</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
 	<td>Dynamic</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@class='lfr-panel-title']/span</td>
-	<td>Source</td>
+	<td>storeChecked</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
+	<td>dynamicNotChecked</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
+	<td>gotoIf</td>
+	<td>${dynamicNotChecked}</td>
+	<td>DynamicChecked</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
+	<td>Dynamic</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
+	<td>Dynamic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,8 +99,13 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_selectionStyle']</td>
+	<td>label</td>
+	<td>DynamicChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
 	<td>Dynamic</td>
 </tr>
 <tr>
@@ -117,11 +127,6 @@
 	<td>assertText</td>
 	<td>xPath=(//div[@class='lfr-panel-title'])[4]/span</td>
 	<td>Ordering and Grouping</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='lfr-panel-title'])[5]/span</td>
-	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

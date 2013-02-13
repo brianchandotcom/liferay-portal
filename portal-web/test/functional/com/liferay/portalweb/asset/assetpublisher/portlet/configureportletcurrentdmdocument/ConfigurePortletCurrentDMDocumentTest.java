@@ -29,7 +29,7 @@ public class ConfigurePortletCurrentDMDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -41,12 +41,12 @@ public class ConfigurePortletCurrentDMDocumentTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.waitForVisible("//select[@id='_86_anyAssetType']");
 		selenium.select("//select[@id='_86_anyAssetType']",
 			RuntimeVariables.replace("Select More Than One..."));
@@ -54,16 +54,16 @@ public class ConfigurePortletCurrentDMDocumentTest extends BaseTestCase {
 			selenium.getSelectedLabel("//select[@id='_86_anyAssetType']"));
 		selenium.waitForVisible("//select[@id='_86_availableClassNameIds']");
 		selenium.addSelection("//select[@id='_86_availableClassNameIds']",
-			RuntimeVariables.replace("Documents and Media Document"));
+			RuntimeVariables.replace("Document"));
 		selenium.waitForVisible(
-			"xPath=(//button[@title='Move selected items from Available to Selected.'])[2]");
-		selenium.clickAt("xPath=(//button[@title='Move selected items from Available to Selected.'])[2]",
+			"//button[@title='Move selected items from Available to Selected.']");
+		selenium.clickAt("//button[@title='Move selected items from Available to Selected.']",
 			RuntimeVariables.replace("Left Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_currentClassNameIds']",
-			"Documents and Media Document");
+			"Document");
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentClassNameIds']",
-				"Documents and Media Document"));
+				"//select[@id='_86_currentClassNameIds']", "Document"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -71,8 +71,7 @@ public class ConfigurePortletCurrentDMDocumentTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_86_currentClassNameIds']",
-				"Documents and Media Document"));
+				"//select[@id='_86_currentClassNameIds']", "Document"));
 		selenium.selectFrame("relative=top");
 	}
 }

@@ -41,12 +41,12 @@ public class ConfigurePortletAPDisplayTemplateAbstractsTest extends BaseTestCase
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForVisible(
+		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.waitForVisible(
 			"//ul[contains(.,'Display Settings')]/li[2]/span/a");
 		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
@@ -55,7 +55,7 @@ public class ConfigurePortletAPDisplayTemplateAbstractsTest extends BaseTestCase
 			"//div[@class='display-template']/span/span/span/select	");
 		selenium.select("//div[@class='display-template']/span/span/span/select	",
 			RuntimeVariables.replace("Abstracts"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

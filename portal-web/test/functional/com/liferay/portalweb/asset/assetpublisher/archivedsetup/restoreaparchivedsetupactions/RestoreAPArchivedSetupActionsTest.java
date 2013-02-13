@@ -28,22 +28,24 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForElementPresent(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		selenium.waitForVisible("//div[@class='archived-setups']/span/a/span");
 		assertEquals(RuntimeVariables.replace("Archive/Restore Setup"),
 			selenium.getText("//div[@class='archived-setups']/span/a/span"));
@@ -56,7 +58,7 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[2]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong",
@@ -74,33 +76,29 @@ public class RestoreAPArchivedSetupActionsTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.waitForElementPresent(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
-		selenium.waitForVisible("//select[@id='_86_selectionStyle']");
-		assertEquals("Manual",
-			selenium.getSelectedLabel("//select[@id='_86_selectionStyle']"));
-		assertEquals(RuntimeVariables.replace("Selection"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[1]/span"));
-		assertEquals(RuntimeVariables.replace("Display Settings"),
-			selenium.getText("xPath=(//div[@class='lfr-panel-title'])[2]/span"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
+		selenium.waitForVisible("//input[@id='_86_selectionStyleManual']");
+		assertTrue(selenium.isChecked("//input[@id='_86_selectionStyleManual']"));
 		selenium.selectFrame("relative=top");
 	}
 }

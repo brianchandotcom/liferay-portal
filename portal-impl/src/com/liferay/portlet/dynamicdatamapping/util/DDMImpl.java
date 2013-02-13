@@ -370,44 +370,38 @@ public class DDMImpl implements DDM {
 		List<String> fieldNames = getFieldNames(
 			fieldNamespace, fieldName, serviceContext);
 
-		List<Serializable> fieldValues = new ArrayList<Serializable>(
-			fieldNames.size());
+		List<Serializable> fieldValues = new ArrayList<Serializable>(1);
 
-		for (String fieldNameValue : fieldNames) {
-			InputStream inputStream = null;
+		InputStream inputStream = null;
 
-			try {
-				String fileName = uploadRequest.getFileName(fieldNameValue);
+		try {
+			String fieldNameValue = fieldNames.get(0);
 
-				inputStream = uploadRequest.getFileAsStream(
-					fieldNameValue, true);
+			String fileName = uploadRequest.getFileName(fieldNameValue);
 
-				if (inputStream != null) {
-					String filePath = storeFieldFile(
-						baseModel, fieldName, inputStream, serviceContext);
+			inputStream = uploadRequest.getFileAsStream(fieldNameValue, true);
 
-					JSONObject recordFileJSONObject =
-						JSONFactoryUtil.createJSONObject();
+			if (inputStream != null) {
+				String filePath = storeFieldFile(
+					baseModel, fieldName, inputStream, serviceContext);
 
-					recordFileJSONObject.put("name", fileName);
-					recordFileJSONObject.put("path", filePath);
-					recordFileJSONObject.put(
-						"className", baseModel.getModelClassName());
-					recordFileJSONObject.put(
-						"classPK",
-						String.valueOf(baseModel.getPrimaryKeyObj()));
+				JSONObject recordFileJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-					String fieldValue = recordFileJSONObject.toString();
+				recordFileJSONObject.put("name", fileName);
+				recordFileJSONObject.put("path", filePath);
+				recordFileJSONObject.put(
+					"className", baseModel.getModelClassName());
+				recordFileJSONObject.put(
+					"classPK", String.valueOf(baseModel.getPrimaryKeyObj()));
 
-					fieldValues.add(fieldValue);
-				}
-				else if (fields.contains(fieldName)) {
-					continue;
-				}
+				String fieldValue = recordFileJSONObject.toString();
+
+				fieldValues.add(fieldValue);
 			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
-			}
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
 		}
 
 		Field field = new Field(

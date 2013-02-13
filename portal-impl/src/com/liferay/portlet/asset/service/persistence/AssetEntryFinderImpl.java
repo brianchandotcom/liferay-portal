@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -279,6 +280,22 @@ public class AssetEntryFinderImpl
 			sb.append(" AND (AssetEntry.viewCount > 0)");
 		}
 
+		// Keywords
+
+		if (Validator.isNotNull(entryQuery.getKeywords())) {
+			sb.append(" AND ((AssetEntry.title LIKE ?) OR");
+			sb.append(" (AssetEntry.description LIKE ?))");
+		}
+		else {
+			if (Validator.isNotNull(entryQuery.getTitle())) {
+				sb.append(" AND (AssetEntry.title LIKE ?)");
+			}
+
+			if (Validator.isNotNull(entryQuery.getDescription())) {
+				sb.append(" AND (AssetEntry.description LIKE ?)");
+			}
+		}
+
 		// Layout
 
 		Layout layout = entryQuery.getLayout();
@@ -397,6 +414,20 @@ public class AssetEntryFinderImpl
 
 		if (entryQuery.isVisible() != null) {
 			qPos.add(entryQuery.isVisible());
+		}
+
+		if (Validator.isNotNull(entryQuery.getKeywords())) {
+			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
+			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
+		}
+		else {
+			if (Validator.isNotNull(entryQuery.getTitle())) {
+				qPos.add(entryQuery.getTitle() + CharPool.PERCENT);
+			}
+
+			if (Validator.isNotNull(entryQuery.getDescription())) {
+				qPos.add(entryQuery.getDescription() + CharPool.PERCENT);
+			}
 		}
 
 		if (layout != null) {

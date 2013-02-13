@@ -22,6 +22,7 @@ String assetCategoryClassName = GetterUtil.getString(request.getAttribute("lifer
 long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetCategoryClassPK"));
 String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
 long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
+String cssClass = (String)request.getAttribute("liferay-ui:app-view-entry:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-entry:data");
 String description = (String)request.getAttribute("liferay-ui:app-view-entry:description");
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
@@ -43,7 +44,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
+		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:if test="<%= showCheckbox %>">
 				<aui:input cssClass="overlay entry-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
 			</c:if>
@@ -92,7 +93,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 		</div>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
+		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(title + " - " + description) %>">
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
@@ -162,7 +163,7 @@ String shortTitle = StringUtil.shorten(title, 60);
 		</div>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
-		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %>">
+		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %> <%= cssClass %>">
 			<liferay-ui:icon
 				cssClass='<%= showCheckbox ? "app-view-entry app-view-entry-taglib entry-display-style selectable" : "app-view-entry app-view-entry-taglib entry-display-style" %>'
 				data="<%= data %>"

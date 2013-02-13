@@ -55,6 +55,9 @@ public interface AssetRenderer {
 
 	public String getSummary(Locale locale);
 
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception;
+
 	public String getTitle(Locale locale);
 
 	public String getURLDownload(ThemeDisplay themeDisplay);

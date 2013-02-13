@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
@@ -317,13 +315,10 @@ public class DDMImpl implements DDM {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		DDMStructure structure = field.getDDMStructure();
 
 		Serializable fieldValue = field.getValue(
-			themeDisplay.getLocale(), valueIndex);
+			LocaleUtil.getDefault(), valueIndex);
 
 		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
 			String.valueOf(fieldValue));

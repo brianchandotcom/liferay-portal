@@ -41,15 +41,13 @@ Team team = (Team)row.getObject();
 		<%
 		Role role = team.getRole();
 
-		int roleType = RoleConstants.TYPE_SITE;
+		int[] roleTypes = {RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE};
 
 		Group group = GroupServiceUtil.getGroup(team.getGroupId());
 
 		if (group.isOrganization()) {
-			roleType = RoleConstants.TYPE_ORGANIZATION;
+			roleTypes = ArrayUtil.append(roleTypes, RoleConstants.TYPE_ORGANIZATION);
 		}
-
-		int[] roleTypes = {RoleConstants.TYPE_REGULAR, roleType};
 		%>
 
 		<liferay-security:permissionsURL

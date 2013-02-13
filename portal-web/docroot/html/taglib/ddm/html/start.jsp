@@ -30,7 +30,7 @@
 					container: '#<%= randomNamespace %>',
 					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
 					portletNamespace: '<portlet:namespace />',
-					repeatable: '<%= repeatable %>'
+					repeatable: <%= repeatable %>
 				}
 			);
 		</aui:script>

@@ -172,7 +172,9 @@ AUI.add(
 					renderRepeatableUI: function(fieldNode) {
 						var instance = this;
 
-						if ((instance.get('repeatable') === 'true') && (fieldNode.getData('repeatable') === 'true')) {
+						var fieldRepeatable = A.DataType.Boolean.parse(fieldNode.getData('repeatable'));
+
+						if (instance.get('repeatable') && fieldRepeatable) {
 							if (!fieldNode.getData('rendered-toolbar')) {
 								var fieldName = fieldNode.getData('fieldName');
 
@@ -250,6 +252,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'aui-parse-content']
+		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content']
 	}
 );

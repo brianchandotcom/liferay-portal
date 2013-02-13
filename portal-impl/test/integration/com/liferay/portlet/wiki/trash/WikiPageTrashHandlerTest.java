@@ -42,9 +42,9 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @ExecutionTestListeners(listeners = {
-		MainServletExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class
-	})
+	MainServletExecutionTestListener.class,
+	SynchronousDestinationExecutionTestListener.class
+})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {

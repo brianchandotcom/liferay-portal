@@ -110,6 +110,7 @@ public abstract class BaseTransformer implements Transformer {
 
 		for (String transformerListenersClassName :
 				transformerListenersClassNames) {
+
 			TransformerListener transformerListener = null;
 
 			try {

@@ -49,6 +49,7 @@ public class WeakValueConcurrentHashMap<K, V>
 
 	public WeakValueConcurrentHashMap(
 		int initialCapacity, float loadFactor, int concurrencyLevel) {
+
 		_map = new ConcurrentHashMap<K, Reference<V>>(
 			initialCapacity, loadFactor, concurrencyLevel);
 	}

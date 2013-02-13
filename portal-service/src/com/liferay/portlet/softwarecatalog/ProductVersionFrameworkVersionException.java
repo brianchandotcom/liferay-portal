@@ -31,6 +31,7 @@ public class ProductVersionFrameworkVersionException extends PortalException {
 
 	public ProductVersionFrameworkVersionException(
 		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

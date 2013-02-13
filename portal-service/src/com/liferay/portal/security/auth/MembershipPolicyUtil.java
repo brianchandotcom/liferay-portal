@@ -57,6 +57,7 @@ public class MembershipPolicyUtil {
 
 	public static Set<Role> getForbiddenRoles(
 		User user, Organization organization) {
+
 		MembershipPolicy membershipPolicy =
 			MembershipPolicyFactoryUtil.getMembershipPolicy();
 

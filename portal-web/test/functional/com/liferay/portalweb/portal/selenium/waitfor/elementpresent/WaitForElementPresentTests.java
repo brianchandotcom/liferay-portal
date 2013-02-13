@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.waitfor.elementpresent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
-import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +22,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
-
+public class WaitForElementPresentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(TypingTestPlan.suite());
-		testSuite.addTest(WaitForTestPlan.suite());
+		testSuite.addTestSuite(WaitForElementPresent1Test.class);
+		testSuite.addTestSuite(WaitForElementPresent2Test.class);
+		testSuite.addTestSuite(WaitForElementNotPresent1Test.class);
+		testSuite.addTestSuite(WaitForElementNotPresent2Test.class);
 
 		return testSuite;
 	}
-
 }

@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.waitfor.confirmation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
-import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.AddBlogsEntryCPTest;
+import com.liferay.portalweb.portal.controlpanel.blogs.blogsentry.addblogsentrycp.TearDownBlogsEntryCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +24,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
-
+public class WaitForConfirmationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(TypingTestPlan.suite());
-		testSuite.addTest(WaitForTestPlan.suite());
+		testSuite.addTestSuite(AddBlogsEntryCPTest.class);
+		testSuite.addTestSuite(TearDownBlogsEntryCPTest.class);
 
 		return testSuite;
 	}
-
 }

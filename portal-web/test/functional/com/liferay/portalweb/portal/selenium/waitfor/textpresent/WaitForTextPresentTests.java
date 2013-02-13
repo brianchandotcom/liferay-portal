@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.waitfor.textpresent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
-import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
+import com.liferay.portalweb.portal.selenium.waitfor.partialtext.WaitForNotPartialText1Test;
+import com.liferay.portalweb.portal.selenium.waitfor.partialtext.WaitForNotPartialText2Test;
+import com.liferay.portalweb.portal.selenium.waitfor.partialtext.WaitForPartialText1Test;
+import com.liferay.portalweb.portal.selenium.waitfor.partialtext.WaitForPartialText2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +26,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
-
+public class WaitForTextPresentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(TypingTestPlan.suite());
-		testSuite.addTest(WaitForTestPlan.suite());
+		testSuite.addTestSuite(WaitForPartialText1Test.class);
+		testSuite.addTestSuite(WaitForPartialText2Test.class);
+		testSuite.addTestSuite(WaitForNotPartialText1Test.class);
+		testSuite.addTestSuite(WaitForNotPartialText2Test.class);
 
 		return testSuite;
 	}
-
 }

@@ -3430,6 +3430,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			if ((passwordPolicy != null) &&
 				(passwordPolicy.getResetTicketMaxAge() > 0)) {
+
 				expirationDate = new Date(
 					System.currentTimeMillis() +
 						(passwordPolicy.getResetTicketMaxAge() * 1000));

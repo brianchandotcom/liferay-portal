@@ -140,6 +140,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
+
 			try {
 				user = UserLocalServiceUtil.getUserByEmailAddress(
 					companyId, emailAddress);

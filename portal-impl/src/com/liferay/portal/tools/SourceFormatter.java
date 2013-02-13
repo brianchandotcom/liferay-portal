@@ -1883,34 +1883,50 @@ public class SourceFormatter {
 						_sourceFormatterHelper.printError(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
-					else {
-						int lineTabCount = StringUtil.count(
-							line, StringPool.TAB);
-						int previousLineTabCount = StringUtil.count(
-							previousLine, StringPool.TAB);
+					else if (!trimmedLine.startsWith("//")) {
+						int lineLeadingTabCount = _getLeadingTabCount(line);
+						int previousLineLeadingTabCount = _getLeadingTabCount(
+							previousLine);
 
 						if (previousLine.endsWith(StringPool.COMMA) &&
 							previousLine.contains(
 								StringPool.OPEN_PARENTHESIS) &&
 							!previousLine.contains("for (") &&
-							(lineTabCount > previousLineTabCount)) {
+							(lineLeadingTabCount >
+								previousLineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
 
-						if (Validator.isNotNull(trimmedLine) &&
-							((previousLine.endsWith(StringPool.COLON) &&
-							  previousLine.contains(StringPool.TAB + "for ")) ||
-							 (previousLine.endsWith(
-								 StringPool.OPEN_PARENTHESIS) &&
-							  previousLine.contains(StringPool.TAB + "if "))) &&
-							((previousLineTabCount + 2) != lineTabCount)) {
+						if (Validator.isNotNull(trimmedLine)) {
+							if (((previousLine.endsWith(StringPool.COLON) &&
+								  previousLine.contains(
+									  StringPool.TAB + "for ")) ||
+								 (previousLine.endsWith(
+									 StringPool.OPEN_PARENTHESIS) &&
+								  previousLine.contains(
+									  StringPool.TAB + "if "))) &&
+								((previousLineLeadingTabCount + 2) !=
+									lineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
+							}
+
+							if (previousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								!trimmedLine.startsWith(
+									StringPool.CLOSE_CURLY_BRACE) &&
+								((previousLineLeadingTabCount + 1) !=
+									lineLeadingTabCount)) {
+
+								_sourceFormatterHelper.printError(
+									fileName,
+									"tab: " + fileName + " " + lineCount);
+							}
 						}
 
 						if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -1932,15 +1948,16 @@ public class SourceFormatter {
 						}
 
 						if (trimmedLine.startsWith("throws ") &&
-							(lineTabCount == previousLineTabCount)) {
+							(lineLeadingTabCount ==
+								previousLineLeadingTabCount)) {
 
 							_sourceFormatterHelper.printError(
 								fileName, "tab: " + fileName + " " + lineCount);
 						}
 
 						combinedLines = _getCombinedLines(
-							trimmedLine, previousLine, lineTabCount,
-							previousLineTabCount);
+							trimmedLine, previousLine, lineLeadingTabCount,
+							previousLineLeadingTabCount);
 					}
 				}
 			}
@@ -3831,6 +3848,18 @@ public class SourceFormatter {
 		}
 
 		return new String[0];
+	}
+
+	private static int _getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
 	}
 
 	private static int _getLineLength(String line) {

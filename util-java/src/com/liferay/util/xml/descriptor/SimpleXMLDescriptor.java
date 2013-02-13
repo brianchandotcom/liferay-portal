@@ -57,6 +57,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 			if (name1.equals(elIds[i].getElementName())) {
 				if (_compareChildText(
 						el1, el2, elIds[i].getIdentifierName()) == 0) {
+
 					return true;
 				}
 				else {

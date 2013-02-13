@@ -15,6 +15,7 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.json.JSONIncludesManager;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Field;
@@ -28,7 +29,7 @@ import java.util.Map;
 /**
  * @author Igor Spasic
  */
-public class JSONIncludesManager {
+public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
 	public String[] lookupExcludes(Class<?> type) {
 		String[] excludes = _excludesMap.get(type);

@@ -179,6 +179,11 @@
 	<bean id="com.liferay.portal.kernel.json.JSONFactoryUtil" class="com.liferay.portal.kernel.json.JSONFactoryUtil">
 		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.json.JSONIncludesManagerUtil" class="com.liferay.portal.kernel.json.JSONIncludesManagerUtil">
+		<property name="jsonIncludesManager">
+			<bean class="com.liferay.portal.json.JSONIncludesManagerImpl"/>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
 		<property name="JSONWebServiceActionsManager">
 			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />

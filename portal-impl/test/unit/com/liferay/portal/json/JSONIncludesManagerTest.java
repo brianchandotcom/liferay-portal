@@ -15,6 +15,7 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 
 import java.util.Arrays;
 
@@ -32,18 +33,22 @@ public class JSONIncludesManagerTest extends TestCase {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		JSONIncludesManagerUtil jsonIncludesManagerUtil =
+			new JSONIncludesManagerUtil();
+
+		jsonIncludesManagerUtil.setJsonIncludesManager
+			(new JSONIncludesManagerImpl());
 	}
 
 	public void testExtendsOne() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
 			ExtendsOne.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("*", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
 			ExtendsOne.class);
 
 		assertEquals(1, includes.length);
@@ -51,15 +56,13 @@ public class JSONIncludesManagerTest extends TestCase {
 	}
 
 	public void testExtendsTwo() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
 			ExtendsTwo.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("*", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
 			ExtendsTwo.class);
 
 		assertEquals(1, includes.length);
@@ -67,14 +70,12 @@ public class JSONIncludesManagerTest extends TestCase {
 	}
 
 	public void testFour() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(Four.class);
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Four.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("*", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(Four.class);
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Four.class);
 
 		Arrays.sort(includes);
 
@@ -91,41 +92,35 @@ public class JSONIncludesManagerTest extends TestCase {
 	}
 
 	public void testOne() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(One.class);
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(One.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("not", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(One.class);
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(One.class);
 
 		assertEquals(1, includes.length);
 		assertEquals("ftwo", includes[0]);
 	}
 
 	public void testThree() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(Three.class);
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Three.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("ignore", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(Three.class);
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Three.class);
 
 		assertEquals(0, includes.length);
 	}
 
 	public void testTwo() {
-		JSONIncludesManager jsonIncludesManager = new JSONIncludesManager();
-
-		String[] excludes = jsonIncludesManager.lookupExcludes(Two.class);
+		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Two.class);
 
 		assertEquals(1, excludes.length);
 		assertEquals("*", excludes[0]);
 
-		String[] includes = jsonIncludesManager.lookupIncludes(Two.class);
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Two.class);
 
 		assertEquals(1, includes.length);
 		assertEquals("ftwo", includes[0]);

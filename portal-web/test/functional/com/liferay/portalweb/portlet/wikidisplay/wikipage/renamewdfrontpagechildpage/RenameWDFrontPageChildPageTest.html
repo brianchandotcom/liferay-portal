@@ -19,13 +19,18 @@
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>Wiki FrontPage ChildPage Title</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
@@ -49,7 +54,7 @@
 	<td>Details</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
 	<td>//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
@@ -59,7 +64,7 @@
 	<td>Move</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
 	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
@@ -109,7 +114,7 @@
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
 	<td>Wiki FrontPage ChildPage Title Rename</td>
 </tr>
@@ -135,12 +140,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a</td>
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a</td>
 	<td>Wiki FrontPage ChildPage Title Rename</td>
 </tr>
 </tbody></table>

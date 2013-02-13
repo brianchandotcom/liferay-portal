@@ -25,7 +25,6 @@ public class ViewRenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -33,8 +32,9 @@ public class ViewRenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Title Rename"),
-			selenium.getText("//tr[5]/td[1]/a"));
-		selenium.clickAt("//tr[5]/td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title Rename"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("FrontPage"),

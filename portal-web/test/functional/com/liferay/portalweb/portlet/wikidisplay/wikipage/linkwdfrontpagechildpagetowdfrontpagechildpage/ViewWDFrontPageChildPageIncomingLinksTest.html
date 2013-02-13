@@ -19,6 +19,11 @@
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage1 Title')]</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage1 Title')]</td>
 	<td>Wiki FrontPage ChildPage1 Title</td>
@@ -26,6 +31,11 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage1 Title')]</td>
+	<td>Wiki FrontPage ChildPage1 Title</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Wiki FrontPage ChildPage1 Title</td>
 </tr>
 <tr>
@@ -60,7 +70,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Wiki FrontPage ChildPage2 Title')]/td[1]/a</td>
 	<td>Wiki FrontPage ChildPage2 Title</td>
 </tr>
 </tbody></table>

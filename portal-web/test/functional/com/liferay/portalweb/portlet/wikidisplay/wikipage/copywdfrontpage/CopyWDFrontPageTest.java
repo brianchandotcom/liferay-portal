@@ -40,7 +40,7 @@ public class CopyWDFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='lfr-component taglib-icon-list']/li/a/span[contains(.,'Copy')]",
 			RuntimeVariables.replace("Copy"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.type("//input[contains(@id,'title')]",
 			RuntimeVariables.replace("FrontPage2"));
 		selenium.clickAt("//input[@value='Publish']",
@@ -60,8 +60,8 @@ public class CopyWDFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("FrontPage2"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("//tr[contains(.,'FrontPage2')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'FrontPage2')]/td[1]/a",
 			RuntimeVariables.replace("FrontPage2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("FrontPage2"),

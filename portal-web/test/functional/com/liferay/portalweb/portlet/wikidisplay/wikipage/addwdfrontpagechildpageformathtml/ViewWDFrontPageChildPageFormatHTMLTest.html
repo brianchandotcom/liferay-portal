@@ -1,4 +1,4 @@
-e<html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ViewWDFrontPageChildPageFormatHTMLTest</title>
@@ -19,6 +19,16 @@ e<html>
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div[@class='child-pages']/h2</td>
+	<td>Children Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='child-pages']/h2</td>
+	<td>Children Pages</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
 	<td>Wiki FrontPage ChildPage Title</td>
@@ -27,26 +37,6 @@ e<html>
 	<td>clickAtAndWait</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
 	<td>Wiki FrontPage ChildPage Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td>Wiki FrontPage ChildPage Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/a</td>
-	<td>Welcome to LIFERAY</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
-	<td>Details</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
-	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -91,127 +81,72 @@ e<html>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='header-back-to']/a</td>
-	<td>« Back</td>
+	<td>« Back to FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Content')]</td>
-	<td>Content</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Details')]</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'History')]</td>
-	<td>History</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Print')]</td>
+	<td>Print</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Incoming Links')]</td>
-	<td>Incoming Links</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td>Welcome to LIFERAY</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Outgoing Links')]</td>
-	<td>Outgoing Links</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]</td>
+	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Attachments')]</td>
-	<td>Attachments</td>
+	<td>//div[@class='article-actions']/span/a[contains(.,'0 Attachments')]</td>
+	<td>0 Attachments</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[1]/th</td>
-	<td>Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/td</td>
-	<td>Wiki FrontPage ChildPage Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[2]/th</td>
-	<td>Format</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[2]/td</td>
-	<td>HTML</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/th</td>
-	<td>Latest Version</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/th</td>
-	<td>Created By</td>
+	<td>assertVisible</td>
+	<td>//div[@class='page-actions']/div[@class='stats']</td>
+	<td>Stats</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//tr[4]/td</td>
-	<td>Joe Bloggs</td>
+	<td>//div[contains(@id,'ratingStarContent')]</td>
+	<td>Your Rating</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/th</td>
-	<td>Last Changed By</td>
+	<td>//div[contains(@id,'ratingScoreContent')]</td>
+	<td>Average (0 Votes)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='wikiCommentsPanel']/div/div/span</td>
+	<td>Comments</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//tr[5]/td</td>
-	<td>Joe Bloggs</td>
+	<td>//fieldset[@class='aui-fieldset add-comment ']/div</td>
+	<td>No comments yet.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/th</td>
-	<td>Attachments</td>
+	<td>//fieldset[@class='aui-fieldset add-comment ']/div/a</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[7]/th</td>
-	<td>RSS Subscription</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[7]/td</td>
-	<td>Atom 1.0 (Opens New Window) RSS 1.0 (Opens New Window) RSS 2.0 (Opens New Window)</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[8]/th</td>
-	<td>Email Subscription</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[8]/td</td>
-	<td>You are not subscribed to this page. Subscribe You are not subscribed to this wiki. Subscribe</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[9]/th</td>
-	<td>Advanced Actions</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[9]/td</td>
-	<td>Permissions Copy Move Delete</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
+	<td>Subscribe to Comments</td>
 </tr>
 </tbody></table>
 </body>

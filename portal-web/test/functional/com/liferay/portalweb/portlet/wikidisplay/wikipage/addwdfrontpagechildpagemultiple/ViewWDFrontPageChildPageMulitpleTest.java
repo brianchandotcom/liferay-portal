@@ -29,6 +29,8 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("xpath=(//div[@class='child-pages']/ul/li/a)[1]",
+			"Wiki FrontPage ChildPage1 Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("xpath=(//div[@class='child-pages']/ul/li/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),

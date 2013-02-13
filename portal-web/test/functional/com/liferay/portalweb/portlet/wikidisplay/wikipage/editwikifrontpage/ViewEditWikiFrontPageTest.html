@@ -1,4 +1,4 @@
-e<html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ViewEditWikiFrontPageTest</title>
@@ -17,6 +17,11 @@ e<html>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Display Test Page</td>
 	<td>Wiki Display Test Page</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'FrontPage')]</td>
+	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>assertText</td>

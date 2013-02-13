@@ -29,20 +29,13 @@ public class ViewWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//div[@class='child-pages']/h2", "Children Pages");
+		assertEquals(RuntimeVariables.replace("Children Pages"),
+			selenium.getText("//div[@class='child-pages']/h2"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("Welcome to LIFERAY"),
-			selenium.getText("//div[@class='wiki-body']/p/a"));
-		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText(
-				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
-		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
-			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText(
@@ -64,61 +57,40 @@ public class ViewWDFrontPageChildPageFormatHTMLTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertEquals(RuntimeVariables.replace("Content"),
+		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Content')]"));
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]"));
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Details')]"));
-		assertEquals(RuntimeVariables.replace("History"),
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		assertEquals(RuntimeVariables.replace("Print"),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'History')]"));
-		assertEquals(RuntimeVariables.replace("Incoming Links"),
+				"//div[@class='page-actions top-actions']/span/a[contains(.,'Print')]"));
+		assertEquals(RuntimeVariables.replace("Welcome to LIFERAY"),
+			selenium.getText("//div[@class='wiki-body']/p"));
+		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Incoming Links')]"));
-		assertEquals(RuntimeVariables.replace("Outgoing Links"),
+				"//div[@class='article-actions']/span/a[contains(.,'Add Child Page')]"));
+		assertEquals(RuntimeVariables.replace("0 Attachments"),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Outgoing Links')]"));
-		assertEquals(RuntimeVariables.replace("Attachments"),
+				"//div[@class='article-actions']/span/a[contains(.,'0 Attachments')]"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='page-actions']/div[@class='stats']"));
+		assertTrue(selenium.isPartialText(
+				"//div[contains(@id,'ratingStarContent')]", "Your Rating"));
+		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
+			selenium.getText("//div[contains(@id,'ratingScoreContent')]"));
+		assertEquals(RuntimeVariables.replace("Comments"),
+			selenium.getText("//div[@id='wikiCommentsPanel']/div/div/span"));
+		assertTrue(selenium.isPartialText(
+				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"No comments yet."));
+		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText(
-				"//ul[contains(@class,'tabview-list')]/li/span/a[contains(.,'Attachments')]"));
-		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//tr[1]/th"));
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//tr[1]/td"));
-		assertEquals(RuntimeVariables.replace("Format"),
-			selenium.getText("//tr[2]/th"));
-		assertEquals(RuntimeVariables.replace("HTML"),
-			selenium.getText("//tr[2]/td"));
-		assertEquals(RuntimeVariables.replace("Latest Version"),
-			selenium.getText("//tr[3]/th"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td"));
-		assertEquals(RuntimeVariables.replace("Created By"),
-			selenium.getText("//tr[4]/th"));
-		assertTrue(selenium.isPartialText("//tr[4]/td", "Joe Bloggs"));
-		assertEquals(RuntimeVariables.replace("Last Changed By"),
-			selenium.getText("//tr[5]/th"));
-		assertTrue(selenium.isPartialText("//tr[5]/td", "Joe Bloggs"));
-		assertEquals(RuntimeVariables.replace("Attachments"),
-			selenium.getText("//tr[6]/th"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[6]/td"));
-		assertEquals(RuntimeVariables.replace("RSS Subscription"),
-			selenium.getText("//tr[7]/th"));
-		assertEquals(RuntimeVariables.replace(
-				"Atom 1.0 (Opens New Window) RSS 1.0 (Opens New Window) RSS 2.0 (Opens New Window)"),
-			selenium.getText("//tr[7]/td"));
-		assertEquals(RuntimeVariables.replace("Email Subscription"),
-			selenium.getText("//tr[8]/th"));
-		assertEquals(RuntimeVariables.replace(
-				"You are not subscribed to this page. Subscribe You are not subscribed to this wiki. Subscribe"),
-			selenium.getText("//tr[8]/td"));
-		assertEquals(RuntimeVariables.replace("Advanced Actions"),
-			selenium.getText("//tr[9]/th"));
-		assertEquals(RuntimeVariables.replace("Permissions Copy Move Delete"),
-			selenium.getText("//tr[9]/td"));
+				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
+			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}
 }

@@ -25,12 +25,21 @@ public class AddWikiNode2Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Wiki']",
@@ -47,16 +56,16 @@ public class AddWikiNode2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Node1 Name"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node1 Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node1 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node1 Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Wiki Node2 Name"),
-			selenium.getText("//tr[5]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node2 Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[5]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node2 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[5]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node2 Name')]/td[3]/a"));
 	}
 }

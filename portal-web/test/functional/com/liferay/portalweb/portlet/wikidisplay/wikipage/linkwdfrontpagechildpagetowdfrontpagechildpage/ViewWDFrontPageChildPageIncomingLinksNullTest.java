@@ -29,12 +29,13 @@ public class ViewWDFrontPageChildPageIncomingLinksNullTest extends BaseTestCase 
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
-			selenium.getText(
-				"//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage1 Title')]"));
+		selenium.waitForElementPresent(
+			"//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage2 Title')]");
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a[contains(.,'Wiki FrontPage ChildPage1 Title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage1 Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

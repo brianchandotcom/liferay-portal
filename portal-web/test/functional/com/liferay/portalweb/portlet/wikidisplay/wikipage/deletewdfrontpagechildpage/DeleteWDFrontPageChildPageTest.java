@@ -37,20 +37,18 @@ public class DeleteWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText(
-				"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]"));
+		selenium.waitForVisible(
+			"//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]");
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText(
-				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]"));
+		selenium.waitForVisible(
+			"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]");
 		selenium.click(RuntimeVariables.replace(
 				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertFalse(selenium.isTextPresent("Children Pages"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 	}

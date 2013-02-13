@@ -39,7 +39,7 @@
 	<td>Wiki FrontPage ChildPage Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
 	<td>Details</td>
 </tr>
@@ -49,7 +49,7 @@
 	<td>Details</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
@@ -59,8 +59,8 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,11 +28,13 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+		selenium.waitForText("//div[@class='child-pages']/ul/li/a",
+			"Wiki FrontPage ChildPage Title");
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage Title");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -44,14 +46,13 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText(
-				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]"));
+		selenium.waitForText("//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]",
+			"Move");
 		selenium.click(RuntimeVariables.replace(
 				"//ul[@class='lfr-component taglib-icon-list']/li/a[contains(.,'Move')]"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"Wiki FrontPage ChildPage Title");
 		selenium.type("//input[contains(@id,'_newTitle')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title Rename"));
 		selenium.clickAt("//input[@value='Rename']",
@@ -76,9 +77,8 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Wiki FrontPage ChildPage Title Rename"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+		selenium.waitForText("//div[@class='child-pages']/ul/li/a",
+			"Wiki FrontPage ChildPage Title Rename");
 		assertNotEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
@@ -89,9 +89,11 @@ public class RenameWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki FrontPage ChildPage Title Rename"),
-			selenium.getText("//tr[5]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Wiki FrontPage ChildPage Title Rename')]/td[1]/a"));
 	}
 }

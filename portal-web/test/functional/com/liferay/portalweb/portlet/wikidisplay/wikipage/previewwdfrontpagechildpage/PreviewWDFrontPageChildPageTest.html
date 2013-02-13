@@ -35,73 +35,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@class='cke_top']</td>
-	<td>CKE Toolbar</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]	</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[contains(@id,'cke_contents__54')]/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Wiki FrontPage ChildPage Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[contains(@id,'cke_contents__54')]/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Wiki FrontPage ChildPage Content</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -110,7 +55,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[contains(@id,'_editor') and contains(@style,'display: none;')]</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td>Text Area</td>
 </tr>
 <tr>

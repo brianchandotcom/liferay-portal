@@ -40,16 +40,16 @@ public class RevertEditWikiFrontPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("1.3"));
 		assertEquals(RuntimeVariables.replace("1.2"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.2')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Revert"),
-			selenium.getText("//tr[4]/td[8]/span/a/span"));
-		selenium.clickAt("//tr[4]/td[8]/span/a/span",
+			selenium.getText("//tr[contains(.,'Revert')]/td[8]/span/a/span"));
+		selenium.clickAt("//tr[contains(.,'Revert')]/td[8]/span/a/span",
 			RuntimeVariables.replace("Revert"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.3"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.3')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Reverted to 1.1"),
-			selenium.getText("//tr[3]/td[7]"));
+			selenium.getText("//tr[contains(.,'1.3')]/td[7]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));

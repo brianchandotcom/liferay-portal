@@ -29,8 +29,8 @@ public class AddWDFrontPageCommentNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 		selenium.waitForVisible("//textarea");
 		selenium.click("//input[@value='Reply']");

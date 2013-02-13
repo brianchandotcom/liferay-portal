@@ -15,6 +15,7 @@
 package com.liferay.portal.jsonwebservice.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -106,7 +107,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			Map.Entry<String, Map<String, Object>> entry = iterator.next();
 
 			Statement statement = _parseStatement(
-				entry.getKey(), entry.getValue());
+				null, entry.getKey(), entry.getValue());
 
 			Object result = _executeStatement(statement);
 
@@ -138,6 +139,14 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			jsonSerializer.exclude("*.class");
 
 			for (Statement statement : _statements) {
+
+				if (_includes != null) {
+					for (String include : _includes) {
+
+						jsonSerializer.include(include);
+					}
+				}
+
 				String name = statement.getName();
 
 				if (name == null) {
@@ -166,6 +175,29 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	}
 
+	private void _addInclude(Statement statement, String name) {
+		if (_includes == null) {
+			_includes = new ArrayList<String>();
+		}
+
+		StringBuilder path = new StringBuilder();
+
+		while (statement._parentStatement != null) {
+
+			String statementName = statement.getName().substring(1);
+
+			statementName += StringPool.PERIOD;
+
+			path.insert(0, statementName);
+
+			statement = statement._parentStatement;
+		}
+
+		path.append(name);
+
+		_includes.add(path.toString());
+	}
+
 	private Object _addVariableStatement(
 			Statement statement, Statement variableStatement, Object result)
 		throws Exception {
@@ -176,7 +208,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Object variableResult = _executeStatement(variableStatement);
 
-		Map<String, Object> map = _convertObjectToMap(result);
+		Map<String, Object> map = _convertObjectToMap(statement, result);
 
 		map.put(name.substring(1), variableResult);
 
@@ -225,11 +257,21 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return (List<Object>)object;
 	}
 
-	private Map<String, Object> _convertObjectToMap(Object object) {
+	private Map<String, Object> _convertObjectToMap(
+		Statement statement, Object object) {
+
 		if (!(object instanceof Map)) {
 			String json = JSONFactoryUtil.looseSerialize(object);
 
+			Class<?> type = object.getClass();
+
 			object = JSONFactoryUtil.looseDeserialize(json, HashMap.class);
+
+			String[] includes = JSONIncludesManagerUtil.lookupIncludes(type);
+
+			for (String include : includes) {
+				_addInclude(statement, include);
+			}
 		}
 
 		return (Map<String, Object>)object;
@@ -301,7 +343,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return result;
 		}
 
-		Map<String, Object> map = _convertObjectToMap(result);
+		Map<String, Object> map = _convertObjectToMap(statement, result);
 
 		Map<String, Object> whitelistMap = new HashMap<String, Object>(
 			whitelist.length);
@@ -316,9 +358,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Statement _parseStatement(
-		String assignment, Map<String, Object> statementBody) {
+		Statement parentStatement, String assignment,
+		Map<String, Object> statementBody) {
 
-		Statement statement = new Statement();
+		Statement statement = new Statement(parentStatement);
 
 		_statements.add(statement);
 
@@ -389,7 +432,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 					statement.setVariableStatements(variableStatements);
 				}
 
-				Statement variableStatement = _parseStatement(key, map);
+				Statement variableStatement = _parseStatement(
+					statement, key, map);
 
 				variableStatements.add(variableStatement);
 			}
@@ -468,6 +512,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private String _command;
+	private List<String> _includes;
 	private HttpServletRequest _request;
 	private List<Statement> _statements = new ArrayList<Statement>();
 
@@ -475,6 +520,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private class Statement {
+
+		private Statement(Statement parentStatement) {
+			_parentStatement = parentStatement;
+		}
 
 		public List<Flag> getFlags() {
 			return _flags;
@@ -528,6 +577,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		private String _method;
 		private String _name;
 		private Map<String, Object> _parameterMap;
+		private Statement _parentStatement;
 		private List<Statement> _variableStatements;
 		private String[] _whitelist;
 

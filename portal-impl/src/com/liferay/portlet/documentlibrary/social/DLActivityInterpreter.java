@@ -30,6 +30,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 /**
  * @author Ryan Park
@@ -134,6 +135,13 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 		String body = sb.toString();
 
 		return new SocialActivityFeedEntry(link, title, body);
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return null;
 	}
 
 	protected String getFolderLink(

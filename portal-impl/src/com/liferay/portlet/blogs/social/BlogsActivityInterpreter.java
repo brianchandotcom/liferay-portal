@@ -28,6 +28,7 @@ import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 import java.text.Format;
 
@@ -146,6 +147,13 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		String body = StringPool.BLANK;
 
 		return new SocialActivityFeedEntry(link, title, body);
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return null;
 	}
 
 	private static final String[] _CLASS_NAMES = new String[] {

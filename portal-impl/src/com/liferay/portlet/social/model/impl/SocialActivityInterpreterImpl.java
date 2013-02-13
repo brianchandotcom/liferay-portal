@@ -18,6 +18,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -62,6 +63,12 @@ public class SocialActivityInterpreterImpl
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 
 		return _activityInterpreter.interpret(activity, themeDisplay);
+	}
+
+	public SocialActivityFeedEntry interpret(
+		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+
+		return _activityInterpreter.interpret(activitySet, themeDisplay);
 	}
 
 	private SocialActivityInterpreter _activityInterpreter;

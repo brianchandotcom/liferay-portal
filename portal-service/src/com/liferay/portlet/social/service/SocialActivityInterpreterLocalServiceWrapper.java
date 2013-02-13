@@ -95,6 +95,13 @@ public class SocialActivityInterpreterLocalServiceWrapper
 			themeDisplay);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _socialActivityInterpreterLocalService.interpret(activitySet,
+			themeDisplay);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

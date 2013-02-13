@@ -25,6 +25,7 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 /**
  * @author Juan Fernández
@@ -108,6 +109,13 @@ public class BookmarksActivityInterpreter
 		String body = StringPool.BLANK;
 
 		return new SocialActivityFeedEntry(link, title, body);
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return null;
 	}
 
 	private static final String[] _CLASS_NAMES = new String[] {

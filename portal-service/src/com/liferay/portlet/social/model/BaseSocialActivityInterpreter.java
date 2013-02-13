@@ -50,6 +50,19 @@ public abstract class BaseSocialActivityInterpreter
 		return null;
 	}
 
+	public SocialActivityFeedEntry interpret(
+		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+
+		try {
+			return doInterpret(activitySet, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error("Unable to interpret activitySet", e);
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated
 	 */
@@ -59,6 +72,10 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected abstract SocialActivityFeedEntry doInterpret(
 			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception;
+
+	protected abstract SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ThemeDisplay themeDisplay)
 		throws Exception;
 
 	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {

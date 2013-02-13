@@ -26,6 +26,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivitySet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -139,6 +140,13 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return new SocialActivityFeedEntry(link, title, body);
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return null;
 	}
 
 	private static final String[] _CLASS_NAMES = new String[] {

@@ -36,7 +36,7 @@ public class JSONIncludesManagerUtil {
 		return getJSONIncludesManager().lookupIncludes(type);
 	}
 
-	public void setJsonIncludesManager(
+	public void setJSONIncludesManager(
 		JSONIncludesManager jsonIncludesManager) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());

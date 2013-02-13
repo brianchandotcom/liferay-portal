@@ -37,7 +37,7 @@ public class JSONIncludesManagerTest extends TestCase {
 		JSONIncludesManagerUtil jsonIncludesManagerUtil =
 			new JSONIncludesManagerUtil();
 
-		jsonIncludesManagerUtil.setJsonIncludesManager
+		jsonIncludesManagerUtil.setJSONIncludesManager
 			(new JSONIncludesManagerImpl());
 	}
 

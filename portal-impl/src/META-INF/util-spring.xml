@@ -180,7 +180,7 @@
 		<property name="JSONFactory" ref="com.liferay.portal.kernel.json.JSONFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.json.JSONIncludesManagerUtil" class="com.liferay.portal.kernel.json.JSONIncludesManagerUtil">
-		<property name="jsonIncludesManager">
+		<property name="JSONIncludesManager">
 			<bean class="com.liferay.portal.json.JSONIncludesManagerImpl"/>
 		</property>
 	</bean>

@@ -15,9 +15,11 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.util.StringPool;
 
 import junit.framework.TestCase;
 
@@ -26,18 +28,35 @@ import junit.framework.TestCase;
  */
 public class JSONSerializerTest extends TestCase {
 
+	public void setUp() throws Exception {
+		super.setUp();
+
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		JSONIncludesManagerUtil jsonIncludesManagerUtil =
+			new JSONIncludesManagerUtil();
+
+		jsonIncludesManagerUtil.setJSONIncludesManager(
+			new JSONIncludesManagerImpl());
+	}
+
 	public void testSerializeHits() {
+
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		Hits hits = new HitsImpl();
 
 		String json = jsonSerializer.serialize(hits);
 
+		json = json.replace(StringPool.SPACE, StringPool.BLANK);
+
 		assertTrue(json.contains("\"docs\":null"));
 		assertFalse(json.contains("\"query\""));
 		assertTrue(json.contains("\"queryTerms\":null"));
-		assertTrue(json.contains("\"scores\":[]"));
-		assertTrue(json.contains("\"snippets\":[]"));
+		assertTrue(json.contains("\"scores\":"));
+		assertTrue(json.contains("\"snippets\":["));
 		assertTrue(json.contains("\"start\":0"));
 		assertTrue(json.contains("\"length\":0"));
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1867,14 +1868,23 @@ public class PortletImporter {
 			String newValue = StringUtil.replace(
 				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
 
-			if (!AssetPublisherUtil.isScopeIdSelectable(
-					PermissionThreadLocal.getPermissionChecker(), newValue,
-					companyGroupId, layout)) {
+			try {
+				if (!AssetPublisherUtil.isScopeIdSelectable(
+						PermissionThreadLocal.getPermissionChecker(), newValue,
+						companyGroupId, layout)) {
 
-				continue;
+					continue;
+				}
+
+				newValues.add(newValue);
 			}
-
-			newValues.add(newValue);
+			catch (NoSuchGroupException nsge) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ignoring scope " + newValue + "because the group " +
+							"referenced was not found");
+				}
+			}
 		}
 
 		jxPreferences.setValues(

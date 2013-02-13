@@ -37,8 +37,6 @@ int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE
 Organization organization = null;
 
 if (group.isOrganization()) {
-	roleType = RoleConstants.TYPE_ORGANIZATION;
-
 	organization = OrganizationLocalServiceUtil.getOrganization(group.getClassPK());
 }
 

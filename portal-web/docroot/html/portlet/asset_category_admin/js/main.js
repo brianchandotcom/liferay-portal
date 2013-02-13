@@ -343,7 +343,7 @@ AUI.add(
 
 						var panelInstance = item.getData(STR_PANEL_INSTANCE);
 
-						if (!panelInstance._positionHelper.test(':hidden')) {
+						if (panelInstance && !panelInstance._positionHelper.test(':hidden')) {
 							panelInstance.position(item);
 						}
 					},

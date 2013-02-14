@@ -410,6 +410,10 @@
 		clear: both;
 	}
 
+	.lfr-journal-small-image-content img {
+		margin-right: 1em;
+	}
+
 	.context-pane {
 		overflow: hidden;
 

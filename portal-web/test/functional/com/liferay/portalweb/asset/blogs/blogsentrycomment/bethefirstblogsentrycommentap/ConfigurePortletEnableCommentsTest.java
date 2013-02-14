@@ -28,7 +28,7 @@ public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -46,6 +46,11 @@ public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		assertEquals(RuntimeVariables.replace("Display Settings"),
+			selenium.getText(
+				"//ul[contains(.,'Display Settings')]/li[2]/span/a"));
+		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
+			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//input[@id='_86_enableCommentsCheckbox']");
 		assertFalse(selenium.isChecked(
 				"//input[@id='_86_enableCommentsCheckbox']"));
@@ -56,6 +61,7 @@ public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

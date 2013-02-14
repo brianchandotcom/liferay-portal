@@ -29,7 +29,12 @@ public class ViewBlogsEntryScopeCurrentPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//span[@title='Add New']/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("Add New in Liferay"),
+			selenium.getText(
+				"//span[@title='Add New in Liferay']/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Add New in Blogs Test Page"),
+			selenium.getText(
+				"//span[@title='Add New in Blogs Test Page']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText(
 				"//div[@class='portlet-body']/div/h3[@class='asset-title']"));
@@ -40,5 +45,27 @@ public class ViewBlogsEntryScopeCurrentPageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Read More About Blogs Entry Title \u00bb"),
 			selenium.getText("//div[@class='portlet-body']/div/div[2]/div[2]"));
+		Thread.sleep(1000);
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+			RuntimeVariables.replace("Configuration"));
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//tr[contains(.,'Blogs Test Page')]/td/span");
+		assertEquals(RuntimeVariables.replace("Blogs Test Page"),
+			selenium.getText("//tr[contains(.,'Blogs Test Page')]/td/span"));
+		selenium.selectFrame("relative=top");
 	}
 }

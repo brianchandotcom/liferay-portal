@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,6 +64,16 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//ul[contains(.,'Display Settings')]/li[2]/span/a</td>
+	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//ul[contains(.,'Display Settings')]/li[2]/span/a</td>
+	<td>Display Settings</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>Enable Comment Ratings</td>
@@ -82,6 +92,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>

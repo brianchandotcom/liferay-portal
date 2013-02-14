@@ -25,6 +25,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.TestPropsValues;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +49,15 @@ public class ResourceLocalServiceTest {
 				"ResourceLocalServiceTest" + (i + 1), _group.getGroupId());
 
 			_userIds[i] = user.getUserId();
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			UserLocalServiceUtil.deleteUser(_userIds[i]);
 		}
 	}
 

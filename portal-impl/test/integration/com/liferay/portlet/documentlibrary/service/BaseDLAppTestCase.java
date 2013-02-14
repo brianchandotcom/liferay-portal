@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -39,9 +40,7 @@ public abstract class BaseDLAppTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		if (parentFolder != null) {
-			DLAppServiceUtil.deleteFolder(parentFolder.getFolderId());
-		}
+		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	protected static final String CONTENT =

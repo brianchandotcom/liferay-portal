@@ -35,6 +35,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -97,6 +98,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		super.tearDown();
+
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			UserLocalServiceUtil.deleteUser(_userIds[i]);
+		}
 	}
 
 	@Test

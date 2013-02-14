@@ -20,6 +20,7 @@ import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.movetorecy
 import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.movetorecyclebinbookmarkssubfolder.MoveToRecycleBinBookmarksSubFolderTests;
 import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.restorebookmarksfolderrecyclebin.RestoreBookmarksFolderRecycleBinTests;
 import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.restorebookmarkssubfolderrecyclebin.RestoreBookmarksSubFolderRecycleBinTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.restorebookmarksrecyclebin.RestoreBookmarksRecycleBin;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,6 +38,7 @@ public class BookmarksTestPlan extends BaseTestSuite {
 		testSuite.addTest(MoveToRecycleBinBookmarksSubFolderTests.suite());
 		testSuite.addTest(RestoreBookmarksFolderRecycleBinTests.suite());
 		testSuite.addTest(RestoreBookmarksSubFolderRecycleBinTests.suite());
+		testSuite.addTest(RestoreBookmarksRecycleBin.suite());
 
 		return testSuite;
 	}

@@ -9,15 +9,6 @@
 	padding: 5px 1px;
 }
 
-@mixin input-field-disabled {
-	background-image: url(../images/forms/input_shadow.png);
-	background-repeat: no-repeat;
-	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
-	resize: none;
-
-	@include opacity(0.6);
-}
-
 @mixin input-field-focus {
 	background: #FFC none;
 	border-color: #FC0;
@@ -160,8 +151,10 @@ input, textarea {
 }
 
 .aui-field-disabled {
-	input[type="password"], input[type="text"], input[type="textarea"], textarea {
-		@include input-field-disabled;
+	input[type="file"], input[type="password"], input[type="text"], select, textarea, .textarea, .aui-field-input-text {
+		@include input-field-default;
+
+		resize: none;
 	}
 }
 
@@ -221,7 +214,7 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 
 	.aui-field-disabled {
 		input, input.password, input.text, input.textarea, textarea {
-			@include opacity(0.6);
+			@include input-field-default;
 		}
 	}
 

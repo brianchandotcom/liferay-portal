@@ -191,6 +191,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 							<div class="lfr-ddm-small-image-header">
 								<aui:input name="smallImage" />
 							</div>
+
 							<div class="lfr-ddm-small-image-content aui-toggler-content-collapsed">
 								<aui:layout>
 									<c:if test="<%= smallImage && (template != null) %>">
@@ -205,6 +206,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" />
 										</aui:fieldset>
+
 										<aui:fieldset>
 											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
 

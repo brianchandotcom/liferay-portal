@@ -105,9 +105,8 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
-			int pos = name.indexOf(StringPool.PERIOD);
-
-			String envName = name.substring(pos + 1);
+			String envName = name.substring(
+				RUNTIME_PERMISSION_GET_ENV.length() + 1);
 
 			if (!hasGetEnv(envName)) {
 				throwSecurityException(
@@ -151,6 +150,44 @@ public class RuntimeChecker extends BaseReflectChecker {
 				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
 		}
+	}
+
+	@Override
+	public String[] generateRuleFromCondition(Object... conditions) {
+		String[] rule = new String[2];
+
+		if ((conditions != null) && (conditions.length == 1) &&
+			(conditions[0] instanceof Permission)) {
+
+			Permission permission = (Permission)conditions[0];
+
+			String name = permission.getName();
+
+			if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+				rule[0] = "security-manager-class-loader-reference-ids";
+
+				if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+					rule[1] = "portal";
+				}
+				else {
+					rule[1] = name.substring(
+						RUNTIME_PERMISSION_GET_CLASSLOADER.length() + 1);;
+				}
+			}
+			else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+				rule[0] = "security-manager-environment-variables";
+				rule[1] = name.substring(
+					RUNTIME_PERMISSION_GET_ENV.length() + 1);
+
+				// Since we're using regex, we can't allow a lone * as the rule
+
+				if (rule[1].equals(StringPool.STAR)) {
+					rule[1] = StringPool.DOUBLE_BACK_SLASH + rule[1];
+				}
+			}
+		}
+
+		return rule;
 	}
 
 	protected boolean hasAccessClassInPackage(String pkg) {

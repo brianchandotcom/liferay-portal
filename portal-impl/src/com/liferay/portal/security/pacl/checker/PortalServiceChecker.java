@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalServiceChecker extends BaseChecker {
 
@@ -63,19 +64,57 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 	}
 
+	@Override
+	public String[] generateRuleFromCondition(Object... args) {
+		String[] rule = new String[2];
+
+		if ((args != null) && (args.length == 3) &&
+			(args[1] instanceof Method)) {
+
+			Class<?> clazz = getClass(args[0]);
+
+			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				classLoader);
+
+			String filter;
+
+			if (paclPolicy != null) {
+				filter = StringPool.OPEN_BRACKET.concat(
+					paclPolicy.getServletContextName()).concat(
+						StringPool.CLOSE_BRACKET);
+			}
+			else {
+				filter = "[portal]";
+			}
+
+			String className = getInterfaceName(clazz.getName());
+
+			Method method = (Method)args[1];
+
+			String methodName = method.getName();
+
+			if (methodName.equals("invokeMethod")) {
+				Object[] arguments = (Object[])args[2];
+
+				methodName = (String)arguments[0];
+			}
+
+			rule[0] = "security-manager-services".concat(filter);
+			rule[1] = className.concat(StringPool.POUND).concat(methodName);
+		}
+
+		return rule;
+	}
+
 	public boolean hasService(
 		Object object, Method method, Object[] arguments) {
 
-		Class<?> clazz = object.getClass();
+		Class<?> clazz = getClass(object);
 
-		if (ProxyUtil.isProxyClass(clazz)) {
-			Class<?>[] interfaces = clazz.getInterfaces();
-
-			if (interfaces.length == 0) {
-				return false;
-			}
-
-			clazz = interfaces[0];
+		if (clazz == null) {
+			return false;
 		}
 
 		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
@@ -109,6 +148,22 @@ public class PortalServiceChecker extends BaseChecker {
 		return false;
 	}
 
+	protected Class<?> getClass(Object object) {
+		Class<?> clazz = object.getClass();
+
+		if (ProxyUtil.isProxyClass(clazz)) {
+			Class<?>[] interfaces = clazz.getInterfaces();
+
+			if (interfaces.length == 0) {
+				return null;
+			}
+
+			clazz = interfaces[0];
+		}
+
+		return clazz;
+	}
+
 	protected String getInterfaceName(String className) {
 		int pos = className.indexOf(".impl.");
 
@@ -132,6 +187,10 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 		else {
 			services = _pluginServices.get(paclPolicy.getServletContextName());
+
+			if (services == null) {
+				return Collections.EMPTY_SET;
+			}
 		}
 
 		return services;

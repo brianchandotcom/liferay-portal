@@ -129,18 +129,18 @@ if (fieldParamSelection.equals("0")) {
 		String tokenLabel = modifiedLabel;
 
 		if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-			String fromDateLabel = fieldParamFrom;
-			String toDateLabel = fieldParamTo;
+			String fromDateLabel = HtmlUtil.escape(fieldParamFrom);
+			String toDateLabel = HtmlUtil.escape(fieldParamTo);
 
-			tokenLabel = LanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"});
+			tokenLabel = UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"});
 		}
 		%>
 
 		Liferay.Search.tokenList.add(
 			{
-				clearFields: '<%= UnicodeFormatter.toString(fieldName) %>',
-				fieldValues: '<%= UnicodeFormatter.toString(fieldName + "selection|0") %>',
-				text: '<%= UnicodeFormatter.toString(tokenLabel) %>'
+				clearFields: '<%= fieldName %>',
+				fieldValues: '<%= fieldName + "selection|0" %>',
+				html: '<%= tokenLabel %>'
 			}
 		);
 	</aui:script>

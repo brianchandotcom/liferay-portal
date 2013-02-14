@@ -49,8 +49,8 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName()) %>',
-							text: '<%= UnicodeFormatter.toString(curUser.getFullName()) %>'
+							clearFields: '<%= renderResponse.getNamespace() + facet.getFieldName() %>',
+							text: '<%= HtmlUtil.escapeJS(curUser.getFullName()) %>'
 						}
 					);
 				</aui:script>

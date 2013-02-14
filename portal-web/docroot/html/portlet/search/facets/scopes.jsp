@@ -49,8 +49,8 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							fieldValues: '<%= UnicodeFormatter.toString(renderResponse.getNamespace() + facet.getFieldName() + "|0") %>',
-							text: '<%= UnicodeFormatter.toString(group.getDescriptiveName(locale)) %>'
+							fieldValues: '<%= renderResponse.getNamespace() + facet.getFieldName() + "|0" %>',
+							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
 						}
 					);
 				</aui:script>
@@ -63,7 +63,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			%>
 
 			<li class="facet-value <%= groupId == curGroupId ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= curGroupId %>" href="javascript:;"><%= group.getDescriptiveName(locale) %></a>
+				<a data-value="<%= curGroupId %>" href="javascript:;"><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></a>
 
 				<c:if test="<%= showAssetCount %>">
 					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>

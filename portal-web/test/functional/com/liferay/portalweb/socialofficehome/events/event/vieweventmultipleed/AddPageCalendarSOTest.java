@@ -36,8 +36,9 @@ public class AddPageCalendarSOTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Page"),
 			selenium.getText("//a[@id='addPage']"));
 		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
-		selenium.waitForVisible("xPath=(//input[@type='text'])[2]");
-		selenium.type("xPath=(//input[@type='text'])[2]",
+		selenium.waitForVisible(
+			"//li[@class='add-page']/div/div/span/span/input");
+		selenium.type("//li[@class='add-page']/div/div/span/span/input",
 			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.clickAt("//button[contains(@id,'Save')]",
 			RuntimeVariables.replace("Save"));

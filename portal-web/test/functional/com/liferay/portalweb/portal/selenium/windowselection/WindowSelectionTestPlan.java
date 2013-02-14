@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.windowselection;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
-import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
-import com.liferay.portalweb.portal.selenium.windowselection.WindowSelectionTestPlan;
+import com.liferay.portalweb.portal.selenium.windowselection.selectframe.SelectFrameTests;
+import com.liferay.portalweb.portal.selenium.windowselection.selectpopup.SelectPopUpTests;
+import com.liferay.portalweb.portal.selenium.windowselection.selectwindow.SelectWindowTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
+public class WindowSelectionTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(TypingTestPlan.suite());
-		testSuite.addTest(WaitForTestPlan.suite());
-		testSuite.addTest(WindowSelectionTestPlan.suite());
+		testSuite.addTest(SelectFrameTests.suite());
+		testSuite.addTest(SelectPopUpTests.suite());
+		testSuite.addTest(SelectWindowTests.suite());
 
 		return testSuite;
 	}

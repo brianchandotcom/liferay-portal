@@ -112,6 +112,7 @@
 				dialog: {
 					width: 820
 				},
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				showGlobalScope: 'false',
 				showManageTemplates: 'true',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',

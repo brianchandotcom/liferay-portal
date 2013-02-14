@@ -87,6 +87,7 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.journal.ArticleContentException;
@@ -139,7 +140,7 @@ import javax.portlet.PortletPreferences;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Bruno Farache
- * @author Juan FernÃ¡ndez
+ * @author Juan Fernández
  * @author Sergio González
  */
 public class JournalArticleLocalServiceImpl
@@ -349,6 +350,12 @@ public class JournalArticleLocalServiceImpl
 			updateStatus(
 				userId, article, WorkflowConstants.STATUS_APPROVED, null,
 				new HashMap<String, Serializable>(), serviceContext);
+		}
+
+		// Update Structure Default Values
+
+		if (PortalUtil.getClassNameId(DDMStructure.class) == classNameId) {
+			updateStructureDefaultValues(classPK, content, serviceContext);
 		}
 
 		return article;
@@ -2443,6 +2450,15 @@ public class JournalArticleLocalServiceImpl
 			reindex(article);
 		}
 
+		// Update Structure Default Values
+
+		if (PortalUtil.getClassNameId(DDMStructure.class) ==
+				article.getClassNameId()) {
+
+			updateStructureDefaultValues(
+				article.getClassPK(), content, serviceContext);
+		}
+
 		return article;
 	}
 
@@ -3841,6 +3857,39 @@ public class JournalArticleLocalServiceImpl
 			if (article.isIndexable()) {
 				reindex(previousApprovedArticle);
 			}
+		}
+	}
+
+	protected void updateStructureDefaultValues(
+			long ddmStructureId, String content, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		try {
+			Document document = SAXReaderUtil.read(content);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> elements = rootElement.elements();
+
+			for (Element element : elements) {
+				String fieldName = element.attributeValue(
+					"name", StringPool.BLANK);
+
+				List<Element> dynamicContentEls = element.elements(
+					"dynamic-content");
+
+				for (Element dynamicContentEl : dynamicContentEls) {
+					String defaultValue = dynamicContentEl.getText();
+
+					ddmStructureLocalService.updateXSDFieldMetadata(
+						ddmStructureId, fieldName,
+						FieldConstants.PREDEFINED_VALUE, defaultValue,
+						serviceContext);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 

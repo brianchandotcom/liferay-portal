@@ -1206,6 +1206,46 @@ public class DDMStructureLocalServiceUtil {
 			descriptionMap, xsd, serviceContext);
 	}
 
+	/**
+	* Updates the structure's XSD
+	*
+	* @param structureId the primary key of the structure
+	* @param xsd the xsd content of the structure
+	* @param serviceContext the service context to be applied.
+	* @return the updated structure
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateXSD(
+		long structureId, java.lang.String xsd,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateXSD(structureId, xsd, serviceContext);
+	}
+
+	/**
+	* Updates a structure field's metadata
+	*
+	* @param structureId the primary key of the structure
+	* @param fieldName the name of the field whose metadata will be updated
+	* @param metadataEntryName the name of the metadata entry
+	* @param metadataEntryValue the new value for the metadata entry
+	* @param serviceContext the service context to be applied.
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void updateXSDFieldMetadata(long structureId,
+		java.lang.String fieldName, java.lang.String metadataEntryName,
+		java.lang.String metadataEntryValue,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateXSDFieldMetadata(structureId, fieldName, metadataEntryName,
+			metadataEntryValue, serviceContext);
+	}
+
 	public static DDMStructureLocalService getService() {
 		if (_service == null) {
 			_service = (DDMStructureLocalService)PortalBeanLocatorUtil.locate(DDMStructureLocalService.class.getName());

@@ -86,6 +86,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
+ * @author Juan Fernández
  */
 public class DDMStructureLocalServiceImpl
 	extends DDMStructureLocalServiceBaseImpl {
@@ -1194,6 +1195,94 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			parentStructureId, nameMap, descriptionMap, xsd, serviceContext,
 			structure);
+	}
+
+	/**
+	 * Updates the structure's XSD
+	 *
+	 * @param structureId the primary key of the structure
+	 * @param xsd the xsd content of the structure
+	 * @param serviceContext the service context to be applied.
+	 * @return the updated structure
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DDMStructure updateXSD(
+			long structureId, String xsd, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		return doUpdateStructure(
+			structure.getParentStructureId(), structure.getNameMap(),
+			structure.getDescriptionMap(), xsd, serviceContext, structure);
+	}
+
+	/**
+	 * Updates a structure field's metadata
+	 *
+	 * @param structureId the primary key of the structure
+	 * @param fieldName the name of the field whose metadata will be updated
+	 * @param metadataEntryName the name of the metadata entry
+	 * @param metadataEntryValue the new value for the metadata entry
+	 * @param serviceContext the service context to be applied.
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void updateXSDFieldMetadata(
+			long structureId, String fieldName, String metadataEntryName,
+			String metadataEntryValue, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = fetchDDMStructure(structureId);
+
+		if (ddmStructure == null) {
+			return;
+		}
+
+		String xsd = ddmStructure.getXsd();
+
+		try {
+			Document document = SAXReaderUtil.read(xsd);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> dynamicElementElements = rootElement.elements(
+				"dynamic-element");
+
+			for (Element dynamicElementElement : dynamicElementElements) {
+				String name = dynamicElementElement.attributeValue(
+					"name", StringPool.BLANK);
+
+				if (!name.equals(fieldName)) {
+					continue;
+				}
+
+				List<Element> metadataElements = dynamicElementElement.elements(
+					"meta-data");
+
+				for (Element metadataElement : metadataElements) {
+					for (Element metadataEntryElement :
+							metadataElement.elements()) {
+
+						String attributeName =
+							metadataEntryElement.attributeValue("name");
+
+						if (attributeName.equals(metadataEntryName)) {
+							metadataEntryElement.setText(metadataEntryValue);
+						}
+					}
+				}
+			}
+
+			updateXSD(structureId, document.asXML(), serviceContext);
+		}
+		catch (DocumentException de) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(de, de);
+			}
+		}
 	}
 
 	protected void appendNewStructureRequiredFields(

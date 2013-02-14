@@ -9,10 +9,6 @@
 		vertical-align: top;
 	}
 
-	.aui-button {
-		margin-left: 0.5em;
-	}
-
 	&:after {
 		clear: both;
 		content: "";

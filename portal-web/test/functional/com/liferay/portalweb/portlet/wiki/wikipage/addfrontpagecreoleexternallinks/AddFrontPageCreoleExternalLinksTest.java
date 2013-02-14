@@ -25,7 +25,6 @@ public class AddFrontPageCreoleExternalLinksTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,28 +35,13 @@ public class AddFrontPageCreoleExternalLinksTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		Thread.sleep(1000);
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"[[http://www.liferay.com|Link to website]]"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body", "Link to website");
-		selenium.selectFrame("relative=top");
-		selenium.clickAt("//input[@id='_36_publishButton']",
+		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

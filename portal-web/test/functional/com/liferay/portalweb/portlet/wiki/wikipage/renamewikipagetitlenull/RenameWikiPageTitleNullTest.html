@@ -14,34 +14,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,28 +45,23 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[contains(.,'Details')]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[9]/td/ul/li[contains(.,'Move')]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[9]/td/ul/li[contains(.,'Move')]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>

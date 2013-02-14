@@ -21,6 +21,7 @@ import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiT
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPage1Test;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPage2Test;
+import com.liferay.portalweb.portlet.wiki.wikipage.changeparentwikipagetowikipage.ChangeParentWikiPageToWikiPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

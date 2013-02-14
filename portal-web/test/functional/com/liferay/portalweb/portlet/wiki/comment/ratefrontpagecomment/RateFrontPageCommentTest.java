@@ -25,35 +25,34 @@ public class RateFrontPageCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[@id='eonk_ratingThumb']/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
-			RuntimeVariables.replace(""));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			RuntimeVariables.replace("Thumbs Up"));
+		selenium.waitForText("//div[@id='eonk_ratingThumb']/div/div",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[@id='eonk_ratingThumb']/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
-			RuntimeVariables.replace(""));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			RuntimeVariables.replace("Thumbs Up"));
+		selenium.waitForText("//div[@id='eonk_ratingThumb']/div/div",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[@id='eonk_ratingThumb']/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			RuntimeVariables.replace("Thumbs Down"));
+		selenium.waitForText("//div[@id='eonk_ratingThumb']/div/div",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[@id='eonk_ratingThumb']/div/div"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
-			RuntimeVariables.replace(""));
-		selenium.waitForText("//div[3]/div/div[2]/div/div/div/div",
+			RuntimeVariables.replace("Thumbs Down"));
+		selenium.waitForText("//div[@id='eonk_ratingThumb']/div/div",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[3]/div/div[2]/div/div/div/div"));
+			selenium.getText("//div[@id='eonk_ratingThumb']/div/div"));
 	}
 }

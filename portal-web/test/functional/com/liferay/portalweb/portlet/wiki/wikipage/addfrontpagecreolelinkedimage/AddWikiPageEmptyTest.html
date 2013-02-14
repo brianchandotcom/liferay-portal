@@ -14,19 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'All Pages')]/a/span</td>
 	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Page']</td>
+	<td>Add Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -55,20 +55,24 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[2]/h1/span</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Wiki Page Title</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>This page is empty. Edit it to add some text.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

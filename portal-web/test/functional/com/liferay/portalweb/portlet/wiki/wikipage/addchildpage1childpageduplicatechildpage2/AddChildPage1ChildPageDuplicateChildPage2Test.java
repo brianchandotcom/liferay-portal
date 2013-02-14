@@ -26,50 +26,32 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Title"),
-			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
-		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page2 Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page2 Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[6]/div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[6]/div[1]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a"));
+		selenium.clickAt("//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
-		assertEquals("Creole",
-			selenium.getSelectedLabel("//select[@id='_36_format']"));
-		assertTrue(selenium.isElementPresent(
-				"//div[@id='cke_1_contents']/iframe"));
-		Thread.sleep(1000);
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Child Page Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body",
-			"Wiki Front Page Child Page2 Child Page Content");
-		selenium.selectFrame("relative=top");
-		selenium.clickAt("//input[@id='_36_publishButton']",
+		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -92,14 +74,14 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
 		assertEquals("HTML",
 			selenium.getSelectedLabel("//select[@id='_36_format']"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.type("//div[@id='cke_1_contents']/iframe",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Child Page Content"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("relative=top");
-		selenium.clickAt("//input[@id='_36_publishButton']",
+		Thread.sleep(1000);
+		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

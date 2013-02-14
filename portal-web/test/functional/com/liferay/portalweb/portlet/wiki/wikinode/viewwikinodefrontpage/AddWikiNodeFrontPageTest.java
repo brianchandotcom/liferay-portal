@@ -28,7 +28,10 @@ public class AddWikiNodeFrontPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Wiki Node Name",
+		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
+			selenium.getText(
+				"//ul[@class='top-links-nodes']/li[contains(.,'Wiki Node Name')]/a"));
+		selenium.clickAt("//ul[@class='top-links-nodes']/li[contains(.,'Wiki Node Name')]/a",
 			RuntimeVariables.replace("Wiki Node Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -37,27 +40,11 @@ public class AddWikiNodeFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='portlet-msg-info']/a",
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		Thread.sleep(1000);
-		selenium.waitForVisible("//span[.='Source']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Wiki Node Front Page Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent("//div[@id='cke_1_contents']/iframe");
-		assertTrue(selenium.isVisible("//div[@id='cke_1_contents']/iframe"));
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body", "Wiki Node Front Page Content");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

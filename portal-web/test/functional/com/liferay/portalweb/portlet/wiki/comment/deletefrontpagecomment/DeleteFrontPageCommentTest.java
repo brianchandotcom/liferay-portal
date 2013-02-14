@@ -25,17 +25,18 @@ public class DeleteFrontPageCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
-			selenium.getText("//div/div[3]/div/div[1]"));
-		selenium.mouseOver("//div[@id='eonk_ratingThumbContent']/div");
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//li[contains(.,'Delete')]/span/a/span"));
-		selenium.clickAt("//li[contains(.,'Delete')]/span/a/span",
-			RuntimeVariables.replace("Delete"));
+			selenium.getText(
+				"//ul[@class='lfr-discussion-actions']/li[contains(.,'Delete')]/span/a/span"));
+		selenium.click(
+			"//ul[@class='lfr-discussion-actions']/li[contains(.,'Delete')]/span/a/span");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
@@ -43,7 +44,5 @@ public class DeleteFrontPageCommentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Comment Body"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 	}
 }

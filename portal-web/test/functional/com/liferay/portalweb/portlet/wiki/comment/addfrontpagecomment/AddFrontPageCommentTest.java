@@ -25,7 +25,6 @@ public class AddFrontPageCommentTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -44,6 +43,6 @@ public class AddFrontPageCommentTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Wiki Front Page Comment Body"),
-			selenium.getText("//div/div[3]/div/div[1]"));
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

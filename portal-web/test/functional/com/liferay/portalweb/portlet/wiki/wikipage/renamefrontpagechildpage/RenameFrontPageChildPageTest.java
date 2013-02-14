@@ -25,14 +25,16 @@ public class RenameFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page Title"),
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -40,16 +42,17 @@ public class RenameFrontPageChildPageTest extends BaseTestCase {
 				"Wiki Front Page Child Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[contains(.,'Details')]/a/span"));
-		selenium.clickAt("//div[3]/span[contains(.,'Details')]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[contains(.,'Move')]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[contains(.,'Move')]/a/span",
+			selenium.getText(
+				"//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span"));
+		selenium.clickAt("//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -61,7 +64,6 @@ public class RenameFrontPageChildPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Wiki2 Front2 Page2 Child2 Page2 Title2"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -75,26 +77,28 @@ public class RenameFrontPageChildPageTest extends BaseTestCase {
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki2 Front2 Page2 Child2 Page2 Title2"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki2 Front2 Page2 Child2 Page2 Title2')]/a"));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Wiki Front Page Child Page Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki2 Front2 Page2 Child2 Page2 Title2"),
-			selenium.getText("//tr[5]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Wiki2 Front2 Page2 Child2 Page2 Title2')]/td[1]/a"));
 	}
 }

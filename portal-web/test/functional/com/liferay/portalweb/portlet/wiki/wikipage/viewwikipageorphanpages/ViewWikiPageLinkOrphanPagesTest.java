@@ -25,11 +25,10 @@ public class ViewWikiPageLinkOrphanPagesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Orphan Pages",
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[contains(.,'Recent Changes')]/span/a/span",
 			RuntimeVariables.replace("Orphan Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Wiki2 Page2 Test2"));

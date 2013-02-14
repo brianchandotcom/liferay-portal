@@ -38,7 +38,7 @@ public class AddPageWikiSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_134_toggle_id_users_admin_group_searchkeywords']",
+		selenium.type("//input[@name='_134_keywords']",
 			RuntimeVariables.replace("Site"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
@@ -55,7 +55,6 @@ public class AddPageWikiSiteTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Public Pages");
 		selenium.clickAt("link=Public Pages",
 			RuntimeVariables.replace("Public Pages"));
 		selenium.waitForPageToLoad("30000");

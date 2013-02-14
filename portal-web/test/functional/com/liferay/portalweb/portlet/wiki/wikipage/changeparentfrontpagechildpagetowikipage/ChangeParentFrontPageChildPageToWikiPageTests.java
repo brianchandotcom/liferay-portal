@@ -19,6 +19,7 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
+import com.liferay.portalweb.portlet.wiki.wikipage.addfrontpagechildpage.AddFrontPageChildPageTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikipage.AddWikiPageTest;
 

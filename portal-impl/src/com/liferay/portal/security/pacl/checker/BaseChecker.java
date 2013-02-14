@@ -43,6 +43,9 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		_portalClassLoader = portalClassLoader;
 		_commonClassLoader = portalClassLoader.getParent();
 		_systemClassLoader = ClassLoader.getSystemClassLoader();
+
+	public String[] generateRuleFromCondition(Object... args) {
+		throw new UnsupportedOperationException();
 	}
 
 	public ClassLoader getClassLoader() {

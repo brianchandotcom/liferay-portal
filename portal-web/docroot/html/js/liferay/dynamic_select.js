@@ -63,7 +63,7 @@ AUI.add(
 							prevSelectVal
 						);
 
-						if (select.attr('name') == '') {
+						if (!select.attr('name')) {
 							select.attr('name', id);
 						}
 

@@ -535,7 +535,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					groupId = group.getGroupId();
 				}
 
-				if (group.isLayout()) {
+				if (group.isLayout() &&
+					!ResourceBlockLocalServiceUtil.isSupported(name)) {
+
 					Layout layout = LayoutLocalServiceUtil.getLayout(
 						group.getClassPK());
 

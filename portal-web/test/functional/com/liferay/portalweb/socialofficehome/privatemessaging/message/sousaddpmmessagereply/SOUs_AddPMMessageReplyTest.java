@@ -77,11 +77,20 @@ public class SOUs_AddPMMessageReplyTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//span[@class='author-sender']"));
 		assertEquals(RuntimeVariables.replace("Message Subject"),
-			selenium.getText("//div[@class='subject']"));
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("Between Joe Bloggs And you"),
+			selenium.getText(
+				"//div[@class='aui-layout-content thread-info-content ']"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));
+		assertEquals(RuntimeVariables.replace("Message Body"),
+			selenium.getText("xPath=(//div[@class='body'])[1]"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText(
+				"xPath=(//span[@class='name'])[contains(.,'Social01 Office01 User01')]"));
 		assertEquals(RuntimeVariables.replace("Message Subject Reply"),
-			selenium.getText("//div[@class='body']"));
+			selenium.getText("xPath=(//div[@class='body'])[2]"));
 	}
 }

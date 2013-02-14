@@ -12,15 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium;
+package com.liferay.portalweb.portal.selenium.browsercommands;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
-import com.liferay.portalweb.portal.selenium.browsercommands.BrowserCommandsTestPlan;
-import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
-import com.liferay.portalweb.portal.selenium.selection.SelectionTestPlan;
-import com.liferay.portalweb.portal.selenium.typing.TypingTestPlan;
-import com.liferay.portalweb.portal.selenium.waitfor.WaitForTestPlan;
+import com.liferay.portalweb.portal.selenium.browsercommands.downloadtempfile.DownloadTempFileTests;
+import com.liferay.portalweb.portal.selenium.browsercommands.setbrowseroption.SetBrowserOptionTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,17 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SeleniumTestPlan extends BaseTestSuite {
+public class BrowserCommandsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AssertionsTestPlan.suite());
-		testSuite.addTest(BrowserCommandsTestPlan.suite());
-		testSuite.addTest(ClickingTestPlan.suite());
-		testSuite.addTest(SelectionTestPlan.suite());
-		testSuite.addTest(TypingTestPlan.suite());
-		testSuite.addTest(WaitForTestPlan.suite());
+		testSuite.addTest(DownloadTempFileTests.suite());
+		testSuite.addTest(SetBrowserOptionTests.suite());
 
 		return testSuite;
 	}

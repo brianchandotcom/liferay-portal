@@ -1146,9 +1146,10 @@ public class DDMStructureLocalServiceImpl
 	 *         description
 	 * @param  xsd the structure's new XML schema definition
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date.
+	 *         structure's modification date.
 	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure updateStructure(
@@ -1179,9 +1180,10 @@ public class DDMStructureLocalServiceImpl
 	 *         descriptions
 	 * @param  xsd the structure's new XML schema definition
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date
+	 *         structure's modification date.
 	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure updateStructure(
@@ -1199,13 +1201,16 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates the structure's XSD
+	 * Updates the structure matching the structure ID, replacing its XSD with a
+	 * new one.
 	 *
-	 * @param structureId the primary key of the structure
-	 * @param xsd the xsd content of the structure
-	 * @param serviceContext the service context to be applied.
+	 * @param  structureId the primary key of the structure
+	 * @param  xsd the structure's new XML schema definition
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         structure's modification date.
 	 * @return the updated structure
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDMStructure updateXSD(
@@ -1221,14 +1226,17 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Updates a structure field's metadata
+	 * Updates the structure matching the structure ID, replacing the metadata
+	 * entry of the named field.
 	 *
-	 * @param structureId the primary key of the structure
-	 * @param fieldName the name of the field whose metadata will be updated
-	 * @param metadataEntryName the name of the metadata entry
-	 * @param metadataEntryValue the new value for the metadata entry
-	 * @param serviceContext the service context to be applied.
-	 * @throws PortalException if a portal exception occurred
+	 * @param  structureId the primary key of the structure
+	 * @param  fieldName the name of the field whose metadata to update
+	 * @param  metadataEntryName the metadata entry's name
+	 * @param  metadataEntryValue the metadata entry's value
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         structure's modification date.
+	 * @throws PortalException if a matching structure could not be found, if
+	 *         the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void updateXSDFieldMetadata(

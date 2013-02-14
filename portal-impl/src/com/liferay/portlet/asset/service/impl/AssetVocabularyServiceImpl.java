@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.model.AssetsPage;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
@@ -172,6 +173,41 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return assetVocabularyFinder.filterCountByG_N(groupId, name);
 	}
 
+	public AssetsPage<AssetVocabulary> getGroupVocabulariesPage(
+			long groupId, String name, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		AssetsPage<AssetVocabulary> assetsPage =
+			new AssetsPage<AssetVocabulary>();
+
+		int page = end / (end - start);
+
+		assetsPage.setEnd(end);
+		assetsPage.setPage(page);
+		assetsPage.setStart(start);
+
+		List<AssetVocabulary> vocabularies;
+		int total = 0;
+
+		if (Validator.isNotNull(name)) {
+			name = (CustomSQLUtil.keywords(name))[0];
+
+			vocabularies = getGroupVocabularies(groupId, name, start, end, obc);
+			total = getGroupVocabulariesCount(groupId, name);
+		}
+		else {
+			vocabularies = getGroupVocabularies(groupId, start, end, obc);
+			total = getGroupVocabulariesCount(groupId);
+		}
+
+		assetsPage.setAssets(vocabularies);
+		assetsPage.setTotal(total);
+
+		return assetsPage;
+	}
+
+	@Deprecated
 	public JSONObject getJSONGroupVocabularies(
 			long groupId, String name, int start, int end,
 			OrderByComparator obc)

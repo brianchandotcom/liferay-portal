@@ -189,6 +189,25 @@ public class AssetCategoryServiceUtil {
 				   .getVocabularyCategoriesCount(groupId, name, vocabularyId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategoriesPage(
+		long vocabularyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesPage(vocabularyId, start, end, obc);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategoriesPage(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getVocabularyCategoriesPage(groupId, name, vocabularyId,
+			start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

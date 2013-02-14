@@ -99,6 +99,13 @@ public class AssetTagServiceUtil {
 		return getService().getGroupTagsCount(groupId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetTag> getGroupTagsPage(
+		long groupId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupTagsPage(groupId, name, start, end);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,

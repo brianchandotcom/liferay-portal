@@ -182,6 +182,24 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 			name, vocabularyId);
 	}
 
+	public com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategoriesPage(
+		long vocabularyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.getVocabularyCategoriesPage(vocabularyId,
+			start, end, obc);
+	}
+
+	public com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategoriesPage(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryService.getVocabularyCategoriesPage(groupId, name,
+			vocabularyId, start, end, obc);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

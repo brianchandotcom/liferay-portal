@@ -164,6 +164,15 @@ public class AssetVocabularyServiceUtil {
 		return getService().getGroupVocabulariesCount(groupId, name);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetsPage<com.liferay.portlet.asset.model.AssetVocabulary> getGroupVocabulariesPage(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getGroupVocabulariesPage(groupId, name, start, end, obc);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

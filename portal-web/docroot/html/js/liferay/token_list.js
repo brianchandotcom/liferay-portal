@@ -8,10 +8,22 @@ AUI().add(
 		var TPL_TOKEN = A.Template(
 			'<tpl for=".">',
 				'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
-					'<span class="lfr-token-text">{[ ("html" in values) ? values.html : A.Escape.html(values.text) ]}</span>',
+					'<span class="lfr-token-text">{text:this.getTokenText}</span>',
 					'<a class="aui-icon aui-icon-close lfr-token-close" href="javascript:;"></a>',
 				'</span>',
-			'</tpl>'
+			'</tpl>',
+			{
+				getTokenText: function(str, values) {
+					if ('html' in values) {
+						str = values.html;
+					}
+					else {
+						str = A.Escape.html(str);
+					}
+
+					return str;
+				}
+			}
 		);
 
 		var TokenList = A.Component.create(

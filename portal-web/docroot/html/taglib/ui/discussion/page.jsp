@@ -626,10 +626,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							id: form
 						},
 						on: {
+							complete: function(event, id, obj) {
+								Util.toggleDisabled(commentButtonList, false);
+							},
 							failure: function(event, id, obj) {
 								<portlet:namespace />showStatusMessage('error', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>');
-
-								Util.toggleDisabled(commentButtonList, false);
 							},
 							start: function() {
 								Util.toggleDisabled(commentButtonList, true);
@@ -670,8 +671,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 									<portlet:namespace />showStatusMessage('error', errorKey);
 								}
-
-								Util.toggleDisabled(commentButtonList, false);
 							}
 						}
 					}

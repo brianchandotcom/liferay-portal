@@ -1301,7 +1301,7 @@
 			if ('refererPortletName' in config) {
 				ddmURL.setParameter('refererPortletName', config.refererPortletName);
 			}
-s
+
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

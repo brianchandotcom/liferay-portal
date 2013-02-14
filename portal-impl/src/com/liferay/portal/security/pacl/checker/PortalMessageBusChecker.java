@@ -25,6 +25,7 @@ import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalMessageBusChecker extends BaseChecker {
 
@@ -54,6 +55,34 @@ public class PortalMessageBusChecker extends BaseChecker {
 					_log, "Attempted to send to " + destinationName);
 			}
 		}
+
+	}
+
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length == 1) &&
+			(arguments[0] instanceof Permission)) {
+
+			PortalMessageBusPermission portalMessageBusPermission =
+				(PortalMessageBusPermission)arguments[0];
+
+			String name = portalMessageBusPermission.getName();
+			String destinationName =
+				portalMessageBusPermission.getDestinationName();
+
+			if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_LISTEN)) {
+				rule[0] = "security-manager-message-bus-listen";
+			}
+			else if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_SEND)) {
+				rule[0] = "security-manager-message-bus-send";
+			}
+
+			rule[1] = destinationName;
+		}
+
+		return rule;
 	}
 
 	protected void initListenDestinationNames() {

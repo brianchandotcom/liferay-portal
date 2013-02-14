@@ -153,6 +153,44 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length == 1) &&
+			(arguments[0] instanceof Permission)) {
+
+			Permission permission = (Permission)arguments[0];
+
+			String name = permission.getName();
+
+			if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+				rule[0] = "security-manager-class-loader-reference-ids";
+
+				if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+					rule[1] = "portal";
+				}
+				else {
+					rule[1] = name.substring(
+						RUNTIME_PERMISSION_GET_CLASSLOADER.length() + 1);;
+				}
+			}
+			else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+				rule[0] = "security-manager-environment-variables";
+				rule[1] = name.substring(
+					RUNTIME_PERMISSION_GET_ENV.length() + 1);
+
+				// Since we're using regex, we can't allow a lone * as the rule
+
+				if (rule[1].equals(StringPool.STAR)) {
+					rule[1] = StringPool.DOUBLE_BACK_SLASH + rule[1];
+				}
+			}
+		}
+
+		return rule;
+	}
+
 	protected boolean hasAccessClassInPackage(String pkg) {
 
 		// TODO

@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalServiceChecker extends BaseChecker {
 
@@ -61,6 +62,66 @@ public class PortalServiceChecker extends BaseChecker {
 					"Attempted to create a dynamic query for " + implClass);
 			}
 		}
+	}
+
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length > 0)) {
+			Object object;
+			Method method;
+
+			if (arguments[0] instanceof Permission) {
+				PortalServicePermission portalServicePermission =
+					(PortalServicePermission)arguments[0];
+
+				object = portalServicePermission.getObject();
+				method = portalServicePermission.getMethod();
+			}
+			else {
+				object = arguments[0];
+				method = (Method)arguments[1];
+			}
+
+			Class<?> clazz = object.getClass();
+
+			if (ProxyUtil.isProxyClass(clazz)) {
+				Class<?>[] interfaces = clazz.getInterfaces();
+
+				if (interfaces.length == 0) {
+					return null;
+				}
+
+				clazz = interfaces[0];
+			}
+
+			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				classLoader);
+
+			String filter = "[portal]";
+
+			if (paclPolicy != null) {
+				filter = StringPool.OPEN_BRACKET.concat(
+					paclPolicy.getServletContextName()).concat(
+						StringPool.CLOSE_BRACKET);
+			}
+
+			String className = getInterfaceName(clazz.getName());
+
+			String methodName = method.getName();
+
+			if (methodName.equals("invokeMethod")) {
+				methodName = (String)arguments[0];
+			}
+
+			rule[0] = "security-manager-services".concat(filter);
+			rule[1] = className.concat(StringPool.POUND).concat(methodName);
+		}
+
+		return rule;
 	}
 
 	public boolean hasService(

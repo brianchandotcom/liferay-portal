@@ -26,6 +26,7 @@ import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalHookChecker extends BaseChecker {
 
@@ -104,6 +105,59 @@ public class PortalHookChecker extends BaseChecker {
 					"Attempted to use struts action path " + strutsActionPath);
 			}
 		}
+
+	}
+
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length == 1) &&
+			(arguments[0] instanceof Permission)) {
+
+			PortalHookPermission portalHookPermission =
+				(PortalHookPermission)arguments[0];
+
+			String name = portalHookPermission.getName();
+			Object subject = portalHookPermission.getSubject();
+
+			if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
+				rule[0] = "security-manager-hook-custom-jsp-dir-enabled";
+				rule[1] = "true";
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
+				rule[0] = "security-manager-hook-indexers";
+				rule[1] = (String)subject;
+			}
+			else if (name.equals(
+						PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
+
+				Locale locale = (Locale)subject;
+
+				rule[0] = "security-manager-hook-language-properties-locales";
+				rule[1] = locale.toString();
+			}
+			else if (name.equals(
+						PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
+
+				rule[0] = "security-manager-hook-portal-properties-keys";
+				rule[1] = (String)subject;
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
+				rule[0] = "security-manager-hook-services";
+				rule[1] = (String)subject;
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
+				rule[0] = "security-manager-hook-servlet-filters-enabled";
+				rule[1] = "true";
+			}
+			else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
+				rule[0] = "security-manager-hook-struts-action-paths";
+				rule[1] = (String)subject;
+			}
+		}
+
+		return rule;
 	}
 
 	protected void initCustomJspDir() {

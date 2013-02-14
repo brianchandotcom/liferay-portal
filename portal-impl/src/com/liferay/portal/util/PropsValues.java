@@ -232,6 +232,8 @@ public class PropsValues {
 
 	public static final String BROWSER_LAUNCHER_URL = PropsUtil.get(PropsKeys.BROWSER_LAUNCHER_URL);
 
+	public static final String BROWSER_UA_IE_COMPATIBILITY_VERSIONS = PropsUtil.get(PropsKeys.BROWSER_UA_IE_COMPATIBILITY_VERSIONS);
+
 	public static final boolean BUFFERED_INCREMENT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED));
 
 	public static final int BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD));

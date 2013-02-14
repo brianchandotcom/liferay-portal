@@ -174,8 +174,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	public AssetsPage<AssetVocabulary> getGroupVocabulariesPage(
-		long groupId, String name, int start, int end,
-		OrderByComparator obc)
+			long groupId, String name, int start, int end,
+			OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		AssetsPage<AssetVocabulary> assetsPage =
@@ -183,9 +183,9 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		int page = end / (end - start);
 
+		assetsPage.setEnd(end);
 		assetsPage.setPage(page);
 		assetsPage.setStart(start);
-		assetsPage.setEnd(end);
 
 		List<AssetVocabulary> vocabularies;
 		int total = 0;
@@ -202,7 +202,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		}
 
 		assetsPage.setAssets(vocabularies);
-
 		assetsPage.setTotal(total);
 
 		return assetsPage;

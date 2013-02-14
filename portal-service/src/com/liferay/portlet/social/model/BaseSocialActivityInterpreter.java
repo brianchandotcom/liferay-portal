@@ -29,6 +29,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,6 +48,27 @@ public abstract class BaseSocialActivityInterpreter
 		}
 		catch (Exception e) {
 			_log.error("Unable to interpret activity", e);
+		}
+
+		return null;
+	}
+
+	public SocialActivityFeedEntry interpret(
+		SocialActivitySet activitySet, ThemeDisplay themeDisplay) {
+
+		try {
+			List<SocialActivity> activities =
+				SocialActivityLocalServiceUtil.getActivitySetActivities(
+					activitySet.getActivitySetId(), 0, 1);
+
+			if (!activities.isEmpty()) {
+				SocialActivity activity = activities.get(0);
+
+				return doInterpret(activity, themeDisplay);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to interpret activity set", e);
 		}
 
 		return null;

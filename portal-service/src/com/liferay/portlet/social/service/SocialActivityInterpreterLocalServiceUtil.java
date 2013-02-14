@@ -98,6 +98,12 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		return getService().interpret(activity, themeDisplay);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return getService().interpret(activitySet, themeDisplay);
+	}
+
 	public static SocialActivityInterpreterLocalService getService() {
 		if (_service == null) {
 			_service = (SocialActivityInterpreterLocalService)PortalBeanLocatorUtil.locate(SocialActivityInterpreterLocalService.class.getName());

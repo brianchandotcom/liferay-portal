@@ -636,6 +636,14 @@ public class SocialActivityLocalServiceImpl
 		return socialActivityPersistence.findByPrimaryKey(activityId);
 	}
 
+	public List<SocialActivity> getActivitySetActivities(
+			long activitySetId, int start, int end)
+		throws SystemException {
+
+		return socialActivityPersistence.findByActivitySetId(
+			activitySetId, start, end);
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

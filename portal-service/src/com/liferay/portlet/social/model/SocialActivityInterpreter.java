@@ -26,4 +26,7 @@ public interface SocialActivityInterpreter {
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay);
 
+	public SocialActivityFeedEntry interpret(
+		SocialActivitySet activitySet, ThemeDisplay themeDisplay);
+
 }

@@ -92,4 +92,8 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
 		com.liferay.portlet.social.model.SocialActivity activity,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 }

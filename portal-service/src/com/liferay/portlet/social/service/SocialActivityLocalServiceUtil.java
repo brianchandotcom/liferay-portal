@@ -660,6 +660,12 @@ public class SocialActivityLocalServiceUtil {
 		return getService().getActivity(activityId);
 	}
 
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
+		long activitySetId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActivitySetActivities(activitySetId, start, end);
+	}
+
 	/**
 	* Returns a range of all the activities done in the group.
 	*

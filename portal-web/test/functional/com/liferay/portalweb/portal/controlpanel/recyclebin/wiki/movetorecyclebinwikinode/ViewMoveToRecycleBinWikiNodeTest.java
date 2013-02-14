@@ -42,18 +42,21 @@ public class ViewMoveToRecycleBinWikiNodeTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@id='cpContextPanelTemplate']",
 				"The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted."));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='lfr-message-info taglib-trash-empty']",
-				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. "));
+		assertEquals(RuntimeVariables.replace(
+				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin"),
+			selenium.getText(
+				"//div[@class='lfr-message-info taglib-trash-empty']/form"));
 		assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
 			selenium.getText("//a[@class='trash-empty-link']"));
+		assertTrue(selenium.isVisible("//input[@title='Search Entries']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
 			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Wiki Node"),
 			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[2]"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'Wiki Node Name')]/td[3]"));
-		assertEquals(RuntimeVariables.replace("Test Test"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[4]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(

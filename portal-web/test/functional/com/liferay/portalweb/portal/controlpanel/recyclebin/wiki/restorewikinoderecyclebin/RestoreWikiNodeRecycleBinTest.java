@@ -40,8 +40,7 @@ public class RestoreWikiNodeRecycleBinTest extends BaseTestCase {
 			RuntimeVariables.replace("Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[1]"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -51,13 +50,18 @@ public class RestoreWikiNodeRecycleBinTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]",
-			RuntimeVariables.replace("Restore"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The item has been restored to Wiki"),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isTextPresent(
-				"//tr[@class='portlet-section-body results-row last']/td[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted."),
+			selenium.getText(
+				"//div[@class='lfr-message-info taglib-trash-empty']/form"));
+		assertEquals(RuntimeVariables.replace("The Recycle Bin is empty."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("Wiki Node Name"));
 	}
 }

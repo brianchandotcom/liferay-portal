@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='category-portlets']/li[11]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a</td>
 	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[@class='category-portlets']/li[11]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a</td>
 	<td>Wiki</td>
 </tr>
 <tr>
@@ -75,13 +75,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Main')]/td[1]</td>
+	<td>//tr[contains(.,'Main')]/td[1]/a</td>
 	<td>Main</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'Main')]/td[2]</td>
-	<td># of Pages</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Main')]/td[2]/a</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -89,8 +89,8 @@
 	<td>Last Post Date</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'Main')]/td[4]</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Main')]/td[4]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

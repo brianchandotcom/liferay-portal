@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[1]</td>
+	<td>//tr[contains(.,'Wiki Node Name')]/td[1]/span/a</td>
 	<td>Wiki Node Name</td>
 </tr>
 <tr>
@@ -74,7 +74,7 @@
 	<td>Restore</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
@@ -84,9 +84,19 @@
 	<td>The item has been restored to Wiki</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-info taglib-trash-empty']/form</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>The Recycle Bin is empty.</td>
+</tr>
+<tr>
 	<td>assertTextNotPresent</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td[1]</td>
 	<td>Wiki Node Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

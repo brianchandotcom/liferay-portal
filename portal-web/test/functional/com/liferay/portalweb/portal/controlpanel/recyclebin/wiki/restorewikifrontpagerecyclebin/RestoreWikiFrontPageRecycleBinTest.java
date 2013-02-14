@@ -52,15 +52,13 @@ public class RestoreWikiFrontPageRecycleBinTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]",
 			RuntimeVariables.replace("Restore"));
-		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//div[@class='portlet-msg-alert']");
-		selenium.clickAt("//div[@class='portlet-msg-alert']",
-			RuntimeVariables.replace(
-				"An entry with name FrontPage already exists."));
-		assertTrue(selenium.isVisible("//input[contains(@value,'Save')]"));
+		assertEquals(RuntimeVariables.replace(
+				"An entry with name FrontPage already exists."),
+			selenium.getText("//div[@class='portlet-msg-alert']"));
 		selenium.clickAt("//input[contains(@value,'Save')]",
 			RuntimeVariables.replace("Save"));
-		assertFalse(selenium.isTextPresent(
-				"//tr[contains(.,'FrontPage')]/td[1]/span/a"));
+		selenium.waitForPageToLoad("30000");
+		assertFalse(selenium.isTextPresent("FrontPage"));
 	}
 }

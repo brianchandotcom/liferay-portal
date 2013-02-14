@@ -14,21 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>//div[@class='wiki-body']</td>
-	<td>Wiki FrontPage Content</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//div[@id='dockbar']</td>
 	<td>Dockbar</td>
@@ -74,14 +59,24 @@
 	<td>The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='lfr-message-info taglib-trash-empty']</td>
-	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. </td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-message-info taglib-trash-empty']/form</td>
+	<td>Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@title='Search Entries']</td>
+	<td>Search Entries</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -101,7 +96,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[contains(.,'FrontPage')]/td[4]</td>
-	<td>Test Test</td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>

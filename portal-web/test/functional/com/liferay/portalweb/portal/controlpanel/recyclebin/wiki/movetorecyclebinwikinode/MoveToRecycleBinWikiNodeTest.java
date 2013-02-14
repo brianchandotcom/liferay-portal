@@ -37,26 +37,29 @@ public class MoveToRecycleBinWikiNodeTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
-			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/a"));
 		selenium.waitForVisible(
-			"//table[@class='taglib-search-iterator']/tbody/tr[4]/td[4]/span/ul/li/strong/a");
-		selenium.clickAt("//table[@class='taglib-search-iterator']/tbody/tr[4]/td[4]/span/ul/li/strong/a",
+			"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
-			RuntimeVariables.replace("Move to the Recycle Bin"));
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
-		assertFalse(selenium.isTextPresent(
-				"//tr[contains(.,'Wiki Node Name')]/td[1]"));
+		assertFalse(selenium.isTextPresent("Wiki Node Name"));
 	}
 }

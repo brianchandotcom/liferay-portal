@@ -45,37 +45,42 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='category-portlets']/li[11]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a</td>
 	<td>Wiki</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[@class='category-portlets']/li[11]/a</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a</td>
 	<td>Wiki</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Wiki Node Name')]/td[1]</td>
+	<td>//tr[contains(.,'Wiki Node Name')]/td[1]/a</td>
 	<td>Wiki Node Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[4]/td[4]/span/ul/li/strong/a</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
@@ -85,8 +90,8 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>//tr[contains(.,'Wiki Node Name')]/td[1]</td>
 	<td>Wiki Node Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

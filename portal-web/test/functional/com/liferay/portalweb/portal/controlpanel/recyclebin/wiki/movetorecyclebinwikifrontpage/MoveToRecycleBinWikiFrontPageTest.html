@@ -24,29 +24,29 @@
 	<td>Wiki FrontPage Content</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[@class='page-actions top-actions']/span/a</td>
+	<td>assertText</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='page-actions top-actions']/span/a</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='aui-button-holder ']/span[4]/span/input</td>
+	<td>//input[@value='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='aui-button-holder ']/span[4]/span/input</td>
+	<td>//input[@value='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>1000</td>
-	<td></td>
+	<td>5000</td>
+	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -55,8 +55,8 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>//div[@class='wiki-body']</td>
 	<td>Wiki FrontPage Content</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

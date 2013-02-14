@@ -30,20 +30,21 @@ public class MoveToRecycleBinWikiFrontPageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='page-actions top-actions']/span/a"));
-		selenium.clickAt("//div[@class='page-actions top-actions']/span/a",
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[4]/span/input"));
-		selenium.clickAt("//div[@class='aui-button-holder ']/span[4]/span/input",
+				"//input[@value='Move to the Recycle Bin']"));
+		selenium.clickAt("//input[@value='Move to the Recycle Bin']",
 			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isTextPresent("//div[@class='wiki-body']"));
+		assertFalse(selenium.isTextPresent("Wiki FrontPage Content"));
 	}
 }

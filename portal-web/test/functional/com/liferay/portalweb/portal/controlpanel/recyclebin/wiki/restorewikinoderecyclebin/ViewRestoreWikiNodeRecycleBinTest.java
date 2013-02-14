@@ -37,8 +37,9 @@ public class ViewRestoreWikiNodeRecycleBinTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
@@ -49,18 +50,22 @@ public class ViewRestoreWikiNodeRecycleBinTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Add Wiki']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertEquals(RuntimeVariables.replace("Main"),
-			selenium.getText("//tr[contains(.,'Main')]/td[1]"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Main')]/td[2]"));
+			selenium.getText("//tr[contains(.,'Main')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//tr[contains(.,'Main')]/td[2]/a"));
 		assertTrue(selenium.isVisible("//tr[contains(.,'Main')]/td[3]"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Main')]/td[4]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Main')]/td[4]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
-			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[2]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'Wiki Node Name')]/td[1]"));
-		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'Wiki Node Name')]/td[1]"));
-		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'Wiki Node Name')]/td[1]"));
+				"//tr[contains(.,'Wiki Node Name')]/td[3]"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Wiki Node Name')]/td[4]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 2 results."),
 			selenium.getText("//div[@class='search-results']"));
 	}

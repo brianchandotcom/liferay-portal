@@ -15,7 +15,7 @@
 --%>
 
 <c:if test="<%= BrowserSnifferUtil.isIe(request) %>">
-	<meta http-equiv="X-UA-Compatible" content="<%= PropsUtil.get(PropsKeys.BROWSER_UA_IE_COMPATIBILITY_VERSIONS) %>">
+	<meta content="<%= PropsValues.BROWSER_UA_IE_COMPATIBILITY_VERSIONS %>" http-equiv="x-ua-compatible" />
 </c:if>
 
 <meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
@@ -25,7 +25,7 @@ int refreshRate = ParamUtil.getInteger(request, "refresh_rate");
 %>
 
 <c:if test="<%= refreshRate > 0 %>">
-	<meta content="<%= refreshRate %>;" http-equiv="Refresh" />
+	<meta content="<%= refreshRate %>;" http-equiv="refresh" />
 </c:if>
 
 <%
@@ -33,9 +33,9 @@ String cacheControl = request.getParameter("cache_control");
 %>
 
 <c:if test='<%= (cacheControl != null) && (cacheControl.equals("0")) %>'>
-	<meta content="no-cache" http-equiv="Cache-Control" />
-	<meta content="no-cache" http-equiv="Pragma" />
-	<meta content="0" http-equiv="Expires" />
+	<meta content="no-cache" http-equiv="cache-control" />
+	<meta content="no-cache" http-equiv="pragma" />
+	<meta content="0" http-equiv="expires" />
 </c:if>
 
 <liferay-theme:meta-tags />

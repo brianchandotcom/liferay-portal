@@ -84,16 +84,10 @@ public class PortalServiceChecker extends BaseChecker {
 				method = (Method)arguments[1];
 			}
 
-			Class<?> clazz = object.getClass();
+			Class<?> clazz = getClass(object);
 
-			if (ProxyUtil.isProxyClass(clazz)) {
-				Class<?>[] interfaces = clazz.getInterfaces();
-
-				if (interfaces.length == 0) {
-					return null;
-				}
-
-				clazz = interfaces[0];
+			if (clazz == null) {
+				return rule;
 			}
 
 			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
@@ -127,16 +121,10 @@ public class PortalServiceChecker extends BaseChecker {
 	public boolean hasService(
 		Object object, Method method, Object[] arguments) {
 
-		Class<?> clazz = object.getClass();
+		Class<?> clazz = getClass(object);
 
-		if (ProxyUtil.isProxyClass(clazz)) {
-			Class<?>[] interfaces = clazz.getInterfaces();
-
-			if (interfaces.length == 0) {
-				return false;
-			}
-
-			clazz = interfaces[0];
+		if (clazz == null) {
+			return false;
 		}
 
 		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
@@ -168,6 +156,22 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	protected Class<?> getClass(Object object) {
+		Class<?> clazz = object.getClass();
+
+		if (ProxyUtil.isProxyClass(clazz)) {
+			Class<?>[] interfaces = clazz.getInterfaces();
+
+			if (interfaces.length == 0) {
+				return null;
+			}
+
+			clazz = interfaces[0];
+		}
+
+		return clazz;
 	}
 
 	protected String getInterfaceName(String className) {

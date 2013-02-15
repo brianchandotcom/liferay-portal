@@ -25,22 +25,26 @@ AnnouncementsDelivery delivery = (AnnouncementsDelivery)row.getObject();
 int index = entry.getIndex();
 
 String param = "announcementsType" + delivery.getType();
+String via = StringPool.BLANK;
 boolean defaultValue = false;
 boolean disabled = false;
 
 if (index == 1) {
 	param += "Email";
+	via = "Email";
 	defaultValue = delivery.isEmail();
 }
 else if (index == 2) {
 	param += "Sms";
+	via = "Sms";
 	defaultValue = delivery.isSms();
 }
 else if (index == 3) {
 	param += "Website";
+	via = "Website";
 	defaultValue = delivery.isWebsite();
 	disabled = true;
 }
 %>
 
-<aui:input disabled="<%= disabled %>" label="" name="<%= param %>" type="checkbox" value="<%= defaultValue %>" />
+<aui:input disabled="<%= disabled %>" label="" name="<%= param %>" title='<%= LanguageUtil.format(pageContext, "receive-x-announcements-through-x", new String[]{StringUtil.upperCaseFirstLetter(delivery.getType()), via}) %>' type="checkbox" value="<%= defaultValue %>" />

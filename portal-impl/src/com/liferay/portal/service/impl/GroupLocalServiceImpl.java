@@ -1151,8 +1151,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of groups that are direct children of the parent
-	 * group with the matching className.
+	 * Returns the number of groups that are direct children of the parent group
+	 * with the matching className.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  className the class name of the group

@@ -251,9 +251,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @param fileName the file's original name
 	* @param tempFolderName the temporary folder's name
 	* @param file Name the file's original name
+	* @param mimeType the file's MIME type
 	* @return the file's name
-	* @throws IOException if a problem occurred in the access or storage of the
-	file
 	* @throws PortalException if the file name was invalid
 	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.kernel.util.TempFileUtil

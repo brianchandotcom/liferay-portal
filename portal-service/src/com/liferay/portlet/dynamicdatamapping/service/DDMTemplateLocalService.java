@@ -451,6 +451,8 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the entity's instance the template
+	is related to
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
@@ -472,6 +474,8 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* </p>
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the entity's instance the template
+	is related to
 	* @param templateKey the unique string identifying the template
 	* @param includeGlobalTemplates whether to include the global scope in the
 	search
@@ -519,6 +523,8 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the entity's instance the template
+	is related to
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
@@ -541,6 +547,8 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* </p>
 	*
 	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the entity's instance the template
+	is related to
 	* @param templateKey the unique string identifying the template
 	* @param includeGlobalTemplates whether to include the global scope in the
 	search

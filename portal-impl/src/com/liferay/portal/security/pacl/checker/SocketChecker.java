@@ -16,6 +16,8 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.net.SocketPermission;
 
@@ -42,6 +44,47 @@ public class SocketChecker extends BaseChecker {
 			throwSecurityException(
 				_log, "Attempted " + actions + " for address " + name);
 		}
+	}
+
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length == 1) &&
+			(arguments[0] instanceof Permission)) {
+
+			Permission permission = (Permission)arguments[0];
+
+			String actions = permission.getActions();
+
+			if (actions.equals(SOCKET_PERMISSION_RESOLVE)) {
+
+				// This should not happen, since resolving host names is always
+				// allowed
+
+				return rule;
+			}
+
+			String name = permission.getName();
+
+			int pos = name.indexOf(StringPool.COLON);
+			int port = GetterUtil.getInteger(name.substring(pos + 1));
+
+			if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
+				rule[0] = "security-manager-sockets-accept";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
+				rule[0] = "security-manager-sockets-connect";
+				rule[1] = name;
+			}
+			else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
+				rule[0] = "security-manager-sockets-listen";
+				rule[1] = String.valueOf(port);
+			}
+		}
+
+		return rule;
 	}
 
 	protected void initAcceptHostsAndPorts() {

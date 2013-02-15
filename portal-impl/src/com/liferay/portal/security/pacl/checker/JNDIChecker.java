@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class JNDIChecker extends BaseChecker {
 
@@ -36,6 +37,20 @@ public class JNDIChecker extends BaseChecker {
 
 	public void checkPermission(Permission permission) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String[] generateRule(Object... arguments) {
+		String[] rule = new String[2];
+
+		if ((arguments != null) && (arguments.length == 1) &&
+			(arguments[0] instanceof String)) {
+
+			rule[0] = "security-manager-jndi-names";
+			rule[1] = (String)arguments[0];
+		}
+
+		return rule;
 	}
 
 	public boolean hasJNDI(String name) {

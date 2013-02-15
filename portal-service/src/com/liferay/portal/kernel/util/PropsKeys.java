@@ -305,6 +305,8 @@ public interface PropsKeys {
 
 	public static final String BROWSER_LAUNCHER_URL = "browser.launcher.url";
 
+	public static final String BROWSER_UA_IE_COMPATIBILITY_VERSIONS = "browser.ua.ie.compatibility.versions";
+
 	public static final String BUFFERED_INCREMENT_ENABLED = "buffered.increment.enabled";
 
 	public static final String BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD = "buffered.increment.standby.queue.threshold";

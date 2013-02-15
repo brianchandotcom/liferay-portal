@@ -200,6 +200,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param fileEntryId the primary key of the file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
@@ -815,6 +816,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param fileEntryId the primary key of the file rank's file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(

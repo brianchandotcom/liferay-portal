@@ -43,7 +43,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.click(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -57,16 +57,15 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='select-asset-selector']/div/span/ul/li/strong/a",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blogs Entry')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]");
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blogs Entry')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Blogs Entry')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent(
-			"//iframe[contains(@id,'_86_selectAsset')]");
+		selenium.waitForVisible("//iframe[contains(@id,'_86_selectAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'_86_selectAsset')]");
 		selenium.waitForVisible("//tr[contains(.,'Blogs Entry Title')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -75,7 +74,7 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");

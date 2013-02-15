@@ -86,9 +86,6 @@ public class ConfigurePortletAPScopeBlogsPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Current Site (Liferay)"),
 			selenium.getText(
 				"//tr[contains(.,'Current Site (Liferay)')]/td[1]/span/span"));
-		selenium.clickAt("//tr[contains(.,'Current Site (Liferay)')]/td[3]/span/a/img[@title='Delete']",
-			RuntimeVariables.replace("Delete"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

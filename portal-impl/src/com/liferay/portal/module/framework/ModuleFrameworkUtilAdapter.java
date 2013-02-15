@@ -24,8 +24,7 @@ import java.io.InputStream;
  *
  * @author Miguel Pastor
  * @author Raymond Augé
- *
- * @see {@link ModuleFrameworkClassloader}
+ * @see    {@link ModuleFrameworkClassloader}
  */
 public class ModuleFrameworkUtilAdapter {
 

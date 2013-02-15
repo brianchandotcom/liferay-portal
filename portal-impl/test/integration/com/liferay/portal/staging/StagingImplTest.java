@@ -46,7 +46,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *
  * @author Julio Camarero
  */
 @ExecutionTestListeners(listeners = {

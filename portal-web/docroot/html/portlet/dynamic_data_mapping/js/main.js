@@ -676,7 +676,7 @@ AUI.add(
 
 		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'aui-form-builder-field-icon aui-form-builder-field-icon-default';
 
-		LiferayFormBuilder.AVAILABLE_FIELDS = {
+		var AVAILABLE_FIELDS = {
 			DEFAULT: [
 				{
 					fieldLabel: Liferay.Language.get('button'),
@@ -840,7 +840,9 @@ AUI.add(
 			]
 		};
 
-		LiferayFormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE = LiferayFormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE.concat(LiferayFormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE);
+		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE);
+
+		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;
 
 		Liferay.FormBuilder = LiferayFormBuilder;
 	},

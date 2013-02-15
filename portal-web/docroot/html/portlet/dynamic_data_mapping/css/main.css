@@ -108,12 +108,12 @@
 	}
 
 	.lfr-wcm-image {
-		background: url(@theme_image_path@/aui/image.png) 0 20px no-repeat;
+		background: url(@theme_image_path@/aui/image.png) no-repeat 0 20px;
 		padding-top: 35px;
 	}
 
 	.lfr-wcm-image-icon {
-		background-position: 50% 50%;
+		background-position: 50%;
 		padding: 0;
 	}
 

@@ -33,17 +33,17 @@
 		function() {
 			var A = AUI();
 
+			var toggleText = '${languageUtil.get(locale, "show")}';
+
 			var containerNode = A.one('#${portletNamespace}${namespacedFieldName}Container');
-			var toggleImageNode = A.one('#${portletNamespace}${namespacedFieldName}ToggleImage');
 
-			if (containerNode.hasClass('aui-helper-hidden')) {
-				toggleImageNode.setContent('${languageUtil.get(locale, "hide")}');
-			}
-			else {
-				toggleImageNode.setContent('${languageUtil.get(locale, "show")}');
+			if (containerNode.test(':hidden')) {
+				toggleText = '${languageUtil.get(locale, "hide")}';
 			}
 
-			containerNode.toggleClass('aui-helper-hidden');
+			A.one('#${portletNamespace}${namespacedFieldName}ToggleImage').setContent(toggleText);
+
+			containerNode.toggle();
 		},
 		['aui-base']
 	);
@@ -54,25 +54,26 @@
 		function() {
 			var A = AUI();
 
-			var deleteButtonNode = A.one('#${portletNamespace}${namespacedFieldName}DeleteImage');
-			var deleteInputNode = A.one('#${portletNamespace}${namespacedFieldName}Delete');
+			var buttonText = '${languageUtil.get(locale, "cancel")}';
+			var name = '${portletNamespace}${namespacedFieldName}';
+
+			var disabled = true;
+
 			var imageInputNode = A.one('#${portletNamespace}${namespacedFieldName}');
-			var imageNode = A.one('#${portletNamespace}${namespacedFieldName}Image');
 
 			if (imageInputNode.get('disabled')) {
-				deleteButtonNode.setContent('${languageUtil.get(locale, "delete")}');
+				buttonText = '${languageUtil.get(locale, "delete")}';
+				name = '${portletNamespace}${namespacedFieldName}Delete';
 
-				imageInputNode.set('disabled', false);
-				deleteInputNode.set('name', '${portletNamespace}${namespacedFieldName}Delete');
-			}
-			else {
-				deleteButtonNode.setContent('${languageUtil.get(locale, "cancel")}');
-
-				imageInputNode.set('disabled', true);
-				deleteInputNode.set('name', '${portletNamespace}${namespacedFieldName}');
+				disabled = false;
 			}
 
-			imageNode.toggleClass('aui-helper-hidden');
+			A.one('#${portletNamespace}${namespacedFieldName}DeleteImage').setContent(buttonText);
+			A.one('#${portletNamespace}${namespacedFieldName}Delete').attr('name', name);
+
+			imageInputNode.attr('disabled', disabled);
+
+			A.one('#${portletNamespace}${namespacedFieldName}Image').toggle();
 		},
 		['aui-base']
 	);

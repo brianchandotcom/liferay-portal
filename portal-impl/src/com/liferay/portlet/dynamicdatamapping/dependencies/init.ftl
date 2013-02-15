@@ -6,7 +6,11 @@
 
 <#-- CSS class -->
 
-<#assign cssClass = escapeAttribute(fieldStructure.fieldCssClass!"")>
+<#assign cssClass = "">
+
+<#if fieldStructure.width??>
+	<#assign cssClass = "aui-w" + fieldStructure.width>
+</#if>
 
 <#-- Repeatable -->
 

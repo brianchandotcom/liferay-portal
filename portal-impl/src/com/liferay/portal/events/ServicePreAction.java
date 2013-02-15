@@ -372,8 +372,8 @@ public class ServicePreAction extends Action {
 		String doAsUserLanguageId = ParamUtil.getString(
 			request, "doAsUserLanguageId");
 		long doAsGroupId = ParamUtil.getLong(request, "doAsGroupId");
-		
-		long refererGroupId = ParamUtil.getLong(request, "refererGroupId");  // not sure how to add refererGroupId to request
+
+		long refererGroupId = ParamUtil.getLong(request, "refererGroupId");
 
 		long refererPlid = ParamUtil.getLong(request, "refererPlid");
 
@@ -813,6 +813,7 @@ public class ServicePreAction extends Action {
 		themeDisplay.setDoAsUserId(doAsUserId);
 		themeDisplay.setDoAsUserLanguageId(doAsUserLanguageId);
 		themeDisplay.setDoAsGroupId(doAsGroupId);
+		themeDisplay.setRefererGroupId(refererGroupId);
 		themeDisplay.setRefererPlid(refererPlid);
 		themeDisplay.setControlPanelCategory(controlPanelCategory);
 		themeDisplay.setLayoutSet(layoutSet);
@@ -933,10 +934,22 @@ public class ServicePreAction extends Action {
 			urlControlPanel = HttpUtil.addParameter(
 				urlControlPanel, "doAsGroupId", scopeGroupId);
 		}
-		
+
 		if (refererGroupId > 0) {
 			urlControlPanel = HttpUtil.addParameter(
 				urlControlPanel, "refererGroupId", refererGroupId);
+		}
+		else if (scopeGroupId > 0) {
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+			if (refererLayout != null) {
+				Group refererLayoutGroup = refererLayout.getGroup();
+
+				if (refererLayoutGroup.isUserGroup()) {
+					urlControlPanel = HttpUtil.addParameter(
+						urlControlPanel, "refererGroupId", scopeGroupId);
+				}
+			}
 		}
 
 		if (refererPlid > 0) {

@@ -1117,7 +1117,7 @@ public class ThemeDisplay
 	public void setRealUser(User realUser) {
 		_realUser = realUser;
 	}
-	
+
 	public void setRefererGroupId(long refererGroupId) {
 		_refererGroupId = refererGroupId;
 	}

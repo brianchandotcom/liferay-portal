@@ -214,28 +214,19 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 			String backURL = null;
 
 			if (themeDisplay.getRefererPlid() > 0) {
-				Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());  // gets page layout ie  '/public-page'
+				Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());
 
 				if (refererLayout != null) {
-					Group refererGroup = refererLayout.getGroup();  // gets user group ie  '/10444'
+					Group refererLayoutGroup = refererLayout.getGroup();
+					Group refererGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getRefererGroupId());
 
-					if (refererGroup.isUserGroup()) {
-						Group scopeGroup = themeDisplay.getScopeGroup();  // gets user in user group ie  '/test1'  <-- technically this is a group
-
-						if (scopeGroup.isUser()) {
-							refererGroup = scopeGroup; 
-							
-							themeDisplay.setRefererGroupId(refererLayout.getGroupId());  //set refererGroupId in themeDisplay when "group" is a user in a user group
-							
-							refererLayout = new VirtualLayout(refererLayout, refererGroup);  
-						}
+					if (refererGroup != null) {
+						refererLayout = new VirtualLayout(refererLayout, refererGroup);
 					}
-					
-					backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);  //set url with new refererGroupId in themeDisplay
-					
-					refererGroupDescriptiveName = refererGroup.getDescriptiveName(locale);
 
-					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
+					refererGroupDescriptiveName = refererLayoutGroup.getDescriptiveName(locale);
+
+					if (refererLayoutGroup.isUser() && (refererLayoutGroup.getClassPK() == user.getUserId())) {
 						if (refererLayout.isPublicLayout()) {
 							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-public-pages");
 						}
@@ -244,7 +235,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 						}
 					}
 
-				
+					backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
 
 					if (!CookieKeys.hasSessionId(request)) {
 						backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());

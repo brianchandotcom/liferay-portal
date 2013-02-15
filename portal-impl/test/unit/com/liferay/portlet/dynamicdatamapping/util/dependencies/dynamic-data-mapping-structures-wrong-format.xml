@@ -5,11 +5,10 @@
 		<name><![CDATA[Contacts]]></name>
 		<description><![CDATA[Contacts]]></description>
 		<root available-locales="en_US" default-locale="en_US">
-			<dynamic-element dataType="string" name="select2235" type="select">
+			<dynamic-element dataType="string" multiple="true" name="select2235" readOnly="false" required="false" showLabel="true" type="select">
 				<dynamic-element name="home_edition" type="option" value="HE">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Home Edition]]></entry>
-						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="business_edition" type="option" value="BE">
@@ -23,21 +22,15 @@
 					</meta-data>
 				</dynamic-element>
 				<meta-data locale="en_US">
-					<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
 					<entry name="label"><![CDATA[Product]]></entry>
-					<entry name="multiple"><![CDATA[true]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="readOnly"><![CDATA[false]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" name="select3212" type="select">
+			<dynamic-element dataType="string" multiple="true" name="select3212" readOnly="false" required="false" showLabel="true" type="select">
 				<dynamic-element name="1_0" type="option" value="1">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[1.0]]></entry>
-						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="2_0" type="option" value="2">
@@ -51,21 +44,15 @@
 					</meta-data>
 				</dynamic-element>
 				<meta-data locale="en_US">
-					<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
 					<entry name="label"><![CDATA[Version]]></entry>
-					<entry name="multiple"><![CDATA[true]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="readOnly"><![CDATA[false]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" name="select4115" type="select">
+			<dynamic-element dataType="string" multiple="true" name="select4115" readOnly="false" required="false" showLabel="true" type="select">
 				<dynamic-element name="administration" type="option" value="admin">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Administration]]></entry>
-						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="installation" type="option" value="install">
@@ -79,21 +66,15 @@
 					</meta-data>
 				</dynamic-element>
 				<meta-data locale="en_US">
-					<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
 					<entry name="label"><![CDATA[Topics]]></entry>
-					<entry name="multiple"><![CDATA[true]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="readOnly"><![CDATA[false]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="string" name="select5069" type="select">
+			<dynamic-element dataType="string" multiple="false" name="select5069" readOnly="false" required="false" showLabel="true" type="select">
 				<dynamic-element name="beginner" type="option" value="beginner">
 					<meta-data locale="en_US">
 						<entry name="label"><![CDATA[Beginner]]></entry>
-						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="intermediate" type="option" value="intermediate">
@@ -107,13 +88,8 @@
 					</meta-data>
 				</dynamic-element>
 				<meta-data locale="en_US">
-					<entry name="displayChildLabelAsValue"><![CDATA[true]]></entry>
 					<entry name="label"><![CDATA[Level]]></entry>
-					<entry name="multiple"><![CDATA[false]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="readOnly"><![CDATA[false]]></entry>
-					<entry name="required"><![CDATA[false]]></entry>
-					<entry name="showLabel"><![CDATA[true]]></entry>
 					<entry name="tip"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>

@@ -154,6 +154,8 @@ input, textarea {
 	input[type="file"], input[type="password"], input[type="text"], select, textarea, .textarea, .aui-field-input-text {
 		@include input-field-default;
 
+		@include opacity(0.5);
+
 		resize: none;
 	}
 }
@@ -215,6 +217,8 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 	.aui-field-disabled {
 		input, input.password, input.text, input.textarea, textarea {
 			@include input-field-default;
+
+			@include opacity(0.5);
 		}
 	}
 

@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.recyclebin;
+package com.liferay.portalweb.portal.controlpanel.recyclebin.webcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.BlogsTestPlan;
-import com.liferay.portalweb.portal.controlpanel.recyclebin.bookmarks.BookmarksTestPlan;
-import com.liferay.portalweb.portal.controlpanel.recyclebin.wiki.WikiTestPlan;
-import com.liferay.portalweb.portal.controlpanel.recyclebin.webcontent.WebContentTestPlan;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.webcontent.movetorecyclebinwcwebcontentwcd.MoveToRecycleBinWCWebContentWCDTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.webcontent.restorewcwebcontentwcdrecyclebin.RestoreWCWebContentWCDRecycleBinTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,15 +24,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RecycleBinTestPlan extends BaseTestSuite {
+public class WebContentTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlogsTestPlan.suite());
-		testSuite.addTest(BookmarksTestPlan.suite());
-		testSuite.addTest(WikiTestPlan.suite());
-		testSuite.addTest(WebContentTestPlan.suite());
+		testSuite.addTest(MoveToRecycleBinWCWebContentWCDTests.suite());
+		testSuite.addTest(RestoreWCWebContentWCDRecycleBinTests.suite());
 
 		return testSuite;
 	}

@@ -38,9 +38,15 @@ AUI.add(
 		var XML_ATTRIBUTES_FIELD_ATTRS = {
 			dataType: 1,
 			indexType: 1,
+			multiple: 1,
 			name: 1,
 			options: 1,
-			type: 1
+			showLabel: 1,
+			readOnly: 1,
+			repeatable: 1,
+			required: 1,
+			type: 1,
+			width: 1
 		};
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
@@ -363,8 +369,14 @@ AUI.add(
 								dataType: field.get('dataType'),
 								fieldNamespace: field.get('fieldNamespace'),
 								indexType: field.get('indexType'),
+								multiple: field.get('multiple'),
 								name: field.get('name'),
-								type: field.get('type')
+								readOnly: field.get('readOnly'),
+								repeatable: field.get('repeatable'),
+								required: field.get('required'),
+								showLabel: field.get('showLabel'),
+								type: field.get('type'),
+								width: field.get('width')
 							}
 						);
 
@@ -415,24 +427,6 @@ AUI.add(
 										}
 									}
 								);
-
-								if (instanceOf(field, A.FormBuilderTextField)) {
-									var fieldCssClassTag = instance._createDynamicNode(
-										'entry',
-										{
-											name: 'fieldCssClass'
-										}
-									);
-
-									var widthVal = field.get('width');
-									var widthCssClassVal = A.getClassName('w' + widthVal);
-
-									buffer.push(
-										fieldCssClassTag.openTag,
-										STR_CDATA_OPEN + widthCssClassVal + STR_CDATA_CLOSE,
-										fieldCssClassTag.closeTag
-									);
-								}
 
 								buffer.push(metadata.closeTag);
 							}

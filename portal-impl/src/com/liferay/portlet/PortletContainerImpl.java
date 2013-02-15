@@ -63,6 +63,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -137,8 +138,15 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			_doRender(request, response, portlet);
+
+			if (themeDisplay.isIsolated() || themeDisplay.isStateExclusive()) {
+				AUIUtil.outputScriptData(request, response.getWriter());
+			}
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
@@ -152,6 +160,14 @@ public class PortletContainerImpl implements PortletContainer {
 
 		try {
 			_doServeResource(request, response, portlet);
+
+			String contentType = response.getContentType();
+
+			if (contentType.equals(ContentTypes.TEXT_HTML) ||
+				contentType.equals(ContentTypes.TEXT_HTML_UTF8)) {
+
+				AUIUtil.outputScriptData(request, response.getWriter());
+			}
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);

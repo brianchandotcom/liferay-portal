@@ -229,7 +229,9 @@ public class Header implements Serializable {
 	private Type _type;
 
 	private static enum Type {
+
 		COOKIE, DATE, INTEGER, STRING
+
 	}
 
 }

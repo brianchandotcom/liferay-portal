@@ -72,8 +72,8 @@ public class DDMTemplateServiceSoap {
 	* Adds a template.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
@@ -190,8 +190,8 @@ public class DDMTemplateServiceSoap {
 	* This method creates new templates, extracting all the values from the old
 	* ones and updating their class PKs.
 	*
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the original template's related entity
 	* @param newClassPK the primary key of the new template's related entity
 	* @param type the template's type. For more information, see {@link
@@ -247,8 +247,8 @@ public class DDMTemplateServiceSoap {
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
@@ -301,8 +301,8 @@ public class DDMTemplateServiceSoap {
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
@@ -336,8 +336,8 @@ public class DDMTemplateServiceSoap {
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @param includeGlobalTemplates whether to include the global scope in the
 	search
@@ -366,8 +366,8 @@ public class DDMTemplateServiceSoap {
 	* Returns all the templates matching the group and class name ID.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	are related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @return the matching templates
 	* @throws SystemException if a system exception occurred
 	*/
@@ -391,8 +391,8 @@ public class DDMTemplateServiceSoap {
 	* PK.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @return the matching templates
 	* @throws SystemException if a system exception occurred
@@ -418,8 +418,8 @@ public class DDMTemplateServiceSoap {
 	* mode.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param type the template's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -477,8 +477,8 @@ public class DDMTemplateServiceSoap {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the
-	templates are related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
@@ -533,8 +533,8 @@ public class DDMTemplateServiceSoap {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the
-	templates are related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
@@ -708,8 +708,8 @@ public class DDMTemplateServiceSoap {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the
-	templates are related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
@@ -744,8 +744,8 @@ public class DDMTemplateServiceSoap {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the
-	templates are related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally

@@ -273,8 +273,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param userId the primary key of the template's creator/owner
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
@@ -312,8 +312,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param userId the primary key of the template's creator/owner
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param templateKey the unique string identifying the template
 	(optionally <code>null</code>)
@@ -438,8 +438,8 @@ public class DDMTemplateLocalServiceUtil {
 	* ones and updating their class PKs.
 	*
 	* @param userId the primary key of the template's creator/owner
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param oldClassPK the primary key of the old template's related entity
 	* @param newClassPK the primary key of the new template's related entity
 	* @param type the template's type. For more information, see {@link
@@ -506,8 +506,8 @@ public class DDMTemplateLocalServiceUtil {
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
@@ -530,8 +530,8 @@ public class DDMTemplateLocalServiceUtil {
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @param includeGlobalTemplates whether to include the global scope in the
 	search
@@ -584,8 +584,8 @@ public class DDMTemplateLocalServiceUtil {
 	* Returns the template matching the group and template key.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
 	* @throws PortalException if a matching template could not be found
@@ -609,8 +609,8 @@ public class DDMTemplateLocalServiceUtil {
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param templateKey the unique string identifying the template
 	* @param includeGlobalTemplates whether to include the global scope in the
 	search
@@ -645,8 +645,8 @@ public class DDMTemplateLocalServiceUtil {
 	* Returns all the templates matching the group and class name ID.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @return the matching templates
 	* @throws SystemException if a system exception occurred
 	*/
@@ -661,8 +661,8 @@ public class DDMTemplateLocalServiceUtil {
 	* PK.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @return the matching templates
 	* @throws SystemException if a system exception occurred
@@ -678,8 +678,8 @@ public class DDMTemplateLocalServiceUtil {
 	* and type.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param type the template's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -697,8 +697,8 @@ public class DDMTemplateLocalServiceUtil {
 	* type, and mode.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param type the template's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -731,8 +731,8 @@ public class DDMTemplateLocalServiceUtil {
 	* Returns the number of templates matching the group and class name ID.
 	*
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @return the number of matching templates
 	* @throws SystemException if a system exception occurred
 	*/
@@ -758,8 +758,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
@@ -805,8 +805,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally
@@ -952,8 +952,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
@@ -981,8 +981,8 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the entity's instance the template
-	is related to
+	* @param classNameId the primary key of the class name for template's
+	related model
 	* @param classPK the primary key of the template's related entity
 	* @param name the name keywords (optionally <code>null</code>)
 	* @param description the description keywords (optionally

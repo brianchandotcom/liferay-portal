@@ -16,17 +16,25 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DDMTemplateTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.List;
+
 /**
  * @author Juan Fernández
+ * @author Marcellus Tavares
  */
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
@@ -51,9 +59,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		runSQL("update DDMTemplate set classNameId = " + classNameId);
 
 		updateDDMStructureStructureKeys();
+		updateDDMStructureXSDs();
 	}
 
-	private void updateDDMStructureStructureKeys() throws Exception {
+	protected void updateDDMStructureStructureKeys() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -80,5 +89,91 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	protected void updateDDMStructureXSDs() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMStructure");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long structureId = rs.getLong("structureId");
+				String xsd = rs.getString("xsd");
+
+				xsd = updateXSD(xsd);
+
+				runSQL(
+					"update DDMStructure set xsd = '" + xsd +
+						"' where structureId = " + structureId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateMetadataElement(
+		Element metadataElement, String[] relocatedMetadadaEntryNames,
+		String[] removedMetadataEntryNames) {
+
+		Element parentElement = metadataElement.getParent();
+
+		List<Element> entryElements = metadataElement.elements("entry");
+
+		for (Element entryElement : entryElements) {
+			String name = entryElement.attributeValue("name");
+
+			if (ArrayUtil.contains(removedMetadataEntryNames, name)) {
+				metadataElement.remove(entryElement);
+			}
+			else if (ArrayUtil.contains(relocatedMetadadaEntryNames, name)) {
+				parentElement.addAttribute(name, entryElement.getText());
+
+				metadataElement.remove(entryElement);
+			}
+		}
+	}
+
+	protected String updateXSD(String xsd) throws Exception {
+		Document document = SAXReaderUtil.read(xsd);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateXSDDynamicElement(dynamicElementElement);
+		}
+
+		return DDMXMLUtil.formatXML(document);
+	}
+
+	protected void updateXSDDynamicElement(Element element) {
+		Element metadataElement = element.element("meta-data");
+
+		updateMetadataElement(
+			metadataElement, _relocatedMetadadaEntryNames,
+			_removedMetadataEntryNames);
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateXSDDynamicElement(dynamicElementElement);
+		}
+	}
+
+	private String[] _relocatedMetadadaEntryNames = new String[] {
+		"multiple", "readOnly", "repeatable", "required", "showLabel", "width"};
+
+	private String[] _removedMetadataEntryNames = new String[] {
+		"displayChildLabelAsValue", "fieldCssClass"};
 
 }

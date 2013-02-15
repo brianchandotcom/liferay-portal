@@ -49,23 +49,28 @@
 	<td>Guest</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//th[8]</td>
-	<td>View</td>
+	<td>storeChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>guestViewOn</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//tr[3]/td[8]/input</td>
+	<td>gotoIf</td>
+	<td>!${guestViewOn}</td>
+	<td>GuestViewOff</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[3]/td[8]/input</td>
-	<td>Guest View</td>
+	<td>label</td>
+	<td>GuestViewOff</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[3]/td[8]/input</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
 <tr>
@@ -80,10 +85,9 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[3]/td[8]/input</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td>Guest View</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

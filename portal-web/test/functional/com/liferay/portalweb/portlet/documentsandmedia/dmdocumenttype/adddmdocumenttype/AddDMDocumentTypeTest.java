@@ -28,19 +28,22 @@ public class AddDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//span[contains(@class,'add-button')]/a");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[contains(@class,'add-button')]/a"));
@@ -50,9 +53,9 @@ public class AddDMDocumentTypeTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("DM DocumentType Name"));
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]");
-		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[11]",
-			"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]");
+			"xPath=(//div[@class='aui-diagram-builder-field-label'])[13]");
+		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[13]",
+			"xPath=(//div[@class='aui-diagram-builder-field-label'])[13]");
 		selenium.waitForVisible(
 			"//div[contains(@class,'aui-form-builder-text-field-content')]/label");
 		assertEquals(RuntimeVariables.replace("Text Box"),

@@ -29,7 +29,7 @@ public class ViewDMPortletSelectFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
-				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+				"//a[contains(@class,'entry-link')]/span[contains(.,'DM Folder Name')]"));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//div[@class='document-library-breadcrumb']/ul/li/span/a"));

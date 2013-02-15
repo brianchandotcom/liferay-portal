@@ -94,20 +94,54 @@ public class ViewDMDocumentOdtTest extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
-		assertEquals(RuntimeVariables.replace("Date 2012-05-09T16:29:14.53"),
+		assertEquals(RuntimeVariables.replace("Modified 2012-05-09T16:29:14.53"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"metadata.DublinCore.CREATED 2012-05-09T16:22:55.33"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Content Type application/vnd.oasis.opendocument.text"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[3]"));
+		assertEquals(RuntimeVariables.replace(
+				"Last Modification 2012-05-09T16:29:14.53"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[4]"));
+		assertEquals(RuntimeVariables.replace("# of Pages 1"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[5]"));
+		assertEquals(RuntimeVariables.replace("# of Paragraphs 10"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[6]"));
+		assertEquals(RuntimeVariables.replace("# of Words 50"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[7]"));
+		assertEquals(RuntimeVariables.replace("# of Characters 250"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[8]"));
+		assertEquals(RuntimeVariables.replace("metadata.MSOffice.TABLE_COUNT 0"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[9]"));
+		assertEquals(RuntimeVariables.replace("metadata.MSOffice.IMAGE_COUNT 0"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[10]"));
+		assertEquals(RuntimeVariables.replace(
+				"metadata.MSOffice.OBJECT_COUNT 0"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[11]"));
 		assertEquals(RuntimeVariables.replace("Edit Time PT2M5S"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[12]"));
 		assertEquals(RuntimeVariables.replace(
 				"Creation Date 2012-05-09T16:22:55.33"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[13]"));
+		assertEquals(RuntimeVariables.replace(
+				"Last Saved 2012-05-09T16:29:14.53"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[14]"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

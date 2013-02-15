@@ -98,16 +98,16 @@ public class ViewDMDocumentJpegTest extends BaseTestCase {
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Bits Per Sample 8"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace("Image Length 92"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[3]"));
 		assertEquals(RuntimeVariables.replace("Image Width 394"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[4]"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

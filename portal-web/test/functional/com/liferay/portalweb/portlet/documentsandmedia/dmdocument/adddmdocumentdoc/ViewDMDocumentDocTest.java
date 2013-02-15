@@ -94,42 +94,55 @@ public class ViewDMDocumentDocTest extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
+		assertEquals(RuntimeVariables.replace("Modified 2012-08-10T18:39:00Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace("Creator Liferay"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"metadata.DublinCore.CREATED 2012-08-10T18:39:00Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[3]"));
 		assertEquals(RuntimeVariables.replace("Content Type application/msword"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"Last Modification 2012-08-10T18:39:00Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[5]"));
 		assertEquals(RuntimeVariables.replace("Last Author Liferay"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[6]"));
+		assertEquals(RuntimeVariables.replace("Author Liferay"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[7]"));
 		assertEquals(RuntimeVariables.replace(
 				"Application Name Microsoft Office Word"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
-		assertEquals(RuntimeVariables.replace("# of Characters 170"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-		assertEquals(RuntimeVariables.replace(
-				"Last Saved Fri Aug 10 18:39:00 GMT 2012"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]"));
-		assertEquals(RuntimeVariables.replace("# of Pages 1"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[6]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[8]"));
 		assertEquals(RuntimeVariables.replace("Revision Number 2"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[7]"));
-		assertEquals(RuntimeVariables.replace("# of Words 50"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[8]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[9]"));
 		assertEquals(RuntimeVariables.replace("Template Normal.dotm"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[9]"));
-		assertEquals(RuntimeVariables.replace("Author Liferay"),
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[10]"));
+		assertEquals(RuntimeVariables.replace("# of Pages 1"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[10]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[11]"));
+		assertEquals(RuntimeVariables.replace("# of Words 50"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[12]"));
+		assertEquals(RuntimeVariables.replace("# of Characters 172"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[13]"));
 		assertEquals(RuntimeVariables.replace(
-				"Creation Date Fri Aug 10 18:39:00 GMT 2012"),
+				"Creation Date 2012-08-10T18:39:00Z"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[11]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[14]"));
+		assertEquals(RuntimeVariables.replace("Last Saved 2012-08-10T18:39:00Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[15]"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

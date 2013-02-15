@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[contains(@class,'display-icon selectable selected')]</td>
+	<td>//div[@id='_20_entries']/div[contains(@class,'selected')]</td>
 	<td>Folders Selected</td>
 </tr>
 <tr>
@@ -160,22 +160,22 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>dmFolderNotDeleted</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>recycleBinPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dmFolderNotDeleted}</td>
-	<td>DMFolderDeleted</td>
+	<td>!${recycleBinPresent}</td>
+	<td>RecycleBinNotPresent</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='trash-empty-link']</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@class='trash-empty-link']</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
@@ -184,19 +184,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>label</td>
-	<td>DMFolderDeleted</td>
+	<td>RecycleBinNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]</td>
-	<td>The Recycle Bin is empty.</td>
 </tr>
 </tbody></table>
 </body>

@@ -59,7 +59,7 @@ public class TearDownDMFolderTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
-					"//div[contains(@class,'display-icon selectable selected')]");
+					"//div[@id='_20_entries']/div[contains(@class,'selected')]");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -98,32 +98,24 @@ public class TearDownDMFolderTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean dmFolderNotDeleted = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+				boolean recycleBinPresent = selenium.isElementPresent(
+						"//form[@id='_182_emptyForm']/a");
 
-				if (!dmFolderNotDeleted) {
+				if (!recycleBinPresent) {
 					label = 3;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("//a[@class='trash-empty-link']"));
-				selenium.clickAt("//a[@class='trash-empty-link']",
+					selenium.getText("//form[@id='_182_emptyForm']/a"));
+				selenium.clickAt("//form[@id='_182_emptyForm']/a",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
-				assertEquals(RuntimeVariables.replace(
-						"The Recycle Bin is empty."),
-					selenium.getText(
-						"//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]"));
-
 			case 100:
 				label = -1;
 			}

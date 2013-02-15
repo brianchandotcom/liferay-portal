@@ -38,17 +38,17 @@ public class AddDMFolderImage2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//li[contains(@class,'folder selected')]/a/span[2]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadCommonFile("//input[@id='_20_file']",
@@ -87,6 +87,6 @@ public class AddDMFolderImage2Test extends BaseTestCase {
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
 	}
 }

@@ -33,11 +33,11 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible("//button[@title='Icon View']");
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible(
 					"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 				assertTrue(selenium.isVisible(
@@ -68,7 +68,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_20_allRowIdsCheckbox']"));
 				selenium.waitForVisible(
-					"//div[contains(@class,'display-icon selectable selected')]");
+					"//div[@id='_20_entries']/div[contains(@class,'selected')]");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -100,18 +100,18 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean dmFolderNotDeleted = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+				boolean recycleBinPresent = selenium.isElementPresent(
+						"//form[@id='_182_emptyForm']/a");
 
-				if (!dmFolderNotDeleted) {
+				if (!recycleBinPresent) {
 					label = 4;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("//a[@class='trash-empty-link']"));
-				selenium.clickAt("//a[@class='trash-empty-link']",
+					selenium.getText("//form[@id='_182_emptyForm']/a"));
+				selenium.clickAt("//form[@id='_182_emptyForm']/a",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()

@@ -28,26 +28,29 @@ public class DeleteDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@id='_20_keywords']");
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
 			selenium.getText("//tr[contains(.,'DM DocumentType Name')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),

@@ -29,10 +29,15 @@ public class ViewDMPortletHideDocumentColumnsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
+		selenium.waitForVisible("//button[@title='Icon View']");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//button[@title='Icon View' and contains(@class,'aui-buttonitem-content')]");
+			"//button[contains(@class,'aui-state-active') and @title='Icon View']");
+		assertTrue(selenium.isVisible(
+				"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
@@ -43,18 +48,30 @@ public class ViewDMPortletHideDocumentColumnsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//div[@class='document-library-breadcrumb']/ul/li[2]/span/a"));
+		Thread.sleep(1000);
+		selenium.waitForVisible("//button[@title='List View']");
 		selenium.clickAt("//button[@title='List View']",
 			RuntimeVariables.replace("List View"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//button[@title='List View' and contains(@class,'aui-buttonitem-content')]");
+			"//button[contains(@class,'aui-state-active') and @title='List View']");
+		assertTrue(selenium.isVisible(
+				"//button[contains(@class,'aui-state-active') and @title='List View']"));
 		selenium.waitForText("//tr[3]/td[2]", "0k");
 		assertEquals(RuntimeVariables.replace("0k"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
+		Thread.sleep(1000);
+		selenium.waitForVisible("//button[@title='Icon View']");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
+		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//button[contains(@class,'aui-state-active') and @title='Icon View']");
+		assertTrue(selenium.isVisible(
+				"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 		selenium.waitForText("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			"DM Folder Document Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),

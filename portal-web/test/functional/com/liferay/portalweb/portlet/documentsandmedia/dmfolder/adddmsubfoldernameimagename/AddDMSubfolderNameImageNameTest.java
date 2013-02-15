@@ -35,18 +35,18 @@ public class AddDMSubfolderNameImageNameTest extends BaseTestCase {
 				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Name"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible("//span[3]/span/span/ul/li/strong/a/span");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[3]/span/span/ul/li/strong/a/span"));
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]");
 		assertEquals(RuntimeVariables.replace("Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]",
 			RuntimeVariables.replace("Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",

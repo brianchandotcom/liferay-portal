@@ -38,17 +38,17 @@ public class AddDMFolder1SubfolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
 				"//li[contains(@class,'folder selected')]/a/span[2]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]");
 		assertEquals(RuntimeVariables.replace("Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]",
 			RuntimeVariables.replace("Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",

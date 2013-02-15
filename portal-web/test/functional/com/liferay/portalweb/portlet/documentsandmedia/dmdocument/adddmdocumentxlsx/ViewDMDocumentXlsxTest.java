@@ -94,35 +94,38 @@ public class ViewDMDocumentXlsxTest extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
-		assertEquals(RuntimeVariables.replace("Date 2006-09-16T00:00:00Z"),
+		assertEquals(RuntimeVariables.replace("Modified 2012-08-13T22:35:33Z"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"metadata.DublinCore.CREATED 2006-09-16T00:00:00Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Content Type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[3]"));
 		assertEquals(RuntimeVariables.replace(
 				"Last Modification 2012-08-13T22:35:33Z"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[4]"));
 		assertEquals(RuntimeVariables.replace(
 				"Application Name Microsoft Excel"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-		assertEquals(RuntimeVariables.replace(
-				"Last Printed 2006-09-16T00:00:00Z"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[5]"));
 		assertEquals(RuntimeVariables.replace("Application Version 14.0300"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[6]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[6]"));
 		assertEquals(RuntimeVariables.replace(
 				"Creation Date 2006-09-16T00:00:00Z"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[7]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[7]"));
+		assertEquals(RuntimeVariables.replace("Last Saved 2012-08-13T22:35:33Z"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[8]"));
 		assertEquals(RuntimeVariables.replace("Protected false"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[8]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[9]"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

@@ -228,7 +228,8 @@ public class PortletURLUtil {
 			}
 		}
 
-		sb.append("&p_p_isolated=1");
+		sb.append("&p_p_isolated=1&p_v_l_s_g_id=");
+		sb.append(themeDisplay.getSiteGroupId());
 
 		String doAsUserId = themeDisplay.getDoAsUserId();
 

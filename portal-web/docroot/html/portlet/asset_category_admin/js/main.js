@@ -1322,7 +1322,7 @@ AUI.add(
 						Liferay.Service(
 							'/assetvocabulary/get-json-group-vocabularies',
 							{
-								groupId: themeDisplay.getParentGroupId(),
+								groupId: themeDisplay.getSiteGroupId(),
 								name: query,
 								start: start,
 								end: end,
@@ -1365,7 +1365,7 @@ AUI.add(
 						if (query && instance._searchType.val() != STR_VOCABULARIES) {
 							params = A.mix(
 								{
-									groupId: themeDisplay.getParentGroupId(),
+									groupId: themeDisplay.getSiteGroupId(),
 									name: Lang.sub(TPL_SEARCH_QUERY, [query])
 								},
 								defaultParams

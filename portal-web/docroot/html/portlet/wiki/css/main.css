@@ -252,6 +252,12 @@
 	}
 
 	.page-activities {
+		.activity-status {
+			color: #666;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
 		.activity-summary {
 			color: #999;
 			display: block;

@@ -30,6 +30,7 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWikiAttachments;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeWikiSocialActivities;
 
 /**
  * @author Raymond Augé
@@ -58,6 +59,7 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradePortletPreferences.class);
 		upgrade(UpgradeUser.class);
 		upgrade(UpgradeWikiAttachments.class);
+		upgrade(UpgradeWikiSocialActivities.class);
 	}
 
 }

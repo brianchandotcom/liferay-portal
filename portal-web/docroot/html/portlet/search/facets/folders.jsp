@@ -51,6 +51,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			}
 
 			searchContext.setFolderIds(new long[] {curFolderId});
+			searchContext.setKeywords(StringPool.BLANK);
 
 			Hits results = indexer.search(searchContext);
 

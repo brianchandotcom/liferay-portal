@@ -41,10 +41,10 @@ AUI.add(
 			multiple: 1,
 			name: 1,
 			options: 1,
-			showLabel: 1,
 			readOnly: 1,
 			repeatable: 1,
 			required: 1,
+			showLabel: 1,
 			type: 1,
 			width: 1
 		};

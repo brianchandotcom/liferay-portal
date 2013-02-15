@@ -33,7 +33,6 @@ public class TearDownBMFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Bookmarks Test Page",
 					RuntimeVariables.replace("Bookmarks Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(1000);
 
 				boolean bookmarksFolder1Present = selenium.isElementPresent(
 						"//td[4]/span[@title='Actions']/ul/li/strong/a/span");

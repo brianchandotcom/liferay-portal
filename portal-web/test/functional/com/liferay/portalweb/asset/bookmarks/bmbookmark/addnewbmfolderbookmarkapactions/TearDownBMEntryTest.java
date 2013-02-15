@@ -33,7 +33,6 @@ public class TearDownBMEntryTest extends BaseTestCase {
 				selenium.clickAt("link=Bookmarks Test Page",
 					RuntimeVariables.replace("Bookmarks Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(1000);
 
 				boolean bookmarksEntry1Present = selenium.isElementPresent(
 						"//td[5]/span[@title='Actions']/ul/li/strong/a/span");

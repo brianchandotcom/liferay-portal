@@ -41,7 +41,7 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -62,19 +62,18 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]",
 			RuntimeVariables.replace("Bookmarks Entry"));
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent(
-			"//iframe[contains(@id,'_86_selectAsset')]");
+		selenium.waitForVisible("//iframe[contains(@id,'_86_selectAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'_86_selectAsset')]");
 		selenium.waitForVisible(
 			"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 			selenium.getText(
 				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a",
+			RuntimeVariables.replace("BM Folder Bookmark Name"));
+		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");

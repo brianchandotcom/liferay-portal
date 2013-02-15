@@ -32,8 +32,9 @@ public class ViewPortletTableBMFolderBookmarkAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Title"),
 			selenium.getText("//tr[contains(.,'Title')]/th"));
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
-			selenium.getText("//tr[contains(.,'BM Folder Bookmark Name')]/td/a"));
-		selenium.clickAt("//tr[contains(.,'BM Folder Bookmark Name')]/td/a",
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a",
 			RuntimeVariables.replace("BM Folder Bookmark Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),

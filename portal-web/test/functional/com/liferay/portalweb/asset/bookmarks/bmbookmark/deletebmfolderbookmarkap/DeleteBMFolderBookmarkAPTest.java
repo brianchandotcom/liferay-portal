@@ -42,7 +42,7 @@ public class DeleteBMFolderBookmarkAPTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -56,12 +56,11 @@ public class DeleteBMFolderBookmarkAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 			selenium.getText(
 				"//tr[contains(.,'BM Folder Bookmark Name')]/td[2]"));
-		selenium.click(RuntimeVariables.replace(
-				"xPath=(//img[@title='Delete'])[2]"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("xPath=(//img[@title='Delete'])[2]",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForConfirmation(
 			"Are you sure you want to delete this? It will be deleted immediately.");
-		Thread.sleep(1000);
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -44,7 +44,6 @@ public class ViewPortletAbstractsBMFolderBookmarkAPTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.clickAt("link=http://www.liferay.com",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.waitForPageToLoad("30000");

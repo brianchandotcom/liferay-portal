@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.social;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +28,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
@@ -53,6 +56,26 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			return null;
 		}
 
+		int activityType = activity.getType();
+
+		WikiPageResource pageResource =
+			WikiPageResourceLocalServiceUtil.getPageResource(
+				activity.getClassPK());
+
+		if ((activityType == WikiActivityKeys.UPDATE_PAGE)) {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				activity.getExtraData());
+
+			double version = extraDataJSONObject.getDouble("version");
+
+			WikiPage page = WikiPageLocalServiceUtil.getPage(
+				pageResource.getNodeId(), pageResource.getTitle(), version);
+
+			if (!page.isApproved()) {
+				return null;
+			}
+		}
+
 		String groupName = StringPool.BLANK;
 
 		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
@@ -62,13 +85,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		String creatorUserName = getUserName(
 			activity.getUserId(), themeDisplay);
 
-		int activityType = activity.getType();
-
 		// Link
-
-		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(
-				activity.getClassPK());
 
 		String link =
 			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
@@ -102,6 +119,36 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 			else {
 				titlePattern = "activity-wiki-update-page-in";
+			}
+		}
+		else if (activityType == SocialActivityConstants.TYPE_ADD_ATTACHMENT) {
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-wiki-add-attachment-page";
+			}
+			else {
+				titlePattern = "activity-wiki-add-attachment-page-in";
+			}
+		}
+		else if (
+			activityType ==
+				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
+
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-wiki-remove-attachment-page";
+			}
+			else {
+				titlePattern = "activity-wiki-remove-attachment-page-in";
+			}
+		}
+		else if (
+			activityType ==
+				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
+
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-wiki-restore-attachment-page";
+			}
+			else {
+				titlePattern = "activity-wiki-restore-attachment-page-in";
 			}
 		}
 

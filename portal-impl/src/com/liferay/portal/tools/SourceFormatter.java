@@ -1955,6 +1955,19 @@ public class SourceFormatter {
 								fileName, "tab: " + fileName + " " + lineCount);
 						}
 
+						if ((previousLine.contains(" class " ) ||
+							 previousLine.contains(" enum ")) &&
+							previousLine.endsWith(
+								StringPool.OPEN_CURLY_BRACE) &&
+							Validator.isNotNull(line) &&
+							!trimmedLine.startsWith(
+								StringPool.CLOSE_CURLY_BRACE)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"new line: " + fileName + " " + lineCount);
+						}
+
 						combinedLines = _getCombinedLines(
 							trimmedLine, previousLine, lineLeadingTabCount,
 							previousLineLeadingTabCount);

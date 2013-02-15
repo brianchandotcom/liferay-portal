@@ -24,7 +24,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.taglib.aui.AUIUtil;
 
 import javax.portlet.WindowState;
 
@@ -90,10 +89,6 @@ public class RenderPortletAction extends Action {
 			request, null, columnId, columnPos, columnCount);
 
 		PortletContainerUtil.render(request, response, portlet);
-
-		if (themeDisplay.isIsolated() || themeDisplay.isStateExclusive()) {
-			AUIUtil.outputScriptData(request, response.getWriter());
-		}
 
 		return null;
 	}

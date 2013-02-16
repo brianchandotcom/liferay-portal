@@ -303,7 +303,7 @@ public interface PropsKeys {
 
 	public static final String BROWSER_CACHE_SIGNED_IN_DISABLED = "browser.cache.signed.in.disabled";
 
-	public static final String BROWSER_COMPATIBILITY_IE_VERSIONS = "browser.compatibility.ie.versionss";
+	public static final String BROWSER_COMPATIBILITY_IE_VERSIONS = "browser.compatibility.ie.versions";
 
 	public static final String BROWSER_LAUNCHER_URL = "browser.launcher.url";
 

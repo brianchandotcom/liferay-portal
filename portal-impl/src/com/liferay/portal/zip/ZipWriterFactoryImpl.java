@@ -16,7 +16,7 @@ package com.liferay.portal.zip;
 
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.File;
 
@@ -27,42 +27,42 @@ public class ZipWriterFactoryImpl implements ZipWriterFactory {
 
 	public ZipWriter getZipWriter() {
 		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+			ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			return new ZipWriterImpl();
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
 
 	public ZipWriter getZipWriter(File file) {
 		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+			ClassLoaderUtil.getPortalClassLoader();
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			return new ZipWriterImpl(file);
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

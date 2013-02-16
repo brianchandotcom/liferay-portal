@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.aop.MethodInterceptorInvocationHandler;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -118,7 +118,7 @@ public class StoreFactory {
 	}
 
 	private static Store _getInstance() throws Exception {
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		Store store = (Store)InstanceFactory.newInstance(
 			classLoader, PropsValues.DL_STORE_IMPL);

@@ -63,7 +63,6 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -79,6 +78,7 @@ import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.Portal;
@@ -724,7 +724,7 @@ public class MainServlet extends ActionServlet {
 			try {
 				requestProcessor =
 					(RequestProcessor)InstanceFactory.newInstance(
-						PACLClassLoaderUtil.getPortalClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader(),
 						controllerConfig.getProcessorClass());
 			}
 			catch (Exception e) {
@@ -883,7 +883,7 @@ public class MainServlet extends ActionServlet {
 		PortletBagFactory portletBagFactory = new PortletBagFactory();
 
 		portletBagFactory.setClassLoader(
-			PACLClassLoaderUtil.getPortalClassLoader());
+			ClassLoaderUtil.getPortalClassLoader());
 		portletBagFactory.setServletContext(servletContext);
 		portletBagFactory.setWARFile(false);
 
@@ -939,7 +939,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initSocial(PluginPackage pluginPackage) throws Exception {
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		ServletContext servletContext = getServletContext();
 

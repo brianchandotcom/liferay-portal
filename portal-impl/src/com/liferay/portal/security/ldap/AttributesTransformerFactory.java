@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -52,7 +52,7 @@ public class AttributesTransformerFactory {
 				"Instantiate " + PropsValues.LDAP_ATTRS_TRANSFORMER_IMPL);
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalAttributesTransformer =
 			(AttributesTransformer)InstanceFactory.newInstance(

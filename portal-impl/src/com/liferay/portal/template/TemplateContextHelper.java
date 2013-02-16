@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.service.permission.AccountPermissionUtil;
@@ -66,6 +65,7 @@ import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks_IW;
 import com.liferay.portal.util.WebKeys;
@@ -110,9 +110,9 @@ public class TemplateContextHelper {
 		TemplateContextType templateContextType) {
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 		ClassLoader portalClassLoader =
-			PACLClassLoaderUtil.getPortalClassLoader();
+			ClassLoaderUtil.getPortalClassLoader();
 
 		if (contextClassLoader == portalClassLoader) {
 			return doGetHelperUtilities(

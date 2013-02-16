@@ -15,7 +15,7 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import org.hibernate.dialect.Dialect;
 
@@ -34,7 +34,7 @@ public class PortletHibernateConfiguration
 
 			// This should not be null except in cases where sharding is enabled
 
-			classLoader = PACLClassLoaderUtil.getContextClassLoader();
+			classLoader = ClassLoaderUtil.getContextClassLoader();
 		}
 
 		return classLoader;

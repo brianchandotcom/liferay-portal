@@ -17,9 +17,9 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Writer;
 
@@ -32,9 +32,9 @@ public class PACLTemplateWrapper implements Template {
 
 	public static Template getTemplate(Template template) {
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 		ClassLoader portalClassLoder =
-			PACLClassLoaderUtil.getPortalClassLoader();
+			ClassLoaderUtil.getPortalClassLoader();
 
 		if (contextClassLoader == portalClassLoder) {
 			return template;

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			if ((classLoaders != null) && (classLoaders.length > 0)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						PACLClassLoaderUtil.getPortalClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader(),
 						classLoaders);
 
 				context.setApplicationClassLoader(aggregateClassLoader);
@@ -116,7 +116,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 				if ((classLoaders != null) && (classLoaders.length > 0)) {
 					ClassLoader aggregateClassLoader =
 						AggregateClassLoader.getAggregateClassLoader(
-							PACLClassLoaderUtil.getPortalClassLoader(),
+							ClassLoaderUtil.getPortalClassLoader(),
 							classLoaders);
 
 					context.setApplicationClassLoader(aggregateClassLoader);

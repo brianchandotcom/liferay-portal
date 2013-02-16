@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.struts.JSONAction;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -92,7 +92,7 @@ public class JSONServiceAction extends JSONAction {
 		}
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		Class<?> clazz = contextClassLoader.loadClass(className);
 

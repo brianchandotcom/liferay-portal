@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.tools.deploy.PortletDeployer;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
@@ -190,13 +190,13 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		}
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		ClassLoader portletClassLoader = getPortletClassLoader();
 
 		try {
 			if (portletClassLoader != null) {
-				PACLClassLoaderUtil.setContextClassLoader(portletClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portletClassLoader);
 			}
 
 			removePortletFilters();
@@ -205,7 +205,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		}
 		finally {
 			if (portletClassLoader != null) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -223,7 +223,7 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			PluginContextListener.PLUGIN_CLASS_LOADER);
 
 		if (classLoader == null) {
-			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 
 		return classLoader;
@@ -245,20 +245,20 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		_portletConfigImpl = (PortletConfigImpl)portletConfig;
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		ClassLoader portletClassLoader = getPortletClassLoader();
 
 		try {
 			if (portletClassLoader != null) {
-				PACLClassLoaderUtil.setContextClassLoader(portletClassLoader);
+				ClassLoaderUtil.setContextClassLoader(portletClassLoader);
 			}
 
 			_portlet.init(portletConfig);
 		}
 		finally {
 			if (portletClassLoader != null) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessUtil;
@@ -81,7 +81,7 @@ public class StartupHelper {
 
 		try {
 			ClassLoader classLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
+				ClassLoaderUtil.getContextClassLoader();
 
 			String tablesSQL = StringUtil.read(
 				classLoader,
@@ -138,7 +138,7 @@ public class StartupHelper {
 
 		_upgraded = UpgradeProcessUtil.upgradeProcess(
 			buildNumber, upgradeProcessClassNames,
-			PACLClassLoaderUtil.getPortalClassLoader());
+			ClassLoaderUtil.getPortalClassLoader());
 	}
 
 	public void verifyProcess(boolean verified) throws VerifyException {

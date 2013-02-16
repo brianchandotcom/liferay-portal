@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.util;
 
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,7 +33,7 @@ public class FilterClassLoader extends ClassLoader {
 			name.startsWith("org.springframework.")) {
 
 			ClassLoader portalClassLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
+				ClassLoaderUtil.getPortalClassLoader();
 
 			return portalClassLoader.loadClass(name);
 		}

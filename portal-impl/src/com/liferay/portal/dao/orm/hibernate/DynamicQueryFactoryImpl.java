@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.security.Permission;
 
@@ -67,7 +67,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 		if (!className.endsWith("Impl")) {
 			if (classLoader == null) {
-				classLoader = PACLClassLoaderUtil.getContextClassLoader();
+				classLoader = ClassLoaderUtil.getContextClassLoader();
 			}
 
 			Package pkg = clazz.getPackage();

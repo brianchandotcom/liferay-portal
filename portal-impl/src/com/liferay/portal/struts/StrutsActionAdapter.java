@@ -15,7 +15,7 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +48,7 @@ public class StrutsActionAdapter extends BaseStrutsAction {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			PACLClassLoaderUtil.getPortalClassLoader());
+			ClassLoaderUtil.getPortalClassLoader());
 
 		try {
 			ActionForward actionForward = _action.execute(

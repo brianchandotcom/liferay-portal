@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.Method;
 
@@ -93,7 +93,7 @@ public class PortalServiceChecker extends BaseChecker {
 			return null;
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
@@ -132,7 +132,7 @@ public class PortalServiceChecker extends BaseChecker {
 			return false;
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
@@ -208,7 +208,7 @@ public class PortalServiceChecker extends BaseChecker {
 	}
 
 	protected boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 

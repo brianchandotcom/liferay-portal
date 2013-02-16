@@ -41,7 +41,7 @@ while (itr.hasNext()) {
 	}
 	else {
 		try {
-			ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 			Class<?> openSearchClazz = classLoader.loadClass(portlet.getOpenSearchClass());
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -110,7 +110,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		ClassLoader aggregateClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
-				PACLClassLoaderUtil.getPortalClassLoader(), classLoaders);
+				ClassLoaderUtil.getPortalClassLoader(), classLoaders);
 
 		GroovyShell groovyShell = null;
 

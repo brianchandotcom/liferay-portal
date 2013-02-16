@@ -16,7 +16,7 @@ package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.File;
 
@@ -38,7 +38,7 @@ public class DeploymentHandler {
 
 		try {
 			ClassLoader classLoader =
-				PACLClassLoaderUtil.getPortalClassLoader();
+				ClassLoaderUtil.getPortalClassLoader();
 
 			DeploymentFactoryManager deploymentFactoryManager =
 				DeploymentFactoryManager.getInstance();

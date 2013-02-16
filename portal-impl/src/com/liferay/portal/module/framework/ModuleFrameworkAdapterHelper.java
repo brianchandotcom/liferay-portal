@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -54,7 +54,7 @@ public class ModuleFrameworkAdapterHelper {
 			}
 
 			_classLoader = new ModuleFrameworkClassLoader(
-				urls, PACLClassLoaderUtil.getPortalClassLoader());
+				urls, ClassLoaderUtil.getPortalClassLoader());
 
 			return _classLoader;
 		}

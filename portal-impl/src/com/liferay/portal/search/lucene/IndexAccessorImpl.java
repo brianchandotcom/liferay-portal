@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.dump.DumpIndexDeletionPolicy;
 import com.liferay.portal.search.lucene.dump.IndexCommitSerializationUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -332,7 +332,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	}
 
 	private MergePolicy _getMergePolicy() throws Exception {
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		MergePolicy mergePolicy = (MergePolicy)InstanceFactory.newInstance(
 			classLoader, PropsValues.LUCENE_MERGE_POLICY);

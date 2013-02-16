@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.impl.PortalServiceImpl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.Method;
 
@@ -121,7 +122,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			Class<?> thisObjectClass = thisObject.getClass();
 
 			if (paclPolicy.getClassLoader() !=
-					PACLClassLoaderUtil.getClassLoader(thisObjectClass)) {
+					ClassLoaderUtil.getClassLoader(thisObjectClass)) {
 
 				// Disable the portal security manager so that PACLDataSource
 				// does not try to check access to tables that can be accessed

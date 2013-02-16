@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.util.log4j.Log4JUtil;
 import com.liferay.util.portlet.PortletProps;
 
@@ -298,14 +298,14 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		ClassLoader aggregateClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
 				new ClassLoader[] {
-					PACLClassLoaderUtil.getPortalClassLoader(), classLoader
+					ClassLoaderUtil.getPortalClassLoader(), classLoader
 				});
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
-			PACLClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
+			ClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
 
 			PortalCacheManager<?, ?> portalCacheManager =
 				(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
@@ -321,7 +321,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			portalCacheManager.reconfigureCaches(cacheConfigurationURL);
 		}
 		finally {
-			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 	}
 

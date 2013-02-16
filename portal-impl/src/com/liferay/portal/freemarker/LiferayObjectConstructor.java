@@ -14,7 +14,7 @@
 
 package com.liferay.portal.freemarker;
 
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -43,7 +43,7 @@ public class LiferayObjectConstructor implements TemplateMethodModelEx {
 			String className = String.valueOf(arguments.get(0));
 
 			clazz = Class.forName(
-				className, true, PACLClassLoaderUtil.getContextClassLoader());
+				className, true, ClassLoaderUtil.getContextClassLoader());
 		}
 		catch (Exception e) {
 			throw new TemplateModelException(e.getMessage());

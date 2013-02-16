@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.persistence.GroupPersistenceImpl;
 import com.liferay.portal.service.persistence.UserPersistenceImpl;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -116,7 +117,7 @@ public class PACLBeanHandler implements InvocationHandler {
 			Class<?> beanClass = _bean.getClass();
 
 			if (paclPolicy.getClassLoader() !=
-					PACLClassLoaderUtil.getClassLoader(beanClass)) {
+					ClassLoaderUtil.getClassLoader(beanClass)) {
 
 				// Disable the portal security manager so that PACLDataSource
 				// does not try to check access to tables that can be accessed

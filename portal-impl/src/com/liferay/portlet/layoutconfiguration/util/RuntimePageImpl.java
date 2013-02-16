@@ -37,9 +37,9 @@ import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
@@ -256,13 +256,13 @@ public class RuntimePageImpl implements RuntimePage {
 		}
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if ((pluginClassLoader != null) &&
 				(pluginClassLoader != contextClassLoader)) {
 
-				PACLClassLoaderUtil.setContextClassLoader(pluginClassLoader);
+				ClassLoaderUtil.setContextClassLoader(pluginClassLoader);
 			}
 
 			if (processTemplate) {
@@ -282,7 +282,7 @@ public class RuntimePageImpl implements RuntimePage {
 			if ((pluginClassLoader != null) &&
 				(pluginClassLoader != contextClassLoader)) {
 
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

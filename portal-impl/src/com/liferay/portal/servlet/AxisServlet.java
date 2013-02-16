@@ -16,7 +16,7 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.IOException;
 
@@ -43,15 +43,15 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 		}
 		else {
 			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
+				ClassLoaderUtil.getContextClassLoader();
 
 			try {
-				PACLClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
+				ClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
 
 				super.init(servletConfig);
 			}
 			finally {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -71,16 +71,16 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 			}
 			else {
 				ClassLoader contextClassLoader =
-					PACLClassLoaderUtil.getContextClassLoader();
+					ClassLoaderUtil.getContextClassLoader();
 
 				try {
-					PACLClassLoaderUtil.setContextClassLoader(
+					ClassLoaderUtil.setContextClassLoader(
 						_pluginClassLoader);
 
 					super.service(request, response);
 				}
 				finally {
-					PACLClassLoaderUtil.setContextClassLoader(
+					ClassLoaderUtil.setContextClassLoader(
 						contextClassLoader);
 				}
 			}

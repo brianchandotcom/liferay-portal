@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 
@@ -223,7 +223,7 @@ public class ImageMagickImpl implements ImageMagick {
 				_processExecutor.setThreadFactory(
 					new NamedThreadFactory(
 						ImageMagickImpl.class.getName(), Thread.MIN_PRIORITY,
-						PACLClassLoaderUtil.getPortalClassLoader()));
+						ClassLoaderUtil.getPortalClassLoader()));
 			}
 		}
 

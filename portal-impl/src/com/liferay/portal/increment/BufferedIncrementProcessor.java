@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -75,7 +75,7 @@ public class BufferedIncrementProcessor {
 		threadPoolExecutor.setThreadFactory(
 			new NamedThreadFactory(
 				sb.toString(), Thread.NORM_PRIORITY,
-				PACLClassLoaderUtil.getContextClassLoader()));
+				ClassLoaderUtil.getContextClassLoader()));
 
 		_executorService = threadPoolExecutor;
 	}

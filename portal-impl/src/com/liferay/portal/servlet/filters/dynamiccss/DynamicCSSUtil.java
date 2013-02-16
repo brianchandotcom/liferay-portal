@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.tools.SassToCssBuilder;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -63,7 +63,7 @@ public class DynamicCSSUtil {
 	public static void init() {
 		try {
 			_rubyScript = StringUtil.read(
-				PACLClassLoaderUtil.getPortalClassLoader(),
+				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
 		}
 		catch (Exception e) {

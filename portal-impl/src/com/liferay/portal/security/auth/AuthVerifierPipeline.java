@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -139,7 +139,7 @@ public class AuthVerifierPipeline {
 
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
-						PACLClassLoaderUtil.getPortalClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader(),
 						authVerifierClassName);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);

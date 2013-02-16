@@ -16,7 +16,7 @@ package com.liferay.portal.javadoc;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.Arrays;
 
@@ -47,7 +47,7 @@ public class JavadocUtil {
 		}
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		if (classLoader != contextClassLoader) {
 			try {

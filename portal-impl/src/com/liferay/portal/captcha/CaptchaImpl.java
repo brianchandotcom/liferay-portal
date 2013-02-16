@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -131,7 +131,7 @@ public class CaptchaImpl implements Captcha {
 				}
 
 				_captcha = (Captcha)InstanceFactory.newInstance(
-					PACLClassLoaderUtil.getPortalClassLoader(),
+					ClassLoaderUtil.getPortalClassLoader(),
 					captchaClassName);
 
 				_originalCaptcha = _captcha;

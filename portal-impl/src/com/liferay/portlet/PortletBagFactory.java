@@ -70,9 +70,9 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xmlrpc.XmlRpcServlet;
@@ -117,7 +117,7 @@ public class PortletBagFactory {
 
 			_servletContext = ServletContextPool.get(contextPath);
 
-			_classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			_classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 
 		Class<?> portletClass = null;
@@ -522,7 +522,7 @@ public class PortletBagFactory {
 			schedulerEntry.setTriggerValue(triggerValue);
 		}
 
-		if (_classLoader == PACLClassLoaderUtil.getPortalClassLoader()) {
+		if (_classLoader == ClassLoaderUtil.getPortalClassLoader()) {
 			portletId = null;
 		}
 

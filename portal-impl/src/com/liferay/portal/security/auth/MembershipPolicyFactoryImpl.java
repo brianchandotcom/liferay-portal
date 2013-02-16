@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -32,7 +32,7 @@ public class MembershipPolicyFactoryImpl implements MembershipPolicyFactory {
 			_log.debug("Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
 			(MembershipPolicy)InstanceFactory.newInstance(

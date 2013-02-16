@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import java.security.AccessController;
@@ -414,11 +414,11 @@ public class RuntimeChecker extends BaseReflectChecker {
 			boolean allow = false;
 
 			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
+				ClassLoaderUtil.getContextClassLoader();
 			ClassLoader portalClassLoader = getPortalClassLoader();
 
 			if (contextClassLoader == portalClassLoader) {
-				if (PACLClassLoaderUtil.getClassLoader(callerClass7) !=
+				if (ClassLoaderUtil.getClassLoader(callerClass7) !=
 						getClassLoader()) {
 
 					allow = true;

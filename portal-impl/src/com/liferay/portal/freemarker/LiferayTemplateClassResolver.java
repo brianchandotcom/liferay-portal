@@ -14,7 +14,7 @@
 
 package com.liferay.portal.freemarker;
 
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import freemarker.core.Environment;
@@ -64,7 +64,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		try {
 			return Class.forName(
-				className, true, PACLClassLoaderUtil.getContextClassLoader());
+				className, true, ClassLoaderUtil.getContextClassLoader());
 		}
 		catch (Exception e) {
 			throw new TemplateException(e, environment);

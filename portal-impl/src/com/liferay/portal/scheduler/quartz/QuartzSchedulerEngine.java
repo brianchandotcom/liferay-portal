@@ -46,8 +46,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.QuartzLocalService;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -895,7 +895,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		ClassLoader classLoader = null;
 
 		if (Validator.isNull(portletId)) {
-			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 		else {
 			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);

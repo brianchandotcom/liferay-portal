@@ -26,9 +26,9 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
 
@@ -322,7 +322,7 @@ public class LayoutSetLocalServiceStagingAdvice
 		}
 
 		return (LayoutSet)ProxyUtil.newProxyInstance(
-			PACLClassLoaderUtil.getPortalClassLoader(),
+			ClassLoaderUtil.getPortalClassLoader(),
 			new Class[] {LayoutSet.class},
 			new LayoutSetStagingHandler(layoutSet));
 	}

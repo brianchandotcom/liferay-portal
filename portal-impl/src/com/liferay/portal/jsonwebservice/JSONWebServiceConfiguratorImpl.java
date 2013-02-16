@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceConfigurator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.BufferedInputStream;
@@ -63,7 +62,8 @@ public class JSONWebServiceConfiguratorImpl extends ClassFinder
 				File[] classPathFiles = null;
 
 				if (getClassLoader() !=
-						PACLClassLoaderUtil.getPortalClassLoader()) {
+						com.liferay.portal.util.ClassLoaderUtil.
+							getPortalClassLoader()) {
 
 					classPathFiles = getPluginClassPathFiles();
 				}

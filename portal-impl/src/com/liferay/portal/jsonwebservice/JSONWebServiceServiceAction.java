@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServiceLoader;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -57,7 +57,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		if ((classLoader == null) &&
 			contextPath.equals(PortalUtil.getPathContext())) {
 
-			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+			classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 
 		_jsonWebServiceConfigurator = getJSONWebServiceConfigurator(

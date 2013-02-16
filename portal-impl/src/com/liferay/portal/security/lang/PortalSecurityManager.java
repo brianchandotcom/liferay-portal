@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.checker.CheckerUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
@@ -85,7 +85,7 @@ public class PortalSecurityManager extends SecurityManager {
 			return;
 		}
 
-		ClassLoader classClassLoader = PACLClassLoaderUtil.getClassLoader(
+		ClassLoader classClassLoader = ClassLoaderUtil.getClassLoader(
 			clazz);
 
 		if (classClassLoader == null) {
@@ -94,7 +94,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 		Class<?> callerClass = Reflection.getCallerClass(4);
 
-		ClassLoader callerClassLoader = PACLClassLoaderUtil.getClassLoader(
+		ClassLoader callerClassLoader = ClassLoaderUtil.getClassLoader(
 			callerClass);
 
 		if (callerClassLoader == null) {
@@ -111,7 +111,7 @@ public class PortalSecurityManager extends SecurityManager {
 					!className.startsWith("java.security") &&
 					!className.startsWith("sun.reflect")) {
 
-					callerClassLoader = PACLClassLoaderUtil.getClassLoader(
+					callerClassLoader = ClassLoaderUtil.getClassLoader(
 						callerClass);
 
 					break;

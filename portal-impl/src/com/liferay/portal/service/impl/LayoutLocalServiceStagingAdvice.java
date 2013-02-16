@@ -36,7 +36,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -46,6 +45,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.lang.reflect.InvocationTargetException;
@@ -488,7 +488,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		}
 
 		return (Layout)ProxyUtil.newProxyInstance(
-			PACLClassLoaderUtil.getPortalClassLoader(),
+			ClassLoaderUtil.getPortalClassLoader(),
 			new Class[] {Layout.class}, new LayoutStagingHandler(layout));
 	}
 

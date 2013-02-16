@@ -15,7 +15,7 @@
 package com.liferay.portal.bean;
 
 import com.liferay.portal.security.pacl.PACLBeanHandler;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.Object;
 import java.lang.reflect.InvocationTargetException;
@@ -41,13 +41,13 @@ public class VelocityBeanHandler extends PACLBeanHandler {
 		throws Throwable {
 
 		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if ((_classLoader != null) &&
 				(_classLoader != contextClassLoader)) {
 
-				PACLClassLoaderUtil.setContextClassLoader(_classLoader);
+				ClassLoaderUtil.setContextClassLoader(_classLoader);
 			}
 
 			return super.invoke(proxy, method, arguments);
@@ -59,7 +59,7 @@ public class VelocityBeanHandler extends PACLBeanHandler {
 			if ((_classLoader != null) &&
 				(_classLoader != contextClassLoader)) {
 
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

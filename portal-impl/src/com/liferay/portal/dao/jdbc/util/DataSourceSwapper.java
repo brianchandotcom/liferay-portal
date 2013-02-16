@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.jpa.LocalContainerEntityManagerFactoryBean;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -213,7 +213,7 @@ public class DataSourceSwapper {
 
 			ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
 			ClassLoader contextClassLoader =
-				PACLClassLoaderUtil.getContextClassLoader();
+				ClassLoaderUtil.getContextClassLoader();
 
 			try {
 				ClassLoader sessionFactoryClassLoader =
@@ -221,7 +221,7 @@ public class DataSourceSwapper {
 
 				PortletClassLoaderUtil.setClassLoader(
 					sessionFactoryClassLoader);
-				PACLClassLoaderUtil.setContextClassLoader(
+				ClassLoaderUtil.setContextClassLoader(
 					sessionFactoryClassLoader);
 
 				PortletHibernateConfiguration portletHibernateConfiguration =
@@ -240,7 +240,7 @@ public class DataSourceSwapper {
 			}
 			finally {
 				PortletClassLoaderUtil.setClassLoader(classLoader);
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

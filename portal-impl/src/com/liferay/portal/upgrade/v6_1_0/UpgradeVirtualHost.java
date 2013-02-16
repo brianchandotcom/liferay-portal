@@ -14,9 +14,9 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,11 +52,11 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
+			String sql = SQLTransformer.transform(
 				"select companyId, virtualHost from Company where " +
-					"virtualHost != ? and virtualHost is not null");
+					"virtualHost is not empty");
 
-			ps.setString(1, StringPool.BLANK);
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -84,11 +84,11 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
+			String sql = SQLTransformer.transform(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
-					"where virtualHost != ? and virtualHost is not null");
+					"where virtualHost is not empty");
 
-			ps.setString(1, StringPool.BLANK);
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

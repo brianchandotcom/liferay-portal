@@ -16,16 +16,15 @@ package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
@@ -54,6 +54,8 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.ArticleContentException;
@@ -78,6 +80,7 @@ import java.io.File;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -407,27 +410,26 @@ public class EditArticleAction extends PortletAction {
 		}
 	}
 
-	protected Map<String, byte[]> getImages(
-			UploadPortletRequest uploadPortletRequest)
+	protected Map<String, byte[]> getImages(Fields fields, Locale locale)
 		throws Exception {
+
+		Iterator<Field> iterator = fields.iterator();
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
-		Map<String, FileItem[]> multipartParameterMap =
-			uploadPortletRequest.getMultipartParameterMap();
+		while (iterator.hasNext()) {
+			Field field = iterator.next();
 
-		String imagePrefix = "structure_image_";
+			String dataType = field.getDataType();
+			String name = field.getName();
 
-		for (String name : multipartParameterMap.keySet()) {
-			if (name.startsWith(imagePrefix)) {
-				File file = uploadPortletRequest.getFile(name);
-				byte[] bytes = FileUtil.getBytes(file);
+			if (dataType.equals(FieldConstants.IMAGE)) {
+				String content = (String)field.getValue(locale);
 
-				if ((bytes != null) && (bytes.length > 0)) {
-					name = name.substring(imagePrefix.length());
+				String imageKey = "_" + name + "_" + LanguageUtil.getLanguageId(
+					locale);
 
-					images.put(name, bytes);
-				}
+				images.put(imageKey, UnicodeFormatter.hexToBytes(content));
 			}
 		}
 
@@ -597,10 +599,20 @@ public class EditArticleAction extends PortletAction {
 				uploadPortletRequest, "description_" + toLanguageId);
 		}
 
+		String languageId = toLanguageId;
+
+		if (Validator.isNull(languageId)) {
+			languageId = defaultLanguageId;
+		}
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
 		String content = ParamUtil.getString(uploadPortletRequest, "content");
 
+		Map<String, byte[]> images = new HashMap<String, byte[]>();
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			JournalArticle.class.getName(), actionRequest);
+			JournalArticle.class.getName(), uploadPortletRequest);
 
 		String structureId = ParamUtil.getString(
 			uploadPortletRequest, "structureId");
@@ -613,6 +625,8 @@ public class EditArticleAction extends PortletAction {
 
 			Fields fields = DDMUtil.getFields(
 				ddmStructure.getStructureId(), serviceContext);
+
+			images = getImages(fields, locale);
 
 			content = JournalConverterUtil.getXML(ddmStructure, fields);
 		}
@@ -711,8 +725,6 @@ public class EditArticleAction extends PortletAction {
 		String smallImageURL = ParamUtil.getString(
 			uploadPortletRequest, "smallImageURL");
 		File smallFile = uploadPortletRequest.getFile("smallFile");
-
-		Map<String, byte[]> images = getImages(uploadPortletRequest);
 
 		String articleURL = ParamUtil.getString(
 			uploadPortletRequest, "articleURL");

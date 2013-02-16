@@ -676,7 +676,7 @@ AUI.add(
 
 		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'aui-form-builder-field-icon aui-form-builder-field-icon-default';
 
-		LiferayFormBuilder.AVAILABLE_FIELDS = {
+		var AVAILABLE_FIELDS = {
 			DEFAULT: [
 				{
 					fieldLabel: Liferay.Language.get('button'),
@@ -828,8 +828,21 @@ AUI.add(
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
 				}
+			],
+
+			WCM_STRUCTURE: [
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'aui-form-builder-field-icon lfr-wcm-image lfr-wcm-image-icon',
+					label: Liferay.Language.get('image'),
+					type: 'wcm-image'
+				}
 			]
 		};
+
+		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE);
+
+		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;
 
 		Liferay.FormBuilder = LiferayFormBuilder;
 	},

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
+package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -20,7 +20,7 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 /**
  * @author Raymond Augé
  */
-public class PACLClassLoaderUtil {
+public class ClassLoaderUtil {
 
 	public static ClassLoader getClassLoader(Class<?> clazz) {
 		boolean checkGetClassLoader =

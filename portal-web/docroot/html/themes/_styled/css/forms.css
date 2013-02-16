@@ -150,6 +150,16 @@ input, textarea {
 	}
 }
 
+.aui-field-disabled {
+	input[type="file"], input[type="password"], input[type="text"], select, textarea, .textarea, .aui-field-input-text {
+		@include input-field-default;
+
+		@include opacity(0.5);
+
+		resize: none;
+	}
+}
+
 .lfr-actions.lfr-extended {
 	&, ul {
 		@include button-default;
@@ -202,6 +212,14 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 .ie {
 	fieldset {
 		padding-top: 0;
+	}
+
+	.aui-field-disabled {
+		input, input.password, input.text, input.textarea, textarea {
+			@include input-field-default;
+
+			@include opacity(0.5);
+		}
 	}
 
 	.aui-button-disabled input {

@@ -72,8 +72,10 @@ public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONA
 public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws Exception {
 	JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
 
+	readOnlyAttributesJSONArray.put("indexType");
 	readOnlyAttributesJSONArray.put("name");
 	readOnlyAttributesJSONArray.put("options");
+	readOnlyAttributesJSONArray.put("repeatable");
 
 	boolean required = structure.getFieldRequired(fieldName);
 

@@ -258,11 +258,25 @@ public class SQLTransformer {
 	}
 
 	private String _replaceIsEmptyCheck(String sql) {
-		return sql;
+		Matcher matcher = _isEmptyCheckPattern.matcher(sql);
+
+		if (_vendorOracle) {
+			return matcher.replaceAll("$1 IS NULL");
+		}
+		else {
+			return matcher.replaceAll("($1 IS NOT NULL AND $1 = '')");
+		}
 	}
 
 	private String _replaceIsNotEmptyCheck(String sql) {
-		return sql;
+		Matcher matcher = _isNotEmptyCheckPattern.matcher(sql);
+
+		if (_vendorOracle) {
+			return matcher.replaceAll("$1 IS NOT NULL");
+		}
+		else {
+			return matcher.replaceAll("($1 IS NOT NULL AND $1 != '')");
+		}
 	}
 
 	private String _replaceLike(String sql) {
@@ -444,6 +458,10 @@ public class SQLTransformer {
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	private static Pattern _isEmptyCheckPattern = Pattern.compile(
+		"(\\S+) IS EMPTY", Pattern.CASE_INSENSITIVE);
+	private static Pattern _isNotEmptyCheckPattern = Pattern.compile(
+		"(\\S+) IS NOT EMPTY", Pattern.CASE_INSENSITIVE);
 	private static Pattern _jpqlCountPattern = Pattern.compile(
 		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
 	private static Pattern _likePattern = Pattern.compile(

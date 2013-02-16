@@ -257,6 +257,14 @@ public class SQLTransformer {
 		}
 	}
 
+	private String _replaceIsEmptyCheck(String sql) {
+		return sql;
+	}
+
+	private String _replaceIsNotEmptyCheck(String sql) {
+		return sql;
+	}
+
 	private String _replaceLike(String sql) {
 		Matcher matcher = _likePattern.matcher(sql);
 
@@ -303,6 +311,8 @@ public class SQLTransformer {
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
+		newSQL = _replaceIsEmptyCheck(newSQL);
+		newSQL = _replaceIsNotEmptyCheck(newSQL);
 
 		if (_vendorDB2) {
 			newSQL = _replaceLike(newSQL);

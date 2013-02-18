@@ -306,7 +306,6 @@ public class DataFactory {
 		dlFileEntry.setCompanyId(companyId);
 		dlFileEntry.setUserId(userId);
 		dlFileEntry.setCreateDate(newCreateDate());
-		dlFileEntry.setModifiedDate(newCreateDate());
 		dlFileEntry.setRepositoryId(groupId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setName(name);
@@ -921,6 +920,7 @@ public class DataFactory {
 		_defaultDLFileEntryType.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		_defaultDLFileEntryType.setCreateDate(newCreateDate());
+		_defaultDLFileEntryType.setModifiedDate(newCreateDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}

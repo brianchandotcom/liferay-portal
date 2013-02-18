@@ -252,6 +252,14 @@ public class JournalStructureLocalServiceImpl
 
 		addStructureResources(newStructure, true, true);
 
+		//Expando
+
+		ExpandoBridge oldExpandoBridge = oldStructure.getExpandoBridge();
+
+		ExpandoBridge newExpandoBridge = newStructure.getExpandoBridge();
+
+		newExpandoBridge.setAttributes(oldExpandoBridge.getAttributes());
+
 		return newStructure;
 	}
 

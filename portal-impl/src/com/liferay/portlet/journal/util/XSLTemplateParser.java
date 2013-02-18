@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.templateparser.BaseTemplateParser;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
@@ -28,7 +29,7 @@ import com.liferay.portal.xsl.XSLURIResolver;
  * @author Raymond Augé
  * @author Tina Tian
  */
-public class XSLTemplateParser extends VelocityTemplateParser {
+public class XSLTemplateParser extends BaseTemplateParser {
 
 	@Override
 	protected String getErrorTemplateId() {

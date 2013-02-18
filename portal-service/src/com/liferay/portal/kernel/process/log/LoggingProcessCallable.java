@@ -52,6 +52,8 @@ public class LoggingProcessCallable implements ProcessCallable<String> {
 		return StringPool.BLANK;
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		LoggingProcessCallable.class);
 

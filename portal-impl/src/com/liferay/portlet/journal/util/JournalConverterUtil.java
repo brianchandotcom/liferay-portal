@@ -586,9 +586,9 @@ public class JournalConverterUtil {
 
 			element.addAttribute("width", "25");
 		}
-		else if (newType.equals("ddm-fileupload")) {
-			addMetadataAttribute(metadataElement, "acceptFiles", "*");
-			addMetadataAttribute(metadataElement, "readOnly", "false");
+		else if (newType.equals("wcm-image")) {
+			element.addAttribute("fieldNamespace", "wcm");
+			element.addAttribute("readOnly", "false");
 		}
 
 		List<Element> dynamicElementElements = element.elements(

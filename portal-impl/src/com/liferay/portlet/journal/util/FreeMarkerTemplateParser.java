@@ -14,14 +14,16 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.templateparser.BaseTemplateParser;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 
 /**
  * @author Mika Koivisto
@@ -30,7 +32,9 @@ public class FreeMarkerTemplateParser extends BaseTemplateParser {
 
 	@Override
 	protected String getErrorTemplateId() {
-		return PropsValues.JOURNAL_ERROR_TEMPLATE_FREEMARKER;
+		return PropsUtil.get(
+			PropsKeys.JOURNAL_ERROR_TEMPLATE,
+			new Filter(TemplateConstants.LANG_TYPE_FTL));
 	}
 
 	@Override

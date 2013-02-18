@@ -30,6 +30,8 @@ public class ReturnProcessCallable<T extends Serializable>
 		return _returnValue;
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private final T _returnValue;
 
 }

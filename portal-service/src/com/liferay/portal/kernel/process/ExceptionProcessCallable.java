@@ -28,6 +28,8 @@ public class ExceptionProcessCallable implements
 		return _processException;
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private final ProcessException _processException;
 
 }

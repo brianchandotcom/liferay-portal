@@ -1184,6 +1184,8 @@ public class ProcessExecutorTest {
 			return clazz.getSimpleName();
 		}
 
+		private static final long serialVersionUID = 1L;
+
 		private int _serverPort;
 
 	}
@@ -1230,6 +1232,8 @@ public class ProcessExecutorTest {
 
 			return null;
 		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 
@@ -1296,6 +1300,8 @@ public class ProcessExecutorTest {
 			return null;
 		}
 
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private static class AttachChildProcessCallable4
@@ -1323,6 +1329,8 @@ public class ProcessExecutorTest {
 
 			return null;
 		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 
@@ -1353,6 +1361,8 @@ public class ProcessExecutorTest {
 			return null;
 		}
 
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private static class AttachChildProcessCallable6
@@ -1380,6 +1390,8 @@ public class ProcessExecutorTest {
 
 			return null;
 		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 
@@ -1449,6 +1461,8 @@ public class ProcessExecutorTest {
 			return sb.toString();
 		}
 
+		private static final long serialVersionUID = 1L;
+
 		private Class<ProcessCallable<?>> _processCallableClass;
 		private int _serverPort;
 
@@ -1468,6 +1482,8 @@ public class ProcessExecutorTest {
 
 			return clazz.getSimpleName();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 
@@ -1507,6 +1523,8 @@ public class ProcessExecutorTest {
 			return clazz.getSimpleName();
 		}
 
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private static class KillJVMProcessCallable
@@ -1537,6 +1555,8 @@ public class ProcessExecutorTest {
 
 			return sb.toString();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private int _exitCode;
 
@@ -1596,6 +1616,8 @@ public class ProcessExecutorTest {
 			return sb.toString();
 		}
 
+		private static final long serialVersionUID = 1L;
+
 		private String _bodyLog;
 		private String _leadingLog;
 
@@ -1648,6 +1670,8 @@ public class ProcessExecutorTest {
 
 			return sb.toString();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private String _logMessage;
 		private File _signalFile;
@@ -1720,6 +1744,8 @@ public class ProcessExecutorTest {
 			return sb.toString();
 		}
 
+		private static final long serialVersionUID = 1L;
+
 		private String _propertyKey;
 
 	}
@@ -1765,6 +1791,8 @@ public class ProcessExecutorTest {
 
 			return sb.toString();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private String _returnValue;
 
@@ -1963,6 +1991,8 @@ public class ProcessExecutorTest {
 
 			return clazz.getSimpleName();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		@SuppressWarnings("unused")
 		private Object _unserializableObject = new Object();

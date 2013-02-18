@@ -205,6 +205,8 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 			method.invoke(object);
 		}
 
+		private static final long serialVersionUID = 1L;
+
 		private List<MethodKey> _afterMethodKeys;
 		private List<MethodKey> _beforeMethodKeys;
 		private String _testClassName;

@@ -11,13 +11,13 @@
 </@>
 
 <@aui.script>
-	function ${namespace}${namespacedFieldName}InitEditor() {
+	function ${portletNamespace}${namespacedFieldName}InitEditor() {
 		return "${unicodeFormatter.toString(fieldValue)}";
 	}
 </@>
 
 <@aui.script use="aui-base">
-	var field = A.one('#${namespace}${namespacedFieldName}');
+	var field = A.one('#${portletNamespace}${namespacedFieldName}');
 
 	if (field) {
 		var form = field.get('form');
@@ -26,7 +26,7 @@
 			form.on(
 				'submit',
 				function(event) {
-					field.val(window.${namespace}${namespacedFieldName}Editor.getHTML());
+					field.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
 				}
 			);
 		}

@@ -198,13 +198,13 @@ AUI.add(
 
 								fieldNode.setData('rendered-toolbar', true);
 							}
-
-							instance.getFieldsList(null, fieldNode).each(
-								function(item, index, collection) {
-									instance.renderRepeatableUI(item);
-								}
-							);
 						}
+
+						instance.getFieldsList(null, fieldNode).each(
+							function(item, index, collection) {
+								instance.renderRepeatableUI(item);
+							}
+						);
 					},
 
 					syncFieldsTreeUI: function() {

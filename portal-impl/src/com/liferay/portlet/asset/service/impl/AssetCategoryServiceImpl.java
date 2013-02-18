@@ -29,7 +29,9 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.model.AssetCategoryDisplay;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.model.impl.AssetCategoryDisplayImpl;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.Autocomplete;
@@ -150,6 +152,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return search(new long[]{groupId}, name, vocabularyIds, start, end);
 	}
 
+	@Deprecated
 	public JSONObject getJSONVocabularyCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -166,6 +169,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return jsonObject;
 	}
 
+	@Deprecated
 	public JSONObject getJSONVocabularyCategories(
 			long groupId, String name, long vocabularyId, int start, int end,
 			OrderByComparator obc)
@@ -254,6 +258,46 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			return assetCategoryPersistence.filterCountByG_LikeN_V(
 				groupId, name, vocabularyId);
 		}
+	}
+
+	public AssetCategoryDisplay getVocabularyCategoriesDisplay(
+			long vocabularyId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		List<AssetCategory> categories = filterCategories(
+			assetCategoryLocalService.getVocabularyCategories(
+				vocabularyId, start, end, obc));
+
+		return new AssetCategoryDisplayImpl(categories, 1, categories.size());
+	}
+
+	public AssetCategoryDisplay getVocabularyCategoriesDisplay(
+			long groupId, String name, long vocabularyId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		int page = 0;
+
+		if ((end > 0) && (start > 0)) {
+			page = end / (end - start);
+		}
+
+		List<AssetCategory> categories;
+		int total = 0;
+
+		if (Validator.isNotNull(name)) {
+			name = (CustomSQLUtil.keywords(name))[0];
+
+			categories = getVocabularyCategories(
+				groupId, name, vocabularyId, start, end, obc);
+			total = getVocabularyCategoriesCount(groupId, name, vocabularyId);
+		}
+		else {
+			categories = getVocabularyCategories(vocabularyId, start, end, obc);
+			total = getVocabularyCategoriesCount(groupId, vocabularyId);
+		}
+
+		return new AssetCategoryDisplayImpl(categories, page, total);
 	}
 
 	public List<AssetCategory> getVocabularyRootCategories(

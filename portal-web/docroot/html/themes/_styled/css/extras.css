@@ -72,7 +72,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 	@include border-radius(5px);
 }
 
-.portlet-journal .structure-tree .structure-field {
+.portlet-journal .lfr-ddm-container .aui-field-wrapper {
 	@include border-radius(6px);
 }
 

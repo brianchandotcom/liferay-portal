@@ -439,7 +439,8 @@ AUI.add(
 								},
 								icon: 'plus',
 								id: 'add',
-								label: Liferay.Language.get('add')
+								label: Liferay.Language.get('add'),
+								title: Liferay.Language.get('add-tags')
 							},
 							{
 								handler: {
@@ -448,7 +449,8 @@ AUI.add(
 								},
 								icon: 'search',
 								id: 'select',
-								label: Liferay.Language.get('select')
+								label: Liferay.Language.get('select'),
+								title: Liferay.Language.get('select-tags')
 							}
 						];
 
@@ -461,7 +463,8 @@ AUI.add(
 									},
 									icon: 'comment',
 									id: 'suggest',
-									label: Liferay.Language.get('suggestions')
+									label: Liferay.Language.get('suggestions'),
+									title: Liferay.Language.get('suggestions')
 								}
 							);
 						}

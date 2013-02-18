@@ -46,6 +46,7 @@ AUI.add(
 		 * hiddenInput {string}: The hidden input used to pass in the current categories.
 		 * instanceVar {string}: The instance variable for this class.
 		 * labelNode {String|A.Node}: The node of the label element for this selector.
+		 * title {String}: The title of the button element for this selector.
 		 * vocabularyIds (string): The ids of the vocabularies.
 		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
@@ -94,6 +95,9 @@ AUI.add(
 					singleSelect: {
 						validator: Lang.isBoolean,
 						value: false
+					},
+					title: {
+						value: Liferay.Language.get('select-categories')
 					},
 					vocabularyIds: {
 						setter: function(value) {
@@ -472,7 +476,8 @@ AUI.add(
 											fn: instance._showSelectPopup
 										},
 										icon: 'search',
-										label: Liferay.Language.get('select')
+										label: Liferay.Language.get('select'),
+										title: instance.get('title')
 									}
 								]
 							}

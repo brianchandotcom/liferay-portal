@@ -892,6 +892,10 @@
 	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePage" />
 	</bean>
+	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
+	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
+		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
+	</bean>
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />

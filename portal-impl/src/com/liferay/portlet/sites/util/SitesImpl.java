@@ -120,31 +120,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ryan Park
  * @author Zsolt Berentey
  */
-public class SitesUtil {
+public class SitesImpl implements Sites {
 
-	public static final String ANALYTICS_PREFIX = "analytics_";
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE = -1;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED = 0;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT =
-		1;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED = 3;
-
-	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
-		2;
-
-	public static final String LAST_MERGE_TIME = "last-merge-time";
-
-	public static final String LAST_RESET_TIME = "last-reset-time";
-
-	public static final String LAYOUT_UPDATEABLE = "layoutUpdateable";
-
-	public static final String MERGE_FAIL_COUNT = "merge-fail-count";
-
-	public static void addPortletBreadcrumbEntries(
+	public void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -176,7 +154,7 @@ public class SitesUtil {
 			portletURL.toString());
 	}
 
-	public static void addPortletBreadcrumbEntries(
+	public void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,
 			HttpServletRequest request, RenderResponse renderResponse)
 		throws Exception {
@@ -219,7 +197,7 @@ public class SitesUtil {
 		}
 	}
 
-	public static void applyLayoutPrototype(
+	public void applyLayoutPrototype(
 			LayoutPrototype layoutPrototype, Layout targetLayout,
 			boolean linkEnabled)
 		throws Exception {
@@ -259,7 +237,7 @@ public class SitesUtil {
 			targetLayout.getTypeSettingsProperties();
 
 		typeSettingsProperties.setProperty(
-			LAST_MERGE_TIME,
+			SitesUtil.LAST_MERGE_TIME,
 			String.valueOf(targetLayout.getModifiedDate().getTime()));
 
 		LayoutLocalServiceUtil.updateLayout(targetLayout);
@@ -267,12 +245,13 @@ public class SitesUtil {
 		UnicodeProperties prototypeTypeSettingsProperties =
 			layoutPrototypeLayout.getTypeSettingsProperties();
 
-		prototypeTypeSettingsProperties.setProperty(MERGE_FAIL_COUNT, "0");
+		prototypeTypeSettingsProperties.setProperty(
+			SitesUtil.MERGE_FAIL_COUNT, "0");
 
 		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
 	}
 
-	public static void copyLayout(
+	public void copyLayout(
 			long userId, Layout sourceLayout, Layout targetLayout,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -298,7 +277,7 @@ public class SitesUtil {
 		}
 	}
 
-	public static void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
+	public void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
 		LayoutLocalServiceUtil.updateLookAndFeel(
@@ -312,8 +291,7 @@ public class SitesUtil {
 			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
 	}
 
-	public static void copyPortletPermissions(
-			Layout targetLayout, Layout sourceLayout)
+	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
 		long companyId = targetLayout.getCompanyId();
@@ -360,8 +338,7 @@ public class SitesUtil {
 		}
 	}
 
-	public static void copyPortletSetups(
-			Layout sourceLayout, Layout targetLayout)
+	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
 		LayoutTypePortlet sourceLayoutTypePortlet =
@@ -426,14 +403,14 @@ public class SitesUtil {
 		}
 	}
 
-	public static void copyTypeSettings(Group sourceGroup, Group targetGroup)
+	public void copyTypeSettings(Group sourceGroup, Group targetGroup)
 		throws Exception {
 
 		GroupServiceUtil.updateGroup(
 			targetGroup.getGroupId(), sourceGroup.getTypeSettings());
 	}
 
-	public static Object[] deleteLayout(
+	public Object[] deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -445,7 +422,7 @@ public class SitesUtil {
 		return deleteLayout(request, response);
 	}
 
-	public static Object[] deleteLayout(
+	public Object[] deleteLayout(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -526,7 +503,7 @@ public class SitesUtil {
 		return new Object[] {group, oldFriendlyURL, newPlid};
 	}
 
-	public static void deleteLayout(
+	public void deleteLayout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
@@ -538,7 +515,7 @@ public class SitesUtil {
 		deleteLayout(request, response);
 	}
 
-	public static File exportLayoutSetPrototype(
+	public File exportLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -553,7 +530,7 @@ public class SitesUtil {
 			parameterMap, null, null);
 	}
 
-	public static Long[] filterGroups(List<Group> groups, String[] names) {
+	public Long[] filterGroups(List<Group> groups, String[] names) {
 		List<Long> groupIds = new ArrayList<Long>();
 
 		for (Group group : groups) {
@@ -565,7 +542,7 @@ public class SitesUtil {
 		return ArrayUtil.toArray(ArrayUtil.toLongArray(groupIds));
 	}
 
-	public static Layout getLayoutSetPrototypeLayout(Layout layout) {
+	public Layout getLayoutSetPrototypeLayout(Layout layout) {
 		try {
 			LayoutSet layoutSet = layout.getLayoutSet();
 
@@ -593,7 +570,7 @@ public class SitesUtil {
 		return null;
 	}
 
-	public static Map<String, String[]> getLayoutSetPrototypeParameters(
+	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext) {
 
 		Map<String, String[]> parameterMap =
@@ -657,7 +634,7 @@ public class SitesUtil {
 		return parameterMap;
 	}
 
-	public static void importLayoutSetPrototype(
+	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -675,7 +652,7 @@ public class SitesUtil {
 			inputStream);
 	}
 
-	public static boolean isContentSharingWithChildrenEnabled(Group group)
+	public boolean isContentSharingWithChildrenEnabled(Group group)
 		throws SystemException {
 
 		UnicodeProperties typeSettingsProperties =
@@ -709,7 +686,7 @@ public class SitesUtil {
 		return false;
 	}
 
-	public static boolean isLayoutDeleteable(Layout layout) {
+	public boolean isLayoutDeleteable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {
 				return false;
@@ -742,7 +719,7 @@ public class SitesUtil {
 		return true;
 	}
 
-	public static boolean isLayoutModifiedSinceLastMerge(Layout layout) {
+	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
 		if ((layout == null) ||
 			Validator.isNull(layout.getSourcePrototypeLayoutUuid()) ||
 			layout.isLayoutPrototypeLinkActive() ||
@@ -752,7 +729,7 @@ public class SitesUtil {
 		}
 
 		long lastMergeTime = GetterUtil.getLong(
-			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
+			layout.getTypeSettingsProperty(SitesUtil.LAST_MERGE_TIME));
 
 		Date existingLayoutModifiedDate = layout.getModifiedDate();
 
@@ -765,7 +742,7 @@ public class SitesUtil {
 		return false;
 	}
 
-	public static boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
+	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
 		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 			return true;
 		}
@@ -793,7 +770,7 @@ public class SitesUtil {
 		return true;
 	}
 
-	public static boolean isLayoutUpdateable(Layout layout) {
+	public boolean isLayoutUpdateable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {
 				return false;
@@ -820,7 +797,7 @@ public class SitesUtil {
 
 				String layoutUpdateable =
 					layoutSetPrototypeLayout.getTypeSettingsProperty(
-						LAYOUT_UPDATEABLE);
+						SitesUtil.LAYOUT_UPDATEABLE);
 
 				if (Validator.isNull(layoutUpdateable)) {
 					return true;
@@ -838,7 +815,7 @@ public class SitesUtil {
 		return true;
 	}
 
-	public static boolean isOrganizationUser(
+	public boolean isOrganizationUser(
 			long companyId, Group group, User user,
 			List<String> organizationNames)
 		throws Exception {
@@ -872,7 +849,7 @@ public class SitesUtil {
 		return organizationUser;
 	}
 
-	public static boolean isUserGroupLayoutSetViewable(
+	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
 
@@ -900,7 +877,7 @@ public class SitesUtil {
 		}
 	}
 
-	public static boolean isUserGroupUser(
+	public boolean isUserGroupUser(
 			long companyId, Group group, User user, List<String> userGroupNames)
 		throws Exception {
 
@@ -928,7 +905,7 @@ public class SitesUtil {
 		return userGroupUser;
 	}
 
-	public static void mergeLayoutPrototypeLayout(Group group, Layout layout)
+	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
 		String sourcePrototypeLayoutUuid =
@@ -956,14 +933,13 @@ public class SitesUtil {
 	/**
 	 * @deprecated {@link #mergeLayoutPrototypeLayout(Group, Layout)}
 	 */
-	public static void mergeLayoutProtypeLayout(Group group, Layout layout)
+	public void mergeLayoutProtypeLayout(Group group, Layout layout)
 		throws Exception {
 
 		mergeLayoutPrototypeLayout(group, layout);
 	}
 
-	public static void mergeLayoutSetPrototypeLayouts(
-			Group group, LayoutSet layoutSet)
+	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
 		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
@@ -976,7 +952,7 @@ public class SitesUtil {
 			layoutSet.getSettingsProperties();
 
 		long lastMergeTime = GetterUtil.getLong(
-			settingsProperties.getProperty(LAST_MERGE_TIME));
+			settingsProperties.getProperty(SitesUtil.LAST_MERGE_TIME));
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.
@@ -997,7 +973,8 @@ public class SitesUtil {
 			layoutSetPrototypeLayoutSet.getSettingsProperties();
 
 		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+			layoutSetPrototypeSettingsProperties.getProperty(
+				SitesUtil.MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
 			PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
@@ -1060,7 +1037,7 @@ public class SitesUtil {
 			boolean importData = true;
 
 			long lastResetTime = GetterUtil.getLong(
-				settingsProperties.getProperty(LAST_RESET_TIME));
+				settingsProperties.getProperty(SitesUtil.LAST_RESET_TIME));
 
 			if ((lastMergeTime > 0) || (lastResetTime > 0)) {
 				importData = false;
@@ -1077,7 +1054,7 @@ public class SitesUtil {
 			_log.error(e, e);
 
 			layoutSetPrototypeSettingsProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
+				SitesUtil.MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
 
 			// Invoke updateImpl so that we do not trigger the listeners
 
@@ -1093,14 +1070,13 @@ public class SitesUtil {
 	/**
 	 * @deprecated {@link #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
 	 */
-	public static void mergeLayoutSetProtypeLayouts(
-			Group group, LayoutSet layoutSet)
+	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
 		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
-	public static void resetPrototype(Layout layout)
+	public void resetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
 		layout.setModifiedDate(null);
@@ -1111,15 +1087,16 @@ public class SitesUtil {
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
-		settingsProperties.remove(LAST_MERGE_TIME);
+		settingsProperties.remove(SitesUtil.LAST_MERGE_TIME);
 
 		settingsProperties.setProperty(
-			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
+			SitesUtil.LAST_RESET_TIME,
+			String.valueOf(System.currentTimeMillis()));
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
-	public static void updateLayoutScopes(
+	public void updateLayoutScopes(
 			long userId, Layout sourceLayout, Layout targetLayout,
 			PortletPreferences sourcePreferences,
 			PortletPreferences targetPreferences, String sourcePortletId,
@@ -1167,7 +1144,7 @@ public class SitesUtil {
 		targetPreferences.store();
 	}
 
-	public static void updateLayoutSetPrototypesLinks(
+	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,
 			boolean publicLayoutSetPrototypeLinkEnabled,
@@ -1182,8 +1159,7 @@ public class SitesUtil {
 			publicLayoutSetPrototypeLinkEnabled);
 	}
 
-	protected static void doMergeLayoutPrototypeLayout(
-			Group group, Layout layout)
+	protected void doMergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
 		if (!layout.isLayoutPrototypeLinkActive() ||
@@ -1193,7 +1169,7 @@ public class SitesUtil {
 		}
 
 		long lastMergeTime = GetterUtil.getLong(
-			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
+			layout.getTypeSettingsProperty(SitesUtil.LAST_MERGE_TIME));
 
 		LayoutPrototype layoutPrototype =
 			LayoutPrototypeLocalServiceUtil.
@@ -1212,7 +1188,8 @@ public class SitesUtil {
 			layoutPrototypeLayout.getTypeSettingsProperties();
 
 		int mergeFailCount = GetterUtil.getInteger(
-			prototypeTypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+			prototypeTypeSettingsProperties.getProperty(
+				SitesUtil.MERGE_FAIL_COUNT));
 
 		if (mergeFailCount >
 				PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
@@ -1276,7 +1253,7 @@ public class SitesUtil {
 			_log.error(e, e);
 
 			prototypeTypeSettingsProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
+				SitesUtil.MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
 
 			// Invoke updateImpl so that we do not trigger the listeners
 
@@ -1289,7 +1266,7 @@ public class SitesUtil {
 		}
 	}
 
-	protected static Map<String, String[]> getLayoutSetPrototypesParameters(
+	protected Map<String, String[]> getLayoutSetPrototypesParameters(
 		boolean importData) {
 
 		Map<String, String[]> parameterMap =
@@ -1370,7 +1347,7 @@ public class SitesUtil {
 		return parameterMap;
 	}
 
-	protected static void importLayoutSetPrototype(
+	protected void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, long groupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
 			boolean importData)
@@ -1442,7 +1419,7 @@ public class SitesUtil {
 		}
 	}
 
-	protected static void setLayoutSetPrototypeLinkEnabledParameter(
+	protected void setLayoutSetPrototypeLinkEnabledParameter(
 		Map<String, String[]> parameterMap, LayoutSet targetLayoutSet,
 		ServiceContext serviceContext) {
 
@@ -1488,7 +1465,7 @@ public class SitesUtil {
 		}
 	}
 
-	protected static void updateLayoutSetPrototypeLink(
+	protected void updateLayoutSetPrototypeLink(
 			long groupId, boolean privateLayout, long layoutSetPrototypeId,
 			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
@@ -1525,10 +1502,10 @@ public class SitesUtil {
 		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
 	}
 
-	private static final String _TEMP_DIR =
+	private Log _log = LogFactoryUtil.getLog(SitesUtil.class);
+
+	private String _TEMP_DIR =
 		SystemProperties.get(SystemProperties.TMP_DIR) +
 			"/liferay/layout_set_prototype/";
-
-	private static Log _log = LogFactoryUtil.getLog(SitesUtil.class);
 
 }

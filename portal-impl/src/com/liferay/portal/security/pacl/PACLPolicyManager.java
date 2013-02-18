@@ -47,6 +47,10 @@ public class PACLPolicyManager {
 			paclPolicy = new ActivePACLPolicy(
 				servletContextName, classLoader, properties);
 		}
+		else if (state == State.GENERATING_AUTHORIZATION_PROPERTY) {
+			paclPolicy = new GeneratingPACLPolicy(
+				servletContextName, classLoader, properties);
+		}
 		else {
 			paclPolicy = new InactivePACLPolicy(
 				servletContextName, classLoader, properties);
@@ -122,7 +126,10 @@ public class PACLPolicyManager {
 		DISABLED, ENABLED, GENERATING_AUTHORIZATION_PROPERTY;
 
 		public static State parse(String state) {
-			if (GetterUtil.getBoolean(state) == true) {
+			if (state.equals("generate")) {
+				return GENERATING_AUTHORIZATION_PROPERTY;
+			}
+			else if (GetterUtil.getBoolean(state) == true) {
 				return ENABLED;
 			}
 

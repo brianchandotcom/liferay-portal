@@ -629,7 +629,7 @@ public class EditArticleAction extends PortletAction {
 
 			images = getImages(fields, locale);
 
-			content = JournalConverterUtil.getXML(ddmStructure, fields);
+			content = JournalConverterUtil.getContent(ddmStructure, fields);
 		}
 
 		Boolean fileItemThresholdSizeExceeded =
@@ -811,7 +811,7 @@ public class EditArticleAction extends PortletAction {
 					Fields mergedFields = DDMUtil.mergeFields(
 						newFields, existingFields);
 
-					content = JournalConverterUtil.getXML(
+					content = JournalConverterUtil.getContent(
 						ddmStructure, mergedFields);
 				}
 			}

@@ -24,10 +24,16 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
  */
 public class JournalConverterUtil {
 
-	public static Fields getDDMFields(DDMStructure ddmStructure, String xml)
+	public static String getContent(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
-		return getJournalConverter().getDDMFields(ddmStructure, xml);
+		return getJournalConverter().getContent(ddmStructure, ddmFields);
+	}
+
+	public static Fields getDDMFields(DDMStructure ddmStructure, String content)
+		throws Exception {
+
+		return getJournalConverter().getDDMFields(ddmStructure, content);
 	}
 
 	public static String getDDMXSD(String journalXSD) throws Exception {
@@ -39,12 +45,6 @@ public class JournalConverterUtil {
 			JournalConverterUtil.class);
 
 		return _journalConverter;
-	}
-
-	public static String getXML(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception {
-
-		return getJournalConverter().getXML(ddmStructure, ddmFields);
 	}
 
 	public void setJournalConverter(JournalConverter journalConverter) {

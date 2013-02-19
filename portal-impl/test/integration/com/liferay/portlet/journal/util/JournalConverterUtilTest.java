@@ -85,6 +85,218 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testGetContentFromBooleanField() throws Exception {
+		Fields fields = new Fields();
+
+		Field booleanField = getBooleanField(_ddmStructure.getStructureId());
+
+		fields.put(booleanField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
+			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-boolean-repeatable-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromDocLibraryField() throws Exception {
+		Fields fields = new Fields();
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, "Test 2.txt");
+
+		Field docLibrary = getDocumentLibraryField(
+			fileEntry, _ddmStructure.getStructureId());
+
+		fields.put(docLibrary);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
+			"document_library_INSTANCE_4aGOvP3N");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-doc-library-field.xml");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
+
+		Document document = SAXReaderUtil.read(expectedContent);
+
+		Element element = (Element)xPathSelector.selectSingleNode(document);
+
+		String previewURL = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+			false, true);
+
+		element.addCDATA(previewURL);
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(document.asXML(), actualContent);
+	}
+
+	@Test
+	public void testGetContentFromLinkToLayoutField() throws Exception {
+		Fields fields = new Fields();
+
+		Field linkToLayoutField = getLinkToLayoutField(
+			_ddmStructure.getStructureId());
+
+		fields.put(linkToLayoutField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "link_to_layout_INSTANCE_MiO7vIJu");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-link-to-page-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromListField() throws Exception {
+		Fields fields = new Fields();
+
+		Field listField = getListField(_ddmStructure.getStructureId());
+
+		fields.put(listField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "list_INSTANCE_pcm9WPVX");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-list-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromMultiListField() throws Exception {
+		Fields fields = new Fields();
+
+		Field multiListField = getMultiListField(
+			_ddmStructure.getStructureId());
+
+		fields.put(multiListField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "multi-list_INSTANCE_9X5wVsSv");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-multi-list-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromNestedFields() throws Exception {
+		Fields fields = getNestedFields(_ddmStructure.getStructureId());
+
+		String expectedContent = readText(
+			"test-journal-content-nested-fields.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromTextAreaField() throws Exception {
+		Fields fields = new Fields();
+
+		Field textAreaField = getTextAreaField(_ddmStructure.getStructureId());
+
+		fields.put(textAreaField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "text_area_INSTANCE_RFnJ1nCn");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-text-area-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromTextBoxField() throws Exception {
+		Fields fields = new Fields();
+
+		Field textBoxField = getTextBoxField(_ddmStructure.getStructureId());
+
+		fields.put(textBoxField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(),
+			"text_box_INSTANCE_ND057krU,text_box_INSTANCE_HvemvQgl," +
+			"text_box_INSTANCE_enAnbvq6");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-text-box-repeatable-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetContentFromTextField() throws Exception {
+		Fields fields = new Fields();
+
+		Field textField = getTextField(_ddmStructure.getStructureId());
+
+		fields.put(textField);
+
+		Field fieldsDisplayField = getFieldsDisplayField(
+			_ddmStructure.getStructureId(), "text_INSTANCE_bf4sdx6Q");
+
+		fields.put(fieldsDisplayField);
+
+		String expectedContent = readText(
+			"test-journal-content-text-field.xml");
+
+		String actualContent = JournalConverterUtil.getContent(
+			_ddmStructure, fields);
+
+		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
 	public void testGetDDMXSD() throws Exception {
 		DDMStructure expectedDDMStructure = new DDMStructureImpl();
 
@@ -103,7 +315,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithBooleanElement() throws Exception {
+	public void testGetFieldsFromContentWithBooleanElement() throws Exception {
 		Fields expectedFields = new Fields();
 
 		Field booleanField = getBooleanField(_ddmStructure.getStructureId());
@@ -116,17 +328,17 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		expectedFields.put(fieldsDisplayField);
 
-		String xml = readText(
+		String content = readText(
 			"test-journal-content-boolean-repeatable-field.xml");
 
 		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, xml);
+			_ddmStructure, content);
 
 		assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithDocumentLibraryElement()
+	public void testGetFieldsFromContentWithDocumentLibraryElement()
 		throws Exception {
 
 		Fields expectedFields = new Fields();
@@ -146,11 +358,11 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		expectedFields.put(fieldsDisplayField);
 
-		String xml = readText("test-journal-content-doc-library-field.xml");
+		String content = readText("test-journal-content-doc-library-field.xml");
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.read(content);
 
 		Element element = (Element)xPathSelector.selectSingleNode(document);
 
@@ -167,7 +379,9 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithLinkToLayoutElement() throws Exception {
+	public void testGetFieldsFromContentWithLinkToLayoutElement()
+		throws Exception {
+
 		Fields expectedFields = new Fields();
 
 		Field linkToLayoutField = getLinkToLayoutField(
@@ -180,16 +394,17 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		expectedFields.put(fieldsDisplayField);
 
-		String xml = readText("test-journal-content-link-to-page-field.xml");
+		String content = readText(
+			"test-journal-content-link-to-page-field.xml");
 
 		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, xml);
+			_ddmStructure, content);
 
 		assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithListElement() throws Exception {
+	public void testGetFieldsFromContentWithListElement() throws Exception {
 		Fields expectedFields = new Fields();
 
 		Field listField = getListField(_ddmStructure.getStructureId());
@@ -201,16 +416,18 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		expectedFields.put(fieldsDisplayField);
 
-		String xml = readText("test-journal-content-list-field.xml");
+		String content = readText("test-journal-content-list-field.xml");
 
 		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, xml);
+			_ddmStructure, content);
 
 		assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithMultiListElement() throws Exception {
+	public void testGetFieldsFromContentWithMultiListElement()
+		throws Exception {
+
 		Fields expectedFields = new Fields();
 
 		Field multiListField = getMultiListField(
@@ -223,224 +440,24 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		expectedFields.put(fieldsDisplayField);
 
-		String xml = readText("test-journal-content-multi-list-field.xml");
+		String content = readText("test-journal-content-multi-list-field.xml");
 
 		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, xml);
+			_ddmStructure, content);
 
 		assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
-	public void testGetFieldsFromXMLWithNestedElements() throws Exception {
+	public void testGetFieldsFromContentWithNestedElements() throws Exception {
 		Fields expectedFields = getNestedFields(_ddmStructure.getStructureId());
 
-		String xml = readText("test-journal-content-nested-fields.xml");
+		String content = readText("test-journal-content-nested-fields.xml");
 
 		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, xml);
+			_ddmStructure, content);
 
 		assertEquals(expectedFields, actualFields);
-	}
-
-	@Test
-	public void testGetXMLFromBooleanField() throws Exception {
-		Fields fields = new Fields();
-
-		Field booleanField = getBooleanField(_ddmStructure.getStructureId());
-
-		fields.put(booleanField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-boolean-repeatable-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromDocLibraryField() throws Exception {
-		Fields fields = new Fields();
-
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true, "Test 2.txt");
-
-		Field docLibrary = getDocumentLibraryField(
-			fileEntry, _ddmStructure.getStructureId());
-
-		fields.put(docLibrary);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"document_library_INSTANCE_4aGOvP3N");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-doc-library-field.xml");
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
-
-		Document document = SAXReaderUtil.read(expectedXML);
-
-		Element element = (Element)xPathSelector.selectSingleNode(document);
-
-		String previewURL = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, true);
-
-		element.addCDATA(previewURL);
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(document.asXML(), actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromLinkToLayoutField() throws Exception {
-		Fields fields = new Fields();
-
-		Field linkToLayoutField = getLinkToLayoutField(
-			_ddmStructure.getStructureId());
-
-		fields.put(linkToLayoutField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "link_to_layout_INSTANCE_MiO7vIJu");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-link-to-page-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromListField() throws Exception {
-		Fields fields = new Fields();
-
-		Field listField = getListField(_ddmStructure.getStructureId());
-
-		fields.put(listField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "list_INSTANCE_pcm9WPVX");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText("test-journal-content-list-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromMultiListField() throws Exception {
-		Fields fields = new Fields();
-
-		Field multiListField = getMultiListField(
-			_ddmStructure.getStructureId());
-
-		fields.put(multiListField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "multi-list_INSTANCE_9X5wVsSv");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-multi-list-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromNestedFields() throws Exception {
-		Fields fields = getNestedFields(_ddmStructure.getStructureId());
-
-		String expectedXML = readText("test-journal-content-nested-fields.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromTextAreaField() throws Exception {
-		Fields fields = new Fields();
-
-		Field textAreaField = getTextAreaField(_ddmStructure.getStructureId());
-
-		fields.put(textAreaField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "text_area_INSTANCE_RFnJ1nCn");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-text-area-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromTextBoxField() throws Exception {
-		Fields fields = new Fields();
-
-		Field textBoxField = getTextBoxField(_ddmStructure.getStructureId());
-
-		fields.put(textBoxField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"text_box_INSTANCE_ND057krU,text_box_INSTANCE_HvemvQgl," +
-			"text_box_INSTANCE_enAnbvq6");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText(
-			"test-journal-content-text-box-repeatable-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
-	}
-
-	@Test
-	public void testGetXMLFromTextField() throws Exception {
-		Fields fields = new Fields();
-
-		Field textField = getTextField(_ddmStructure.getStructureId());
-
-		fields.put(textField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "text_INSTANCE_bf4sdx6Q");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedXML = readText("test-journal-content-text-field.xml");
-
-		String actualXML = JournalConverterUtil.getXML(_ddmStructure, fields);
-
-		assertEquals(expectedXML, actualXML);
 	}
 
 	protected void assertEquals(Fields expectedFields, Fields actualFields) {
@@ -471,14 +488,14 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(expectedFields, actualFields);
 	}
 
-	protected void assertEquals(String expectedXML, String actualXML)
+	protected void assertEquals(String expectedContent, String actualContent)
 		throws Exception {
 
 		Map<String, Map<Locale, List<String>>> expectedFieldsMap = getFieldsMap(
-			expectedXML);
+			expectedContent);
 
 		Map<String, Map<Locale, List<String>>> actualFieldsMap = getFieldsMap(
-			actualXML);
+			actualContent);
 
 		Assert.assertEquals(expectedFieldsMap, actualFieldsMap);
 	}
@@ -532,13 +549,13 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		return fieldsDisplayField;
 	}
 
-	protected Map<String, Map<Locale, List<String>>> getFieldsMap(String xml)
-		throws Exception {
+	protected Map<String, Map<Locale, List<String>>> getFieldsMap(
+		String content) throws Exception {
 
 		Map<String, Map<Locale, List<String>>> fieldsMap =
 			new HashMap<String, Map<Locale, List<String>>>();
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 

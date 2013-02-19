@@ -23,12 +23,12 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
  */
 public interface JournalConverter {
 
-	public Fields getDDMFields(DDMStructure ddmStructure, String xml)
+	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
+		throws Exception;
+
+	public Fields getDDMFields(DDMStructure ddmStructure, String content)
 		throws Exception;
 
 	public String getDDMXSD(String journalXSD) throws Exception;
-
-	public String getXML(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception;
 
 }

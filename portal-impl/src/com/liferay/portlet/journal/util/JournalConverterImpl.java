@@ -53,9 +53,52 @@ import java.util.Set;
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
-public class JournalConverterUtil {
+public class JournalConverterImpl implements JournalConverter {
 
-	public static Fields getDDMFields(DDMStructure ddmStructure, String xml)
+	public JournalConverterImpl() {
+		_ddmDataTypes = new HashMap<String, String>();
+
+		_ddmDataTypes.put("boolean", "boolean");
+		_ddmDataTypes.put("document_library", "document-library");
+		_ddmDataTypes.put("image", "image");
+		_ddmDataTypes.put("link_to_layout", "link-to-page");
+		_ddmDataTypes.put("list", "string");
+		_ddmDataTypes.put("multi-list", "string");
+		_ddmDataTypes.put("text", "string");
+		_ddmDataTypes.put("text_area", "html");
+		_ddmDataTypes.put("text_box", "string");
+
+		_ddmMetadataAttributes = new HashMap<String, String>();
+
+		_ddmMetadataAttributes.put("instructions", "tip");
+		_ddmMetadataAttributes.put("label", "label");
+		_ddmMetadataAttributes.put("predefinedValue", "predefinedValue");
+
+		_ddmTypesToJournalTypes = new HashMap<String, String>();
+
+		_ddmTypesToJournalTypes.put("checkbox", "boolean");
+		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
+		_ddmTypesToJournalTypes.put("ddm-link-to-page", "link_to_layout");
+		_ddmTypesToJournalTypes.put("ddm-text-html", "text_area");
+		_ddmTypesToJournalTypes.put("select", "list");
+		_ddmTypesToJournalTypes.put("text", "text");
+		_ddmTypesToJournalTypes.put("textarea", "text_box");
+		_ddmTypesToJournalTypes.put("wcm-image", "image");
+
+		_journalTypesToDDMTypes = new HashMap<String, String>();
+
+		_journalTypesToDDMTypes.put("boolean", "checkbox");
+		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
+		_journalTypesToDDMTypes.put("image", "wcm-image");
+		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
+		_journalTypesToDDMTypes.put("list", "select");
+		_journalTypesToDDMTypes.put("multi-list", "select");
+		_journalTypesToDDMTypes.put("text", "text");
+		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
+		_journalTypesToDDMTypes.put("text_box", "textarea");
+	}
+
+	public Fields getDDMFields(DDMStructure ddmStructure, String xml)
 		throws Exception {
 
 		Document document = SAXReaderUtil.read(xml);
@@ -83,7 +126,7 @@ public class JournalConverterUtil {
 		return ddmFields;
 	}
 
-	public static String getDDMXSD(String journalXSD) throws Exception {
+	public String getDDMXSD(String journalXSD) throws Exception {
 		Document document = SAXReaderUtil.read(journalXSD);
 
 		Element rootElement = document.getRootElement();
@@ -103,7 +146,7 @@ public class JournalConverterUtil {
 		return DDMXMLUtil.formatXML(document);
 	}
 
-	public static String getXML(DDMStructure ddmStructure, Fields ddmFields)
+	public String getXML(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
 		Document document = SAXReaderUtil.createDocument();
@@ -140,7 +183,7 @@ public class JournalConverterUtil {
 		return DDMXMLUtil.formatXML(document.asXML());
 	}
 
-	protected static void addDDMFields(
+	protected void addDDMFields(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, String defaultLocale)
 		throws Exception {
@@ -181,7 +224,7 @@ public class JournalConverterUtil {
 		}
 	}
 
-	protected static void addMetadataAttribute(
+	protected void addMetadataAttribute(
 		Element metadataElement, String name, String value) {
 
 		Element entryElement = metadataElement.addElement("entry");
@@ -190,7 +233,7 @@ public class JournalConverterUtil {
 		entryElement.addCDATA(value);
 	}
 
-	protected static int countFieldRepetition(
+	protected int countFieldRepetition(
 			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
 		throws Exception {
@@ -225,7 +268,7 @@ public class JournalConverterUtil {
 		return repetitions;
 	}
 
-	protected static String getAvailableLocales(Fields ddmFields) {
+	protected String getAvailableLocales(Fields ddmFields) {
 		Set<Locale> availableLocales = ddmFields.getAvailableLocales();
 
 		Locale[] availableLocalesArray = new Locale[availableLocales.size()];
@@ -237,7 +280,7 @@ public class JournalConverterUtil {
 		return StringUtil.merge(languageIds);
 	}
 
-	protected static Field getField(
+	protected Field getField(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			String defaultLocale)
 		throws Exception {
@@ -270,7 +313,7 @@ public class JournalConverterUtil {
 		return ddmField;
 	}
 
-	protected static Serializable getFieldValue(
+	protected Serializable getFieldValue(
 			String dataType, String type, Element dynamicContentElement)
 		throws Exception {
 
@@ -336,7 +379,7 @@ public class JournalConverterUtil {
 		return serializable;
 	}
 
-	protected static void updateContentDynamicElement(
+	protected void updateContentDynamicElement(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
 		throws Exception {
@@ -369,7 +412,7 @@ public class JournalConverterUtil {
 		ddmFieldsCounter.incrementKey(fieldName);
 	}
 
-	protected static void updateContentDynamicElement(
+	protected void updateContentDynamicElement(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
 		throws Exception {
@@ -401,7 +444,7 @@ public class JournalConverterUtil {
 			ddmFieldsCounter);
 	}
 
-	protected static void updateDynamicContentValue(
+	protected void updateDynamicContentValue(
 			Element dynamicContentElement, String fieldType, String fieldValue)
 		throws Exception {
 
@@ -466,9 +509,7 @@ public class JournalConverterUtil {
 		}
 	}
 
-	protected static void updateFieldsDisplay(
-		Fields ddmFields, String fieldName) {
-
+	protected void updateFieldsDisplay(Fields ddmFields, String fieldName) {
 		String fieldsDisplayValue =
 			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
 				PwdGenerator.getPassword());
@@ -484,7 +525,7 @@ public class JournalConverterUtil {
 		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
 	}
 
-	protected static void updateXSDDynamicElement(Element element) {
+	protected void updateXSDDynamicElement(Element element) {
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String name = element.attributeValue("name");
@@ -608,48 +649,9 @@ public class JournalConverterUtil {
 		}
 	}
 
-	private static Map<String, String> _ddmDataTypes =
-		new HashMap<String, String>();
-	private static Map<String, String> _ddmMetadataAttributes =
-		new HashMap<String, String>();
-	private static Map<String, String> _ddmTypesToJournalTypes =
-		new HashMap<String, String>();
-	private static Map<String, String> _journalTypesToDDMTypes =
-		new HashMap<String, String>();
-
-	static {
-		_ddmDataTypes.put("boolean", "boolean");
-		_ddmDataTypes.put("document_library", "document-library");
-		_ddmDataTypes.put("image", "image");
-		_ddmDataTypes.put("link_to_layout", "link-to-page");
-		_ddmDataTypes.put("list", "string");
-		_ddmDataTypes.put("multi-list", "string");
-		_ddmDataTypes.put("text", "string");
-		_ddmDataTypes.put("text_area", "html");
-		_ddmDataTypes.put("text_box", "string");
-
-		_ddmMetadataAttributes.put("instructions", "tip");
-		_ddmMetadataAttributes.put("label", "label");
-		_ddmMetadataAttributes.put("predefinedValue", "predefinedValue");
-
-		_ddmTypesToJournalTypes.put("checkbox", "boolean");
-		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
-		_ddmTypesToJournalTypes.put("ddm-link-to-page", "link_to_layout");
-		_ddmTypesToJournalTypes.put("ddm-text-html", "text_area");
-		_ddmTypesToJournalTypes.put("select", "list");
-		_ddmTypesToJournalTypes.put("text", "text");
-		_ddmTypesToJournalTypes.put("textarea", "text_box");
-		_ddmTypesToJournalTypes.put("wcm-image", "image");
-
-		_journalTypesToDDMTypes.put("boolean", "checkbox");
-		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
-		_journalTypesToDDMTypes.put("image", "wcm-image");
-		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
-		_journalTypesToDDMTypes.put("list", "select");
-		_journalTypesToDDMTypes.put("multi-list", "select");
-		_journalTypesToDDMTypes.put("text", "text");
-		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
-		_journalTypesToDDMTypes.put("text_box", "textarea");
-	}
+	private Map<String, String> _ddmDataTypes;
+	private Map<String, String> _ddmMetadataAttributes;
+	private Map<String, String> _ddmTypesToJournalTypes;
+	private Map<String, String> _journalTypesToDDMTypes;
 
 }

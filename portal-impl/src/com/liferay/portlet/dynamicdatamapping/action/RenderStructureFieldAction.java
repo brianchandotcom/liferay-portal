@@ -21,9 +21,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
-import com.liferay.taglib.aui.AUIUtil;
-
-import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

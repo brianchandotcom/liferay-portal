@@ -34,6 +34,13 @@ public class OrganizationTestUtil {
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, false);
 	}
 
+	public static Organization addOrganization(boolean site) throws Exception {
+		return addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			ServiceTestUtil.randomString(),
+			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, site);
+	}
+
 	public static Organization addOrganization(
 			long parentOrganizationId, String name, String type, boolean site)
 		throws Exception {

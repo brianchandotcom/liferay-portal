@@ -39,6 +39,7 @@ boolean inlineLabels = GetterUtil.getBoolean(String.valueOf(request.getAttribute
 java.lang.String method = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:method"), "post");
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:name"), "fm");
 java.lang.String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:onSubmit"));
+java.lang.String portletNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("aui:form:portletNamespace"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:form:useNamespace")), true);
 
 _updateOptions(_options, "action", action);
@@ -48,6 +49,7 @@ _updateOptions(_options, "inlineLabels", inlineLabels);
 _updateOptions(_options, "method", method);
 _updateOptions(_options, "name", name);
 _updateOptions(_options, "onSubmit", onSubmit);
+_updateOptions(_options, "portletNamespace", portletNamespace);
 _updateOptions(_options, "useNamespace", useNamespace);
 %>
 

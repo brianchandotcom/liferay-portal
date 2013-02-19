@@ -1502,10 +1502,10 @@ public class SitesImpl implements Sites {
 		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
 	}
 
-	private Log _log = LogFactoryUtil.getLog(SitesUtil.class);
-
-	private String _TEMP_DIR =
+	private static final String _TEMP_DIR =
 		SystemProperties.get(SystemProperties.TMP_DIR) +
 			"/liferay/layout_set_prototype/";
+
+	private Log _log = LogFactoryUtil.getLog(SitesUtil.class);
 
 }

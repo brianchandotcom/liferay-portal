@@ -4,7 +4,6 @@
 
 		${sampleSQLBuilder.insertBlogsEntry(blogsEntry)}
 
-		<#assign mbCompanyId = 0>
 		<#assign mbGroupId = 0>
 		<#assign mbUserId = blogsEntry.userId>
 		<#assign mbCategoryId = 0>

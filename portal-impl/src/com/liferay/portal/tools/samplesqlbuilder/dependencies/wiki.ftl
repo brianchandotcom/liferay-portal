@@ -10,7 +10,6 @@
 
 				${sampleSQLBuilder.insertWikiPage(wikiNode, wikiPage)}
 
-				<#assign mbCompanyId = 0>
 				<#assign mbGroupId = 0>
 				<#assign mbUserId = wikiPage.userId>
 				<#assign mbCategoryId = 0>

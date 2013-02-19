@@ -21,17 +21,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifie
 <#assign mbMessageId = counter.get()>
 <#assign mbThreadId = counter.get()>
 
-<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, mbThreadId)>
-
-insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
-
-<#assign mbMessage = dataFactory.addMBMessage(mbMessageId, groupId, firstUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, -1, mbThreadId, mbMessageId, 0, stringUtil.valueOf(journalArticleResource.resourcePrimKey), stringUtil.valueOf(journalArticleResource.resourcePrimKey))>
-
-${sampleSQLBuilder.insertMBMessage(mbMessage)}
-
-<#assign mbThread = dataFactory.addMBThread(mbMessage.threadId, groupId, companyId, -1, mbMessage.messageId, 1, firstUserId)>
-
-insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
+${sampleSQLBuilder.insertMBDiscussion(groupId, firstUserId, mbMessageId, mbThreadId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, 0)}
 
 <#assign publicLayoutsSize = publicLayouts?size>
 

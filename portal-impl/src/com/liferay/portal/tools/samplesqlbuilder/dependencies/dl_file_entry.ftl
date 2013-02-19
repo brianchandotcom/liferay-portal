@@ -28,17 +28,7 @@ insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageL
 <#assign mbThreadId = counter.get()>
 <#assign mbMessageId = counter.get()>
 
-<#assign mbDiscussion = dataFactory.addMBDiscussion(dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, mbThreadId)>
-
-insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
-
-<#assign mbMessage = dataFactory.addMBMessage(mbMessageId, dlFileEntry.groupId, dlFileEntry.userId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, -1, mbThreadId, mbMessageId, 0, stringUtil.valueOf(dlFileEntry.fileEntryId), stringUtil.valueOf(dlFileEntry.fileEntryId))>
-
-${sampleSQLBuilder.insertMBMessage(mbMessage)}
-
-<#assign mbThread = dataFactory.addMBThread(mbThreadId, mbMessage.groupId, companyId, mbMessage.categoryId, mbMessage.messageId, 1, mbMessage.userId)>
-
-insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, '${createDate}', 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', '${createDate}');
+${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dlFileEntry.userId, mbMessageId, mbThreadId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, 0)}
 
 <#assign socialActivity = dataFactory.addSocialActivity(dlFileEntry.groupId, dlFileEntry.companyId, dlFileEntry.userId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId)>
 

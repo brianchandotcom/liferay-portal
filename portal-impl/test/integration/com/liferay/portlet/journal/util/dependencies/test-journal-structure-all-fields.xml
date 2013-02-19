@@ -19,7 +19,7 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element name="image" type="image" index-type="" repeatable="false">
+	<dynamic-element name="image_1" type="image" index-type="" repeatable="false">
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 			<entry name="instructions"><![CDATA[]]></entry>
@@ -28,6 +28,8 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
+	<dynamic-element name="image_2" type="image" repeatable="false" />
+	<dynamic-element name="image_3" type="image" />
 	<dynamic-element name="link_to_layout" type="link_to_layout" index-type="" repeatable="false">
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>

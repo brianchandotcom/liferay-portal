@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -486,7 +487,6 @@ public class JournalConverterUtil {
 	protected static void updateXSDDynamicElement(Element element) {
 		Locale defaultLocale = LocaleUtil.getDefault();
 
-		String indexType = element.attributeValue("index-type");
 		String name = element.attributeValue("name");
 		String type = element.attributeValue("type");
 
@@ -526,7 +526,16 @@ public class JournalConverterUtil {
 			}
 		}
 
-		element.remove(element.attribute("index-type"));
+		String indexType = StringPool.BLANK;
+
+		Attribute indexTypeAttribute = element.attribute("index-type");
+
+		if (indexTypeAttribute != null) {
+			indexType = indexTypeAttribute.getValue();
+
+			element.remove(indexTypeAttribute);
+		}
+
 		element.remove(element.attribute("type"));
 
 		element.addAttribute("dataType", _ddmDataTypes.get(type));

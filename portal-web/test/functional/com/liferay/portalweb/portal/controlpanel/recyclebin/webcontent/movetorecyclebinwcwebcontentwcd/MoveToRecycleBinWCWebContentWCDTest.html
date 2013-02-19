@@ -49,9 +49,49 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@class='entry-title']/span[contains(.,'WC WebContent Title')]</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>webContentArticleCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${webContentArticleCheckbox}</td>
+	<td>WebContentArticleCheckbox</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//div[@data-title='WC WebContent Title']/span[2]/span/ul/li/strong/a</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>Web Content Article Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContentArticleCheckbox</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>Web Content Article Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -59,7 +99,7 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
@@ -67,6 +107,16 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
 	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
+	<td>No Web Content was found.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>WC WebContent Title</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

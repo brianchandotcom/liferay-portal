@@ -31,6 +31,6 @@ public class ViewRestoreWCWebContentWCDRecycleBinTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//span[@class='portlet-title-text']");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//div[@class='portlet-content']/div/div/div/p"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

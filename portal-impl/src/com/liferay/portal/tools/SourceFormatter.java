@@ -1994,7 +1994,8 @@ public class SourceFormatter {
 							 line.endsWith(StringPool.SEMICOLON))) {
 
 							previousLine = StringUtil.replaceLast(
-								previousLine, linePart, StringPool.BLANK);
+								previousLine, StringUtil.trim(linePart),
+								StringPool.BLANK);
 
 							line = StringUtil.replaceLast(
 								line, StringPool.TAB,
@@ -3344,6 +3345,10 @@ public class SourceFormatter {
 
 		if (line.startsWith("// ") || trimmedPreviousLine.startsWith("// ")) {
 			return null;
+		}
+
+		if (previousLine.endsWith(" implements")) {
+			return new Tuple(previousLine, "implements ", false);
 		}
 
 		if (line.startsWith("+ ") || line.startsWith("- ") ||

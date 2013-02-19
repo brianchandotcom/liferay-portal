@@ -1048,10 +1048,6 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected void populateExpandoAttributes(
 		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
-		if (expandoAttributes.isEmpty()) {
-			return;
-		}
-
 		Map<String, Serializable> serializedExpandoAttributes =
 			new HashMap<String, Serializable>();
 

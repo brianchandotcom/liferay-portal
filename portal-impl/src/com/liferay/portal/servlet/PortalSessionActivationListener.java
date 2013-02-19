@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSessionEvent;
 /**
  * @author Alexander Chow
  */
-public class PortalSessionActivationListener implements
-	HttpSessionActivationListener, Serializable {
+public class PortalSessionActivationListener
+	implements HttpSessionActivationListener, Serializable {
 
 	public static PortalSessionActivationListener getInstance() {
 		return _instance;

@@ -43,7 +43,6 @@ public class JSONSerializerTest extends TestCase {
 	}
 
 	public void testSerializeHits() {
-
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		Hits hits = new HitsImpl();

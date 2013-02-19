@@ -139,10 +139,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			jsonSerializer.exclude("*.class");
 
 			for (Statement statement : _statements) {
-
 				if (_includes != null) {
 					for (String include : _includes) {
-
 						jsonSerializer.include(include);
 					}
 				}
@@ -180,22 +178,19 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			_includes = new ArrayList<String>();
 		}
 
-		StringBuilder path = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
 		while (statement._parentStatement != null) {
-
 			String statementName = statement.getName().substring(1);
 
-			statementName += StringPool.PERIOD;
-
-			path.insert(0, statementName);
+			sb.insert(0, statementName + StringPool.PERIOD);
 
 			statement = statement._parentStatement;
 		}
 
-		path.append(name);
+		sb.append(name);
 
-		_includes.add(path.toString());
+		_includes.add(sb.toString());
 	}
 
 	private Object _addVariableStatement(

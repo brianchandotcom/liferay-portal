@@ -31,7 +31,7 @@
 
 		<#assign preferences = "<portlet-preferences><preference><name>recordSetId</name><value>" + ddlRecordSet.recordSetId +"</value></preference><preference><name>displayDDMTemplateId</name><value></value></preference><preference><name>editable</name><value>true</value></preference></portlet-preferences>">
 
-		<#assign portletPreferences = dataFactory.addPortletPreferences(defaultUserId, ddlDisplayLayout.plid, ddlPortletId, preferences)>
+		<#assign portletPreferences = dataFactory.addPortletPreferences(0, ddlDisplayLayout.plid, ddlPortletId, preferences)>
 
 		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
 

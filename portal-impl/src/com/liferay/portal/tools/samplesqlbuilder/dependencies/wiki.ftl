@@ -10,22 +10,21 @@
 
 				${sampleSQLBuilder.insertWikiPage(wikiNode, wikiPage)}
 
-				<#assign mbGroupId = 0>
-				<#assign mbUserId = wikiPage.userId>
-				<#assign mbCategoryId = 0>
+				<#assign mbCategoryId = -1>
 				<#assign mbThreadId = counter.get()>
+				<#assign mbRootMessageId = counter.get()>
 
-				<#assign mbRootMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbCategoryId, mbThreadId, 0, 0, stringUtil.valueOf(wikiPage.resourcePrimKey), stringUtil.valueOf(wikiPage.resourcePrimKey))>
+				<#assign mbRootMessage = dataFactory.addMBMessage(mbRootMessageId, groupId, firstUserId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbCategoryId, mbThreadId, mbRootMessageId, 0, stringUtil.valueOf(wikiPage.resourcePrimKey), stringUtil.valueOf(wikiPage.resourcePrimKey))>
 
 				${sampleSQLBuilder.insertMBMessage(mbRootMessage)}
 
-				<#assign mbThread = dataFactory.addMBThread(mbThreadId, mbGroupId, companyId, mbCategoryId, mbRootMessage.messageId, maxWikiPageCommentCount, mbUserId)>
+				<#assign mbThread = dataFactory.addMBThread(mbThreadId, groupId, companyId, mbCategoryId, mbRootMessage.messageId, maxWikiPageCommentCount, firstUserId)>
 
 				insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
 
 				<#if (maxWikiPageCommentCount > 0)>
 					<#list 1..maxWikiPageCommentCount as wikiPageComment>
-						<#assign mbMessage = dataFactory.addMBMessage(counter.get(), mbGroupId, mbUserId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbCategoryId, mbThreadId, mbRootMessage.messageId, mbRootMessage.messageId, "N/A", "This is a test comment " + wikiPageComment + ".")>
+						<#assign mbMessage = dataFactory.addMBMessage(counter.get(), groupId, firstUserId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbCategoryId, mbThreadId, mbRootMessage.messageId, mbRootMessage.messageId, "N/A", "This is a test comment " + wikiPageComment + ".")>
 
 						${sampleSQLBuilder.insertMBMessage(mbMessage)}
 					</#list>
@@ -35,7 +34,7 @@
 
 				insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
 
-				${writerWikiCSV.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbMessage.threadId + "," + mbMessage.messageId + "\n")}
+				${writerWikiCSV.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

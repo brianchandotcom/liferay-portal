@@ -4574,13 +4574,37 @@ public class SourceFormatter {
 
 			s = s.substring(1);
 
-			int y = s.indexOf(delimeter);
+			String value = null;
+			int y = -1;
 
-			if ((y == -1) || (s.length() <= (y + 1))) {
-				return line;
+			for (;;) {
+				y = s.indexOf(delimeter, y + 1);
+
+				if ((y == -1) || (s.length() <= (y + 1))) {
+					return line;
+				}
+
+				value = s.substring(0, y);
+
+				if (value.startsWith("<%")) {
+					int endJavaCodeSignCount = StringUtil.count(value, "%>");
+					int startJavaCodeSignCount = StringUtil.count(value, "<%");
+
+					if (endJavaCodeSignCount == startJavaCodeSignCount) {
+						break;
+					}
+				}
+				else {
+					int greaterThanCount = StringUtil.count(
+						value, StringPool.GREATER_THAN);
+					int lessThanCount = StringUtil.count(
+						value, StringPool.LESS_THAN);
+
+					if (greaterThanCount == lessThanCount) {
+						break;
+					}
+				}
 			}
-
-			String value = s.substring(0, y);
 
 			if ((delimeter == CharPool.APOSTROPHE) &&
 				!value.contains(StringPool.QUOTE)) {
@@ -4588,18 +4612,6 @@ public class SourceFormatter {
 				return StringUtil.replace(
 					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 					StringPool.QUOTE + value + StringPool.QUOTE);
-			}
-
-			if (value.contains("<%") && !value.contains("%>")) {
-				int z = s.indexOf("%>");
-
-				if (z == -1) {
-					return line;
-				}
-
-				y = s.substring(z).indexOf(delimeter);
-
-				value = s.substring(0, y + z);
 			}
 
 			StringBundler sb = new StringBundler(5);
@@ -4613,8 +4625,8 @@ public class SourceFormatter {
 			String currentAttributeAndValue = sb.toString();
 
 			if (wrongOrder) {
-				if (line.contains(currentAttributeAndValue) &&
-					line.contains(previousAttributeAndValue)) {
+				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
+					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
 
 					line = StringUtil.replaceFirst(
 						line, previousAttributeAndValue,

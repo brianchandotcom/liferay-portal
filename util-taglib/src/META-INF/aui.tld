@@ -1271,6 +1271,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>portletNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

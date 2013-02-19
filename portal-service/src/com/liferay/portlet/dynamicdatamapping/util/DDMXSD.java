@@ -35,40 +35,47 @@ public interface DDMXSD {
 
 	public String getFieldHTML(
 			PageContext pageContext, Element element, Fields fields,
-			String namespace, String mode, boolean readOnly, Locale locale)
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
 		throws Exception;
 
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, Fields fields, String namespace, String mode,
-			boolean readOnly, Locale locale)
+			String fieldName, Fields fields, String portletNamespace,
+			String namespace, String mode, boolean readOnly, Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
-			String namespace, boolean readOnly, Locale locale)
+			String portletNamespace, String namespace, boolean readOnly,
+			Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, DDMTemplate ddmTemplate, Fields fields,
-			String namespace, boolean readOnly, Locale locale)
-		throws Exception;
-
-	public String getHTML(
-			PageContext pageContext, String xml, Fields fields, Locale locale)
-		throws Exception;
-
-	public String getHTML(
-			PageContext pageContext, String xml, Fields fields,
-			String namespace, boolean readOnly, Locale locale)
+			String portletNamespace, String namespace, boolean readOnly,
+			Locale locale)
 		throws Exception;
 
 	public String getHTML(
 			PageContext pageContext, String xml, Fields fields,
-			String namespace, Locale locale)
+			String portletNamespace, Locale locale)
 		throws Exception;
 
-	public String getHTML(PageContext pageContext, String xml, Locale locale)
+	public String getHTML(
+			PageContext pageContext, String xml, Fields fields,
+			String portletNamespace, String namespace, boolean readOnly,
+			Locale locale)
+		throws Exception;
+
+	public String getHTML(
+			PageContext pageContext, String xml, Fields fields,
+			String portletNamespace, String namespace, Locale locale)
+		throws Exception;
+
+	public String getHTML(
+			PageContext pageContext, String xml, String portletNamespace,
+			Locale locale)
 		throws Exception;
 
 	public JSONArray getJSONArray(DDMStructure structure, String xsd)

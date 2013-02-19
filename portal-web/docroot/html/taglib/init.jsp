@@ -30,7 +30,7 @@ String namespace = StringPool.BLANK;
 boolean auiFormUseNamespace = GetterUtil.getBoolean((String)request.getAttribute("aui:form:useNamespace"), true);
 
 if ((portletResponse != null) && auiFormUseNamespace) {
-	namespace = GetterUtil.getString(request.getAttribute("aui:form:namespace"), portletResponse.getNamespace());
+	namespace = GetterUtil.getString(request.getAttribute("aui:form:portletNamespace"), portletResponse.getNamespace());
 }
 
 String currentURL = PortalUtil.getCurrentURL(request);

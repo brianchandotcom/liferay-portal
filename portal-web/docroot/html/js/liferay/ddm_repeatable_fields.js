@@ -29,6 +29,9 @@ AUI.add(
 					namespace: {
 					},
 
+					portletNamespace: {
+					},
+
 					repeatable: {
 						validator: Lang.isBoolean,
 						value: false
@@ -94,6 +97,7 @@ AUI.add(
 									fieldName: fieldName,
 									namespace: instance.get('namespace'),
 									p_p_isolated: true,
+									portletNamespace: instance.get('portletNamespace'),
 									readOnly: instance.get('readOnly')
 								},
 								on: {

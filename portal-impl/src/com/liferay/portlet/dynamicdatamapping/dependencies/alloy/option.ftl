@@ -27,7 +27,7 @@
 		<#assign parentFieldNamespace = "_INSTANCE_" + parentFieldStructure.fieldNamespace>
 	</#if>
 
-	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${parentName}${parentFieldNamespace}" type="radio" value=fieldStructure.value>
+	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentName}${parentFieldNamespace}" type="radio" value=fieldStructure.value>
 		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>
 			<@aui.validator name="required" />
 		</#if>

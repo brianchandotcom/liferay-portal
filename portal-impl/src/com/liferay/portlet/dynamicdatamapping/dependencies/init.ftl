@@ -37,11 +37,9 @@
 
 <#assign namespace = namespace!"">
 
-<#if namespace == "">
-	<#assign namespace = portletNamespace>
-</#if>
+<#assign namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}">
 
-<#assign namespacedFieldName = "${fieldName}${fieldNamespace}">
+<#assign namespacedParentName = "${namespace}${parentName}">
 
 <#-- Data -->
 

@@ -34,28 +34,28 @@
 	</@aui.input>
 
 	<@aui["button-row"]>
-		<@aui.button id="${namespace}${namespacedFieldName}selectFileEntry" value="select" />
+		<@aui.button id=namespacedFieldName value="select" />
 
-		<@aui.button onClick="window['${namespace}${namespacedFieldName}downloadFileEntry']();" value="download" />
+		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}downloadFileEntry']();" value="download" />
 
-		<@aui.button onClick="window['${namespace}${namespacedFieldName}clearFileEntry']();" value="clear" />
+		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}clearFileEntry']();" value="clear" />
 	</@>
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
 </@>
 
 <@aui.script>
-	window['${namespace}${namespacedFieldName}clearFileEntry'] = function() {
-		window['${namespace}${namespacedFieldName}setFileEntry']('', '', '', '', '');
+	window['${portletNamespace}${namespacedFieldName}clearFileEntry'] = function() {
+		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '', '');
 	};
 
 	Liferay.provide(
 		window,
-		'${namespace}${namespacedFieldName}downloadFileEntry',
+		'${portletNamespace}${namespacedFieldName}downloadFileEntry',
 		function() {
 			var A = AUI();
 
-			var titleNode = A.one('#${namespace}${namespacedFieldName}Title');
+			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
 			if (titleNode) {
 				var url = titleNode.attr('url');
@@ -70,11 +70,11 @@
 
 	Liferay.provide(
 		window,
-		'${namespace}${namespacedFieldName}setFileEntry',
+		'${portletNamespace}${namespacedFieldName}setFileEntry',
 		function(url, uuid, groupId, title, version) {
 			var A = AUI();
 
-			var inputNode = A.one('#${namespace}${namespacedFieldName}');
+			var inputNode = A.one('#${portletNamespace}${namespacedFieldName}');
 
 			if (inputNode) {
 				if (uuid) {
@@ -93,7 +93,7 @@
 				}
 			}
 
-			var titleNode = A.one('#${namespace}${namespacedFieldName}Title');
+			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
 			if (titleNode) {
 				titleNode.attr('url', url);
@@ -105,10 +105,10 @@
 </@>
 
 <@aui.script use="liferay-portlet-url">
-	var selectFileEntryNode = A.one('#${namespace}${namespacedFieldName}selectFileEntry');
+	var namespacedField = A.one('#${namespacedFieldName}');
 
-	if (selectFileEntryNode) {
-		selectFileEntryNode.on(
+	if (namespacedField) {
+		namespacedField.on(
 			'click',
 			function(event) {
 				var portletURL = Liferay.PortletURL.createRenderURL();
@@ -124,12 +124,12 @@
 
 				Liferay.Util.openWindow(
 					{
-						id: '${namespace}selectDocumentLibrary',
+						id: '${portletNamespace}selectDocumentLibrary',
 						uri: portletURL.toString()
 					}
 				);
 
-				window['${portalUtil.getPortletNamespace("166")}selectDocumentLibrary'] = window['${namespace}${namespacedFieldName}setFileEntry'];
+				window['${portalUtil.getPortletNamespace("166")}selectDocumentLibrary'] = window['${portletNamespace}${namespacedFieldName}setFileEntry'];
 			}
 		);
 	}

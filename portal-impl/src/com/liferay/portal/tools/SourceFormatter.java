@@ -1378,6 +1378,18 @@ public class SourceFormatter {
 				}
 			}
 
+			// LPS-33070
+
+			if (content.contains("implements ProcessCallable") &&
+				!content.contains(
+					"private static final long serialVersionUID")) {
+
+				_sourceFormatterHelper.printError(
+					fileName,
+					"Assign ProcessCallable implementation a " + 
+						"serialVersionUID: " + fileName);
+			}
+
 			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			String oldContent = newContent;

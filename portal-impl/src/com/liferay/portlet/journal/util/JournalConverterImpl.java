@@ -98,10 +98,47 @@ public class JournalConverterImpl implements JournalConverter {
 		_journalTypesToDDMTypes.put("text_box", "textarea");
 	}
 
-	public Fields getDDMFields(DDMStructure ddmStructure, String xml)
+	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		String availableLocales = getAvailableLocales(ddmFields);
+
+		rootElement.addAttribute("available-locales", availableLocales);
+
+		Locale defaultLocale = ddmFields.getDefaultLocale();
+
+		rootElement.addAttribute(
+			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
+
+		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
+
+		for (String fieldName : ddmStructure.getRootFieldNames()) {
+			int repetitions = countFieldRepetition(
+				ddmFields, fieldName, null, -1);
+
+			for (int i = 0; i < repetitions; i++) {
+				Element dynamicElementElement = rootElement.addElement(
+					"dynamic-element");
+
+				dynamicElementElement.addAttribute("name", fieldName);
+
+				updateContentDynamicElement(
+					dynamicElementElement, ddmStructure, ddmFields,
+					ddmFieldsCounter);
+			}
+		}
+
+		return DDMXMLUtil.formatXML(document.asXML());
+	}
+
+	public Fields getDDMFields(DDMStructure ddmStructure, String content)
+		throws Exception {
+
+		Document document = SAXReaderUtil.read(content);
 
 		Field fieldsDisplayField = new Field(
 			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
@@ -144,43 +181,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return DDMXMLUtil.formatXML(document);
-	}
-
-	public String getXML(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		String availableLocales = getAvailableLocales(ddmFields);
-
-		rootElement.addAttribute("available-locales", availableLocales);
-
-		Locale defaultLocale = ddmFields.getDefaultLocale();
-
-		rootElement.addAttribute(
-			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
-
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
-
-		for (String fieldName : ddmStructure.getRootFieldNames()) {
-			int repetitions = countFieldRepetition(
-				ddmFields, fieldName, null, -1);
-
-			for (int i = 0; i < repetitions; i++) {
-				Element dynamicElementElement = rootElement.addElement(
-					"dynamic-element");
-
-				dynamicElementElement.addAttribute("name", fieldName);
-
-				updateContentDynamicElement(
-					dynamicElementElement, ddmStructure, ddmFields,
-					ddmFieldsCounter);
-			}
-		}
-
-		return DDMXMLUtil.formatXML(document.asXML());
 	}
 
 	protected void addDDMFields(

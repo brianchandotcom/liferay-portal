@@ -32,11 +32,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -316,13 +314,11 @@ public class DDMImpl implements DDM {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Locale locale = PortalUtil.getLocale(request);
 
 		DDMStructure structure = field.getDDMStructure();
 
-		Serializable fieldValue = field.getValue(
-			themeDisplay.getLocale(), valueIndex);
+		Serializable fieldValue = field.getValue(locale, valueIndex);
 
 		JSONObject fileJSONObject = JSONFactoryUtil.createJSONObject(
 			String.valueOf(fieldValue));
@@ -568,7 +564,7 @@ public class DDMImpl implements DDM {
 		String dirName = getFileUploadPath(baseModel);
 
 		if (!DLStoreUtil.hasDirectory(
-			companyId, CompanyConstants.SYSTEM, dirName)) {
+				companyId, CompanyConstants.SYSTEM, dirName)) {
 
 			DLStoreUtil.addDirectory(
 				companyId, CompanyConstants.SYSTEM, dirName);
@@ -579,8 +575,8 @@ public class DDMImpl implements DDM {
 		String fileName = dirName + StringPool.SLASH + fieldName;
 
 		if (DLStoreUtil.hasFile(
-			companyId, CompanyConstants.SYSTEM, fileName,
-			Store.VERSION_DEFAULT)) {
+				companyId, CompanyConstants.SYSTEM, fileName,
+				Store.VERSION_DEFAULT)) {
 
 			DLStoreUtil.deleteFile(
 				companyId, CompanyConstants.SYSTEM, fileName,

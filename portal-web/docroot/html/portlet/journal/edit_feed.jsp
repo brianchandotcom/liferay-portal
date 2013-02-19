@@ -121,14 +121,14 @@ if (feed != null) {
 	<portlet:param name="struts_action" value="/journal/edit_feed" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>' >
+<aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
 	<aui:input name="rendererTemplateId" type="hidden" value="<%= rendererTemplateId %>" />
 	<aui:input name="contentField" type="hidden" value="<%= contentField %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= String.valueOf(ddmStructureId) %>"  />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= String.valueOf(ddmStructureId) %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -265,7 +265,7 @@ if (feed != null) {
 							for (DDMTemplate curTemplate : ddmTemplates) {
 							%>
 
-								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>"  label='<%= LanguageUtil.format(pageContext, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale))) %>' selected="<%= rendererTemplateId.equals(curTemplate.getTemplateId()) %>" value="<%= curTemplate.getTemplateId() %>" />
+								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(pageContext, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale))) %>' selected="<%= rendererTemplateId.equals(curTemplate.getTemplateId()) %>" value="<%= curTemplate.getTemplateId() %>" />
 
 							<%
 							}

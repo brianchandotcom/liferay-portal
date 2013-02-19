@@ -62,7 +62,7 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 
 <br />
 
-<input type="button" value="<liferay-ui:message key="save" />" onClick="<portlet:namespace />saveCurrency();" />
+<input onClick="<portlet:namespace />saveCurrency();" type="button" value="<liferay-ui:message key="save" />" />
 
 </form>
 

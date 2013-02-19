@@ -150,7 +150,7 @@
 				<div class="journal-edit-field-control">
 					<br /><br />
 
-					<input class="journal-list-key" title="<liferay-ui:message key="new-item" />" size="15" type="text" value="<liferay-ui:message key="new-item" />" />
+					<input class="journal-list-key" size="15" title="<liferay-ui:message key="new-item" />" type="text" value="<liferay-ui:message key="new-item" />" />
 
 					<input class="journal-list-value" size="15" title="<liferay-ui:message key="item-value" />" type="text" value="value" />
 

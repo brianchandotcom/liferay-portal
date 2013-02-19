@@ -1407,17 +1407,11 @@
 	</sql>
     <sql id="com.liferay.portal.service.persistence.UserFinder.joinByNoOrganizations">
 		<![CDATA[
+			LEFT JOIN
+				Users_Orgs ON
+					(User_.userId = Users_Orgs.userId)
 			WHERE
-                (NOT EXISTS
-                    (
-                        SELECT
-                            userId
-                        FROM
-                            Users_Orgs
-                        WHERE
-                            User_.userId=Users_orgs.userId
-                    )
-                )
+				(Users_Orgs.organizationId IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.joinByUserGroupRole">

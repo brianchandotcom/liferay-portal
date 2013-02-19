@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.process;
 /**
  * @author Shuyang Zhou
  */
-public class ExceptionProcessCallable implements
-	ProcessCallable<ProcessException> {
+public class ExceptionProcessCallable
+	implements ProcessCallable<ProcessException> {
 
 	public ExceptionProcessCallable(ProcessException processException) {
 		_processException = processException;

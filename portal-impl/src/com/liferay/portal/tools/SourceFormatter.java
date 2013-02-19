@@ -1378,6 +1378,18 @@ public class SourceFormatter {
 				}
 			}
 
+			// LPS-33070
+
+			if (content.contains("implements ProcessCallable") &&
+				!content.contains(
+					"private static final long serialVersionUID")) {
+
+				_sourceFormatterHelper.printError(
+					fileName,
+					"Assign ProcessCallable implementation a " + 
+						"serialVersionUID: " + fileName);
+			}
+
 			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			String oldContent = newContent;
@@ -1994,7 +2006,8 @@ public class SourceFormatter {
 							 line.endsWith(StringPool.SEMICOLON))) {
 
 							previousLine = StringUtil.replaceLast(
-								previousLine, linePart, StringPool.BLANK);
+								previousLine, StringUtil.trim(linePart),
+								StringPool.BLANK);
 
 							line = StringUtil.replaceLast(
 								line, StringPool.TAB,
@@ -3344,6 +3357,10 @@ public class SourceFormatter {
 
 		if (line.startsWith("// ") || trimmedPreviousLine.startsWith("// ")) {
 			return null;
+		}
+
+		if (previousLine.endsWith(" implements")) {
+			return new Tuple(previousLine, "implements ", false);
 		}
 
 		if (line.startsWith("+ ") || line.startsWith("- ") ||

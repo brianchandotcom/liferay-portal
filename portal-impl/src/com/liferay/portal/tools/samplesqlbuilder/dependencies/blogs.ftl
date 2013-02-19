@@ -30,10 +30,6 @@
 
 		insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
 
-		${writerBlogsCSV.write(blogsEntry.entryId + "," + blogsEntry.urlTitle + "," + mbMessage.threadId + "," + mbMessage.messageId + ",")}
-
-		<#if (blogsEntryCount < maxBlogsEntryCount)>
-			${writerBlogsCSV.write("\n")}
-		</#if>
+		${writerBlogsCSV.write(blogsEntry.entryId + "," + blogsEntry.urlTitle + "," + mbMessage.threadId + "," + mbMessage.messageId + "\n")}
 	</#list>
 </#if>

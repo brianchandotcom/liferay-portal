@@ -1,8 +1,5 @@
 <#setting number_format = "0">
 
-<#assign mbMessageCounter = dataFactory.newInteger()>
-<#assign wikiPageCounter = dataFactory.newInteger()>
-
 ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")])}
 
 <#assign privateLayouts = []>

@@ -22,8 +22,6 @@
 				<#assign parentMessageId = 0>
 
 				<#list 1..maxMBMessageCount as mbMessageCount>
-					<#assign mbMessageCounterIncrement = mbMessageCounter.increment()>
-
 					<#assign messageId = messageCounterOffset + mbMessageCount>
 
 					<#if (mbMessageCount = 1)>
@@ -43,11 +41,7 @@
 
 				insert into MBThread values (${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
 
-				${writerMessageBoardsCSV.write(categoryId + "," + threadId + "," + rootMessageId + ",")}
-
-				<#if (mbMessageCounter.value < (maxGroupCount * totalMBMessageCount))>
-					${writerMessageBoardsCSV.write("\n")}
-				</#if>
+				${writerMessageBoardsCSV.write(categoryId + "," + threadId + "," + rootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

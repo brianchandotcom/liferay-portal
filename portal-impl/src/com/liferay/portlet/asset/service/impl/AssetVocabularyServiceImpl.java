@@ -195,7 +195,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			total = getGroupVocabulariesCount(groupId);
 		}
 
-		return new AssetVocabularyDisplayImpl(page, total, vocabularies);
+		return new AssetVocabularyDisplayImpl(vocabularies, page, total);
 	}
 
 	@Deprecated

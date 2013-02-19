@@ -25,9 +25,9 @@ import java.util.List;
  */
 public class AssetTagDisplayImpl implements AssetTagDisplay {
 
-	public AssetTagDisplayImpl(int page, List<AssetTag> tags, int total) {
-		_page = page;
+	public AssetTagDisplayImpl(List<AssetTag> tags, int page, int total) {
 		_tags = tags;
+		_page = page;
 		_total = total;
 	}
 

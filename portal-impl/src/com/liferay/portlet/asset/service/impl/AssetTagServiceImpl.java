@@ -133,7 +133,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			total = getGroupTagsCount(groupId);
 		}
 
-		return new AssetTagDisplayImpl(page, tags, total);
+		return new AssetTagDisplayImpl(tags, page, total);
 	}
 
 	@Deprecated

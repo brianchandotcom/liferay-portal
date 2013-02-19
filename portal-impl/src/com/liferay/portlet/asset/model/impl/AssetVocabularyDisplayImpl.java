@@ -26,11 +26,11 @@ import java.util.List;
 public class AssetVocabularyDisplayImpl implements AssetVocabularyDisplay {
 
 	public AssetVocabularyDisplayImpl(
-		int page, int total, List<AssetVocabulary> vocabularies) {
+		List<AssetVocabulary> vocabularies, int page, int total) {
 
+		_vocabularies = vocabularies;
 		_page = page;
 		_total = total;
-		_vocabularies = vocabularies;
 	}
 
 	public int getPage() {

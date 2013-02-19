@@ -23,7 +23,7 @@ String containerName = (String)request.getAttribute("liferay-ui:app-view-search-
 String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(locale, "folder"));
 String cssClass = (String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass");
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
-List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntries");
+List<Tuple> fileEntryResults = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryResults");
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
 List<MBMessage> mbMessages = (List<MBMessage>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessages");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
@@ -78,11 +78,12 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 		</span>
 	</a>
 
-	<c:if test="<%= fileEntries != null %>">
-
+	<c:if test="<%= fileEntryResults != null %>">
 
 		<%
-		for (FileEntry fileEntry : fileEntries) {
+		for (Tuple fileEntryResult : fileEntryResults) {
+			FileEntry fileEntry = (FileEntry)fileEntryResult.getObject(0);
+			Summary fileEntrySummary = (Summary)fileEntryResult.getObject(1);
 		%>
 
 			<div class="entry-attachment">
@@ -100,7 +101,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 						</span>
 
 						<span cssClass="body">
-							<%= StringUtil.highlight(fileEntry.getTitle(), queryTerms) %>
+							<%= StringUtil.highlight((Validator.isNotNull(fileEntrySummary.getContent())) ? fileEntrySummary.getContent() : fileEntry.getTitle(), queryTerms) %>
 						</span>
 				</aui:a>
 			</div>

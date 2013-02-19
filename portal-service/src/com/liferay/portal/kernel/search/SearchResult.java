@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
@@ -31,8 +32,10 @@ public class SearchResult {
 		_classPK = classPK;
 	}
 
-	public void addFileEntry(FileEntry fileEntry) {
-		_fileEntries.add(fileEntry);
+	public void addFileEntry(FileEntry fileEntry, Summary fileEntrySummary) {
+		Tuple result = new Tuple(fileEntry, fileEntrySummary);
+
+		_fileEntryResults.add(result);
 	}
 
 	public void addMBMessage(MBMessage mbMessage) {
@@ -68,8 +71,8 @@ public class SearchResult {
 		return _classPK;
 	}
 
-	public List<FileEntry> getFileEntries() {
-		return _fileEntries;
+	public List<Tuple> getFileEntryResults() {
+		return _fileEntryResults;
 	}
 
 	public List<MBMessage> getMBMessages() {
@@ -98,7 +101,7 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
-	private List<FileEntry> _fileEntries = new ArrayList<FileEntry>();
+	private List<Tuple> _fileEntryResults = new ArrayList<Tuple>();
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private Summary _summary;
 

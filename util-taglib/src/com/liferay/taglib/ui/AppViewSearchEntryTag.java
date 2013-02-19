@@ -14,8 +14,8 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -57,8 +57,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setFileEntries(List<FileEntry> fileEntries) {
-		_fileEntries = fileEntries;
+	public void setFileEntryResults(List<Tuple> fileEntryResults) {
+		_fileEntryResults = fileEntryResults;
 	}
 
 	public void setLocked(boolean locked) {
@@ -109,7 +109,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_containerType = null;
 		_cssClass = null;
 		_description = null;
-		_fileEntries = null;
+		_fileEntryResults = null;
 		_locked = false;
 		_mbMessages = null;
 		_queryTerms = null;
@@ -147,7 +147,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:fileEntries", _fileEntries);
+			"liferay-ui:app-view-search-entry:fileEntryResults",
+			_fileEntryResults);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
@@ -179,7 +180,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private List<FileEntry> _fileEntries;
+	private List<Tuple> _fileEntryResults;
 	private boolean _locked;
 	private List<MBMessage> _mbMessages;
 	private String[] _queryTerms;

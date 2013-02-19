@@ -130,7 +130,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				containerType='<%= LanguageUtil.get(locale, "category") %>'
 				cssClass='<%= MathUtil.isEven(index) ? "search alt" : "search" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : StringPool.BLANK %>"
-				fileEntries="<%= searchResult.getFileEntries() %>"
+				fileEntryResults="<%= searchResult.getFileEntryResults() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : HtmlUtil.escape(message.getSubject()) %>"
 				url="<%= rowURL %>"

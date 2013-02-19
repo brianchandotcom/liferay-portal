@@ -65,8 +65,8 @@
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@id='show-portlet-description-28']/div</td>
-	<td>Bookmarks are shortcuts to websites that you like, use often, or want to share with other users. Users can add, delete and share bookmarks. </td>
+	<td>//div[contains(@class,'portlet-description')]</td>
+	<td>Bookmarks are shortcuts to websites that you like, use often, or want to share with other users. Users can add, delete and share bookmarks.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -111,7 +111,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='lfr-asset-metadata']/div[3]</td>
-	<td>Ent</td>
+	<td>Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -135,7 +135,12 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[contains(.,'Bookmark Name')]/td[5]</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[4]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Bookmark Name')]/td[5]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

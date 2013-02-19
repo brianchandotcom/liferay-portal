@@ -47,8 +47,8 @@ public class ViewRestoreBookmarksRecycleBinTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Bookmarks"),
 			selenium.getText("//h1[@class='portlet-title']/span"));
 		assertTrue(selenium.isPartialText(
-				"//div[@id='show-portlet-description-28']/div",
-				"Bookmarks are shortcuts to websites that you like, use often, or want to share with other users. Users can add, delete and share bookmarks. "));
+				"//div[contains(@class,'portlet-description')]",
+				"Bookmarks are shortcuts to websites that you like, use often, or want to share with other users. Users can add, delete and share bookmarks."));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Home')]"));
@@ -77,7 +77,10 @@ public class ViewRestoreBookmarksRecycleBinTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//tr[contains(.,'Bookmark Name')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Bookmark Name')]/td[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Bookmark Name')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Bookmark Name')]/td[5]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),

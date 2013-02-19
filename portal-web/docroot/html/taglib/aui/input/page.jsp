@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/input/init.jsp" %>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("assetTags") && !type.equals("hidden") %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") %>'>
 	<span class="<%= fieldCss %>">
 		<span class="aui-field-content">
 			<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
@@ -187,7 +187,7 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("assetTags") && !type.equals("hidden") %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") %>'>
 			</span>
 
 			<c:if test='<%= Validator.isNotNull(suffix) && !inlineLabel.equals("right") %>'>

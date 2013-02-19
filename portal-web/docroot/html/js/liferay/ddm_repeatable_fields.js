@@ -26,6 +26,9 @@ AUI.add(
 						setter: A.one
 					},
 
+					namespace: {
+					},
+
 					portletNamespace: {
 					},
 
@@ -92,6 +95,7 @@ AUI.add(
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
 									fieldName: fieldName,
+									namespace: instance.get('namespace'),
 									p_p_isolated: true,
 									portletNamespace: instance.get('portletNamespace'),
 									readOnly: instance.get('readOnly')

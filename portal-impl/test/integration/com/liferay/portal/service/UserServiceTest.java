@@ -14,11 +14,17 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
@@ -27,6 +33,8 @@ import com.liferay.portal.util.TestPropsValues;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,6 +49,11 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
 public class UserServiceTest {
+
+	@Before
+	public void setUp() {
+		FinderCacheUtil.clearCache();
+	}
 
 	@Test
 	public void testAddUser() throws Exception {
@@ -60,6 +73,165 @@ public class UserServiceTest {
 
 		UserServiceUtil.getUserByEmailAddress(
 			TestPropsValues.getCompanyId(), user.getEmailAddress());
+	}
+
+	@Test
+	public void testOrgAdminUnsetOrgAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User orgAdminOperator = UserTestUtil.addOrganizationAdminUser(
+			organization);
+		User orgAdminUpdated = UserTestUtil.addOrganizationAdminUser(
+			organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), orgAdminOperator,
+			orgAdminUpdated);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), orgAdminUpdated.getUserId()));
+	}
+
+	@Test
+	public void testOrgAdminUnsetOrgOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User orgAdminOperator = UserTestUtil.addOrganizationAdminUser(
+			organization);
+		User orgOwnerUpdated = UserTestUtil.addOrganizationOwnerUser(
+			organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), orgAdminOperator,
+			orgOwnerUpdated);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), orgOwnerUpdated.getUserId()));
+	}
+
+	@Test
+	public void testOrgOwnerUnsetOrgAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User orgOwnerOperator = UserTestUtil.addOrganizationOwnerUser(
+			organization);
+		User orgAdminUpdated = UserTestUtil.addOrganizationAdminUser(
+			organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), orgOwnerOperator,
+			orgAdminUpdated);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), orgAdminUpdated.getUserId()));
+	}
+
+	@Test
+	public void testOrgOwnerUnsetOrgOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User orgOwnerOperator = UserTestUtil.addOrganizationOwnerUser(
+			organization);
+		User orgOwnerUpdated = UserTestUtil.addOrganizationOwnerUser(
+			organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), orgOwnerOperator,
+			orgOwnerUpdated);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasOrganizationUser(
+				organization.getOrganizationId(), orgOwnerUpdated.getUserId()));
+	}
+
+	@Test
+	public void testSiteAdminUnsetSiteAdmin() throws Exception {
+		Group site = ServiceTestUtil.addGroup(
+			0, ServiceTestUtil.randomString());
+
+		User siteAdminOperator = UserTestUtil.addGroupAdminUser(site);
+		User siteAdminUpdated = UserTestUtil.addGroupAdminUser(site);
+
+		unsetGroupUsers(site.getGroupId(), siteAdminOperator, siteAdminUpdated);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				site.getGroupId(), siteAdminUpdated.getUserId()));
+	}
+
+	@Test
+	public void testSiteAdminUnsetSiteOwner() throws Exception {
+		Group site = ServiceTestUtil.addGroup(
+			0, ServiceTestUtil.randomString());
+
+		User siteAdminOperator = UserTestUtil.addGroupAdminUser(site);
+		User siteOwnerUpdated = UserTestUtil.addGroupOwnerUser(site);
+
+		unsetGroupUsers(site.getGroupId(), siteAdminOperator, siteOwnerUpdated);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				site.getGroupId(), siteOwnerUpdated.getUserId()));
+	}
+
+	@Test
+	public void testSiteOwnerUnsetSiteAdmin() throws Exception {
+		Group site = ServiceTestUtil.addGroup(
+			0, ServiceTestUtil.randomString());
+
+		User siteOwnerOperator = UserTestUtil.addGroupOwnerUser(site);
+		User siteAdminUpdated = UserTestUtil.addGroupAdminUser(site);
+
+		unsetGroupUsers(site.getGroupId(), siteOwnerOperator, siteAdminUpdated);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				site.getGroupId(), siteAdminUpdated.getUserId()));
+	}
+
+	@Test
+	public void testSiteOwnerUnsetSiteOwner() throws Exception {
+		Group site = ServiceTestUtil.addGroup(
+			0, ServiceTestUtil.randomString());
+
+		User siteOwnerOperator = UserTestUtil.addGroupOwnerUser(site);
+		User siteOwnerUpdated = UserTestUtil.addGroupOwnerUser(site);
+
+		unsetGroupUsers(site.getGroupId(), siteOwnerOperator, siteOwnerUpdated);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				site.getGroupId(), siteOwnerUpdated.getUserId()));
+	}
+
+	protected static void unsetGroupUsers(
+		long groupId, User operatorUser, User updatedUser) throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(operatorUser);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		UserServiceUtil.unsetGroupUsers(
+			groupId, new long[] {updatedUser.getUserId()}, serviceContext);
+	}
+
+	protected static void unsetOrganizationUsers(
+			long organizationId, User operatorUser, User updatedUser)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(operatorUser);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		UserServiceUtil.unsetOrganizationUsers(
+			organizationId, new long[] {updatedUser.getUserId()});
 	}
 
 	protected User addUser() throws Exception {

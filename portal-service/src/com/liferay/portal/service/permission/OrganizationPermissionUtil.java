@@ -77,6 +77,23 @@ public class OrganizationPermissionUtil {
 		return _organizationPermission;
 	}
 
+	public static boolean hasMembershipProtected(
+			PermissionChecker permissionChecker, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		return getOrganizationPermission().hasMembershipProtected(
+			permissionChecker, groupId, userId);
+	}
+
+	public static boolean hasRoleProtected(
+			PermissionChecker permissionChecker, long groupId, long userId,
+			long roleId)
+		throws PortalException, SystemException {
+
+		return getOrganizationPermission().hasRoleProtected(
+			permissionChecker, groupId, userId, roleId);
+	}
+
 	public void setOrganizationPermission(
 		OrganizationPermission organizationPermission) {
 

@@ -71,6 +71,24 @@ public class UsersAdminUtil {
 		return getUsersAdmin().addRequiredRoles(user, roleIds);
 	}
 
+	public static long[] filterDeleteOrganizationRoleUserIds(
+			PermissionChecker permissionChecker, long groupId, long roleId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().filterDeleteOrganizationRoleUserIds(
+			permissionChecker, groupId, roleId, userIds);
+	}
+
+	public static long[] filterDeleteSiteRoleUserIds(
+			PermissionChecker permissionChecker, long groupId, long roleId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().filterDeleteSiteRoleUserIds(
+			permissionChecker, groupId, roleId, userIds);
+	}
+
 	public static List<Role> filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException {
@@ -99,6 +117,22 @@ public class UsersAdminUtil {
 		PermissionChecker permissionChecker, List<Role> roles) {
 
 		return getUsersAdmin().filterRoles(permissionChecker, roles);
+	}
+
+	public static long[] filterUnsetGroupUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().filterUnsetGroupUserIds(
+			permissionChecker, groupId, userIds);
+	}
+
+	public static long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().filterUnsetOrganizationUserIds(
+			permissionChecker, groupId, userIds);
 	}
 
 	public static List<UserGroupRole> filterUserGroupRoles(

@@ -17,11 +17,15 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
@@ -164,6 +168,58 @@ public class GroupPermissionImpl implements GroupPermission {
 
 		return permissionChecker.hasPermission(
 			0, Group.class.getName(), 0, actionId);
+	}
+
+	public boolean hasMembershipProtected(
+			PermissionChecker permissionChecker, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		if (permissionChecker.isGroupOwner(groupId)) {
+			return false;
+		}
+
+		Role siteAdministratorRole = RoleLocalServiceUtil.getRole(
+			permissionChecker.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
+		Role siteOwnerRole = RoleLocalServiceUtil.getRole(
+			permissionChecker.getCompanyId(), RoleConstants.SITE_OWNER);
+
+		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				userId, groupId, siteAdministratorRole.getRoleId()) ||
+			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				userId, groupId, siteOwnerRole.getRoleId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasRoleProtected(
+			PermissionChecker permissionChecker, long groupId, long userId,
+			long roleId)
+		throws PortalException, SystemException {
+
+		if (permissionChecker.isGroupOwner(groupId)) {
+			return false;
+		}
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		String roleName = role.getName();
+
+		if (!roleName.equals(RoleConstants.SITE_ADMINISTRATOR) &&
+			!roleName.equals(RoleConstants.SITE_OWNER)) {
+
+			return false;
+		}
+
+		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				userId, groupId, roleId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

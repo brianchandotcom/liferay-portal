@@ -177,6 +177,42 @@ public class UsersAdminImpl implements UsersAdmin {
 		return roleIds;
 	}
 
+	public long[] filterDeleteOrganizationRoleUserIds(
+			PermissionChecker permissionChecker, long groupId, long roleId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (int i = 0; i < userIds.length; i++) {
+			if (OrganizationPermissionUtil.hasRoleProtected(
+					permissionChecker, groupId, userIds[i], roleId)) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
+	public long[] filterDeleteSiteRoleUserIds(
+			PermissionChecker permissionChecker, long groupId, long roleId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (int i = 0; i < userIds.length; i++) {
+			if (GroupPermissionUtil.hasRoleProtected(
+					permissionChecker, groupId, userIds[i], roleId)) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
 	public List<Role> filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException {
@@ -340,6 +376,40 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		return filteredRoles;
+	}
+
+	public long[] filterUnsetGroupUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (int i = 0; i < userIds.length; i++) {
+			if (GroupPermissionUtil.hasMembershipProtected(
+					permissionChecker, groupId, userIds[i])) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
+	public long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (int i = 0; i < userIds.length; i++) {
+			if (OrganizationPermissionUtil.hasMembershipProtected(
+					permissionChecker, groupId, userIds[i])) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userIds[i]);
+			}
+		}
+
+		return filteredUserIds;
 	}
 
 	public List<UserGroupRole> filterUserGroupRoles(

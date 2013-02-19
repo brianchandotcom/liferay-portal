@@ -74,6 +74,23 @@ public class GroupPermissionUtil {
 		return _groupPermission;
 	}
 
+	public static boolean hasMembershipProtected(
+			PermissionChecker permissionChecker, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		return getGroupPermission().hasMembershipProtected(
+			permissionChecker, groupId, userId);
+	}
+
+	public static boolean hasRoleProtected(
+			PermissionChecker permissionChecker, long groupId, long userId,
+			long roleId)
+		throws PortalException, SystemException {
+
+		return getGroupPermission().hasRoleProtected(
+			permissionChecker, groupId, userId, roleId);
+	}
+
 	public void setGroupPermission(GroupPermission groupPermission) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

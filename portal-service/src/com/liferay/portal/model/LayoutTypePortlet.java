@@ -123,8 +123,6 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean hasDefaultScopePortletId(long groupId, String portletId)
 		throws PortalException, SystemException;
 
-	public boolean hasLayoutSetPrototypeLayout();
-
 	public boolean hasModeAboutPortletId(String portletId);
 
 	public boolean hasModeConfigPortletId(String portletId);

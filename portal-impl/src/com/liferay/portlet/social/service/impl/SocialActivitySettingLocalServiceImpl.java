@@ -329,10 +329,10 @@ public class SocialActivitySettingLocalServiceImpl
 			String name = activitySetting.getName();
 
 			if (name.equals(SocialActivitySettingConstants.NAME_ENABLED)) {
-				activityDefinition.setEnabled(
+				activityDefinition.setCountersEnabled(
 					GetterUtil.getBoolean(
 						activitySetting.getValue(),
-						defaultActivityDefinition.isEnabled()));
+						defaultActivityDefinition.isCountersEnabled()));
 			}
 			else if (name.equals(
 						SocialActivitySettingConstants.NAME_LOG_ENABLED)) {

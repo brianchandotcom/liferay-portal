@@ -227,7 +227,7 @@ if (Validator.isNull(redirect)) {
 					<liferay-ui:message key="this-page-does-not-exist-yet-and-the-title-is-not-valid" />
 				</div>
 
-				<input type="button" value="<liferay-ui:message key="cancel" />" onClick="document.location = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>'" />
+				<input onClick="document.location = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>'" type="button" value="<liferay-ui:message key="cancel" />" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>

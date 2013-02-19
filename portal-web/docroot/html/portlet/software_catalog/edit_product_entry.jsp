@@ -45,7 +45,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", productScreenshots.size());
 %>
 
-<form action="<portlet:actionURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm" enctype="multipart/form-data" onSubmit="<portlet:namespace />saveProductEntry(); return false;">
+<form action="<portlet:actionURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /></portlet:actionURL>" enctype="multipart/form-data" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveProductEntry(); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="" />
 <input name="<portlet:namespace />redirect" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirect) %>" />
 <input name="<portlet:namespace />productEntryId" type="hidden" value="<%= productEntryId %>" />
@@ -275,10 +275,10 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 			</table>
 
-			<input type="button" value="<liferay-ui:message key="add-screenshot" />" onClick="<portlet:namespace />addScreenShot();" />
+			<input onClick="<portlet:namespace />addScreenShot();" type="button" value="<liferay-ui:message key="add-screenshot" />" />
 
 			<c:if test="<%= screenshotsCount > 0 %>">
-				<input type="button" value="<liferay-ui:message key="remove-screenshot" />" onClick="<portlet:namespace />removeScreenShot();" />
+				<input onClick="<portlet:namespace />removeScreenShot();" type="button" value="<liferay-ui:message key="remove-screenshot" />" />
 			</c:if>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
@@ -286,7 +286,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 <input type="submit" value="<liferay-ui:message key="save" />" />
 
-<input type="button" value="<liferay-ui:message key="cancel" />" onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" />
+<input onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
 
 </form>
 

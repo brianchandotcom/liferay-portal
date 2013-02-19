@@ -256,7 +256,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 
 		<br />
 
-		<input type="button" value="<liferay-ui:message key="update-display-order" />" onClick="<portlet:namespace />updateDisplayOrder();" />
+		<input onClick="<portlet:namespace />updateDisplayOrder();" type="button" value="<liferay-ui:message key="update-display-order" />" />
 	</c:when>
 	<c:when test='<%= tabs4.equals("merge-pages") %>'>
 

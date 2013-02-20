@@ -616,6 +616,12 @@ public class PortletURLImpl
 		}
 	}
 
+	public void setRefererGroupId(long refererGroupId) {
+		_refererGroupId = refererGroupId;
+
+		clearCache();
+	}
+
 	public void setRefererPlid(long refererPlid) {
 		_refererPlid = refererPlid;
 
@@ -939,6 +945,19 @@ public class PortletURLImpl
 			sb.append("doAsGroupId");
 			sb.append(StringPool.EQUAL);
 			sb.append(processValue(key, doAsGroupId));
+			sb.append(StringPool.AMPERSAND);
+		}
+
+		long refererGroupId = _refererGroupId;
+
+		if (refererGroupId <= 0) {
+			refererGroupId = themeDisplay.getRefererGroupId();
+		}
+
+		if (refererGroupId > 0) {
+			sb.append("refererGroupId");
+			sb.append(StringPool.EQUAL);
+			sb.append(processValue(key, refererGroupId));
 			sb.append(StringPool.AMPERSAND);
 		}
 
@@ -1392,6 +1411,7 @@ public class PortletURLImpl
 	private String _portletId;
 	private String _portletModeString;
 	private PortletRequest _portletRequest;
+	private long _refererGroupId;
 	private long _refererPlid;
 	private Set<String> _removedParameterNames;
 	private Map<String, String[]> _removePublicRenderParameters;

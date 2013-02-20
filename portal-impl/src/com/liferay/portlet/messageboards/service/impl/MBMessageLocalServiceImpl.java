@@ -1423,7 +1423,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			List<FileEntry> fileEntries = message.getAttachmentsFileEntries();
 
 			for (FileEntry fileEntry : fileEntries) {
-				if (!existingFiles.contains(fileEntry.getTitle())) {
+				String fileEntryId = String.valueOf(fileEntry.getFileEntryId());
+
+				if (!existingFiles.contains(fileEntryId)) {
 					if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
 						deleteMessageAttachment(
 							messageId, fileEntry.getTitle());

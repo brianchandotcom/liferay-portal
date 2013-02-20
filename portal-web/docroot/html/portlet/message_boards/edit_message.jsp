@@ -304,7 +304,7 @@ if (Validator.isNull(redirect)) {
 
 							<li class="message-attachment">
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getTitle() %>" />
+									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
 									<liferay-ui:icon
 										image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'

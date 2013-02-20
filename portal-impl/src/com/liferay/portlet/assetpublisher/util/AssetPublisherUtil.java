@@ -297,7 +297,7 @@ public class AssetPublisherUtil {
 
 	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences preferences, Layout layout, long scopeGroupId,
-			boolean checkPermission)
+			boolean checkPermission, int max)
 		throws PortalException, SystemException {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
@@ -326,10 +326,7 @@ public class AssetPublisherUtil {
 
 		assetEntryQuery.setEnablePermissions(enablePermissions);
 
-		int rssDelta = GetterUtil.getInteger(
-			preferences.getValue("rssDelta", "20"));
-
-		assetEntryQuery.setEnd(rssDelta);
+		assetEntryQuery.setEnd(max);
 
 		boolean excludeZeroViewCount = GetterUtil.getBoolean(
 			preferences.getValue("excludeZeroViewCount", null));
@@ -993,7 +990,8 @@ public class AssetPublisherUtil {
 		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(
-			preferences, layout, layout.getGroupId(), false);
+			preferences, layout, layout.getGroupId(), false,
+			PropsValues.ASSET_PUBLISHER_DYNAMIC_SUBSCRIPTION_LIMIT);
 
 		if (assetEntries.isEmpty()) {
 			return;

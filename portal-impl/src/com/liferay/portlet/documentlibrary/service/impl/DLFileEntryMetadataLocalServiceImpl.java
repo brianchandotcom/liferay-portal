@@ -160,7 +160,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 		if (fileEntryMetadata != null) {
 			StorageEngineUtil.update(
-				fileEntryMetadata.getDDMStorageId(), fields, serviceContext);
+				fileEntryMetadata.getDDMStorageId(), fields, true,
+				serviceContext);
 		}
 		else {
 

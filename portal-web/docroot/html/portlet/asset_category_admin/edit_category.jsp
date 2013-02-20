@@ -152,11 +152,11 @@ else {
 					<aui:button type="submit" />
 
 					<c:if test="<%= category != null %>">
-						<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, AssetCategory.class.getName(), category.getCategoryId(), ActionKeys.DELETE) %>">
+						<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
 							<aui:button id="deleteCategoryButton" value="delete" />
 						</c:if>
 
-						<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, AssetCategory.class.getName(), category.getCategoryId(), ActionKeys.PERMISSIONS) %>">
+						<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS) %>">
 							<liferay-security:permissionsURL
 								modelResource="<%= AssetCategory.class.getName() %>"
 								modelResourceDescription="<%= category.getTitle(locale) %>"

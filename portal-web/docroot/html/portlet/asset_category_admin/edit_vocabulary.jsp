@@ -57,11 +57,11 @@ long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 					<aui:button type="submit" />
 
 					<c:if test="<%= vocabulary != null %>">
-						<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, AssetVocabulary.class.getName(), vocabulary.getVocabularyId(), ActionKeys.DELETE) %>">
+						<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.DELETE) %>">
 							<aui:button id="deleteVocabularyButton" value="delete" />
 						</c:if>
 
-						<c:if test="<%= permissionChecker.hasPermission(scopeGroupId, AssetVocabulary.class.getName(), vocabulary.getVocabularyId(), ActionKeys.PERMISSIONS) %>">
+						<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.PERMISSIONS) %>">
 							<liferay-security:permissionsURL
 								modelResource="<%= AssetVocabulary.class.getName() %>"
 								modelResourceDescription="<%= vocabulary.getTitle(locale) %>"

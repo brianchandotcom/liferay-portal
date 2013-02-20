@@ -531,6 +531,8 @@ public class JavadocFormatter {
 			return;
 		}
 
+		Element returnElement = methodElement.addElement("return");
+
 		DocletTag[] returnDocletTags = javaMethod.getTagsByName("return");
 
 		String comment = StringPool.BLANK;
@@ -544,8 +546,6 @@ public class JavadocFormatter {
 		comment = _trimMultilineText(comment);
 
 		if (Validator.isNotNull(comment)) {
-			Element returnElement = methodElement.addElement("return");
-
 			Element commentElement = returnElement.addElement("comment");
 
 			commentElement.addCDATA(comment);

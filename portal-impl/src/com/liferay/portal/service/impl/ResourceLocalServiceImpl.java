@@ -45,6 +45,17 @@ import java.util.List;
 import org.apache.commons.lang.time.StopWatch;
 
 /**
+ * The Resource local service is responsible for accessing, creating, modifying,
+ * and deleting resources.
+ *
+ * <p>
+ * Permissions in Liferay are defined for resource/action pairs. Some resources,
+ * known as model resources, define actions that the end-user can perform with
+ * respect to the service/persistence layer. Other resources, known as portlet
+ * resources or simply resources, define actions that end-user can perform with
+ * respect to a portlet window.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man
  * @author Raymond Augé
@@ -53,6 +64,14 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
+	/**
+	 * Adds a model resource using a model
+	 *
+	 * @param  auditedModel the model corresponding to the resource
+	 * @param  serviceContext the resource's service context
+	 * @throws PortalException if a PortalException occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addModelResources(
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -86,6 +105,21 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * Adds a model resource using a <code>long</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of user adding the resource
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource, optionally
+	 *         <code>0</code>
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			long primKey, String[] groupPermissions, String[] guestPermissions)
@@ -96,6 +130,21 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			groupPermissions, guestPermissions, null);
 	}
 
+	/**
+	 * Adds a model resource using a <code>String</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of user adding the resource
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource, optionally
+	 *         <code>null</code>
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, String[] groupPermissions,
@@ -107,6 +156,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions, null);
 	}
 
+	/**
+	 * Adds a resource using a <code>long</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user adding the resource
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource, optionally
+	 *         <code>0</code>
+	 * @param  portletActions whether to associate portlet actions with the
+	 *         resource
+	 * @param  addGroupPermissions whether to add group permissions
+	 * @param  addGuestPermissions whether to add guest permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
 			long primKey, boolean portletActions, boolean addGroupPermissions,
@@ -118,6 +184,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			portletActions, addGroupPermissions, addGuestPermissions, null);
 	}
 
+	/**
+	 * Adds a resource using a <code>String</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user adding the resource
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource, optionally
+	 *         <code>null</code>
+	 * @param  portletActions whether to associate portlet actions with the
+	 *         resource
+	 * @param  addGroupPermissions whether to add group permissions
+	 * @param  addGuestPermissions whether to add guest permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, boolean portletActions, boolean addGroupPermissions,
@@ -129,6 +212,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			addGroupPermissions, addGuestPermissions, null);
 	}
 
+	/**
+	 * Adds a resource without specifying a user or a primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the name of the resource
+	 * @param  portletActions whether to associate portlet actions with the
+	 *         resource
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addResources(
 			long companyId, long groupId, String name, boolean portletActions)
 		throws PortalException, SystemException {
@@ -137,6 +231,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			companyId, groupId, 0, name, null, portletActions, false, false);
 	}
 
+	/**
+	 * Deletes a model resource using a model
+	 *
+	 * @param  auditedModel the model corresponding to the resource
+	 * @param  scope the scope of the resource
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.model.ResourceConstants
+	 */
 	public void deleteResource(AuditedModel auditedModel, int scope)
 		throws PortalException, SystemException {
 
@@ -148,6 +251,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			getPermissionedModel(auditedModel));
 	}
 
+	/**
+	 * Deletes a resource using a <code>long</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  name the name of the resource
+	 * @param  scope the scope of the resource
+	 * @param  primKey the primary key of the resource
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.model.ResourceConstants
+	 */
 	public void deleteResource(
 			long companyId, String name, int scope, long primKey)
 		throws PortalException, SystemException {
@@ -155,6 +270,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		deleteResource(companyId, name, scope, String.valueOf(primKey), null);
 	}
 
+	/**
+	 * Deletes a resource using a <code>String</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  name the name of the resource
+	 * @param  scope the scope of the resource
+	 * @param  primKey the primary key of the resource
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.model.ResourceConstants
+	 */
 	public void deleteResource(
 			long companyId, String name, int scope, String primKey)
 		throws PortalException, SystemException {
@@ -162,6 +289,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		deleteResource(companyId, name, scope, primKey, null);
 	}
 
+	/**
+	 * Returns the specified resource
+	 *
+	 * @param companyId the primary key of the portal instance
+	 * @param name the name of the resource
+	 * @param scope the scope of the resource
+	 * @param primKey the primary key of the resource
+	 * @see   com.liferay.portal.model.ResourceConstants
+	 */
 	public Resource getResource(
 		long companyId, String name, int scope, String primKey) {
 
@@ -175,6 +311,22 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		return resource;
 	}
 
+	/**
+	 * Returns <code>true</code> if the roles have permission at the scope to
+	 * perform the action on the resources.
+	 *
+	 * @param  userId the primary key of the user whose permissions are to be
+	 *         checked
+	 * @param  resourceId the primary key of the resource for which permissions
+	 *         are to be checked
+	 * @param  resources the resources for which permissions are to be checked
+	 * @param  actionId the primary key of the action that be performed on the
+	 *         resources
+	 * @param  roleIds the primary keys of the roles whose permissions are to be
+	 *         checked
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasUserPermissions(
 			long userId, long resourceId, List<Resource> resources,
 			String actionId, long[] roleIds)
@@ -199,6 +351,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		return hasUserPermissions;
 	}
 
+	/**
+	 * Updates a model resource using a model
+	 *
+	 * @param  auditedModel the model corresponding to the resource
+	 * @param  serviceContext the resource's service context
+	 * @throws PortalException if a PortalException occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateModelResources(
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -214,6 +374,19 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			getPermissionedModel(auditedModel));
 	}
 
+	/**
+	 * Updates a resource using a <code>long</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateResources(
 			long companyId, long groupId, String name, long primKey,
 			String[] groupPermissions, String[] guestPermissions)
@@ -224,6 +397,19 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions, null);
 	}
 
+	/**
+	 * Updates a resource using a <code>String</code> representation of the
+	 * resource's primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the name of the resource
+	 * @param  primKey the primary key of the resource
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateResources(
 			long companyId, long groupId, String name, String primKey,
 			String[] groupPermissions, String[] guestPermissions)
@@ -234,6 +420,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions, null);
 	}
 
+	/**
+	 * Updates a resource, replacing the resource's old primary key with a new
+	 * primary key
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  name the name of the resource
+	 * @param  scope the scope of the resource
+	 * @param  primKey the old primary key of the resource
+	 * @param  newPrimKey the new primary key of the resource
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.model.ResourceConstants
+	 */
 	public void updateResources(
 			long companyId, String name, int scope, String primKey,
 			String newPrimKey)

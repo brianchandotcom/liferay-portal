@@ -28,8 +28,8 @@
 					<@liferay_portlet.param name="struts_action" value="/dynamic_data_lists/edit_record_file" />
 					<@liferay_portlet.param name="cmd" value="delete" />
 					<@liferay_portlet.param name="redirect" value=portalUtil.getCurrentURL(request) />
-					<@liferay_portlet.param name="recordId" value=recordId />
 					<@liferay_portlet.param name="fieldName" value=fieldName />
+					<@liferay_portlet.param name="recordId" value=classPK />
 					<@liferay_portlet.param name="valueIndex" value=valueIndex?string />
 				</@>">
 

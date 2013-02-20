@@ -499,8 +499,30 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		return sb.toString();
 	}
 
+	private String[] _toStringArray(String type, Serializable[] values) {
+		String[] stringValues = new String[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			Serializable serializable = values[i];
+
+			if (FieldConstants.isNumericType(type) && (serializable == null)) {
+				serializable = _NUMERIC_NULL_VALUE;
+			}
+
+			stringValues[i] = String.valueOf(serializable);
+		}
+
+		return stringValues;
+	}
+
 	private List<Serializable> _transformValue(String type, String value) {
 		List<Serializable> serializables = new ArrayList<Serializable>();
+
+		if (FieldConstants.isNumericType(type) &&
+			_NUMERIC_NULL_VALUE.equals(value)) {
+
+			value = null;
+		}
 
 		Serializable serializable = FieldConstants.getSerializable(type, value);
 
@@ -513,6 +535,12 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 		List<Serializable> serializables = new ArrayList<Serializable>();
 
 		for (String value : values) {
+			if (FieldConstants.isNumericType(type) &&
+				_NUMERIC_NULL_VALUE.equals(value)) {
+
+				value = null;
+			}
+
 			Serializable serializable = FieldConstants.getSerializable(
 				type, value);
 
@@ -552,8 +580,10 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 						stringArrayMap.put(locale, values);
 					}
 					else {
-						stringArrayMap.put(
-							locale, ArrayUtil.toStringArray((Object[])value));
+						String[] values = _toStringArray(
+							field.getDataType(), (Serializable[])value);
+
+						stringArrayMap.put(locale, values);
 					}
 				}
 
@@ -565,7 +595,12 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				for (Locale locale : field.getAvailableLocales()) {
 					Serializable value = field.getValue(locale);
 
-					if (value instanceof Date) {
+					if (FieldConstants.isNumericType(field.getDataType()) &&
+						(value == null)) {
+
+						value = _NUMERIC_NULL_VALUE;
+					}
+					else if (value instanceof Date) {
 						Date date = (Date)value;
 
 						value = date.getTime();
@@ -583,6 +618,8 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				field.getName(), classPK, dataMap, field.getDefaultLocale());
 		}
 	}
+
+	private static final String _NUMERIC_NULL_VALUE = "NUMERIC_NULL_VALUE";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExpandoStorageAdapter.class);

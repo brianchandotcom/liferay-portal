@@ -239,14 +239,17 @@ public class Field implements Serializable {
 	}
 
 	public void setValue(Locale locale, Serializable value) {
-		Class<?> clazz = value.getClass();
-
 		List<Serializable> values = null;
 
-		if (clazz.isArray()) {
-			values = ListUtil.fromArray((Serializable[])value);
+		if (value != null) {
+			Class<?> clazz = value.getClass();
+
+			if (clazz.isArray()) {
+				values = ListUtil.fromArray((Serializable[])value);
+			}
 		}
-		else {
+
+		if (values == null) {
 			values = new ArrayList<Serializable>();
 
 			values.add(value);

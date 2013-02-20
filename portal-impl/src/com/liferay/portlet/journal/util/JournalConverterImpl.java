@@ -17,6 +17,8 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -280,6 +283,45 @@ public class JournalConverterImpl implements JournalConverter {
 		return StringUtil.merge(languageIds);
 	}
 
+	protected Serializable getDocumentLibraryValue(String url) {
+		int beginIndex = url.indexOf("/documents/");
+
+		if (beginIndex == -1) {
+			return null;
+		}
+
+		int endIndex = url.indexOf(StringPool.QUESTION);
+
+		if (endIndex == -1) {
+			endIndex = url.length();
+		}
+
+		url = url.substring(beginIndex, endIndex);
+
+		String[] pathArray = StringUtil.split(url, CharPool.SLASH);
+
+		try {
+			long groupId = GetterUtil.getLong(pathArray[2]);
+
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					pathArray[5], groupId);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("groupId", fileEntry.getGroupId());
+			jsonObject.put("uuid", fileEntry.getUuid());
+			jsonObject.put("version", fileEntry.getVersion());
+
+			return jsonObject.toString();
+		}
+		catch (Exception e) {
+			_log.warn("Error retrieving file entry", e);
+		}
+
+		return null;
+	}
+
 	protected Field getField(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			String defaultLocale)
@@ -320,22 +362,8 @@ public class JournalConverterImpl implements JournalConverter {
 		Serializable serializable = null;
 
 		if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(type)) {
-			String[] pathArray = StringUtil.split(
-				dynamicContentElement.getText(), CharPool.SLASH);
-
-			long groupId = GetterUtil.getLong(pathArray[2]);
-
-			FileEntry fileEntry =
-				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					pathArray[5], groupId);
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("groupId", fileEntry.getGroupId());
-			jsonObject.put("uuid", fileEntry.getUuid());
-			jsonObject.put("version", fileEntry.getVersion());
-
-			serializable = jsonObject.toString();
+			serializable = getDocumentLibraryValue(
+				dynamicContentElement.getText());
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
 			String[] values = StringUtil.split(
@@ -455,7 +483,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 			dynamicContentElement.addCDATA(fieldValue);
 		}
-		else if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(fieldType)) {
+		else if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				fieldValue);
 
@@ -472,7 +502,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 			dynamicContentElement.addCDATA(fieldValue);
 		}
-		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType)) {
+		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				fieldValue);
 
@@ -489,7 +521,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 			dynamicContentElement.addCDATA(fieldValue);
 		}
-		else if (DDMImpl.TYPE_SELECT.equals(fieldType)) {
+		else if (DDMImpl.TYPE_SELECT.equals(fieldType) &&
+				 Validator.isNotNull(fieldValue)) {
+
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
 
 			if (jsonArray.length() > 1) {
@@ -648,6 +682,8 @@ public class JournalConverterImpl implements JournalConverter {
 			updateXSDDynamicElement(dynamicElementElement);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(JournalConverterImpl.class);
 
 	private Map<String, String> _ddmDataTypes;
 	private Map<String, String> _ddmMetadataAttributes;

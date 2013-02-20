@@ -33,11 +33,48 @@
 	<td>//input[@value='Add Event']</td>
 	<td>Add Event</td>
 </tr>
+<!--Begin ee-6.1.20 Target Conditionals -Ken Duenwald-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>//select[@id='_8_startdateday']</td>
+	<td>newStartDateDaySelectPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${newStartDateDaySelectPresent}</td>
+	<td>NewStartDateDaySelectNotPresent</td>
+</tr>
 <tr>
 	<td>select</td>
 	<td>//select[@id='_8_startdateday']</td>
 	<td>${dayNumber}</td>
 </tr>
+<tr>
+	<td>label</td>
+	<td>NewStartDateDaySelectNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//select[@id='_8_startDateDay']</td>
+	<td>oldStartDateDaySelectPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${oldStartDateDaySelectPresent}</td>
+	<td>OldStartDateDaySelectNotPresent</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_8_startDateDay']</td>
+	<td>${dayNumber}</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>OldStartDateDaySelectNotPresent</td>
+	<td></td>
+</tr>
+<!--End ee-6.1.20 Target Conditionals -Ken Duenwald-->
 <tr>
 	<td>type</td>
 	<td>//input[@id='_8_title']</td>

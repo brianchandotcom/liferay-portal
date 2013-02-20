@@ -50,9 +50,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -144,7 +141,7 @@ public class AssetPublisherUtil {
 			className, classPK);
 
 		addSelection(
-			portletRequest, portletPreferences, referringPortletResource,
+			themeDisplay, portletPreferences, referringPortletResource,
 			assetEntry.getEntryId(), assetEntryOrder, className);
 
 		portletPreferences.store();
@@ -161,6 +158,9 @@ public class AssetPublisherUtil {
 			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long assetEntryId = ParamUtil.getLong(portletRequest, "assetEntryId");
 		int assetEntryOrder = ParamUtil.getInteger(
 			portletRequest, "assetEntryOrder");
@@ -168,14 +168,14 @@ public class AssetPublisherUtil {
 			portletRequest, "assetEntryType");
 
 		addSelection(
-			portletRequest, portletPreferences, portletId, assetEntryId,
+			themeDisplay, portletPreferences, portletId, assetEntryId,
 			assetEntryOrder, assetEntryType);
 	}
 
 	public static void addSelection(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences, String portletId,
-			long assetEntryId, int assetEntryOrder, String assetEntryType)
+			ThemeDisplay themeDisplay, PortletPreferences portletPreferences,
+			String portletId, long assetEntryId, int assetEntryOrder,
+			String assetEntryType)
 		throws Exception {
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -199,25 +199,17 @@ public class AssetPublisherUtil {
 			portletPreferences.setValues("assetEntryXml", assetEntryXmls);
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long plid = themeDisplay.getRefererPlid();
 
 		if (plid == 0) {
 			plid = themeDisplay.getPlid();
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			AssetEntry.class.getName(), portletRequest);
-
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 		assetEntries.add(assetEntry);
 
-		notifySubscribers(
-			ServiceContextUtil.getPortletPreferences(serviceContext), plid,
-			portletId, assetEntries);
+		notifySubscribers(portletPreferences, plid, portletId, assetEntries);
 	}
 
 	public static void addUserAttributes(

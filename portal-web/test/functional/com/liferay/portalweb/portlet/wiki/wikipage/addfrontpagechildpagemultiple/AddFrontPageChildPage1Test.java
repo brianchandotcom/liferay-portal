@@ -29,33 +29,18 @@ public class AddFrontPageChildPage1Test extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
-			selenium.getText("//div[1]/span[1]/a/span"));
-		selenium.clickAt("//div[1]/span[1]/a/span",
+			selenium.getText(
+				"//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a"));
+		selenium.clickAt("//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.waitForText("//body", "Wiki Front Page Child Page1 Content");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -64,8 +49,9 @@ public class AddFrontPageChildPage1Test extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

@@ -26,29 +26,32 @@ public class ChangeParentFrontPageChildPageToWikiPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page Title"),
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
-			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//tr[9]/td/ul/li[3]/a/span"));
-		selenium.clickAt("//tr[9]/td/ul/li[3]/a/span",
+			selenium.getText(
+				"//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span"));
+		selenium.clickAt("//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Change Parent",
@@ -63,27 +66,27 @@ public class ChangeParentFrontPageChildPageToWikiPageTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[5]/td[1]/a"));
-		selenium.clickAt("//tr[5]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

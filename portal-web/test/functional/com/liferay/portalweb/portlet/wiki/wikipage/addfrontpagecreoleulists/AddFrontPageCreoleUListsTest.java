@@ -35,29 +35,12 @@ public class AddFrontPageCreoleUListsTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"* Item1\n** Subitem1a\n* Item2\n** Subitem2a\n** Subitem2b\n* Item3\n** Subitem3a\n** Subitem3b\n** Subitem3c"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.waitForText("//body",
-			"Item1 Subitem1a Item2 Subitem2a Subitem2b Item3 Subitem3a Subitem3b Subitem3c");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -67,29 +50,31 @@ public class AddFrontPageCreoleUListsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Item1 Subitem1a Item2 Subitem2a Subitem2b Item3 Subitem3a Subitem3b Subitem3c"),
 			selenium.getText("//div[@class='wiki-body']/ul"));
-		assertEquals(RuntimeVariables.replace("Item1"),
+		assertEquals(RuntimeVariables.replace("Item1 Subitem1a"),
 			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li)[1]"));
 		assertEquals(RuntimeVariables.replace("Subitem1a"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul)[1]"));
-		assertEquals(RuntimeVariables.replace("Subitem1a"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[1]"));
-		assertEquals(RuntimeVariables.replace("Item2"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li)[2]"));
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li/ul/li)"));
+		assertEquals(RuntimeVariables.replace("Item2 Subitem2a Subitem2b"),
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[2])"));
 		assertEquals(RuntimeVariables.replace("Subitem2a Subitem2b"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul)[2]"));
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[2]/ul)"));
 		assertEquals(RuntimeVariables.replace("Subitem2a"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[2]"));
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[2]/ul/li)"));
 		assertEquals(RuntimeVariables.replace("Subitem2b"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[3]"));
-		assertEquals(RuntimeVariables.replace("Item3"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li)[3]"));
+			selenium.getText(
+				"xPath=(//div[@class='wiki-body']/ul/li[2]/ul/li[2])"));
+		assertEquals(RuntimeVariables.replace(
+				"Item3 Subitem3a Subitem3b Subitem3c"),
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[3])"));
 		assertEquals(RuntimeVariables.replace("Subitem3a Subitem3b Subitem3c"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul)[3]"));
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[3]/ul)"));
 		assertEquals(RuntimeVariables.replace("Subitem3a"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[4]"));
+			selenium.getText("xPath=(//div[@class='wiki-body']/ul/li[3]/ul/li)"));
 		assertEquals(RuntimeVariables.replace("Subitem3b"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[5]"));
+			selenium.getText(
+				"xPath=(//div[@class='wiki-body']/ul/li[3]/ul/li[2])"));
 		assertEquals(RuntimeVariables.replace("Subitem3c"),
-			selenium.getText("xPath=(//div[@class='wiki-body']/ul/ul/li)[6]"));
+			selenium.getText(
+				"xPath=(//div[@class='wiki-body']/ul/li[3]/ul/li[3])"));
 	}
 }

@@ -14,48 +14,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/h2</td>
-	<td>Test Wiki Article#</td>
+	<td>assertElementPresent</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a</td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a</td>
+	<td>All Pages</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Test Wiki Article</td>
+	<td>Test Wiki Article</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Test Wiki Article</td>
+	<td>Test Wiki Article</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/em</td>
+	<td>xPath=(//div[@class='portlet-body']/div[2]/h1/span)</td>
+	<td>Test Wiki Article</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='wiki-body']/p/em)</td>
 	<td>this is italics</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/strong</td>
+	<td>xPath=(//div[@class='wiki-body']/p/strong)</td>
 	<td>bold</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/a</td>
-	<td>Link to website</td>
+	<td>xPath=(//div[@class='wiki-body']/p/a)</td>
+	<td>Link to Website</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li)</td>
 	<td>this is a list item</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/ul/li</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li/ul)</td>
 	<td>this is a sub list item</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>xPath=(//div[@class='child-pages']/ul/li/a)</td>
 	<td>Test</td>
 </tr>
 <tr>
@@ -65,32 +80,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/h2</td>
-	<td>Test Child Article#</td>
+	<td>xPath=(//div[@class='wiki-body']/h2)</td>
+	<td>Test Child Article\\ #</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/em</td>
+	<td>xPath=(//div[@class='wiki-body']/p/em)</td>
 	<td>this is italics</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/strong</td>
+	<td>xPath=(//div[@class='wiki-body']/p/strong)</td>
 	<td>bold</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='wiki-body']/p/a</td>
+	<td>xPath=(//div[@class='wiki-body']/p/a)</td>
 	<td>Link to website</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/li</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li)</td>
 	<td>this is a list item</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='wiki-body']/ul/ul/li</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/ul/li/ul/li)</td>
 	<td>this is a sub list item</td>
 </tr>
 <tr>
@@ -101,12 +116,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/h4</td>
-	<td>Yes this is a second test article #</td>
+	<td>Yes this is a second test article\\ #</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td>I love Liferay! This Wiki has been EDITED!</td>
+	<td>I love liferay! This wiki has been EDITED!</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -124,19 +139,19 @@
 	<td>Link Me 1</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p)[1]</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/p)</td>
 	<td>Hi Administrator! Hope you are well! Please link me to another page!</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p)[2]</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/p)</td>
 	<td>-testing</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p/a)[1]</td>
-	<td>FrontPage</td>
+	<td>xPath=(//div[@class='wiki-body']/p[2])</td>
+	<td>Frontpage</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -149,31 +164,30 @@
 	<td>Link Me 2</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p)[1]</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/p)</td>
 	<td>Hi Administrator!</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p)[2]</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/p)</td>
 	<td>I made another mistake! Oh me. Please link this article to another!</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p)[3]</td>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='wiki-body']/p)</td>
 	<td>-rj</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='wiki-body']/p/a)[1]</td>
-	<td>FrontPage</td>
+	<td>xPath=(//div[@class='wiki-body']/p/a)</td>
+	<td>Frontpage</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='wiki-body']/p/a)[2]</td>
 	<td>Link Me 1</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

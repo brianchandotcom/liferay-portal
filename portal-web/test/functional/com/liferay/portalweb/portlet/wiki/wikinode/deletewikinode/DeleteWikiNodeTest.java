@@ -37,16 +37,17 @@ public class DeleteWikiNodeTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[4]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Wiki Node Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));

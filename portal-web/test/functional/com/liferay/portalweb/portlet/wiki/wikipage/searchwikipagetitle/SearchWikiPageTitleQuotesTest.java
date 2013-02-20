@@ -25,7 +25,6 @@ public class SearchWikiPageTitleQuotesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -35,7 +34,8 @@ public class SearchWikiPageTitleQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//a[@title='Wiki Page Title - Wiki Page Content']/span"));
 		selenium.type("//input[@id='_36_keywords']",
 			RuntimeVariables.replace("\"Wiki1 Page1 Title1\""));
 		selenium.clickAt("//input[@value='Search']",

@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[9]/td/ul/li[2]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Copy')]/a/span</td>
 	<td>Copy</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[9]/td/ul/li[2]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Copy')]/a/span</td>
 	<td>Copy</td>
 </tr>
 <tr>
@@ -44,9 +44,9 @@
 	<td>FrontPage2</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -70,22 +70,22 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'FrontPage2')]/td[1]/a</td>
 	<td>FrontPage2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[4]/td[1]/a</td>
+	<td>//tr[contains(.,'FrontPage2')]/td[1]/a</td>
 	<td>FrontPage2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>FrontPage2</td>
 </tr>
 <tr>

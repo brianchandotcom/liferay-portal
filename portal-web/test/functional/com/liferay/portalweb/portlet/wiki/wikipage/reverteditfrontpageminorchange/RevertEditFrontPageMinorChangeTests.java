@@ -20,6 +20,7 @@ import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;
 import com.liferay.portalweb.portlet.wiki.wikipage.addwikifrontpage.AddWikiFrontPageTest;
+import com.liferay.portalweb.portlet.wiki.wikipage.editfrontpageminorchange.EditFrontPageMinorChangeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

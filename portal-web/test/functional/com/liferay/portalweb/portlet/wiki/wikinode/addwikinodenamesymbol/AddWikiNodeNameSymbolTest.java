@@ -37,10 +37,12 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//input[@value='Add Wiki']"));
 		selenium.clickAt("//input[@value='Add Wiki']",
 			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");
@@ -69,10 +71,12 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//input[@value='Add Wiki']"));
 		selenium.clickAt("//input[@value='Add Wiki']",
 			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");
@@ -103,10 +107,12 @@ public class AddWikiNodeNameSymbolTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//input[@value='Add Wiki']"));
 		selenium.clickAt("//input[@value='Add Wiki']",
 			RuntimeVariables.replace("Add Wiki"));
 		selenium.waitForPageToLoad("30000");

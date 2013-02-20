@@ -25,20 +25,21 @@ public class ViewWikiPageIncomingLinksNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
+		selenium.clickAt("//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span",
+			RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page2 Title"),
-			selenium.getText("//tr[5]/td[1]/a"));
-		selenium.clickAt("//tr[5]/td[1]/a",
+			selenium.getText("//tr[contains(.,'Wiki Page2 Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Wiki Page2 Title')]/td[1]/a",
 			RuntimeVariables.replace("Wiki Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Incoming Links",

@@ -25,26 +25,32 @@ public class DeleteFrontPageChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Front Page Child Page Title"),
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//td/ul/li[4]/a/span"));
-		selenium.click(RuntimeVariables.replace("//td/ul/li[4]/a/span"));
+			selenium.getText(
+				"//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Delete')]/a/span"));
+		selenium.click(RuntimeVariables.replace(
+				"//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Delete')]/a/span"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
 	}
 }

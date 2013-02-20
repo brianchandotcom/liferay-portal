@@ -31,30 +31,15 @@ public class EditFrontPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span[contains(.,'Edit')]/a/span"));
-		selenium.clickAt("//span[contains(.,'Edit')]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span",
 			RuntimeVariables.replace("Edit"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__36_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__36_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Wiki FrontPage Content Edit"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_36_editor' and @style='display: none;']");
-		assertTrue(selenium.isVisible(
-				"//td[@id='cke_contents__36_editor']/iframe"));
-		selenium.selectFrame("//td[@id='cke_contents__36_editor']/iframe");
-		selenium.waitForText("//body", "Wiki FrontPage Content Edit");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -70,17 +55,18 @@ public class EditFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Details"),
-			selenium.getText("//div[3]/span[2]/a/span"));
-		selenium.clickAt("//div[3]/span[2]/a/span",
+			selenium.getText(
+				"//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span"));
+		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=History", RuntimeVariables.replace("History"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("1.2"),
-			selenium.getText("//tr[3]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.2')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.1')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1.0 (Minor Edit)"),
-			selenium.getText("//tr[5]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'1.0 (Minor Edit)')]/td[4]/a"));
 	}
 }

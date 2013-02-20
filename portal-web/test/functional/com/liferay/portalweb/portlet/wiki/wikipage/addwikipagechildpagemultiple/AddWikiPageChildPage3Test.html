@@ -20,27 +20,27 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
 	<td>All Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[6]/td[1]/a</td>
+	<td>//tr[contains(.,'Wiki Page Title')]/td[1]/a</td>
 	<td>Wiki Page Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='article-actions']/span/a/span</td>
+	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
 	<td>Add Child Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='article-actions']/span/a/span</td>
+	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
 	<td>Add Child Page</td>
 </tr>
 <tr>
@@ -49,69 +49,19 @@
 	<td>Wiki Page ChildPage3 Title</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Wiki Page ChildPage3 Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__36_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Wiki Page ChildPage3 Content</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -125,22 +75,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='child-pages']/ul/li/a)[1]</td>
+	<td>//div[@class='child-pages']/ul/li[contains(.,'Wiki Page ChildPage1 Title')]/a</td>
 	<td>Wiki Page ChildPage1 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='child-pages']/ul/li/a)[2]</td>
+	<td>//div[@class='child-pages']/ul/li[contains(.,'Wiki Page ChildPage2 Title')]/a</td>
 	<td>Wiki Page ChildPage2 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='child-pages']/ul/li/a)[3]</td>
+	<td>//div[@class='child-pages']/ul/li[contains(.,'Wiki Page ChildPage3 Title')]/a</td>
 	<td>Wiki Page ChildPage3 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>xPath=(//div[@class='child-pages']/ul/li/a)[3]</td>
+	<td>//div[@class='child-pages']/ul/li[contains(.,'Wiki Page ChildPage3 Title')]/a</td>
 	<td>Wiki Page ChildPage3 Title</td>
 </tr>
 <tr>

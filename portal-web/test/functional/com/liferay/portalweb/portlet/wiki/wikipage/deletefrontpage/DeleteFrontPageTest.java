@@ -35,7 +35,7 @@ public class DeleteFrontPageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertFalse(selenium.isTextPresent(
 						"This page is empty. Edit it to add some text."));
-				selenium.clickAt("link=All Pages",
+				selenium.clickAt("//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span",
 					RuntimeVariables.replace("All Pages"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("FrontPage"),

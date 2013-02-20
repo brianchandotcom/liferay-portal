@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
+	<td>assertText</td>
+	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>lllllllll1lllllllll2lllllllll3lllllllll4lllllllll5lllllllll6lllllllll7lllllllll8lllllllll9llllllll10llllllll11llllllll12llllllll13llllllll14llllllll15llllllll16llllllll17llllllll18llllllll19llllllll20llllllll21llllllll22llllllll23llllllll24llllllll25llll</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -45,22 +45,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[9]/td/ul/li[3]/a/span</td>
+	<td>//ul[@class='lfr-component taglib-icon-list']/li[contains(.,'Move')]/a/span</td>
 	<td>Move</td>
 </tr>
 <tr>
@@ -94,11 +94,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
@@ -114,18 +109,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=All Pages</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
 	<td>All Pages</td>
 </tr>
 <tr>
@@ -153,7 +143,6 @@
 	<td>« Back to FrontPage</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

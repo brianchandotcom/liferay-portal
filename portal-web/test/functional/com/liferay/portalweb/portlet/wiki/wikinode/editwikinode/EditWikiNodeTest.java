@@ -37,8 +37,9 @@ public class EditWikiNodeTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//ul[@class='category-portlets']/li[11]/a"));
-		selenium.clickAt("//ul[@class='category-portlets']/li[11]/a",
+			selenium.getText(
+				"//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a"));
+		selenium.clickAt("//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a",
 			RuntimeVariables.replace("Wiki"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Node Name"),
@@ -53,11 +54,11 @@ public class EditWikiNodeTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Wiki Node Name')]/td[4]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_154_name']",

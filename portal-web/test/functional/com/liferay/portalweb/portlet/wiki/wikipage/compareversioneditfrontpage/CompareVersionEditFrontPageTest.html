@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Test Page</td>
-	<td>Wiki Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Test Page</td>
 	<td>Wiki Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span[2]/a/span</td>
+	<td>//div[@class='page-actions top-actions']/span[contains(.,'Details')]/a/span</td>
 	<td>Details</td>
 </tr>
 <tr>
@@ -40,26 +35,26 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'1.2')]/td[4]/a</td>
 	<td>1.2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/a</td>
+	<td>//tr[contains(.,'1.1')]/td[4]/a</td>
 	<td>1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[5]/td[4]/a</td>
+	<td>//tr[contains(.,'1.0 (Minor Edit)')]/td[4]/a</td>
 	<td>1.0 (Minor Edit)</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@name='_36_rowIds' and @value='1.2']</td>
 	<td>1.2</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>clickAt</td>
 	<td>//input[@name='_36_rowIds' and @value='1.1']</td>
 	<td>1.1</td>
 </tr>
@@ -80,40 +75,39 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//p[contains(.,'Wiki FrontPage Content Edit')]</td>
 	<td>Wiki FrontPage Content Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/a</td>
+	<td>//a[@class='change-mode']</td>
 	<td>Text Mode</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/div/a</td>
+	<td>//a[@class='change-mode']</td>
 	<td>Text Mode</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[1]</td>
+	<td>//tr[contains(.,'FrontPage 1.1')]/td[1]</td>
 	<td>FrontPage 1.1</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//table[@id='taglib-diff-results']/tbody/tr/td)[2]</td>
+	<td>//tr[contains(.,'FrontPage 1.2')]/td[2]</td>
 	<td>FrontPage 1.2</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[1]</td>
+	<td>xPath=(//tr[@class='lfr-top']/td[1])[1]</td>
 	<td>Wiki FrontPage Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//table[@class='taglib-diff-table']/tbody/tr/td)[2]</td>
+	<td>xPath=(//tr[@class='lfr-top']/td[1])[2]</td>
 	<td>Wiki FrontPage Content Edit</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

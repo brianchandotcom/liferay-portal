@@ -31,8 +31,8 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Wiki Page Title"),
-			selenium.getText("//tr[4]/td[1]/a"));
-		selenium.clickAt("//tr[4]/td[1]/a",
+			selenium.getText("xPath=(//tr[4]/td[1])/a"));
+		selenium.clickAt("xPath=(//tr[4]/td[1])/a",
 			RuntimeVariables.replace("Wiki Page Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -46,9 +46,9 @@ public class AddWikiPageEmptyAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div[@class='portlet-msg-info']",
-			"This page does not have any file attachments.");
+			"This page does not have file attachments.");
 		assertEquals(RuntimeVariables.replace(
-				"This page does not have any file attachments."),
+				"This page does not have file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));

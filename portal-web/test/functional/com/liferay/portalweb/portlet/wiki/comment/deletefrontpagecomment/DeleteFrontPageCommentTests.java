@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.wiki.comment.deletefrontpagecomment;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.wiki.comment.addfrontpagecomment.AddFrontPageCommentTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPageWikiTest;
 import com.liferay.portalweb.portlet.wiki.portlet.addportletwiki.AddPortletWikiTest;
 import com.liferay.portalweb.portlet.wiki.wikinode.addwikinode.TearDownWikiNodeTest;

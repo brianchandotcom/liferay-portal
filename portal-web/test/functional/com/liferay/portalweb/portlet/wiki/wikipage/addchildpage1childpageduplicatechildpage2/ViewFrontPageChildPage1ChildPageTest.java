@@ -26,20 +26,21 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Title"),
-			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
-		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"),
-			selenium.getText("//div[@class='child-pages']/ul/li/a"));
-		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Child Page Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page1 Child Page Title')]/a",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
 		selenium.waitForPageToLoad("30000");
@@ -50,14 +51,14 @@ public class ViewFrontPageChildPage1ChildPageTest extends BaseTestCase {
 				"Wiki Front Page Child Page1 Child Page Content"),
 			selenium.getText("//div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Title"),
-			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
-		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
+			selenium.getText(
+				"//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page2 Title')]/a"));
+		selenium.clickAt("//div[@class='child-pages']/ul/li[contains(.,'Wiki Front Page Child Page2 Title')]/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent(

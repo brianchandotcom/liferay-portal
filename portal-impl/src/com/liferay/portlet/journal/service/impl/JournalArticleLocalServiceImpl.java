@@ -645,9 +645,9 @@ public class JournalArticleLocalServiceImpl
 
 		ExpandoBridge oldExpandoBridge = oldArticle.getExpandoBridge();
 
-		ExpandoBridge expandoBridge = newArticle.getExpandoBridge();
+		ExpandoBridge newExpandoBridge = newArticle.getExpandoBridge();
 
-		expandoBridge.setAttributes(oldExpandoBridge.getAttributes());
+		newExpandoBridge.setAttributes(oldExpandoBridge.getAttributes());
 
 		// Small image
 

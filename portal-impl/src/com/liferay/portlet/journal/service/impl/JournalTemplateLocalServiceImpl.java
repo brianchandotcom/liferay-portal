@@ -296,7 +296,7 @@ public class JournalTemplateLocalServiceImpl
 
 		addTemplateResources(newTemplate, true, true);
 
-		//Expando
+		// Expando
 
 		ExpandoBridge oldExpandoBridge = oldTemplate.getExpandoBridge();
 

@@ -662,6 +662,7 @@ if (Validator.isNotNull(content)) {
 	function <portlet:namespace />openDDMStructureSelector(strutsAction, ddmStructureId) {
 		Liferay.Util.openDDMPortlet(
 			{
+				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				chooseCallback: '<portlet:namespace />selectStructure',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,

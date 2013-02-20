@@ -219,6 +219,7 @@ if (Validator.isNotNull(script)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 		{
+			availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 			classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 			ddmResource: '<%= ddmResource %>',
 			dialog: {

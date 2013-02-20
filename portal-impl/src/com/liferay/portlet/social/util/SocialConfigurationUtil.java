@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.DocumentType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
@@ -159,6 +161,17 @@ public class SocialConfigurationUtil {
 
 		Document document = SAXReaderUtil.read(xml);
 
+		DocumentType documentType = document.getDocumentType();
+
+		String publicId = documentType.getPublicId();
+
+		if (!publicId.equals("-//Liferay//DTD Social 6.2.0//EN") &&
+			!publicId.equals("-//Liferay//DTD Social 6.1.0//EN")) {
+
+			throw new DocumentException(
+				"Unsupported document type " + publicId);
+		}
+
 		Element rootElement = document.getRootElement();
 
 		List<Element> activityElements = rootElement.elements("activity");
@@ -225,30 +238,40 @@ public class SocialConfigurationUtil {
 			SocialActivityDefinition activityDefinition)
 		throws Exception {
 
-		String languageKey = GetterUtil.getString(
-			activityElement.elementText("language-key"));
-
-		activityDefinition.setLanguageKey(languageKey);
-
 		boolean logActivity = GetterUtil.getBoolean(
 			activityElement.elementText("log-activity"));
 
+		logActivity = GetterUtil.getBoolean(
+			activityElement.attributeValue("log-activity"), logActivity);
+
 		activityDefinition.setLogActivity(logActivity);
 
-		String processorClassName = GetterUtil.getString(
-			activityElement.elementText("processor-class"));
+		boolean countersEnabled = GetterUtil.getBoolean(
+			activityElement.attributeValue("enable-counters"), true);
 
-		if (Validator.isNotNull(processorClassName)) {
-			SocialActivityProcessor activityProcessor =
-				(SocialActivityProcessor)ProxyFactory.newInstance(
-					classLoader, SocialActivityProcessor.class,
-					processorClassName);
+		activityDefinition.setCountersEnabled(countersEnabled);
 
-			activityDefinition.setActivityProcessor(activityProcessor);
+		if (countersEnabled) {
+			String languageKey = GetterUtil.getString(
+				activityElement.elementText("language-key"));
+
+			activityDefinition.setLanguageKey(languageKey);
+
+			String processorClassName = GetterUtil.getString(
+				activityElement.elementText("processor-class"));
+
+			if (Validator.isNotNull(processorClassName)) {
+				SocialActivityProcessor activityProcessor =
+					(SocialActivityProcessor)ProxyFactory.newInstance(
+						classLoader, SocialActivityProcessor.class,
+						processorClassName);
+
+				activityDefinition.setActivityProcessor(activityProcessor);
+			}
+
+			_readActivityContribution(activityElement, activityDefinition);
+			_readActivityParticipation(activityElement, activityDefinition);
 		}
-
-		_readActivityContribution(activityElement, activityDefinition);
-		_readActivityParticipation(activityElement, activityDefinition);
 	}
 
 	private static void _readActivity(

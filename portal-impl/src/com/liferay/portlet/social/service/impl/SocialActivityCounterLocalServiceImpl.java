@@ -292,7 +292,9 @@ public class SocialActivityCounterLocalServiceImpl
 				activity.getGroupId(), activity.getClassName(),
 				activity.getType());
 
-		if ((activityDefinition == null) || !activityDefinition.isEnabled()) {
+		if ((activityDefinition == null) ||
+			!activityDefinition.isCountersEnabled()) {
+
 			return;
 		}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,11 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		attributes.put("uuid", getUuid());
 		attributes.put("repositoryEntryId", getRepositoryEntryId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
@@ -70,6 +76,36 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -162,6 +198,116 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	public void setGroupId(long groupId) {
 		_repositoryEntry.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this repository entry.
+	*
+	* @return the company ID of this repository entry
+	*/
+	public long getCompanyId() {
+		return _repositoryEntry.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this repository entry.
+	*
+	* @param companyId the company ID of this repository entry
+	*/
+	public void setCompanyId(long companyId) {
+		_repositoryEntry.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this repository entry.
+	*
+	* @return the user ID of this repository entry
+	*/
+	public long getUserId() {
+		return _repositoryEntry.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this repository entry.
+	*
+	* @param userId the user ID of this repository entry
+	*/
+	public void setUserId(long userId) {
+		_repositoryEntry.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this repository entry.
+	*
+	* @return the user uuid of this repository entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryEntry.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this repository entry.
+	*
+	* @param userUuid the user uuid of this repository entry
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_repositoryEntry.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this repository entry.
+	*
+	* @return the user name of this repository entry
+	*/
+	public java.lang.String getUserName() {
+		return _repositoryEntry.getUserName();
+	}
+
+	/**
+	* Sets the user name of this repository entry.
+	*
+	* @param userName the user name of this repository entry
+	*/
+	public void setUserName(java.lang.String userName) {
+		_repositoryEntry.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this repository entry.
+	*
+	* @return the create date of this repository entry
+	*/
+	public java.util.Date getCreateDate() {
+		return _repositoryEntry.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this repository entry.
+	*
+	* @param createDate the create date of this repository entry
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_repositoryEntry.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this repository entry.
+	*
+	* @return the modified date of this repository entry
+	*/
+	public java.util.Date getModifiedDate() {
+		return _repositoryEntry.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this repository entry.
+	*
+	* @param modifiedDate the modified date of this repository entry
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_repositoryEntry.setModifiedDate(modifiedDate);
 	}
 
 	/**

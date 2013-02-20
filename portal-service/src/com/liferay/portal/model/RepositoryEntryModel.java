@@ -15,11 +15,14 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the RepositoryEntry service. Represents a row in the &quot;RepositoryEntry&quot; database table, with each column mapped to a property of this class.
@@ -34,7 +37,8 @@ import java.io.Serializable;
  * @see com.liferay.portal.model.impl.RepositoryEntryModelImpl
  * @generated
  */
-public interface RepositoryEntryModel extends BaseModel<RepositoryEntry> {
+public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
+	GroupedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -97,6 +101,92 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry> {
 	 * @param groupId the group ID of this repository entry
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this repository entry.
+	 *
+	 * @return the company ID of this repository entry
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this repository entry.
+	 *
+	 * @param companyId the company ID of this repository entry
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this repository entry.
+	 *
+	 * @return the user ID of this repository entry
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this repository entry.
+	 *
+	 * @param userId the user ID of this repository entry
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this repository entry.
+	 *
+	 * @return the user uuid of this repository entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this repository entry.
+	 *
+	 * @param userUuid the user uuid of this repository entry
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this repository entry.
+	 *
+	 * @return the user name of this repository entry
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this repository entry.
+	 *
+	 * @param userName the user name of this repository entry
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this repository entry.
+	 *
+	 * @return the create date of this repository entry
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this repository entry.
+	 *
+	 * @param createDate the create date of this repository entry
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this repository entry.
+	 *
+	 * @return the modified date of this repository entry
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this repository entry.
+	 *
+	 * @param modifiedDate the modified date of this repository entry
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the repository ID of this repository entry.

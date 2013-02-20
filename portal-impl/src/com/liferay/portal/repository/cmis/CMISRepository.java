@@ -52,6 +52,7 @@ import com.liferay.portal.repository.cmis.model.CMISFileVersion;
 import com.liferay.portal.repository.cmis.model.CMISFolder;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryEntryUtil;
 import com.liferay.portal.util.PropsValues;
@@ -2255,15 +2256,10 @@ public class CMISRepository extends BaseCmisRepository {
 			getRepositoryId(), rootFolderId);
 
 		if (repositoryEntry == null) {
-			long repositoryEntryId = counterLocalService.increment();
-
-			repositoryEntry = RepositoryEntryUtil.create(repositoryEntryId);
-
-			repositoryEntry.setGroupId(getGroupId());
-			repositoryEntry.setRepositoryId(getRepositoryId());
-			repositoryEntry.setMappedId(rootFolderId);
-
-			RepositoryEntryUtil.update(repositoryEntry);
+			repositoryEntry =
+				RepositoryEntryLocalServiceUtil.addRepositoryEntry(
+					dlFolder.getUserId(), getGroupId(), getRepositoryId(),
+					rootFolderId, new ServiceContext());
 		}
 
 		return repositoryEntry.getMappedId();
@@ -2293,15 +2289,14 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void updateMappedId(long repositoryEntryId, String mappedId)
-		throws NoSuchRepositoryEntryException, SystemException {
+		throws PortalException, SystemException {
 
 		RepositoryEntry repositoryEntry = RepositoryEntryUtil.findByPrimaryKey(
 			repositoryEntryId);
 
 		if (!mappedId.equals(repositoryEntry.getMappedId())) {
-			repositoryEntry.setMappedId(mappedId);
-
-			RepositoryEntryUtil.update(repositoryEntry);
+			RepositoryEntryLocalServiceUtil.updateRepositoryEntry(
+				repositoryEntryId, mappedId);
 		}
 	}
 

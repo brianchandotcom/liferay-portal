@@ -382,7 +382,12 @@ drop index IX_ED7CF243 on PasswordPolicyRel;
 
 drop table Permission_;
 
+alter table RepositoryEntry add companyId LONG;
+alter table RepositoryEntry add createDate DATE null;
 alter table RepositoryEntry add manualCheckInRequired BOOLEAN;
+alter table RepositoryEntry add modifiedDate DATE null;
+alter table RepositoryEntry add userId LONG;
+alter table RepositoryEntry add userName VARCHAR(75) null;
 
 drop table Resource_;
 

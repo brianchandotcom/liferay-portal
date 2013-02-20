@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
@@ -112,6 +113,16 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setGroupId(ServiceTestUtil.nextLong());
 
+		newRepositoryEntry.setCompanyId(ServiceTestUtil.nextLong());
+
+		newRepositoryEntry.setUserId(ServiceTestUtil.nextLong());
+
+		newRepositoryEntry.setUserName(ServiceTestUtil.randomString());
+
+		newRepositoryEntry.setCreateDate(ServiceTestUtil.nextDate());
+
+		newRepositoryEntry.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newRepositoryEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
 		newRepositoryEntry.setMappedId(ServiceTestUtil.randomString());
@@ -128,6 +139,18 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getRepositoryEntryId());
 		Assert.assertEquals(existingRepositoryEntry.getGroupId(),
 			newRepositoryEntry.getGroupId());
+		Assert.assertEquals(existingRepositoryEntry.getCompanyId(),
+			newRepositoryEntry.getCompanyId());
+		Assert.assertEquals(existingRepositoryEntry.getUserId(),
+			newRepositoryEntry.getUserId());
+		Assert.assertEquals(existingRepositoryEntry.getUserName(),
+			newRepositoryEntry.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRepositoryEntry.getCreateDate()),
+			Time.getShortTimestamp(newRepositoryEntry.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRepositoryEntry.getModifiedDate()),
+			Time.getShortTimestamp(newRepositoryEntry.getModifiedDate()));
 		Assert.assertEquals(existingRepositoryEntry.getRepositoryId(),
 			newRepositoryEntry.getRepositoryId());
 		Assert.assertEquals(existingRepositoryEntry.getMappedId(),
@@ -284,6 +307,16 @@ public class RepositoryEntryPersistenceTest {
 		repositoryEntry.setUuid(ServiceTestUtil.randomString());
 
 		repositoryEntry.setGroupId(ServiceTestUtil.nextLong());
+
+		repositoryEntry.setCompanyId(ServiceTestUtil.nextLong());
+
+		repositoryEntry.setUserId(ServiceTestUtil.nextLong());
+
+		repositoryEntry.setUserName(ServiceTestUtil.randomString());
+
+		repositoryEntry.setCreateDate(ServiceTestUtil.nextDate());
+
+		repositoryEntry.setModifiedDate(ServiceTestUtil.nextDate());
 
 		repositoryEntry.setRepositoryId(ServiceTestUtil.nextLong());
 

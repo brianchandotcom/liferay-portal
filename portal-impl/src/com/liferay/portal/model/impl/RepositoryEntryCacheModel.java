@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing RepositoryEntry in entity cache.
  *
@@ -35,7 +37,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -43,6 +45,16 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(repositoryEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", mappedId=");
@@ -66,6 +78,30 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		repositoryEntryImpl.setRepositoryEntryId(repositoryEntryId);
 		repositoryEntryImpl.setGroupId(groupId);
+		repositoryEntryImpl.setCompanyId(companyId);
+		repositoryEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			repositoryEntryImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			repositoryEntryImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			repositoryEntryImpl.setCreateDate(null);
+		}
+		else {
+			repositoryEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			repositoryEntryImpl.setModifiedDate(null);
+		}
+		else {
+			repositoryEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		repositoryEntryImpl.setRepositoryId(repositoryId);
 
 		if (mappedId == null) {
@@ -86,6 +122,11 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		uuid = objectInput.readUTF();
 		repositoryEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		mappedId = objectInput.readUTF();
 		manualCheckInRequired = objectInput.readBoolean();
@@ -102,6 +143,18 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		objectOutput.writeLong(repositoryEntryId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(repositoryId);
 
 		if (mappedId == null) {
@@ -117,6 +170,11 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	public String uuid;
 	public long repositoryEntryId;
 	public long groupId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public long repositoryId;
 	public String mappedId;
 	public boolean manualCheckInRequired;

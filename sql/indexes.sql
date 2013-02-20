@@ -655,6 +655,7 @@ create unique index IX_11641E26 on Repository (uuid_, groupId);
 create index IX_B7034B27 on RepositoryEntry (repositoryId);
 create unique index IX_9BDCF489 on RepositoryEntry (repositoryId, mappedId);
 create index IX_B9B1506 on RepositoryEntry (uuid_);
+create index IX_D3B9AF62 on RepositoryEntry (uuid_, companyId);
 create unique index IX_354AA664 on RepositoryEntry (uuid_, groupId);
 
 create index IX_81F2DB09 on ResourceAction (name);

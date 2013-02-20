@@ -680,6 +680,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		RepositoryEntry repositoryEntry =
 			(RepositoryEntry)portletDataContext.getZipEntryAsObject(path);
 
+		long userId = portletDataContext.getUserId(
+			repositoryEntry.getUserUuid());
+
 		Map<Long, Long> repositoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Repository.class);
@@ -704,8 +707,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				importedRepositoryEntry =
 					RepositoryEntryLocalServiceUtil.addRepositoryEntry(
-						portletDataContext.getScopeGroupId(), repositoryId,
-						repositoryEntry.getMappedId(), serviceContext);
+						userId, portletDataContext.getScopeGroupId(),
+						repositoryId, repositoryEntry.getMappedId(),
+						serviceContext);
 			}
 			else {
 				importedRepositoryEntry =
@@ -717,7 +721,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		else {
 			importedRepositoryEntry =
 				RepositoryEntryLocalServiceUtil.addRepositoryEntry(
-					portletDataContext.getScopeGroupId(), repositoryId,
+					userId, portletDataContext.getScopeGroupId(), repositoryId,
 					repositoryEntry.getMappedId(), serviceContext);
 		}
 

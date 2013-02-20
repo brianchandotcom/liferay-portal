@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Marcellus Tavares
+ * @author Eduardo Lundgren
  */
 public class FieldConstants {
 
@@ -108,6 +109,10 @@ public class FieldConstants {
 	public static final Serializable getSerializable(
 		String type, String value) {
 
+		if (isNumericType(type) && Validator.isNull(value)) {
+			return null;
+		}
+
 		if (type.equals(BOOLEAN)) {
 			return GetterUtil.getBoolean(value);
 		}
@@ -135,6 +140,16 @@ public class FieldConstants {
 		else {
 			return value;
 		}
+	}
+
+	public static final boolean isNumericType(String type) {
+		if (type.equals(DOUBLE) || type.equals(FLOAT) || type.equals(INTEGER) ||
+			type.equals(LONG) || type.equals(NUMBER) || type.equals(SHORT)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -671,7 +671,6 @@ if (Validator.isNotNull(content)) {
 					width: 820
 				},
 				groupId: <%= groupId %>,
-				saveCallback: '<portlet:namespace />selectStructure',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',

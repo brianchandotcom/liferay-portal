@@ -11,13 +11,19 @@ processor-class?, contribution-value?, contribution-limit?,
 contribution-limit-period?, participation-value?, participation-limit?,
 participation-limit-period?, counter*, achievement*)>
 
+<!ATTLIST activity
+	enable-counters (true|false) "true"
+>
+
+<!ATTLIST activity
+	log-activity (true|false) "false"
+>
+
 <!ELEMENT model-name (#PCDATA)>
 
 <!ELEMENT activity-type (#PCDATA)>
 
 <!ELEMENT language-key (#PCDATA)>
-
-<!ELEMENT log-activity (#PCDATA)>
 
 <!ELEMENT processor-class (#PCDATA)>
 

@@ -84,6 +84,12 @@ public class BookmarksFolderServiceUtil {
 		return getService().getFolder(folderId);
 	}
 
+	public static long[] getFolderIds(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFolderIds(groupId, folderId);
+	}
+
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getFolders(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -152,6 +158,13 @@ public class BookmarksFolderServiceUtil {
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
+		long folderId, boolean recurse)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSubfolderIds(groupId, folderId, recurse);
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolder(

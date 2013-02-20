@@ -193,12 +193,49 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
+	public static long[] getFolderIds(HttpPrincipal httpPrincipal,
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
+					"getFolderIds", _getFolderIdsParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (long[])returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getFolders(
 		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFolders", _getFoldersParameterTypes4);
+					"getFolders", _getFoldersParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -229,7 +266,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFolders", _getFoldersParameterTypes5);
+					"getFolders", _getFoldersParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId);
@@ -262,7 +299,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFolders", _getFoldersParameterTypes6);
+					"getFolders", _getFoldersParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId, start, end);
@@ -295,7 +332,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFolders", _getFoldersParameterTypes7);
+					"getFolders", _getFoldersParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId, status, start, end);
@@ -327,7 +364,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFoldersAndEntries", _getFoldersAndEntriesParameterTypes8);
+					"getFoldersAndEntries", _getFoldersAndEntriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId);
@@ -359,7 +396,8 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFoldersAndEntries", _getFoldersAndEntriesParameterTypes9);
+					"getFoldersAndEntries",
+					_getFoldersAndEntriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, status);
@@ -393,7 +431,7 @@ public class BookmarksFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
 					"getFoldersAndEntries",
-					_getFoldersAndEntriesParameterTypes10);
+					_getFoldersAndEntriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, status, start, end);
@@ -426,7 +464,7 @@ public class BookmarksFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
 					"getFoldersAndEntriesCount",
-					_getFoldersAndEntriesCountParameterTypes11);
+					_getFoldersAndEntriesCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId);
@@ -459,7 +497,7 @@ public class BookmarksFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
 					"getFoldersAndEntriesCount",
-					_getFoldersAndEntriesCountParameterTypes12);
+					_getFoldersAndEntriesCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, status);
@@ -491,7 +529,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFoldersCount", _getFoldersCountParameterTypes13);
+					"getFoldersCount", _getFoldersCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId);
@@ -523,7 +561,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getFoldersCount", _getFoldersCountParameterTypes14);
+					"getFoldersCount", _getFoldersCountParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentFolderId, status);
@@ -555,7 +593,7 @@ public class BookmarksFolderServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"getSubfolderIds", _getSubfolderIdsParameterTypes15);
+					"getSubfolderIds", _getSubfolderIdsParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderIds, groupId, folderId);
@@ -578,13 +616,51 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
+	public static java.util.List<java.lang.Long> getSubfolderIds(
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		boolean recurse)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
+					"getSubfolderIds", _getSubfolderIdsParameterTypes17);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId, recurse);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<java.lang.Long>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"moveFolder", _moveFolderParameterTypes16);
+					"moveFolder", _moveFolderParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId);
@@ -621,7 +697,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"moveFolderFromTrash", _moveFolderFromTrashParameterTypes17);
+					"moveFolderFromTrash", _moveFolderFromTrashParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId);
@@ -658,7 +734,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"moveFolderToTrash", _moveFolderToTrashParameterTypes18);
+					"moveFolderToTrash", _moveFolderToTrashParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
 
@@ -691,7 +767,7 @@ public class BookmarksFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
 					"restoreFolderFromTrash",
-					_restoreFolderFromTrashParameterTypes19);
+					_restoreFolderFromTrashParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
 
@@ -723,7 +799,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"subscribeFolder", _subscribeFolderParameterTypes20);
+					"subscribeFolder", _subscribeFolderParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId);
@@ -756,7 +832,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"unsubscribeFolder", _unsubscribeFolderParameterTypes21);
+					"unsubscribeFolder", _unsubscribeFolderParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId);
@@ -792,7 +868,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class,
-					"updateFolder", _updateFolderParameterTypes22);
+					"updateFolder", _updateFolderParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId, name, description,
@@ -838,61 +914,67 @@ public class BookmarksFolderServiceHttp {
 	private static final Class<?>[] _getFolderParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getFoldersParameterTypes4 = new Class[] {
-			long.class
+	private static final Class<?>[] _getFolderIdsParameterTypes4 = new Class[] {
+			long.class, long.class
 		};
 	private static final Class<?>[] _getFoldersParameterTypes5 = new Class[] {
-			long.class, long.class
+			long.class
 		};
 	private static final Class<?>[] _getFoldersParameterTypes6 = new Class[] {
-			long.class, long.class, int.class, int.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _getFoldersParameterTypes7 = new Class[] {
-			long.class, long.class, int.class, int.class, int.class
+			long.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getFoldersAndEntriesParameterTypes8 = new Class[] {
-			long.class, long.class
+	private static final Class<?>[] _getFoldersParameterTypes8 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class
 		};
 	private static final Class<?>[] _getFoldersAndEntriesParameterTypes9 = new Class[] {
-			long.class, long.class, int.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _getFoldersAndEntriesParameterTypes10 = new Class[] {
+			long.class, long.class, int.class
+		};
+	private static final Class<?>[] _getFoldersAndEntriesParameterTypes11 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _getFoldersAndEntriesCountParameterTypes11 = new Class[] {
-			long.class, long.class
-		};
 	private static final Class<?>[] _getFoldersAndEntriesCountParameterTypes12 = new Class[] {
-			long.class, long.class, int.class
-		};
-	private static final Class<?>[] _getFoldersCountParameterTypes13 = new Class[] {
 			long.class, long.class
+		};
+	private static final Class<?>[] _getFoldersAndEntriesCountParameterTypes13 = new Class[] {
+			long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getFoldersCountParameterTypes14 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _getFoldersCountParameterTypes15 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _getSubfolderIdsParameterTypes15 = new Class[] {
+	private static final Class<?>[] _getSubfolderIdsParameterTypes16 = new Class[] {
 			java.util.List.class, long.class, long.class
 		};
-	private static final Class<?>[] _moveFolderParameterTypes16 = new Class[] {
+	private static final Class<?>[] _getSubfolderIdsParameterTypes17 = new Class[] {
+			long.class, long.class, boolean.class
+		};
+	private static final Class<?>[] _moveFolderParameterTypes18 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _moveFolderFromTrashParameterTypes17 = new Class[] {
+	private static final Class<?>[] _moveFolderFromTrashParameterTypes19 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _moveFolderToTrashParameterTypes18 = new Class[] {
+	private static final Class<?>[] _moveFolderToTrashParameterTypes20 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreFolderFromTrashParameterTypes19 = new Class[] {
+	private static final Class<?>[] _restoreFolderFromTrashParameterTypes21 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _subscribeFolderParameterTypes20 = new Class[] {
+	private static final Class<?>[] _subscribeFolderParameterTypes22 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _unsubscribeFolderParameterTypes21 = new Class[] {
+	private static final Class<?>[] _unsubscribeFolderParameterTypes23 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes22 = new Class[] {
+	private static final Class<?>[] _updateFolderParameterTypes24 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class

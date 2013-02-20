@@ -121,6 +121,21 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static long[] getFolderIds(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			long[] returnValue = BookmarksFolderServiceUtil.getFolderIds(groupId,
+					folderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap[] getFolders(
 		long groupId) throws RemoteException {
 		try {
@@ -250,6 +265,21 @@ public class BookmarksFolderServiceSoap {
 		try {
 			BookmarksFolderServiceUtil.getSubfolderIds(ListUtil.toList(
 					folderIds), groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
+		boolean recurse) throws RemoteException {
+		try {
+			java.util.List<java.lang.Long> returnValue = BookmarksFolderServiceUtil.getSubfolderIds(groupId,
+					folderId, recurse);
+
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

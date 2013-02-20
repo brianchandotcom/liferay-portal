@@ -106,6 +106,7 @@ create index IX_507BA031 on BlogsStatsUser (userId, lastPostDate);
 create index IX_5200100C on BookmarksEntry (groupId, folderId);
 create index IX_146382F2 on BookmarksEntry (groupId, folderId, status);
 create index IX_416AD7D5 on BookmarksEntry (groupId, status);
+create index IX_C78B61AC on BookmarksEntry (groupId, userId, folderId, status);
 create index IX_9D9CF70F on BookmarksEntry (groupId, userId, status);
 create index IX_E848278F on BookmarksEntry (resourceBlockId);
 create index IX_B670BA39 on BookmarksEntry (uuid_);

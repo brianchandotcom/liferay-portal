@@ -35,7 +35,6 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseIm
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
@@ -434,9 +433,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
 
-		folderIds = DLAppUtil.filterFolderIds(
-			getPermissionChecker(), groupId, folderIds);
-
 		if (folderIds.length == 0) {
 			return Collections.emptyList();
 		}
@@ -456,9 +452,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		long[] folderIds = dlFolderService.getFolderIds(groupId, rootFolderId);
-
-		folderIds = DLAppUtil.filterFolderIds(
-			getPermissionChecker(), groupId, folderIds);
 
 		if (folderIds.length == 0) {
 			return Collections.emptyList();

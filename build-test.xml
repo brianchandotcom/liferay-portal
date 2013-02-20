@@ -3479,7 +3479,9 @@ file.
 								<isset property="skip.delete-liferay-home" />
 							</not>
 							<then>
-								<delete dir="${user.home}/liferay" />
+								<delete dir="${user.home}/liferay" includeemptydirs="true">
+									<exclude name="**/osgi/**" />
+								</delete>
 							</then>
 						</if>
 

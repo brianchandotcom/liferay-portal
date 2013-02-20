@@ -3479,9 +3479,7 @@ file.
 								<isset property="skip.delete-liferay-home" />
 							</not>
 							<then>
-								<delete dir="${user.home}/liferay" includeemptydirs="true">
-									<exclude name="**/osgi/**" />
-								</delete>
+								<delete dir="${user.home}/liferay" />
 							</then>
 						</if>
 
@@ -3540,6 +3538,10 @@ file.
 				</if>
 			</else>
 		</if>
+
+		<copy todir="${user.home}/liferay/data/osgi">
+			<fileset dir="${app.server.parent.dir}/data/osgi" />
+		</copy>
 	</target>
 
 	<target name="rebuild-database-db2">

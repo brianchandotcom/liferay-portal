@@ -106,6 +106,40 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void testGroupAdminUnsetOrganizationAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		User subjectUser = UserTestUtil.addGroupAdminUser(
+			organization.getGroup());
+
+		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+					organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupAdminUnsetOrganizationOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		User subjectUser = UserTestUtil.addGroupAdminUser(
+			organization.getGroup());
+
+		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+					organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
 	public void testGroupOwnerUnsetGroupAdmin() throws Exception {
 		Group group = ServiceTestUtil.addGroup();
 
@@ -131,6 +165,40 @@ public class UserServiceTest {
 		Assert.assertFalse(
 			UserLocalServiceUtil.hasGroupUser(
 				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupOwnerUnsetOrganizationAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		User subjectUser = UserTestUtil.addGroupOwnerUser(
+			organization.getGroup());
+
+		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+					organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testGroupOwnerUnsetOrganizationOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		User subjectUser = UserTestUtil.addGroupOwnerUser(
+			organization.getGroup());
+
+		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		unsetOrganizationUsers(
+			organization.getOrganizationId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasOrganizationUser(
+					organization.getOrganizationId(), objectUser.getUserId()));
 	}
 
 	@Test
@@ -164,6 +232,38 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void testOrganizationAdminUnsetSiteAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group group = organization.getGroup();
+
+		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
+		User objectUser = UserTestUtil.addGroupAdminUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationAdminUnsetSiteOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group group = organization.getGroup();
+
+		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
+		User objectUser = UserTestUtil.addGroupOwnerUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertTrue(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
 	public void testOrganizationOwnerUnsetOrganizationAdmin() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
@@ -191,6 +291,38 @@ public class UserServiceTest {
 		Assert.assertFalse(
 			UserLocalServiceUtil.hasOrganizationUser(
 				organization.getOrganizationId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationOwnerUnsetSiteAdmin() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group group = organization.getGroup();
+
+		User subjectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+		User objectUser = UserTestUtil.addGroupAdminUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
+	}
+
+	@Test
+	public void testOrganizationOwnerUnsetSiteOwner() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group group = organization.getGroup();
+
+		User subjectUser = UserTestUtil.addOrganizationOwnerUser(organization);
+		User objectUser = UserTestUtil.addGroupOwnerUser(group);
+
+		unsetGroupUsers(group.getGroupId(), subjectUser, objectUser);
+
+		Assert.assertFalse(
+			UserLocalServiceUtil.hasGroupUser(
+				group.getGroupId(), objectUser.getUserId()));
 	}
 
 	protected User addUser() throws Exception {

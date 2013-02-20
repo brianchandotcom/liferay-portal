@@ -118,6 +118,15 @@ public class UsersAdminUtil {
 			permissionChecker, groupId, userIds);
 	}
 
+	public static long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long organizationId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().filterUnsetOrganizationUserIds(
+			permissionChecker, organizationId, userIds);
+	}
+
 	public static List<UserGroupRole> filterUserGroupRoles(
 			PermissionChecker permissionChecker,
 			List<UserGroupRole> userGroupRoles)

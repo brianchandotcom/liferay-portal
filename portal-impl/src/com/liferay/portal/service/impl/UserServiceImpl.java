@@ -1105,13 +1105,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
 
-		User user = getUser();
-
-		Group group = groupLocalService.getOrganizationGroup(
-			user.getCompanyId(), organizationId);
-
-		userIds = UsersAdminUtil.filterUnsetGroupUserIds(
-			getPermissionChecker(), group.getGroupId(), userIds);
+		userIds = UsersAdminUtil.filterUnsetOrganizationUserIds(
+			getPermissionChecker(), organizationId, userIds);
 
 		if (userIds.length == 0) {
 			return;

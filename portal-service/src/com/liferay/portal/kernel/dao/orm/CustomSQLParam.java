@@ -34,7 +34,7 @@ public class CustomSQLParam {
 		if (_value instanceof Long) {
 			Long valueLong = (Long)_value;
 
-			if (Validator.isNotNull(valueLong)) {
+			if (valueLong != null) {
 				qPos.add(valueLong);
 			}
 		}
@@ -42,7 +42,7 @@ public class CustomSQLParam {
 			Long[] valueArray = (Long[])_value;
 
 			for (int i = 0; i < valueArray.length; i++) {
-				if (Validator.isNotNull(valueArray[i])) {
+				if (valueArray[i] != null) {
 					qPos.add(valueArray[i]);
 				}
 			}

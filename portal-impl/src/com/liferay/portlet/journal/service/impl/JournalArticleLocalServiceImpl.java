@@ -3966,9 +3966,17 @@ public class JournalArticleLocalServiceImpl
 			DDMTemplate ddmTemplate = null;
 
 			if (Validator.isNotNull(templateId)) {
-				ddmTemplate = ddmTemplateService.getTemplate(
-					groupId, PortalUtil.getClassNameId(DDMStructure.class),
-					templateId);
+				try {
+					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
+						groupId, PortalUtil.getClassNameId(DDMStructure.class),
+						templateId);
+				}
+				catch (NoSuchTemplateException nste) {
+					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
+						companyGroup.getGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						templateId);
+				}
 
 				if (ddmTemplate.getClassPK() != ddmStructure.getStructureId()) {
 					throw new NoSuchTemplateException();

@@ -386,6 +386,29 @@ public class UsersAdminImpl implements UsersAdmin {
 		return filteredUserIds;
 	}
 
+	public long[] filterUnsetOrganizationUserIds(
+			PermissionChecker permissionChecker, long organizationId,
+			long[] userIds)
+		throws PortalException, SystemException {
+
+		long[] filteredUserIds = userIds;
+
+		for (long userId : userIds) {
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			if (MembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, organization, user)) {
+
+				filteredUserIds = ArrayUtil.remove(filteredUserIds, userId);
+			}
+		}
+
+		return filteredUserIds;
+	}
+
 	public List<UserGroupRole> filterUserGroupRoles(
 			PermissionChecker permissionChecker,
 			List<UserGroupRole> userGroupRoles)

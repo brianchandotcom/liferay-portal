@@ -256,7 +256,7 @@ userGroupRoles.addAll(siteRoles);
 					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
 
-				<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !MembershipPolicyUtil.isMembershipProtected(permissionChecker, userGroupRole.getGroup(), selUser) %>">
+				<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !MembershipPolicyUtil.isMembershipProtected(permissionChecker, userGroupRole.getGroup(), userGroupRole.getRole(), selUser) %>">
 					<liferay-ui:search-container-column-text>
 						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>

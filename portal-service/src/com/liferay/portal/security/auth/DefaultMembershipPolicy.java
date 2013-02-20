@@ -118,7 +118,7 @@ public class DefaultMembershipPolicy implements MembershipPolicy {
 			User user)
 		throws PortalException, SystemException {
 
-		if (group.isOrganization()) {
+		if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 			Organization organization =
 				OrganizationLocalServiceUtil.getOrganization(
 					group.getClassPK());
@@ -151,14 +151,6 @@ public class DefaultMembershipPolicy implements MembershipPolicy {
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, Group group, User user)
 		throws PortalException, SystemException {
-
-		if (group.isOrganization()) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					group.getClassPK());
-
-			return isMembershipProtected(permissionChecker, organization, user);
-		}
 
 		if (permissionChecker.isGroupOwner(group.getGroupId())) {
 			return false;

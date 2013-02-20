@@ -93,6 +93,13 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		return _assetTagService.getGroupTagsCount(groupId);
 	}
 
+	public com.liferay.portlet.asset.model.AssetTagDisplay getGroupTagsDisplay(
+		long groupId, java.lang.String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagService.getGroupTagsDisplay(groupId, name, start, end);
+	}
+
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,

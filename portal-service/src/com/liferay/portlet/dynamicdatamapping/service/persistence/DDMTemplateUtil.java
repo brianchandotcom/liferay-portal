@@ -1680,6 +1680,273 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	* Returns all the d d m templates where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @return the matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_CPK(groupId, classPK);
+	}
+
+	/**
+	* Returns a range of all the d d m templates where groupId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @return the range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
+		long groupId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_CPK(groupId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m templates where groupId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
+		long groupId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_CPK(groupId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_First(
+		long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByG_CPK_First(groupId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_First(
+		long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_CPK_First(groupId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_Last(
+		long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByG_CPK_Last(groupId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_Last(
+		long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_CPK_Last(groupId, classPK, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m templates before and after the current d d m template in the ordered set where groupId = &#63; and classPK = &#63;.
+	*
+	* @param templateId the primary key of the current d d m template
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_CPK_PrevAndNext(
+		long templateId, long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .findByG_CPK_PrevAndNext(templateId, groupId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the d d m templates that the user has permission to view where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @return the matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_CPK(groupId, classPK);
+	}
+
+	/**
+	* Returns a range of all the d d m templates that the user has permission to view where groupId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @return the range of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
+		long groupId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_CPK(groupId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m templates that the user has permissions to view where groupId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
+		long groupId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_CPK(groupId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d d m templates before and after the current d d m template in the ordered set of d d m templates that the user has permission to view where groupId = &#63; and classPK = &#63;.
+	*
+	* @param templateId the primary key of the current d d m template
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_CPK_PrevAndNext(
+		long templateId, long groupId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		return getPersistence()
+				   .filterFindByG_CPK_PrevAndNext(templateId, groupId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m templates where groupId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByG_CPK(long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByG_CPK(groupId, classPK);
+	}
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_CPK(long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_CPK(groupId, classPK);
+	}
+
+	/**
+	* Returns the number of d d m templates that the user has permission to view where groupId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classPK the class p k
+	* @return the number of matching d d m templates that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_CPK(long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_CPK(groupId, classPK);
+	}
+
+	/**
 	* Returns all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID

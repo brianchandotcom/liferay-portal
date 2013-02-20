@@ -17,11 +17,17 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
@@ -62,6 +68,48 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		}
 
 		return _smallImageType;
+	}
+
+	/**
+	 * Returns the webdav url to access the template
+	 *
+	 * @param themeDisplay the theme display needed to build the url. It can set
+	 *        https access, the server name, the server port, the path context
+	 *        and the scope group
+	 * @param webDavToken the webdav token for the url
+	 * @return the webdav url
+	 */
+	public String getWebDavURL(ThemeDisplay themeDisplay, String webDavToken) {
+		StringBundler sb = new StringBundler(11);
+
+		boolean secure = false;
+
+		if (themeDisplay.isSecure() ||
+			PropsValues.WEBDAV_SERVLET_HTTPS_REQUIRED) {
+
+			secure = true;
+		}
+
+		String portalURL = PortalUtil.getPortalURL(
+			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
+
+		sb.append(portalURL);
+		sb.append(themeDisplay.getPathContext());
+		sb.append(StringPool.SLASH);
+		sb.append("webdav");
+
+		Group group = themeDisplay.getScopeGroup();
+
+		sb.append(group.getFriendlyURL());
+		sb.append(StringPool.SLASH);
+		sb.append(webDavToken);
+		sb.append(StringPool.SLASH);
+		sb.append("Templates");
+		sb.append(StringPool.SLASH);
+
+		sb.append(getTemplateId());
+
+		return sb.toString();
 	}
 
 	public void setSmallImageType(String smallImageType) {

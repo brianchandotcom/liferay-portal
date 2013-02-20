@@ -199,6 +199,7 @@ create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK);
 create index IX_90800923 on DDMTemplate (groupId, classNameId, classPK, type_);
 create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_);
 create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey);
+create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);
 create index IX_33BEF579 on DDMTemplate (language);
 create index IX_CAE41A28 on DDMTemplate (templateKey);
 create index IX_C4F283C8 on DDMTemplate (type_);

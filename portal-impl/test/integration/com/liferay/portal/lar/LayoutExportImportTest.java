@@ -24,8 +24,8 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -42,7 +42,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
  */
 @ExecutionTestListeners(
 	listeners = {
-		EnvironmentExecutionTestListener.class,
+		MainServletExecutionTestListener.class,
 		TransactionalCallbackAwareExecutionTestListener.class
 	})
 @PrepareForTest({PortletLocalServiceUtil.class})
@@ -200,6 +200,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 						layoutSetPrototypeGroup.getGroupId(),
 						ServiceTestUtil.randomString(), true, layoutPrototype,
 						layoutLinkEnabled);
+
+					layoutSetPrototypeLayout = propagateChanges(
+						layoutSetPrototypeLayout);
 
 					propagateChanges(group);
 

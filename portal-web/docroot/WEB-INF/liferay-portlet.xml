@@ -1758,13 +1758,11 @@
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMStructureStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMTemplateStagedModelDataHandler</staged-model-data-handler-class>
-		<webdav-storage-token>dynamic_data_mapping</webdav-storage-token>
-		<webdav-storage-class>com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDAVStorageImpl</webdav-storage-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,scopeTitle,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
+		<autopropagated-parameters>chooseCallback,ddmResource,ddmResourceActionId,refererWebDavToken,saveCallback,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,scopeTitle,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
@@ -1780,6 +1778,8 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler</staged-model-data-handler-class>
+		<webdav-storage-token>dynamic_data_lists</webdav-storage-token>
+		<webdav-storage-class>com.liferay.portlet.dynamicdatalists.webdav.DDLWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>24.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory</asset-renderer-factory>
@@ -2003,6 +2003,8 @@
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.portletdisplaytemplate.lar.PortletDisplayTemplatePortletDataHandler</portlet-data-handler-class>
+		<webdav-storage-token>application_display_template</webdav-storage-token>
+		<webdav-storage-class>com.liferay.portlet.portletdisplaytemplate.webdav.ApplicationDisplayTemplateWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>25.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

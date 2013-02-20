@@ -22,51 +22,59 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddMessageBoardThreadSiteTest extends BaseTestCase {
 	public void testAddMessageBoardThreadSite() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Test Page");
-		selenium.clickAt("link=Message Boards Test Page",
-			RuntimeVariables.replace("Message Boards Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Post New Thread']",
-			RuntimeVariables.replace("Post New Thread"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_19_subject']",
-			RuntimeVariables.replace("MB Thread Message Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
-			RuntimeVariables.replace("MB Thread Message Body"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body", "MB Thread Message Body");
-		selenium.selectFrame("relative=top");
-		assertTrue(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
-		selenium.clickAt("//input[@id='_19_subscribeCheckbox']",
-			RuntimeVariables.replace("Subscribe"));
-		assertFalse(selenium.isChecked("//input[@id='_19_subscribeCheckbox']"));
-		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace("Publish"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
-			selenium.getText("//div[@class='thread-body']"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/site-name/");
+				selenium.clickAt("link=Message Boards Test Page",
+					RuntimeVariables.replace("Message Boards Test Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//input[@value='Post New Thread']",
+					RuntimeVariables.replace("Post New Thread"));
+				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@id='_19_subject']",
+					RuntimeVariables.replace("MB Thread Message Subject"));
+				selenium.waitForVisible(
+					"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]	");
+				selenium.waitForVisible(
+					"//iframe[contains(@title,'Rich Text Editor')]");
+				selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
+					RuntimeVariables.replace("MB Thread Message Body"));
+
+				boolean subscribeMeCheckbox = selenium.isChecked(
+						"//input[@id='_19_subscribeCheckbox']");
+
+				if (!subscribeMeCheckbox) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//input[@id='_19_subscribeCheckbox']",
+					RuntimeVariables.replace("Subscribe Me Checkbox"));
+
+			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_19_subscribeCheckbox']"));
+				selenium.clickAt("//input[@value='Publish']",
+					RuntimeVariables.replace("Publish"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
+				assertEquals(RuntimeVariables.replace(
+						"MB Thread Message Subject"),
+					selenium.getText("//div[@class='subject']/a/strong"));
+				assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
+					selenium.getText("//div[@class='thread-body']"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

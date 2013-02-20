@@ -26,7 +26,6 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,15 +35,14 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]");
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
-				"//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']"));
-		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]",
 			RuntimeVariables.replace("Subscribe"));
 		selenium.waitForPageToLoad("30000");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -54,9 +52,9 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]");
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
 	}
 }

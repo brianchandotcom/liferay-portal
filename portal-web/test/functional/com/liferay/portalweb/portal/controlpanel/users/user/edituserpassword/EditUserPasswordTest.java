@@ -69,8 +69,9 @@ public class EditUserPasswordTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("userfn"));
+					selenium.getText("//tr[contains(.,'userfn')]/td[2]/a"));
+				selenium.clickAt("//tr[contains(.,'userfn')]/td[2]/a",
+					RuntimeVariables.replace("userfn"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_125_passwordLink']", "Password"));

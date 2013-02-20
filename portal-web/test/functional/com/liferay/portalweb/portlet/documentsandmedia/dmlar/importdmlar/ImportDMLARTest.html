@@ -54,6 +54,11 @@
 	<td>Manage Content Iframe</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//ul[@class='category-portlets']/li[3]/a</td>
 	<td>Documents and Media</td>
@@ -70,7 +75,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,22 +90,22 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]</td>
 	<td>Export / Import</td>
 </tr>
 <tr>
@@ -111,7 +116,7 @@
 <tr>
 	<td>uploadFile</td>
 	<td>//input[@id='_86_importFileName']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portlet\documentsandmedia\dependencies\Document_Library-Selenium.portlet.lar</td>
+	<td>L:\portal\build\portal-web\test\functional\com\liferay\portalweb\portlet\documentsandmedia\dependencies\Document_Library-Selenium.portlet.lar</td>
 </tr>
 <tr>
 	<td>check</td>

@@ -19,14 +19,34 @@
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='Icon View' and contains(@class,'aui-buttonitem-content')]</td>
-	<td>Icon View</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,14 +69,34 @@
 	<td>DM Folder Name</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='List View']</td>
+	<td>List View</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='List View']</td>
 	<td>List View</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//button[@title='List View' and contains(@class,'aui-buttonitem-content')]</td>
-	<td>List View</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='List View']</td>
+	<td>List View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='List View']</td>
+	<td>List View Selected</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -79,9 +119,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@title='Icon View']</td>
+	<td>Icon View</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//button[@title='Icon View']</td>
 	<td>Icon View</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[contains(@class,'aui-state-active') and @title='Icon View']</td>
+	<td>Icon View Selected</td>
 </tr>
 <tr>
 	<td>waitForText</td>

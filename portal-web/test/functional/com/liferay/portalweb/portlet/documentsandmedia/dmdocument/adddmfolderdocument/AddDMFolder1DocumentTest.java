@@ -37,17 +37,17 @@ public class AddDMFolder1DocumentTest extends BaseTestCase {
 			"DM Folder1 Name");
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//li[contains(@class,'folder selected')]/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_20_file']");

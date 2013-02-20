@@ -37,30 +37,32 @@ public class ImportDMLARTest extends BaseTestCase {
 			RuntimeVariables.replace("Site Content"));
 		selenium.waitForElementPresent("//iframe[@id='manageContentDialog']");
 		selenium.selectFrame("//iframe[@id='manageContentDialog']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//ul[@class='category-portlets']/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//ul[@class='category-portlets']/li[3]/a"));
 		selenium.clickAt("//ul[@class='category-portlets']/li[3]/a",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentsandmedia\\dependencies\\Document_Library-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portlet\\documentsandmedia\\dependencies\\Document_Library-Selenium.portlet.lar"));
 		selenium.check("//input[@id='_86_DELETE_PORTLET_DATACheckbox']");
 		selenium.check("//input[@id='_86_PORTLET_DATACheckbox']");
 		selenium.check("//input[@id='_86_PERMISSIONSCheckbox']");

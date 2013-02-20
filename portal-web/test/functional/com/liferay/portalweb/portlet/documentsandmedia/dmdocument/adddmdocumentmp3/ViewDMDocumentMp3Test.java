@@ -94,27 +94,33 @@ public class ViewDMDocumentMp3Test extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/span"));
+		assertEquals(RuntimeVariables.replace("Creator John Piper"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[1]"));
 		assertEquals(RuntimeVariables.replace("Content Type audio/mpeg"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[1]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[2]"));
 		assertEquals(RuntimeVariables.replace("Author John Piper"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[2]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[3]"));
 		assertEquals(RuntimeVariables.replace("Artist John Piper"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[3]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[4]"));
 		assertEquals(RuntimeVariables.replace("Audio Sample Rate 22050"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-		assertEquals(RuntimeVariables.replace("Audio Channel Type Stereo"),
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[5]"));
+		assertEquals(RuntimeVariables.replace("Audio Channel Type Mono"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[5]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[6]"));
 		assertEquals(RuntimeVariables.replace("Audio Compressor MP3"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[6]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[7]"));
+		assertEquals(RuntimeVariables.replace("Genre Sermon"),
+			selenium.getText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[8]"));
 		assertEquals(RuntimeVariables.replace("Release Date 2000"),
 			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[7]"));
+				"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div/div[9]"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText(
 				"//div[@id='documentLibraryVersionHistoryPanel']/div/div/span"));

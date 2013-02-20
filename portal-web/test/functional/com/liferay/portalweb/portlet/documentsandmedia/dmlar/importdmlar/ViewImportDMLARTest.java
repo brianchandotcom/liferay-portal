@@ -28,61 +28,24 @@ public class ViewImportDMLARTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
-			"DL Folder1 Name");
-		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText(
-				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
-			selenium.getText(
-				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
-		selenium.clickAt("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
-			RuntimeVariables.replace("DL Folder1 Name"));
-		selenium.waitForText("//li[contains(@class,'folder selected')]/a[2]",
-			"DL Folder1 Name");
-		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a[2]"));
-		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DL Folder1 Subfolder Name"));
+			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForText("//li[contains(@class,'folder selected')]/a",
-			"DL Folder1 Subfolder Name");
-		assertEquals(RuntimeVariables.replace("DL Folder1 Subfolder Name"),
+			"DM Folder Name");
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[contains(@class,'folder selected')]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"DL Folder1 Subfolder Document Title Edit"),
+		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
 		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
-			RuntimeVariables.replace("DL Folder1 Subfolder Document Title Edit"));
+			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//h2[@class='document-title']",
-			"DL Folder1 Subfolder Document Title Edit");
-		assertEquals(RuntimeVariables.replace(
-				"DL Folder1 Subfolder Document Title Edit"),
-			selenium.getText("//h2[@class='document-title']"));
-		assertEquals(RuntimeVariables.replace(
-				"DL Folder1 Subfolder Document Description Edit"),
-			selenium.getText("//span[@class='document-description']"));
-		assertEquals(RuntimeVariables.replace("Download (1k)"),
+		assertEquals(RuntimeVariables.replace("Download (22k)"),
 			selenium.getText("//span[@class='download-document']/span/a/span"));
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
-			selenium.getText(
-				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]"));
-		selenium.clickAt("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[2]",
-			RuntimeVariables.replace("DL Folder2 Name Edit"));
-		selenium.waitForText("//li[contains(@class,'folder selected')]/a[2]",
-			"DL Folder2 Name Edit");
-		assertEquals(RuntimeVariables.replace("DL Folder2 Name Edit"),
-			selenium.getText("//li[contains(@class,'folder selected')]/a[2]"));
-		assertEquals(RuntimeVariables.replace("DL Folder2 Subfolder Name Edit"),
-			selenium.getText(
-				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document Comment"),
+			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

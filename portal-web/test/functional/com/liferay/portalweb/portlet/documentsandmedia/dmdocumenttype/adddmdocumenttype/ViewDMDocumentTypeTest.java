@@ -28,7 +28,7 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
@@ -42,7 +42,7 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
@@ -56,6 +56,8 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//input[@title='Search Entries']");
 		selenium.type("//input[@title='Search Entries']",
 			RuntimeVariables.replace("Name"));

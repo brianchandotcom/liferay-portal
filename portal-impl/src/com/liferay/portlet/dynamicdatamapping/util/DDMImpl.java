@@ -526,7 +526,7 @@ public class DDMImpl implements DDM {
 				}
 			}
 
-			if (Validator.isNull(fieldValue) ||
+			if ((fieldValue == null) ||
 				fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 
 				return null;

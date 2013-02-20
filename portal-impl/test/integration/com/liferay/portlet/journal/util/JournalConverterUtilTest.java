@@ -366,16 +366,23 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		Element element = (Element)xPathSelector.selectSingleNode(document);
 
-		String previewURL = DLUtil.getPreviewURL(
+		String[] previewURLs = new String[2];
+
+		previewURLs[0] = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK, true,
+			true);
+		previewURLs[1] = DLUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, true);
+			false, false);
 
-		element.addCDATA(previewURL);
+		for (int i = 0; i < previewURLs.length; i++) {
+			element.addCDATA(previewURLs[i]);
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
-			_ddmStructure, document.asXML());
+			Fields actualFields = JournalConverterUtil.getDDMFields(
+				_ddmStructure, document.asXML());
 
-		assertEquals(expectedFields, actualFields);
+			assertEquals(expectedFields, actualFields);
+		}
 	}
 
 	@Test

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -25,6 +26,7 @@ import java.util.TimeZone;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class DateFormatFactoryImpl implements DateFormatFactory {
 
 	public DateFormat getDate(Locale locale) {

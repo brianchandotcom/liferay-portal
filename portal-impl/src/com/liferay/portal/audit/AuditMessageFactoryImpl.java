@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditMessageFactory;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Date;
 
 /**
  * @author Amos Fong
  */
+@DoPrivileged
 public class AuditMessageFactoryImpl implements AuditMessageFactory {
 
 	public AuditMessage getAuditMessage(String message) throws JSONException {

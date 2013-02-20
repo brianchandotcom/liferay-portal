@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cluster.messaging.ClusterForwardMessageListener
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 
@@ -34,6 +35,7 @@ import org.jgroups.JChannel;
 /**
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
 	public static final int MAX_CHANNEL_COUNT = Priority.values().length;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -27,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Alexander Chow
  */
+@DoPrivileged
 public class LockListenerRegistryImpl implements LockListenerRegistry {
 
 	public LockListenerRegistryImpl() {

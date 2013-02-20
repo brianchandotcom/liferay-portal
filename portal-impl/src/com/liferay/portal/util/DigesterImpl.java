@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -38,6 +39,7 @@ import org.apache.commons.codec.binary.Hex;
  * @author Alexander Chow
  * @author Connor McKay
  */
+@DoPrivileged
 public class DigesterImpl implements Digester {
 
 	public String digest(ByteBuffer byteBuffer) {

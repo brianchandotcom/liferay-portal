@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MultiValueMap;
 import com.liferay.portal.kernel.util.MultiValueMapFactory;
@@ -25,6 +26,7 @@ import java.io.Serializable;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class MultiValueMapFactoryImpl implements MultiValueMapFactory {
 
 	public MultiValueMap<?, ?> getMultiValueMap(int type) {

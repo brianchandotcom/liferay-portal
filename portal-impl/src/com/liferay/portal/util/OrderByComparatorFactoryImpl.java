@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactory;
@@ -28,6 +29,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 
 	public OrderByComparator create(String tableName, Object... columns) {

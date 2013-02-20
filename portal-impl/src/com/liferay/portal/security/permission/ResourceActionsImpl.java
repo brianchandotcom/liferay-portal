@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,6 +76,7 @@ import javax.servlet.jsp.PageContext;
  * @author Daeyoung Song
  * @author Raymond Augé
  */
+@DoPrivileged
 public class ResourceActionsImpl implements ResourceActions {
 
 	public void afterPropertiesSet() {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -40,6 +41,7 @@ import javax.servlet.http.HttpSession;
  * @author Wilson Man
  * @author Mika Koivisto
  */
+@DoPrivileged
 public class FacebookConnectImpl implements FacebookConnect {
 
 	public String getAccessToken(long companyId, String redirect, String code)

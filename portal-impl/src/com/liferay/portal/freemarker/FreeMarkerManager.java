@@ -14,6 +14,7 @@
 
 package com.liferay.portal.freemarker;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
@@ -39,6 +40,7 @@ import java.util.Map;
  * @author Mika Koivisto
  * @author Tina Tina
  */
+@DoPrivileged
 public class FreeMarkerManager implements TemplateManager {
 
 	public void destroy() {

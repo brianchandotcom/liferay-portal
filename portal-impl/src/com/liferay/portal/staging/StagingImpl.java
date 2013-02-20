@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -118,6 +119,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
+@DoPrivileged
 public class StagingImpl implements Staging {
 
 	public String buildRemoteURL(

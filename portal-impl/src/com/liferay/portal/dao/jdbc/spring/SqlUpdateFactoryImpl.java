@@ -16,12 +16,14 @@ package com.liferay.portal.dao.jdbc.spring;
 
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class SqlUpdateFactoryImpl implements SqlUpdateFactory {
 
 	public SqlUpdate getSqlUpdate(

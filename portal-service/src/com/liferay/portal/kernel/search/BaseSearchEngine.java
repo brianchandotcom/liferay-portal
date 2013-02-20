@@ -17,12 +17,14 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
  * @author Bruno Farache
  */
+@DoPrivileged
 public class BaseSearchEngine implements SearchEngine {
 
 	public BooleanClauseFactory getBooleanClauseFactory() {

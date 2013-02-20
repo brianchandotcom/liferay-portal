@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitor;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceClassVisitorFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class JSONWebServiceClassVisitorFactoryImpl
 	implements JSONWebServiceClassVisitorFactory {
 

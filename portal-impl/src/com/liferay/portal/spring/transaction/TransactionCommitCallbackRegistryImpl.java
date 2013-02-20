@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistry;
 
 import java.util.concurrent.Callable;
@@ -21,6 +22,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Michael C. Han
  */
+@DoPrivileged
 public class TransactionCommitCallbackRegistryImpl
 	implements TransactionCommitCallbackRegistry {
 

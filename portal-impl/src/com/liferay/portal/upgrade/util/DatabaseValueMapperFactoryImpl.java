@@ -14,12 +14,14 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.upgrade.util.ValueMapper;
 import com.liferay.portal.kernel.upgrade.util.ValueMapperFactory;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class DatabaseValueMapperFactoryImpl implements ValueMapperFactory {
 
 	public ValueMapper getValueMapper() {

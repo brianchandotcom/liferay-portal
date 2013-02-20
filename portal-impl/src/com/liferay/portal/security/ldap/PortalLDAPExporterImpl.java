@@ -16,6 +16,7 @@ package com.liferay.portal.security.ldap;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -47,6 +48,7 @@ import javax.naming.ldap.LdapContext;
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
+@DoPrivileged
 public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 	public void exportToLDAP(

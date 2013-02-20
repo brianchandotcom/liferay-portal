@@ -14,12 +14,14 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactory;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class HashCodeFactoryImpl implements HashCodeFactory {
 
 	public HashCode getHashCode() {

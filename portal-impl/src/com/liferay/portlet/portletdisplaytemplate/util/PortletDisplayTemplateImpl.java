@@ -16,6 +16,7 @@ package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -64,6 +65,7 @@ import javax.servlet.jsp.PageContext;
  * @author Juan Fernández
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {

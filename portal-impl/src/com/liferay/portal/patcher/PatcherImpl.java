@@ -17,6 +17,7 @@ package com.liferay.portal.patcher;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.Patcher;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +34,7 @@ import java.util.Properties;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PatcherImpl implements Patcher {
 
 	public boolean applyPatch(File patchFile) {

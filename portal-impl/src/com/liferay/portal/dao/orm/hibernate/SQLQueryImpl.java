@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.ScrollableResults;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 
@@ -36,6 +38,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class SQLQueryImpl implements SQLQuery {
 
 	public SQLQueryImpl(org.hibernate.SQLQuery sqlQuery, boolean strictName) {
@@ -61,6 +64,7 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	@NotPrivileged
 	public int executeUpdate() throws ORMException {
 		try {
 			return _sqlQuery.executeUpdate();
@@ -70,11 +74,13 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
+	@NotPrivileged
 	@SuppressWarnings("rawtypes")
 	public Iterator iterate() throws ORMException {
 		return iterate(true);
 	}
 
+	@NotPrivileged
 	@SuppressWarnings("rawtypes")
 	public Iterator iterate(boolean unmodifiable) throws ORMException {
 		try {
@@ -85,6 +91,7 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
+	@NotPrivileged
 	public Object iterateNext() throws ORMException {
 		Iterator<?> iterator = iterate(false);
 
@@ -95,14 +102,17 @@ public class SQLQueryImpl implements SQLQuery {
 		return null;
 	}
 
+	@NotPrivileged
 	public List<?> list() throws ORMException {
 		return list(false, false);
 	}
 
+	@NotPrivileged
 	public List<?> list(boolean unmodifiable) throws ORMException {
 		return list(true, unmodifiable);
 	}
 
+	@NotPrivileged
 	public List<?> list(boolean copy, boolean unmodifiable)
 		throws ORMException {
 
@@ -123,6 +133,7 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
+	@NotPrivileged
 	public ScrollableResults scroll() throws ORMException {
 		try {
 			return new ScrollableResultsImpl(_sqlQuery.scroll());
@@ -312,6 +323,7 @@ public class SQLQueryImpl implements SQLQuery {
 		return this;
 	}
 
+	@NotPrivileged
 	public Object uniqueResult() throws ORMException {
 		try {
 			return _sqlQuery.uniqueResult();

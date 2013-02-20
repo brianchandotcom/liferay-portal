@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -53,6 +54,7 @@ import java.util.Map;
  * @author Mika Koivisto
  * @author Miguel Pastor
  */
+@DoPrivileged
 public class RawMetadataProcessorImpl
 	implements DLProcessor, RawMetadataProcessor {
 

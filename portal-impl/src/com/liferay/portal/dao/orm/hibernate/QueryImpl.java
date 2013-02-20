@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.ScrollableResults;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 
@@ -36,6 +38,7 @@ import org.hibernate.LockOptions;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class QueryImpl implements Query {
 
 	public QueryImpl(org.hibernate.Query query, boolean strictName) {
@@ -49,6 +52,7 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@NotPrivileged
 	public int executeUpdate() throws ORMException {
 		try {
 			return _query.executeUpdate();
@@ -58,10 +62,12 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@NotPrivileged
 	public Iterator<?> iterate() throws ORMException {
 		return iterate(true);
 	}
 
+	@NotPrivileged
 	public Iterator<?> iterate(boolean unmodifiable) throws ORMException {
 		try {
 			return list(unmodifiable).iterator();
@@ -71,6 +77,7 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@NotPrivileged
 	public Object iterateNext() throws ORMException {
 		Iterator<?> iterator = iterate(false);
 
@@ -81,14 +88,17 @@ public class QueryImpl implements Query {
 		return null;
 	}
 
+	@NotPrivileged
 	public List<?> list() throws ORMException {
 		return list(false, false);
 	}
 
+	@NotPrivileged
 	public List<?> list(boolean unmodifiable) throws ORMException {
 		return list(true, unmodifiable);
 	}
 
+	@NotPrivileged
 	public List<?> list(boolean copy, boolean unmodifiable)
 		throws ORMException {
 
@@ -109,6 +119,7 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@NotPrivileged
 	public ScrollableResults scroll() throws ORMException {
 		try {
 			return new ScrollableResultsImpl(_query.scroll());
@@ -305,6 +316,7 @@ public class QueryImpl implements Query {
 		return this;
 	}
 
+	@NotPrivileged
 	public Object uniqueResult() throws ORMException {
 		try {
 			return _query.uniqueResult();

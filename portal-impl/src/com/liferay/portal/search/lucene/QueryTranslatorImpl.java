@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTranslator;
 import com.liferay.portal.kernel.search.StringQueryImpl;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Field;
@@ -34,6 +35,7 @@ import org.apache.lucene.search.WildcardQuery;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class QueryTranslatorImpl implements QueryTranslator {
 
 	public Object translate(Query query) throws ParseException {

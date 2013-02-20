@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Props;
 
 import java.util.Properties;
@@ -22,6 +23,7 @@ import java.util.Properties;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PropsImpl implements Props {
 
 	public boolean contains(String key) {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.executor.PortalExecutorFactory;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
@@ -35,6 +36,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	public void afterPropertiesSet() {

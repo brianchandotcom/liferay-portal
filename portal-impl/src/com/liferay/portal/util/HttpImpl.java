@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -99,6 +100,7 @@ import org.apache.commons.httpclient.protocol.Protocol;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
+@DoPrivileged
 public class HttpImpl implements Http {
 
 	public HttpImpl() {

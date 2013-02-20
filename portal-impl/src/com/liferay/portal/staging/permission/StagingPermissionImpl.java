@@ -16,6 +16,7 @@ package com.liferay.portal.staging.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -25,6 +26,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 /**
  * @author Jorge Ferrer
  */
+@DoPrivileged
 public class StagingPermissionImpl implements StagingPermission {
 
 	public Boolean hasPermission(

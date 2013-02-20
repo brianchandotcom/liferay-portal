@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -90,6 +91,7 @@ import javax.naming.ldap.LdapContext;
  * @author Wesley Gong
  * @author Hugo Huijser
  */
+@DoPrivileged
 public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 	public void importFromLDAP() throws Exception {

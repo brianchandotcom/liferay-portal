@@ -256,7 +256,7 @@ public class JavadocFormatter {
 		boolean publicAccess) {
 
 		List<String> allTagNames = new ArrayList<String>();
-		List<String> commonTagNamesWithComments = new ArrayList<String>();
+		List<String> commonTagNamesWithCommentsOrNames = new ArrayList<String>();
 		List<String> customTagNames = new ArrayList<String>();
 
 		for (String tagName : tagNames) {
@@ -280,7 +280,25 @@ public class JavadocFormatter {
 					tagName.equals("throws")) {
 
 					if (Validator.isNotNull(comment)) {
-						commonTagNamesWithComments.add(tagName);
+						commonTagNamesWithCommentsOrNames.add(tagName);
+					}
+					else if (tagName.equals("param")) {
+
+						String docletHasParamName =
+							element.element("docletHasParamName").getText();
+
+						if (Boolean.parseBoolean(docletHasParamName)) {
+							commonTagNamesWithCommentsOrNames.add(tagName);
+						}
+					}
+					else if (tagName.equals("throws")) {
+
+						String docletHasClassName =
+							element.element("docletHasClassName").getText();
+
+						if (Boolean.parseBoolean(docletHasClassName)) {
+							commonTagNamesWithCommentsOrNames.add(tagName);
+						}
 					}
 				}
 				else {
@@ -299,16 +317,16 @@ public class JavadocFormatter {
 			maxTagNameLengthTags.addAll(allTagNames);
 		}
 		else if (_updateJavadocs) {
-			if (!commonTagNamesWithComments.isEmpty()) {
+			if (!commonTagNamesWithCommentsOrNames.isEmpty()) {
 				maxTagNameLengthTags.addAll(allTagNames);
 			}
 			else {
-				maxTagNameLengthTags.addAll(commonTagNamesWithComments);
+				maxTagNameLengthTags.addAll(commonTagNamesWithCommentsOrNames);
 				maxTagNameLengthTags.addAll(customTagNames);
 			}
 		}
 		else {
-			maxTagNameLengthTags.addAll(commonTagNamesWithComments);
+			maxTagNameLengthTags.addAll(commonTagNamesWithCommentsOrNames);
 			maxTagNameLengthTags.addAll(customTagNames);
 		}
 
@@ -377,7 +395,7 @@ public class JavadocFormatter {
 
 							sb.append(comment);
 						}
-						else if (!commonTagNamesWithComments.isEmpty()) {
+						else if (!commonTagNamesWithCommentsOrNames.isEmpty()) {
 
 							// Write out all tags
 
@@ -406,9 +424,39 @@ public class JavadocFormatter {
 
 							sb.append(comment);
 						}
+						else if (tagName.equals("param")) {
+
+							String docletHasParamName =
+								element.element("docletHasParamName").getText();
+
+							if (Boolean.parseBoolean(docletHasParamName)) {
+								elementName = element.elementText("name");
+
+								comment = _assembleTagComment(
+									tagName, elementName, comment, indent,
+									tagNameIndent);
+
+								sb.append(comment);
+							}
+						}
+						else if (tagName.equals("throws")) {
+
+							String docletHasClassName =
+								element.element("docletHasClassName").getText();
+
+							if (Boolean.parseBoolean(docletHasClassName)) {
+								elementName = element.elementText("name");
+
+								comment = _assembleTagComment(
+									tagName, elementName, comment, indent,
+									tagNameIndent);
+
+								sb.append(comment);
+							}
+						}
 						else {
 
-							// Skip empty common tag name
+							// Skip empty common tag
 
 						}
 					}
@@ -490,9 +538,15 @@ public class JavadocFormatter {
 		DocUtil.add(paramElement, "name", name);
 		DocUtil.add(paramElement, "type", _getTypeValue(javaParameter));
 
+		boolean docletHasParamName = false;
 		if (value != null) {
+			docletHasParamName = true;
 			value = value.substring(name.length());
 		}
+
+		DocUtil.add(
+			paramElement, "docletHasParamName",
+			Boolean.toString(docletHasParamName));
 
 		value = _trimMultilineText(value);
 
@@ -580,9 +634,15 @@ public class JavadocFormatter {
 		DocUtil.add(throwsElement, "name", name);
 		DocUtil.add(throwsElement, "type", exceptionType.getValue());
 
+		boolean docletHasClassName = false;
 		if (value != null) {
+			docletHasClassName = true;
 			value = value.substring(name.length());
 		}
+
+		DocUtil.add(
+			throwsElement, "docletHasClassName",
+			Boolean.toString(docletHasClassName));
 
 		value = _trimMultilineText(value);
 

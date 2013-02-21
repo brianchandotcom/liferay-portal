@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,19 +49,29 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td>iFrame</td>
+	<td>Asset Publisher - Configuration</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
 	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[contains(.,'Display Settings')]/li[2]/span/a</td>
+	<td>Display Settings</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//ul[contains(.,'Display Settings')]/li[2]/span/a</td>
+	<td>Display Settings</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -87,6 +97,11 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>

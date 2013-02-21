@@ -19,18 +19,23 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//th[1]</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'Title')]/th[1]</td>
 	<td>Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Title')]/th[1]</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
@@ -60,7 +65,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']/div/p</td>
 	<td>Blogs Entry Content</td>
 </tr>
 </tbody></table>

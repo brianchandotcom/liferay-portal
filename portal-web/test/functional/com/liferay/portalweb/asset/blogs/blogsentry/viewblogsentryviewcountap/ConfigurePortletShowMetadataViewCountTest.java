@@ -29,7 +29,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -47,12 +47,16 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible(
+			"//ul[contains(.,'Display Settings')]/li[2]/span/a");
+		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
+			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@id='_86_availableMetadataFields']");
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",
 			RuntimeVariables.replace("View Count"));
 		selenium.waitForVisible(
-			"//div[5]/div[2]/fieldset[2]/div/div/div/div/div/div/div/div[2]/div/span/span/button[2]");
-		selenium.clickAt("//div[5]/div[2]/fieldset[2]/div/div/div/div/div/div/div/div[2]/div/span/span/button[2]",
+			"//button[@title='Move selected items from Available to Current.']");
+		selenium.clickAt("//button[@title='Move selected items from Available to Current.']",
 			RuntimeVariables.replace("Left Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_currentMetadataFields']",
 			"View Count");

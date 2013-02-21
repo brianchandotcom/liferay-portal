@@ -149,8 +149,8 @@ public class TearDownBlogsEntryAPTest extends BaseTestCase {
 				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
 
 			case 7:
 			case 100:

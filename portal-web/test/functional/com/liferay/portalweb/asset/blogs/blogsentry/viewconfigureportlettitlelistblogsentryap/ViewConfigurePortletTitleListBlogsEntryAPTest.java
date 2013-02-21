@@ -29,6 +29,7 @@ public class ViewConfigurePortletTitleListBlogsEntryAPTest extends BaseTestCase 
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//ul[@class='title-list']/li/span/a/span");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//ul[@class='title-list']/li/span/a/span"));
 		selenium.clickAt("//ul[@class='title-list']/li/span/a/span",
@@ -46,6 +47,6 @@ public class ViewConfigurePortletTitleListBlogsEntryAPTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

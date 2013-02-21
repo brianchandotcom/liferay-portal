@@ -29,11 +29,12 @@ public class ViewConfigurePortletTableBlogsEntryAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//tr[contains(.,'Title')]/th[1]");
 		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//th[1]"));
+			selenium.getText("//tr[contains(.,'Title')]/th[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Blogs Entry Title')]/td[1]/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
@@ -48,6 +49,6 @@ public class ViewConfigurePortletTableBlogsEntryAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div/p"));
 	}
 }

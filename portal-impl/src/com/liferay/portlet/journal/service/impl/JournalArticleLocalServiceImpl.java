@@ -3173,10 +3173,16 @@ public class JournalArticleLocalServiceImpl
 					String dynamicContent = dynamicContentElement.getText();
 
 					if (Validator.isNotNull(dynamicContent)) {
+						String contentType = ContentTypes.TEXT_PLAIN;
+
+						if (elType.equals("text_area")) {
+							contentType = ContentTypes.TEXT_HTML;
+						}
+
 						dynamicContent = SanitizerUtil.sanitize(
 							user.getCompanyId(), groupId, user.getUserId(),
-							JournalArticle.class.getName(), 0,
-							ContentTypes.TEXT_HTML, dynamicContent);
+							JournalArticle.class.getName(), 0, contentType,
+							dynamicContent);
 
 						dynamicContentElement.clearContent();
 

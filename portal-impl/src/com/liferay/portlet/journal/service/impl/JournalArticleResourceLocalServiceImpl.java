@@ -41,6 +41,13 @@ public class JournalArticleResourceLocalServiceImpl
 		return journalArticleResourcePersistence.fetchByG_A(groupId, articleId);
 	}
 
+	public JournalArticleResource fetchArticleResource(
+			String uuid, long groupId)
+		throws SystemException {
+
+		return journalArticleResourcePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
 	public JournalArticleResource getArticleResource(
 			long articleResourcePrimKey)
 		throws PortalException, SystemException {

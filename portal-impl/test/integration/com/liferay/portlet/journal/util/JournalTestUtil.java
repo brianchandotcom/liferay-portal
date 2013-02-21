@@ -157,16 +157,18 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
-			long groupId, String xml, String structureId, String templateId)
+			long groupId, String xml, String ddmStructureKey,
+			String ddmTemplateKey)
 		throws Exception {
 
 		return addArticleWithXMLContent(
-			groupId, xml, structureId, templateId, LocaleUtil.getDefault());
+			groupId, xml, ddmStructureKey, ddmTemplateKey,
+			LocaleUtil.getDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
-			long groupId, String xml, String structureId, String templateId,
-			Locale defaultLocale)
+			long groupId, String xml, String ddmStructureKey,
+			String ddmTemplateKey, Locale defaultLocale)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
@@ -181,27 +183,27 @@ public class JournalTestUtil {
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			TestPropsValues.getUserId(), groupId, 0, 0, 0, StringPool.BLANK,
-			true, 0, titleMap, null, xml, "general", structureId, templateId,
-			null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-			true, false, null, null, null, null, serviceContext);
+			true, 0, titleMap, null, xml, "general", ddmStructureKey,
+			ddmTemplateKey, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0,
+			0, 0, 0, true, true, false, null, null, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
-			String xml, String structureId, String templateId)
+			String xml, String ddmStructureKey, String ddmTemplateKey)
 		throws Exception {
 
 		return addArticleWithXMLContent(
-			TestPropsValues.getGroupId(), xml, structureId, templateId,
+			TestPropsValues.getGroupId(), xml, ddmStructureKey, ddmTemplateKey,
 			LocaleUtil.getDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
-			String xml, String structureId, String templateId,
+			String xml, String ddmStructureKey, String ddmTemplateKey,
 			Locale defaultLocale)
 		throws Exception {
 
 		return addArticleWithXMLContent(
-			TestPropsValues.getGroupId(), xml, structureId, templateId,
+			TestPropsValues.getGroupId(), xml, ddmStructureKey, ddmTemplateKey,
 			defaultLocale);
 	}
 

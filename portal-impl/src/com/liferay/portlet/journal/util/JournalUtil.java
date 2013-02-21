@@ -980,20 +980,22 @@ public class JournalUtil {
 	}
 
 	public static String getTemplateScript(
-			long groupId, String templateId, Map<String, String> tokens,
+			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId)
 		throws PortalException, SystemException {
 
-		return getTemplateScript(groupId, templateId, tokens, languageId, true);
+		return getTemplateScript(
+			groupId, ddmTemplateKey, tokens, languageId, true);
 	}
 
 	public static String getTemplateScript(
-			long groupId, String templateId, Map<String, String> tokens,
+			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId, boolean transform)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId);
+			groupId, PortalUtil.getClassNameId(DDMStructure.class),
+			ddmTemplateKey);
 
 		return getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}
@@ -1194,7 +1196,7 @@ public class JournalUtil {
 	}
 
 	public static void removeRecentDDMStructure(
-		PortletRequest portletRequest, String structureId) {
+		PortletRequest portletRequest, String ddmStructureKey) {
 
 		Stack<DDMStructure> stack = getRecentDDMStructures(portletRequest);
 
@@ -1203,7 +1205,7 @@ public class JournalUtil {
 		while (itr.hasNext()) {
 			DDMStructure ddmStructure = itr.next();
 
-			if (structureId.equals(ddmStructure.getStructureKey())) {
+			if (ddmStructureKey.equals(ddmStructure.getStructureKey())) {
 				itr.remove();
 
 				break;
@@ -1212,7 +1214,7 @@ public class JournalUtil {
 	}
 
 	public static void removeRecentDDMTemplate(
-		PortletRequest portletRequest, String templateId) {
+		PortletRequest portletRequest, String ddmTemplateKey) {
 
 		Stack<DDMTemplate> stack = getRecentDDMTemplates(portletRequest);
 
@@ -1221,7 +1223,7 @@ public class JournalUtil {
 		while (itr.hasNext()) {
 			DDMTemplate ddmTemplate = itr.next();
 
-			if (templateId.equals(ddmTemplate.getTemplateKey())) {
+			if (ddmTemplateKey.equals(ddmTemplate.getTemplateKey())) {
 				itr.remove();
 
 				break;

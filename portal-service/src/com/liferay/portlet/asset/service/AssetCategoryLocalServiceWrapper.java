@@ -330,6 +330,12 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.fetchCategory(categoryId);
 	}
 
+	public java.util.List<java.lang.Long> getAllChildCategories(
+		long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryLocalService.getAllChildCategories(parentCategoryId);
+	}
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetCategoryLocalService.getCategories();

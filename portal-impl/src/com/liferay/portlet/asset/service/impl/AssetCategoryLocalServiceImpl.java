@@ -221,6 +221,12 @@ public class AssetCategoryLocalServiceImpl
 		return assetCategoryPersistence.fetchByPrimaryKey(categoryId);
 	}
 
+	public List<Long> getAllChildCategories(long parentCategoryId)
+		throws SystemException {
+
+		return assetCategoryFinder.findByG_L(parentCategoryId);
+	}
+
 	public List<AssetCategory> getCategories() throws SystemException {
 		return assetCategoryPersistence.findAll();
 	}

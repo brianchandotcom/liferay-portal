@@ -65,6 +65,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -1236,6 +1237,14 @@ public abstract class BaseIndexer implements Indexer {
 			className, classPK);
 
 		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
+
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+			className, classPK);
+
+		long[] assetTagsIds = StringUtil.split(
+			ListUtil.toString(assetTags, AssetTag.TAG_ID_ACCESSOR), 0L);
+
+		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
 
 		document.addKeyword(Field.ENTRY_CLASS_NAME, className);
 		document.addKeyword(Field.ENTRY_CLASS_PK, classPK);

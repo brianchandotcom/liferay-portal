@@ -243,6 +243,15 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		_assetTagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* @param userId
+	* @param name
+	* @param tagProperties
+	* @param serviceContext
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag addTag(long userId,
 		java.lang.String name, java.lang.String[] tagProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -252,6 +261,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			serviceContext);
 	}
 
+	/**
+	* @param tag
+	* @param addGroupPermissions
+	* @param addGuestPermissions
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void addTagResources(com.liferay.portlet.asset.model.AssetTag tag,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -260,6 +276,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			addGuestPermissions);
 	}
 
+	/**
+	* @param tag
+	* @param groupPermissions
+	* @param guestPermissions
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void addTagResources(com.liferay.portlet.asset.model.AssetTag tag,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -268,12 +291,26 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			guestPermissions);
 	}
 
+	/**
+	* @param userId
+	* @param groupId
+	* @param names
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void checkTags(long userId, long groupId, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_assetTagLocalService.checkTags(userId, groupId, names);
 	}
 
+	/**
+	* @param tagId
+	* @param classNameId
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag decrementAssetCount(
 		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -281,47 +318,92 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.decrementAssetCount(tagId, classNameId);
 	}
 
+	/**
+	* @param tag
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void deleteTag(com.liferay.portlet.asset.model.AssetTag tag)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_assetTagLocalService.deleteTag(tag);
 	}
 
+	/**
+	* @param tagId
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void deleteTag(long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_assetTagLocalService.deleteTag(tagId);
 	}
 
+	/**
+	* @param entryId
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getEntryTags(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getEntryTags(entryId);
 	}
 
+	/**
+	* @param groupIds
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupsTags(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getGroupsTags(groupIds);
 	}
 
+	/**
+	* @param groupId
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getGroupTags(groupId);
 	}
 
+	/**
+	* @param groupId
+	* @param start
+	* @param end
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getGroupTags(groupId, start, end);
 	}
 
+	/**
+	* @param groupId
+	* @return
+	* @throws SystemException
+	*/
 	public int getGroupTagsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getGroupTagsCount(groupId);
 	}
 
+	/**
+	* @param groupId
+	* @param socialActivityCounterName
+	* @param startOffset
+	* @param endOffset
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getSocialActivityCounterOffsetTags(
 		long groupId, java.lang.String socialActivityCounterName,
 		int startOffset, int endOffset)
@@ -330,6 +412,14 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			socialActivityCounterName, startOffset, endOffset);
 	}
 
+	/**
+	* @param groupId
+	* @param socialActivityCounterName
+	* @param startPeriod
+	* @param endPeriod
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getSocialActivityCounterPeriodTags(
 		long groupId, java.lang.String socialActivityCounterName,
 		int startPeriod, int endPeriod)
@@ -338,12 +428,25 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			socialActivityCounterName, startPeriod, endPeriod);
 	}
 
+	/**
+	* @param tagId
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag getTag(long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTag(tagId);
 	}
 
+	/**
+	* @param groupId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag getTag(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -351,57 +454,120 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.getTag(groupId, name);
 	}
 
+	/**
+	* @param groupId
+	* @param names
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public long[] getTagIds(long groupId, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagIds(groupId, names);
 	}
 
+	/**
+	* @param groupIds
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public long[] getTagIds(long[] groupIds, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagIds(groupIds, name);
 	}
 
+	/**
+	* @param groupIds
+	* @param names
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public long[] getTagIds(long[] groupIds, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagIds(groupIds, names);
 	}
 
+	/**
+	* @return
+	* @throws SystemException
+	*/
 	public java.lang.String[] getTagNames()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagNames();
 	}
 
+	/**
+	* @param classNameId
+	* @param classPK
+	* @return
+	* @throws SystemException
+	*/
 	public java.lang.String[] getTagNames(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagNames(classNameId, classPK);
 	}
 
+	/**
+	* @param className
+	* @param classPK
+	* @return
+	* @throws SystemException
+	*/
 	public java.lang.String[] getTagNames(java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagNames(className, classPK);
 	}
 
+	/**
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags();
 	}
 
+	/**
+	* @param classNameId
+	* @param classPK
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags(classNameId, classPK);
 	}
 
+	/**
+	* @param groupId
+	* @param classNameId
+	* @param name
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long groupId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags(groupId, classNameId, name);
 	}
 
+	/**
+	* @param groupId
+	* @param classNameId
+	* @param name
+	* @param start
+	* @param end
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -409,23 +575,50 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			end);
 	}
 
+	/**
+	* @param className
+	* @param classPK
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTags(className, classPK);
 	}
 
+	/**
+	* @param groupId
+	* @param classNameId
+	* @param name
+	* @return
+	* @throws SystemException
+	*/
 	public int getTagsSize(long groupId, long classNameId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.getTagsSize(groupId, classNameId, name);
 	}
 
+	/**
+	* @param groupId
+	* @param name
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public boolean hasTag(long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _assetTagLocalService.hasTag(groupId, name);
 	}
 
+	/**
+	* @param tagId
+	* @param classNameId
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag incrementAssetCount(
 		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -433,6 +626,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.incrementAssetCount(tagId, classNameId);
 	}
 
+	/**
+	* @param fromTagId
+	* @param toTagId
+	* @param overrideProperties
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public void mergeTags(long fromTagId, long toTagId,
 		boolean overrideProperties)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -440,6 +640,15 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		_assetTagLocalService.mergeTags(fromTagId, toTagId, overrideProperties);
 	}
 
+	/**
+	* @param groupId
+	* @param name
+	* @param tagProperties
+	* @param start
+	* @param end
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
 		long groupId, java.lang.String name, java.lang.String[] tagProperties,
 		int start, int end)
@@ -448,6 +657,15 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			start, end);
 	}
 
+	/**
+	* @param groupIds
+	* @param name
+	* @param tagProperties
+	* @param start
+	* @param end
+	* @return
+	* @throws SystemException
+	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
 		long[] groupIds, java.lang.String name,
 		java.lang.String[] tagProperties, int start, int end)
@@ -456,6 +674,16 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 			start, end);
 	}
 
+	/**
+	* @param userId
+	* @param tagId
+	* @param name
+	* @param tagProperties
+	* @param serviceContext
+	* @return
+	* @throws PortalException
+	* @throws SystemException
+	*/
 	public com.liferay.portlet.asset.model.AssetTag updateTag(long userId,
 		long tagId, java.lang.String name, java.lang.String[] tagProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)

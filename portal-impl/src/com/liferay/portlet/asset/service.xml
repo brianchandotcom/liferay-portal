@@ -273,7 +273,7 @@
 
 		<!-- PK fields -->
 
-		<column name="tagId" type="long" primary="true" />
+		<column name="tagId" type="long" primary="true" accessor="true" />
 
 		<!-- Group instance -->
 

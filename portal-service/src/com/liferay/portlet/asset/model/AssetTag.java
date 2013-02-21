@@ -32,6 +32,12 @@ public interface AssetTag extends AssetTagModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.asset.model.impl.AssetTagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AssetTag, Long> TAG_ID_ACCESSOR = new Accessor<AssetTag, Long>() {
+			public Long get(AssetTag assetTag) {
+				return assetTag.getTagId();
+			}
+		};
+
 	public static final Accessor<AssetTag, String> NAME_ACCESSOR = new Accessor<AssetTag, String>() {
 			public String get(AssetTag assetTag) {
 				return assetTag.getName();

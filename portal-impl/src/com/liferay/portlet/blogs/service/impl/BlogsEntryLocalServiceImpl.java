@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -826,13 +825,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Workflow
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			WorkflowInstanceLink workflowInstanceLink =
-				workflowInstanceLinkLocalService.getWorkflowInstanceLink(
-					entry.getCompanyId(), entry.getGroupId(),
-					BlogsEntry.class.getName(), entry.getEntryId());
-
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				workflowInstanceLink.getWorkflowInstanceLinkId());
+				entry.getCompanyId(), entry.getGroupId(),
+				BlogsEntry.class.getName(), entry.getEntryId());
 		}
 
 		return entry;

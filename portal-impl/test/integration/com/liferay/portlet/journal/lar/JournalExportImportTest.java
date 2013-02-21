@@ -30,6 +30,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -41,14 +43,16 @@ import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
+
+import java.io.File;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -84,9 +88,9 @@ public class JournalExportImportTest {
 
 		// Add a site and a layout
 
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = ServiceTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
 
 		// Add a Journal Article and DDM Structure and Template
@@ -130,9 +134,9 @@ public class JournalExportImportTest {
 
 		// Add another site and layout
 
-		group = ServiceTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 
-		layout = ServiceTestUtil.addLayout(
+		layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
 
 		int initialArticlesCount =

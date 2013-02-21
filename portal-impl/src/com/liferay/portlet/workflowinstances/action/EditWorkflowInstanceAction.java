@@ -27,10 +27,12 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -168,9 +170,10 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 			String portletId = PortalUtil.getPortletId(actionRequest);
 
-			if (!permissionChecker.hasPermission(
-					groupId, portletId, 0,
-					ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, groupId, portlet)) {
 
 				return themeDisplay.getURLControlPanel();
 			}

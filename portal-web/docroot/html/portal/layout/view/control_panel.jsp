@@ -25,7 +25,7 @@ if (controlPanelCategory.equals(PortletCategoryKeys.CONTENT) && Validator.isNull
 	List<Portlet> portlets = PortalUtil.getControlPanelPortlets(PortletCategoryKeys.CONTENT, themeDisplay);
 
 	for (Portlet portlet : portlets) {
-		if (PortletPermissionUtil.contains(permissionChecker, scopeGroupId, 0, portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+		if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, portlet)) {
 			ppid = portlet.getPortletId();
 
 			break;
@@ -59,15 +59,18 @@ List<Layout> scopeLayouts = new ArrayList<Layout>();
 
 Portlet portlet = null;
 
-boolean denyAccess = false;
+boolean denyAccess = true;
 
-if (Validator.isNotNull(ppid)) {
+if (Validator.isNull(ppid)) {
+	denyAccess = false;
+}
+else {
 	portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
 
-	if ((portlet == null) ||
-		(!portlet.isSystem() && !PortalUtil.isControlPanelPortlet(ppid, category, themeDisplay)) && !PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
+	if ((portlet != null) &&
+		(portlet.isSystem() || PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, portlet) || PortalUtil.isAllowAddPortletDefaultResource(request, portlet))) {
 
-		denyAccess = true;
+		denyAccess = false;
 	}
 }
 

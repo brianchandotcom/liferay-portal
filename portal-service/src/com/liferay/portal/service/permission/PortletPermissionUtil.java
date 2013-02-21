@@ -16,6 +16,8 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -183,12 +185,29 @@ public class PortletPermissionUtil {
 			permissionChecker, groupId, layout, portletId, actionId, strict);
 	}
 
+	/**
+	 * @see        #hasControlPanelAccessPermission(PermissionChecker, long,
+	 *             Collection)
+	 * @deprecated As of 6.2. This method will be permanently removed in a
+	 *             future version. Please use {@link
+	 *             #hasControlPanelAccessPermission}.
+	 */
+	@Deprecated
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, long plid,
 		Collection<Portlet> portlets, String actionId) {
 
-		return getPortletPermission().contains(
-			permissionChecker, groupId, plid, portlets, actionId);
+		try {
+			return hasControlPanelAccessPermission(
+				permissionChecker, groupId, portlets);
+
+		} catch (PortalException e) {
+			_log.error(e);
+		} catch (SystemException e) {
+			_log.error(e);
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
@@ -265,6 +284,24 @@ public class PortletPermissionUtil {
 			permissionChecker, scopeGroupId, layout, portlet, portletMode);
 	}
 
+	public static boolean hasControlPanelAccessPermission(
+			PermissionChecker permissionChecker, long scopeGroupId,
+			Collection<Portlet> portlets)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().hasControlPanelAccessPermission(
+			permissionChecker, scopeGroupId, portlets);
+	}
+
+	public static boolean hasControlPanelAccessPermission(
+			PermissionChecker permissionChecker, long scopeGroupId,
+			Portlet portlet)
+		throws PortalException, SystemException {
+
+		return getPortletPermission().hasControlPanelAccessPermission(
+			permissionChecker, scopeGroupId, portlet);
+	}
+
 	public static boolean hasLayoutManagerPermission(
 		String portletId, String actionId) {
 
@@ -277,6 +314,9 @@ public class PortletPermissionUtil {
 
 		_portletPermission = portletPermission;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletPermissionUtil.class);
 
 	private static PortletPermission _portletPermission;
 

@@ -62,6 +62,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
@@ -657,7 +658,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	public ControlPanelEntry getControlPanelEntryInstance() {
 		if (Validator.isNull(getControlPanelEntryClass())) {
-			return null;
+			return DefaultControlPanelEntryFactory.getInstance();
 		}
 
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());

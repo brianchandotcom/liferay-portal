@@ -902,9 +902,9 @@ public class ServicePreAction extends Action {
 
 			siteContentPortlets.remove(siteSettingsPortlet);
 
-			showSiteContentIcon = PortletPermissionUtil.contains(
-				permissionChecker, scopeGroupId, controlPanelPlid,
-				siteContentPortlets, ActionKeys.VIEW);
+			showSiteContentIcon =
+				PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, scopeGroupId, siteContentPortlets);
 		}
 
 		themeDisplay.setShowSiteContentIcon(showSiteContentIcon);

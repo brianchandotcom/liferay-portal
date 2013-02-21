@@ -103,7 +103,7 @@
 				}
 
 				if (!manageableSites.isEmpty() && !manageableSites.contains(curLiveGroup)) {
-					if (curLiveGroup.isSite() && PortletPermissionUtil.contains(permissionChecker, curLiveGroup.getGroupId(), 0, categoryPortlets, ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+					if (curLiveGroup.isSite() && PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, curLiveGroup.getGroupId(), categoryPortlets)) {
 						manageableSites.add(0, curLiveGroup);
 					}
 					else {

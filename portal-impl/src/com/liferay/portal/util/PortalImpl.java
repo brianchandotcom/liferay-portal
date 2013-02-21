@@ -148,8 +148,6 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.comparator.PortletControlPanelWeightComparator;
 import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
@@ -1441,7 +1439,7 @@ public class PortalImpl implements Portal {
 		Set<Portlet> portlets = getControlPanelPortlets(
 			themeDisplay.getCompanyId(), category);
 
-		return filterControlPanelPortlets(portlets, category, themeDisplay);
+		return filterControlPanelPortlets(portlets, themeDisplay);
 	}
 
 	public String getCreateAccountURL(
@@ -4979,26 +4977,33 @@ public class PortalImpl implements Portal {
 			String portletId, String category, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		List<Portlet> portlets = getControlPanelPortlets(
-			category, themeDisplay);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
 
-		for (Portlet portlet : portlets) {
-			if (portlet.getPortletId().equals(portletId)) {
-				return true;
-			}
+		String controlPanelEntryCategory =
+			portlet.getControlPanelEntryCategory();
+
+		if (!controlPanelEntryCategory.equals(category)) {
+			return false;
 		}
 
-		return false;
+		return isControlPanelPortlet(portletId, themeDisplay);
 	}
 
 	public boolean isControlPanelPortlet(
 			String portletId, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		for (String category : PortletCategoryKeys.ALL) {
-			if (isControlPanelPortlet(portletId, category, themeDisplay)) {
-				return true;
-			}
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
+		try {
+			return PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portlet);
+		}
+		catch (PortalException e) {
+			_log.warn("Cannot process control panel access permission", e);
 		}
 
 		return false;
@@ -5917,22 +5922,9 @@ public class PortalImpl implements Portal {
 	}
 
 	protected List<Portlet> filterControlPanelPortlets(
-		Set<Portlet> portlets, String category, ThemeDisplay themeDisplay) {
+		Set<Portlet> portlets, ThemeDisplay themeDisplay) {
 
-		Group group = themeDisplay.getScopeGroup();
-
-		List<Portlet> filteredPortlets = new ArrayList<Portlet>();
-
-		if (category.equals(PortletCategoryKeys.CONTENT) && group.isLayout()) {
-			for (Portlet portlet : portlets) {
-				if (portlet.isScopeable()) {
-					filteredPortlets.add(portlet);
-				}
-			}
-		}
-		else {
-			filteredPortlets.addAll(portlets);
-		}
+		List<Portlet> filteredPortlets = new ArrayList<Portlet>(portlets);
 
 		Iterator<Portlet> itr = filteredPortlets.iterator();
 
@@ -5940,16 +5932,9 @@ public class PortalImpl implements Portal {
 			Portlet portlet = itr.next();
 
 			try {
-				ControlPanelEntry controlPanelEntry =
-					portlet.getControlPanelEntryInstance();
-
-				if (controlPanelEntry == null) {
-					controlPanelEntry =
-						DefaultControlPanelEntryFactory.getInstance();
-				}
-
-				if (!controlPanelEntry.hasAccessPermission(
-						themeDisplay.getPermissionChecker(), group, portlet)) {
+				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(), portlet)) {
 
 					itr.remove();
 				}

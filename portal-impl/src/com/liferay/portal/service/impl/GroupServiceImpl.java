@@ -285,9 +285,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			Group group = itr.next();
 
 			if (!group.isSite() ||
-				!PortletPermissionUtil.contains(
-					permissionChecker, group.getGroupId(), 0L, portlets,
-					ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+				!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, group.getGroupId(), portlets)) {
 
 				itr.remove();
 			}

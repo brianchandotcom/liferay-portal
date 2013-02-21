@@ -15,8 +15,10 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -73,7 +75,12 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		}
 
 		if (Validator.isNull(position)) {
-			position = _POSITION_AUTO;
+			if (_SCRIPT_BUFFER_FILTER_ENABLED) {
+				position = _POSITION_AUTO;
+			}
+			else {
+				position = _POSITION_INLINE;
+			}
 		}
 
 		return position;
@@ -82,6 +89,12 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 	private static final String _POSITION_AUTO = "auto";
 
 	private static final String _POSITION_INLINE = "inline";
+
+	private static final boolean _SCRIPT_BUFFER_FILTER_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				"com.liferay.portal.servlet.filters.script." +
+					"ScriptBufferFilter"));
 
 	private String _position;
 

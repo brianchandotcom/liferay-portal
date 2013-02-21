@@ -78,15 +78,6 @@ public class ScriptTag extends BaseScriptTag {
 		}
 	}
 
-	public static void flushScriptData(PageContext pageContext)
-		throws Exception {
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		AUIUtil.outputScriptData(request, pageContext.getOut());
-	}
-
 	@Override
 	public int doEndTag() throws JspException {
 		HttpServletRequest request =
@@ -123,7 +114,8 @@ public class ScriptTag extends BaseScriptTag {
 					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
-					AUIUtil.outputScriptData(request, pageContext.getOut());
+					AUIUtil.outputInlineScriptData(
+						request, pageContext.getOut());
 				}
 			}
 			else {

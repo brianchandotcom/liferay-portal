@@ -16,6 +16,7 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
+ * @author Eduardo Lundgren
  */
 public class AUIUtil {
 
@@ -172,8 +174,7 @@ public class AUIUtil {
 		return sb.toString();
 	}
 
-	public static void outputScriptData(
-			HttpServletRequest request, Writer writer)
+	public static String getScriptData(HttpServletRequest request)
 		throws IOException {
 
 		ScriptData scriptData = (ScriptData)request.getAttribute(
@@ -189,14 +190,14 @@ public class AUIUtil {
 		}
 
 		if (scriptData == null) {
-			return;
+			return StringPool.BLANK;
 		}
 
-		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+		StringBundler sb = new StringBundler();
 
-		StringBundler rawSB = scriptData.getRawSB();
+		sb.append("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
-		rawSB.writeTo(writer);
+		sb.append(scriptData.getRawSB());
 
 		StringBundler callbackSB = scriptData.getCallbackSB();
 
@@ -209,27 +210,60 @@ public class AUIUtil {
 				loadMethod = "ready";
 			}
 
-			writer.write("AUI().");
-			writer.write( loadMethod );
-			writer.write("(");
+			sb.append("AUI().");
+			sb.append( loadMethod );
+			sb.append("(");
 
 			Set<String> useSet = scriptData.getUseSet();
 
 			for (String use : useSet) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(use);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(use);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			writer.write("function(A) {");
+			sb.append("function(A) {");
 
-			callbackSB.writeTo(writer);
+			sb.append(callbackSB);
 
-			writer.write("});");
+			sb.append("});");
 		}
 
-		writer.write("\n// ]]>\n</script>");
+		sb.append("\n// ]]>\n</script>");
+
+		return sb.toString();
+	}
+
+	public static void outputInlineScriptData(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		String scriptData = AUIUtil.getScriptData(request);
+
+		writer.write(scriptData);
+	}
+
+	public static void outputScriptData(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		String scriptData = AUIUtil.getScriptData(request);
+
+		writer.write(scriptData);
+
+		request.setAttribute(WebKeys.SCRIPT_DATA_OUTPUTED, true);
+	}
+
+	public static void outputScriptDataIfNeeded(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		if (!GetterUtil.getBoolean(
+				request.getAttribute(WebKeys.SCRIPT_DATA_OUTPUTED))) {
+
+			outputScriptData(request, writer);
+		}
 	}
 
 }

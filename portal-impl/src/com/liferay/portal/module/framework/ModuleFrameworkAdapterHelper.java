@@ -46,12 +46,16 @@ public class ModuleFrameworkAdapterHelper {
 		}
 
 		try {
+			_initFileUtil();
+
 			_initDir(
 				"com/liferay/portal/deploy/dependencies/osgi/core",
 				PropsValues.MODULE_FRAMEWORK_CORE_DIR);
 			_initDir(
 				"com/liferay/portal/deploy/dependencies/osgi/portal",
 				PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
+
+			_destroyFileUtil();
 
 			File coreDir = new File(PropsValues.MODULE_FRAMEWORK_CORE_DIR);
 
@@ -129,6 +133,10 @@ public class ModuleFrameworkAdapterHelper {
 		return method;
 	}
 
+	private static void _destroyFileUtil() {
+		new FileUtil().setFile(null);
+	}
+
 	private static void _initDir(String sourcePath, String destinationPath)
 		throws Exception {
 
@@ -156,6 +164,10 @@ public class ModuleFrameworkAdapterHelper {
 
 			FileUtil.write(new File(destinationPath, jarFileName), bytes);
 		}
+	}
+
+	private static void _initFileUtil() {
+		new FileUtil().setFile(new FileImpl());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

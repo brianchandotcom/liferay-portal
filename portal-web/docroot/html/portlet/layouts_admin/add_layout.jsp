@@ -99,7 +99,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			<aui:input id="addLayoutHidden" name="hidden" />
 
 			<div class="aui-helper-hidden" id="<portlet:namespace />layoutPrototypeLinkOptions">
-				<aui:input label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" value="true" />
+				<aui:input id="addLayoutLayoutPrototypeLinkEnabled" label="automatically-apply-changes-done-to-the-page-template" name="LayoutPrototypeLinkEnabled" type="checkbox" value="true" />
 			</div>
 		</aui:fieldset>
 

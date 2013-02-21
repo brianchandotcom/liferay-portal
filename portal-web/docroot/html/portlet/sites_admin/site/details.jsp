@@ -93,8 +93,7 @@ if (showPrototypes && (group != null)) {
 	</c:if>
 </liferay-ui:error>
 
-<liferay-ui:error key="templateMergeFailedSeeLogsForDetails" message="template-merge-failed-see-logs-for-details" />
-
+<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 <aui:fieldset>
 	<c:choose>
@@ -197,16 +196,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 										<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 
-											<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>publicLayoutSetPrototypeLinkEnabledPropagationBox">
-
-												<%
-												request.setAttribute("details.jsp-layoutSetPrototype", publicLayoutSetPrototype);
-												request.setAttribute("details.jsp-groupId", group.getGroupId());
-												request.setAttribute("details.jsp-privateLayoutSet", false);
-												request.setAttribute("details.jsp-forceMergeNow", true);
-												%>
-
-												<liferay-util:include page="/html/portlet/sites_admin/site/template_merge_fail_reset.jsp" />
+											<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>publicLayoutSetPrototypeMergeAlert">
+												<liferay-ui:prototype-merge-alert groupId="<%= group.getGroupId() %>" layoutSetPrototype="<%= publicLayoutSetPrototype %>" redirect="<%= currentURL %>" />
 											</div>
 										</c:when>
 										<c:when test="<%= publicLayoutSetPrototype != null %>">
@@ -281,16 +272,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 										<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 
-											<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>privateLayoutSetPrototypeLinkEnabledPropagationBox">
-
-												<%
-												request.setAttribute("details.jsp-layoutSetPrototype", privateLayoutSetPrototype);
-												request.setAttribute("details.jsp-groupId", group.getGroupId());
-												request.setAttribute("details.jsp-privateLayoutSet", true);
-												request.setAttribute("details.jsp-forceMergeNow", true);
-												%>
-
-												<liferay-util:include page="/html/portlet/sites_admin/site/template_merge_fail_reset.jsp" />
+											<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>privateLayoutSetPrototypeMergeAlert">
+												<liferay-ui:prototype-merge-alert groupId="<%= group.getGroupId() %>" layoutSetPrototype="<%= privateLayoutSetPrototype %>" privateLayoutSet="<%= true %>" redirect="<%= currentURL %>" />
 											</div>
 										</c:when>
 										<c:when test="<%= privateLayoutSetPrototype != null %>">
@@ -506,32 +489,8 @@ if (parentGroup != null) {
 		['liferay-search-container']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleLayoutSetPrototypePropagationBox',
-		function(layoutSetPrototypeType) {
-			var A = AUI();
-
-			var checkbox = A.one('#<portlet:namespace />' + layoutSetPrototypeType + 'LinkEnabledCheckbox');
-			var propagationBox = A.one('#<portlet:namespace/>' + layoutSetPrototypeType + 'LinkEnabledPropagationBox');
-
-			if (checkbox && propagationBox) {
-
-				var checked = checkbox.get('checked');
-
-				if(checked) {
-					propagationBox.show();
-				}
-				else {
-					propagationBox.hide();
-				}
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />publicLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />publicLayoutSetPrototypeMergeAlert');
+	Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
 </aui:script>
 
 <aui:script use="liferay-search-container">
@@ -548,21 +507,4 @@ if (parentGroup != null) {
 		},
 		'.modify-link'
 	);
-
-	var A = AUI();
-
-	<c:forTokens delims="," items="privateLayoutSetPrototype,publicLayoutSetPrototype,layoutSetPrototype" var="type">
-
-		var ${type}PrototypeCheckbox = A.one('#<portlet:namespace />${type}LinkEnabledCheckbox');
-
-		if(${type}PrototypeCheckbox) {
-
-			${type}PrototypeCheckbox.on(
-				'change',
-				function(event){
-					<portlet:namespace />toggleLayoutSetPrototypePropagationBox('${type}');
-				}
-			);
-		}
-	</c:forTokens>
 </aui:script>

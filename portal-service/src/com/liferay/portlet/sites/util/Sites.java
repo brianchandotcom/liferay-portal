@@ -185,10 +185,12 @@ public interface Sites {
 			throws PortalException, SystemException;
 
 	public void setMergeFailCount(
-		Layout layoutPrototypeLayout, int newMergeFailCount);
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException, SystemException;
 
 	public void setMergeFailCount(
-		LayoutSet layoutSetPrototypeLayoutSet, int newMergeFailCount);
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
+		throws PortalException, SystemException;
 
 	public void updateLayoutScopes(
 			long userId, Layout sourceLayout, Layout targetLayout,

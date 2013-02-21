@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -150,16 +148,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeLayoutSetSettingsProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		layoutSetPrototypeLayoutSetSettingsProperties.remove(
-			SitesUtil.MERGE_FAIL_COUNT);
-
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetPrototypeLayoutSet);
+		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
 	}
 
 	protected void updateLayoutSetPrototype(ActionRequest actionRequest)

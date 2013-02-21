@@ -2582,6 +2582,41 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>prototype-merge-alert</name>
+		<tag-class>com.liferay.taglib.ui.PrototypeMergeAlertTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>groupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>layoutPrototype</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>layoutSetPrototype</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>privateLayoutSet</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>redirect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>selPlid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>ratings</name>
 		<tag-class>com.liferay.taglib.ui.RatingsTag</tag-class>
 		<body-content>JSP</body-content>

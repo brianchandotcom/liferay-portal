@@ -35,8 +35,6 @@ Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales();
-
-int mergeFailCount = layoutPrototypeId > 0 ? SitesUtil.getMergeFailCount(layoutPrototype) : 0;
 %>
 
 <liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">
@@ -48,6 +46,8 @@ int mergeFailCount = layoutPrototypeId > 0 ? SitesUtil.getMergeFailCount(layoutP
 	localizeTitle="<%= layoutPrototype.isNew() %>"
 	title='<%= layoutPrototype.isNew() ? "new-page-template" : layoutPrototype.getName(locale) %>'
 />
+
+<liferay-ui:prototype-merge-alert layoutPrototype="<%= layoutPrototype %>" redirect="<%= redirect %>" />
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveLayoutPrototype();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -80,28 +80,6 @@ int mergeFailCount = layoutPrototypeId > 0 ? SitesUtil.getMergeFailCount(layoutP
 					url="<%= viewURL %>"
 				/>
 			</aui:field-wrapper>
-
-			<aui:field-wrapper inlineField="true" label="">
-
-				<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-
-					<span class="portlet-msg-alert">
-						<aui:a cssClass="merge-fail-popup-button" href="javascript:;">
-							<liferay-ui:message key="propagation-disabled-temporarily" />
-						</aui:a>
-					</span>
-
-					<div class="aui-helper-hidden" id="<portlet:namespace />mergeFailCountDialogContentWrapper">
-						<div class="content">
-							<p>
-								<liferay-ui:message arguments="<%= new Object[]{mergeFailCount} %>" key="the-propagation-has-been-disabled-temporarily-after-x-errors" />
-							</p>
-
-							<aui:button onClick='<%= renderResponse.getNamespace() + "resetMergeFailCount()" %>' value="reset-merge-fail-count" />
-						</div>
-					</div>
-				</c:if>
-			</aui:field-wrapper>
 		</c:if>
 	</aui:fieldset>
 
@@ -118,46 +96,9 @@ int mergeFailCount = layoutPrototypeId > 0 ? SitesUtil.getMergeFailCount(layoutP
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" /></portlet:actionURL>");
 	}
 
-	function <portlet:namespace />resetMergeFailCount() {
-
-		<portlet:renderURL var="currentEditURL">
-			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
-		</portlet:renderURL>
-
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.RESET_MERGE_FAIL_COUNT %>';
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentEditURL %>';
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" /></portlet:actionURL>');
-	}
-
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
-</aui:script>
-
-<aui:script use="aui-base,aui-dialog">
-	var warningElem = A.one(".merge-fail-popup-button");
-
-	if(warningElem) {
-		warningElem.on('click', function(){
-
-			var dialogContent = A.one('#<portlet:namespace />mergeFailCountDialogContentWrapper .content');
-
-			var options = {
-				title: '<liferay-ui:message key="propagation-of-changes" />',
-				bodyContent: dialogContent.html(),
-				centered: true,
-				width: 400,
-				height: 150,
-				modal: true
-			};
-
-			var popup = new A.Dialog(options).render();
-
-			dialogContent.show();
-		});
-	}
 </aui:script>
 
 <%

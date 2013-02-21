@@ -75,6 +75,15 @@ public class ViewDMFolderDocumentMultipleTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DM Folder Document1 Title"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("My Documents"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[1]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document1 Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -109,6 +118,15 @@ public class ViewDMFolderDocumentMultipleTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 			RuntimeVariables.replace("DM Folder Document2 Title"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("My Documents"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[1]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document2 Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -143,6 +161,15 @@ public class ViewDMFolderDocumentMultipleTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]",
 			RuntimeVariables.replace("DM Folder Document3 Title"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("My Documents"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[1]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[2]/span/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
+			selenium.getText(
+				"//ul[contains(@class,'breadcrumbs')]/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document3 Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));

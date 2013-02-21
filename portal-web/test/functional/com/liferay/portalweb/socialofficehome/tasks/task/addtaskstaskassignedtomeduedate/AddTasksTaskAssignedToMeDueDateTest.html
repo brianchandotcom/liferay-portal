@@ -69,9 +69,20 @@
 	<td>Add Due Date</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
+	<td>//a[@id='toggleDueDate']</td>
+	<td>Remove Due Date</td>
+</tr>
+<!--Begin ee-6.1.20 Target Conditionals -Ken Duenwald-->
+<tr>
+	<td>storeElementPresent</td>
 	<td>//select[@id='_1_WAR_tasksportlet_duedatemonth']</td>
-	<td>Month</td>
+	<td>newDueDateMonthSelectPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${newDueDateMonthSelectPresent}</td>
+	<td>NewDueDateMonthSelectNotPresent</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -88,6 +99,42 @@
 	<td>//select[@id='_1_WAR_tasksportlet_duedateyear']</td>
 	<td>label=2016</td>
 </tr>
+<tr>
+	<td>label</td>
+	<td>NewDueDateMonthSelectNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//select[@id='_1_WAR_tasksportlet_dueDateMonth']</td>
+	<td>oldDueDateMonthSelectPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${oldDueDateMonthSelectPresent}</td>
+	<td>OldDueDateMonthSelectNotPresent</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_1_WAR_tasksportlet_dueDateMonth']</td>
+	<td>label=March</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_1_WAR_tasksportlet_dueDateDay']</td>
+	<td>label=16</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_1_WAR_tasksportlet_dueDateYear']</td>
+	<td>label=2016</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>OldDueDateMonthSelectNotPresent</td>
+	<td></td>
+</tr>
+<!--End ee-6.1.20 Target Conditionals -Ken Duenwald-->
 <tr>
 	<td>clickAt</td>
 	<td>//input[@value='Save']</td>

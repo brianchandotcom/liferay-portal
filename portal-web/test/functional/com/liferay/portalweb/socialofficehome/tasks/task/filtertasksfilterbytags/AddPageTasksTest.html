@@ -58,11 +58,48 @@
 	<td>//input[@type='text']</td>
 	<td>Tasks Test Page</td>
 </tr>
+<!--Begin ee-6.1.20 Target Conditionals -Ken Duenwald-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>//button[contains(@id,'Save')]</td>
+	<td>newSaveButtonPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${newSaveButtonPresent}</td>
+	<td>NewSaveButtonNotPresent</td>
+</tr>
 <tr>
 	<td>clickAt</td>
 	<td>//button[contains(@id,'Save')]</td>
 	<td>Save</td>
 </tr>
+<tr>
+	<td>label</td>
+	<td>NewSaveButtonNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//button[contains(@id,'save')]</td>
+	<td>oldSaveButtonPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${oldSaveButtonPresent}</td>
+	<td>OldSaveButtonNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[contains(@id,'save')]</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>OldSaveButtonNotPresent</td>
+	<td></td>
+</tr>
+<!--End ee-6.1.20 Target Conditionals -Ken Duenwald-->
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Tasks Test Page</td>

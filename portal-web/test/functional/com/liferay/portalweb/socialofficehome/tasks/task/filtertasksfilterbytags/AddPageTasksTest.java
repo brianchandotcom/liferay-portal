@@ -22,28 +22,65 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageTasksTest extends BaseTestCase {
 	public void testAddPageTasks() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//li[@id='_145_addContent']/a/span"));
-		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='addPage']");
-		assertEquals(RuntimeVariables.replace("Page"),
-			selenium.getText("//a[@id='addPage']"));
-		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
-		selenium.waitForVisible("//input[@type='text']");
-		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Tasks Test Page"));
-		selenium.clickAt("//button[contains(@id,'Save')]",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("link=Tasks Test Page");
-		selenium.clickAt("link=Tasks Test Page",
-			RuntimeVariables.replace("Tasks Test Page"));
-		selenium.waitForPageToLoad("30000");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText("//li[@id='_145_addContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+				selenium.waitForVisible("//a[@id='addPage']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@id='addPage']"));
+				selenium.clickAt("//a[@id='addPage']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible("//input[@type='text']");
+				selenium.type("//input[@type='text']",
+					RuntimeVariables.replace("Tasks Test Page"));
+
+				boolean newSaveButtonPresent = selenium.isElementPresent(
+						"//button[contains(@id,'Save')]");
+
+				if (!newSaveButtonPresent) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//button[contains(@id,'Save')]",
+					RuntimeVariables.replace("Save"));
+
+			case 2:
+
+				boolean oldSaveButtonPresent = selenium.isElementPresent(
+						"//button[contains(@id,'save')]");
+
+				if (!oldSaveButtonPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//button[contains(@id,'save')]",
+					RuntimeVariables.replace("Save"));
+
+			case 3:
+				selenium.waitForVisible("link=Tasks Test Page");
+				selenium.clickAt("link=Tasks Test Page",
+					RuntimeVariables.replace("Tasks Test Page"));
+				selenium.waitForPageToLoad("30000");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

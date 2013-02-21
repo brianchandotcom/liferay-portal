@@ -70,9 +70,8 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//tr[4]/td[1]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("tag1"),
-			selenium.getText("//span/a[contains(.,'tag1')]"));
-		selenium.clickAt("//span/a[contains(.,'tag1')]",
-			RuntimeVariables.replace("tag1"));
+			selenium.getText("//span/a[.='tag1']"));
+		selenium.clickAt("//span/a[.='tag1']", RuntimeVariables.replace("tag1"));
 		selenium.waitForText("//td[1]/div[1]/a", "Task Description");
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));

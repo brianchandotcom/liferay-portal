@@ -22,29 +22,66 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPageCalendarSOTest extends BaseTestCase {
 	public void testAddPageCalendarSO() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/user/joebloggs/so/dashboard/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//li[@id='_145_addContent']/a/span"));
-		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='addPage']");
-		assertEquals(RuntimeVariables.replace("Page"),
-			selenium.getText("//a[@id='addPage']"));
-		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
-		selenium.waitForVisible(
-			"//li[@class='add-page']/div/div/span/span/input");
-		selenium.type("//li[@class='add-page']/div/div/span/span/input",
-			RuntimeVariables.replace("Calendar Test Page"));
-		selenium.clickAt("//button[contains(@id,'Save')]",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page",
-			RuntimeVariables.replace("Calendar Test Page"));
-		selenium.waitForPageToLoad("30000");
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/user/joebloggs/so/dashboard/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText("//li[@id='_145_addContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+				selenium.waitForVisible("//a[@id='addPage']");
+				assertEquals(RuntimeVariables.replace("Page"),
+					selenium.getText("//a[@id='addPage']"));
+				selenium.clickAt("//a[@id='addPage']",
+					RuntimeVariables.replace("Page"));
+				selenium.waitForVisible(
+					"//li[@class='add-page']/div/div/span/span/input");
+				selenium.type("//li[@class='add-page']/div/div/span/span/input",
+					RuntimeVariables.replace("Calendar Test Page"));
+
+				boolean newSaveButtonPresent = selenium.isElementPresent(
+						"//button[contains(@id,'Save')]");
+
+				if (!newSaveButtonPresent) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//button[contains(@id,'Save')]",
+					RuntimeVariables.replace("Save"));
+
+			case 2:
+
+				boolean oldSaveButtonPresent = selenium.isElementPresent(
+						"//button[contains(@id,'save')]");
+
+				if (!oldSaveButtonPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				selenium.clickAt("//button[contains(@id,'save')]",
+					RuntimeVariables.replace("Save"));
+
+			case 3:
+				selenium.waitForVisible("link=Calendar Test Page");
+				selenium.clickAt("link=Calendar Test Page",
+					RuntimeVariables.replace("Calendar Test Page"));
+				selenium.waitForPageToLoad("30000");
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

@@ -3538,6 +3538,10 @@ file.
 				</if>
 			</else>
 		</if>
+
+		<copy todir="${user.home}/liferay/data/osgi">
+			<fileset dir="${app.server.parent.dir}/data/osgi" />
+		</copy>
 	</target>
 
 	<target name="rebuild-database-db2">

@@ -765,8 +765,6 @@ public interface PropsKeys {
 
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE = "dynamic.data.lists.storage.type";
 
-	public static final String DYNAMIC_DATA_LISTS_TEMPLATE_LANGUAGE_PARSER = "dynamic.data.lists.template.language.parser";
-
 	public static final String DYNAMIC_DATA_LISTS_TRANSFORMER_LISTENER = "dynamic.data.lists.transformer.listener";
 
 	public static final String DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS = "dynamic.data.mapping.image.extensions";
@@ -1116,8 +1114,6 @@ public interface PropsKeys {
 	public static final String JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES = "journal.template.freemarker.restricted.variables";
 
 	public static final String JOURNAL_TEMPLATE_LANGUAGE_CONTENT = "journal.template.language.content";
-
-	public static final String JOURNAL_TEMPLATE_LANGUAGE_PARSER = "journal.template.language.parser";
 
 	public static final String JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES = "journal.template.velocity.restricted.variables";
 

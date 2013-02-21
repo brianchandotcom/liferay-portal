@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.templateparser;
+package com.liferay.portal.templateparser;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.templateparser.TemplateParser;
+import com.liferay.portal.kernel.templateparser.Transformer;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -31,7 +35,6 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.templateparser.BaseTemplateParser;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;

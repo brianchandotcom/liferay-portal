@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.templateparser.BaseTransformer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.templateparser.BaseTransformer;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;

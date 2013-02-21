@@ -16,12 +16,14 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.io.Writer;
 
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
+ * @author Eduardo Lundgren
  */
 public class AUIUtil {
 
@@ -171,7 +174,7 @@ public class AUIUtil {
 		return sb.toString();
 	}
 
-	public static String getScriptDataBuffer(HttpServletRequest request)
+	public static String getScriptData(HttpServletRequest request)
 		throws IOException {
 
 		ScriptData scriptData = (ScriptData)request.getAttribute(
@@ -230,6 +233,37 @@ public class AUIUtil {
 		sb.append("\n// ]]>\n</script>");
 
 		return sb.toString();
+	}
+
+	public static void outputInlineScriptData(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		String scriptData = AUIUtil.getScriptData(request);
+
+		writer.write(scriptData);
+	}
+
+	public static void outputScriptData(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		String scriptData = AUIUtil.getScriptData(request);
+
+		writer.write(scriptData);
+
+		request.setAttribute(WebKeys.SCRIPT_DATA_OUTPUTED, true);
+	}
+
+	public static void outputScriptDataIfNeeded(
+			HttpServletRequest request, Writer writer)
+		throws Exception {
+
+		if (!GetterUtil.getBoolean(
+				request.getAttribute(WebKeys.SCRIPT_DATA_OUTPUTED))) {
+
+			outputScriptData(request, writer);
+		}
 	}
 
 }

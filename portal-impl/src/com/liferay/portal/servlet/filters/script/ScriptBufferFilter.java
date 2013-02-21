@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.taglib.aui.AUIUtil;
 
@@ -29,39 +31,23 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Bruno Basto
+ * @author Eduardo Lundgren
  */
-public class ScriptsBufferFilter extends BasePortalFilter {
+public class ScriptBufferFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
-		ScriptsBufferFilter.class.getName() + "SKIP_FILTER";
+		ScriptBufferFilter.class.getName() + "SKIP_FILTER";
 
 	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (super.isFilterEnabled() && !isAlreadyFiltered(request)) {
+		if (super.isFilterEnabled() && !isAlreadyFiltered(request) ) {
 			return true;
 		}
 		else {
 			return false;
 		}
-	}
-
-	protected String flushScriptsBuffer(
-			HttpServletRequest request, String content)
-		throws Exception {
-
-		String scriptDataBuffer = AUIUtil.getScriptDataBuffer(request);
-
-		if (content.indexOf(_CLOSE_BODY) > -1) {
-			content = StringUtil.replace(
-				content, _CLOSE_BODY, scriptDataBuffer.concat(_CLOSE_BODY));
-		}
-		else {
-			content = content.concat(scriptDataBuffer);
-		}
-
-		return content;
 	}
 
 	protected boolean isAlreadyFiltered(HttpServletRequest request) {
@@ -91,17 +77,34 @@ public class ScriptsBufferFilter extends BasePortalFilter {
 			new BufferCacheServletResponse(response);
 
 		processFilter(
-			ScriptsBufferFilter.class, request, bufferCacheServletResponse,
+			ScriptBufferFilter.class, request, bufferCacheServletResponse,
 			filterChain);
 
-		String content = flushScriptsBuffer(
-			request, bufferCacheServletResponse.getString());
+		String content = bufferCacheServletResponse.getString();
+
+		String contentType = response.getContentType();
+
+		if ((contentType != null) &&
+			contentType.startsWith(ContentTypes.TEXT_HTML)) {
+
+			String scriptData = AUIUtil.getScriptData(request);
+
+			if (content.indexOf(_CLOSE_BODY) > -1) {
+				content = StringUtil.replace(
+					content, _CLOSE_BODY, scriptData.concat(_CLOSE_BODY));
+			}
+			else {
+				content = content.concat(scriptData);
+			}
+
+			request.setAttribute(WebKeys.SCRIPT_DATA_OUTPUTED, true);
+		}
 
 		ServletResponseUtil.write(response, content);
 	}
 
 	private static final String _CLOSE_BODY = "</body>";
 
-	private static Log _log = LogFactoryUtil.getLog(ScriptsBufferFilter.class);
+	private static Log _log = LogFactoryUtil.getLog(ScriptBufferFilter.class);
 
 }

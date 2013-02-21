@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -57,12 +58,15 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.servlet.filters.script.ScriptBufferFilter;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -790,6 +794,10 @@ public class PortletContainerImpl implements PortletContainer {
 
 				writer.write(bufferCacheServletResponse.getString());
 			}
+
+			if (themeDisplay.isIsolated() && _SCRIPT_BUFFER_FILTER_ENABLED) {
+				AUIUtil.outputScriptDataIfNeeded(request, response.getWriter());
+			}
 		}
 		finally {
 			portletDisplay.copyFrom(portletDisplayClone);
@@ -955,6 +963,10 @@ public class PortletContainerImpl implements PortletContainer {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
+
+	private static final boolean _SCRIPT_BUFFER_FILTER_ENABLED =
+			GetterUtil.getBoolean(
+				PropsUtil.get(ScriptBufferFilter.class.getName()));
 
 	private static Log _log = LogFactoryUtil.getLog(PortletContainerImpl.class);
 

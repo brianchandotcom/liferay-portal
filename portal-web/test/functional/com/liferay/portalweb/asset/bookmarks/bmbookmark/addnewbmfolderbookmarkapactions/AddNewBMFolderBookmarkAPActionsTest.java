@@ -28,7 +28,7 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a/span",
@@ -47,7 +47,7 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.selectWindow("title=Bookmarks");
 		selenium.waitForVisible("//input[@value='Choose']");
 		selenium.click("//input[@value='Choose']");
@@ -67,6 +67,11 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
+		Thread.sleep(1000);
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Asset Publisher Test Page",
+			RuntimeVariables.replace("Asset Publisher Test Page"));
+		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//h3[@class='asset-title']/a");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));

@@ -30,7 +30,7 @@ public class DeleteBMFolderBookmarkAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -42,21 +42,25 @@ public class DeleteBMFolderBookmarkAPTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//td[1]/a");
-		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
-			selenium.getText("//td[1]/a"));
+		selenium.waitForVisible(
+			"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
-			selenium.getText("//td[2]/a"));
-		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[2]"));
+		selenium.clickAt("xPath=(//img[@title='Delete'])[2]",
+			RuntimeVariables.replace("Delete"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

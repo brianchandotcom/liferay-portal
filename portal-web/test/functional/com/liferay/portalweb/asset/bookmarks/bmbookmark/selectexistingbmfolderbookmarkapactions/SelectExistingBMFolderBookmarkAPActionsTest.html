@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td>Asset Publisher - Configuration</td>
 </tr>
@@ -65,18 +65,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//div[@class='select-asset-selector']/div/span/ul/li/strong/a</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//div[@class='select-asset-selector']/div/span/ul/li/strong/a</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>//div[@class='select-asset-selector']/div/span/ul/li/strong/a</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -89,19 +89,64 @@
 	<td>Bookmarks Entry</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAt</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]</td>
 	<td>Bookmarks Entry</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'_86_selectAsset')]</td>
+	<td>Select Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'_86_selectAsset')]</td>
+	<td>Select Bookmarks Entry</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a</td>
+	<td>BM Folder Bookmark Name</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a</td>
 	<td>BM Folder Bookmark Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a</td>
 	<td>BM Folder Bookmark Name</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -110,13 +155,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Bookmarks Entry</td>
+	<td>//tr[contains(.,'BM Folder Bookmark Name')]/td[1]</td>
+	<td>BM Folder Bookmark Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>BM Folder Bookmark Name</td>
+	<td>//tr[contains(.,'BM Folder Bookmark Name')]/td[2]</td>
+	<td>Bookmarks Entry</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

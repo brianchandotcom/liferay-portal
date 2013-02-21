@@ -29,7 +29,7 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -41,39 +41,54 @@ public class SelectExistingBMFolderBookmarkAPActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
-		selenium.waitForElementPresent(
+		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible(
-			"//span[@title='Select Existing']/ul/li/strong/a/span");
-		assertEquals(RuntimeVariables.replace("Select Existing"),
+			"//div[@class='select-asset-selector']/div/span/ul/li/strong/a");
+		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//span[@title='Select Existing']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Select Existing']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Select Existing"));
+				"//div[@class='select-asset-selector']/div/span/ul/li/strong/a"));
+		selenium.clickAt("//div[@class='select-asset-selector']/div/span/ul/li/strong/a",
+			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]");
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]"));
-		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]",
+			RuntimeVariables.replace("Bookmarks Entry"));
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[contains(@id,'_86_selectAsset')]");
+		selenium.selectFrame("//iframe[contains(@id,'_86_selectAsset')]");
+		selenium.waitForVisible(
+			"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'BM Folder Bookmark Name')]/td[1]/a",
 			RuntimeVariables.replace("BM Folder Bookmark Name"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.selectFrame(
+			"//iframe[contains(@id,'configurationIframeDialog')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
-			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
+			selenium.getText(
+				"//tr[contains(.,'BM Folder Bookmark Name')]/td[2]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page",

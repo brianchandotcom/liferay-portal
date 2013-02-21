@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.templateparser.BaseTransformer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -25,10 +27,19 @@ import com.liferay.portal.util.PropsUtil;
 public class DDLTransformer extends BaseTransformer {
 
 	@Override
-	protected String getTemplateParserClassName(String langType) {
+	protected String getErrorTemplateId(String langType) {
 		return PropsUtil.get(
-			PropsKeys.DYNAMIC_DATA_LISTS_TEMPLATE_LANGUAGE_PARSER,
-			new Filter(langType));
+			PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, new Filter(langType));
+	}
+
+	@Override
+	protected TemplateContextType getTemplateContextType(String langType) {
+		if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+			return TemplateContextType.EMPTY;
+		}
+		else {
+			return TemplateContextType.STANDARD;
+		}
 	}
 
 	@Override

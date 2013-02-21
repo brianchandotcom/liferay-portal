@@ -16,13 +16,28 @@ package com.liferay.portal.kernel.templateparser;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.templateparser.BaseTemplateParser;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.xsl.XSLTemplateResource;
+import com.liferay.portal.xsl.XSLURIResolver;
+import com.liferay.portlet.journal.util.JournalXSLURIResolver;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,26 +63,10 @@ public abstract class BaseTransformer implements Transformer {
 			return null;
 		}
 
-		String templateParserClassName = getTemplateParserClassName(langType);
+		TemplateContext templateContext = getTemplateContext(
+			themeDisplay, contextObjects, script, langType);
 
-		if (Validator.isNull(templateParserClassName)) {
-			return null;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Template parser class name " + templateParserClassName);
-		}
-
-		TemplateParser templateParser = null;
-
-		try {
-			templateParser = (TemplateParser)InstanceFactory.newInstance(
-				PortalClassLoaderUtil.getClassLoader(),
-				templateParserClassName);
-		}
-		catch (Exception e) {
-			throw new TransformException(e);
-		}
+		TemplateParser templateParser = new BaseTemplateParser(templateContext);
 
 		templateParser.setContextObjects(contextObjects);
 		templateParser.setScript(script);
@@ -171,36 +170,20 @@ public abstract class BaseTransformer implements Transformer {
 			output = LocalizationUtil.getLocalization(xml, languageId);
 		}
 		else {
-			String templateParserClassName = getTemplateParserClassName(
-				langType);
+			TemplateContext templateContext = getTemplateContext(
+				themeDisplay, tokens, languageId, xml, script, langType);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Template parser class name " + templateParserClassName);
-			}
+			TemplateParser templateParser = new BaseTemplateParser(
+				templateContext);
 
-			if (Validator.isNotNull(templateParserClassName)) {
-				TemplateParser templateParser = null;
+			templateParser.setLanguageId(languageId);
+			templateParser.setScript(script);
+			templateParser.setThemeDisplay(themeDisplay);
+			templateParser.setTokens(tokens);
+			templateParser.setViewMode(viewMode);
+			templateParser.setXML(xml);
 
-				try {
-					templateParser =
-						(TemplateParser)InstanceFactory.newInstance(
-							PortalClassLoaderUtil.getClassLoader(),
-							templateParserClassName);
-				}
-				catch (Exception e) {
-					throw new TransformException(e);
-				}
-
-				templateParser.setLanguageId(languageId);
-				templateParser.setScript(script);
-				templateParser.setThemeDisplay(themeDisplay);
-				templateParser.setTokens(tokens);
-				templateParser.setViewMode(viewMode);
-				templateParser.setXML(xml);
-
-				output = templateParser.transform();
-			}
+			output = templateParser.transform();
 		}
 
 		// Postprocess output
@@ -227,7 +210,130 @@ public abstract class BaseTransformer implements Transformer {
 		return output;
 	}
 
-	protected abstract String getTemplateParserClassName(String langType);
+	protected abstract String getErrorTemplateId(String langType);
+
+	protected TemplateResource getErrorTemplateResource(String langType) {
+		try {
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			URL url = classLoader.getResource(getErrorTemplateId(langType));
+
+			return new URLTemplateResource(getErrorTemplateId(langType), url);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	protected TemplateContext getTemplateContext(
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			String script, String langType)
+		throws Exception {
+
+		long companyId = 0;
+		long companyGroupId = 0;
+		long groupId = 0;
+
+		if (themeDisplay != null) {
+			companyId = themeDisplay.getCompanyId();
+			companyGroupId = themeDisplay.getCompanyGroupId();
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
+		String templateId = String.valueOf(contextObjects.get("template_id"));
+
+		templateId = getTemplateId(
+			templateId, companyId, companyGroupId, groupId);
+
+		TemplateResource templateResource = new StringTemplateResource(
+			templateId, script);
+
+		TemplateResource errorTemplateResource = getErrorTemplateResource(
+			langType);
+
+		TemplateContextType templateContextType = getTemplateContextType(
+			langType);
+
+		return TemplateManagerUtil.getTemplate(
+			langType, templateResource, errorTemplateResource,
+			templateContextType);
+	}
+
+	protected TemplateContext getTemplateContext(
+			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			String languageId, String xml, String script, String langType)
+		throws Exception {
+
+		long companyId = 0;
+		long companyGroupId = 0;
+		long groupId = 0;
+
+		if (themeDisplay != null) {
+			companyId = themeDisplay.getCompanyId();
+			companyGroupId = themeDisplay.getCompanyGroupId();
+			groupId = themeDisplay.getScopeGroupId();
+		}
+		else if (tokens != null) {
+			companyId =GetterUtil.getLong(tokens.get("company_id"));
+			companyGroupId = GetterUtil.getLong(tokens.get("company_group_id"));
+			groupId = GetterUtil.getLong(tokens.get("group_id"));
+		}
+
+		String templateId = tokens.get("template_id");
+
+		templateId = getTemplateId(
+			templateId, companyId, companyGroupId, groupId);
+
+		TemplateResource templateResource = null;
+
+		if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+			XSLURIResolver xslURIResolver = new JournalXSLURIResolver(
+				tokens, languageId);
+
+			templateResource = new XSLTemplateResource(
+				templateId, script, xslURIResolver, xml);
+		}
+		else {
+			templateResource = new StringTemplateResource(templateId, script);
+		}
+
+		TemplateResource errorTemplateResource = getErrorTemplateResource(
+			langType);
+
+		TemplateContextType templateContextType = getTemplateContextType(
+			langType);
+
+		return TemplateManagerUtil.getTemplate(
+			langType, templateResource, errorTemplateResource,
+			templateContextType);
+	}
+
+	protected abstract TemplateContextType getTemplateContextType(
+		String langType);
+
+	protected String getTemplateId(
+		String templateId, long companyId, long companyGroupId, long groupId) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(companyId);
+		sb.append(StringPool.POUND);
+
+		if (companyGroupId > 0) {
+			sb.append(companyGroupId);
+		}
+		else {
+			sb.append(groupId);
+		}
+
+		sb.append(StringPool.POUND);
+		sb.append(templateId);
+
+		return sb.toString();
+	}
 
 	protected abstract String[] getTransformerListenersClassNames();
 

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TemplateParser;
@@ -44,8 +42,6 @@ import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +52,11 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public abstract class BaseTemplateParser implements TemplateParser {
+public class BaseTemplateParser implements TemplateParser {
+
+	public BaseTemplateParser(TemplateContext templateContext) {
+		_templateContext = templateContext;
+	}
 
 	public String getLanguageId() {
 		return _languageId;
@@ -116,8 +116,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		boolean load = false;
 
 		try {
-			TemplateContext templateContext = getTemplateContext();
-
 			if (Validator.isNotNull(_xml)) {
 				Document document = SAXReaderUtil.read(_xml);
 
@@ -128,28 +126,28 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 				if (templateNodes != null) {
 					for (TemplateNode templateNode : templateNodes) {
-						templateContext.put(
+						_templateContext.put(
 							templateNode.getName(), templateNode);
 					}
 				}
 
 				Element requestElement = rootElement.element("request");
 
-				templateContext.put(
+				_templateContext.put(
 					"request", insertRequestVariables(requestElement));
 
-				templateContext.put("xmlRequest", requestElement.asXML());
+				_templateContext.put("xmlRequest", requestElement.asXML());
 			}
 
 			if (_contextObjects != null) {
 				for (String key : _contextObjects.keySet()) {
-					templateContext.put(key, _contextObjects.get(key));
+					_templateContext.put(key, _contextObjects.get(key));
 				}
 			}
 
-			populateTemplateContext(templateContext);
+			populateTemplateContext(_templateContext);
 
-			load = mergeTemplate(templateContext, unsyncStringWriter);
+			load = mergeTemplate(_templateContext, unsyncStringWriter);
 		}
 		catch (Exception e) {
 			if (e instanceof DocumentException) {
@@ -182,14 +180,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return CompanyLocalServiceUtil.getCompany(getCompanyId());
 	}
 
-	protected long getCompanyGroupId() {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getCompanyGroupId();
-		}
-
-		return GetterUtil.getLong(_tokens.get("company_group_id"));
-	}
-
 	protected long getCompanyId() {
 		if (_themeDisplay != null) {
 			return _themeDisplay.getCompanyId();
@@ -204,24 +194,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		}
 
 		return UnknownDevice.getInstance();
-	}
-
-	protected abstract String getErrorTemplateId();
-
-	protected TemplateResource getErrorTemplateResource() {
-		try {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			URL url = classLoader.getResource(getErrorTemplateId());
-
-			return new URLTemplateResource(getErrorTemplateId(), url);
-		}
-		catch (Exception e) {
-		}
-
-		return null;
 	}
 
 	protected long getGroupId() {
@@ -240,39 +212,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		sb.append(getCompanyId());
 		sb.append(StringPool.SLASH);
 		sb.append(getGroupId());
-
-		return sb.toString();
-	}
-
-	protected abstract TemplateContext getTemplateContext() throws Exception;
-
-	protected String getTemplateId() {
-		long companyGroupId = getCompanyGroupId();
-
-		String templateId = null;
-
-		if (_tokens != null) {
-			templateId = _tokens.get("template_id");
-		}
-
-		if (Validator.isNull(templateId)) {
-			templateId = (String.valueOf(_contextObjects.get("template_id")));
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(getCompanyId());
-		sb.append(StringPool.POUND);
-
-		if (companyGroupId > 0) {
-			sb.append(companyGroupId);
-		}
-		else {
-			sb.append(getGroupId());
-		}
-
-		sb.append(StringPool.POUND);
-		sb.append(templateId);
 
 		return sb.toString();
 	}
@@ -449,6 +388,9 @@ public abstract class BaseTemplateParser implements TemplateParser {
 	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
 	private String _languageId;
 	private String _script;
+
+	private TemplateContext _templateContext;
+
 	private ThemeDisplay _themeDisplay;
 	private Map<String, String> _tokens;
 	private String _viewMode;

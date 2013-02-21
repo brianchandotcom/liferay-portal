@@ -120,6 +120,7 @@ public class MBAttachmentsTrashTest {
 
 		for (FileEntry fileEntry : fileEntries) {
 			String fileEntryId = String.valueOf(fileEntry.getFileEntryId());
+
 			existingFiles.add(fileEntryId);
 		}
 

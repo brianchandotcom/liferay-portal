@@ -56,16 +56,14 @@ AUI.add(
 			A.on('formNavigator:revealSection', instance._revealSection, instance);
 			A.on('formNavigator:trackChanges', instance._trackChanges, instance);
 
-			var inputs = instance._container.all('input, select, textarea');
-
-			if (inputs) {
-				inputs.on(
-					'change',
-					function(event) {
-						A.fire('formNavigator:trackChanges', event.target);
-					}
-				);
-			}
+			instance._container.delegate(
+				'change',
+				function(event) {
+					A.fire('formNavigator:trackChanges', event.target);
+				},
+				'input, select, textarea',
+				instance
+			);
 
 			Liferay.on(
 				'submitForm',

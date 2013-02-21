@@ -36,12 +36,14 @@ public class MoveToRecycleBinWikiFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='page-actions top-actions']/span[contains(.,'Edit')]/a/span",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		assertTrue(selenium.isVisible(
 				"//input[@value='Move to the Recycle Bin']"));
 		selenium.clickAt("//input[@value='Move to the Recycle Bin']",
 			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

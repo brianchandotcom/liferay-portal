@@ -34,6 +34,16 @@
 	<td>Edit</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
@@ -42,11 +52,6 @@
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
 	<td>assertText</td>

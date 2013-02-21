@@ -119,7 +119,8 @@ public class MBAttachmentsTrashTest {
 		List<String> existingFiles = new ArrayList<String>();
 
 		for (FileEntry fileEntry : fileEntries) {
-			existingFiles.add(fileEntry.getTitle());
+			String fileEntryId = String.valueOf(fileEntry.getFileEntryId());
+			existingFiles.add(fileEntryId);
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

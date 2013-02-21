@@ -1042,11 +1042,11 @@ public class JournalArticleLocalServiceImpl
 			"article_resource_pk",
 			String.valueOf(article.getResourcePrimKey()));
 
-		String defaultTemplateId = article.getTemplateId();
+		String defaultDDMTemplateKey = article.getTemplateId();
 
 		if (article.isTemplateDriven()) {
 			if (Validator.isNull(ddmTemplateKey)) {
-				ddmTemplateKey = defaultTemplateId;
+				ddmTemplateKey = defaultDDMTemplateKey;
 			}
 
 			tokens.put("structure_id", article.getStructureId());
@@ -1164,11 +1164,11 @@ public class JournalArticleLocalServiceImpl
 							String.valueOf(companyGroup.getGroupId()));
 					}
 					catch (NoSuchTemplateException nste2) {
-						if (!defaultTemplateId.equals(ddmTemplateKey)) {
+						if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
 							ddmTemplate = ddmTemplatePersistence.findByG_C_T(
 								article.getGroupId(),
 								PortalUtil.getClassNameId(DDMStructure.class),
-								defaultTemplateId);
+								defaultDDMTemplateKey);
 						}
 						else {
 							throw nste1;
@@ -2978,15 +2978,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	public void updateTemplateId(
-			long groupId, long classNameId, String oldTemplateId,
-			String newTemplateId)
+			long groupId, long classNameId, String oldDDMTemplateKey,
+			String newDDMTemplateKey)
 		throws SystemException {
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_C_T(
-			groupId, classNameId, oldTemplateId);
+			groupId, classNameId, oldDDMTemplateKey);
 
 		for (JournalArticle article : articles) {
-			article.setTemplateId(newTemplateId);
+			article.setTemplateId(newDDMTemplateKey);
 
 			journalArticlePersistence.update(article);
 		}

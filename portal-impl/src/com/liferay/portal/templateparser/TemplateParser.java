@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
-import com.liferay.portal.kernel.templateparser.TemplateParser;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,62 +51,27 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public class BaseTemplateParser implements TemplateParser {
+public class TemplateParser {
 
-	public BaseTemplateParser(TemplateContext templateContext) {
+	public TemplateParser(
+		ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+		TemplateContext templateContext) {
+
+		_themeDisplay = themeDisplay;
+		_contextObjects = contextObjects;
 		_templateContext = templateContext;
 	}
 
-	public String getLanguageId() {
-		return _languageId;
-	}
+	public TemplateParser(
+		ThemeDisplay themeDisplay, Map<String, String> tokens, String viewMode,
+		String languageId, String xml, TemplateContext templateContext) {
 
-	public String getScript() {
-		return _script;
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return _themeDisplay;
-	}
-
-	public Map<String, String> getTokens() {
-		return _tokens;
-	}
-
-	public String getViewMode() {
-		return _viewMode;
-	}
-
-	public String getXML() {
-		return _xml;
-	}
-
-	public void setContextObjects(Map<String, Object> contextObjects) {
-		_contextObjects = contextObjects;
-	}
-
-	public void setLanguageId(String languageId) {
-		_languageId = languageId;
-	}
-
-	public void setScript(String script) {
-		_script = script;
-	}
-
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
 		_themeDisplay = themeDisplay;
-	}
-
-	public void setTokens(Map<String, String> tokens) {
 		_tokens = tokens;
-	}
-
-	public void setViewMode(String viewMode) {
 		_viewMode = viewMode;
-	}
-
-	public void setXML(String xml) {
+		_languageId = languageId;
 		_xml = xml;
+		_templateContext = templateContext;
 	}
 
 	public String transform() throws TransformException {
@@ -249,7 +213,7 @@ public class BaseTemplateParser implements TemplateParser {
 				"type", StringPool.BLANK);
 
 			TemplateNode templateNode = new TemplateNode(
-				getThemeDisplay(), name, stripCDATA(data), type);
+				_themeDisplay, name, stripCDATA(data), type);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
@@ -387,7 +351,6 @@ public class BaseTemplateParser implements TemplateParser {
 
 	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
 	private String _languageId;
-	private String _script;
 
 	private TemplateContext _templateContext;
 

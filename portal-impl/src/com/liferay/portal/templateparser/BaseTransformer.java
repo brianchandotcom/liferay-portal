@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
-import com.liferay.portal.kernel.templateparser.TemplateParser;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.Constants;
@@ -70,11 +69,8 @@ public abstract class BaseTransformer implements Transformer {
 		TemplateContext templateContext = getTemplateContext(
 			themeDisplay, contextObjects, script, langType);
 
-		TemplateParser templateParser = new BaseTemplateParser(templateContext);
-
-		templateParser.setContextObjects(contextObjects);
-		templateParser.setScript(script);
-		templateParser.setThemeDisplay(themeDisplay);
+		TemplateParser templateParser = new TemplateParser(
+			themeDisplay, contextObjects, templateContext);
 
 		return templateParser.transform();
 	}
@@ -177,15 +173,9 @@ public abstract class BaseTransformer implements Transformer {
 			TemplateContext templateContext = getTemplateContext(
 				themeDisplay, tokens, languageId, xml, script, langType);
 
-			TemplateParser templateParser = new BaseTemplateParser(
+			TemplateParser templateParser = new TemplateParser(
+				themeDisplay, tokens, viewMode, languageId, xml,
 				templateContext);
-
-			templateParser.setLanguageId(languageId);
-			templateParser.setScript(script);
-			templateParser.setThemeDisplay(themeDisplay);
-			templateParser.setTokens(tokens);
-			templateParser.setViewMode(viewMode);
-			templateParser.setXML(xml);
 
 			output = templateParser.transform();
 		}

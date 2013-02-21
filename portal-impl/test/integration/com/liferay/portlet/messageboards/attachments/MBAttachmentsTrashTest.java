@@ -22,9 +22,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -53,7 +53,7 @@ public class MBAttachmentsTrashTest {
 	public void setUp() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		_group = ServiceTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = new ServiceContext();
 

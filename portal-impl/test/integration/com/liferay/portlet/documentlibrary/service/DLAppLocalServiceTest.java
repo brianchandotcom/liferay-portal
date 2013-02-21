@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -47,7 +48,7 @@ public class DLAppLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = ServiceTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

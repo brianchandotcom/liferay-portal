@@ -32,6 +32,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
@@ -59,7 +60,7 @@ public class BookmarksFolderServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = ServiceTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

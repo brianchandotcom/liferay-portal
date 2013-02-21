@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
@@ -56,7 +57,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupAdminRemovingGroupAdminRoleByRoles() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupAdminUser(group);
 		User objectUser = addGroupAdminUser(group);
@@ -74,7 +75,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupAdminRemovingGroupAdminRoleByUsers() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupAdminUser(group);
 		User objectUser = addGroupAdminUser(group);
@@ -92,7 +93,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupAdminRemovingGroupOwnerRoleByRoles() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupAdminUser(group);
 		User objectUser = addGroupOwnerUser(group);
@@ -110,7 +111,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupAdminRemovingGroupOwnerRoleByUsers() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupAdminUser(group);
 		User objectUser = addGroupOwnerUser(group);
@@ -128,7 +129,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupOwnerRemovingGroupAdminRoleByRoles() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupOwnerUser(group);
 		User objectUser = addGroupAdminUser(group);
@@ -146,7 +147,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupOwnerRemovingGroupAdminRoleByUsers() throws Exception {
-		Group site = ServiceTestUtil.addGroup();
+		Group site = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupOwnerUser(site);
 		User objectUser = addGroupAdminUser(site);
@@ -164,7 +165,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupOwnerRemovingGroupOwnerRoleByRoles() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupOwnerUser(group);
 		User objectUser = addGroupOwnerUser(group);
@@ -182,7 +183,7 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupOwnerRemovingGroupOwnerRoleByUsers() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = addGroupOwnerUser(group);
 		User objectUser = addGroupOwnerUser(group);
@@ -387,7 +388,7 @@ public class UserGroupRoleServiceTest {
 	}
 
 	protected User addGroupUser(Group group, String roleName) throws Exception {
-		User groupUser = ServiceTestUtil.addUser(
+		User groupUser = UserTestUtil.addUser(
 			ServiceTestUtil.randomString(), group.getGroupId());
 
 		Role role = RoleLocalServiceUtil.getRole(

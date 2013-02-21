@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -49,7 +50,7 @@ public class WikiAttachmentsTrashTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = ServiceTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -36,6 +34,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -69,9 +69,9 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = ServiceTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		_layout = ServiceTestUtil.addLayout(
+		_layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
@@ -80,7 +80,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		LayoutLocalServiceUtil.deleteLayout(
 			_layout, true, new ServiceContext());
 
-		_layout = ServiceTestUtil.addLayout(
+		_layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
@@ -88,7 +88,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 	public void testChildLayoutScopeIds() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		Group childGroup = ServiceTestUtil.addGroup(
+		Group childGroup = GroupTestUtil.addGroup(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		preferenceMap.put(
@@ -137,7 +137,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 	public void testLayoutScopeId() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
 			"scopeIds",
@@ -160,7 +160,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 	public void testLegacyLayoutScopeId() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
 			"scopeIds", new String[] {
@@ -183,14 +183,14 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_layout.getCompanyId());
 
-		Layout secondLayout = ServiceTestUtil.addLayout(
+		Layout secondLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		addGroup(TestPropsValues.getUserId(), secondLayout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
 
 		Group companyGroup = company.getGroup();
 
@@ -233,14 +233,14 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testSeveralLegacyLayoutScopeIds() throws Exception {
-		Layout secondLayout = ServiceTestUtil.addLayout(
+		Layout secondLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
-		addGroup(TestPropsValues.getUserId(), secondLayout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
 
 		preferenceMap.put(
 			"scopeIds",
@@ -302,20 +302,6 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 		return assetPublisherPortletId;
 	}
 
-	protected Group addGroup(long userId, Layout layout) throws Exception {
-		Group scopeGroup = layout.getScopeGroup();
-
-		if (scopeGroup != null) {
-			return scopeGroup;
-		}
-
-		return GroupLocalServiceUtil.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			Layout.class.getName(), layout.getPlid(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			String.valueOf(layout.getPlid()), null, 0, null, false, true, null);
-	}
-
 	protected PortletPreferences getImportedPortletPreferences(
 			Layout layout, Map<String, String[]> preferenceMap)
 		throws Exception {
@@ -335,7 +321,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			layout.getGroupId(), layout.isPrivateLayout(), null, parameterMap,
 			null, null);
 
-		_importedGroup = ServiceTestUtil.addGroup();
+		_importedGroup = GroupTestUtil.addGroup();
 
 		// Import site LAR
 

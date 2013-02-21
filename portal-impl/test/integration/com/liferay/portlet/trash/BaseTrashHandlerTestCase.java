@@ -34,6 +34,7 @@ import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -56,7 +57,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
 
-		group = ServiceTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 	}
 
 	@After

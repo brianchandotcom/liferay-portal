@@ -34,6 +34,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portal.webdav.methods.Method;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -58,7 +59,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = ServiceTestUtil.addUser(null, group.getGroupId());
+		_user = UserTestUtil.addUser(null, group.getGroupId());
 
 		_role = ServiceTestUtil.addRole(
 			"Trash Admin", RoleConstants.TYPE_REGULAR, PortletKeys.TRASH,

@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -51,7 +51,7 @@ public class JournalFolderServiceTest {
 
 	@Test
 	public void testContent() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder folder = JournalTestUtil.addFolder(
 			group.getGroupId(), 0, "Test Folder");
@@ -69,7 +69,7 @@ public class JournalFolderServiceTest {
 	@Test
 	@Transactional
 	public void testSubfolders() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder folder1 = JournalTestUtil.addFolder(
 			group.getGroupId(), 0, "Test 1");

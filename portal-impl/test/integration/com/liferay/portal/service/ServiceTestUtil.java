@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -29,18 +28,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -98,7 +87,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -111,108 +99,6 @@ import java.util.Set;
 public class ServiceTestUtil {
 
 	public static final int THREAD_COUNT = 25;
-
-	public static Group addGroup() throws Exception {
-		return addGroup(randomString());
-	}
-
-	public static Group addGroup(long parentGroupId, String name)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			TestPropsValues.getCompanyId(), name);
-
-		if (group != null) {
-			return group;
-		}
-
-		String description = "This is a test group.";
-		int type = GroupConstants.TYPE_SITE_OPEN;
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-		boolean site = true;
-		boolean active = true;
-
-		return GroupLocalServiceUtil.addGroup(
-			TestPropsValues.getUserId(), parentGroupId, null, 0,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
-			friendlyURL, site, active, getServiceContext());
-	}
-
-	public static Group addGroup(String name) throws Exception {
-		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
-	}
-
-	public static Layout addLayout(long groupId, String name) throws Exception {
-		return addLayout(groupId, name, false);
-	}
-
-	public static Layout addLayout(
-			long groupId, String name, boolean privateLayout)
-		throws Exception {
-
-		return addLayout(groupId, name, privateLayout, null, false);
-	}
-
-	public static Layout addLayout(
-			long groupId, String name, boolean privateLayout,
-			LayoutPrototype layoutPrototype, boolean linkEnabled)
-		throws Exception {
-
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-
-		Layout layout = null;
-
-		try {
-			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				groupId, false, friendlyURL);
-
-			return layout;
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		String description = "This is a test page.";
-
-		ServiceContext serviceContext = getServiceContext();
-
-		if (layoutPrototype != null) {
-			serviceContext.setAttribute(
-				"layoutPrototypeLinkEnabled", linkEnabled);
-			serviceContext.setAttribute(
-				"layoutPrototypeUuid", layoutPrototype.getUuid());
-		}
-
-		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
-			LayoutConstants.TYPE_PORTLET, false, friendlyURL, serviceContext);
-	}
-
-	public static LayoutPrototype addLayoutPrototype(String name)
-		throws Exception {
-
-		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
-
-		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			nameMap, null, true);
-	}
-
-	public static LayoutSetPrototype addLayoutSetPrototype(String name)
-		throws Exception {
-
-		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
-
-		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			nameMap, null, true, true, getServiceContext());
-	}
 
 	public static void addResourcePermission(
 			Role role, String resourceName, int scope, String primKey,
@@ -261,59 +147,6 @@ public class ServiceTestUtil {
 		addResourcePermission(role, resourceName, scope, primKey, actionId);
 
 		return role;
-	}
-
-	public static User addUser(
-			String screenName, boolean autoScreenName, long[] groupIds)
-		throws Exception {
-
-		User user = UserLocalServiceUtil.fetchUserByScreenName(
-			TestPropsValues.getCompanyId(), screenName);
-
-		if (user != null) {
-			return user;
-		}
-
-		boolean autoPassword = true;
-		String password1 = StringPool.BLANK;
-		String password2 = StringPool.BLANK;
-		String emailAddress = "ServiceTestSuite." + nextLong() + "@liferay.com";
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.getDefault();
-		String firstName = "ServiceTestSuite";
-		String middleName = StringPool.BLANK;
-		String lastName = "ServiceTestSuite";
-		int prefixId = 0;
-		int suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringPool.BLANK;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		return UserLocalServiceUtil.addUser(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			autoPassword, password1, password2, autoScreenName, screenName,
-			emailAddress, facebookId, openId, locale, firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendMail, getServiceContext());
-	}
-
-	public static User addUser(String screenName, long groupId)
-		throws Exception {
-
-		if (Validator.isNull(screenName)) {
-			return addUser(null, true, new long[] {groupId});
-		}
-		else {
-			return addUser(screenName, false, new long[] {groupId});
-		}
 	}
 
 	public static void destroyServices() {

@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
@@ -79,7 +80,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testGroupAdminUnsetGroupAdmin() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupAdminUser(group);
@@ -93,7 +94,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testGroupAdminUnsetGroupOwner() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupOwnerUser(group);
@@ -107,7 +108,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testGroupOwnerUnsetGroupAdmin() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = UserTestUtil.addGroupOwnerUser(group);
 		User objectUser = UserTestUtil.addGroupAdminUser(group);
@@ -121,7 +122,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testGroupOwnerUnsetGroupOwner() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		User subjectUser = UserTestUtil.addGroupOwnerUser(group);
 		User objectUser = UserTestUtil.addGroupOwnerUser(group);

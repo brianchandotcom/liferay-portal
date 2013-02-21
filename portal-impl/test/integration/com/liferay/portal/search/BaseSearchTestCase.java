@@ -29,6 +29,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -49,7 +50,7 @@ public abstract class BaseSearchTestCase {
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
 
-		group = ServiceTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 	}
 
 	@After

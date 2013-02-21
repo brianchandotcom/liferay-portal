@@ -23,6 +23,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.UserTestUtil;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class OrganizationLocalServiceTest {
 
 	@Test
 	public void testAddOrganization() throws Exception {
-		User user = ServiceTestUtil.addUser("testAddOrganization", false, null);
+		User user = UserTestUtil.addUser("testAddOrganization", false, null);
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(

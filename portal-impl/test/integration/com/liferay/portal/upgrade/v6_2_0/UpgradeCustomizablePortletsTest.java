@@ -29,6 +29,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortalPreferencesImpl;
@@ -204,9 +206,9 @@ public class UpgradeCustomizablePortletsTest
 	}
 
 	protected Layout getLayout() throws Exception {
-		Group group = ServiceTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		return ServiceTestUtil.addLayout(
+		return LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString(), false);
 	}
 

@@ -60,11 +60,33 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
+				buffer="buffer"
 				name="name"
 				orderable="<%= true %>"
-				value="<%= layoutSetPrototype.getName(locale) %>"
-			/>
+			>
+
+				<%
+				buffer.append("<a href=\"");
+				buffer.append(rowURL);
+				buffer.append("\">");
+				buffer.append(layoutSetPrototype.getName(locale));
+				buffer.append("</a>");
+
+				int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
+
+				if (mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
+				%>
+
+					<liferay-util:buffer var="iconAlert">
+						<liferay-ui:icon image="../messages/alert" message='<%= LanguageUtil.format(pageContext, "the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors", new Object[] {mergeFailCount, "site-template"}) %>' />
+					</liferay-util:buffer>
+
+				<%
+					buffer.append(iconAlert);
+				}
+				%>
+
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"

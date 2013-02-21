@@ -42,6 +42,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -104,7 +105,7 @@ public abstract class BaseTransformer implements Transformer {
 		List<TransformerListener> transformerListeners =
 			new ArrayList<TransformerListener>();
 
-		String[] transformerListenersClassNames =
+		Set<String> transformerListenersClassNames =
 			getTransformerListenersClassNames();
 
 		for (String transformerListenersClassName :
@@ -335,7 +336,7 @@ public abstract class BaseTransformer implements Transformer {
 		return sb.toString();
 	}
 
-	protected abstract String[] getTransformerListenersClassNames();
+	protected abstract Set<String> getTransformerListenersClassNames();
 
 	private static Log _log = LogFactoryUtil.getLog(BaseTransformer.class);
 

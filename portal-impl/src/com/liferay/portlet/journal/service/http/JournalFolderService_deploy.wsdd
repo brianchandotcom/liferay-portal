@@ -31,6 +31,11 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getFoldersAndArticlesCount" qname="operNS:getFoldersAndArticlesCount" returnQName="getFoldersAndArticlesCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getFoldersCount" qname="operNS:getFoldersCount" returnQName="getFoldersCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>

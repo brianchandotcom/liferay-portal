@@ -15,16 +15,16 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="autoArticleId" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="autoArticleKey" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="titleMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="titleMapValues" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmTemplateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="layoutUuid" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateMonth" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateDay" type="tns:int"></parameter>
@@ -51,32 +51,32 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="oldArticleId" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="newArticleId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="autoArticleId" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="autoArticleKey" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="deleteArticle" qname="operNS:deleteArticle" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="deleteArticle" qname="operNS:deleteArticle" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="expireArticle" qname="operNS:expireArticle" returnQName="expireArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="expireArticle" qname="operNS:expireArticle" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
@@ -89,11 +89,11 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getArticle" qname="operNS:getArticle" returnQName="getArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getArticle" qname="operNS:getArticle" returnQName="getArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getArticle" qname="operNS:getArticle" returnQName="getArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
@@ -103,7 +103,7 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="urn:http.service.journal.portlet.liferay.com" xmlns:tns2="http://model.journal.portlet.liferay.com" name="getArticlesByArticleId" qname="operNS:getArticlesByArticleId" returnQName="getArticlesByArticleIdReturn" returnType="rtns:ArrayOf_tns3_JournalArticleSoap" returnItemType="tns2:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
@@ -114,7 +114,16 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="urn:http.service.journal.portlet.liferay.com" xmlns:tns2="http://model.journal.portlet.liferay.com" name="getArticlesByStructureId" qname="operNS:getArticlesByStructureId" returnQName="getArticlesByStructureIdReturn" returnType="rtns:ArrayOf_tns3_JournalArticleSoap" returnItemType="tns2:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="urn:http.service.journal.portlet.liferay.com" xmlns:tns2="http://model.journal.portlet.liferay.com" name="getArticlesByStructureId" qname="operNS:getArticlesByStructureId" returnQName="getArticlesByStructureIdReturn" returnType="rtns:ArrayOf_tns3_JournalArticleSoap" returnItemType="tns2:JournalArticleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
@@ -129,11 +138,17 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getArticlesCountByArticleId" qname="operNS:getArticlesCountByArticleId" returnQName="getArticlesCountByArticleIdReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getArticlesCountByStructureId" qname="operNS:getArticlesCountByStructureId" returnQName="getArticlesCountByStructureIdReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getArticlesCountByStructureId" qname="operNS:getArticlesCountByStructureId" returnQName="getArticlesCountByStructureIdReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getArticlesCountByUserId" qname="operNS:getArticlesCountByUserId" returnQName="getArticlesCountByUserIdReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -168,7 +183,7 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getLatestArticle" qname="operNS:getLatestArticle" returnQName="getLatestArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getLatestArticle" qname="operNS:getLatestArticle" returnQName="getLatestArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
@@ -176,9 +191,13 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="moveArticleToTrash" qname="operNS:moveArticleToTrash" returnQName="moveArticleToTrashReturn" returnType="rtns:JournalArticleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="moveArticle" qname="operNS:moveArticle" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="newFolderId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="removeArticleLocale" qname="operNS:removeArticleLocale" soapAction="">
@@ -187,10 +206,17 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="removeArticleLocale" qname="operNS:removeArticleLocale" returnQName="removeArticleLocaleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="languageId" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="restoreArticleFromTrash" qname="operNS:restoreArticleFromTrash" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourcePrimKey" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" name="restoreArticleFromTrash" qname="operNS:restoreArticleFromTrash" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="searchCount" qname="operNS:searchCount" returnQName="searchCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
@@ -199,8 +225,8 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmTemplateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateGT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateLT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -211,7 +237,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="folderIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
@@ -230,14 +256,14 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="folderIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmTemplateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateGT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateLT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -252,8 +278,8 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmTemplateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateGT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateLT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -267,7 +293,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="folderIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
@@ -289,14 +315,14 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="folderIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureKey" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmTemplateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateGT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="displayDateLT" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -316,7 +342,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="titleMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="titleMapValues" type="tns:ArrayOf_xsd_string"></parameter>
@@ -329,26 +355,26 @@
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="updateArticle" qname="operNS:updateArticle" returnQName="updateArticleReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="updateContent" qname="operNS:updateContent" returnQName="updateContentReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="content" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="updateStatus" qname="operNS:updateStatus" returnQName="updateStatusReturn" returnType="rtns:JournalArticleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="articleURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addArticle copyArticle deleteArticle expireArticle getArticle getArticleByUrlTitle getArticles getArticlesByArticleId getArticlesByLayoutUuid getArticlesByStructureId getArticlesByUserId getArticlesCount getArticlesCountByArticleId getArticlesCountByStructureId getArticlesCountByUserId getDisplayArticleByUrlTitle getFoldersAndArticlesCount getLatestArticle moveArticle removeArticleLocale search searchCount subscribe unsubscribe updateArticle updateContent updateStatus" />
+		<parameter name="allowedMethods" value="addArticle copyArticle deleteArticle expireArticle getArticle getArticleByUrlTitle getArticles getArticlesByArticleId getArticlesByLayoutUuid getArticlesByStructureId getArticlesByUserId getArticlesCount getArticlesCountByArticleId getArticlesCountByStructureId getArticlesCountByUserId getDisplayArticleByUrlTitle getFoldersAndArticlesCount getLatestArticle moveArticle moveArticleToTrash removeArticleLocale restoreArticleFromTrash search searchCount subscribe unsubscribe updateArticle updateContent updateStatus" />
 		<parameter name="className" value="com.liferay.portlet.journal.service.http.JournalArticleServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.journal.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.journal.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

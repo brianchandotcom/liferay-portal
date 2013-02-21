@@ -36,6 +36,11 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="http://model.journal.portlet.liferay.com" name="getStructure" qname="operNS:getStructure" returnQName="getStructureReturn" returnType="rtns:JournalStructureSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeGlobalStructures" type="tns:boolean"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.portlet.liferay.com" xmlns:rtns="urn:http.service.journal.portlet.liferay.com" xmlns:tns2="http://model.journal.portlet.liferay.com" name="getStructures" qname="operNS:getStructures" returnQName="getStructuresReturn" returnType="rtns:ArrayOf_tns3_JournalStructureSoap" returnItemType="tns2:JournalStructureSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.journal.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>

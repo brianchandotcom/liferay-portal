@@ -67,7 +67,7 @@ public interface JournalArticleService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -87,7 +87,7 @@ public interface JournalArticleService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -198,14 +198,14 @@ public interface JournalArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByStructureId(
-		long groupId, long classNameId, java.lang.String structureId,
+		long groupId, long classNameId, java.lang.String ddmStructureKey,
 		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByStructureId(
-		long groupId, java.lang.String structureId, int start, int end,
+		long groupId, java.lang.String ddmStructureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -226,12 +226,12 @@ public interface JournalArticleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticlesCountByStructureId(long groupId, long classNameId,
-		java.lang.String structureId, int status)
+		java.lang.String ddmStructureKey, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticlesCountByStructureId(long groupId,
-		java.lang.String structureId)
+		java.lang.String ddmStructureKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -300,8 +300,8 @@ public interface JournalArticleService extends BaseService {
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String structureId,
-		java.lang.String templateId, java.util.Date displayDateGT,
+		java.lang.String type, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -312,7 +312,7 @@ public interface JournalArticleService extends BaseService {
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
 		java.util.Date reviewDate, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -324,9 +324,10 @@ public interface JournalArticleService extends BaseService {
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
-		java.lang.String[] structureIds, java.lang.String[] templateIds,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator, int start, int end,
+		java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -334,8 +335,8 @@ public interface JournalArticleService extends BaseService {
 	public int searchCount(long companyId, long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String structureId,
-		java.lang.String templateId, java.util.Date displayDateGT,
+		java.lang.String type, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, int status, java.util.Date reviewDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -345,7 +346,7 @@ public interface JournalArticleService extends BaseService {
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
 		java.util.Date reviewDate, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -356,9 +357,10 @@ public interface JournalArticleService extends BaseService {
 		java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
 		java.lang.String content, java.lang.String type,
-		java.lang.String[] structureIds, java.lang.String[] templateIds,
-		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
-		java.util.Date reviewDate, boolean andOperator)
+		java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void subscribe(long groupId)
@@ -385,7 +387,7 @@ public interface JournalArticleService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String content, java.lang.String type,
-		java.lang.String structureId, java.lang.String templateId,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.lang.String layoutUuid, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,

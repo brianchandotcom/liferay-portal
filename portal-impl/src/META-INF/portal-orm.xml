@@ -2645,6 +2645,9 @@
 	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBBanModelImpl">
 		<attributes>
 			<id name="banId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />

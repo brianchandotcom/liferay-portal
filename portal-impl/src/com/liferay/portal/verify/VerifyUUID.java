@@ -98,6 +98,9 @@ public class VerifyUUID extends VerifyProcess {
 			"LayoutSetPrototype", "layoutSetPrototypeId"
 		},
 		new String[] {
+			"MBBan", "banId"
+		},
+		new String[] {
 			"WikiPageResource", "resourcePrimKey"
 		}
 	};

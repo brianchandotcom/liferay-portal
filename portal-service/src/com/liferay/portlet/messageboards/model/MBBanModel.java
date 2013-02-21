@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.util.Date;
  * @see com.liferay.portlet.messageboards.model.impl.MBBanModelImpl
  * @generated
  */
-public interface MBBanModel extends BaseModel<MBBan>, GroupedModel {
+public interface MBBanModel extends BaseModel<MBBan>, GroupedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +61,21 @@ public interface MBBanModel extends BaseModel<MBBan>, GroupedModel {
 	 * @param primaryKey the primary key of this message boards ban
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this message boards ban.
+	 *
+	 * @return the uuid of this message boards ban
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this message boards ban.
+	 *
+	 * @param uuid the uuid of this message boards ban
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the ban ID of this message boards ban.

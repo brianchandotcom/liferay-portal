@@ -64,6 +64,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	 */
 	public static final String TABLE_NAME = "MBBan";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "banId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -73,7 +74,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "banUserId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBBan (banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbBan.banId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBBan.banId ASC";
@@ -90,9 +91,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBBan"),
 			true);
 	public static long BANUSERID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
-	public static long BANID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long BANID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -107,6 +110,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		MBBan model = new MBBanImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setBanId(soapModel.getBanId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -173,6 +177,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("banId", getBanId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -187,6 +192,12 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long banId = (Long)attributes.get("banId");
 
 		if (banId != null) {
@@ -237,6 +248,28 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
 	public long getBanId() {
 		return _banId;
 	}
@@ -272,7 +305,19 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -396,6 +441,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public Object clone() {
 		MBBanImpl mbBanImpl = new MBBanImpl();
 
+		mbBanImpl.setUuid(getUuid());
 		mbBanImpl.setBanId(getBanId());
 		mbBanImpl.setGroupId(getGroupId());
 		mbBanImpl.setCompanyId(getCompanyId());
@@ -458,9 +504,15 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	public void resetOriginalValues() {
 		MBBanModelImpl mbBanModelImpl = this;
 
+		mbBanModelImpl._originalUuid = mbBanModelImpl._uuid;
+
 		mbBanModelImpl._originalGroupId = mbBanModelImpl._groupId;
 
 		mbBanModelImpl._setOriginalGroupId = false;
+
+		mbBanModelImpl._originalCompanyId = mbBanModelImpl._companyId;
+
+		mbBanModelImpl._setOriginalCompanyId = false;
 
 		mbBanModelImpl._originalUserId = mbBanModelImpl._userId;
 
@@ -476,6 +528,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	@Override
 	public CacheModel<MBBan> toCacheModel() {
 		MBBanCacheModel mbBanCacheModel = new MBBanCacheModel();
+
+		mbBanCacheModel.uuid = getUuid();
+
+		String uuid = mbBanCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbBanCacheModel.uuid = null;
+		}
 
 		mbBanCacheModel.banId = getBanId();
 
@@ -518,9 +578,11 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{banId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", banId=");
 		sb.append(getBanId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -542,12 +604,16 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBBan");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>banId</column-name><column-value><![CDATA[");
 		sb.append(getBanId());
@@ -588,11 +654,15 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	private static ClassLoader _classLoader = MBBan.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { MBBan.class };
+	private String _uuid;
+	private String _originalUuid;
 	private long _banId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

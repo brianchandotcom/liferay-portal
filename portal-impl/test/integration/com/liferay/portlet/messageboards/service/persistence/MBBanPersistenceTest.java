@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -109,6 +110,8 @@ public class MBBanPersistenceTest {
 
 		MBBan newMBBan = _persistence.create(pk);
 
+		newMBBan.setUuid(ServiceTestUtil.randomString());
+
 		newMBBan.setGroupId(ServiceTestUtil.nextLong());
 
 		newMBBan.setCompanyId(ServiceTestUtil.nextLong());
@@ -127,6 +130,7 @@ public class MBBanPersistenceTest {
 
 		MBBan existingMBBan = _persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
 
+		Assert.assertEquals(existingMBBan.getUuid(), newMBBan.getUuid());
 		Assert.assertEquals(existingMBBan.getBanId(), newMBBan.getBanId());
 		Assert.assertEquals(existingMBBan.getGroupId(), newMBBan.getGroupId());
 		Assert.assertEquals(existingMBBan.getCompanyId(),
@@ -266,6 +270,11 @@ public class MBBanPersistenceTest {
 
 		MBBanModelImpl existingMBBanModelImpl = (MBBanModelImpl)_persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(existingMBBanModelImpl.getUuid(),
+				existingMBBanModelImpl.getOriginalUuid()));
+		Assert.assertEquals(existingMBBanModelImpl.getGroupId(),
+			existingMBBanModelImpl.getOriginalGroupId());
+
 		Assert.assertEquals(existingMBBanModelImpl.getGroupId(),
 			existingMBBanModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingMBBanModelImpl.getBanUserId(),
@@ -276,6 +285,8 @@ public class MBBanPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		MBBan mbBan = _persistence.create(pk);
+
+		mbBan.setUuid(ServiceTestUtil.randomString());
 
 		mbBan.setGroupId(ServiceTestUtil.nextLong());
 

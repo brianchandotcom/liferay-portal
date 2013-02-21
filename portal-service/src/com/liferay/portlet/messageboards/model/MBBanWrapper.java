@@ -45,6 +45,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("banId", getBanId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -58,6 +59,12 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long banId = (Long)attributes.get("banId");
 
 		if (banId != null) {
@@ -123,6 +130,24 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_mbBan.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this message boards ban.
+	*
+	* @return the uuid of this message boards ban
+	*/
+	public java.lang.String getUuid() {
+		return _mbBan.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this message boards ban.
+	*
+	* @param uuid the uuid of this message boards ban
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_mbBan.setUuid(uuid);
 	}
 
 	/**

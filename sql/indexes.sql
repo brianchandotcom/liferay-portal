@@ -481,6 +481,9 @@ create index IX_69951A25 on MBBan (banUserId);
 create index IX_5C3FF12A on MBBan (groupId);
 create unique index IX_8ABC4E3B on MBBan (groupId, banUserId);
 create index IX_48814BBA on MBBan (userId);
+create index IX_8A13C634 on MBBan (uuid_);
+create index IX_4F841574 on MBBan (uuid_, companyId);
+create unique index IX_2A3B68F6 on MBBan (uuid_, groupId);
 
 create index IX_BC735DCF on MBCategory (companyId);
 create index IX_E15A5DB5 on MBCategory (companyId, status);

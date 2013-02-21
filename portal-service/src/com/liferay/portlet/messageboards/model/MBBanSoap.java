@@ -31,6 +31,7 @@ public class MBBanSoap implements Serializable {
 	public static MBBanSoap toSoapModel(MBBan model) {
 		MBBanSoap soapModel = new MBBanSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setBanId(model.getBanId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -89,6 +90,14 @@ public class MBBanSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setBanId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getBanId() {
@@ -155,6 +164,7 @@ public class MBBanSoap implements Serializable {
 		_banUserId = banUserId;
 	}
 
+	private String _uuid;
 	private long _banId;
 	private long _groupId;
 	private long _companyId;

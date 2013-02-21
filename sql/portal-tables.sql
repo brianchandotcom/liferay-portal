@@ -1107,6 +1107,7 @@ create table Lock_ (
 );
 
 create table MBBan (
+	uuid_ VARCHAR(75) null,
 	banId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

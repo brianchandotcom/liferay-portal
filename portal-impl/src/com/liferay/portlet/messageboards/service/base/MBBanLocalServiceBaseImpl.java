@@ -231,6 +231,20 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the message boards ban with the UUID in the group.
+	 *
+	 * @param uuid the UUID of message boards ban
+	 * @param groupId the group id of the message boards ban
+	 * @return the message boards ban
+	 * @throws PortalException if a message boards ban with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBBan getMBBanByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return mbBanPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the message boards bans.
 	 *
 	 * <p>

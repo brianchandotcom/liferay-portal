@@ -52,6 +52,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		if (ban == null) {
 			ban = mbBanPersistence.create(banId);
 
+			ban.setUuid(serviceContext.getUuid());
 			ban.setGroupId(groupId);
 			ban.setCompanyId(user.getCompanyId());
 			ban.setUserId(user.getUserId());

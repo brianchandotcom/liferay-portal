@@ -1885,6 +1885,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portlet.messageboards.model.MBBan">
+		<field name="uuid" type="String" />
 		<field name="banId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

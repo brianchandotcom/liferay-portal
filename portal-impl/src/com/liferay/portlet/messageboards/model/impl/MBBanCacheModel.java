@@ -37,9 +37,11 @@ import java.util.Date;
 public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{banId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", banId=");
 		sb.append(banId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -62,6 +64,13 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	public MBBan toEntityModel() {
 		MBBanImpl mbBanImpl = new MBBanImpl();
+
+		if (uuid == null) {
+			mbBanImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			mbBanImpl.setUuid(uuid);
+		}
 
 		mbBanImpl.setBanId(banId);
 		mbBanImpl.setGroupId(groupId);
@@ -97,6 +106,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		banId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
@@ -109,6 +119,13 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(banId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
@@ -126,6 +143,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		objectOutput.writeLong(banUserId);
 	}
 
+	public String uuid;
 	public long banId;
 	public long groupId;
 	public long companyId;

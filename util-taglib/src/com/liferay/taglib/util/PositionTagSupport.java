@@ -17,8 +17,6 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -75,18 +73,7 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 		}
 
 		if (Validator.isNull(position)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay.isIsolated() ||
-				themeDisplay.isLifecycleResource() ||
-				themeDisplay.isStateExclusive()) {
-
-				position = _POSITION_INLINE;
-			}
-			else {
-				position = _POSITION_AUTO;
-			}
+			position = _POSITION_AUTO;
 		}
 
 		return position;

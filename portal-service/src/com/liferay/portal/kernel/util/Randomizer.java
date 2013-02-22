@@ -67,7 +67,7 @@ public class Randomizer extends Random {
 		return array;
 	}
 
-	public void randomize(char array[]) {
+	public void randomize(char[] array) {
 		int length = array.length;
 
 		for (int i = 0; i < length - 1; i++) {
@@ -81,7 +81,7 @@ public class Randomizer extends Random {
 		}
 	}
 
-	public void randomize(int array[]) {
+	public void randomize(int[] array) {
 		int length = array.length;
 
 		for (int i = 0; i < length - 1; i++) {
@@ -110,7 +110,7 @@ public class Randomizer extends Random {
 		}
 	}
 
-	public void randomize(Object array[]) {
+	public void randomize(Object[] array) {
 		int length = array.length;
 
 		for (int i = 0; i < length - 1; i++) {

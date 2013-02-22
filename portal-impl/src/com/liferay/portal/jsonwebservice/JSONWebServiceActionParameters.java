@@ -32,7 +32,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jodd.util.KeyValue;
+import jodd.util.NameValue;
 
 /**
  * @author Igor Spasic
@@ -61,7 +61,7 @@ public class JSONWebServiceActionParameters {
 		_collectFromMap(parameterMap);
 	}
 
-	public List<KeyValue<String, Object>> getInnerParameters(String baseName) {
+	public List<NameValue<String, Object>> getInnerParameters(String baseName) {
 		if (_innerParameters == null) {
 			return null;
 		}
@@ -355,7 +355,7 @@ public class JSONWebServiceActionParameters {
 		return serviceContext;
 	}
 
-	private Map<String, List<KeyValue<String, Object>>> _innerParameters;
+	private Map<String, List<NameValue<String, Object>>> _innerParameters;
 	private JSONRPCRequest _jsonRPCRequest;
 	private Map<String, Object> _parameters = new HashMap<String, Object>() {
 
@@ -397,19 +397,19 @@ public class JSONWebServiceActionParameters {
 
 				if (_innerParameters == null) {
 					_innerParameters =
-						new HashMap<String, List<KeyValue<String, Object>>>();
+						new HashMap<String, List<NameValue<String, Object>>>();
 				}
 
-				List<KeyValue<String, Object>> values = _innerParameters.get(
+				List<NameValue<String, Object>> values = _innerParameters.get(
 					baseName);
 
 				if (values == null) {
-					values = new ArrayList<KeyValue<String, Object>>();
+					values = new ArrayList<NameValue<String, Object>>();
 
 					_innerParameters.put(baseName, values);
 				}
 
-				values.add(new KeyValue<String, Object>(innerName, value));
+				values.add(new NameValue<String, Object>(innerName, value));
 
 				return value;
 			}

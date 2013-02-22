@@ -40,7 +40,7 @@ import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.TypeConverterManager;
 
-import jodd.util.KeyValue;
+import jodd.util.NameValue;
 import jodd.util.ReflectUtil;
 
 /**
@@ -280,24 +280,24 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return;
 		}
 
-		List<KeyValue<String, Object>> innerParameters =
+		List<NameValue<String, Object>> innerParameters =
 			_jsonWebServiceActionParameters.getInnerParameters(parameterName);
 
 		if (innerParameters == null) {
 			return;
 		}
 
-		for (KeyValue<String, Object> innerParameter : innerParameters) {
+		for (NameValue<String, Object> innerParameter : innerParameters) {
 			try {
 				BeanUtil.setProperty(
-					parameterValue, innerParameter.getKey(),
+					parameterValue, innerParameter.getName(),
 					innerParameter.getValue());
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to set inner parameter " + parameterName + "." +
-							innerParameter.getKey(),
+							innerParameter.getName(),
 						e);
 				}
 			}

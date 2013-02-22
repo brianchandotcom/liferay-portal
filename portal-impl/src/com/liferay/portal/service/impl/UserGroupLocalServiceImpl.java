@@ -242,7 +242,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated
 	 */
-	public void copyUserGroupLayouts(long userGroupId, long userIds[])
+	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
 		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
@@ -277,7 +277,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated
 	 */
-	public void copyUserGroupLayouts(long userGroupIds[], long userId)
+	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws PortalException, SystemException {
 
 		for (long userGroupId : userGroupIds) {

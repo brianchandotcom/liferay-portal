@@ -1510,13 +1510,13 @@ public class SourceFormatter {
 
 		JavaTerm javaTerm = null;
 
-		int javaTermLineCount = -1;
 		String javaTermName = null;
+		int javaTermLineCount = -1;
 		int javaTermStartPosition = -1;
 		int javaTermType = -1;
 
-		List<String> parameterTypes = new ArrayList<String>();
 		boolean readParameterTypes = false;
+		List<String> parameterTypes = new ArrayList<String>();
 
 		int lastCommentOrAnnotationPos = -1;
 
@@ -1528,10 +1528,6 @@ public class SourceFormatter {
 			lineCount++;
 
 			line = _trimLine(line);
-
-			if (Validator.isNull(line)) {
-				lastCommentOrAnnotationPos = -1;
-			}
 
 			line = StringUtil.replace(
 				line,
@@ -1645,10 +1641,9 @@ public class SourceFormatter {
 					javaTermLineCount = lineCount;
 					javaTermName = (String)tuple.getObject(0);
 					javaTermStartPosition = javaTermEndPosition;
+					javaTermType = (Integer)tuple.getObject(1);
 
 					if (Validator.isNotNull(javaTermName)) {
-						javaTermType = (Integer)tuple.getObject(1);
-
 						if (_isInJavaTermTypeGroup(
 								 javaTermType, _TYPE_CONSTRUCTOR) ||
 							 _isInJavaTermTypeGroup(
@@ -1660,10 +1655,10 @@ public class SourceFormatter {
 						}
 					}
 				}
-			}
-			else if (line.startsWith(StringPool.TAB + "/**") ||
-					 line.startsWith(StringPool.TAB + "@")) {
 
+				lastCommentOrAnnotationPos = -1;
+			}
+			else if (_hasAnnotationOrJavadoc(line)) {
 				if (lastCommentOrAnnotationPos == -1) {
 					lastCommentOrAnnotationPos = index;
 				}
@@ -4144,6 +4139,17 @@ public class SourceFormatter {
 		return StringPool.BLANK;
 	}
 
+	private static boolean _hasAnnotationOrJavadoc(String s) {
+		if (s.startsWith(StringPool.TAB + StringPool.AT) ||
+			s.startsWith(StringPool.TAB + "/**")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static boolean _isGenerated(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -4396,6 +4402,7 @@ public class SourceFormatter {
 		String previousJavaTermContent = StringPool.BLANK;
 		int previousJavaTermLineCount = -1;
 		String previousJavaTermName = StringPool.BLANK;
+		int previousJavaTermType = -1;
 
 		String fileNameWithForwardSlashes = StringUtil.replace(
 			fileName, "\\", "/");
@@ -4406,11 +4413,9 @@ public class SourceFormatter {
 			JavaTerm javaTerm = itr.next();
 
 			String javaTermContent = javaTerm.getContent();
-
-			javaTermContent = javaTermContent.trim();
-
 			int javaTermLineCount = javaTerm.getLineCount();
 			String javaTermName = javaTerm.getName();
+			int javaTermType = javaTerm.getType();
 
 			String excluded = null;
 
@@ -4431,40 +4436,56 @@ public class SourceFormatter {
 				}
 			}
 
-			if ((excluded == null) &&
-				(previousJavaTermLineCount > javaTermLineCount)) {
+			if (excluded == null) {
+				if (previousJavaTermLineCount > javaTermLineCount) {
+					String javaTermNameLowerCase = javaTermName.toLowerCase();
+					String previousJavaTermNameLowerCase =
+						previousJavaTermName.toLowerCase();
 
-				String javaTermNameLowerCase = javaTermName.toLowerCase();
-				String previousJavaTermNameLowerCase =
-					previousJavaTermName.toLowerCase();
+					if (fileName.contains("persistence") &&
+						((previousJavaTermName.startsWith("doCount") &&
+						  javaTermName.startsWith("doCount")) ||
+						 (previousJavaTermName.startsWith("doFind") &&
+						  javaTermName.startsWith("doFind")) ||
+						 (previousJavaTermNameLowerCase.startsWith("count") &&
+						  javaTermNameLowerCase.startsWith("count")) ||
+						 (previousJavaTermNameLowerCase.startsWith("filter") &&
+						  javaTermNameLowerCase.startsWith("filter")) ||
+						 (previousJavaTermNameLowerCase.startsWith("find") &&
+						  javaTermNameLowerCase.startsWith("find")) ||
+						 (previousJavaTermNameLowerCase.startsWith("join") &&
+						  javaTermNameLowerCase.startsWith("join")))) {
+					}
+					else {
+						content = StringUtil.replaceFirst(
+							content, javaTermContent, previousJavaTermContent);
+						content = StringUtil.replaceLast(
+							content, previousJavaTermContent, javaTermContent);
 
-				if (fileName.contains("persistence") &&
-					((previousJavaTermName.startsWith("doCount") &&
-					  javaTermName.startsWith("doCount")) ||
-					 (previousJavaTermName.startsWith("doFind") &&
-					  javaTermName.startsWith("doFind")) ||
-					 (previousJavaTermNameLowerCase.startsWith("count") &&
-					  javaTermNameLowerCase.startsWith("count")) ||
-					 (previousJavaTermNameLowerCase.startsWith("filter") &&
-					  javaTermNameLowerCase.startsWith("filter")) ||
-					 (previousJavaTermNameLowerCase.startsWith("find") &&
-					  javaTermNameLowerCase.startsWith("find")) ||
-					 (previousJavaTermNameLowerCase.startsWith("join") &&
-					  javaTermNameLowerCase.startsWith("join")))) {
+						return content;
+					}
 				}
-				else {
-					content = StringUtil.replaceFirst(
-						content, javaTermContent, previousJavaTermContent);
-					content = StringUtil.replaceLast(
-						content, previousJavaTermContent, javaTermContent);
 
-					return content;
+				if ((previousJavaTermType == javaTermType) &&
+					((javaTermType == _TYPE_VARIABLE_PRIVATE_STATIC) ||
+					 (javaTermType == _TYPE_VARIABLE_PRIVATE) ||
+					 (javaTermType == _TYPE_VARIABLE_PROTECTED_STATIC) ||
+					 (javaTermType == _TYPE_VARIABLE_PROTECTED)) &&
+					(_hasAnnotationOrJavadoc(previousJavaTermContent) ||
+					 _hasAnnotationOrJavadoc(javaTermContent))) {
+
+					if (!content.contains("\n\n" + javaTermContent)) {
+						return StringUtil.replace(
+							content, "\n" + javaTermContent,
+							"\n\n" + javaTermContent);
+					}
 				}
 			}
 
 			previousJavaTermContent = javaTermContent;
 			previousJavaTermLineCount = javaTermLineCount;
 			previousJavaTermName = javaTermName;
+			previousJavaTermType = javaTermType;
 		}
 
 		return content;

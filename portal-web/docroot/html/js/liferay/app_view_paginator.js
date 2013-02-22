@@ -324,7 +324,7 @@ AUI.add(
 						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
 						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
 						customParams[instance.ns(VIEW_ENTRIES)] = false;
-						customParams[instance.ns(VIEW_ENTRIES_PAGE)] = false;
+						customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
 						customParams[instance.ns(VIEW_FOLDERS)] = false;
 
 						if (AObject.owns(requestParams, instance.ns(SEARCH_TYPE))) {

@@ -52,9 +52,9 @@ public class ValidHtmlFilter extends BasePortalFilter {
 
 	protected String getContent(HttpServletRequest request, String content) {
 		content = StringUtil.replaceLast(
-			content, _BODY_CLOSE, StringPool.BLANK);
+			content, _CLOSE_BODY, StringPool.BLANK);
 		content = StringUtil.replaceLast(
-			content, _HTML_CLOSE, _BODY_CLOSE + _HTML_CLOSE);
+			content, _CLOSE_HTML, _CLOSE_BODY + _CLOSE_HTML);
 
 		return content;
 	}
@@ -102,9 +102,9 @@ public class ValidHtmlFilter extends BasePortalFilter {
 		ServletResponseUtil.write(response, content);
 	}
 
-	private static final String _BODY_CLOSE = "</body>";
+	private static final String _CLOSE_BODY = "</body>";
 
-	private static final String _HTML_CLOSE = "</html>";
+	private static final String _CLOSE_HTML = "</html>";
 
 	private static Log _log = LogFactoryUtil.getLog(ValidHtmlFilter.class);
 

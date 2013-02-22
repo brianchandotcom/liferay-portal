@@ -165,8 +165,10 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 	@BeanReference(type = MDRRuleGroupInstanceLocalService.class)
 	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+
 	@BeanReference(type = MDRRuleGroupLocalService.class)
 	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+
 	private Map<String, RuleHandler> _ruleHandlers =
 		new HashMap<String, RuleHandler>();
 

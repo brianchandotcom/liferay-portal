@@ -358,6 +358,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+
 	@BeanReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
 

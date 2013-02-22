@@ -45,7 +45,7 @@ public class UpgradeRepositoryEntry extends UpgradeProcess {
 
 			sb.append("select Repository.companyId, repositoryEntryId from");
 			sb.append(" RepositoryEntry inner join Repository on");
-			sb.append(" Repositoryentry.repositoryId =");
+			sb.append(" RepositoryEntry.repositoryId =");
 			sb.append(" Repository.repositoryId");
 
 			ps = con.prepareStatement(sb.toString());

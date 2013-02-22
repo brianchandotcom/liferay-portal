@@ -18,7 +18,7 @@ ${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.J
 
 insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifiedDate, classNameId, classPK, visible, mimeType, title) values (${counter.get()}, ${assetEntry.groupId}, ${companyId}, ${assetEntry.userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${assetEntry.classNameId}, ${assetEntry.classPK}, <#if assetEntry.visible>TRUE<#else>FALSE</#if>, '${assetEntry.mimeType}', '${assetEntry.title}');
 
-${sampleSQLBuilder.insertMBDiscussion(groupId, firstUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, ${counter.get()}, ${counter.get()}, 0)}
+${sampleSQLBuilder.insertMBDiscussion(groupId, firstUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get(), counter.get(), 0)}
 
 <#assign publicLayoutsSize = publicLayouts?size>
 

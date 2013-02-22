@@ -14,15 +14,3 @@ insert into Contact_ values (${contact.contactId}, ${companyId}, ${user.userId},
 		insert into Users_Groups values (${user.userId}, ${groupId});
 	</#list>
 </#if>
-
-<#if organizationIds??>
-	<#list organizationIds as organizationId>
-		insert into Users_Orgs values (${user.userId}, ${organizationId});
-	</#list>
-</#if>
-
-<#if userGroupRoles??>
-	<#list userGroupRoles as userGroupRole>
-		insert into UserGroupRole values (${user.userId}, ${userGroupRole.groupId}, ${userGroupRole.roleId});
-	</#list>
-</#if>

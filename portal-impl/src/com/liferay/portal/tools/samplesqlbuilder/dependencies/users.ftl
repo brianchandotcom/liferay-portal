@@ -1,7 +1,6 @@
 <#setting number_format = "0">
 
 <#assign groupIds = dataFactory.addUserToGroupIds(group.groupId)>
-<#assign organizationIds = []>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
 <#if (maxUserCount > 0)>
@@ -13,20 +12,8 @@
 
 		<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
-		${sampleSQLBuilder.insertGroup(userGroup, [], [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
+		${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
 
-		${sampleSQLBuilder.insertUser(contact, groupIds, organizationIds, roleIds, user)}
-
-		<#assign blogsStatsUser = dataFactory.addBlogsStatsUser(groupId, user.userId)>
-
-		insert into BlogsStatsUser (statsUserId, groupId, companyId, userId) values (${counter.get()}, ${blogsStatsUser.groupId}, ${companyId}, ${blogsStatsUser.userId});
-
-		<#assign mbStatsUser = dataFactory.addMBStatsUser(groupId, user.userId)>
-
-		insert into MBStatsUser (statsUserId, groupId, userId) values (${counter.get()}, ${mbStatsUser.groupId}, ${mbStatsUser.userId});
-
-		<#if (userCount = 1)>
-			<#assign firstUserId = user.userId>
-		</#if>
+		${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
 	</#list>
 </#if>

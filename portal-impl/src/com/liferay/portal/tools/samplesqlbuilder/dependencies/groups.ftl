@@ -1,8 +1,6 @@
 <#setting number_format = "0">
 
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")])}
-
-<#assign privateLayouts = []>
+${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.addLayout(1, "Welcome", "/welcome", "58,", "47,")])}
 
 <#list 1..maxGroupCount as groupCount>
 	<#assign groupId = groupCount>
@@ -31,5 +29,5 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [], [dataFactory.addLayou
 
 	<#include "wiki.ftl">
 
-	${sampleSQLBuilder.insertGroup(group, privateLayouts, publicLayouts)}
+	${sampleSQLBuilder.insertGroup(group, publicLayouts)}
 </#list>

@@ -33,8 +33,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
-
-String emptyListMessage = LanguageUtil.format(pageContext, "no-x-records-were-found", recordSet.getDDMStructure().getName(themeDisplay.getLocale()));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -63,7 +61,7 @@ String emptyListMessage = LanguageUtil.format(pageContext, "no-x-records-were-fo
 	%>
 
 	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.get(pageContext, emptyListMessage)) %>'
+		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-x-records-were-found", ddmStructure.getName(locale))) %>'
 	>
 
 		<liferay-ui:search-form

@@ -19,11 +19,11 @@
 <%
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
+DDMStructure ddmStructure = recordSet.getDDMStructure();
+
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
 DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-
-String addRecordMessage = LanguageUtil.format(pageContext, "add-x", recordSet.getDDMStructure().getName(themeDisplay.getLocale()));
 %>
 
 <liferay-ui:search-toggle
@@ -44,7 +44,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 <c:if test="<%= showAddRecordButton %>">
 	<div class="add-record-button-row">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value="<%= addRecordMessage %>" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value='<%= LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)) %>' />
 	</div>
 
 	<aui:script>

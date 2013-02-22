@@ -33,18 +33,30 @@ public class SearchFolderEntryQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
-			selenium.getText(
-				"//tr[contains(.,'Bookmark1 Search Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Bookmark1 Search Name"),
 			selenium.getText(
-				"//tr[contains(.,'Bookmark1 Search Name')]/td[3]/a"));
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[1]/span/a/span"));
+		assertEquals(RuntimeVariables.replace("Entry"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
 			selenium.getText(
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark1 Search Name')]/td[4]/span/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Bookmark1 Search Name"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark2 Search Name')]/td[1]/span/a/span"));
+		assertEquals(RuntimeVariables.replace("Entry"),
+			selenium.getText(
 				"//tr[contains(.,'Bookmark2 Search Name')]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Bookmark2 Search Name"),
+		assertEquals(RuntimeVariables.replace("Bookmark Folder Name"),
 			selenium.getText(
 				"//tr[contains(.,'Bookmark2 Search Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Bookmark2 Search Name')]/td[4]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 - 2."),
 			selenium.getText("//div[@class='search-results']"));
 		selenium.open("/web/guest/home/");

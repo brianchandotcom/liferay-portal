@@ -14,21 +14,14 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
- * @author Eduardo Lundgren
  */
 public class AUIUtil {
 
@@ -166,62 +159,6 @@ public class AUIUtil {
 		if (showForLabel) {
 			sb.append(" for=\"" + forLabel + "\"");
 		}
-
-		return sb.toString();
-	}
-
-	public static String getScriptDataString(HttpServletRequest request) {
-		ScriptData scriptData = (ScriptData)request.getAttribute(
-			ScriptTag.class.getName());
-
-		if (scriptData == null) {
-			scriptData = (ScriptData)request.getAttribute(
-				WebKeys.AUI_SCRIPT_DATA);
-
-			if (scriptData != null) {
-				request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
-			}
-		}
-
-		if (scriptData == null) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("<script type=\"text/javascript\">\n// <![CDATA[\n");
-		sb.append(scriptData.getRawSB());
-
-		StringBundler callbackSB = scriptData.getCallbackSB();
-
-		if (callbackSB.index() > 0) {
-			String loadMethod = "use";
-
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
-
-				loadMethod = "ready";
-			}
-
-			sb.append("AUI().");
-			sb.append(loadMethod);
-			sb.append("(");
-
-			Set<String> useSet = scriptData.getUseSet();
-
-			for (String use : useSet) {
-				sb.append(StringPool.APOSTROPHE);
-				sb.append(use);
-				sb.append(StringPool.APOSTROPHE);
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			sb.append("function(A) {");
-			sb.append(callbackSB);
-			sb.append("});");
-		}
-
-		sb.append("\n// ]]>\n</script>");
 
 		return sb.toString();
 	}

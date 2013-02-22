@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.base.BaseScriptTag;
 
-import java.io.Writer;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -80,6 +78,24 @@ public class ScriptTag extends BaseScriptTag {
 		}
 	}
 
+	public static void flushScriptData(PageContext pageContext)
+		throws Exception {
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		ScriptData scriptData = (ScriptData)request.getAttribute(
+			WebKeys.AUI_SCRIPT_DATA);
+
+		if (scriptData == null) {
+			return;
+		}
+
+		request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
+
+		scriptData.writeTo(request, pageContext.getOut());
+	}
+
 	@Override
 	public int doEndTag() throws JspException {
 		HttpServletRequest request =
@@ -104,8 +120,6 @@ public class ScriptTag extends BaseScriptTag {
 			if (positionInline) {
 				ScriptData scriptData = new ScriptData();
 
-				request.setAttribute(ScriptTag.class.getName(), scriptData);
-
 				scriptData.append(portletId, bodyContentSB, use);
 
 				String page = getPage();
@@ -116,12 +130,7 @@ public class ScriptTag extends BaseScriptTag {
 					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
-					Writer writer = pageContext.getOut();
-
-					String scriptDataString = AUIUtil.getScriptDataString(
-						request);
-
-					writer.write(scriptDataString);
+					scriptData.writeTo(request, pageContext.getOut());
 				}
 			}
 			else {
@@ -143,10 +152,6 @@ public class ScriptTag extends BaseScriptTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (positionInline) {
-				request.removeAttribute(ScriptTag.class.getName());
-			}
-
 			if (!ServerDetector.isResin()) {
 				cleanUp();
 			}

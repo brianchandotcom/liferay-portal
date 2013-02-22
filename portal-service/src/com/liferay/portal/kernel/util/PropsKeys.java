@@ -1899,6 +1899,8 @@ public interface PropsKeys {
 
 	public static final String PORTLET_EVENT_DISTRIBUTION = "portlet.event.distribution";
 
+	public static final String PORTLET_FILTERS_SYSTEM = "portlet.filters.system";
+
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = "portlet.public.render.parameter.distribution";
 
 	public static final String PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP = "portlet.resource.id.banned.paths.regexp";

@@ -199,8 +199,6 @@ AUI.add(
 						instance._setFolders(data);
 						instance._setParentTitle(data);
 
-						instance._parseContent(data);
-
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 					},
 
@@ -434,16 +432,6 @@ AUI.add(
 						);
 					},
 
-					_parseContent: function(data) {
-						var instance = this;
-
-						var tmpNode = A.Node.create('<div></div>');
-
-						tmpNode.plug(A.Plugin.ParseContent);
-
-						tmpNode.ParseContent.parseContent(data);
-					},
-
 					_processDefaultParams: function(event) {
 						var instance = this;
 
@@ -548,6 +536,8 @@ AUI.add(
 						if (addButton) {
 							var addButtonContainer = instance.byId('addButtonContainer');
 
+							addButtonContainer.plug(A.Plugin.ParseContent);
+
 							addButtonContainer.setContent(addButton);
 						}
 
@@ -558,6 +548,8 @@ AUI.add(
 
 							var displayStyleButtonsContainer = instance.byId('displayStyleButtonsContainer');
 
+							displayStyleButtonsContainer.plug(A.Plugin.ParseContent);
+
 							displayStyleButtonsContainer.setContent(displayStyleButtons);
 						}
 
@@ -565,6 +557,8 @@ AUI.add(
 
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');
+
+							sortButtonContainer.plug(A.Plugin.ParseContent);
 
 							sortButtonContainer.setContent(sortButton);
 						}
@@ -579,6 +573,8 @@ AUI.add(
 							var entriesContainer = instance._entriesContainer;
 
 							entriesContainer.empty();
+
+							entriesContainer.plug(A.Plugin.ParseContent);
 
 							entriesContainer.setContent(entries);
 
@@ -601,6 +597,8 @@ AUI.add(
 
 						if (folders) {
 							var listViewDataContainer = A.one('.lfr-list-view-data-container');
+
+							listViewDataContainer.plug(A.Plugin.ParseContent);
 
 							instance._listView.set(STR_DATA, folders.html());
 						}

@@ -1,7 +1,7 @@
 <#setting number_format = "0">
 
 <#if (maxDDLRecordSetCount > 0)>
-	<#assign ddmStructure = dataFactory.addDDMStructure(groupId, companyId, firstUserId, dataFactory.DDLRecordSetClassNameId)>
+	<#assign ddmStructure = dataFactory.addDDMStructure(groupId, companyId, sampleUserId, dataFactory.DDLRecordSetClassNameId)>
 
 	<#assign createDate = dataFactory.getDateString(ddmStructure.createDate)>
 

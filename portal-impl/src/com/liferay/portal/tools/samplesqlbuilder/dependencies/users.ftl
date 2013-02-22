@@ -23,9 +23,5 @@
 		<#assign mbStatsUser = dataFactory.addMBStatsUser(groupId, user.userId)>
 
 		insert into MBStatsUser (statsUserId, groupId, userId) values (${counter.get()}, ${mbStatsUser.groupId}, ${mbStatsUser.userId});
-
-		<#if (userCount = 1)>
-			<#assign firstUserId = user.userId>
-		</#if>
 	</#list>
 </#if>

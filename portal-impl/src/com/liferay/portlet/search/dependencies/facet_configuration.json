@@ -9,7 +9,7 @@
 			},
 			displayStyle: 'scopes',
 			fieldName: 'groupId',
-			label: 'scope',
+			label: 'site',
 			order: 'OrderHitsDesc',
 			static: false,
 			weight: 1.6

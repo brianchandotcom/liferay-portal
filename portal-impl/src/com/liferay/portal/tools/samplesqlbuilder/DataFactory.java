@@ -1080,16 +1080,7 @@ public class DataFactory {
 	}
 
 	public void initSimpleCounters() {
-		int totalMThreadCount = _maxMBCategoryCount * _maxMBThreadCount;
-		int totalMBMessageCount = totalMThreadCount * _maxMBMessageCount;
-
-		int counterOffset =
-			_maxMBCategoryCount + totalMThreadCount + totalMBMessageCount;
-
-		counterOffset = _maxGroupsCount * counterOffset;
-		counterOffset = _maxGroupsCount + counterOffset + 1;
-
-		_counter = new SimpleCounter(counterOffset);
+		_counter = new SimpleCounter(_maxGroupsCount + 1);
 		_dlDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();

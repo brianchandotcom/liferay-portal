@@ -42,9 +42,7 @@ String ddmStructureXSD = StringPool.BLANK;
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
 if (ddmStructure != null) {
-	if (Validator.isNull(structureId)) {
-		structureId = ddmStructure.getStructureKey();
-	}
+	structureId = ddmStructure.getStructureKey();
 
 	ddmStructureGroupId = ddmStructure.getGroupId();
 	ddmStructureName = ddmStructure.getName(locale);

@@ -133,9 +133,7 @@ public class RawMetadataProcessorImpl
 				inputStream = fileVersion.getContentStream(false);
 
 				if (inputStream == null) {
-					if (_log.isDebugEnabled()) {
-						_log.warn("extract raw metadata file fail");
-					}
+					_log.error("Metadata is not available");
 
 					return;
 				}

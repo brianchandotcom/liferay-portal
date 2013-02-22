@@ -170,9 +170,7 @@ public abstract class BaseStore implements Store {
 			companyId, repositoryId, fileName, fromVersionLabel);
 
 		if (is == null) {
-			if (_log.isDebugEnabled()) {
-				_log.warn("copy file version fail");
-		}
+			_log.error("File version is not available");
 
 			return;
 		}

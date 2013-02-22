@@ -12,11 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.templateparser;
+package com.liferay.portal.templateparser;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,6 +35,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
 
@@ -43,58 +51,27 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public abstract class BaseTemplateParser implements TemplateParser {
+public class TemplateParser {
 
-	public String getLanguageId() {
-		return _languageId;
-	}
+	public TemplateParser(
+		ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+		TemplateContext templateContext) {
 
-	public String getScript() {
-		return _script;
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return _themeDisplay;
-	}
-
-	public Map<String, String> getTokens() {
-		return _tokens;
-	}
-
-	public String getViewMode() {
-		return _viewMode;
-	}
-
-	public String getXML() {
-		return _xml;
-	}
-
-	public void setContextObjects(Map<String, Object> contextObjects) {
-		_contextObjects = contextObjects;
-	}
-
-	public void setLanguageId(String languageId) {
-		_languageId = languageId;
-	}
-
-	public void setScript(String script) {
-		_script = script;
-	}
-
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
 		_themeDisplay = themeDisplay;
+		_contextObjects = contextObjects;
+		_templateContext = templateContext;
 	}
 
-	public void setTokens(Map<String, String> tokens) {
+	public TemplateParser(
+		ThemeDisplay themeDisplay, Map<String, String> tokens, String viewMode,
+		String languageId, String xml, TemplateContext templateContext) {
+
+		_themeDisplay = themeDisplay;
 		_tokens = tokens;
-	}
-
-	public void setViewMode(String viewMode) {
 		_viewMode = viewMode;
-	}
-
-	public void setXML(String xml) {
+		_languageId = languageId;
 		_xml = xml;
+		_templateContext = templateContext;
 	}
 
 	public String transform() throws TransformException {
@@ -103,8 +80,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		boolean load = false;
 
 		try {
-			TemplateContext templateContext = getTemplateContext();
-
 			if (Validator.isNotNull(_xml)) {
 				Document document = SAXReaderUtil.read(_xml);
 
@@ -115,28 +90,28 @@ public abstract class BaseTemplateParser implements TemplateParser {
 
 				if (templateNodes != null) {
 					for (TemplateNode templateNode : templateNodes) {
-						templateContext.put(
+						_templateContext.put(
 							templateNode.getName(), templateNode);
 					}
 				}
 
 				Element requestElement = rootElement.element("request");
 
-				templateContext.put(
+				_templateContext.put(
 					"request", insertRequestVariables(requestElement));
 
-				templateContext.put("xmlRequest", requestElement.asXML());
+				_templateContext.put("xmlRequest", requestElement.asXML());
 			}
 
 			if (_contextObjects != null) {
 				for (String key : _contextObjects.keySet()) {
-					templateContext.put(key, _contextObjects.get(key));
+					_templateContext.put(key, _contextObjects.get(key));
 				}
 			}
 
-			populateTemplateContext(templateContext);
+			populateTemplateContext(_templateContext);
 
-			load = mergeTemplate(templateContext, unsyncStringWriter);
+			load = mergeTemplate(_templateContext, unsyncStringWriter);
 		}
 		catch (Exception e) {
 			if (e instanceof DocumentException) {
@@ -169,14 +144,6 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return CompanyLocalServiceUtil.getCompany(getCompanyId());
 	}
 
-	protected long getCompanyGroupId() {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getCompanyGroupId();
-		}
-
-		return GetterUtil.getLong(_tokens.get("company_group_id"));
-	}
-
 	protected long getCompanyId() {
 		if (_themeDisplay != null) {
 			return _themeDisplay.getCompanyId();
@@ -201,41 +168,85 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return GetterUtil.getLong(_tokens.get("group_id"));
 	}
 
-	protected abstract TemplateContext getTemplateContext() throws Exception;
-
-	protected String getTemplateId() {
-		long companyGroupId = getCompanyGroupId();
-
-		String templateId = null;
-
-		if (_tokens != null) {
-			templateId = _tokens.get("template_id");
-		}
-
-		if (Validator.isNull(templateId)) {
-			templateId = (String.valueOf(_contextObjects.get("template_id")));
-		}
-
+	protected String getJournalTemplatesPath() {
 		StringBundler sb = new StringBundler(5);
 
+		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
+		sb.append(StringPool.SLASH);
 		sb.append(getCompanyId());
-		sb.append(StringPool.POUND);
-
-		if (companyGroupId > 0) {
-			sb.append(companyGroupId);
-		}
-		else {
-			sb.append(getGroupId());
-		}
-
-		sb.append(StringPool.POUND);
-		sb.append(templateId);
+		sb.append(StringPool.SLASH);
+		sb.append(getGroupId());
 
 		return sb.toString();
 	}
 
-	protected abstract List<TemplateNode> getTemplateNodes(Element element)
-		throws Exception;
+	protected List<TemplateNode> getTemplateNodes(Element element)
+		throws Exception {
+
+		List<TemplateNode> templateNodes = new ArrayList<TemplateNode>();
+
+		Map<String, TemplateNode> prototypeTemplateNodes =
+			new HashMap<String, TemplateNode>();
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			Element dynamicContentElement = dynamicElementElement.element(
+				"dynamic-content");
+
+			String data = StringPool.BLANK;
+
+			if (dynamicContentElement != null) {
+				data = dynamicContentElement.getText();
+			}
+
+			String name = dynamicElementElement.attributeValue(
+				"name", StringPool.BLANK);
+
+			if (name.length() == 0) {
+				throw new TransformException(
+					"Element missing \"name\" attribute");
+			}
+
+			String type = dynamicElementElement.attributeValue(
+				"type", StringPool.BLANK);
+
+			TemplateNode templateNode = new TemplateNode(
+				_themeDisplay, name, stripCDATA(data), type);
+
+			if (dynamicElementElement.element("dynamic-element") != null) {
+				templateNode.appendChildren(
+					getTemplateNodes(dynamicElementElement));
+			}
+			else if ((dynamicContentElement != null) &&
+					 (dynamicContentElement.element("option") != null)) {
+
+				List<Element> optionElements = dynamicContentElement.elements(
+					"option");
+
+				for (Element optionElement : optionElements) {
+					templateNode.appendOption(
+						stripCDATA(optionElement.getText()));
+				}
+			}
+
+			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
+				name);
+
+			if (prototypeTemplateNode == null) {
+				prototypeTemplateNode = templateNode;
+
+				prototypeTemplateNodes.put(name, prototypeTemplateNode);
+
+				templateNodes.add(templateNode);
+			}
+
+			prototypeTemplateNode.appendSibling(templateNode);
+		}
+
+		return templateNodes;
+	}
 
 	protected Map<String, Object> insertRequestVariables(Element element) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -284,10 +295,22 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		return map;
 	}
 
-	protected abstract boolean mergeTemplate(
+	protected boolean mergeTemplate(
 			TemplateContext templateContext,
 			UnsyncStringWriter unsyncStringWriter)
-		throws Exception;
+		throws Exception {
+
+		Template template = (Template)templateContext;
+
+		VelocityTaglib velocityTaglib = (VelocityTaglib)template.get(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
+
+		if (velocityTaglib != null) {
+			velocityTaglib.setTemplateContext(templateContext);
+		}
+
+		return template.processTemplate(unsyncStringWriter);
+	}
 
 	protected void populateTemplateContext(TemplateContext templateContext)
 		throws Exception {
@@ -304,11 +327,33 @@ public abstract class BaseTemplateParser implements TemplateParser {
 		templateContext.put(
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
 		templateContext.put("viewMode", _viewMode);
+
+		templateContext.put("journalTemplatesPath", getJournalTemplatesPath());
+
+		String randomNamespace =
+			PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
+				StringPool.UNDERLINE;
+
+		templateContext.put("randomNamespace", randomNamespace);
+	}
+
+	protected String stripCDATA(String s) {
+		if (s.startsWith(StringPool.CDATA_OPEN) &&
+			s.endsWith(StringPool.CDATA_CLOSE)) {
+
+			s = s.substring(
+				StringPool.CDATA_OPEN.length(),
+				s.length() - StringPool.CDATA_CLOSE.length());
+		}
+
+		return s;
 	}
 
 	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
 	private String _languageId;
-	private String _script;
+
+	private TemplateContext _templateContext;
+
 	private ThemeDisplay _themeDisplay;
 	private Map<String, String> _tokens;
 	private String _viewMode;

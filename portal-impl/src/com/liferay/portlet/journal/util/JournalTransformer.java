@@ -15,24 +15,66 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.templateparser.BaseTransformer;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.templateparser.BaseTransformer;
 import com.liferay.portal.util.PropsUtil;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
  */
 public class JournalTransformer extends BaseTransformer {
 
-	@Override
-	protected String getTemplateParserClassName(String langType) {
-		return PropsUtil.get(
-			PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_PARSER, new Filter(langType));
+	public JournalTransformer() {
+		_transformerListenerClassNames = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				PropsUtil.getArray(PropsKeys.JOURNAL_TRANSFORMER_LISTENER)));
+
+		_errorTemplateIdMap = new HashMap<String, String>();
+
+		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
+			PropsKeys.JOURNAL_ERROR_TEMPLATE);
+
+		for (String langType : langTypes) {
+			String errorTemplateId = PropsUtil.get(
+				PropsKeys.JOURNAL_ERROR_TEMPLATE, new Filter(langType));
+
+			if (Validator.isNotNull(errorTemplateId)) {
+				_errorTemplateIdMap.put(langType, errorTemplateId);
+			}
+		}
 	}
 
 	@Override
-	protected String[] getTransformerListenersClassNames() {
-		return PropsUtil.getArray(PropsKeys.JOURNAL_TRANSFORMER_LISTENER);
+	protected String getErrorTemplateId(String langType) {
+		return _errorTemplateIdMap.get(langType);
 	}
+
+	@Override
+	protected TemplateContextType getTemplateContextType(String langType) {
+		if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+			return TemplateContextType.EMPTY;
+		}
+		else {
+			return TemplateContextType.RESTRICTED;
+		}
+	}
+
+	@Override
+	protected Set<String> getTransformerListenersClassNames() {
+		return _transformerListenerClassNames;
+	}
+
+	private Map<String, String> _errorTemplateIdMap;
+	private Set<String> _transformerListenerClassNames;
 
 }

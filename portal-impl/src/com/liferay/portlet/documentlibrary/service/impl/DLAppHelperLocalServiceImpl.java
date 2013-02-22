@@ -17,8 +17,6 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -699,6 +697,14 @@ public class DLAppHelperLocalServiceImpl
 		// Trash
 
 		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
+			folder.getFolderId(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
+			0);
 	}
 
 	public AssetEntry updateAsset(
@@ -896,22 +902,10 @@ public class DLAppHelperLocalServiceImpl
 
 				// Social
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", dlFileEntry.getTitle());
-
 				if (status == WorkflowConstants.STATUS_APPROVED) {
 					socialActivityCounterLocalService.enableActivityCounters(
 						DLFileEntryConstants.getClassName(),
 						dlFileEntry.getFileEntryId());
-
-					socialActivityLocalService.addActivity(
-						user.getUserId(), dlFileEntry.getGroupId(),
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(),
-						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
-						extraDataJSONObject.toString(), 0);
 				}
 				else if (latestDlFileVersion.getStatus() ==
 							WorkflowConstants.STATUS_APPROVED) {
@@ -919,13 +913,6 @@ public class DLAppHelperLocalServiceImpl
 					socialActivityCounterLocalService.disableActivityCounters(
 						DLFileEntryConstants.getClassName(),
 						dlFileEntry.getFileEntryId());
-
-					socialActivityLocalService.addActivity(
-						user.getUserId(), dlFileEntry.getGroupId(),
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(),
-						SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-						extraDataJSONObject.toString(), 0);
 				}
 
 				// Index
@@ -1377,6 +1364,13 @@ public class DLAppHelperLocalServiceImpl
 		// File rank
 
 		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
+			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			StringPool.BLANK, 0);
 
 		return new LiferayFolder(dlFolder);
 	}

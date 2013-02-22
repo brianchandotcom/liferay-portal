@@ -1,7 +1,6 @@
 <#setting number_format = "0">
 
 <#assign groupIds = dataFactory.addUserToGroupIds(group.groupId)>
-<#assign organizationIds = []>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
 <#if (maxUserCount > 0)>
@@ -13,9 +12,9 @@
 
 		<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
-		${sampleSQLBuilder.insertGroup(userGroup, [], [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
+		${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
 
-		${sampleSQLBuilder.insertUser(contact, groupIds, organizationIds, roleIds, user)}
+		${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
 
 		<#assign blogsStatsUser = dataFactory.addBlogsStatsUser(groupId, user.userId)>
 

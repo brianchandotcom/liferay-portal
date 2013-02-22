@@ -31,7 +31,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jodd.bean.BeanTool;
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.Convert;
@@ -43,7 +43,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 	public void copyProperties(Object source, Object target) {
 		try {
-			BeanTool.copyProperties(source, target);
+			BeanCopy.beans(source, target).copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -54,7 +54,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 		Object source, Object target, Class<?> editable) {
 
 		try {
-			BeanTool.copyProperties(source, target, editable);
+			BeanCopy.beans(source, target).includeByTemplate(editable).copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -65,7 +65,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 		Object source, Object target, String[] ignoreProperties) {
 
 		try {
-			BeanTool.copyProperties(source, target, ignoreProperties, false);
+			BeanCopy.beans(source, target).exclude(ignoreProperties).copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.jdbc;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Properties;
 
@@ -42,6 +43,19 @@ public class DataSourceFactoryUtil {
 		throws Exception {
 
 		return getDataSourceFactory().initDataSource(properties);
+	}
+
+	/**
+	 * @deprecated {@link #initDataSource(String, String, String, String,
+	 *             String)}
+	 */
+	public static DataSource initDataSource(
+			String driverClassName, String url, String userName,
+			String password)
+		throws Exception {
+
+		return initDataSource(
+			driverClassName, url, userName, password, StringPool.BLANK);
 	}
 
 	public static DataSource initDataSource(

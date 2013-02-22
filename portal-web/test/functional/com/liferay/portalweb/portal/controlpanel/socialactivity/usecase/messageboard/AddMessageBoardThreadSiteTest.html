@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
@@ -34,84 +29,44 @@
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_19_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]	</td>
+	<td>Unlink Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__19_editor']/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[@id='cke_contents__19_editor']/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>MB Thread Message Body</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_19_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__19_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__19_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>MB Thread Message Body</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
+	<td>storeChecked</td>
 	<td>//input[@id='_19_subscribeCheckbox']</td>
-	<td>Subscribe</td>
+	<td>subscribeMeCheckbox</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${subscribeMeCheckbox}</td>
+	<td>SubscribeMeCheckbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//input[@id='_19_subscribeCheckbox']</td>
-	<td>Subscribe</td>
+	<td>Subscribe Me Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SubscribeMeCheckbox</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_19_subscribeCheckbox']</td>
-	<td>Subscribe</td>
+	<td>Subscribe Me Checkbox</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -125,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//div[@class='subject']/a/strong</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>

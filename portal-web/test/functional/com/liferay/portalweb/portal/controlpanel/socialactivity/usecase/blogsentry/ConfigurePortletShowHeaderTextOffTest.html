@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=User Statistics Test Page</td>
-	<td>User Statistics Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=User Statistics Test Page</td>
 	<td>User Statistics Test Page</td>
@@ -50,17 +45,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
@@ -82,6 +77,11 @@
 	<td>storeChecked</td>
 	<td>//input[@id='_86_showHeaderTextCheckbox']</td>
 	<td>showHeaderTextChecked</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>gotoIf</td>

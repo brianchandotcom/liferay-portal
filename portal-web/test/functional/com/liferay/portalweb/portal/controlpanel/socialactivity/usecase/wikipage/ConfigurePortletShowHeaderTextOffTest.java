@@ -31,7 +31,6 @@ public class ConfigurePortletShowHeaderTextOffTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/site-name/");
-				selenium.waitForVisible("link=User Statistics Test Page");
 				selenium.clickAt("link=User Statistics Test Page",
 					RuntimeVariables.replace("User Statistics Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -45,12 +44,12 @@ public class ConfigurePortletShowHeaderTextOffTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 				selenium.waitForVisible(
 					"//iframe[@id='_180_configurationIframeDialog']");
 				selenium.selectFrame(
@@ -60,6 +59,7 @@ public class ConfigurePortletShowHeaderTextOffTest extends BaseTestCase {
 
 				boolean showHeaderTextChecked = selenium.isChecked(
 						"//input[@id='_86_showHeaderTextCheckbox']");
+				Thread.sleep(1000);
 
 				if (!showHeaderTextChecked) {
 					label = 2;
@@ -76,8 +76,6 @@ public class ConfigurePortletShowHeaderTextOffTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForText("//div[@class='portlet-msg-success']",
-					"You have successfully updated the setup.");
 				assertEquals(RuntimeVariables.replace(
 						"You have successfully updated the setup."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

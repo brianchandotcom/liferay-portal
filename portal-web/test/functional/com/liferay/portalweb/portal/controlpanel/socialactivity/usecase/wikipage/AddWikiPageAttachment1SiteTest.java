@@ -25,7 +25,6 @@ public class AddWikiPageAttachment1SiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -44,17 +43,19 @@ public class AddWikiPageAttachment1SiteTest extends BaseTestCase {
 			RuntimeVariables.replace("0 Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div[@class='portlet-msg-info']",
-			"This page does not have any file attachments.");
+			"This page does not have file attachments.");
 		assertEquals(RuntimeVariables.replace(
-				"This page does not have any file attachments."),
+				"This page does not have file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectWindow("null");
 		selenium.windowFocus();
-		selenium.waitForVisible("//a[@class='use-fallback using-new-uploader']");
-		selenium.click("//a[@class='use-fallback using-new-uploader']");
+		selenium.waitForVisible(
+			"//span[@id='_36_selectFilesButton']/span/input");
+		selenium.clickAt("//span[@id='_36_selectFilesButton']/span/input",
+			RuntimeVariables.replace("Select Files"));
 		selenium.waitForVisible("//input[@id='_36_file1']");
 		selenium.uploadCommonFile("//input[@id='_36_file1']",
 			RuntimeVariables.replace("Document_1.jpg"));

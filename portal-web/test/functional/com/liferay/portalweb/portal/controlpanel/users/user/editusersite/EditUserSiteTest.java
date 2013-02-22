@@ -69,8 +69,8 @@ public class EditUserSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//tr[3]/td[2]/a"));
-				selenium.clickAt("//tr[3]/td[2]/a",
+					selenium.getText("//tr[contains(.,'userfn')]/td[2]/a"));
+				selenium.clickAt("//tr[contains(.,'userfn')]/td[2]/a",
 					RuntimeVariables.replace("userfn"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText("//a[@id='_125_sitesLink']",
@@ -85,22 +85,21 @@ public class EditUserSiteTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.selectWindow("title=Users and Organizations");
 				selenium.waitForVisible(
-					"//input[@id='_125_toggle_id_users_admin_group_searchkeywords']");
-				selenium.type("//input[@id='_125_toggle_id_users_admin_group_searchkeywords']",
+					"//span[@class='aui-search-bar']/span/span/span/input");
+				selenium.type("//span[@class='aui-search-bar']/span/span/span/input",
 					RuntimeVariables.replace("Site"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText("//tr[3]/td[1]/a"));
-				selenium.clickAt("//tr[3]/td[1]/a",
+					selenium.getText("//tr[contains(.,'Site Name')]/td[1]/a"));
+				selenium.clickAt("//tr[contains(.,'Site Name')]/td[1]/a",
 					RuntimeVariables.replace("Site Name"));
 				selenium.selectWindow("null");
-				selenium.waitForText("//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td",
+				selenium.waitForText("//tr[contains(.,'Site Name')]/td[1]",
 					"Site Name");
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText(
-						"//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td"));
+					selenium.getText("//tr[contains(.,'Site Name')]/td[1]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -108,8 +107,7 @@ public class EditUserSiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Site Name"),
-					selenium.getText(
-						"//table[@data-searchcontainerid='_125_groupsSearchContainer']/tbody/tr/td[contains(.,'Site Name')]"));
+					selenium.getText("//tr[contains(.,'Site Name')]/td[1]"));
 
 			case 100:
 				label = -1;

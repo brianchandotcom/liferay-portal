@@ -27,7 +27,6 @@ public class User_ViewUserStatisticsUnsubscribeBlogsEntry2Test
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -53,7 +52,7 @@ public class User_ViewUserStatisticsUnsubscribeBlogsEntry2Test
 		assertEquals(RuntimeVariables.replace("User's Message Board Posts: 1"),
 			selenium.getText(
 				"xPath=(//div[@class='social-counter-user.message-posts'])[2]"));
-		assertEquals(RuntimeVariables.replace("User's Votes: 1"),
+		assertEquals(RuntimeVariables.replace("Votes by User: 1"),
 			selenium.getText("//div[@class='social-counter-user.votes']"));
 		assertEquals(RuntimeVariables.replace("User's Subscriptions: 1"),
 			selenium.getText(

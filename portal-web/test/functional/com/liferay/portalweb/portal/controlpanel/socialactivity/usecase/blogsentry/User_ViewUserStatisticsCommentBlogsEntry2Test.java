@@ -26,7 +26,6 @@ public class User_ViewUserStatisticsCommentBlogsEntry2Test extends BaseTestCase 
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,7 +35,7 @@ public class User_ViewUserStatisticsCommentBlogsEntry2Test extends BaseTestCase 
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Rank: 1"),
 			selenium.getText("xPath=(//div[@class='user-rank'])[1]"));
-		assertEquals(RuntimeVariables.replace("Contribution Score: 4"),
+		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[1]"));
 		assertEquals(RuntimeVariables.replace("Participation Score: 5"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[1]"));
@@ -48,7 +47,7 @@ public class User_ViewUserStatisticsCommentBlogsEntry2Test extends BaseTestCase 
 			selenium.getText("xPath=(//div[@class='user-rank'])[2]"));
 		assertEquals(RuntimeVariables.replace("Contribution Score: 0"),
 			selenium.getText("xPath=(//div[@class='contribution-score'])[2]"));
-		assertEquals(RuntimeVariables.replace("Participation Score: 7"),
+		assertEquals(RuntimeVariables.replace("Participation Score: 1"),
 			selenium.getText("xPath=(//div[@class='participation-score'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//div[@class='social-counter-user.comments']"));

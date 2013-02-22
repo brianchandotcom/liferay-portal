@@ -26,7 +26,6 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -36,11 +35,11 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]");
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']"));
-		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]",
 			RuntimeVariables.replace("Unsubscribe"));
 		selenium.waitForPageToLoad("30000");
 	}

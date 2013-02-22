@@ -95,12 +95,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'userfn')]/td[2]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'userfn')]/td[2]/a</td>
 	<td>userfn</td>
 </tr>
 <tr>
@@ -140,12 +140,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_125_toggle_id_users_admin_group_searchkeywords']</td>
+	<td>//span[@class='aui-search-bar']/span/span/span/input</td>
 	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_toggle_id_users_admin_group_searchkeywords']</td>
+	<td>//span[@class='aui-search-bar']/span/span/span/input</td>
 	<td>Site</td>
 </tr>
 <tr>
@@ -155,12 +155,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[3]/td[1]/a</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]/a</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -170,12 +170,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@data-searchcontainerid='_125_groupsSearchContainer']/tr/td</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
 	<td>Site Name</td>
 </tr>
 <tr>
@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@data-searchcontainerid='_125_groupsSearchContainer']/tbody/tr/td[contains(.,'Site Name')]</td>
+	<td>//tr[contains(.,'Site Name')]/td[1]</td>
 	<td>Site Name</td>
 </tr>
 </tbody></table>

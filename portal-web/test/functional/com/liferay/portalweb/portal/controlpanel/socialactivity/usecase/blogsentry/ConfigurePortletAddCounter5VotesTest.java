@@ -26,7 +26,6 @@ public class ConfigurePortletAddCounter5VotesTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=User Statistics Test Page");
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -40,12 +39,12 @@ public class ConfigurePortletAddCounter5VotesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
 		selenium.waitForVisible(
 			"//iframe[@id='_180_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_180_configurationIframeDialog']");
@@ -55,14 +54,14 @@ public class ConfigurePortletAddCounter5VotesTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//select[@id='_86_displayActivityCounterName5']");
 		selenium.select("//select[@id='_86_displayActivityCounterName5']",
-			RuntimeVariables.replace("User's Votes"));
+			RuntimeVariables.replace("Votes by User"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("User's Votes",
+		assertEquals("Votes by User",
 			selenium.getSelectedLabel(
 				"//select[@id='_86_displayActivityCounterName5']"));
 		selenium.selectFrame("relative=top");

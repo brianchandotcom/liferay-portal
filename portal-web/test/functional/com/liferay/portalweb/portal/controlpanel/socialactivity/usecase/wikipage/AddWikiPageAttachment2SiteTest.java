@@ -25,7 +25,6 @@ public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.waitForVisible("link=Wiki Test Page");
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -48,8 +47,10 @@ public class AddWikiPageAttachment2SiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.selectWindow("null");
 		selenium.windowFocus();
-		selenium.waitForVisible("//a[@class='use-fallback using-new-uploader']");
-		selenium.click("//a[@class='use-fallback using-new-uploader']");
+		selenium.waitForVisible(
+			"//span[@id='_36_selectFilesButton']/span/input");
+		selenium.clickAt("//span[@id='_36_selectFilesButton']/span/input",
+			RuntimeVariables.replace("Select Files"));
 		selenium.waitForVisible("//input[@id='_36_file1']");
 		selenium.uploadCommonFile("//input[@id='_36_file1']",
 			RuntimeVariables.replace("Document_2.jpg"));

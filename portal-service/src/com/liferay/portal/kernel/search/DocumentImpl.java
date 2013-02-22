@@ -413,7 +413,7 @@ public class DocumentImpl implements Document {
 					0, _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH);
 			}
 
-			addKeyword(getSortableFieldName(name), truncatedValue);
+			addKeyword(getSortableFieldName(name), truncatedValue, true);
 		}
 	}
 

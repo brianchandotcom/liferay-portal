@@ -331,22 +331,13 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		catch (Exception e) {
 		}
 
-		if (indexContent && (is == null)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Document " + dlFileEntry + " does not have any content");
-			}
-
-			return null;
-		}
-
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		try {
 			Document document = getBaseModelDocument(
 				PORTLET_ID, dlFileEntry, dlFileVersion);
 
-			if (indexContent) {
+			if (indexContent && (is != null)) {
 				try {
 					document.addFile(Field.CONTENT, is, dlFileEntry.getTitle());
 				}

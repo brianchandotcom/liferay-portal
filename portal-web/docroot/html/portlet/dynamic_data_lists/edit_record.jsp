@@ -73,12 +73,18 @@ if (!defaultLanguageId.equals(languageId)) {
 if (translating) {
 	redirect = currentURL;
 }
+
+String recordName = ddmStructure.getName(themeDisplay.getLocale());
+
+String addRecordMessage = LanguageUtil.format(pageContext, "add-x", recordName);
+String editRecordMessage = LanguageUtil.format(pageContext, "edit-x", recordName);
+String newRecordMessage = LanguageUtil.format(pageContext, "new-x", recordName);
 %>
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	showBackURL="<%= !translating %>"
-	title='<%= (record != null) ? "edit-record" : "new-record" %>'
+	title='<%= (record != null) ? editRecordMessage : newRecordMessage %>'
 />
 
 <portlet:actionURL var="editRecordURL">
@@ -290,9 +296,9 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());
 
 if (record != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit-record"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, editRecordMessage, currentURL);
 }
 else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-record"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, addRecordMessage, currentURL);
 }
 %>

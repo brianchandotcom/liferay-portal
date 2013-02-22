@@ -15,14 +15,13 @@
 package com.liferay.portal.servlet.filters.json;
 
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.servlet.JSONContentTypeServletResponse;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Igor Spasic
@@ -43,25 +42,12 @@ public class JSONContentTypeFilter extends BasePortalFilter {
 		if (!BrowserSnifferUtil.isIe(request)) {
 			processFilter(
 				JSONContentTypeFilter.class, request, response, filterChain);
-
-			return;
 		}
-
-		processFilter(
-			JSONContentTypeFilter.class, request,
-			new HttpServletResponseWrapper(response) {
-
-				@Override
-				public void setContentType(String contentType) {
-					if (contentType.toLowerCase().equals(
-							ContentTypes.APPLICATION_JSON)) {
-
-						contentType = ContentTypes.TEXT_JAVASCRIPT;
-					}
-
-					super.setContentType(contentType);
-				}
-			}, filterChain);
+		else {
+			processFilter(
+				JSONContentTypeFilter.class, request,
+				new JSONContentTypeServletResponse(response), filterChain);
+		}
 	}
 
 }

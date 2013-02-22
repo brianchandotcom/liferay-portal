@@ -14,13 +14,16 @@
 
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +31,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,36 +50,6 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		PortletData portletData = _getPortletData(portletId);
 
 		portletData.append(contentSB, use);
-	}
-
-	public StringBundler getCallbackSB() {
-		StringBundler callbackSB = new StringBundler();
-
-		for (PortletData portletData : _portletDataMap.values()) {
-			callbackSB.append(portletData._callbackSB);
-		}
-
-		return callbackSB;
-	}
-
-	public StringBundler getRawSB() {
-		StringBundler rawSB = new StringBundler();
-
-		for (PortletData portletData : _portletDataMap.values()) {
-			rawSB.append(portletData._rawSB);
-		}
-
-		return rawSB;
-	}
-
-	public Set<String> getUseSet() {
-		Set<String> useSet = new TreeSet<String>();
-
-		for (PortletData portletData : _portletDataMap.values()) {
-			useSet.addAll(portletData._useSet);
-		}
-
-		return useSet;
 	}
 
 	public void mark() {
@@ -103,6 +78,54 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 			sb.setIndex(entry.getValue());
 		}
+	}
+
+	public void writeTo(HttpServletRequest request, Writer writer)
+		throws IOException {
+
+		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+
+		StringBundler callbackSB = new StringBundler();
+
+		for (PortletData portletData : _portletDataMap.values()) {
+			portletData._rawSB.writeTo(writer);
+			callbackSB.append(portletData._callbackSB);
+		}
+
+		if (callbackSB.index() > 0) {
+			String loadMethod = "use";
+
+			if (BrowserSnifferUtil.isIe(request) &&
+				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+
+				loadMethod = "ready";
+			}
+
+			writer.write("AUI().");
+			writer.write( loadMethod );
+			writer.write("(");
+
+			Set<String> useSet = new TreeSet<String>();
+
+			for (PortletData portletData : _portletDataMap.values()) {
+				useSet.addAll(portletData._useSet);
+			}
+
+			for (String use : useSet) {
+				writer.write(StringPool.APOSTROPHE);
+				writer.write(use);
+				writer.write(StringPool.APOSTROPHE);
+				writer.write(StringPool.COMMA_AND_SPACE);
+			}
+
+			writer.write("function(A) {");
+
+			callbackSB.writeTo(writer);
+
+			writer.write("});");
+		}
+
+		writer.write("\n// ]]>\n</script>");
 	}
 
 	private PortletData _getPortletData(String portletId) {

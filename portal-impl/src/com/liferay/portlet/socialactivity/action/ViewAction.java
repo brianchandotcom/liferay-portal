@@ -93,7 +93,19 @@ public class ViewAction extends PortletAction {
 		Arrays.sort(modelNames, comparator);
 
 		for (String modelName : modelNames) {
-			activitySettingsMap.put(modelName, false);
+			List<SocialActivityDefinition> activityDefinitions =
+				SocialActivitySettingLocalServiceUtil.getActivityDefinitions(
+					themeDisplay.getScopeGroupId(), modelName);
+
+			for (SocialActivityDefinition activityDefinition :
+					activityDefinitions) {
+
+				if (activityDefinition.isCountersEnabled()) {
+					activitySettingsMap.put(modelName, false);
+
+					break;
+				}
+			}
 		}
 
 		for (SocialActivitySetting activitySetting : activitySettings) {

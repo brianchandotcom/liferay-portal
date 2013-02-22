@@ -75,6 +75,10 @@ public class SocialActivitySettingServiceImpl
 		for (SocialActivityDefinition activityDefinition :
 				activityDefinitions) {
 
+			if (!activityDefinition.isCountersEnabled()) {
+				continue;
+			}
+
 			JSONObject activityDefinitionJSONObject =
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.looseSerialize(activityDefinition));

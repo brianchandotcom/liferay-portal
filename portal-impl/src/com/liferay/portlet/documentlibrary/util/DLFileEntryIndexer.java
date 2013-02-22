@@ -337,13 +337,21 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			Document document = getBaseModelDocument(
 				PORTLET_ID, dlFileEntry, dlFileVersion);
 
-			if (indexContent && (is != null)) {
-				try {
-					document.addFile(Field.CONTENT, is, dlFileEntry.getTitle());
+			if (indexContent) {
+				if (is != null) {
+					try {
+						document.addFile(
+							Field.CONTENT, is, dlFileEntry.getTitle());
+					}
+					catch (IOException ioe) {
+						throw new SearchException(
+							"Cannot extract text from file" + dlFileEntry);
+					}
 				}
-				catch (IOException ioe) {
-					throw new SearchException(
-						"Cannot extract text from file" + dlFileEntry);
+				else if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Document " + dlFileEntry +
+							" does not have any content");
 				}
 			}
 

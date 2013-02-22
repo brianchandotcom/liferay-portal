@@ -38,6 +38,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Shuyang Zhou
+ * @author Bruno Basto
+ * @author Eduardo Lundgren
  */
 public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 

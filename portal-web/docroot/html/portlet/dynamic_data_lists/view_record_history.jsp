@@ -21,6 +21,10 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
+DDLRecordSet recordSet = record.getRecordSet();
+
+DDMStructure ddmStructure = recordSet.getDDMStructure();
+
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -32,7 +36,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title="record-history"
+	title='<%= LanguageUtil.format(pageContext, "x-history", ddmStructure.getName(locale)) %>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

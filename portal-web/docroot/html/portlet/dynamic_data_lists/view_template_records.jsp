@@ -17,11 +17,9 @@
 <%@ include file="/html/portlet/dynamic_data_list_display/init.jsp" %>
 
 <%
-DDLRecordSet recordSet = null;
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
-if (Validator.isNotNull(recordSetId)) {
-	recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
-}
+DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
 <portlet:actionURL var="editRecordSetURL">
@@ -30,7 +28,7 @@ if (Validator.isNotNull(recordSetId)) {
 
 <aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value="add-record" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value='<%= LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)) %>' />
 
 		<div class="separator"><!-- --></div>
 	</c:if>

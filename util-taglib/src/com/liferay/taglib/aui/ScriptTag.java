@@ -90,18 +90,11 @@ public class ScriptTag extends BaseScriptTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		ScriptData scriptData = (ScriptData)request.getAttribute(
-			ScriptTag.class.getName());
-
-		if (scriptData == null) {
-			scriptData = (ScriptData)request.getAttribute(
 				WebKeys.AUI_SCRIPT_DATA);
 
-			if (scriptData != null) {
-				request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
-			}
-		}
-
 		if (scriptData != null) {
+			request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
+
 			ScriptTag scriptTag = new ScriptTag();
 
 			scriptTag.setPageContext(pageContext);
@@ -133,8 +126,6 @@ public class ScriptTag extends BaseScriptTag {
 
 			if (positionInline) {
 				ScriptData scriptData = new ScriptData();
-
-				request.setAttribute(ScriptTag.class.getName(), scriptData);
 
 				scriptData.append(portletId, bodyContentSB, use);
 
@@ -168,10 +159,6 @@ public class ScriptTag extends BaseScriptTag {
 			throw new JspException(e);
 		}
 		finally {
-			if (positionInline) {
-				request.removeAttribute(ScriptTag.class.getName());
-			}
-
 			if (!ServerDetector.isResin()) {
 				cleanUp();
 			}

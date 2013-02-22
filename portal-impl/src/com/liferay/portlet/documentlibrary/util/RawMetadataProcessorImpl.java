@@ -132,6 +132,14 @@ public class RawMetadataProcessorImpl
 			try {
 				inputStream = fileVersion.getContentStream(false);
 
+				if (inputStream == null) {
+					if (_log.isDebugEnabled()) {
+						_log.warn("extract raw metadata file fail");
+					}
+
+					return;
+				}
+
 				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
 					fileVersion.getExtension(), fileVersion.getMimeType(),
 					inputStream);

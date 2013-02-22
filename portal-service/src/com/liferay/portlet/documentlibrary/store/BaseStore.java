@@ -169,6 +169,14 @@ public abstract class BaseStore implements Store {
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
+		if (is == null) {
+			if (_log.isDebugEnabled()) {
+				_log.warn("copy file version fail");
+		}
+
+			return;
+		}
+
 		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
 

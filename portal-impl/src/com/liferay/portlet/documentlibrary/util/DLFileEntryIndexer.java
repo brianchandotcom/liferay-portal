@@ -331,15 +331,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		catch (Exception e) {
 		}
 
-		if (indexContent && (is == null)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Document " + dlFileEntry + " does not have any content");
-			}
-
-			return null;
-		}
-
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		try {
@@ -347,12 +338,20 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				PORTLET_ID, dlFileEntry, dlFileVersion);
 
 			if (indexContent) {
-				try {
-					document.addFile(Field.CONTENT, is, dlFileEntry.getTitle());
+				if (is != null) {
+					try {
+						document.addFile(
+							Field.CONTENT, is, dlFileEntry.getTitle());
+					}
+					catch (IOException ioe) {
+						throw new SearchException(
+							"Cannot extract text from file" + dlFileEntry);
+					}
 				}
-				catch (IOException ioe) {
-					throw new SearchException(
-						"Cannot extract text from file" + dlFileEntry);
+				else if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Document " + dlFileEntry +
+							" does not have any content");
 				}
 			}
 

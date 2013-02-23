@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -28,6 +29,7 @@ import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -136,7 +138,7 @@ public class DataFactory {
 			initClassNames();
 			initCompany();
 			initAccount();
-			initDefaultUser();
+			initDefaultUsers();
 			initDLFileEntryType();
 			initGuestGroup();
 			initJournalArticle(maxJournalArticleSize);
@@ -191,13 +193,26 @@ public class DataFactory {
 		return blogsStatsUser;
 	}
 
-	public Contact addContact(String firstName, String lastName) {
+	public Contact addContact(User user) {
 		Contact contact = new ContactImpl();
 
-		contact.setContactId(_counter.get());
+		Date date = new Date();
+
+		contact.setContactId(user.getContactId());
+		contact.setCompanyId(user.getCompanyId());
+		contact.setUserId(user.getUserId());
+		contact.setUserName(user.getFullName());
+		contact.setCreateDate(date);
+		contact.setModifiedDate(date);
+		contact.setClassNameId(_userClassNameId);
+		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_company.getAccountId());
-		contact.setFirstName(firstName);
-		contact.setLastName(lastName);
+		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+		contact.setEmailAddress(user.getEmailAddress());
+		contact.setFirstName(user.getFirstName());
+		contact.setLastName(user.getLastName());
+		contact.setMale(true);
+		contact.setBirthday(date);
 
 		return contact;
 	}
@@ -614,23 +629,11 @@ public class DataFactory {
 		return socialActivity;
 	}
 
-	public User addUser(boolean defaultUser, String screenName) {
-		User user = new UserImpl();
+	public User addUser(int currentIndex) {
+		String[] names = nextUserName(currentIndex - 1);
 
-		user.setUserId(_counter.get());
-		user.setDefaultUser(defaultUser);
-
-		if (Validator.isNull(screenName)) {
-			screenName = String.valueOf(user.getUserId());
-		}
-
-		user.setScreenName(screenName);
-
-		String emailAddress = screenName + "@liferay.com";
-
-		user.setEmailAddress(emailAddress);
-
-		return user;
+		return newUser(
+			names[0], names[1], "test" + _userScreenNameCounter.get(), false);
 	}
 
 	public List<Long> addUserToGroupIds(long groupId) {
@@ -762,6 +765,10 @@ public class DataFactory {
 		return _guestRole;
 	}
 
+	public User getGuestUser() {
+		return _guestUser;
+	}
+
 	public long getJournalArticleClassNameId() {
 		return _journalArticleClassNameId;
 	}
@@ -794,6 +801,10 @@ public class DataFactory {
 		return _roles;
 	}
 
+	public User getSampleUser() {
+		return _sampleUser;
+	}
+
 	public Role getSiteAdministratorRole() {
 		return _siteAdministratorRole;
 	}
@@ -812,10 +823,6 @@ public class DataFactory {
 
 	public Role getUserRole() {
 		return _userRole;
-	}
-
-	public SimpleCounter getUserScreenNameCounter() {
-		return _userScreenNameCounter;
 	}
 
 	public VirtualHost getVirtualHost() {
@@ -933,10 +940,11 @@ public class DataFactory {
 		_counters.add(counter);
 	}
 
-	public void initDefaultUser() {
-		_defaultUser = new UserImpl();
-
-		_defaultUser.setUserId(_counter.get());
+	public void initDefaultUsers() {
+		_defaultUser = newUser(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
+		_guestUser = newUser("Test", "Test", "Test", false);
+		_sampleUser = newUser("Sample", "Sample", "Sample", false);
 	}
 
 	public void initDLFileEntryType() {
@@ -1160,6 +1168,50 @@ public class DataFactory {
 		return role;
 	}
 
+	protected User newUser(
+		String firstName, String lastName, String screenName,
+		boolean defaultUser) {
+
+		User user = new UserImpl();
+
+		Date date = new Date();
+
+		user.setUuid(SequentialUUID.generate());
+		user.setUserId(_counter.get());
+		user.setCompanyId(_company.getCompanyId());
+		user.setCreateDate(date);
+		user.setModifiedDate(date);
+		user.setDefaultUser(defaultUser);
+		user.setContactId(_counter.get());
+		user.setPassword(_PASSWORD);
+		user.setPasswordModifiedDate(date);
+		user.setReminderQueryQuestion(_QUERY_QUESTION);
+		user.setLanguageId(_DEFAULT_LANGUAGE_ID);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setLoginDate(date);
+		user.setLastLoginDate(date);
+		user.setLastFailedLoginDate(date);
+		user.setLockoutDate(date);
+		user.setAgreedToTermsOfUse(true);
+		user.setEmailAddressVerified(true);
+
+		if (Validator.isNull(screenName)) {
+			screenName = String.valueOf(user.getUserId());
+		}
+
+		user.setScreenName(screenName);
+		user.setReminderQueryAnswer(screenName);
+		user.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
+		user.setEmailAddress(screenName + "@liferay.com");
+
+		return user;
+	}
+
+	private static final String _DEFAULT_LANGUAGE_ID = "en_US";
+	private static final String _PASSWORD = "test";
+	private static final String _QUERY_QUESTION = "what is your screen name?";
+
 	private Account _account;
 	private Role _administratorRole;
 	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
@@ -1179,6 +1231,7 @@ public class DataFactory {
 	private long _groupClassNameId;
 	private Group _guestGroup;
 	private Role _guestRole;
+	private User _guestUser;
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
@@ -1193,6 +1246,7 @@ public class DataFactory {
 	private SimpleCounter _resourcePermissionCounter;
 	private long _roleClassNameId;
 	private List<Role> _roles;
+	private User _sampleUser;
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Role _siteAdministratorRole;

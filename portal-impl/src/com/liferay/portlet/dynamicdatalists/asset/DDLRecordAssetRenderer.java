@@ -30,6 +30,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.Locale;
 
@@ -52,6 +53,8 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 		try {
 			_recordSet = record.getRecordSet();
+
+			_ddmStructure = _recordSet.getDDMStructure();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -77,9 +80,13 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 	}
 
 	public String getTitle(Locale locale) {
-		String name = _recordSet.getName(locale);
+		String ddmStructureName = _ddmStructure.getName(locale);
 
-		return LanguageUtil.format(locale, "new-record-for-list-x", name);
+		String recordSetName = _recordSet.getName(locale);
+
+		return LanguageUtil.format(
+			locale, "new-x-for-list-x",
+			new Object[] {ddmStructureName, recordSetName});
 	}
 
 	@Override
@@ -155,6 +162,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 	private static Log _log = LogFactoryUtil.getLog(
 		DDLRecordAssetRenderer.class);
 
+	private DDMStructure _ddmStructure;
 	private DDLRecord _record;
 	private DDLRecordSet _recordSet;
 	private DDLRecordVersion _recordVersion;

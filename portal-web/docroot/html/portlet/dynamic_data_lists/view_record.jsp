@@ -26,7 +26,11 @@ long recordId = BeanParamUtil.getLong(record, request, "recordId");
 
 long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
+DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
+
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
+
+DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
 
 String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERSION_DEFAULT);
 
@@ -41,7 +45,7 @@ if (editable) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='view-record'
+	title='<%= LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale)) %>'
 />
 
 <c:if test="<%= recordVersion != null %>">
@@ -53,10 +57,6 @@ if (editable) {
 <aui:fieldset>
 
 	<%
-	DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
-
-	DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
-
 	Fields fields = null;
 
 	if (recordVersion != null) {
@@ -91,8 +91,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
 portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 
-DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
-
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-record"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale)), currentURL);
 %>

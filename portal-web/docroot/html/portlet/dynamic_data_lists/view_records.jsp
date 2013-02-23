@@ -61,7 +61,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 	%>
 
 	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.get(pageContext, "no-records-were-found")) %>'
+		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-x-records-were-found", ddmStructure.getName(locale))) %>'
 	>
 
 		<liferay-ui:search-form

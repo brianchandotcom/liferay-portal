@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.forums.thread;
+package com.liferay.portalweb.socialofficesite.forums.mbthread.postnewmbcategorythreadmessagesite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,12 +24,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ThreadTestPlan extends BaseTestSuite {
-
+public class PostNewMBCategoryThreadMessageSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AddSitesSiteTest.class);
+		testSuite.addTestSuite(AddMBCategorySiteTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThreadMessageSiteTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadMessageSiteTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadMessageMyPostsSiteTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadMessageRecentPostsSiteTest.class);
+		testSuite.addTestSuite(TearDownSOSitesTest.class);
 
 		return testSuite;
 	}
-
 }

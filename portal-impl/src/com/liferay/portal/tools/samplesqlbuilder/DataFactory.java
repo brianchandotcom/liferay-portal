@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.counter.model.Counter;
-import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -713,10 +713,6 @@ public class DataFactory {
 		return _counter;
 	}
 
-	public List<CounterModelImpl> getCounters() {
-		return _counters;
-	}
-
 	public String getDateLong(Date date) {
 		return String.valueOf(date.getTime());
 	}
@@ -905,39 +901,37 @@ public class DataFactory {
 		_company.setActive(true);
 	}
 
-	public void initCounters() {
-		if (_counters != null) {
-			return;
-		}
-
-		_counters = new ArrayList<CounterModelImpl>();
+	public List<Counter> initCounters() {
+		List<Counter> counters = new ArrayList<Counter>();
 
 		// Counter
 
-		CounterModelImpl counter = new CounterModelImpl();
+		Counter counter = new CounterImpl();
 
 		counter.setName(Counter.class.getName());
 		counter.setCurrentId(_counter.get());
 
-		_counters.add(counter);
+		counters.add(counter);
 
 		// ResourcePermission
 
-		counter = new CounterModelImpl();
+		counter = new CounterImpl();
 
 		counter.setName(ResourcePermission.class.getName());
 		counter.setCurrentId(_resourcePermissionCounter.get());
 
-		_counters.add(counter);
+		counters.add(counter);
 
 		// SocialActivity
 
-		counter = new CounterModelImpl();
+		counter = new CounterImpl();
 
 		counter.setName(SocialActivity.class.getName());
 		counter.setCurrentId(_socialActivityCounter.get());
 
-		_counters.add(counter);
+		counters.add(counter);
+
+		return counters;
 	}
 
 	public void initDefaultUsers() {
@@ -1175,7 +1169,6 @@ public class DataFactory {
 	private List<ClassName> _classNames;
 	private Company _company;
 	private SimpleCounter _counter;
-	private List<CounterModelImpl> _counters;
 	private long _ddlRecordSetClassNameId;
 	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;

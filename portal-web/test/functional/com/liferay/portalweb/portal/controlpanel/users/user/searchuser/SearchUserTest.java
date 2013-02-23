@@ -55,10 +55,10 @@ public class SearchUserTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("selen01"));
-		assertFalse(selenium.isTextPresent("nium01"));
-		assertFalse(selenium.isTextPresent("selenium01"));
+		assertFalse(selenium.isTextPresent("userfn"));
+		assertFalse(selenium.isTextPresent("userln"));
+		assertFalse(selenium.isTextPresent("usersn"));
 		assertEquals(RuntimeVariables.replace("No users were found."),
-			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xpath=(//div[@class='portlet-msg-info'])[3]"));
 	}
 }

@@ -100,13 +100,13 @@ public class ViewUser1Test extends BaseTestCase {
 					selenium.getText("//span[@class='edit-logo-link']/a/span"));
 				assertEquals("January",
 					selenium.getSelectedLabel(
-						"//select[@id='_125_birthdayMonth']"));
+						"//select[@name='_125_birthdayMonth']"));
 				assertEquals("1",
 					selenium.getSelectedLabel(
-						"//select[@id='_125_birthdayDay']"));
+						"//select[@name='_125_birthdayDay']"));
 				assertEquals("1970",
 					selenium.getSelectedLabel(
-						"//select[@id='_125_birthdayYear']"));
+						"//select[@name='_125_birthdayYear']"));
 				assertEquals("Male",
 					selenium.getSelectedLabel("//select[@id='_125_male']"));
 				assertEquals("",

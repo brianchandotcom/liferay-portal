@@ -169,6 +169,12 @@ public abstract class BaseStore implements Store {
 		InputStream is = getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
+		if (is == null) {
+			_log.error("File version is not available");
+
+			return;
+		}
+
 		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
 

@@ -67,6 +67,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -212,6 +213,9 @@ public class EditLayoutsAction extends PortletAction {
 
 					layoutTypePortlet.resetUserPreferences();
 				}
+			}
+			else if (cmd.equals(Constants.RESET_MERGE_FAIL_COUNT_AND_MERGE)) {
+				resetMergeFailCountAndMerge(actionRequest);
 			}
 			else if (cmd.equals("reset_prototype")) {
 				SitesUtil.resetPrototype(themeDisplay.getLayout());
@@ -676,6 +680,37 @@ public class EditLayoutsAction extends PortletAction {
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
+		throws Exception {
+
+		long targetPlid = ParamUtil.getLong(actionRequest, "selPlid");
+		long layoutPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutPrototypeId");
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+				layoutPrototypeId);
+
+		SitesUtil.setMergeFailCount(layoutPrototype, 0);
+
+		Layout targetLayout = LayoutLocalServiceUtil.getLayout(targetPlid);
+
+		SitesUtil.resetPrototype(targetLayout);
+
+		SitesUtil.mergeLayoutPrototypeLayout(
+			targetLayout.getGroup(), targetLayout);
+
+		layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(
+			layoutPrototypeId);
+
+		int mergeFailCountAfterMerge = SitesUtil.getMergeFailCount(
+			layoutPrototype);
+
+		if (mergeFailCountAfterMerge > 0) {
+			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
+		}
 	}
 
 	protected void selectLayoutBranch(ActionRequest actionRequest)

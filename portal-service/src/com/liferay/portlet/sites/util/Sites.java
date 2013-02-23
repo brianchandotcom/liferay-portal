@@ -124,6 +124,12 @@ public interface Sites {
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext);
 
+	public int getMergeFailCount(LayoutPrototype layoutPrototype)
+		throws PortalException, SystemException;
+
+	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
+		throws PortalException, SystemException;
+
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -173,6 +179,17 @@ public interface Sites {
 		throws Exception;
 
 	public void resetPrototype(Layout layout)
+		throws PortalException, SystemException;
+
+	public void resetPrototype(LayoutSet layoutSet)
+			throws PortalException, SystemException;
+
+	public void setMergeFailCount(
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException, SystemException;
+
+	public void setMergeFailCount(
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
 		throws PortalException, SystemException;
 
 	public void updateLayoutScopes(

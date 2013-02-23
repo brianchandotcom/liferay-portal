@@ -96,6 +96,8 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</liferay-ui:error>
 </c:if>
 
+<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
+
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= !group.isLayoutPrototype() %>">
@@ -136,11 +138,17 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<%
 		LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
+
+		boolean layoutPrototypeLinkEnabled = selLayout.isLayoutPrototypeLinkEnabled();
 		%>
 
 		<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
 
-		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
+		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= layoutPrototypeLinkEnabled %>" />
+
+		<div class='<%= layoutPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
+			<liferay-ui:prototype-merge-alert layoutPrototype="<%= layoutPrototype %>" redirect="<%= currentURL %>" selPlid="<%= selLayout.getPlid() %>" />
+		</div>
 	</c:if>
 
 	<aui:select name="type">
@@ -187,6 +195,10 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</div>
 
 </aui:fieldset>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabledCheckbox','<portlet:namespace />layoutPrototypeMergeAlert');
+</aui:script>
 
 <aui:script use="aui-base">
 	var templateLink = A.one('#templateLink');

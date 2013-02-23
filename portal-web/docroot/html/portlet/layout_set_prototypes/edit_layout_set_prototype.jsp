@@ -49,6 +49,8 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 	title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
 />
 
+<liferay-ui:prototype-merge-alert layoutSetPrototype="<%= layoutSetPrototype %>" redirect="<%= redirect %>" />
+
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveLayoutSetPrototype();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

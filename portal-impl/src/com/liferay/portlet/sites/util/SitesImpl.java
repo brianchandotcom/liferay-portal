@@ -633,6 +633,35 @@ public class SitesImpl implements Sites {
 		return parameterMap;
 	}
 
+	public int getMergeFailCount(LayoutPrototype layoutPrototype)
+		throws PortalException, SystemException {
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			prototypeTypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+
+		return mergeFailCount;
+	}
+
+	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSetPrototypeLayoutSet =
+			layoutSetPrototype.getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeSettingsProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
+
+		return mergeFailCount;
+	}
+
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -1082,6 +1111,13 @@ public class SitesImpl implements Sites {
 		LayoutLocalServiceUtil.updateLayout(layout);
 
 		LayoutSet layoutSet = layout.getLayoutSet();
+
+		resetPrototype(layoutSet);
+	}
+
+	public void resetPrototype(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -1091,6 +1127,47 @@ public class SitesImpl implements Sites {
 			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+	}
+
+	public void setMergeFailCount(
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		UnicodeProperties prototypeTypeSettingsProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		if (newMergeFailCount == 0) {
+			prototypeTypeSettingsProperties.remove(MERGE_FAIL_COUNT);
+		}
+		else {
+			prototypeTypeSettingsProperties.setProperty(
+				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
+		}
+
+		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
+	}
+
+	public void setMergeFailCount(
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSetPrototypeLayoutSet =
+			layoutSetPrototype.getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeSettingsProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		if (newMergeFailCount == 0) {
+			layoutSetPrototypeSettingsProperties.remove(MERGE_FAIL_COUNT);
+		}
+		else {
+			layoutSetPrototypeSettingsProperties.setProperty(
+				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
+		}
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetPrototypeLayoutSet);
 	}
 
 	public void updateLayoutScopes(

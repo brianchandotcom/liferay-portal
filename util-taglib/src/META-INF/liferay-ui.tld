@@ -2711,6 +2711,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayStyles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>enabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -33,6 +33,10 @@ public class RSSSettingsTag extends IncludeTag {
 		_displayStyle = displayStyle;
 	}
 
+	public void setDisplayStyles(String[] displayStyles) {
+		_displayStyles = displayStyles;
+	}
+
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
 	}
@@ -53,6 +57,7 @@ public class RSSSettingsTag extends IncludeTag {
 	protected void cleanUp() {
 		_delta = SearchContainer.DEFAULT_DELTA;
 		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
+		_displayStyles = RSSUtil.DISPLAY_STYLES;
 		_enabled = false;
 		_feedType = RSSUtil.FEED_TYPE_DEFAULT;
 		_name = null;
@@ -76,6 +81,8 @@ public class RSSSettingsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:rss-settings:displayStyle", _displayStyle);
 		request.setAttribute(
+			"liferay-ui:rss-settings:displayStyles", _displayStyles);
+		request.setAttribute(
 			"liferay-ui:rss-settings:enabled", String.valueOf(_enabled));
 		request.setAttribute("liferay-ui:rss-settings:feedType", _feedType);
 		request.setAttribute("liferay-ui:rss-settings:name", _name);
@@ -90,6 +97,7 @@ public class RSSSettingsTag extends IncludeTag {
 
 	private int _delta = SearchContainer.DEFAULT_DELTA;
 	private String _displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
+	private String[] _displayStyles = RSSUtil.DISPLAY_STYLES;
 	private boolean _enabled;
 	private String _feedType = RSSUtil.FEED_TYPE_DEFAULT;
 	private String _name;

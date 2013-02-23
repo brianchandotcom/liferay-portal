@@ -21,6 +21,7 @@
 <%
 int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:rss-settings:delta"));
 String displayStyle = (String)request.getAttribute("liferay-ui:rss-settings:displayStyle");
+String[] displayStyles = (String[])request.getAttribute("liferay-ui:rss-settings:displayStyles");
 boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:rss-settings:enabled"));
 String feedType = (String)request.getAttribute("liferay-ui:rss-settings:feedType");
 String name = (String)request.getAttribute("liferay-ui:rss-settings:name");
@@ -59,7 +60,7 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 			<aui:select label="display-style" name="preferences--rssDisplayStyle--">
 
 				<%
-				for (String curDisplayStyle : RSSUtil.DISPLAY_STYLES) {
+				for (String curDisplayStyle : displayStyles) {
 				%>
 
 					<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />

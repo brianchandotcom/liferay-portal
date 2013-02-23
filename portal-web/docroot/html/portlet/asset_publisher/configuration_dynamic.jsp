@@ -387,6 +387,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			<liferay-ui:rss-settings
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
+				displayStyles="<%= new String[] {RSSUtil.DISPLAY_STYLE_ABSTRACT, RSSUtil.DISPLAY_STYLE_TITLE} %>"
 				enabled="<%= enableRSS %>"
 				feedType="<%= rssFeedType %>"
 				name="<%= rssName %>"

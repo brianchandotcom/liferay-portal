@@ -276,11 +276,22 @@ if (Validator.isNotNull(content)) {
 											</span>
 
 											<c:if test="<%= ddmStructure != null %>">
+
+												<%
+													StringBundler sb = new StringBundler(5);
+
+													sb.append("javascript:");
+													sb.append(renderResponse.getNamespace());
+													sb.append("openDDMTemplateSelector('");
+													sb.append(ddmStructure.getStructureId());
+													sb.append("');");
+												%>
+
 												<liferay-ui:icon
 													image="add"
 													label="<%= true %>"
 													message="select"
-													url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMTemplateSelector();" %>'
+													url="<%= sb.toString() %>"
 												/>
 											</c:if>
 										</c:when>
@@ -697,8 +708,8 @@ if (Validator.isNotNull(content)) {
 		<portlet:namespace />openDDMSelector('<portlet:namespace />selectStructure', null, null, '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>');
 	}
 
-	function <portlet:namespace />openDDMTemplateSelector() {
-		<portlet:namespace />openDDMSelector('<portlet:namespace />selectTemplate', '/dynamic_data_mapping/view_template', '<%= ddmStructure.getStructureId() %>', '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>');
+	function <portlet:namespace />openDDMTemplateSelector(ddmStructureId) {
+		<portlet:namespace />openDDMSelector('<portlet:namespace />selectTemplate', '/dynamic_data_mapping/view_template', ddmStructureId, '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>');
 	}
 </aui:script>
 

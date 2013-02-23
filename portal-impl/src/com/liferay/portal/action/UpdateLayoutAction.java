@@ -317,7 +317,7 @@ public class UpdateLayoutAction extends JSONAction {
 			populatePortletJSONObject(
 				request, portletHTML, portlet, jsonObject);
 
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setContentType(ContentTypes.APPLICATION_JSON);
 
 			ServletResponseUtil.write(response, jsonObject.toString());
 		}

@@ -56,7 +56,7 @@ public class GetStructureJSONAction extends Action {
 
 			JSONArray jsonArray = DDMXSDUtil.getJSONArray(structure, xsd);
 
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setContentType(ContentTypes.APPLICATION_JSON);
 
 			ServletResponseUtil.write(response, jsonArray.toString());
 		}

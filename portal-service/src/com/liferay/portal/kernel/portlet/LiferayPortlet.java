@@ -398,7 +398,7 @@ public class LiferayPortlet extends GenericPortlet {
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+		response.setContentType(ContentTypes.APPLICATION_JSON);
 
 		ServletResponseUtil.write(response, json.toString());
 	}
@@ -408,7 +408,7 @@ public class LiferayPortlet extends GenericPortlet {
 			Object json)
 		throws IOException {
 
-		mimeResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+		mimeResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		PortletResponseUtil.write(mimeResponse, json.toString());
 	}

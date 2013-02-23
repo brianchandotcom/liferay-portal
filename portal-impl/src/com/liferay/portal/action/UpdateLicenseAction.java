@@ -68,7 +68,7 @@ public class UpdateLicenseAction extends Action {
 			if (cmd.equals("licenseProperties")) {
 				String licenseProperties = _getLicenseProperties(clusterNodeId);
 
-				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+				response.setContentType(ContentTypes.APPLICATION_JSON);
 
 				ServletResponseUtil.write(response, licenseProperties);
 
@@ -77,7 +77,7 @@ public class UpdateLicenseAction extends Action {
 			else if (cmd.equals("serverInfo")) {
 				String serverInfo = _getServerInfo(clusterNodeId);
 
-				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+				response.setContentType(ContentTypes.APPLICATION_JSON);
 
 				ServletResponseUtil.write(response, serverInfo);
 

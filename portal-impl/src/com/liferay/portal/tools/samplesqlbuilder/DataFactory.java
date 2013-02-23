@@ -217,6 +217,39 @@ public class DataFactory {
 		return contact;
 	}
 
+	public List<Counter> addCounters() {
+		List<Counter> counters = new ArrayList<Counter>();
+
+		// Counter
+
+		Counter counter = new CounterImpl();
+
+		counter.setName(Counter.class.getName());
+		counter.setCurrentId(_counter.get());
+
+		counters.add(counter);
+
+		// ResourcePermission
+
+		counter = new CounterImpl();
+
+		counter.setName(ResourcePermission.class.getName());
+		counter.setCurrentId(_resourcePermissionCounter.get());
+
+		counters.add(counter);
+
+		// SocialActivity
+
+		counter = new CounterImpl();
+
+		counter.setName(SocialActivity.class.getName());
+		counter.setCurrentId(_socialActivityCounter.get());
+
+		counters.add(counter);
+
+		return counters;
+	}
+
 	public DDLRecord addDDLRecord(
 		long groupId, long companyId, long userId, long ddlRecordSetId) {
 
@@ -899,39 +932,6 @@ public class DataFactory {
 		_company.setWebId("liferay.com");
 		_company.setMx("liferay.com");
 		_company.setActive(true);
-	}
-
-	public List<Counter> initCounters() {
-		List<Counter> counters = new ArrayList<Counter>();
-
-		// Counter
-
-		Counter counter = new CounterImpl();
-
-		counter.setName(Counter.class.getName());
-		counter.setCurrentId(_counter.get());
-
-		counters.add(counter);
-
-		// ResourcePermission
-
-		counter = new CounterImpl();
-
-		counter.setName(ResourcePermission.class.getName());
-		counter.setCurrentId(_resourcePermissionCounter.get());
-
-		counters.add(counter);
-
-		// SocialActivity
-
-		counter = new CounterImpl();
-
-		counter.setName(SocialActivity.class.getName());
-		counter.setCurrentId(_socialActivityCounter.get());
-
-		counters.add(counter);
-
-		return counters;
 	}
 
 	public void initDefaultUsers() {

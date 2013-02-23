@@ -83,66 +83,66 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 				</aui:layout>
 			</div>
 		</div>
-	</c:if>
-</aui:fieldset>
 
-<aui:script use="aui-toggler">
-	var container = A.one('#<portlet:namespace />smallImageContainer');
+		<aui:script use="aui-toggler">
+			var container = A.one('#<portlet:namespace />smallImageContainer');
 
-	var types = container.all('.lfr-journal-small-image-type');
-	var values = container.all('.lfr-journal-small-image-value');
+			var types = container.all('.lfr-journal-small-image-type');
+			var values = container.all('.lfr-journal-small-image-value');
 
-	var selectSmallImageType = function(index) {
-		types.set('checked', false);
+			var selectSmallImageType = function(index) {
+				types.set('checked', false);
 
-		types.item(index).set('checked', true);
+				types.item(index).set('checked', true);
 
-		values.set('disabled', true);
+				values.set('disabled', true);
 
-		values.item(index).set('disabled', false);
-	};
+				values.item(index).set('disabled', false);
+			};
 
-	container.delegate(
-		'change',
-		function(event) {
-			var index = types.indexOf(event.currentTarget);
+			container.delegate(
+				'change',
+				function(event) {
+					var index = types.indexOf(event.currentTarget);
 
-			selectSmallImageType(index);
-		},
-		'.lfr-journal-small-image-type'
-	);
+					selectSmallImageType(index);
+				},
+				'.lfr-journal-small-image-type'
+			);
 
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-content',
-			expanded: <%= smallImage %>,
-			header: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
+			new A.Toggler(
+				{
+					animated: true,
+					content: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-content',
+					expanded: <%= smallImage %>,
+					header: '#<portlet:namespace />smallImageContainer .lfr-journal-small-image-header',
+					on: {
+						animatingChange: function(event) {
+							var instance = this;
 
-					var expanded = !instance.get('expanded');
+							var expanded = !instance.get('expanded');
 
-					A.one('#<portlet:namespace />smallImage').set('value', expanded);
-					A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+							A.one('#<portlet:namespace />smallImage').set('value', expanded);
+							A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
 
-					if (expanded) {
-						types.each(
-							function (item, index, collection) {
-								if (item.get('checked')) {
-									values.item(index).set('disabled', false);
-								}
+							if (expanded) {
+								types.each(
+									function (item, index, collection) {
+										if (item.get('checked')) {
+											values.item(index).set('disabled', false);
+										}
+									}
+								);
 							}
-						);
-					}
-					else {
-						values.set('disabled', true);
+							else {
+								values.set('disabled', true);
+							}
+						}
 					}
 				}
-			}
-		}
-	);
+			);
 
-	selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
-</aui:script>
+			selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+		</aui:script>
+	</c:if>
+</aui:fieldset>

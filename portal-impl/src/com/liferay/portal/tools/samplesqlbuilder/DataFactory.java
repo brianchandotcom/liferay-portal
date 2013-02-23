@@ -985,132 +985,82 @@ public class DataFactory {
 	}
 
 	public void initRoles() {
-		if (_roles != null) {
-			return;
-		}
-
 		_roles = new ArrayList<Role>();
 
 		// Administrator
 
-		Role role = newRole();
+		_administratorRole = newRole(
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_administratorRole = role;
+		_roles.add(_administratorRole);
 
 		// Guest
 
-		role = newRole();
+		_guestRole = newRole(RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.GUEST);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_guestRole = role;
+		_roles.add(_guestRole);
 
 		// Organization Administrator
 
-		role = newRole();
+		_organizationAdministratorRole = newRole(
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationAdministratorRole = role;
+		_roles.add(_organizationAdministratorRole);
 
 		// Organization Owner
 
-		role = newRole();
+		_organizationOwnerRole = newRole(
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_OWNER);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationOwnerRole = role;
+		_roles.add(_organizationOwnerRole);
 
 		// Organization User
 
-		role = newRole();
+		_organizationUserRole = newRole(
+			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
 
-		role.setName(RoleConstants.ORGANIZATION_USER);
-		role.setType(RoleConstants.TYPE_ORGANIZATION);
-
-		_roles.add(role);
-
-		_organizationUserRole = role;
+		_roles.add(_organizationUserRole);
 
 		// Owner
 
-		role = newRole();
+		_ownerRole = newRole(RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.OWNER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_ownerRole = role;
+		_roles.add(_ownerRole);
 
 		// Power User
 
-		role = newRole();
+		_powerUserRole = newRole(
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.POWER_USER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_powerUserRole = role;
+		_roles.add(_powerUserRole);
 
 		// Site Administrator
 
-		role = newRole();
+		_siteAdministratorRole = newRole(
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_ADMINISTRATOR);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteAdministratorRole = role;
+		_roles.add(_siteAdministratorRole);
 
 		// Site Member
 
-		role = newRole();
+		_siteMemberRole = newRole(
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_MEMBER);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteMemberRole = role;
+		_roles.add(_siteMemberRole);
 
 		// Site Owner
 
-		role = newRole();
+		_siteOwnerRole = newRole(
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
 
-		role.setName(RoleConstants.SITE_OWNER);
-		role.setType(RoleConstants.TYPE_SITE);
-
-		_roles.add(role);
-
-		_siteOwnerRole = role;
+		_roles.add(_siteOwnerRole);
 
 		// User
 
-		role = newRole();
+		_userRole = newRole(RoleConstants.USER, RoleConstants.TYPE_REGULAR);
 
-		role.setName(RoleConstants.USER);
-		role.setType(RoleConstants.TYPE_REGULAR);
-
-		_roles.add(role);
-
-		_userRole = role;
+		_roles.add(_userRole);
 	}
 
 	public void initSimpleCounters() {
@@ -1158,12 +1108,17 @@ public class DataFactory {
 		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
 	}
 
-	protected Role newRole() {
+	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
-		role.setRoleId(_counter.get());
+		long roleId = _counter.get();
+
+		role.setRoleId(roleId);
+		role.setCompanyId(_company.getCompanyId());
 		role.setClassNameId(_roleClassNameId);
-		role.setClassPK(role.getRoleId());
+		role.setClassPK(roleId);
+		role.setName(name);
+		role.setType(type);
 
 		return role;
 	}

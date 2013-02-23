@@ -232,6 +232,37 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Copies the user group's layout to the user.
+	 *
+	 * @param      userGroupId the primary key of the user group
+	 * @param      userId the primary key of the user
+	 * @throws     PortalException if a user with the primary key could not be
+	 *             found or if a portal exception occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated
+	 */
+	public void copyUserGroupLayouts(long userGroupId, long userId)
+		throws PortalException, SystemException {
+
+		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
+
+		File[] files = exportLayouts(userGroupId, parameterMap);
+
+		try {
+			importLayouts(userId, parameterMap, files[0], files[1]);
+		}
+		finally {
+			if (files[0] != null) {
+				files[0].delete();
+			}
+
+			if (files[1] != null) {
+				files[1].delete();
+			}
+		}
+	}
+
+	/**
 	 * Copies the user group's layouts to the users who are not already members
 	 * of the user group.
 	 *
@@ -242,7 +273,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated
 	 */
-	public void copyUserGroupLayouts(long userGroupId, long userIds[])
+	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
 
 		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
@@ -277,43 +308,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated
 	 */
-	public void copyUserGroupLayouts(long userGroupIds[], long userId)
+	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws PortalException, SystemException {
 
 		for (long userGroupId : userGroupIds) {
 			if (!userGroupPersistence.containsUser(userGroupId, userId)) {
 				copyUserGroupLayouts(userGroupId, userId);
-			}
-		}
-	}
-
-	/**
-	 * Copies the user group's layout to the user.
-	 *
-	 * @param      userGroupId the primary key of the user group
-	 * @param      userId the primary key of the user
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found or if a portal exception occurred
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated
-	 */
-	public void copyUserGroupLayouts(long userGroupId, long userId)
-		throws PortalException, SystemException {
-
-		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
-
-		File[] files = exportLayouts(userGroupId, parameterMap);
-
-		try {
-			importLayouts(userId, parameterMap, files[0], files[1]);
-		}
-		finally {
-			if (files[0] != null) {
-				files[0].delete();
-			}
-
-			if (files[1] != null) {
-				files[1].delete();
 			}
 		}
 	}

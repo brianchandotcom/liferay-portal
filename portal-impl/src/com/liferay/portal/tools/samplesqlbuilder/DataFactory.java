@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
@@ -38,6 +39,8 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.VirtualHost;
+import com.liferay.portal.model.impl.AccountImpl;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.ContactImpl;
@@ -47,6 +50,7 @@ import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -131,12 +135,14 @@ public class DataFactory {
 
 			initClassNames();
 			initCompany();
+			initAccount();
 			initDefaultUser();
 			initDLFileEntryType();
 			initGuestGroup();
 			initJournalArticle(maxJournalArticleSize);
 			initRoles();
 			initUserNames();
+			initVirtualHost();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -676,6 +682,10 @@ public class DataFactory {
 		return wikiPage;
 	}
 
+	public Account getAccount() {
+		return _account;
+	}
+
 	public Role getAdministratorRole() {
 		return _administratorRole;
 	}
@@ -808,8 +818,25 @@ public class DataFactory {
 		return _userScreenNameCounter;
 	}
 
+	public VirtualHost getVirtualHost() {
+		return _virtualHost;
+	}
+
 	public long getWikiPageClassNameId() {
 		return _wikiPageClassNameId;
+	}
+
+	public void initAccount() {
+		_account = new AccountImpl();
+
+		Date date = new Date();
+
+		_account.setAccountId(_company.getAccountId());
+		_account.setCompanyId(_company.getCompanyId());
+		_account.setCreateDate(date);
+		_account.setModifiedDate(date);
+		_account.setName("Liferay");
+		_account.setLegalName("Liferay, Inc.");
 	}
 
 	public void initClassNames() {
@@ -866,6 +893,9 @@ public class DataFactory {
 
 		_company.setCompanyId(_counter.get());
 		_company.setAccountId(_counter.get());
+		_company.setWebId("liferay.com");
+		_company.setMx("liferay.com");
+		_company.setActive(true);
 	}
 
 	public void initCounters() {
@@ -1094,6 +1124,14 @@ public class DataFactory {
 			new File(_baseDir, dependenciesDir + "last_names.txt"));
 	}
 
+	public void initVirtualHost() throws Exception {
+		_virtualHost = new VirtualHostImpl();
+
+		_virtualHost.setVirtualHostId(_counter.get());
+		_virtualHost.setCompanyId(_company.getCompanyId());
+		_virtualHost.setHostname("localhost");
+	}
+
 	public IntegerWrapper newInteger() {
 		return new IntegerWrapper();
 	}
@@ -1122,6 +1160,7 @@ public class DataFactory {
 		return role;
 	}
 
+	private Account _account;
 	private Role _administratorRole;
 	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
@@ -1163,6 +1202,7 @@ public class DataFactory {
 	private long _userClassNameId;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;
+	private VirtualHost _virtualHost;
 	private long _wikiPageClassNameId;
 
 }

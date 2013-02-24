@@ -2250,18 +2250,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/jodd.jar</file-name>
-		<version>3.3.4</version>
-		<project-name>Jodd</project-name>
-		<project-url>http://jodd.org</project-url>
-		<licenses>
-			<license>
-				<license-name>BSD Style License</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/portal/jodd-wot.jar</file-name>
-		<version>3.3.4</version>
+		<version>3.4.2</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>

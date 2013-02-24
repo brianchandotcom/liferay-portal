@@ -111,7 +111,7 @@ if (fieldParamSelection.equals("0")) {
 					<aui:input label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
 				</div>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
+				<aui:button name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>
@@ -266,4 +266,67 @@ if (fieldParamSelection.equals("0")) {
 			A.one('#<%= randomNamespace + "custom-range" %>').toggle();
 		}
 	);
+</aui:script>
+
+<aui:script use="aui-form-validator">
+	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
+	A.mix(
+		DEFAULTS_FORM_VALIDATOR.STRINGS,
+		{
+			customRange: Liferay.Language.get('search-custom-range-format')
+		},
+		true
+	);
+
+	A.mix(
+		DEFAULTS_FORM_VALIDATOR.RULES,
+		{
+			customRange: function(val, fieldNode, ruleValue) {
+				var customRangeRegexp = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
+
+				var valid = (val != '') && customRangeRegexp && customRangeRegexp.test(val);
+
+				if (valid) {
+					var date = new Date(val);
+
+					valid = A.Lang.isDate(date) && (date !== 'Invalid Date') && !isNaN(date);
+				}
+
+				return valid;
+			}
+		},
+		true
+	);
+
+	var disableSearchButton = function(value) {
+		var button = A.one('#<portlet:namespace />searchCustomRangeButton');
+
+		if (button) {
+			button.set('disabled', value);
+		}
+	};
+
+	var ruleArray = {
+		customRange: true
+	};
+
+	var customRangeValidator = new A.FormValidator({
+		boundingBox: document.<portlet:namespace />fm,
+		fieldContainer: 'div',
+
+		rules: {
+			<portlet:namespace /><%= facet.getFieldName() %>from: ruleArray,
+			<portlet:namespace /><%= facet.getFieldName() %>to: ruleArray
+		},
+
+		on: {
+			errorField: function(event) {
+				disableSearchButton(true);
+			},
+			validField: function(event) {
+				disableSearchButton(false);
+			}
+		}
+	});
 </aui:script>

@@ -54,7 +54,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 		Object source, Object target, Class<?> editable) {
 
 		try {
-			BeanCopy.beans(source, target).includeByTemplate(editable).copy();
+			BeanCopy.beans(source, target).includeAs(editable).copy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

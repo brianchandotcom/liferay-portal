@@ -80,24 +80,36 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getUserId(), title, vocabularyId, serviceContext);
 	}
 
-	public void deleteCategories(long[] categoryIds)
+	public List<AssetCategory> deleteCategories(
+			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		List<AssetCategory> failedCategories = new ArrayList<AssetCategory>();
 
 		for (long categoryId : categoryIds) {
-			AssetCategory category = assetCategoryPersistence.fetchByPrimaryKey(
-				categoryId);
+			try {
+				AssetCategoryPermission.check(
+					getPermissionChecker(), categoryId, ActionKeys.DELETE);
 
-			if (category == null) {
-				continue;
+				assetCategoryLocalService.deleteCategory(categoryId);
 			}
+			catch (PortalException pe) {
+				if (serviceContext.isFailOnPortalException()) {
+					throw pe;
+				}
 
-			AssetCategoryPermission.check(
-				permissionChecker, categoryId, ActionKeys.DELETE);
+				AssetCategory category =
+					assetCategoryPersistence.fetchByPrimaryKey(categoryId);
 
-			assetCategoryLocalService.deleteCategory(category);
+				if (category == null) {
+					category = assetCategoryPersistence.create(categoryId);
+				}
+
+				failedCategories.add(category);
+			}
 		}
+
+		return failedCategories;
 	}
 
 	public void deleteCategory(long categoryId)

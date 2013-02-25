@@ -1,12 +1,10 @@
 <#-- Default user -->
 
-<#assign contact = dataFactory.addContact("", "")>
-<#assign user = dataFactory.addUser(true, "")>
+${sampleSQLBuilder.insertUser(null, null, dataFactory.defaultUser)}
 
-${sampleSQLBuilder.insertUser(contact, null, null, user)}
+<#-- Guest user -->
 
-<#assign contact = dataFactory.addContact("Test", "Test")>
-<#assign user = dataFactory.addUser(false, "test")>
+<#assign user = dataFactory.guestUser>
 
 <#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
 
@@ -15,12 +13,11 @@ ${sampleSQLBuilder.insertGroup(userGroup, [])}
 <#assign groupIds = [dataFactory.guestGroup.groupId]>
 <#assign roleIds = [dataFactory.administratorRole.roleId]>
 
-${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
+${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#-- Sample user -->
 
-<#assign contact = dataFactory.addContact("Sample", "Sample")>
-<#assign user = dataFactory.addUser(false, "Sample")>
+<#assign user = dataFactory.sampleUser>
 
 <#assign sampleUserId = user.userId>
 
@@ -31,7 +28,7 @@ ${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/ho
 <#assign groupIds = 1..maxGroupCount>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 
-${sampleSQLBuilder.insertUser(contact, groupIds, roleIds, user)}
+${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#list groupIds as groupId>
 	<#assign blogsStatsUser = dataFactory.addBlogsStatsUser(groupId, user.userId)>

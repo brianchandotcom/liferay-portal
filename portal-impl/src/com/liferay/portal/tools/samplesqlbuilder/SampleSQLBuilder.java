@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
-import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
@@ -317,13 +316,11 @@ public class SampleSQLBuilder {
 		processTemplate(_tplResourcePermission, context);
 	}
 
-	public void insertUser(
-			Contact contact, List<Long> groupIds, List<Role> roleIds, User user)
+	public void insertUser(List<Long> groupIds, List<Role> roleIds, User user)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
-		put(context, "contact", contact);
 		put(context, "groupIds", groupIds);
 		put(context, "roleIds", roleIds);
 		put(context, "user", user);
@@ -511,9 +508,6 @@ public class SampleSQLBuilder {
 		put(context, "portalUUIDUtil", SequentialUUID.getSequentialUUID());
 		put(context, "sampleSQLBuilder", this);
 		put(context, "stringUtil", StringUtil_IW.getInstance());
-		put(
-			context, "userScreenNameCounter",
-			_dataFactory.getUserScreenNameCounter());
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);

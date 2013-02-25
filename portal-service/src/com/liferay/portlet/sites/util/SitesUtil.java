@@ -207,6 +207,12 @@ public class SitesUtil {
 		return getSites().isLayoutModifiedSinceLastMerge(layout);
 	}
 
+	public static boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		return getSites().isLayoutSetMergeable(group, layoutSet);
+	}
+
 	public static boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
 		return getSites().isLayoutSetPrototypeUpdateable(layoutSet);
 	}

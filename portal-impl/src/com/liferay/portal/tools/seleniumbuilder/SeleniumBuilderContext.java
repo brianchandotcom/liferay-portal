@@ -61,7 +61,7 @@ public class SeleniumBuilderContext {
 
 				_actionNames.add(actionName);
 
-				_actionRootElements.put(fileName, _getRootElement(fileName));
+				_actionRootElements.put(actionName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".function")) {
 				_functionClassNames.add(_getClassName(fileName));
@@ -77,7 +77,8 @@ public class SeleniumBuilderContext {
 
 				_functionNames.add(functionName);
 
-				_functionRootElements.put(fileName, _getRootElement(fileName));
+				_functionRootElements.put(
+					functionName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".macro")) {
 				_macroClassNames.add(_getClassName(fileName));
@@ -93,7 +94,7 @@ public class SeleniumBuilderContext {
 
 				_macroNames.add(macroName);
 
-				_macroRootElements.put(fileName, _getRootElement(fileName));
+				_macroRootElements.put(macroName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".path")) {
 				_actionClassNames.add(_getClassName(fileName, "Action"));
@@ -111,7 +112,7 @@ public class SeleniumBuilderContext {
 
 				_pathNames.add(pathName);
 
-				_pathRootElements.put(fileName, _getRootElement(fileName));
+				_pathRootElements.put(pathName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testcase")) {
 				_testCaseClassNames.add(_getClassName(fileName));
@@ -127,7 +128,8 @@ public class SeleniumBuilderContext {
 
 				_testCaseNames.add(testCaseName);
 
-				_testCaseRootElements.put(fileName, _getRootElement(fileName));
+				_testCaseRootElements.put(
+					testCaseName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".testsuite")) {
 				_testSuiteClassNames.add(_getClassName(fileName));
@@ -143,7 +145,8 @@ public class SeleniumBuilderContext {
 
 				_testSuiteNames.add(testSuiteName);
 
-				_testSuiteRootElements.put(fileName, _getRootElement(fileName));
+				_testSuiteRootElements.put(
+					testSuiteName, _getRootElement(fileName));
 			}
 			else {
 				throw new IllegalArgumentException("Invalid file " + fileName);
@@ -163,8 +166,8 @@ public class SeleniumBuilderContext {
 		return _actionNames;
 	}
 
-	public Element getActionRootElement(String fileName) {
-		return _actionRootElements.get(fileName);
+	public Element getActionRootElement(String actionName) {
+		return _actionRootElements.get(actionName);
 	}
 
 	public Map<String, Element> getActionRootElements() {
@@ -187,8 +190,8 @@ public class SeleniumBuilderContext {
 		return _functionNames;
 	}
 
-	public Element getFunctionRootElement(String fileName) {
-		return _functionRootElements.get(fileName);
+	public Element getFunctionRootElement(String functionName) {
+		return _functionRootElements.get(functionName);
 	}
 
 	public Map<String, Element> getFunctionRootElements() {
@@ -207,8 +210,8 @@ public class SeleniumBuilderContext {
 		return _macroNames;
 	}
 
-	public Element getMacroRootElement(String fileName) {
-		return _macroRootElements.get(fileName);
+	public Element getMacroRootElement(String macroName) {
+		return _macroRootElements.get(macroName);
 	}
 
 	public Map<String, Element> getMacroRootElements() {
@@ -227,8 +230,8 @@ public class SeleniumBuilderContext {
 		return _pathNames;
 	}
 
-	public Element getPathRootElement(String fileName) {
-		return _pathRootElements.get(fileName);
+	public Element getPathRootElement(String pathName) {
+		return _pathRootElements.get(pathName);
 	}
 
 	public Map<String, Element> getPathRootElements() {
@@ -247,8 +250,8 @@ public class SeleniumBuilderContext {
 		return _testCaseNames;
 	}
 
-	public Element getTestCaseRootElement(String fileName) {
-		return _testCaseRootElements.get(fileName);
+	public Element getTestCaseRootElement(String testCaseName) {
+		return _testCaseRootElements.get(testCaseName);
 	}
 
 	public Map<String, Element> getTestCaseRootElements() {
@@ -267,8 +270,8 @@ public class SeleniumBuilderContext {
 		return _testSuiteNames;
 	}
 
-	public Element getTestSuiteRootElement(String fileName) {
-		return _testSuiteRootElements.get(fileName);
+	public Element getTestSuiteRootElement(String testSuiteName) {
+		return _testSuiteRootElements.get(testSuiteName);
 	}
 
 	public Map<String, Element> getTestSuiteRootElements() {

@@ -323,11 +323,11 @@ AUI.add(
 						var content = A.Node.create(responseData);
 
 						if (content) {
+							instance._setSearchResults(content);
+
 							instance._appViewFolders.processData(content);
 
 							instance._appViewSelect.syncDisplayStyleToolbar();
-
-							instance._setSearchResults(content);
 						}
 					},
 
@@ -437,8 +437,6 @@ AUI.add(
 						if (searchInfo) {
 							entriesContainer.empty();
 
-							entriesContainer.plug(A.Plugin.ParseContent);
-
 							entriesContainer.setContent(searchInfo);
 						}
 
@@ -452,8 +450,6 @@ AUI.add(
 							if (searchResults) {
 								searchResults.empty();
 
-								searchResults.plug(A.Plugin.ParseContent);
-
 								searchResults.setContent(fragmentSearchResults.html());
 							}
 						}
@@ -464,8 +460,6 @@ AUI.add(
 							if (!searchInfo) {
 								entriesContainer.empty();
 							}
-
-							entriesContainer.plug(A.Plugin.ParseContent);
 
 							entriesContainer.append(searchResultsContainer);
 						}

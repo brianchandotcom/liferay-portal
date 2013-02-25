@@ -15,24 +15,22 @@ Liferay.Language = {
 
 		var value = instance._cache[url];
 
-		if (value) {
-			return value;
+		if (!value) {
+			AUI().use('io-base').io(
+				url,
+				{
+					on: {
+						complete: function(i, o) {
+							value = o.responseText;
+						}
+					},
+					sync: true,
+					type: 'GET'
+				}
+			);
+
+			instance._cache[url] = value;
 		}
-
-		AUI().use('aui-io').io(
-			url,
-			{
-				sync: true,
-				on: {
-					complete: function(i, o) {
-						value = o.responseText;
-					}
-				},
-				type: 'GET'
-			}
-		);
-
-		instance._cache[url] = value;
 
 		return value;
 	},

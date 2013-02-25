@@ -133,12 +133,6 @@ AUI.add(
 					UI_EVENTS: {},
 					TREEVIEWS: {},
 
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._entriesHandles)).detach();
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -183,20 +177,6 @@ AUI.add(
 								instance.entries.add(entry);
 							}
 						);
-
-						if (!instance._entriesHandles) {
-							var entries = instance.entries;
-
-							instance._entriesHandles = [
-								entries.after(
-									['add', 'replace', 'remove'],
-									function(event) {
-										A.fire('formNavigator:trackChanges', instance.inputNode);
-									},
-									instance
-								)
-							];
-						}
 					},
 
 					_afterTBLFocusedChange: EMPTY_FN,

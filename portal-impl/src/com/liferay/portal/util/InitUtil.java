@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
+import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.util.SpringUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
@@ -106,6 +107,10 @@ public class InitUtil {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		// Security manager
+
+		SecurityManagerUtil.init();
 
 		// Cache registry
 

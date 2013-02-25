@@ -137,6 +137,9 @@ public interface Sites {
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException, SystemException;
 
+	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
+		throws PortalException, SystemException;
+
 	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet);
 
 	public boolean isLayoutUpdateable(Layout layout);

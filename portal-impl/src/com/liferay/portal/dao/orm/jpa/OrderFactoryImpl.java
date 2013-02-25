@@ -16,11 +16,13 @@ package com.liferay.portal.dao.orm.jpa;
 
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class OrderFactoryImpl implements OrderFactory {
 
 	public Order asc(String propertyName) {

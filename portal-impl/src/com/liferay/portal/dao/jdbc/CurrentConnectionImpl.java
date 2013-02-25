@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.jdbc;
 
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.sql.Connection;
 
@@ -26,6 +27,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 /**
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class CurrentConnectionImpl implements CurrentConnection {
 
 	public Connection getConnection(DataSource dataSource) {

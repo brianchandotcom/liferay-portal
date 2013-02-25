@@ -14,6 +14,7 @@
 
 package com.liferay.portal.uuid;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -23,6 +24,7 @@ import java.util.UUID;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PortalUUIDImpl implements PortalUUID {
 
 	public String fromJsSafeUuid(String jsSafeUuid) {

@@ -16,6 +16,7 @@ package com.liferay.portal.portletdisplaytemplate;
 
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistry;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * @author Juan Fernández
  */
+@DoPrivileged
 public class PortletDisplayTemplateHandlerRegistryImpl
 	implements PortletDisplayTemplateHandlerRegistry {
 

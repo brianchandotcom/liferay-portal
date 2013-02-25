@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PrefsProps;
 
 import java.util.Properties;
@@ -24,6 +25,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PrefsPropsImpl implements PrefsProps {
 
 	public boolean getBoolean(long companyId, String name)

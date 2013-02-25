@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 /**
  * @author Jorge Ferrer
  */
+@DoPrivileged
 public class WorkflowPermissionImpl implements WorkflowPermission {
 
 	public Boolean hasPermission(

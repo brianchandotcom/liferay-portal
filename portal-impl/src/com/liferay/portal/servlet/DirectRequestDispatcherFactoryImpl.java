@@ -16,6 +16,7 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -34,6 +35,7 @@ import javax.servlet.ServletRequest;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class DirectRequestDispatcherFactoryImpl
 	implements DirectRequestDispatcherFactory {
 

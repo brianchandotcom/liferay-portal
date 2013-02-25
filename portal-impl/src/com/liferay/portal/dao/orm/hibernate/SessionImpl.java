@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 
 import java.io.Serializable;
 
@@ -29,12 +31,14 @@ import java.sql.Connection;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class SessionImpl implements Session {
 
 	public SessionImpl(org.hibernate.Session session) {
 		_session = session;
 	}
 
+	@NotPrivileged
 	public void clear() throws ORMException {
 		try {
 			_session.clear();
@@ -44,6 +48,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public Connection close() throws ORMException {
 		try {
 			return _session.close();
@@ -53,6 +58,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public boolean contains(Object object) throws ORMException {
 		try {
 			return _session.contains(object);
@@ -97,6 +103,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public void delete(Object object) throws ORMException {
 		try {
 			_session.delete(object);
@@ -106,6 +113,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public void evict(Object object) throws ORMException {
 		try {
 			_session.evict(object);
@@ -115,6 +123,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public void flush() throws ORMException {
 		try {
 			_session.flush();
@@ -124,6 +133,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public Object get(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return _session.get(clazz, id);
@@ -136,6 +146,7 @@ public class SessionImpl implements Session {
 	/**
 	 * @deprecated
 	 */
+	@NotPrivileged
 	public Object get(Class<?> clazz, Serializable id, LockMode lockMode)
 		throws ORMException {
 
@@ -148,10 +159,12 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public Object getWrappedSession() {
 		return _session;
 	}
 
+	@NotPrivileged
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return _session.load(clazz, id);
@@ -161,6 +174,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public Object merge(Object object) throws ORMException {
 		try {
 			return _session.merge(object);
@@ -170,6 +184,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public Serializable save(Object object) throws ORMException {
 		try {
 			return _session.save(object);
@@ -179,6 +194,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@NotPrivileged
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {
 			_session.saveOrUpdate(object);

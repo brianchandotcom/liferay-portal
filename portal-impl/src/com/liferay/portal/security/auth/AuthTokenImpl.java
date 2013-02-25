@@ -14,12 +14,14 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Amos Fong
  */
+@DoPrivileged
 public class AuthTokenImpl extends AuthTokenWrapper {
 
 	public AuthTokenImpl() {

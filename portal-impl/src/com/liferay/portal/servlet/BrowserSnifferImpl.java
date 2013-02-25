@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eduardo Lundgren
  * @author Nate Cavanaugh
  */
+@DoPrivileged
 public class BrowserSnifferImpl implements BrowserSniffer {
 
 	public boolean acceptsGzip(HttpServletRequest request) {

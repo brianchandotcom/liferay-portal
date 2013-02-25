@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -40,6 +41,7 @@ import java.util.Set;
 /**
  * @author Tina Tian
  */
+@DoPrivileged
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	public DefaultTemplateResourceLoader(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.trash;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -25,6 +26,7 @@ import java.util.TreeMap;
 /**
  * @author Alexander Chow
  */
+@DoPrivileged
 public class TrashHandlerRegistryImpl implements TrashHandlerRegistry {
 
 	public TrashHandler getTrashHandler(String className) {

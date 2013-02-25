@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BinarySearch;
@@ -48,6 +49,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Igor Spasic
  */
+@DoPrivileged
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 

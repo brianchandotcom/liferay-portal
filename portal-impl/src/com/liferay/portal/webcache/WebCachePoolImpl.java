@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.webcache.WebCachePool;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class WebCachePoolImpl implements WebCachePool {
 
 	public void afterPropertiesSet() {

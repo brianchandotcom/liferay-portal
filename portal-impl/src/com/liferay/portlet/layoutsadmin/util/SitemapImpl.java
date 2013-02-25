@@ -17,6 +17,7 @@ package com.liferay.portlet.layoutsadmin.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,6 +53,7 @@ import java.util.Set;
  * @author Jorge Ferrer
  * @author Vilmos Papp
  */
+@DoPrivileged
 public class SitemapImpl implements Sitemap {
 
 	public String encodeXML(String input) {

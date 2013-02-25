@@ -17,6 +17,7 @@ package com.liferay.portal.cache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.io.Serializable;
 
@@ -24,6 +25,7 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
+@DoPrivileged
 public class SingleVMPoolImpl implements SingleVMPool {
 
 	public void clear() {

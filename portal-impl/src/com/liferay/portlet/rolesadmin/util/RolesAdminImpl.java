@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.rolesadmin.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -21,6 +22,7 @@ import com.liferay.portal.model.RoleConstants;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class RolesAdminImpl implements RolesAdmin {
 
 	public String getCssClassName(Role role) {

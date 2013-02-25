@@ -16,10 +16,12 @@ package com.liferay.portal.microsofttranslator;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Hugo Huijser
  */
+@DoPrivileged
 public class MicrosoftTranslatorFactoryImpl
 	implements MicrosoftTranslatorFactory {
 

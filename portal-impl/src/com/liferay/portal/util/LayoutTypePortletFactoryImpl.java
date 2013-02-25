@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
@@ -21,6 +22,7 @@ import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class LayoutTypePortletFactoryImpl implements LayoutTypePortletFactory {
 
 	public LayoutTypePortlet create(Layout layout) {

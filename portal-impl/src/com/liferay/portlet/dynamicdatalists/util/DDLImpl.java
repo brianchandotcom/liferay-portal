@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -80,6 +81,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcelllus Tavares
  * @author Eduardo Lundgren
  */
+@DoPrivileged
 public class DDLImpl implements DDL {
 
 	public void addAllReservedEls(

@@ -16,11 +16,13 @@ package com.liferay.portal.dao.orm.jpa;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 	public DynamicQuery forClass(Class<?> clazz) {

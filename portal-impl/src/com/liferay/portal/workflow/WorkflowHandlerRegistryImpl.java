@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistry;
@@ -26,6 +27,7 @@ import java.util.TreeMap;
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
+@DoPrivileged
 public class WorkflowHandlerRegistryImpl implements WorkflowHandlerRegistry {
 
 	public List<WorkflowHandler> getScopeableWorkflowHandlers() {

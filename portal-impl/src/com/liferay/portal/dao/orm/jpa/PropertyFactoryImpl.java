@@ -16,11 +16,13 @@ package com.liferay.portal.dao.orm.jpa;
 
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PropertyFactoryImpl implements PropertyFactory {
 
 	public Property forName(String propertyName) {

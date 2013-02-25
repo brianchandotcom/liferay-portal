@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.passwordpoliciesadmin.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.util.comparator.PasswordPolicyDescriptionComparator;
 import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
@@ -21,6 +22,7 @@ import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PasswordPoliciesAdminImpl implements PasswordPoliciesAdmin {
 
 	public OrderByComparator getPasswordPolicyOrderByComparator(

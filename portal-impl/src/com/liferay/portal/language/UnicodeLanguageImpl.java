@@ -17,6 +17,7 @@ package com.liferay.portal.language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.language.UnicodeLanguage;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 
 import java.util.Locale;
@@ -28,6 +29,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class UnicodeLanguageImpl implements UnicodeLanguage {
 
 	public String format(Locale locale, String pattern, Object argument) {

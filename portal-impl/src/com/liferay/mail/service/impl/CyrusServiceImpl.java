@@ -22,10 +22,12 @@ import com.liferay.mail.service.persistence.CyrusUserUtil;
 import com.liferay.mail.service.persistence.CyrusVirtualUtil;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Alexander Chow
  */
+@DoPrivileged
 public class CyrusServiceImpl implements CyrusService, IdentifiableBean {
 
 	public void addUser(long userId, String emailAddress, String password)

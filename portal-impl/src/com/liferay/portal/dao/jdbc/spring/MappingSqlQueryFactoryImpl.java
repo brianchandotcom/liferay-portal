@@ -17,12 +17,14 @@ package com.liferay.portal.dao.jdbc.spring;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class MappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 
 	public <T> MappingSqlQuery<T> getMappingSqlQuery(

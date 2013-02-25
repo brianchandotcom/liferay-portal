@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -260,6 +261,7 @@ import org.apache.struts.Globals;
  * @author Hugo Huijser
  * @author Juan Fernández
  */
+@DoPrivileged
 public class PortalImpl implements Portal {
 
 	public PortalImpl() {

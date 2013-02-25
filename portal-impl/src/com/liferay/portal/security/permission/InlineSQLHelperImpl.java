@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -35,6 +36,7 @@ import java.util.Set;
  * @author Raymond Augé
  * @author Connor McKay
  */
+@DoPrivileged
 public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	public static final String FILTER_BY_RESOURCE_BLOCK_ID =

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PropsValues;
 
@@ -22,6 +23,7 @@ import com.liferay.portal.util.PropsValues;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 
 	public PermissionCheckerFactoryImpl() throws Exception {

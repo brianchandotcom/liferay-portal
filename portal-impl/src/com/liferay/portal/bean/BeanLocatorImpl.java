@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +40,7 @@ import org.springframework.context.ApplicationContext;
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
  */
+@DoPrivileged
 @SuppressWarnings("deprecation")
 public class BeanLocatorImpl implements BeanLocator {
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +43,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Raymond Augé
  * @author Michael Young
  */
+@DoPrivileged
 public class JournalContentImpl implements JournalContent {
 
 	public void clearCache() {

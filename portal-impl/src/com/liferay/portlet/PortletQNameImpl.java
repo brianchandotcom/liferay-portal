@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PortletQNameImpl implements PortletQName {
 
 	public PortletQNameImpl() {

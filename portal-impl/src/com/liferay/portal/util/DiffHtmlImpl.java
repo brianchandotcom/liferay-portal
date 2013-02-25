@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.DiffHtml;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,6 +47,7 @@ import org.xml.sax.helpers.AttributesImpl;
  *
  * @author Julio Camarero
  */
+@DoPrivileged
 public class DiffHtmlImpl implements DiffHtml {
 
 	/**

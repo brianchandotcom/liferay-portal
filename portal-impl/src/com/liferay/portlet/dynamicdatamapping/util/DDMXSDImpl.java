@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
@@ -86,6 +87,7 @@ import javax.servlet.jsp.PageContext;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
+@DoPrivileged
 public class DDMXSDImpl implements DDMXSD {
 
 	public DDMXSDImpl() {

@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.portal.kernel.security.pacl;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.upgrade.util.ValueMapper;
-import com.liferay.portal.kernel.upgrade.util.ValueMapperFactory;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
-@DoPrivileged
-public class DatabaseValueMapperFactoryImpl implements ValueMapperFactory {
-
-	public ValueMapper getValueMapper() {
-		return new DatabaseValueMapper();
-	}
-
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface NotPrivileged {
 }

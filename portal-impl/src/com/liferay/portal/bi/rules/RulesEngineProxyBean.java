@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.bi.rules.Query;
 import com.liferay.portal.kernel.bi.rules.RulesEngine;
 import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
+@DoPrivileged
 public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 
 	public void add(

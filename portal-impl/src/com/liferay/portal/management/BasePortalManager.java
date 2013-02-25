@@ -17,10 +17,12 @@ package com.liferay.portal.management;
 import com.liferay.portal.kernel.management.ManageAction;
 import com.liferay.portal.kernel.management.ManageActionException;
 import com.liferay.portal.kernel.management.PortalManager;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class BasePortalManager implements PortalManager {
 
 	public <T> T manage(ManageAction<T> manageAction)

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.model.Portlet;
 
 import java.util.Map;
@@ -27,6 +28,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PortletConfigFactoryImpl implements PortletConfigFactory {
 
 	public PortletConfigFactoryImpl() {

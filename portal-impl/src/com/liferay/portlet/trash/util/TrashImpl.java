@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -65,6 +66,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergio González
  * @author Julio Camarero
  */
+@DoPrivileged
 public class TrashImpl implements Trash {
 
 	public void addBaseModelBreadcrumbEntries(

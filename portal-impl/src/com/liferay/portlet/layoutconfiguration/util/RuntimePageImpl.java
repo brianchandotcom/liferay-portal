@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -84,6 +85,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class RuntimePageImpl implements RuntimePage {
 
 	public StringBundler getProcessedTemplate(

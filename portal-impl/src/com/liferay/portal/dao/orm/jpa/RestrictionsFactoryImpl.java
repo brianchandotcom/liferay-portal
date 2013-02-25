@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Collection;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {

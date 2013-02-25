@@ -15,12 +15,14 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Set;
 
 /**
  * @author Michael C. Han
  */
+@DoPrivileged
 public class DefaultAuthenticatedUserUUIDStoreImpl
 	implements AuthenticatedUserUUIDStore {
 

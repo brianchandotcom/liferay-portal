@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.deploy.DeployManager;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -33,6 +34,7 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  */
+@DoPrivileged
 public class DeployManagerImpl implements DeployManager {
 
 	public void deploy(AutoDeploymentContext autoDeploymentContext)

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.xsl;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
@@ -28,6 +29,7 @@ import java.util.Map;
 /**
  * @author Tina Tian
  */
+@DoPrivileged
 public class XSLManager implements TemplateManager {
 
 	public void destroy() {

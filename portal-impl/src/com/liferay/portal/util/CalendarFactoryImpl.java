@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CalendarFactory;
 
 import java.util.Calendar;
@@ -24,6 +25,7 @@ import java.util.TimeZone;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class CalendarFactoryImpl implements CalendarFactory {
 
 	public Calendar getCalendar() {

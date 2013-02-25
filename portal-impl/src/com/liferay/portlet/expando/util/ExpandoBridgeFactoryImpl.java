@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
@@ -21,6 +22,7 @@ import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class ExpandoBridgeFactoryImpl implements ExpandoBridgeFactory {
 
 	public ExpandoBridge getExpandoBridge(long companyId, String className) {

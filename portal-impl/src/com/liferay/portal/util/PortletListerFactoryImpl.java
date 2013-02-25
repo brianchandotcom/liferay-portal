@@ -14,11 +14,14 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+
 /**
  * @author Jorge Ferrer
  * @author Dennis Ju
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class PortletListerFactoryImpl implements PortletListerFactory {
 
 	public PortletLister getPortletLister() {

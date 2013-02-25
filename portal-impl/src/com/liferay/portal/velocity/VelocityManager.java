@@ -14,6 +14,7 @@
 
 package com.liferay.portal.velocity;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
@@ -39,6 +40,7 @@ import org.apache.velocity.util.introspection.SecureUberspector;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class VelocityManager implements TemplateManager {
 
 	public void destroy() {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.googleapps.GGroupManager;
 import com.liferay.portal.kernel.googleapps.GNicknameManager;
 import com.liferay.portal.kernel.googleapps.GUserManager;
 import com.liferay.portal.kernel.googleapps.GoogleAppsFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class GoogleAppsFactoryImpl implements GoogleAppsFactory {
 
 	public GEmailSettingsManager getGEmailSettingsManager(long companyId) {

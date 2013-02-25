@@ -14,6 +14,7 @@
 
 package com.liferay.portal.staging;
 
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.LayoutStaging;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -31,6 +32,7 @@ import java.lang.reflect.InvocationHandler;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class LayoutStagingImpl implements LayoutStaging {
 
 	public LayoutRevision getLayoutRevision(Layout layout) {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -93,6 +94,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Shuyang Zhou
  */
+@DoPrivileged
 public class PortletContainerImpl implements PortletContainer {
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)

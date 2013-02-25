@@ -810,8 +810,9 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive() || themeDisplay.isAjax()) {
+		if (themeDisplay.isAjax() || themeDisplay.isIsolated() ||
+			themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive()) {
 
 			return PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}

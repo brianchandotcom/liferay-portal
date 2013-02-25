@@ -25,6 +25,8 @@ import com.liferay.portal.security.pacl.checker.CheckerUtil;
 
 import java.lang.reflect.Field;
 
+import java.security.Policy;
+
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
 
@@ -44,7 +46,37 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	implements PortalSecurityManager {
 
 	public PortalSecurityManagerImpl() {
+		SecurityManager securityManager = System.getSecurityManager();
+
 		initClasses();
+
+		try {
+			Policy policy = null;
+
+			if (securityManager != null) {
+				policy = Policy.getPolicy();
+			}
+
+			_policy = new PortalPolicy(policy);
+
+			Policy.setPolicy(_policy);
+
+			_policy.refresh();
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to override the original java security policy " +
+						"because sufficient privileges are not granted to " +
+							"Liferay. PACL is not enabled.");
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			return;
+		}
 
 		try {
 			initInitialContextFactoryBuilder();
@@ -61,6 +93,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				_log.warn(e, e);
 			}
 		}
+	}
+
+	public Policy getPolicy() {
+		return _policy;
 	}
 
 	protected void initClasses() {
@@ -127,5 +163,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalSecurityManagerImpl.class.getName());
+
+	private Policy _policy;
 
 }

@@ -93,7 +93,7 @@ if ((category == null) && (mailingList == null)) {
 			try {
 				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
 
-				parentCategoryName = parentCategory.getName();
+				parentCategoryName = HtmlUtil.escape(parentCategory.getName());
 			}
 			catch (NoSuchCategoryException nsce) {
 			}

@@ -147,6 +147,20 @@ public class ServletContextUtil {
 		return lastModified;
 	}
 
+	public static String getResourcePath(URL resourceURL)
+		throws URISyntaxException {
+
+		URI resourceURI = getResourceURI(resourceURL);
+
+		return resourceURI.toString();
+	}
+
+	public static URI getResourceURI(URL resourceURL)
+		throws URISyntaxException {
+
+		return _getResourceURI(resourceURL, resourceURL.getPath());
+	}
+
 	public static String getRootPath(ServletContext servletContext)
 		throws MalformedURLException {
 
@@ -182,7 +196,7 @@ public class ServletContextUtil {
 				path = path.substring(0, index);
 			}
 
-			rootURI = new URI(rootURL.getProtocol(), path, null);
+			rootURI = _getResourceURI(rootURL, path);
 
 			servletContext.setAttribute(URI_ATTRIBUTE, rootURI);
 		}
@@ -266,6 +280,12 @@ public class ServletContextUtil {
 					servletContext.getResourcePaths(resourcePath), classNames);
 			}
 		}
+	}
+
+	private static URI _getResourceURI(URL resourceURL, String resourcePath)
+		throws URISyntaxException {
+
+		return new URI(resourceURL.getProtocol(), resourcePath, null);
 	}
 
 	private static final String _EXT_CLASS = ".class";

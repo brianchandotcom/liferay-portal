@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.servlet.ServletContext;
@@ -40,6 +41,25 @@ import org.springframework.mock.web.MockServletContext;
 @RunWith(PowerMockRunner.class)
 public class ServletContextUtilTest extends PowerMockito {
 
+	public void testGetResourceURIWithEmptyPath() throws Exception {
+		getResourceURI(StringPool.BLANK);
+	}
+
+	@Test(expected = URISyntaxException.class)
+	public void testGetResourceURIWithInvalidCharacters() throws Exception {
+		getResourceURI(_URI_WITH_INVALID_CHARACTERS);
+	}
+
+	@Test
+	public void testGetResourceURIWithReservedCharacters() throws Exception {
+		getResourceURI(_URI_WITH_RESERVED_CHARACTERS);
+	}
+
+	@Test
+	public void testGetResourceURIWithUnreservedCharacters() throws Exception {
+		getResourceURI(_URI_WITH_UNRESERVED_CHARACTERS);
+	}
+
 	@Test
 	public void testGetRootURIWithEmptyPath() throws Exception {
 		getRootURI(StringPool.BLANK, getURI(StringPool.SLASH));
@@ -47,23 +67,31 @@ public class ServletContextUtilTest extends PowerMockito {
 
 	@Test(expected = MalformedURLException.class)
 	public void testGetRootURIWithInvalidCharacters() throws Exception {
-		getRootURI(":?#[]/@", null);
+		getRootURI(_URI_WITH_INVALID_CHARACTERS, null);
 	}
 
 	@Test
 	public void testGetRootURIWithReservedCharacters() throws Exception {
-		String path =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_" +
-				".~";
+		String path = _URI_WITH_RESERVED_CHARACTERS;
 
 		getRootURI(path, getURI(path));
 	}
 
 	@Test
 	public void testGetRootURIWithUnreservedCharacters() throws Exception {
-		String path = "/!$&'()*+,;= ";
+		String path = _URI_WITH_UNRESERVED_CHARACTERS;
 
 		getRootURI(path, getURI(path));
+	}
+
+	protected void getResourceURI(String resourceURL) throws Exception {
+		URL url = getURL(resourceURL);
+
+		URI actualURI = ServletContextUtil.getResourceURI(url);
+
+		URI expectedURI = getURI(url.getPath());
+
+		Assert.assertEquals(expectedURI, actualURI);
 	}
 
 	protected void getRootURI(String path, URI uri) throws Exception {
@@ -103,6 +131,27 @@ public class ServletContextUtilTest extends PowerMockito {
 
 		return uri;
 	}
+
+	protected URL getURL(String path) {
+		URL url = null;
+
+		try {
+			url = new URL("file://" + path + "/dummy");
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return url;
+	}
+
+	private static final String _URI_WITH_INVALID_CHARACTERS = ":?#[]/@";
+
+	private static final String _URI_WITH_RESERVED_CHARACTERS =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+
+	private static final String _URI_WITH_UNRESERVED_CHARACTERS =
+		"/!$&'()*+,;= ";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ServletContextUtilTest.class);

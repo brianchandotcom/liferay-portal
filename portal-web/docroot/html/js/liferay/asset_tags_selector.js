@@ -390,6 +390,8 @@ AUI.add(
 							else {
 								instance.entries.add(text, {});
 							}
+
+							A.fire('formNavigator:trackChanges', instance.inputNode);
 						}
 
 						Liferay.Util.focusFormField(instance.inputNode);

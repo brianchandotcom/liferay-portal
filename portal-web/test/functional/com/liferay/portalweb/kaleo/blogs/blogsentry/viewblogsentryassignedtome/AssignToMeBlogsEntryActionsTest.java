@@ -35,14 +35,14 @@ public class AssignToMeBlogsEntryActionsTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -64,14 +64,14 @@ public class AssignToMeBlogsEntryActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

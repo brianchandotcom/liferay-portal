@@ -107,7 +107,7 @@ public abstract class JSONAction extends Action {
 		}
 		else if (Validator.isNotNull(json)) {
 			response.setCharacterEncoding(StringPool.UTF8);
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setContentType(ContentTypes.APPLICATION_JSON);
 			response.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);

@@ -138,7 +138,7 @@ public class SetupWizardAction extends Action {
 				"database-connection-could-not-be-established");
 		}
 
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+		response.setContentType(ContentTypes.APPLICATION_JSON);
 		response.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);

@@ -761,12 +761,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 
-			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			response.setContentType(ContentTypes.APPLICATION_JSON);
 
 			ServletResponseUtil.write(response, json.toString());
 		}
 		else if (mimeResponse != null) {
-			mimeResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			mimeResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 			PortletResponseUtil.write(mimeResponse, json.toString());
 		}

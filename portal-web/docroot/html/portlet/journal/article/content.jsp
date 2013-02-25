@@ -691,7 +691,8 @@ if (Validator.isNotNull(content)) {
 				ddmResource: '<%= ddmResource %>',
 				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {
-					width: 820
+					modal: true,
+					width: '80%'
 				},
 				groupId: <%= groupId %>,
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',

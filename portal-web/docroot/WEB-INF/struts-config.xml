@@ -600,7 +600,7 @@
 		</action>
 
 		<action path="/dynamic_data_list_display/view_record_set" type="com.liferay.portlet.dynamicdatalists.action.EditRecordSetAction">
-			<forward name="portlet.dynamic_data_lists.edit_record_set" path="portlet.dynamic_data_lists.view_record_set" />
+			<forward name="portlet.dynamic_data_lists.edit_record_set" path="portlet.dynamic_data_list_display.view" />
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
 		</action>
 

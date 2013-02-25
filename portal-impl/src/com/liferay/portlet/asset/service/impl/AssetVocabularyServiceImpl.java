@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -86,17 +87,55 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getUserId(), title, serviceContext);
 	}
 
-	public void deleteVocabularies(long[] vocabularyIds)
+	public long[] deleteVocabularies(
+			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		long[] failedToDeleteIds = new long[0];
+
+		int failedToDeleteIndex = 0;
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		for (long vocabularyId : vocabularyIds) {
-			AssetVocabularyPermission.check(
-				permissionChecker, vocabularyId, ActionKeys.DELETE);
+			AssetVocabulary vocabulary =
+				assetVocabularyPersistence.fetchByPrimaryKey(vocabularyId);
 
-			assetVocabularyLocalService.deleteVocabulary(vocabularyId);
+			if (vocabulary == null) {
+				continue;
+			}
+
+			boolean hasPermission = true;
+
+			if (serviceContext.isFailOnError()) {
+				AssetVocabularyPermission.check(
+					permissionChecker, vocabulary, ActionKeys.DELETE);
+			}
+			else {
+				hasPermission = AssetVocabularyPermission.contains(
+					permissionChecker, vocabulary, ActionKeys.DELETE);
+			}
+
+			if (hasPermission) {
+				assetVocabularyLocalService.deleteVocabulary(vocabulary);
+			}
+			else {
+				if (failedToDeleteIds.length == 0) {
+					failedToDeleteIds = new long[vocabularyIds.length];
+				}
+
+				failedToDeleteIds[failedToDeleteIndex++] = vocabularyId;
+			}
 		}
+
+		if ((failedToDeleteIndex > 0) &&
+			(failedToDeleteIndex < vocabularyIds.length)) {
+
+			failedToDeleteIds = ArrayUtil.subset(
+				failedToDeleteIds, 0, failedToDeleteIndex);
+		}
+
+		return failedToDeleteIds;
 	}
 
 	public void deleteVocabulary(long vocabularyId)

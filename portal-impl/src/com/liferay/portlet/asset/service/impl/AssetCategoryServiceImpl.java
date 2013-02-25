@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -80,8 +81,13 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getUserId(), title, vocabularyId, serviceContext);
 	}
 
-	public void deleteCategories(long[] categoryIds)
+	public long[] deleteCategories(
+			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		long[] failedToDeleteIds = new long[0];
+
+		int failedToDeleteIndex = 0;
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -93,11 +99,37 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				continue;
 			}
 
-			AssetCategoryPermission.check(
-				permissionChecker, categoryId, ActionKeys.DELETE);
+			boolean hasPermission = true;
 
-			assetCategoryLocalService.deleteCategory(category);
+			if (serviceContext.isFailOnError()) {
+				AssetCategoryPermission.check(
+					permissionChecker, categoryId, ActionKeys.DELETE);
+			}
+			else {
+				hasPermission = AssetCategoryPermission.contains(
+					permissionChecker, categoryId, ActionKeys.DELETE);
+			}
+
+			if (hasPermission) {
+				assetCategoryLocalService.deleteCategory(category);
+			}
+			else {
+				if (failedToDeleteIds.length == 0) {
+					failedToDeleteIds = new long[categoryIds.length];
+				}
+
+				failedToDeleteIds[failedToDeleteIndex++] = categoryId;
+			}
 		}
+
+		if ((failedToDeleteIndex > 0) &&
+			(failedToDeleteIndex < categoryIds.length)) {
+
+			failedToDeleteIds = ArrayUtil.subset(
+				failedToDeleteIds, 0, failedToDeleteIndex);
+		}
+
+		return failedToDeleteIds;
 	}
 
 	public void deleteCategory(long categoryId)

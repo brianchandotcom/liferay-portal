@@ -17,7 +17,9 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -271,6 +273,87 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 				"2,\"resource\":{\"id\":2,\"value\":\"foo!\"}},{\"id\":3," +
 					"\"resource\":{\"id\":3,\"value\":\"foo!\"}}]",
 			toJSON(invokerResult));
+	}
+
+	@Test
+	public void testNoProperty() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/bar", params);
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		json = invokerResult.toJSONString();
+
+		Assert.assertEquals("{\"array\":[1,2,3],\"value\":\"value\"}", json);
+	}
+
+	@Test
+	public void testPropertyInner() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/bar", params);
+
+		Map<String, Object> innerParam = new LinkedHashMap<String, Object>();
+
+		params.put("$new1 = /foo/bar", innerParam);
+
+		innerParam.put("$new2 = /foo/hello", Collections.EMPTY_MAP);
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		json = invokerResult.toJSONString();
+
+		Assert.assertEquals(2, StringUtil.count(json, "\"array\":[1,2,3]"));
+		Assert.assertFalse(json.contains("\"secret\""));
+		Assert.assertTrue(json.contains("\"new1\":{"));
+		Assert.assertTrue(json.contains("\"new2\":\"world\""));
+	}
+
+	@Test
+	public void testPropertySimple() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/bar", params);
+
+		Map<String, Object> innerParam = new LinkedHashMap<String, Object>();
+
+		params.put("$new = /foo/hello", innerParam);
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		json = invokerResult.toJSONString();
+
+		Assert.assertTrue(json.contains("\"array\":[1,2,3]"));
+		Assert.assertFalse(json.contains("\"secret\""));
+		Assert.assertTrue(json.contains("\"new\":\"world\""));
 	}
 
 	@Test

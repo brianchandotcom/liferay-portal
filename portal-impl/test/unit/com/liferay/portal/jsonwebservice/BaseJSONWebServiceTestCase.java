@@ -15,7 +15,9 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.json.JSONIncludesManagerImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -47,6 +49,12 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		JSONIncludesManagerUtil jsonIncludesManagerUtil =
+			new JSONIncludesManagerUtil();
+
+		jsonIncludesManagerUtil.setJSONIncludesManager(
+			new JSONIncludesManagerImpl());
 
 		JSONWebServiceActionsManagerUtil jsonWebServiceActionsManagerUtil =
 			new JSONWebServiceActionsManagerUtil();

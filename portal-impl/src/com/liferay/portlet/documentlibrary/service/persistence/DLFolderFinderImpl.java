@@ -713,13 +713,13 @@ public class DLFolderFinderImpl
 		return sql;
 	}
 
-	protected String getFolderId(long folderId, String table) {
+	protected String getFolderId(long folderId, String tableName) {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(table);
+		sb.append(tableName);
 		sb.append(".");
 
-		if (table.equals("DLFolder")) {
+		if (tableName.equals(DLFolderImpl.TABLE_NAME)) {
 			sb.append("parentFolderId");
 		}
 		else {
@@ -731,7 +731,7 @@ public class DLFolderFinderImpl
 		return sb.toString();
 	}
 
-	protected String getMimeTypes(String[] mimeTypes, String table) {
+	protected String getMimeTypes(String[] mimeTypes, String tableName) {
 		if (mimeTypes.length == 0) {
 			return StringPool.BLANK;
 		}
@@ -739,7 +739,7 @@ public class DLFolderFinderImpl
 		StringBundler sb = new StringBundler(mimeTypes.length * 2 - 1);
 
 		for (int i = 0; i < mimeTypes.length; i++) {
-			sb.append(table);
+			sb.append(tableName);
 			sb.append(".mimeType = ?");
 
 			if ((i + 1) != mimeTypes.length) {
@@ -760,10 +760,10 @@ public class DLFolderFinderImpl
 				"[$FILE_VERSION_FOLDER_ID$]", "[$FOLDER_PARENT_FOLDER_ID$]"
 			},
 			new String[] {
-				getFolderId(folderId, "DLFileEntry"),
-				getFolderId(folderId, "DLFileShortcut"),
-				getFolderId(folderId, "DLFileVersion"),
-				getFolderId(folderId, "DLFolder")
+				getFolderId(folderId, DLFileEntryImpl.TABLE_NAME),
+				getFolderId(folderId, DLFileShortcutImpl.TABLE_NAME),
+				getFolderId(folderId, DLFileVersionImpl.TABLE_NAME),
+				getFolderId(folderId, DLFolderImpl.TABLE_NAME)
 			});
 
 		if (includeMountFolders) {

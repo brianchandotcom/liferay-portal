@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -377,7 +377,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	public void search() throws Exception {
 	}
 
-	public void setTemplateContext(TemplateContext templateContext) {
+	public void setTemplate(Template template) {
 	}
 
 	public void sitesDirectory() throws Exception {

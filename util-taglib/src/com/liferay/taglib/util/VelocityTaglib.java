@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
@@ -288,7 +288,7 @@ public interface VelocityTaglib {
 
 	public void search() throws Exception;
 
-	public void setTemplateContext(TemplateContext templateContext);
+	public void setTemplate(Template template);
 
 	public void sitesDirectory() throws Exception;
 

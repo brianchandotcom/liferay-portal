@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
@@ -286,7 +285,7 @@ public class ThemeUtil {
 			servletContext, request,
 			new PipingServletResponse(response, writer), pageContext, template);
 
-		template.put(TemplateContext.WRITER, writer);
+		template.put(TemplateConstants.WRITER, writer);
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);
 
@@ -506,7 +505,7 @@ public class ThemeUtil {
 			servletContext, request,
 			new PipingServletResponse(response, writer), pageContext, template);
 
-		template.put(TemplateContext.WRITER, writer);
+		template.put(TemplateConstants.WRITER, writer);
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -952,7 +953,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		Writer writer = null;
 
 		if (_templateContext != null) {
-			writer = (Writer)_templateContext.get(TemplateContext.WRITER);
+			writer = (Writer)_templateContext.get(TemplateConstants.WRITER);
 		}
 
 		if (writer == null) {

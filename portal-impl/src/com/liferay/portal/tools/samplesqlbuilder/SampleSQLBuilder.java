@@ -134,7 +134,8 @@ public class SampleSQLBuilder {
 
 		_dataFactory = new DataFactory(
 			baseDir, _maxGroupCount, _maxJournalArticleSize,
-			_maxUserToGroupCount);
+			_maxUserToGroupCount, _maxBlogsEntryCount, _maxMBCategoryCount,
+			_maxMBThreadCount, _maxMBMessageCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 

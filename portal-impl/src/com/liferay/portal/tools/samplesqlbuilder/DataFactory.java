@@ -132,12 +132,18 @@ public class DataFactory {
 
 	public DataFactory(
 		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
-		int maxUserToGroupCount) {
+		int maxUserToGroupCount, int maxBlogsEntryCount, int maxMBCategoryCount,
+		int maxMBThreadCount, int maxMBMessageCountPerThread) {
 
 		try {
 			_baseDir = baseDir;
 			_maxGroupsCount = maxGroupsCount;
 			_maxUserToGroupCount = maxUserToGroupCount;
+			_maxBlogsEntryCount = maxBlogsEntryCount;
+
+			_maxMBMessageCount =
+				maxMBCategoryCount * maxMBThreadCount *
+				maxMBMessageCountPerThread;
 
 			initSimpleCounters();
 			initCompany();
@@ -189,11 +195,15 @@ public class DataFactory {
 		return blogsEntry;
 	}
 
-	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId) {
+	public BlogsStatsUser addBlogsStatsUser(long groupId) {
 		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
 
+		blogsStatsUser.setStatsUserId(_counter.get());
 		blogsStatsUser.setGroupId(groupId);
-		blogsStatsUser.setUserId(userId);
+		blogsStatsUser.setCompanyId(_company.getCompanyId());
+		blogsStatsUser.setUserId(_sampleUser.getUserId());
+		blogsStatsUser.setEntryCount(_maxBlogsEntryCount);
+		blogsStatsUser.setLastPostDate(new Date());
 
 		return blogsStatsUser;
 	}
@@ -614,11 +624,14 @@ public class DataFactory {
 		return mbMessage;
 	}
 
-	public MBStatsUser addMBStatsUser(long groupId, long userId) {
+	public MBStatsUser addMBStatsUser(long groupId) {
 		MBStatsUser mbStatsUser = new MBStatsUserImpl();
 
+		mbStatsUser.setStatsUserId(_counter.get());
 		mbStatsUser.setGroupId(groupId);
-		mbStatsUser.setUserId(userId);
+		mbStatsUser.setUserId(_sampleUser.getUserId());
+		mbStatsUser.setMessageCount(_maxMBMessageCount);
+		mbStatsUser.setLastPostDate(new Date());
 
 		return mbStatsUser;
 	}
@@ -1272,7 +1285,9 @@ public class DataFactory {
 	private List<String> _lastNames;
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
+	private int _maxBlogsEntryCount;
 	private int _maxGroupsCount;
+	private int _maxMBMessageCount;
 	private int _maxUserToGroupCount;
 	private long _mbMessageClassNameId;
 	private Role _organizationAdministratorRole;

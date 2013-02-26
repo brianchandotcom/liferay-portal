@@ -39,10 +39,7 @@ public class AssertVisible2Test extends BaseTestCase {
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText(
-				"//a[@id='_130_authenticationLink']", "Authentication"));
-		selenium.clickAt("//a[@id='_130_authenticationLink']",
-			RuntimeVariables.replace("Authentication"));
+		selenium.waitForElementPresent("//input[@id='_130_addButton']");
 		assertTrue(selenium.isVisible("//input[@id='_130_addButton']"));
 	}
 }

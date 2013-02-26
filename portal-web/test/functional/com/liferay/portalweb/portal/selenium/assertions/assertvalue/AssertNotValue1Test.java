@@ -39,10 +39,6 @@ public class AssertNotValue1Test extends BaseTestCase {
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_130_generalLink']",
-				"General"));
-		selenium.clickAt("//a[@id='_130_generalLink']",
-			RuntimeVariables.replace("General"));
 		assertNotEquals("Catherine", selenium.getValue("//input[@value='Save']"));
 	}
 }

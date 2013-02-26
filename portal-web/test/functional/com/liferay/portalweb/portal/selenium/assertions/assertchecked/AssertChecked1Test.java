@@ -39,10 +39,8 @@ public class AssertChecked1Test extends BaseTestCase {
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_130_generalLink']",
-				"General"));
-		selenium.clickAt("//a[@id='_130_generalLink']",
-			RuntimeVariables.replace("General"));
+		selenium.waitForVisible(
+			"//input[@id='_130_cdn.dynamic.resources.enabledCheckbox']");
 		selenium.check(
 			"//input[@id='_130_cdn.dynamic.resources.enabledCheckbox']");
 		assertTrue(selenium.isChecked(

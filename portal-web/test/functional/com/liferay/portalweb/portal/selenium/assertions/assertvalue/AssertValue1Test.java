@@ -39,10 +39,6 @@ public class AssertValue1Test extends BaseTestCase {
 		selenium.clickAt("link=Portal Settings",
 			RuntimeVariables.replace("Portal Settings"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_130_generalLink']",
-				"General"));
-		selenium.clickAt("//a[@id='_130_generalLink']",
-			RuntimeVariables.replace("General"));
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 	}
 }

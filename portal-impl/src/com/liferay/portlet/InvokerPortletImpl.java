@@ -499,35 +499,45 @@ public class InvokerPortletImpl implements InvokerPortlet {
 			}
 		}
 
-		for (String portletFilterClassName :
-				PropsValues.PORTLET_FILTERS_SYSTEM) {
+		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
-			com.liferay.portal.model.PortletFilter portletFilterModel =
-				new PortletFilterImpl(
-					portletFilterClassName, portletFilterClassName,
-					Collections.<String>emptySet(),
-					Collections.<String, String>emptyMap(), portletApp);
+		try {
+			ClassLoaderUtil.setContextClassLoader(
+				ClassLoaderUtil.getPortalClassLoader());
 
-			PortletFilter portletFilter = PortletFilterFactory.create(
-				portletFilterModel, _portletContextImpl);
+			for (String portletFilterClassName :
+					PropsValues.PORTLET_FILTERS_SYSTEM) {
 
-			_systemPortletFilters.add(portletFilter);
+				com.liferay.portal.model.PortletFilter portletFilterModel =
+					new PortletFilterImpl(
+						portletFilterClassName, portletFilterClassName,
+						Collections.<String>emptySet(),
+						Collections.<String, String>emptyMap(), portletApp);
 
-			if (portletFilter instanceof ActionFilter) {
-				_actionFilters.add((ActionFilter)portletFilter);
+				PortletFilter portletFilter = PortletFilterFactory.create(
+					portletFilterModel, _portletContextImpl);
+
+				_systemPortletFilters.add(portletFilter);
+
+				if (portletFilter instanceof ActionFilter) {
+					_actionFilters.add((ActionFilter)portletFilter);
+				}
+
+				if (portletFilter instanceof EventFilter) {
+					_eventFilters.add((EventFilter)portletFilter);
+				}
+
+				if (portletFilter instanceof RenderFilter) {
+					_renderFilters.add((RenderFilter)portletFilter);
+				}
+
+				if (portletFilter instanceof ResourceFilter) {
+					_resourceFilters.add((ResourceFilter)portletFilter);
+				}
 			}
-
-			if (portletFilter instanceof EventFilter) {
-				_eventFilters.add((EventFilter)portletFilter);
-			}
-
-			if (portletFilter instanceof RenderFilter) {
-				_renderFilters.add((RenderFilter)portletFilter);
-			}
-
-			if (portletFilter instanceof ResourceFilter) {
-				_resourceFilters.add((ResourceFilter)portletFilter);
-			}
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(classLoader);
 		}
 	}
 

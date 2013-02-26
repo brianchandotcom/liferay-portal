@@ -199,8 +199,8 @@ public class DataFactory {
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(user.getUserId());
 		contact.setUserName(user.getFullName());
-		contact.setCreateDate(newDate());
-		contact.setModifiedDate(newDate());
+		contact.setCreateDate(nextFutureDate());
+		contact.setModifiedDate(nextFutureDate());
 		contact.setClassNameId(_userClassNameId);
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_company.getAccountId());
@@ -209,7 +209,7 @@ public class DataFactory {
 		contact.setFirstName(user.getFirstName());
 		contact.setLastName(user.getLastName());
 		contact.setMale(true);
-		contact.setBirthday(newDate());
+		contact.setBirthday(nextFutureDate());
 
 		return contact;
 	}
@@ -256,7 +256,7 @@ public class DataFactory {
 		ddlRecord.setGroupId(groupId);
 		ddlRecord.setCompanyId(companyId);
 		ddlRecord.setUserId(userId);
-		ddlRecord.setCreateDate(newDate());
+		ddlRecord.setCreateDate(nextFutureDate());
 		ddlRecord.setRecordSetId(ddlRecordSetId);
 
 		return ddlRecord;
@@ -322,7 +322,7 @@ public class DataFactory {
 		ddmStructure.setGroupId(groupId);
 		ddmStructure.setCompanyId(companyId);
 		ddmStructure.setUserId(userId);
-		ddmStructure.setCreateDate(newDate());
+		ddmStructure.setCreateDate(nextFutureDate());
 		ddmStructure.setClassNameId(classNameId);
 
 		return ddmStructure;
@@ -352,7 +352,7 @@ public class DataFactory {
 		dlFileEntry.setGroupId(groupId);
 		dlFileEntry.setCompanyId(companyId);
 		dlFileEntry.setUserId(userId);
-		dlFileEntry.setCreateDate(newDate());
+		dlFileEntry.setCreateDate(nextFutureDate());
 		dlFileEntry.setRepositoryId(groupId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setName(name);
@@ -409,7 +409,7 @@ public class DataFactory {
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(companyId);
 		dlFolder.setUserId(userId);
-		dlFolder.setCreateDate(newDate());
+		dlFolder.setCreateDate(nextFutureDate());
 		dlFolder.setRepositoryId(groupId);
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
@@ -922,8 +922,8 @@ public class DataFactory {
 
 		_account.setAccountId(_company.getAccountId());
 		_account.setCompanyId(_company.getCompanyId());
-		_account.setCreateDate(newDate());
-		_account.setModifiedDate(newDate());
+		_account.setCreateDate(nextFutureDate());
+		_account.setModifiedDate(nextFutureDate());
 		_account.setName("Liferay");
 		_account.setLegalName("Liferay, Inc.");
 	}
@@ -934,8 +934,8 @@ public class DataFactory {
 		_defaultDLFileEntryType.setUuid(SequentialUUID.generate());
 		_defaultDLFileEntryType.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryType.setCreateDate(newDate());
-		_defaultDLFileEntryType.setModifiedDate(newDate());
+		_defaultDLFileEntryType.setCreateDate(nextFutureDate());
+		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}
@@ -1046,7 +1046,7 @@ public class DataFactory {
 
 	public void initSimpleCounters() {
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
-		_dlDateCounter = new SimpleCounter();
+		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -1092,10 +1092,6 @@ public class DataFactory {
 		return userName;
 	}
 
-	protected Date newDate() {
-		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
-	}
-
 	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
@@ -1124,12 +1120,12 @@ public class DataFactory {
 		user.setUuid(SequentialUUID.generate());
 		user.setUserId(userId);
 		user.setCompanyId(_company.getCompanyId());
-		user.setCreateDate(newDate());
-		user.setModifiedDate(newDate());
+		user.setCreateDate(nextFutureDate());
+		user.setModifiedDate(nextFutureDate());
 		user.setDefaultUser(defaultUser);
 		user.setContactId(_counter.get());
 		user.setPassword("test");
-		user.setPasswordModifiedDate(newDate());
+		user.setPasswordModifiedDate(nextFutureDate());
 		user.setReminderQueryQuestion("What is your screen name?");
 		user.setReminderQueryAnswer(screenName);
 		user.setEmailAddress(screenName + "@liferay.com");
@@ -1138,20 +1134,25 @@ public class DataFactory {
 		user.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setLoginDate(newDate());
-		user.setLastLoginDate(newDate());
-		user.setLastFailedLoginDate(newDate());
-		user.setLockoutDate(newDate());
+		user.setLoginDate(nextFutureDate());
+		user.setLastLoginDate(nextFutureDate());
+		user.setLastFailedLoginDate(nextFutureDate());
+		user.setLockoutDate(nextFutureDate());
 		user.setAgreedToTermsOfUse(true);
 		user.setEmailAddressVerified(true);
 
 		return user;
 	}
 
+	protected Date nextFutureDate() {
+		return new Date(
+			_baseFutureTime + (_futureDateCounter.get() * Time.SECOND));
+	}
+
 	private Account _account;
 	private Role _administratorRole;
-	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
+	private long _baseFutureTime = System.currentTimeMillis() + Time.YEAR;
 	private long _blogsEntryClassNameId;
 	private List<ClassName> _classNames;
 	private Company _company;
@@ -1160,9 +1161,9 @@ public class DataFactory {
 	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
-	private SimpleCounter _dlDateCounter;
 	private long _dlFileEntryClassNameId;
 	private List<String> _firstNames;
+	private SimpleCounter _futureDateCounter;
 	private long _groupClassNameId;
 	private Group _guestGroup;
 	private Role _guestRole;

@@ -43,4 +43,6 @@ public interface TemplateConstants {
 	public static final String THEME_LOADER_SEPARATOR =
 		"_THEME_LOADER_CONTEXT_";
 
+	public static final String WRITER = "writer";
+
 }

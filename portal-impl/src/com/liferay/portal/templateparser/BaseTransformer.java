@@ -17,12 +17,12 @@ package com.liferay.portal.templateparser;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.Constants;
@@ -66,11 +66,11 @@ public abstract class BaseTransformer implements Transformer {
 			return null;
 		}
 
-		TemplateContext templateContext = getTemplateContext(
+		Template template = getTemplate(
 			themeDisplay, contextObjects, script, langType);
 
 		TemplateParser templateParser = new TemplateParser(
-			themeDisplay, contextObjects, templateContext);
+			themeDisplay, contextObjects, template);
 
 		return templateParser.transform();
 	}
@@ -170,12 +170,11 @@ public abstract class BaseTransformer implements Transformer {
 			output = LocalizationUtil.getLocalization(xml, languageId);
 		}
 		else {
-			TemplateContext templateContext = getTemplateContext(
+			Template template = getTemplate(
 				themeDisplay, tokens, languageId, xml, script, langType);
 
 			TemplateParser templateParser = new TemplateParser(
-				themeDisplay, tokens, viewMode, languageId, xml,
-				templateContext);
+				themeDisplay, tokens, viewMode, languageId, xml, template);
 
 			output = templateParser.transform();
 		}
@@ -222,7 +221,7 @@ public abstract class BaseTransformer implements Transformer {
 		return null;
 	}
 
-	protected TemplateContext getTemplateContext(
+	protected Template getTemplate(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			String script, String langType)
 		throws Exception {
@@ -256,7 +255,7 @@ public abstract class BaseTransformer implements Transformer {
 			templateContextType);
 	}
 
-	protected TemplateContext getTemplateContext(
+	protected Template getTemplate(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String languageId, String xml, String script, String langType)
 		throws Exception {

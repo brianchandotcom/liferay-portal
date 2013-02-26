@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -315,12 +314,10 @@ public class VelocityTemplateTest {
 		}
 
 		@Override
-		public void prepare(
-			TemplateContext templateContext, HttpServletRequest request) {
+		public void prepare(Template template, HttpServletRequest request) {
+			String testValue = (String)template.get(_TEST_KEY);
 
-			String testValue = (String)templateContext.get(_TEST_KEY);
-
-			templateContext.put(testValue, testValue);
+			template.put(testValue, testValue);
 		}
 
 	}

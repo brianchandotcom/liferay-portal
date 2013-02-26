@@ -16,7 +16,7 @@ package com.liferay.portal.theme;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,8 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 public class NavItem implements Serializable {
 
 	public static List<NavItem> fromLayouts(
-		HttpServletRequest request, List<Layout> layouts,
-		TemplateContext templateContext) {
+		HttpServletRequest request, List<Layout> layouts, Template template) {
 
 		if (layouts == null) {
 			return null;
@@ -50,21 +49,20 @@ public class NavItem implements Serializable {
 		List<NavItem> navItems = new ArrayList<NavItem>(layouts.size());
 
 		for (Layout layout : layouts) {
-			navItems.add(new NavItem(request, layout, templateContext));
+			navItems.add(new NavItem(request, layout, template));
 		}
 
 		return navItems;
 	}
 
 	public NavItem(
-		HttpServletRequest request, Layout layout,
-		TemplateContext templateContext) {
+		HttpServletRequest request, Layout layout, Template template) {
 
 		_request = request;
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 		_layout = layout;
-		_templateContext = templateContext;
+		_template = template;
 	}
 
 	public List<NavItem> getChildren() throws Exception {
@@ -72,7 +70,7 @@ public class NavItem implements Serializable {
 			List<Layout> layouts = _layout.getChildren(
 				_themeDisplay.getPermissionChecker());
 
-			_children = fromLayouts(_request, layouts, _templateContext);
+			_children = fromLayouts(_request, layouts, _template);
 		}
 
 		return _children;
@@ -139,10 +137,9 @@ public class NavItem implements Serializable {
 	}
 
 	public void icon() throws Exception {
-		Object velocityTaglib = _templateContext.get("theme");
+		Object velocityTaglib = _template.get("theme");
 
-		Method method = (Method)_templateContext.get(
-			"velocityTaglib#layoutIcon");
+		Method method = (Method)_template.get("velocityTaglib#layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
 	}
@@ -161,7 +158,7 @@ public class NavItem implements Serializable {
 	private List<NavItem> _children;
 	private Layout _layout;
 	private HttpServletRequest _request;
-	private TemplateContext _templateContext;
+	private Template _template;
 	private ThemeDisplay _themeDisplay;
 
 }

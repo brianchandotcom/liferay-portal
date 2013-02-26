@@ -18,7 +18,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -95,9 +96,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	public VelocityTaglibImpl(
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response, PageContext pageContext,
-		TemplateContext templateContext) {
+		Template template) {
 
-		init(servletContext, request, response, pageContext, templateContext);
+		init(servletContext, request, response, pageContext, template);
 	}
 
 	public void actionURL(long plid, String portletName, String queryString)
@@ -865,8 +866,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		searchTag.runTag();
 	}
 
-	public void setTemplateContext(TemplateContext templateContext) {
-		_templateContext = templateContext;
+	public void setTemplate(Template template) {
+		_template = template;
 	}
 
 	public void sitesDirectory() throws Exception {
@@ -937,13 +938,13 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	protected VelocityTaglibImpl init(
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response, PageContext pageContext,
-		TemplateContext templateContext) {
+		Template template) {
 
 		_servletContext = servletContext;
 		_request = request;
 		_response = response;
 		_pageContext = pageContext;
-		_templateContext = templateContext;
+		_template = template;
 
 		return this;
 	}
@@ -951,8 +952,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	protected void setUp(TagSupport tagSupport) throws Exception {
 		Writer writer = null;
 
-		if (_templateContext != null) {
-			writer = (Writer)_templateContext.get(TemplateContext.WRITER);
+		if (_template != null) {
+			writer = (Writer)_template.get(TemplateConstants.WRITER);
 		}
 
 		if (writer == null) {
@@ -966,6 +967,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
-	private TemplateContext _templateContext;
+	private Template _template;
 
 }

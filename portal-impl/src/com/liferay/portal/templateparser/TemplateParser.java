@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -55,23 +54,23 @@ public class TemplateParser {
 
 	public TemplateParser(
 		ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-		TemplateContext templateContext) {
+		Template template) {
 
 		_themeDisplay = themeDisplay;
 		_contextObjects = contextObjects;
-		_templateContext = templateContext;
+		_template = template;
 	}
 
 	public TemplateParser(
 		ThemeDisplay themeDisplay, Map<String, String> tokens, String viewMode,
-		String languageId, String xml, TemplateContext templateContext) {
+		String languageId, String xml, Template template) {
 
 		_themeDisplay = themeDisplay;
 		_tokens = tokens;
 		_viewMode = viewMode;
 		_languageId = languageId;
 		_xml = xml;
-		_templateContext = templateContext;
+		_template = template;
 	}
 
 	public String transform() throws TransformException {
@@ -90,28 +89,27 @@ public class TemplateParser {
 
 				if (templateNodes != null) {
 					for (TemplateNode templateNode : templateNodes) {
-						_templateContext.put(
-							templateNode.getName(), templateNode);
+						_template.put(templateNode.getName(), templateNode);
 					}
 				}
 
 				Element requestElement = rootElement.element("request");
 
-				_templateContext.put(
+				_template.put(
 					"request", insertRequestVariables(requestElement));
 
-				_templateContext.put("xmlRequest", requestElement.asXML());
+				_template.put("xmlRequest", requestElement.asXML());
 			}
 
 			if (_contextObjects != null) {
 				for (String key : _contextObjects.keySet()) {
-					_templateContext.put(key, _contextObjects.get(key));
+					_template.put(key, _contextObjects.get(key));
 				}
 			}
 
-			populateTemplateContext(_templateContext);
+			populateTemplateContext(_template);
 
-			load = mergeTemplate(_templateContext, unsyncStringWriter);
+			load = mergeTemplate(_template, unsyncStringWriter);
 		}
 		catch (Exception e) {
 			if (e instanceof DocumentException) {
@@ -296,44 +294,39 @@ public class TemplateParser {
 	}
 
 	protected boolean mergeTemplate(
-			TemplateContext templateContext,
-			UnsyncStringWriter unsyncStringWriter)
+			Template template, UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
-
-		Template template = (Template)templateContext;
 
 		VelocityTaglib velocityTaglib = (VelocityTaglib)template.get(
 			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
 
 		if (velocityTaglib != null) {
-			velocityTaglib.setTemplateContext(templateContext);
+			velocityTaglib.setTemplate(template);
 		}
 
 		return template.processTemplate(unsyncStringWriter);
 	}
 
-	protected void populateTemplateContext(TemplateContext templateContext)
-		throws Exception {
-
-		templateContext.put("company", getCompany());
-		templateContext.put("companyId", getCompanyId());
-		templateContext.put("device", getDevice());
-		templateContext.put("groupId", getGroupId());
-		templateContext.put("journalTemplatesPath", getJournalTemplatesPath());
+	protected void populateTemplateContext(Template template) throws Exception {
+		template.put("company", getCompany());
+		template.put("companyId", getCompanyId());
+		template.put("device", getDevice());
+		template.put("groupId", getGroupId());
+		template.put("journalTemplatesPath", getJournalTemplatesPath());
 
 		Locale locale = LocaleUtil.fromLanguageId(_languageId);
 
-		templateContext.put("locale", locale);
+		template.put("locale", locale);
 
-		templateContext.put(
+		template.put(
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
-		templateContext.put("viewMode", _viewMode);
+		template.put("viewMode", _viewMode);
 
 		String randomNamespace =
 			PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
 				StringPool.UNDERLINE;
 
-		templateContext.put("randomNamespace", randomNamespace);
+		template.put("randomNamespace", randomNamespace);
 	}
 
 	protected String stripCDATA(String s) {
@@ -350,7 +343,7 @@ public class TemplateParser {
 
 	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
 	private String _languageId;
-	private TemplateContext _templateContext;
+	private Template _template;
 	private ThemeDisplay _themeDisplay;
 	private Map<String, String> _tokens;
 	private String _viewMode;

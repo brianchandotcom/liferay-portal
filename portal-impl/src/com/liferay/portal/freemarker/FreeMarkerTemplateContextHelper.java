@@ -14,8 +14,8 @@
 
 package com.liferay.portal.freemarker;
 
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -47,10 +47,8 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	}
 
 	@Override
-	public void prepare(
-		TemplateContext templateContext, HttpServletRequest request) {
-
-		super.prepare(templateContext, request);
+	public void prepare(Template template, HttpServletRequest request) {
+		super.prepare(template, request);
 
 		// Theme display
 
@@ -65,12 +63,12 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 			String servletContextName = GetterUtil.getString(
 				theme.getServletContextName());
 
-			templateContext.put(
+			template.put(
 				"fullCssPath",
 				StringPool.SLASH + servletContextName +
 					theme.getFreeMarkerTemplateLoader() + theme.getCssPath());
 
-			templateContext.put(
+			template.put(
 				"fullTemplatesPath",
 				StringPool.SLASH + servletContextName +
 					theme.getFreeMarkerTemplateLoader() +
@@ -78,7 +76,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 			// Init
 
-			templateContext.put(
+			template.put(
 				"init",
 				StringPool.SLASH + themeDisplay.getPathContext() +
 					TemplateConstants.SERVLET_SEPARATOR +
@@ -96,7 +94,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 				Object value = entry.getValue();
 
 				if (Validator.isNotNull(key)) {
-					templateContext.put(key, value);
+					template.put(key, value);
 				}
 			}
 		}

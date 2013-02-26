@@ -85,12 +85,12 @@ public abstract class AbstractTemplate implements Template {
 			}
 		}
 
-		Writer oldWriter = (Writer)get(WRITER);
+		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
 		try {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			put(WRITER, unsyncStringWriter);
+			put(TemplateConstants.WRITER, unsyncStringWriter);
 
 			processTemplate(templateResource, unsyncStringWriter);
 
@@ -101,14 +101,14 @@ public abstract class AbstractTemplate implements Template {
 			return true;
 		}
 		catch (Exception e) {
-			put(WRITER, writer);
+			put(TemplateConstants.WRITER, writer);
 
 			handleException(e, writer);
 
 			return false;
 		}
 		finally {
-			put(WRITER, oldWriter);
+			put(TemplateConstants.WRITER, oldWriter);
 		}
 	}
 

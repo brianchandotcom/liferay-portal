@@ -65,24 +65,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 @PrepareForTest({PortletLocalServiceUtil.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
-
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-
-		// Delete and readd to ensure a different layout ID (not ID or UUID).
-		// See LPS-32132.
-
-		LayoutLocalServiceUtil.deleteLayout(
-			_layout, true, new ServiceContext());
-
-		_layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
-	}
+public class AssetPublisherExportImportTest extends
+	BasePortletExportImportTestCase {
 
 	@Test
 	public void testChildLayoutScopeIds() throws Exception {
@@ -274,42 +258,15 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			StringUtil.merge(portletPreferences.getValues("scopeIds", null)));
 	}
 
-	protected String addAssetPublisherPortletToLayout(
-			long userId, Layout layout, String columnId,
-			Map<String, String[]> preferenceMap)
-		throws Exception {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		String assetPublisherPortletId = layoutTypePortlet.addPortletId(
-			userId, PortletKeys.ASSET_PUBLISHER, columnId, -1);
-
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		PortletPreferences portletPreferences = getPortletPreferences(
-			layout.getCompanyId(), layout.getPlid(), assetPublisherPortletId);
-
-		for (String key : preferenceMap.keySet()) {
-			portletPreferences.setValues(key, preferenceMap.get(key));
-		}
-
-		updatePortletPreferences(
-			layout.getPlid(), assetPublisherPortletId, portletPreferences);
-
-		return assetPublisherPortletId;
-	}
-
 	protected PortletPreferences getImportedPortletPreferences(
 			Layout layout, Map<String, String[]> preferenceMap)
 		throws Exception {
 
 		// Export site LAR
 
-		String assetPublisherPortletId = addAssetPublisherPortletToLayout(
-			TestPropsValues.getUserId(), _layout, "column-1", preferenceMap);
+		String assetPublisherPortletId = addPortletToLayout(
+			TestPropsValues.getUserId(), _layout, PortletKeys.ASSET_PUBLISHER,
+			"column-1", preferenceMap);
 
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
@@ -317,7 +274,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
 
-		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		_larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			layout.getGroupId(), layout.isPrivateLayout(), null, parameterMap,
 			null, null);
 
@@ -327,7 +284,7 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), _importedGroup.getGroupId(),
-			layout.isPrivateLayout(), parameterMap, file);
+			layout.isPrivateLayout(), parameterMap, _larFile);
 
 		_importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			layout.getUuid(), _importedGroup.getGroupId(),
@@ -339,29 +296,5 @@ public class AssetPublisherExportImportTest extends BaseExportImportTestCase {
 			_importedLayout.getCompanyId(), _importedLayout.getPlid(),
 			assetPublisherPortletId);
 	}
-
-	protected PortletPreferences getPortletPreferences(
-			long companyId, long plid, String portletId)
-		throws Exception {
-
-		return PortletPreferencesLocalServiceUtil.getPreferences(
-			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-	}
-
-	protected void updatePortletPreferences(
-			long plid, String portletId, PortletPreferences portletPreferences)
-		throws Exception {
-
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-			portletPreferences);
-	}
-
-	private Group _group;
-	private Group _importedGroup;
-	private Layout _importedLayout;
-	private Layout _layout;
 
 }

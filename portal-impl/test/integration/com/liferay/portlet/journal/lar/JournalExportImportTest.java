@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.lar.PortletImporter;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -64,14 +62,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class JournalExportImportTest {
-
-	@After
-	public void tearDown() throws Exception {
-		if ((_larFile != null) && _larFile.exists()) {
-			FileUtil.delete(_larFile);
-		}
-	}
+public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Test
 	public void testExportImportBasicJournalContent() throws Exception {
@@ -86,34 +77,27 @@ public class JournalExportImportTest {
 	protected void exportImportJournalArticle(boolean structuredContent)
 		throws Exception {
 
-		// Add a site and a layout
-
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString());
-
-		// Add a Journal Article and DDM Structure and Template
+		// Add a Journal Article, DDM Structure and Template
 
 		JournalArticle article = null;
 		DDMStructure ddmStructure = null;
 		DDMTemplate ddmTemplate = null;
 
 		if (structuredContent) {
-			ddmStructure = JournalTestUtil.addDDMStructure(group.getGroupId());
+			ddmStructure = JournalTestUtil.addDDMStructure(_group.getGroupId());
 
 			ddmTemplate = JournalTestUtil.addDDMTemplate(
-				group.getGroupId(), ddmStructure.getStructureId());
+				_group.getGroupId(), ddmStructure.getStructureId());
 
 			String content = JournalTestUtil.getSampleStructuredContent();
 
 			article = JournalTestUtil.addArticleWithXMLContent(
-				group.getGroupId(), content, ddmStructure.getStructureKey(),
+				_group.getGroupId(), content, ddmStructure.getStructureKey(),
 				ddmTemplate.getTemplateKey());
 		}
 		else {
 			article = JournalTestUtil.addArticle(
-				group.getGroupId(), ServiceTestUtil.randomString(),
+				_group.getGroupId(), ServiceTestUtil.randomString(),
 				ServiceTestUtil.randomString());
 		}
 
@@ -122,41 +106,39 @@ public class JournalExportImportTest {
 		// Export Portlet Content
 
 		Map<String, String[]> parameterMap = getExportParameterMap(
-			group.getGroupId(), layout.getPlid());
+			_group.getGroupId(), _layout.getPlid());
 
 		_larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			layout.getPlid(), group.getGroupId(), PortletKeys.JOURNAL,
+			_layout.getPlid(), _group.getGroupId(), PortletKeys.JOURNAL,
 			parameterMap, null, null);
 
-		// Remove the site
+		// Add another site and _layout
 
-		GroupLocalServiceUtil.deleteGroup(group.getGroupId());
+		_importedGroup = GroupTestUtil.addGroup();
 
-		// Add another site and layout
-
-		group = GroupTestUtil.addGroup();
-
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString());
+		_importedLayout = LayoutTestUtil.addLayout(
+			_importedGroup.getGroupId(), ServiceTestUtil.randomString());
 
 		int initialArticlesCount =
-			JournalArticleLocalServiceUtil.getArticlesCount(group.getGroupId());
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				_importedGroup.getGroupId());
 
 		// Import Portlet Content
 
 		PortletImporter portletImporter = new PortletImporter();
 
 		parameterMap = getImportParameterMap(
-			group.getGroupId(), layout.getPlid());
+			_importedGroup.getGroupId(), _importedLayout.getPlid());
 
 		portletImporter.importPortletInfo(
-			TestPropsValues.getUserId(), layout.getPlid(), group.getGroupId(),
-			PortletKeys.JOURNAL, parameterMap, _larFile);
+			TestPropsValues.getUserId(), _importedLayout.getPlid(),
+			_importedGroup.getGroupId(), PortletKeys.JOURNAL, parameterMap,
+			_larFile);
 
 		// Verify there is just one new article in the new site
 
 		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			group.getGroupId());
+			_importedGroup.getGroupId());
 
 		Assert.assertEquals(initialArticlesCount + 1, articlesCount);
 
@@ -164,7 +146,7 @@ public class JournalExportImportTest {
 
 		JournalArticleResource importedJournalArticleResource =
 			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				exportedResourceUuid, group.getGroupId());
+				exportedResourceUuid, _importedGroup.getGroupId());
 
 		Assert.assertNotNull(importedJournalArticleResource);
 
@@ -174,13 +156,13 @@ public class JournalExportImportTest {
 
 			DDMStructure importedDDMStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructure.getUuid(), group.getGroupId());
+					ddmStructure.getUuid(), _importedGroup.getGroupId());
 
 			Assert.assertNotNull(importedDDMStructure);
 
 			DDMTemplate importedDDMTemplate =
 				DDMTemplateLocalServiceUtil.fetchTemplate(
-					ddmTemplate.getUuid(), group.getGroupId());
+					ddmTemplate.getUuid(), _importedGroup.getGroupId());
 
 			Assert.assertNotNull(importedDDMTemplate);
 

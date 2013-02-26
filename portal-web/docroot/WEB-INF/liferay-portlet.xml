@@ -1924,6 +1924,10 @@
 		<parent-struts-path>mobile_device_rules</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRActionStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRRuleGroupInstanceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRRuleGroupStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRRuleStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>22.0</control-panel-entry-weight>
 		<use-default-template>false</use-default-template>

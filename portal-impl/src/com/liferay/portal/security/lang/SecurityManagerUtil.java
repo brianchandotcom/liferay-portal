@@ -17,6 +17,7 @@ package com.liferay.portal.security.lang;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.PortalSecurityManagerImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
@@ -39,7 +40,7 @@ public class SecurityManagerUtil {
 		if (_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) {
 
-			System.setSecurityManager(new PortalSecurityManager());
+			System.setSecurityManager(new PortalSecurityManagerImpl());
 		}
 		else if (_portalSecurityManagerStrategy ==
 					PortalSecurityManagerStrategy.NONE) {

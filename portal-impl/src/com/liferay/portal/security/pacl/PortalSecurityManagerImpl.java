@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.lang;
+package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
@@ -23,9 +23,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
-import com.liferay.portal.security.pacl.PACLClassUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.checker.CheckerUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -51,9 +50,10 @@ import sun.reflect.Reflection;
  * @author Raymond Augé
  * @author Zsolt Berentey
  */
-public class PortalSecurityManager extends SecurityManager {
+public class PortalSecurityManagerImpl extends SecurityManager
+	implements PortalSecurityManager {
 
-	public PortalSecurityManager() {
+	public PortalSecurityManagerImpl() {
 		_parentSecurityManager = System.getSecurityManager();
 
 		initClasses();
@@ -292,7 +292,7 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		PortalSecurityManager.class.getName());
+		PortalSecurityManagerImpl.class.getName());
 
 	private SecurityManager _parentSecurityManager;
 

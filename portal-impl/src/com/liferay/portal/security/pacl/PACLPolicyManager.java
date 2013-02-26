@@ -147,7 +147,7 @@ public class PACLPolicyManager {
 						"plugin security management");
 			}
 
-			System.setSecurityManager(new PortalSecurityManager());
+			System.setSecurityManager(new PortalSecurityManagerImpl());
 		}
 		catch (SecurityException se) {
 			_log.error(

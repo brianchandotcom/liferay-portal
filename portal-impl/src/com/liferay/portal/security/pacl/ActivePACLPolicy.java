@@ -50,10 +50,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		}
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		Checker checker = getChecker(permission.getClass());
 
-		checker.checkPermission(permission);
+		return checker.implies(permission);
 	}
 
 	public JNDIChecker getJndiChecker() {

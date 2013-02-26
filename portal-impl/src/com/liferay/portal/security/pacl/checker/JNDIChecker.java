@@ -35,7 +35,7 @@ public class JNDIChecker extends BaseChecker {
 		initNames();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		throw new UnsupportedOperationException();
 	}
 

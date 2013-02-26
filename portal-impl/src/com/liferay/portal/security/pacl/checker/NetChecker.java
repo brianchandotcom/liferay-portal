@@ -30,12 +30,14 @@ public class NetChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		String name = permission.getName();
 
 		if (name.equals(NET_PERMISSION_GET_PROXY_SELECTOR)) {
 			if (!hasGetProxySelector()) {
-				throwSecurityException(_log, "Attempted to get proxy selector");
+				logSecurityException(_log, "Attempted to get proxy selector");
+
+				return false;
 			}
 		}
 		else if (name.equals(NET_PERMISSION_SPECIFY_STREAM_HANDLER)) {
@@ -43,6 +45,8 @@ public class NetChecker extends BaseChecker {
 			// TODO
 
 		}
+
+		return true;
 	}
 
 	protected boolean hasGetProxySelector() {

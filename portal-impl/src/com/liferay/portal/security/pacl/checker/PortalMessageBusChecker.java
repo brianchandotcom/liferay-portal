@@ -34,7 +34,7 @@ public class PortalMessageBusChecker extends BaseChecker {
 		initSendDestinationNames();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		PortalMessageBusPermission portalMessageBusPermission =
 			(PortalMessageBusPermission)permission;
 
@@ -44,18 +44,23 @@ public class PortalMessageBusChecker extends BaseChecker {
 
 		if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_LISTEN)) {
 			if (!_listenDestinationNames.contains(destinationName)) {
-				throwSecurityException(
+				logSecurityException(
 					_log,
 					"Attempted to listen on destination " + destinationName);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_SEND)) {
 			if (!_sendDestinationNames.contains(destinationName)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to send to " + destinationName);
+
+				return false;
 			}
 		}
 
+		return true;
 	}
 
 	@Override

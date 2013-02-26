@@ -28,13 +28,13 @@ public class DefaultAcceptChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		if (_log.isDebugEnabled()) {
 			Thread.dumpStack();
 		}
 
 		if (!_log.isInfoEnabled()) {
-			return;
+			return true;
 		}
 
 		Class<?> clazz = permission.getClass();
@@ -49,6 +49,8 @@ public class DefaultAcceptChecker extends BaseChecker {
 		else {
 			_log.info("Allowing permission " + clazz.getName() + " to " + name);
 		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DefaultAcceptChecker.class);

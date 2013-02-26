@@ -41,7 +41,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		initThreadPoolExecutorNames();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		PortalRuntimePermission portalRuntimePermission =
 			(PortalRuntimePermission)permission;
 
@@ -54,8 +54,10 @@ public class PortalRuntimeChecker extends BaseChecker {
 			String className = (String)subject;
 
 			if (!_expandoBridgeClassNames.contains(className)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to get Expando bridge on " + className);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
@@ -63,23 +65,27 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			if (!hasGetBeanProperty(clazz, property)) {
 				if (Validator.isNotNull(property)) {
-					throwSecurityException(
+					logSecurityException(
 						_log,
 						"Attempted to get bean property " + property + " on " +
 							clazz);
 				}
 				else {
-					throwSecurityException(
+					logSecurityException(
 						_log, "Attempted to get bean property on " + clazz);
 				}
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
 			String searchEngineId = (String)subject;
 
 			if (!_searchEngineIds.contains(searchEngineId)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to get search engine " + searchEngineId);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
@@ -87,27 +93,33 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			if (!hasSetBeanProperty(clazz, property)) {
 				if (Validator.isNotNull(property)) {
-					throwSecurityException(
+					logSecurityException(
 						_log,
 						"Attempted to set bean property " + property + " on " +
 							clazz);
 				}
 				else {
-					throwSecurityException(
+					logSecurityException(
 						_log, "Attempted to set bean property on " + clazz);
 				}
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
 			String threadPoolExecutorName = (String)subject;
 
 			if (!_threadPoolExecutorNames.contains(threadPoolExecutorName)) {
-				throwSecurityException(
+				logSecurityException(
 					_log,
 					"Attempted to modify thread pool executor " +
 						threadPoolExecutorName);
+
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	@Override

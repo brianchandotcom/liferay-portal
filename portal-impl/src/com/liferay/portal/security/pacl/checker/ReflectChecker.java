@@ -27,10 +27,14 @@ public class ReflectChecker extends BaseReflectChecker {
 	public void afterPropertiesSet() {
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		if (!hasReflect(permission)) {
-			throwSecurityException(_log, "Attempted to reflect");
+			logSecurityException(_log, "Attempted to reflect");
+
+			return false;
 		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ReflectChecker.class);

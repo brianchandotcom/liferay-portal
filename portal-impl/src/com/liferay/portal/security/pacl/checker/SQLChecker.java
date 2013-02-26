@@ -53,7 +53,7 @@ public class SQLChecker extends BaseChecker {
 		initTableNames();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		throw new UnsupportedOperationException();
 	}
 

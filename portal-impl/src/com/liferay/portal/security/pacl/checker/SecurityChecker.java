@@ -31,17 +31,21 @@ public class SecurityChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		String name = permission.getName();
 
 		if (name.equals(SECURITY_PERMISSION_GET_POLICY)) {
 			if (!hasGetPolicy()) {
-				throwSecurityException(_log, "Attempted to get the policy");
+				logSecurityException(_log, "Attempted to get the policy");
+
+				return false;
 			}
 		}
 		else if (name.equals(SECURITY_PERMISSION_SET_POLICY)) {
 			if (!hasSetPolicy()) {
-				throwSecurityException(_log, "Attempted to set the policy");
+				logSecurityException(_log, "Attempted to set the policy");
+
+				return false;
 			}
 		}
 		else {
@@ -49,11 +53,15 @@ public class SecurityChecker extends BaseChecker {
 				Thread.dumpStack();
 			}
 
-			throwSecurityException(
+			logSecurityException(
 				_log,
 				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
+
+			return false;
 		}
+
+		return true;
 	}
 
 	protected boolean hasGetPolicy() {

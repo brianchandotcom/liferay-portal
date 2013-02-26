@@ -59,10 +59,7 @@ public class PortalPermissionCollection extends PermissionCollection {
 			return true;
 		}
 
-		try {
-			_paclPolicy.checkPermission(permission);
-		}
-		catch (SecurityException se) {
+		if (!_paclPolicy.implies(permission)) {
 			return false;
 		}
 

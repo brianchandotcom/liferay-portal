@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.PortletPreferences;
@@ -117,7 +119,9 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -190,6 +194,32 @@ public class DataFactory {
 		blogsStatsUser.setUserId(userId);
 
 		return blogsStatsUser;
+	}
+
+	public List<Layout> addCommonLayouts(long groupId) {
+		List<Layout> layouts = new ArrayList<Layout>();
+
+		Layout layout = addLayout(groupId, "welcome", "58,", "47,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "blogs", "", "33,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "document_library", "", "20,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "forums", "", "19,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "wiki", "", "36,");
+
+		layouts.add(layout);
+
+		return layouts;
 	}
 
 	public Contact addContact(User user) {
@@ -474,16 +504,23 @@ public class DataFactory {
 	}
 
 	public Layout addLayout(
-		int layoutId, String name, String friendlyURL, String column1,
-		String column2) {
+		long groupId, String name, String column1, String column2) {
 
-		Layout layout = new LayoutImpl();
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
 
-		layout.setPlid(_counter.get());
-		layout.setPrivateLayout(false);
-		layout.setLayoutId(layoutId);
-		layout.setName(name);
-		layout.setFriendlyURL(friendlyURL);
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("\"<?xml version=\\\"1.0\\\"?><root><name>");
+		sb.append(name);
+		sb.append("</name></root>");
+
+		name = sb.toString();
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
@@ -495,6 +532,18 @@ public class DataFactory {
 		String typeSettings = StringUtil.replace(
 			typeSettingsProperties.toString(), "\n", "\\n");
 
+		Layout layout = new LayoutImpl();
+
+		layout.setUuid(SequentialUUID.generate());
+		layout.setLayoutId(simpleCounter.get());
+		layout.setPlid(_counter.get());
+		layout.setGroupId(groupId);
+		layout.setCompanyId(_company.getCompanyId());
+		layout.setCreateDate(new Date());
+		layout.setModifiedDate(new Date());
+		layout.setName(name);
+		layout.setType(LayoutConstants.TYPE_PORTLET);
+		layout.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 		layout.setTypeSettings(typeSettings);
 
 		return layout;
@@ -1190,6 +1239,8 @@ public class DataFactory {
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
+	private Map<Long, SimpleCounter> _layoutCounters =
+		new HashMap<Long, SimpleCounter>();
 	private int _maxGroupsCount;
 	private int _maxUserToGroupCount;
 	private long _mbMessageClassNameId;

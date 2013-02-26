@@ -25,7 +25,7 @@ ${sampleSQLBuilder.insertMBDiscussion(groupId, sampleUserId, dataFactory.journal
 <#list 1..maxJournalArticleCount as journalArticleCount>
 	<#assign friendlyURL = "/" + groupId + "_journal_article_" + journalArticleCount>
 
-	<#assign layout = dataFactory.addLayout(publicLayoutsSize + journalArticleCount, "Web Content " + journalArticleCount, friendlyURL, "", "56,")>
+	<#assign layout = dataFactory.addLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", "56,")>
 
 	${writerLayoutCSV.write(friendlyURL + "\n")}
 

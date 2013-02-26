@@ -11,7 +11,7 @@
 		<#assign ddlFriendlyURL = "dynamic_data_list_display_" + ddlRecordSetCount>
 		<#assign ddlPortletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
 
-		<#assign ddlDisplayLayout = dataFactory.addLayout(publicLayouts?size + ddlRecordSetCount, "Dynamic Data List Display " + ddlRecordSetCount, "/" + ddlFriendlyURL, "", ddlPortletId)>
+		<#assign ddlDisplayLayout = dataFactory.addLayout(groupId,  "dynamic_data_list_display_" + ddlRecordSetCount, "", ddlPortletId)>
 
 		<#assign publicLayouts = publicLayouts + [ddlDisplayLayout]>
 

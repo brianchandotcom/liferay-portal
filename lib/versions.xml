@@ -755,7 +755,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/selenium-java.jar</file-name>
-		<version>2.25.0</version>
+		<version>2.30.0</version>
 		<project-name>Selenium Client Drivers</project-name>
 		<project-url>http://seleniumhq.org</project-url>
 		<licenses>
@@ -766,7 +766,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/selenium-server.jar</file-name>
-		<version>2.25.0</version>
+		<version>2.30.0</version>
 		<project-name>Selenium Server</project-name>
 		<project-url>http://seleniumhq.org</project-url>
 		<licenses>

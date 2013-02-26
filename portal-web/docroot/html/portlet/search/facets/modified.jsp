@@ -269,7 +269,13 @@ if (fieldParamSelection.equals("0")) {
 </aui:script>
 
 <aui:script use="aui-form-validator">
+	var Util = Liferay.Util;
+
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
+	var REGEX_RANGE = /^\d{4}-\d{2}-\d{2}$/;
+
+	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
@@ -283,50 +289,32 @@ if (fieldParamSelection.equals("0")) {
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
 			customRange: function(val, fieldNode, ruleValue) {
-				var customRangeRegexp = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
-
-				var valid = (val != '') && customRangeRegexp && customRangeRegexp.test(val);
-
-				if (valid) {
-					var date = new Date(val);
-
-					valid = A.Lang.isDate(date) && (date !== 'Invalid Date') && !isNaN(date);
-				}
-
-				return valid;
+				return REGEX_RANGE.test(val);
 			}
 		},
 		true
 	);
 
-	var disableSearchButton = function(value) {
-		var button = A.one('#<portlet:namespace />searchCustomRangeButton');
-
-		if (button) {
-			button.set('disabled', value);
-		}
-	};
-
-	var ruleArray = {
+	var ruleCustomRange = {
 		customRange: true
 	};
 
-	var customRangeValidator = new A.FormValidator({
-		boundingBox: document.<portlet:namespace />fm,
-		fieldContainer: 'div',
-
-		rules: {
-			<portlet:namespace /><%= facet.getFieldName() %>from: ruleArray,
-			<portlet:namespace /><%= facet.getFieldName() %>to: ruleArray
-		},
-
-		on: {
-			errorField: function(event) {
-				disableSearchButton(true);
+	var customRangeValidator = new A.FormValidator(
+		{
+			boundingBox: document.<portlet:namespace />fm,
+			fieldContainer: 'div',
+			on: {
+				errorField: function(event) {
+					Util.toggleDisabled(searchButton, true);
+				},
+				validField: function(event) {
+					Util.toggleDisabled(searchButton, false);
+				}
 			},
-			validField: function(event) {
-				disableSearchButton(false);
+			rules: {
+				<portlet:namespace /><%= facet.getFieldName() %>from: ruleCustomRange,
+				<portlet:namespace /><%= facet.getFieldName() %>to: ruleCustomRange
 			}
 		}
-	});
+	);
 </aui:script>

@@ -256,27 +256,3 @@ portletURL.setParameter("tabs1", tabs1);
 		['liferay-util-list-fields']
 	);
 </aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-structures-button');
-
-	if (buttons.size()) {
-		var toggleDisabled = A.bind('toggleDisabled', Liferay.Util, ':button');
-
-		var resultsGrid = A.one('.results-grid');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-					'click',
-					function(event) {
-						var disabled = (resultsGrid.one(':checked') == null);
-
-						toggleDisabled(disabled);
-					},
-					':checkbox'
-			);
-		}
-
-		toggleDisabled(true);
-	}
-</aui:script>

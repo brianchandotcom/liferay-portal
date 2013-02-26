@@ -146,10 +146,11 @@ public class WikiPagePermission {
 			while (page != null) {
 				if (!permissionChecker.hasOwnerPermission(
 						page.getCompanyId(), WikiPage.class.getName(),
-						page.getPageId(), page.getUserId(), ActionKeys.VIEW) &&
+						page.getResourcePrimKey(), page.getUserId(),
+						ActionKeys.VIEW) &&
 					!permissionChecker.hasPermission(
 						page.getGroupId(), WikiPage.class.getName(),
-						page.getPageId(), ActionKeys.VIEW)) {
+						page.getResourcePrimKey(), ActionKeys.VIEW)) {
 
 					return false;
 				}
@@ -188,10 +189,10 @@ public class WikiPagePermission {
 
 			if (permissionChecker.hasOwnerPermission(
 					page.getCompanyId(), WikiPage.class.getName(),
-					page.getPageId(), page.getUserId(), actionId) ||
+					page.getResourcePrimKey(), page.getUserId(), actionId) ||
 				permissionChecker.hasPermission(
 					page.getGroupId(), WikiPage.class.getName(),
-					page.getPageId(), actionId)) {
+					page.getResourcePrimKey(), actionId)) {
 
 				return true;
 			}

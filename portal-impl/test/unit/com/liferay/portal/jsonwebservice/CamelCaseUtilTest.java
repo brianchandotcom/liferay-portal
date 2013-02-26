@@ -16,34 +16,39 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Igor Spasic
  */
-public class CamelCaseUtilTest extends TestCase {
+public class CamelCaseUtilTest {
 
+	@Test
 	public void testFromCamelCase() {
-		assertEquals("camel-case", CamelCaseUtil.fromCamelCase("camelCase"));
-		assertEquals(
+		Assert.assertEquals(
+			"camel-case", CamelCaseUtil.fromCamelCase("camelCase"));
+		Assert.assertEquals(
 			"camel-case-word", CamelCaseUtil.fromCamelCase("camelCASEWord"));
-		assertEquals("camel-case", CamelCaseUtil.fromCamelCase("camelCASE"));
+		Assert.assertEquals("camel-case", CamelCaseUtil.fromCamelCase("camelCASE"));
 	}
 
+	@Test
 	public void testNormalization() {
-		assertEquals(
+		Assert.assertEquals(
 			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCase"));
-		assertEquals(
+		Assert.assertEquals(
 			"camelCaseWord", CamelCaseUtil.normalizeCamelCase("camelCASEWord"));
-		assertEquals(
+		Assert.assertEquals(
 			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCASE"));
 	}
 
+	@Test
 	public void testToCamelCase() {
-		assertEquals("camelCase", CamelCaseUtil.toCamelCase("camel-case"));
-		assertEquals(
+		Assert.assertEquals("camelCase", CamelCaseUtil.toCamelCase("camel-case"));
+		Assert.assertEquals(
 			"camelCASEWord", CamelCaseUtil.toCamelCase("camel-CASE-word"));
-		assertEquals("camelCASE", CamelCaseUtil.toCamelCase("camel-CASE"));
+		Assert.assertEquals("camelCASE", CamelCaseUtil.toCamelCase("camel-CASE"));
 	}
 
 }

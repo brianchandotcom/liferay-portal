@@ -77,7 +77,8 @@ public class UserTestUtil {
 	}
 
 	public static User addOrganizationUser(
-		Organization organization, String roleName) throws Exception {
+			Organization organization, String roleName)
+		throws Exception {
 
 		User organizationUser = addUser(
 			ServiceTestUtil.randomString(), organization.getGroupId());

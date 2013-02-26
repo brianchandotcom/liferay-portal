@@ -190,7 +190,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected String[] getClassTypeIds(
-		ActionRequest actionRequest, String[] classNameIds) throws Exception {
+			ActionRequest actionRequest, String[] classNameIds)
+		throws Exception {
 
 		String anyAssetTypeString = getParameter(actionRequest, "anyAssetType");
 

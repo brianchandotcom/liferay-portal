@@ -322,7 +322,8 @@ public class PortletExportImportTest extends BaseExportImportTestCase {
 	}
 
 	protected JournalArticle updateArticle(
-		JournalArticle journalArticle, String content) throws Exception {
+			JournalArticle journalArticle, String content)
+		throws Exception {
 
 		Locale locale = LocaleUtil.getDefault();
 

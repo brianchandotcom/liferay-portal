@@ -214,7 +214,7 @@ public class EditLayoutsAction extends PortletAction {
 					layoutTypePortlet.resetUserPreferences();
 				}
 			}
-			else if (cmd.equals(Constants.RESET_MERGE_FAIL_COUNT)) {
+			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
 				resetMergeFailCountAndMerge(actionRequest);
 			}
 			else if (cmd.equals("reset_prototype")) {
@@ -685,52 +685,22 @@ public class EditLayoutsAction extends PortletAction {
 	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
 		throws Exception {
 
-		long targetLayoutPlid = ParamUtil.getLong(actionRequest, "layoutPlid");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		// reset counter
-
-		Layout targetLayout = LayoutLocalServiceUtil.getLayout(
-			targetLayoutPlid);
+		long targetPlid = ParamUtil.getLong(actionRequest, "selPlid");
+		long layoutPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutPrototypeId");
 
 		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.
-				getLayoutPrototypeByUuidAndCompanyId(
-					targetLayout.getLayoutPrototypeUuid(),
-					themeDisplay.getCompanyId());
+			LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+				layoutPrototypeId);
 
-		long layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
+		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 
-		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-		SitesUtil.setMergeFailCount(layoutPrototypeLayout, 0);
-
-		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
-
-		// enable link, if disabled
-
-		if (!targetLayout.isLayoutPrototypeLinkEnabled()) {
-
-			targetLayout.setLayoutPrototypeLinkEnabled(true);
-			targetLayout.setLayoutPrototypeUuid(layoutPrototype.getUuid());
-
-			LayoutLocalServiceUtil.updateLayout(targetLayout);
-
-			targetLayout = LayoutLocalServiceUtil.getLayout(targetLayoutPlid);
-		}
-
-		// reset merge timestamps
+		Layout targetLayout = LayoutLocalServiceUtil.getLayout(targetPlid);
 
 		SitesUtil.resetPrototype(targetLayout);
 
-		// force merge from template
-
 		SitesUtil.mergeLayoutPrototypeLayout(
 			targetLayout.getGroup(), targetLayout);
-
-		// check whether reset (and possible merge) was successful
 
 		layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(
 			layoutPrototypeId);
@@ -739,9 +709,7 @@ public class EditLayoutsAction extends PortletAction {
 			layoutPrototype);
 
 		if (mergeFailCountAfterMerge > 0) {
-
-			SessionErrors.add(
-				actionRequest, "templateMergeFailedSeeLogsForDetails");
+			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
 	}
 

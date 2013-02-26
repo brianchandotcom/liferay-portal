@@ -96,7 +96,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</liferay-ui:error>
 </c:if>
 
-<liferay-ui:error key="templateMergeFailedSeeLogsForDetails" message="template-merge-failed-see-logs-for-details" />
+<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 <aui:fieldset>
 	<c:choose>
@@ -144,17 +144,17 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
 
-		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" onChange="toggleLayoutPrototypePropagationBox()" type="checkbox" value="<%= layoutPrototypeLinkEnabled %>" />
+		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= layoutPrototypeLinkEnabled %>" />
 
-		<div class='<%= layoutPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>layoutPrototypeLinkEnabledPropagationBox">
+		<div class='<%= layoutPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
 
 			<%
-			request.setAttribute("details.jsp-layoutPrototype", layoutPrototype);
-			request.setAttribute("details.jsp-layout", selLayout);
-			request.setAttribute("details.jsp-forceMergeNow", true);
+			request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
+			request.setAttribute("edit_layout_prototype.jsp-redirect", currentURL);
+			request.setAttribute("edit_layout_prototype.jsp-selPlid", String.valueOf(selLayout.getPlid()));
 			%>
 
-			<liferay-util:include page="/html/portlet/layouts_admin/layout/template_merge_fail_reset.jsp" />
+			<liferay-util:include page="/html/portlet/layout_prototypes/merge_alert.jsp" />
 		</div>
 	</c:if>
 
@@ -204,25 +204,8 @@ StringBuilder friendlyURLBase = new StringBuilder();
 </aui:fieldset>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'toggleLayoutPrototypePropagationBox',
-		function() {
-
-			var A = AUI();
-
-			var checkbox = A.one('#<portlet:namespace />layoutPrototypeLinkEnabledCheckbox');
-			var propagationBox = A.one('#<portlet:namespace/>layoutPrototypeLinkEnabledPropagationBox');
-
-			if (checkbox && propagationBox) {
-
-				propagationBox.toggle();
-			}
-		},
-		['aui-base']
-	);
+	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabledCheckbox','<portlet:namespace />layoutPrototypeMergeAlert');
 </aui:script>
-
 
 <aui:script use="aui-base">
 	var templateLink = A.one('#templateLink');

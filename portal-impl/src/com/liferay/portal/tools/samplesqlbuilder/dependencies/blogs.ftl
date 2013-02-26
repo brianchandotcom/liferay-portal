@@ -1,6 +1,6 @@
 <#if (maxBlogsEntryCount > 0)>
 	<#list 1..maxBlogsEntryCount as blogsEntryCount>
-		<#assign blogsEntry = dataFactory.addBlogsEntry(groupId, sampleUserId, "Test Blog " + blogsEntryCount, "testblog" + blogsEntryCount, "This is a test blog " + blogsEntryCount + ".")>
+		<#assign blogsEntry = dataFactory.addBlogsEntry(groupId, blogsEntryCount)>
 
 		${sampleSQLBuilder.insertBlogsEntry(blogsEntry)}
 

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.samplesqlbuilder;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -162,6 +163,14 @@ public class DataFactory {
 		}
 	}
 
+	public AssetEntry addAssetEntry(BlogsEntry blogsEntry) {
+		return newAssetEntry(
+			blogsEntry.getGroupId(), blogsEntry.getCreateDate(),
+			blogsEntry.getModifiedDate(), _blogsEntryClassNameId,
+			blogsEntry.getEntryId(), blogsEntry.getUuid(), 0,
+			ContentTypes.TEXT_HTML, blogsEntry.getTitle());
+	}
+
 	public AssetEntry addAssetEntry(
 		long groupId, long userId, long classNameId, long classPK,
 		boolean visible, String mimeType, String title) {
@@ -179,18 +188,23 @@ public class DataFactory {
 		return assetEntry;
 	}
 
-	public BlogsEntry addBlogsEntry(
-		long groupId, long userId, String title, String urlTitle,
-		String content) {
-
+	public BlogsEntry addBlogsEntry(long groupId, int currentIndex) {
 		BlogsEntry blogsEntry = new BlogsEntryImpl();
 
+		blogsEntry.setUuid(SequentialUUID.generate());
 		blogsEntry.setEntryId(_counter.get());
 		blogsEntry.setGroupId(groupId);
-		blogsEntry.setUserId(userId);
-		blogsEntry.setTitle(title);
-		blogsEntry.setUrlTitle(urlTitle);
-		blogsEntry.setContent(content);
+		blogsEntry.setCompanyId(_sampleUser.getCompanyId());
+		blogsEntry.setUserId(_sampleUser.getUserId());
+		blogsEntry.setUserName(_sampleUser.getFullName());
+		blogsEntry.setCreateDate(new Date());
+		blogsEntry.setModifiedDate(new Date());
+		blogsEntry.setTitle("Test Blog " + currentIndex);
+		blogsEntry.setUrlTitle("testblog" + currentIndex);
+		blogsEntry.setContent(
+			"This is a test blog " + currentIndex + StringPool.PERIOD);
+		blogsEntry.setDisplayDate(new Date());
+		blogsEntry.setStatusDate(new Date());
 
 		return blogsEntry;
 	}
@@ -1160,6 +1174,35 @@ public class DataFactory {
 		userName[1] = _lastNames.get((int)(index % _lastNames.size()));
 
 		return userName;
+	}
+
+	protected AssetEntry newAssetEntry(
+		long groupId, Date createDate, Date modifiedDate, long classNameId,
+		long classPK, String uuid, long classTypeId, String mimeType,
+		String title) {
+
+		AssetEntry assetEntry = new AssetEntryImpl();
+
+		assetEntry.setEntryId(_counter.get());
+		assetEntry.setGroupId(groupId);
+		assetEntry.setCompanyId(_sampleUser.getCompanyId());
+		assetEntry.setUserId(_sampleUser.getUserId());
+		assetEntry.setUserName(_sampleUser.getFullName());
+		assetEntry.setCreateDate(createDate);
+		assetEntry.setModifiedDate(modifiedDate);
+		assetEntry.setClassNameId(classNameId);
+		assetEntry.setClassPK(classPK);
+		assetEntry.setClassUuid(uuid);
+		assetEntry.setClassTypeId(classTypeId);
+		assetEntry.setStartDate(createDate);
+		assetEntry.setEndDate(nextFutureDate());
+		assetEntry.setPublishDate(createDate);
+		assetEntry.setExpirationDate(nextFutureDate());
+		assetEntry.setVisible(true);
+		assetEntry.setMimeType(mimeType);
+		assetEntry.setTitle(title);
+
+		return assetEntry;
 	}
 
 	protected Group newGroup(

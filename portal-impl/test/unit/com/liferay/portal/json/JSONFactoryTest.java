@@ -23,14 +23,16 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Igor Spasic
  */
-public class JSONFactoryTest extends TestCase {
+public class JSONFactoryTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		JSONInit.init();
 
@@ -45,6 +47,7 @@ public class JSONFactoryTest extends TestCase {
 			new JSONIncludesManagerImpl());
 	}
 
+	@Test
 	public void testHasProperty() {
 		Three three = new Three();
 
@@ -54,15 +57,16 @@ public class JSONFactoryTest extends TestCase {
 
 		String jsonString = jsonSerializer.serialize(three);
 
-		assertEquals("{\"flag\":true}", jsonString);
+		Assert.assertEquals("{\"flag\":true}", jsonString);
 	}
 
+	@Test
 	public void testLooseDeserialize() {
 		try {
 			JSONFactoryUtil.looseDeserialize(
 				"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}}");
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
 		}
@@ -71,59 +75,60 @@ public class JSONFactoryTest extends TestCase {
 			Object object = JSONFactoryUtil.looseDeserialize(
 				"{\"class\":\"java.lang.Thread\"}}");
 
-			assertEquals(Thread.class, object.getClass());
+			Assert.assertEquals(Thread.class, object.getClass());
 		}
 		catch (Exception e) {
-			fail(e.toString());
+			Assert.fail(e.toString());
 		}
 	}
 
+	@Test
 	public void testLooseDeserializeSafe() {
 		Object object = JSONFactoryUtil.looseDeserializeSafe(
 			"{\"class\":\"java.lang.Thread\"}}");
 
-		assertEquals(HashMap.class, object.getClass());
+		Assert.assertEquals(HashMap.class, object.getClass());
 
 		object = JSONFactoryUtil.looseDeserializeSafe(
 			"{\"\u0063lass\":\"java.lang.Thread\"}}");
 
-		assertEquals(HashMap.class, object.getClass());
-		assertTrue(((Map<?, ?>)object).containsKey("class"));
+		Assert.assertEquals(HashMap.class, object.getClass());
+		Assert.assertTrue(((Map<?, ?>)object).containsKey("class"));
 
 		try {
 			JSONFactoryUtil.looseDeserializeSafe(
 				"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}}");
 		}
 		catch (Exception e) {
-			fail(e.toString());
+			Assert.fail(e.toString());
 		}
 
 		Map<?, ?> map = (Map<?, ?>)JSONFactoryUtil.looseDeserializeSafe(
 			"{\"class\":\"" + EntityCacheUtil.class.getName() +
 				"\",\"foo\": \"boo\"}");
 
-		assertNotNull(map);
-		assertEquals(2, map.size());
-		assertEquals(
+		Assert.assertNotNull(map);
+		Assert.assertEquals(2, map.size());
+		Assert.assertEquals(
 			"com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
 			map.get("class"));
-		assertEquals("boo", map.get("foo"));
+		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)JSONFactoryUtil.looseDeserializeSafe(
 			"{\"class\":\"" + EntityCacheUtil.class.getName() +
 				"\",\"foo\": \"boo\",\"entityCache\":{\"class\":\"" +
 					EntityCacheImpl.class.getName() + "\"}}");
 
-		assertNotNull(map);
-		assertEquals(3, map.size());
-		assertEquals( EntityCacheUtil.class.getName(), map.get("class"));
-		assertEquals("boo", map.get("foo"));
+		Assert.assertNotNull(map);
+		Assert.assertEquals(3, map.size());
+		Assert.assertEquals( EntityCacheUtil.class.getName(), map.get("class"));
+		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)map.get("entityCache");
 
-		assertNotNull(map);
-		assertEquals(1, map.size());
-		assertEquals(EntityCacheImpl.class.getName(), map.get("class"));
+		Assert.assertNotNull(map);
+		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(EntityCacheImpl.class.getName(), map.get("class"));
 	}
 
 }

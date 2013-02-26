@@ -199,8 +199,8 @@ public class DataFactory {
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(user.getUserId());
 		contact.setUserName(user.getFullName());
-		contact.setCreateDate(nextFutureDate());
-		contact.setModifiedDate(nextFutureDate());
+		contact.setCreateDate(new Date());
+		contact.setModifiedDate(new Date());
 		contact.setClassNameId(_userClassNameId);
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_company.getAccountId());
@@ -209,7 +209,7 @@ public class DataFactory {
 		contact.setFirstName(user.getFirstName());
 		contact.setLastName(user.getLastName());
 		contact.setMale(true);
-		contact.setBirthday(nextFutureDate());
+		contact.setBirthday(new Date());
 
 		return contact;
 	}
@@ -922,8 +922,8 @@ public class DataFactory {
 
 		_account.setAccountId(_company.getAccountId());
 		_account.setCompanyId(_company.getCompanyId());
-		_account.setCreateDate(nextFutureDate());
-		_account.setModifiedDate(nextFutureDate());
+		_account.setCreateDate(new Date());
+		_account.setModifiedDate(new Date());
 		_account.setName("Liferay");
 		_account.setLegalName("Liferay, Inc.");
 	}
@@ -1120,12 +1120,12 @@ public class DataFactory {
 		user.setUuid(SequentialUUID.generate());
 		user.setUserId(userId);
 		user.setCompanyId(_company.getCompanyId());
-		user.setCreateDate(nextFutureDate());
-		user.setModifiedDate(nextFutureDate());
+		user.setCreateDate(new Date());
+		user.setModifiedDate(new Date());
 		user.setDefaultUser(defaultUser);
 		user.setContactId(_counter.get());
 		user.setPassword("test");
-		user.setPasswordModifiedDate(nextFutureDate());
+		user.setPasswordModifiedDate(new Date());
 		user.setReminderQueryQuestion("What is your screen name?");
 		user.setReminderQueryAnswer(screenName);
 		user.setEmailAddress(screenName + "@liferay.com");
@@ -1134,10 +1134,10 @@ public class DataFactory {
 		user.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setLoginDate(nextFutureDate());
-		user.setLastLoginDate(nextFutureDate());
-		user.setLastFailedLoginDate(nextFutureDate());
-		user.setLockoutDate(nextFutureDate());
+		user.setLoginDate(new Date());
+		user.setLastLoginDate(new Date());
+		user.setLastFailedLoginDate(new Date());
+		user.setLockoutDate(new Date());
 		user.setAgreedToTermsOfUse(true);
 		user.setEmailAddressVerified(true);
 

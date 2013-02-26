@@ -158,6 +158,10 @@ public class SeleniumBuilderContext {
 		return _actionClassNames;
 	}
 
+	public String getActionFileName(String actionName) {
+		return _actionFileNames.get(actionName);
+	}
+
 	public Map<String, String> getActionFileNames() {
 		return _actionFileNames;
 	}
@@ -182,6 +186,10 @@ public class SeleniumBuilderContext {
 		return _functionClassNames;
 	}
 
+	public String getFunctionFileName(String functionName) {
+		return _functionFileNames.get(functionName);
+	}
+
 	public Map<String, String> getFunctionFileNames() {
 		return _functionFileNames;
 	}
@@ -200,6 +208,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getMacroClassNames() {
 		return _macroClassNames;
+	}
+
+	public String getMacroFileName(String macroName) {
+		return _macroFileNames.get(macroName);
 	}
 
 	public Map<String, String> getMacroFileNames() {
@@ -222,6 +234,10 @@ public class SeleniumBuilderContext {
 		return _pathClassNames;
 	}
 
+	public String getPathFileName(String pathName) {
+		return _pathFileNames.get(pathName);
+	}
+
 	public Map<String, String> getPathFileNames() {
 		return _pathFileNames;
 	}
@@ -242,6 +258,10 @@ public class SeleniumBuilderContext {
 		return _testCaseClassNames;
 	}
 
+	public String getTestCaseFileName(String testCaseName) {
+		return _testCaseFileNames.get(testCaseName);
+	}
+
 	public Map<String, String> getTestCaseFileNames() {
 		return _testCaseFileNames;
 	}
@@ -260,6 +280,10 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getTestSuiteClassNames() {
 		return _testSuiteClassNames;
+	}
+
+	public String getTestSuiteFileName(String testSuiteName) {
+		return _testSuiteFileNames.get(testSuiteName);
 	}
 
 	public Map<String, String> getTestSuiteFileNames() {

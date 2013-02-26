@@ -1826,6 +1826,17 @@ public class SourceFormatter {
 				}
 			}
 
+			if (line.endsWith(" throws") ||
+				(previousLine.endsWith(
+					StringPool.OPEN_PARENTHESIS) &&
+				 line.contains(" throws " ) &&
+				 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+
+				_sourceFormatterHelper.printError(
+					fileName,
+					"line break: " + fileName + " " + lineCount);
+			}
+
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
 					_sourceFormatterHelper.printError(

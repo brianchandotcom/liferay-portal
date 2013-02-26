@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.lar.PortletImporter;
@@ -47,7 +46,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -140,7 +138,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
 			_importedGroup.getGroupId());
 
-		Assert.assertEquals(initialArticlesCount + 1, articlesCount);
+		Assert.assertEquals(
+			"The article has not been imported", initialArticlesCount + 1,
+			articlesCount);
 
 		// Verify the same article exists in the new site
 
@@ -148,7 +148,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
 				exportedResourceUuid, _importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedJournalArticleResource);
+		Assert.assertNotNull(
+			"The imported article has not kept the uuid",
+			importedJournalArticleResource);
 
 		if (structuredContent) {
 
@@ -158,24 +160,31 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				DDMStructureLocalServiceUtil.fetchStructure(
 					ddmStructure.getUuid(), _importedGroup.getGroupId());
 
-			Assert.assertNotNull(importedDDMStructure);
+			Assert.assertNotNull(
+				"The DDM Structure has not been imported",
+				importedDDMStructure);
 
 			DDMTemplate importedDDMTemplate =
 				DDMTemplateLocalServiceUtil.fetchTemplate(
 					ddmTemplate.getUuid(), _importedGroup.getGroupId());
 
-			Assert.assertNotNull(importedDDMTemplate);
+			Assert.assertNotNull(
+				"The DDM Template has not been imported", importedDDMTemplate);
 
 			// Check Relationships
 
 			Assert.assertEquals(
+				"The imported article doesn't point to the right DDM Structure",
 				article.getStructureId(),
 				importedDDMStructure.getStructureKey());
 
 			Assert.assertEquals(
+				"The imported article doesn't point to the right DDM Template",
 				article.getTemplateId(), importedDDMTemplate.getTemplateKey());
 
 			Assert.assertEquals(
+				"The imported DDM Structure doesn't point to the right DDM " +
+					"Template",
 				importedDDMTemplate.getClassPK(),
 				importedDDMStructure.getStructureId());
 		}
@@ -245,15 +254,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
-		parameterMap.put(Constants.CMD, new String[] {Constants.IMPORT});
-		parameterMap.put("doAsGroupId", new String[] {String.valueOf(groupId)});
-		parameterMap.put("groupId", new String[] {String.valueOf(groupId)});
-		parameterMap.put(
-			"permissionsAssignedToRoles",
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put("plid", new String[] {String.valueOf(plid)});
-		parameterMap.put("portletResource", new String[] {PortletKeys.JOURNAL});
-
 		// Journal Options
 
 		parameterMap.put(
@@ -273,6 +273,15 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			"_journal_ratings", new String[] {Boolean.TRUE.toString()});
 
 		// General Options
+
+		parameterMap.put(Constants.CMD, new String[] {Constants.IMPORT});
+		parameterMap.put("doAsGroupId", new String[] {String.valueOf(groupId)});
+		parameterMap.put("groupId", new String[] {String.valueOf(groupId)});
+		parameterMap.put(
+			"permissionsAssignedToRoles",
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put("plid", new String[] {String.valueOf(plid)});
+		parameterMap.put("portletResource", new String[] {PortletKeys.JOURNAL});
 
 		parameterMap.put(
 			PortletDataHandlerKeys.CATEGORIES,

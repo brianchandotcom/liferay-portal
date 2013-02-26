@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lar;
 
-
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
@@ -28,13 +27,17 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
-import org.junit.After;
-import org.junit.Before;
-import org.powermock.api.mockito.PowerMockito;
+
+import java.io.File;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import java.io.File;
-import java.util.Map;
+
+import org.junit.After;
+import org.junit.Before;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Juan Fernández
@@ -42,8 +45,8 @@ import java.util.Map;
 public class BasePortletExportImportTestCase extends PowerMockito {
 
 	public String addPortletToLayout(
-		long userId, Layout layout, String portletId, String columnId,
-		Map<String, String[]> preferenceMap)
+			long userId, Layout layout, String portletId, String columnId,
+			Map<String, String[]> preferenceMap)
 		throws Exception {
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -70,7 +73,7 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 	}
 
 	public PortletPreferences getPortletPreferences(
-		long companyId, long plid, String portletId)
+			long companyId, long plid, String portletId)
 		throws Exception {
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
@@ -97,7 +100,7 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 
 	@After
 	public void tearDown() throws Exception {
-   		try {
+		try {
 			GroupLocalServiceUtil.deleteGroup(_group);
 			GroupLocalServiceUtil.deleteGroup(_importedGroup);
 		}
@@ -113,7 +116,7 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 	}
 
 	public void updatePortletPreferences(
-		long plid, String portletId, PortletPreferences portletPreferences)
+			long plid, String portletId, PortletPreferences portletPreferences)
 		throws Exception {
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(

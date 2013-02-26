@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-social PUBLIC "-//Liferay//DTD Social 6.1.0//EN" "http://www.liferay.com/dtd/liferay-social_6_1_0.dtd">
+<!DOCTYPE liferay-social PUBLIC "-//Liferay//DTD Social 6.2.0//EN" "http://www.liferay.com/dtd/liferay-social_6_2_0.dtd">
 
 <liferay-social>
 	<activity>
@@ -40,7 +40,6 @@
 		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_VOTE}</activity-type>
 		<language-key>ADD_VOTE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
 		<contribution-limit enabled="false" />
 		<participation-value>1</participation-value>
@@ -55,9 +54,20 @@
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
 		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
@@ -78,7 +88,6 @@
 		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-limit enabled="false" />
 		<counter>
 			<name>asset.cancelled-subscriptions</name>
@@ -109,8 +118,66 @@
 		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
 		<language-key>VIEW</language-key>
-		<log-activity>false</log-activity>
 		<participation-value>1</participation-value>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.bookmarks.model.BookmarksEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.bookmarks.model.BookmarksEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.bookmarks.model.BookmarksFolder</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.bookmarks.model.BookmarksFolder</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.documentlibrary.model.DLFolder</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.documentlibrary.model.DLFolder</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.journal.model.JournalArticle</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.journal.model.JournalArticle</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
@@ -128,7 +195,6 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<activity-type>${com.liferay.portlet.messageboards.social.MBActivityKeys.REPLY_MESSAGE}</activity-type>
 		<language-key>REPLY_MESSAGE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
 		<counter>
 			<name>asset.replies</name>
@@ -139,7 +205,6 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_VOTE}</activity-type>
 		<language-key>ADD_VOTE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>5</contribution-value>
 		<contribution-limit enabled="false" />
 		<participation-value>1</participation-value>
@@ -153,17 +218,21 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
-		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
-		<language-key>VIEW</language-key>
-		<log-activity>false</log-activity>
-		<participation-value>1</participation-value>
+		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
 		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
@@ -184,7 +253,6 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<counter>
 			<name>asset.cancelled-subscriptions</name>
 			<owner-type>asset</owner-type>
@@ -197,6 +265,12 @@
 			<name>user.cancelled-subscriptions</name>
 			<owner-type>actor</owner-type>
 		</counter>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
+		<language-key>VIEW</language-key>
+		<participation-value>1</participation-value>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
@@ -249,20 +323,31 @@
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH}</activity-type>
-		<language-key>MOVE_ATTACHMENT_TO_TRASH</language-key>
 		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH}</activity-type>
-		<language-key>RESTORE_ATTACHMENT_FROM_TRASH</language-key>
 		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
+	</activity>
+	<activity>
+		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
+		<log-activity>true</log-activity>
+		<enable-counters>false</enable-counters>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<contribution-value>2</contribution-value>
 		<contribution-limit enabled="false" />
 		<participation-value>2</participation-value>
@@ -283,7 +368,6 @@
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
-		<log-activity>false</log-activity>
 		<counter>
 			<name>asset.cancelled-subscriptions</name>
 			<owner-type>asset</owner-type>
@@ -313,7 +397,6 @@
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
 		<language-key>VIEW</language-key>
-		<log-activity>false</log-activity>
 		<participation-value>1</participation-value>
 	</activity>
 </liferay-social>

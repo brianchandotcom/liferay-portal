@@ -79,7 +79,7 @@ public class OutputStreamWriter extends Writer {
 		throws IOException {
 
 		ByteBuffer byteBuffer = _charsetEncoder.encode(
-			CharBuffer.wrap(string, offset, length));
+			CharBuffer.wrap(string, offset, offset + length));
 
 		_outputStream.write(byteBuffer.array(), 0, byteBuffer.limit());
 	}

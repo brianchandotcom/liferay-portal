@@ -156,6 +156,10 @@ public class SeleniumBuilderContext {
 		}
 	}
 
+	public String getActionClassName(String actionName) {
+		return _actionClassNames.get(actionName);
+	}
+
 	public Map<String, String> getActionClassNames() {
 		return _actionClassNames;
 	}
@@ -184,6 +188,10 @@ public class SeleniumBuilderContext {
 		return _baseDir;
 	}
 
+	public String getFunctionClassName(String functionName) {
+		return _functionClassNames.get(functionName);
+	}
+
 	public Map<String, String> getFunctionClassNames() {
 		return _functionClassNames;
 	}
@@ -206,6 +214,10 @@ public class SeleniumBuilderContext {
 
 	public Map<String, Element> getFunctionRootElements() {
 		return _functionRootElements;
+	}
+
+	public String getMacroClassName(String macroName) {
+		return _macroClassNames.get(macroName);
 	}
 
 	public Map<String, String> getMacroClassNames() {
@@ -232,6 +244,10 @@ public class SeleniumBuilderContext {
 		return _macroRootElements;
 	}
 
+	public String getPathClassName(String pathName) {
+		return _pathClassNames.get(pathName);
+	}
+
 	public Map<String, String> getPathClassNames() {
 		return _pathClassNames;
 	}
@@ -256,6 +272,10 @@ public class SeleniumBuilderContext {
 		return _pathRootElements;
 	}
 
+	public String getTestCaseClassName(String testCaseName) {
+		return _testCaseClassNames.get(testCaseName);
+	}
+
 	public Map<String, String> getTestCaseClassNames() {
 		return _testCaseClassNames;
 	}
@@ -278,6 +298,10 @@ public class SeleniumBuilderContext {
 
 	public Map<String, Element> getTestCaseRootElements() {
 		return _testCaseRootElements;
+	}
+
+	public String getTestSuiteClassName(String testSuiteName) {
+		return _testSuiteClassNames.get(testSuiteName);
 	}
 
 	public Map<String, String> getTestSuiteClassNames() {

@@ -21,12 +21,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
@@ -67,7 +65,7 @@ public class EditLayoutPrototypeAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteLayoutPrototypes(actionRequest);
 			}
-			else if (cmd.equals(Constants.RESET_MERGE_FAIL_COUNT)) {
+			else if (cmd.equals("reset_merge_fail_count")) {
 				resetMergeFailCount(actionRequest);
 			}
 
@@ -145,13 +143,7 @@ public class EditLayoutPrototypeAction extends PortletAction {
 
 		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
 
-		UnicodeProperties layoutPrototypeLayoutTypeSettingsProperties =
-			layoutPrototypeLayout.getTypeSettingsProperties();
-
-		layoutPrototypeLayoutTypeSettingsProperties.remove(
-			SitesUtil.MERGE_FAIL_COUNT);
-
-		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
+		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 	}
 
 	protected void updateLayoutPrototype(ActionRequest actionRequest)

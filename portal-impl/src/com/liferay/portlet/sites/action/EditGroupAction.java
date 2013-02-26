@@ -139,7 +139,7 @@ public class EditGroupAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteGroups(actionRequest);
 			}
-			else if (cmd.equals(Constants.RESET_MERGE_FAIL_COUNT)) {
+			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
 				resetMergeFailCountAndMerge(actionRequest);
 			}
 
@@ -295,80 +295,28 @@ public class EditGroupAction extends PortletAction {
 			actionRequest, "privateLayoutSet");
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");
-		boolean forceMergeNow = ParamUtil.getBoolean(
-			actionRequest, "forceMergeNow");
-
-		// reset counter
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
+		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
 
-		SitesUtil.setMergeFailCount(layoutSetPrototypeLayoutSet, 0);
+		LayoutSet targetLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			targetGroupId, privateLayoutSet);
 
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetPrototypeLayoutSet);
+		SitesUtil.resetPrototype(targetLayoutSet);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"'merge-fail-count' was reset for layoutSetPrototype " +
-				layoutSetPrototypeId);
-		}
+		Group targetGroup = GroupLocalServiceUtil.getGroup(targetGroupId);
 
-		// force merge from template
-
-		if (forceMergeNow) {
-
-			LayoutSet targetGroupLayoutSet =
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					targetGroupId, privateLayoutSet);
-
-			Group targetGroup = GroupLocalServiceUtil.getGroup(targetGroupId);
-
-			// enable link, if disabled
-
-			if (!targetGroupLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
-				LayoutSetLocalServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-					targetGroupId, privateLayoutSet, true,
-					layoutSetPrototype.getUuid());
-
-				targetGroupLayoutSet =
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						targetGroupId, privateLayoutSet);
-			}
-
-			// reset merge timestamps
-
-			SitesUtil.resetPrototype(targetGroupLayoutSet);
-
-			// do the merge
-
-			SitesUtil.mergeLayoutSetPrototypeLayouts(
-				targetGroup, targetGroupLayoutSet);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Site template " + layoutSetPrototypeId +
-					" was merged to group " + targetGroupId );
-			}
-		}
-
-		// check whether reset (and possible merge) was successful
+		SitesUtil.mergeLayoutSetPrototypeLayouts(targetGroup, targetLayoutSet);
 
 		layoutSetPrototype =
 			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
-		int mergeFailCountAfterMerge = SitesUtil.getMergeFailCount(
-			layoutSetPrototype);
-
-		if (mergeFailCountAfterMerge > 0) {
-
-			SessionErrors.add(
-				actionRequest, "templateMergeFailedSeeLogsForDetails");
+		if (SitesUtil.getMergeFailCount(layoutSetPrototype) > 0) {
+			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
 	}
 

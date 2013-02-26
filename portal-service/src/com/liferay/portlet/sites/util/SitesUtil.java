@@ -303,16 +303,17 @@ public class SitesUtil {
 	}
 
 	public static void setMergeFailCount(
-		Layout layoutPrototypeLayout, int newMergeFailCount) {
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
 
-		getSites().setMergeFailCount(layoutPrototypeLayout, newMergeFailCount);
+		getSites().setMergeFailCount(layoutPrototype, newMergeFailCount);
 	}
 
 	public static void setMergeFailCount(
-		LayoutSet layoutSetPrototypeLayoutSet, int newMergeFailCount) {
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
+		throws PortalException, SystemException {
 
-		getSites().setMergeFailCount(
-			layoutSetPrototypeLayoutSet, newMergeFailCount);
+		getSites().setMergeFailCount(layoutSetPrototype, newMergeFailCount);
 	}
 
 	public static void updateLayoutScopes(

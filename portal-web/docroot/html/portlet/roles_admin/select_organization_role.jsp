@@ -256,7 +256,7 @@ if (step == 1) {
 					<%
 					String rowHREF = null;
 
-					if (MembershipPolicyUtil.isMembershipAllowed(organization, role, selUser)) {
+					if (OrganizationMembershipPolicyUtil.isRoleAllowed(selUser.getUserId(), organization.getOrganizationId(), role.getRoleId())) {
 						StringBundler sb = new StringBundler(14);
 
 						sb.append("javascript:opener.");

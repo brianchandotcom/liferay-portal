@@ -19,15 +19,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -68,24 +66,19 @@ public class UserOrganizationChecker extends RowChecker {
 
 		User user = (User)obj;
 
-		if (isChecked(user)) {
-			Set<Organization> mandatoryOrganizations =
-				MembershipPolicyUtil.getMandatoryOrganizations(user);
-
-			if (mandatoryOrganizations.contains(_organization) ||
-				!MembershipPolicyUtil.isMembershipAllowed(
-					_organization, user)) {
-
-				return true;
-			}
-		}
-
 		try {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			if (MembershipPolicyUtil.isMembershipProtected(
-					permissionChecker, _organization, user)) {
+			if ((isChecked(user) &&
+				OrganizationMembershipPolicyUtil.isMembershipRequired(
+					user.getUserId(), _organization.getOrganizationId())) ||
+				(!isChecked(user) &&
+				!OrganizationMembershipPolicyUtil.isMembershipAllowed(
+					user.getUserId(), _organization.getOrganizationId())) ||
+				OrganizationMembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, user.getUserId(),
+					_organization.getOrganizationId())) {
 
 				return true;
 			}
@@ -95,8 +88,9 @@ public class UserOrganizationChecker extends RowChecker {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			return false;
+		}
+		finally {
+			return super.isDisabled(obj);
 		}
 	}
 

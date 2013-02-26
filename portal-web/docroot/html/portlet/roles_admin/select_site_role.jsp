@@ -209,7 +209,7 @@ if (step == 1) {
 					<%
 					String rowHREF = null;
 
-					if (MembershipPolicyUtil.isMembershipAllowed(group, role, selUser)) {
+					if (SiteMembershipPolicyUtil.isRoleAllowed(selUser.getUserId(), group.getGroupId(), role.getRoleId())) {
 						StringBundler sb = new StringBundler(14);
 
 						sb.append("javascript:opener.");

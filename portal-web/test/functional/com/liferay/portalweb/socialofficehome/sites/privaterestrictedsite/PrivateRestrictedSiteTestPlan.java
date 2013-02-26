@@ -15,8 +15,15 @@
 package com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.acceptmemberrequestsiteprivaterestrict.AcceptMemberRequestSitePrivateRestrictTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.addsitessitetypeprivaterestricted.AddSitesSiteTypePrivateRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.deletesitetypeprivaterestricted.DeleteSiteTypePrivateRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.denymemberrequestsitetypeprivaterestrict.DenyMemberRequestSiteTypePrivateRestrictTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchdeletesitetypeprivaterestricted.SearchDeleteSiteTypePrivateRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchdocumentdeletesiteprivaterestrict.SearchDocumentDeleteSitePrivateRestrictTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchsitessitetypeprivaterestricted.SearchSitesSiteTypePrivateRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchthreaddeletesiteprivaterestrict.SearchThreadDeleteSitePrivateRestrictTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.sousfavoritesite1typeprivaterestricted.SOUs_FavoriteSite1TypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.soussearchsitessitetypeprivaterestricted.SOUs_SearchSitesSiteTypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.viewsitessitetypeprivaterestricted.ViewSitesSiteTypePrivateRestrictedTests;
 
@@ -31,8 +38,16 @@ public class PrivateRestrictedSiteTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AcceptMemberRequestSitePrivateRestrictTests.suite());
 		testSuite.addTest(AddSitesSiteTypePrivateRestrictedTests.suite());
+		testSuite.addTest(DeleteSiteTypePrivateRestrictedTests.suite());
+		testSuite.addTest(
+			DenyMemberRequestSiteTypePrivateRestrictTests.suite());
+		testSuite.addTest(SearchDeleteSiteTypePrivateRestrictedTests.suite());
+		testSuite.addTest(SearchDocumentDeleteSitePrivateRestrictTests.suite());
 		testSuite.addTest(SearchSitesSiteTypePrivateRestrictedTests.suite());
+		testSuite.addTest(SearchThreadDeleteSitePrivateRestrictTests.suite());
+		testSuite.addTest(SOUs_FavoriteSite1TypePrivateRestrictedTests.suite());
 		testSuite.addTest(
 			SOUs_SearchSitesSiteTypePrivateRestrictedTests.suite());
 		testSuite.addTest(ViewSitesSiteTypePrivateRestrictedTests.suite());

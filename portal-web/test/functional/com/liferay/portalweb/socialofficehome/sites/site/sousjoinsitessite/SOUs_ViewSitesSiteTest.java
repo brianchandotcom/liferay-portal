@@ -28,8 +28,42 @@ public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
-		selenium.waitForVisible(
-			"//button[contains(.,'Sites Directory')]/span[2]");
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//div[@id='so-sidebar']/h3"));
+		assertTrue(selenium.isVisible("//input[@class='search-input']"));
+		selenium.select("//div[@class='sites-tabs']/span/span/span/select",
+			RuntimeVariables.replace("My Sites"));
+		selenium.type("//input[@class='search-input']",
+			RuntimeVariables.replace("Open"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
+			selenium.getText(
+				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
+			RuntimeVariables.replace("Open Site Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
+			selenium.getText("//div[@class='community-title']"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//nav/ul/li[contains(.,'Home')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Calendar"),
+			selenium.getText("//nav/ul/li[contains(.,'Calendar')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Documents"),
+			selenium.getText("//nav/ul/li[contains(.,'Documents')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Forums"),
+			selenium.getText("//nav/ul/li[contains(.,'Forums')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Blogs')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//nav/ul/li[contains(.,'Wiki')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Members"),
+			selenium.getText("//nav/ul/li[contains(.,'Members')]/a/span"));
+		selenium.open("/user/socialoffice01/so/dashboard/");
+		selenium.waitForVisible("//li[contains(@class, 'selected')]/a/span");
+		assertEquals(RuntimeVariables.replace("Dashboard"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertEquals(RuntimeVariables.replace("Sites Directory"),
 			selenium.getText("//button[contains(.,'Sites Directory')]/span[2]"));
 		selenium.clickAt("//button[contains(.,'Sites Directory')]/span[2]",
@@ -50,6 +84,18 @@ public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//nav/ul/li[contains(.,'Home')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Calendar"),
+			selenium.getText("//nav/ul/li[contains(.,'Calendar')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Documents"),
+			selenium.getText("//nav/ul/li[contains(.,'Documents')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Forums"),
+			selenium.getText("//nav/ul/li[contains(.,'Forums')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Blogs')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//nav/ul/li[contains(.,'Wiki')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[contains(.,'Members')]/a/span"));
 		selenium.clickAt("//nav/ul/li[contains(.,'Members')]/a/span",

@@ -17,8 +17,13 @@ package com.liferay.portalweb.socialofficehome.sites.site;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitesdefaultpagenone.AddSitesDefaultPageNoneTests;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.deletesite.DeleteSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.searchdeletesite.SearchDeleteSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.searchdmfolderdocumentdeletesite.SearchDMFolderDocumentDeleteSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.searchmbthreaddeletesite.SearchMBThreadDeleteSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.searchsitesdirectory.SearchSitesDirectoryTests;
 import com.liferay.portalweb.socialofficehome.sites.site.searchsitessite.SearchSitesSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.sousfavoritesite1.SOUs_FavoriteSite1Tests;
 import com.liferay.portalweb.socialofficehome.sites.site.sousjoinsitessite.SOUs_JoinSitesSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessite.SOUs_SearchSitesSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.sousviewsiteslinksauserprofile.SOUs_ViewSitesLinkSAUserProfileTests;
@@ -39,8 +44,13 @@ public class SiteTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddSitesDefaultPageNoneTests.suite());
 		testSuite.addTest(AddSitesSiteTests.suite());
+		testSuite.addTest(DeleteSiteTests.suite());
+		testSuite.addTest(SearchDeleteSiteTests.suite());
+		testSuite.addTest(SearchDMFolderDocumentDeleteSiteTests.suite());
+		testSuite.addTest(SearchMBThreadDeleteSiteTests.suite());
 		testSuite.addTest(SearchSitesDirectoryTests.suite());
 		testSuite.addTest(SearchSitesSiteTests.suite());
+		testSuite.addTest(SOUs_FavoriteSite1Tests.suite());
 		testSuite.addTest(SOUs_JoinSitesSiteTests.suite());
 		testSuite.addTest(SOUs_SearchSitesSiteTests.suite());
 		testSuite.addTest(SOUs_ViewSitesLinkSAUserProfileTests.suite());

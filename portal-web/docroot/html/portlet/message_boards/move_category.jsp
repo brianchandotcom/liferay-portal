@@ -52,7 +52,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			try {
 				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
 
-				parentCategoryName = parentCategory.getName();
+				parentCategoryName = HtmlUtil.escape(parentCategory.getName());
 			}
 			catch (NoSuchCategoryException nsce) {
 			}

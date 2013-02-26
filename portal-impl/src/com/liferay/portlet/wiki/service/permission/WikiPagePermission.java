@@ -146,7 +146,8 @@ public class WikiPagePermission {
 			while (page != null) {
 				if (!permissionChecker.hasOwnerPermission(
 						page.getCompanyId(), WikiPage.class.getName(),
-						page.getResourcePrimKey(), page.getUserId(), ActionKeys.VIEW) &&
+						page.getResourcePrimKey(), page.getUserId(),
+						ActionKeys.VIEW) &&
 					!permissionChecker.hasPermission(
 						page.getGroupId(), WikiPage.class.getName(),
 						page.getResourcePrimKey(), ActionKeys.VIEW)) {

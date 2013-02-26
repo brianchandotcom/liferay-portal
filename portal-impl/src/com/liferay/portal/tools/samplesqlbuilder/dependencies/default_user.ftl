@@ -5,8 +5,7 @@ ${sampleSQLBuilder.insertUser(null, null, dataFactory.defaultUser)}
 <#-- Guest user -->
 
 <#assign user = dataFactory.guestUser>
-
-<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.addGroup(user)>
 
 ${sampleSQLBuilder.insertGroup(userGroup, [])}
 
@@ -21,7 +20,7 @@ ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#assign sampleUserId = user.userId>
 
-<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.addGroup(user)>
 
 ${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
 

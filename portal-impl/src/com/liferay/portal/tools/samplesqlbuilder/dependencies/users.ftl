@@ -7,7 +7,7 @@
 	<#list 1..maxUserCount as userCount>
 		<#assign user = dataFactory.addUser(userCount)>
 
-		<#assign userGroup = dataFactory.addGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+		<#assign userGroup = dataFactory.addGroup(user)>
 
 		${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.addLayout(1, "Home", "/home", "", "33,")])}
 

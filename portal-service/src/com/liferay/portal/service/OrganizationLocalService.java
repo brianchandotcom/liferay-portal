@@ -309,10 +309,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 		long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Deletes the logo of the organization.
 	*

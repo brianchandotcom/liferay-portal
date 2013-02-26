@@ -370,11 +370,6 @@ public class GroupLocalServiceUtil {
 		getService().checkCompanyGroup(companyId);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups

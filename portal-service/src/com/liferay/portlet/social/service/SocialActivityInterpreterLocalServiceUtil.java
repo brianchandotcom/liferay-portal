@@ -65,6 +65,11 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		getService().addActivityInterpreter(activityInterpreter);
 	}
 
+	public static void addActivityInterpreter(java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter) {
+		getService().addActivityInterpreter(context, activityInterpreter);
+	}
+
 	/**
 	* Removes the activity interpreter from the list of available interpreters.
 	*
@@ -73,6 +78,11 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	public static void deleteActivityInterpreter(
 		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter) {
 		getService().deleteActivityInterpreter(activityInterpreter);
+	}
+
+	public static void deleteActivityInterpreter(java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter) {
+		getService().deleteActivityInterpreter(context, activityInterpreter);
 	}
 
 	/**
@@ -99,9 +109,23 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return getService().interpret(context, activity, themeDisplay);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
 		return getService().interpret(activitySet, themeDisplay);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return getService().interpret(context, activitySet, themeDisplay);
 	}
 
 	public static SocialActivityInterpreterLocalService getService() {

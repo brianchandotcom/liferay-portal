@@ -64,12 +64,18 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	public void addActivityInterpreter(
 		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
 
+	public void addActivityInterpreter(java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
+
 	/**
 	* Removes the activity interpreter from the list of available interpreters.
 	*
 	* @param activityInterpreter the activity interpreter
 	*/
 	public void deleteActivityInterpreter(
+		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
+
+	public void deleteActivityInterpreter(java.lang.String context,
 		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
 
 	/**
@@ -94,6 +100,16 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
 	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String context,
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivitySet activitySet,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		java.lang.String context,
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 }

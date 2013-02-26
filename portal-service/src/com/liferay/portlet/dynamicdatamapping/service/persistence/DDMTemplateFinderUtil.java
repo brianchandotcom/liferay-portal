@@ -168,6 +168,15 @@ public class DDMTemplateFinderUtil {
 			classPK, keywords, type, mode, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_SC(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_SC(groupId, structureClassNameId, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String name, java.lang.String description,
@@ -240,6 +249,15 @@ public class DDMTemplateFinderUtil {
 		return getFinder()
 				   .findByKeywords(companyId, groupIds, classNameIds, classPK,
 			keywords, type, mode, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_SC(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_SC(groupId, structureClassNameId, start, end,
+			orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_C_C_N_D_T_M_L(

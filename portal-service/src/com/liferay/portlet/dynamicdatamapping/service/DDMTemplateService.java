@@ -347,6 +347,25 @@ public interface DDMTemplateService extends BaseService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the templates matching the group and class PK.
+	*
+	* @param groupId the primary key of the group
+	* @param classPK the primary key of the template's related entity
+	* @return the matching templates
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the
 	* template names and descriptions.

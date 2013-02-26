@@ -114,6 +114,7 @@
 					width: 820
 				},
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererWebDavToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showGlobalScope: 'false',
 				showManageTemplates: 'true',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',

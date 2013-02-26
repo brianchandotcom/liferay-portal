@@ -136,7 +136,7 @@ if (selUser != null) {
 					data.put("groupid", organization.getGroupId());
 					data.put("name", HtmlUtil.escape(organization.getName()));
 					data.put("organizationid", organization.getOrganizationId());
-					data.put("type", organization.getType());
+					data.put("type", LanguageUtil.get(pageContext, organization.getType()));
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

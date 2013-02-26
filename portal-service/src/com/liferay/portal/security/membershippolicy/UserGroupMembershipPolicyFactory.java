@@ -15,10 +15,10 @@
 package com.liferay.portal.security.membershippolicy;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
-public interface MembershipPolicyFactory {
+public interface UserGroupMembershipPolicyFactory {
 
-	public MembershipPolicy getMembershipPolicy();
+	public UserGroupMembershipPolicy getUserGroupsMembershipPolicy();
 
 }

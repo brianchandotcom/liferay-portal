@@ -18,34 +18,38 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Sergio González
  * @author Shuyang Zhou
  */
-public class MembershipPolicyFactoryImpl implements MembershipPolicyFactory {
+public class OrganizationMembershipPolicyFactoryImpl
+	implements OrganizationMembershipPolicyFactory {
 
 	public void afterPropertiesSet() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
+			_log.debug(
+				"Instantiate " + PropsValues.MEMBERSHIP_POLICY_ORGANIZATIONS);
 		}
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
-			(MembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
+			(OrganizationMembershipPolicy)InstanceFactory.newInstance(
+				classLoader, PropsValues.MEMBERSHIP_POLICY_ORGANIZATIONS);
 
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public MembershipPolicy getMembershipPolicy() {
+	public OrganizationMembershipPolicy getOrganizationsMembershipPolicy() {
 		return _membershipPolicy;
 	}
 
-	public void setMembershipPolicy(MembershipPolicy membershipPolicy) {
+	public void setMembershipPolicy(
+		OrganizationMembershipPolicy membershipPolicy) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set " + ClassUtil.getClassName(membershipPolicy));
 		}
@@ -59,9 +63,10 @@ public class MembershipPolicyFactoryImpl implements MembershipPolicyFactory {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		MembershipPolicyFactory.class);
+		OrganizationMembershipPolicyFactory.class);
 
-	private static volatile MembershipPolicy _membershipPolicy;
-	private static MembershipPolicy _originalMembershipPolicy;
+	private static volatile OrganizationMembershipPolicy
+		_membershipPolicy;
+	private static OrganizationMembershipPolicy _originalMembershipPolicy;
 
 }

@@ -15,24 +15,24 @@
 package com.liferay.portal.security.membershippolicy;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
-public class MembershipPolicyFactoryUtil {
+public class RoleMembershipPolicyFactoryUtil {
 
-	public static MembershipPolicy getMembershipPolicy() {
-		return getMembershipPolicyFactory().getMembershipPolicy();
+	public static RoleMembershipPolicy getMembershipPolicy() {
+		return getMembershipPolicyFactory().getRolesMembershipPolicy();
 	}
 
-	public static MembershipPolicyFactory getMembershipPolicyFactory() {
+	public static RoleMembershipPolicyFactory getMembershipPolicyFactory() {
 		return _membershipPolicyFactory;
 	}
 
 	public void setMembershipPolicyFactory(
-		MembershipPolicyFactory membershipPolicyFactory) {
+		RoleMembershipPolicyFactory membershipPolicyFactory) {
 
 		_membershipPolicyFactory = membershipPolicyFactory;
 	}
 
-	private static MembershipPolicyFactory _membershipPolicyFactory;
+	private static RoleMembershipPolicyFactory _membershipPolicyFactory;
 
 }

@@ -944,6 +944,11 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getTransientFieldsMap(locale);
 	}
 
+	public java.lang.String getWebDavURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _ddmStructure.getWebDavURL(themeDisplay);
+	}
+
 	public boolean hasField(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -372,6 +372,21 @@ public class DDMTemplateServiceUtil {
 				   .getTemplates(groupId, classNameId, classPK, type, mode);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+		long groupId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplatesByClassPK(groupId, classPK);
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTemplatesByStructureClassNameId(groupId,
+			structureClassNameId, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

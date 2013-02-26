@@ -17,9 +17,11 @@ package com.liferay.portal.tools.samplesqlbuilder;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -33,6 +35,8 @@ import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.PortletPreferences;
@@ -48,6 +52,7 @@ import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
@@ -117,7 +122,9 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -126,28 +133,42 @@ public class DataFactory {
 
 	public DataFactory(
 		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
-		int maxUserToGroupCount) {
+		int maxUserToGroupCount, int maxBlogsEntryCount, int maxMBCategoryCount,
+		int maxMBThreadCount, int maxMBMessageCountPerThread) {
 
 		try {
 			_baseDir = baseDir;
 			_maxGroupsCount = maxGroupsCount;
 			_maxUserToGroupCount = maxUserToGroupCount;
+			_maxBlogsEntryCount = maxBlogsEntryCount;
+
+			_maxMBMessageCount =
+				maxMBCategoryCount * maxMBThreadCount *
+				maxMBMessageCountPerThread;
 
 			initSimpleCounters();
+			initCompany();
+			initUsers();
 
 			initClassNames();
-			initCompany();
 			initDLFileEntryType();
-			initGuestGroup();
+			initGroups();
 			initJournalArticle(maxJournalArticleSize);
 			initRoles();
 			initUserNames();
-			initUsers();
 			initVirtualHost();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public AssetEntry addAssetEntry(BlogsEntry blogsEntry) {
+		return newAssetEntry(
+			blogsEntry.getGroupId(), blogsEntry.getCreateDate(),
+			blogsEntry.getModifiedDate(), _blogsEntryClassNameId,
+			blogsEntry.getEntryId(), blogsEntry.getUuid(), 0,
+			ContentTypes.TEXT_HTML, blogsEntry.getTitle());
 	}
 
 	public AssetEntry addAssetEntry(
@@ -167,29 +188,64 @@ public class DataFactory {
 		return assetEntry;
 	}
 
-	public BlogsEntry addBlogsEntry(
-		long groupId, long userId, String title, String urlTitle,
-		String content) {
-
+	public BlogsEntry addBlogsEntry(long groupId, int currentIndex) {
 		BlogsEntry blogsEntry = new BlogsEntryImpl();
 
+		blogsEntry.setUuid(SequentialUUID.generate());
 		blogsEntry.setEntryId(_counter.get());
 		blogsEntry.setGroupId(groupId);
-		blogsEntry.setUserId(userId);
-		blogsEntry.setTitle(title);
-		blogsEntry.setUrlTitle(urlTitle);
-		blogsEntry.setContent(content);
+		blogsEntry.setCompanyId(_sampleUser.getCompanyId());
+		blogsEntry.setUserId(_sampleUser.getUserId());
+		blogsEntry.setUserName(_sampleUser.getFullName());
+		blogsEntry.setCreateDate(new Date());
+		blogsEntry.setModifiedDate(new Date());
+		blogsEntry.setTitle("Test Blog " + currentIndex);
+		blogsEntry.setUrlTitle("testblog" + currentIndex);
+		blogsEntry.setContent(
+			"This is a test blog " + currentIndex + StringPool.PERIOD);
+		blogsEntry.setDisplayDate(new Date());
+		blogsEntry.setStatusDate(new Date());
 
 		return blogsEntry;
 	}
 
-	public BlogsStatsUser addBlogsStatsUser(long groupId, long userId) {
+	public BlogsStatsUser addBlogsStatsUser(long groupId) {
 		BlogsStatsUser blogsStatsUser = new BlogsStatsUserImpl();
 
+		blogsStatsUser.setStatsUserId(_counter.get());
 		blogsStatsUser.setGroupId(groupId);
-		blogsStatsUser.setUserId(userId);
+		blogsStatsUser.setCompanyId(_company.getCompanyId());
+		blogsStatsUser.setUserId(_sampleUser.getUserId());
+		blogsStatsUser.setEntryCount(_maxBlogsEntryCount);
+		blogsStatsUser.setLastPostDate(new Date());
 
 		return blogsStatsUser;
+	}
+
+	public List<Layout> addCommonLayouts(long groupId) {
+		List<Layout> layouts = new ArrayList<Layout>();
+
+		Layout layout = addLayout(groupId, "welcome", "58,", "47,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "blogs", "", "33,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "document_library", "", "20,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "forums", "", "19,");
+
+		layouts.add(layout);
+
+		layout = addLayout(groupId, "wiki", "", "36,");
+
+		layouts.add(layout);
+
+		return layouts;
 	}
 
 	public Contact addContact(User user) {
@@ -199,8 +255,8 @@ public class DataFactory {
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(user.getUserId());
 		contact.setUserName(user.getFullName());
-		contact.setCreateDate(newDate());
-		contact.setModifiedDate(newDate());
+		contact.setCreateDate(new Date());
+		contact.setModifiedDate(new Date());
 		contact.setClassNameId(_userClassNameId);
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_company.getAccountId());
@@ -209,7 +265,7 @@ public class DataFactory {
 		contact.setFirstName(user.getFirstName());
 		contact.setLastName(user.getLastName());
 		contact.setMale(true);
-		contact.setBirthday(newDate());
+		contact.setBirthday(new Date());
 
 		return contact;
 	}
@@ -256,7 +312,7 @@ public class DataFactory {
 		ddlRecord.setGroupId(groupId);
 		ddlRecord.setCompanyId(companyId);
 		ddlRecord.setUserId(userId);
-		ddlRecord.setCreateDate(newDate());
+		ddlRecord.setCreateDate(nextFutureDate());
 		ddlRecord.setRecordSetId(ddlRecordSetId);
 
 		return ddlRecord;
@@ -322,7 +378,7 @@ public class DataFactory {
 		ddmStructure.setGroupId(groupId);
 		ddmStructure.setCompanyId(companyId);
 		ddmStructure.setUserId(userId);
-		ddmStructure.setCreateDate(newDate());
+		ddmStructure.setCreateDate(nextFutureDate());
 		ddmStructure.setClassNameId(classNameId);
 
 		return ddmStructure;
@@ -352,7 +408,7 @@ public class DataFactory {
 		dlFileEntry.setGroupId(groupId);
 		dlFileEntry.setCompanyId(companyId);
 		dlFileEntry.setUserId(userId);
-		dlFileEntry.setCreateDate(newDate());
+		dlFileEntry.setCreateDate(nextFutureDate());
 		dlFileEntry.setRepositoryId(groupId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setName(name);
@@ -409,7 +465,7 @@ public class DataFactory {
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(companyId);
 		dlFolder.setUserId(userId);
-		dlFolder.setCreateDate(newDate());
+		dlFolder.setCreateDate(nextFutureDate());
 		dlFolder.setRepositoryId(groupId);
 		dlFolder.setParentFolderId(parentFolderId);
 		dlFolder.setName(name);
@@ -441,20 +497,10 @@ public class DataFactory {
 		return dlSync;
 	}
 
-	public Group addGroup(
-		long groupId, long classNameId, long classPK, String name,
-		String friendlyURL, boolean site) {
-
-		Group group = new GroupImpl();
-
-		group.setGroupId(groupId);
-		group.setClassNameId(classNameId);
-		group.setClassPK(classPK);
-		group.setName(name);
-		group.setFriendlyURL(friendlyURL);
-		group.setSite(site);
-
-		return group;
+	public Group addGroup(User user) throws Exception {
+		return newGroup(
+			_counter.get(), _userClassNameId, user.getUserId(),
+			Long.toString(user.getUserId()), user.getScreenName(), false);
 	}
 
 	public JournalArticle addJournalArticle(
@@ -484,16 +530,23 @@ public class DataFactory {
 	}
 
 	public Layout addLayout(
-		int layoutId, String name, String friendlyURL, String column1,
-		String column2) {
+		long groupId, String name, String column1, String column2) {
 
-		Layout layout = new LayoutImpl();
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
 
-		layout.setPlid(_counter.get());
-		layout.setPrivateLayout(false);
-		layout.setLayoutId(layoutId);
-		layout.setName(name);
-		layout.setFriendlyURL(friendlyURL);
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("\"<?xml version=\\\"1.0\\\"?><root><name>");
+		sb.append(name);
+		sb.append("</name></root>");
+
+		name = sb.toString();
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
@@ -505,9 +558,30 @@ public class DataFactory {
 		String typeSettings = StringUtil.replace(
 			typeSettingsProperties.toString(), "\n", "\\n");
 
+		Layout layout = new LayoutImpl();
+
+		layout.setUuid(SequentialUUID.generate());
+		layout.setLayoutId(simpleCounter.get());
+		layout.setPlid(_counter.get());
+		layout.setGroupId(groupId);
+		layout.setCompanyId(_company.getCompanyId());
+		layout.setCreateDate(new Date());
+		layout.setModifiedDate(new Date());
+		layout.setName(name);
+		layout.setType(LayoutConstants.TYPE_PORTLET);
+		layout.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 		layout.setTypeSettings(typeSettings);
 
 		return layout;
+	}
+
+	public List<LayoutSet> addLayoutSets(long groupId, int pageCount) {
+		List<LayoutSet> layoutSets = new ArrayList<LayoutSet>(2);
+
+		layoutSets.add(newLayoutSet(groupId, true, 0));
+		layoutSets.add(newLayoutSet(groupId, false, pageCount));
+
+		return layoutSets;
 	}
 
 	public MBCategory addMBCategory(
@@ -564,11 +638,14 @@ public class DataFactory {
 		return mbMessage;
 	}
 
-	public MBStatsUser addMBStatsUser(long groupId, long userId) {
+	public MBStatsUser addMBStatsUser(long groupId) {
 		MBStatsUser mbStatsUser = new MBStatsUserImpl();
 
+		mbStatsUser.setStatsUserId(_counter.get());
 		mbStatsUser.setGroupId(groupId);
-		mbStatsUser.setUserId(userId);
+		mbStatsUser.setUserId(_sampleUser.getUserId());
+		mbStatsUser.setMessageCount(_maxMBMessageCount);
+		mbStatsUser.setLastPostDate(new Date());
 
 		return mbStatsUser;
 	}
@@ -780,8 +857,8 @@ public class DataFactory {
 		return _dlFileEntryClassNameId;
 	}
 
-	public long getGroupClassNameId() {
-		return _groupClassNameId;
+	public List<Group> getGroups() {
+		return _groups;
 	}
 
 	public Group getGuestGroup() {
@@ -922,8 +999,8 @@ public class DataFactory {
 
 		_account.setAccountId(_company.getAccountId());
 		_account.setCompanyId(_company.getCompanyId());
-		_account.setCreateDate(newDate());
-		_account.setModifiedDate(newDate());
+		_account.setCreateDate(new Date());
+		_account.setModifiedDate(new Date());
 		_account.setName("Liferay");
 		_account.setLegalName("Liferay, Inc.");
 	}
@@ -934,21 +1011,28 @@ public class DataFactory {
 		_defaultDLFileEntryType.setUuid(SequentialUUID.generate());
 		_defaultDLFileEntryType.setFileEntryTypeId(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryType.setCreateDate(newDate());
-		_defaultDLFileEntryType.setModifiedDate(newDate());
+		_defaultDLFileEntryType.setCreateDate(nextFutureDate());
+		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}
 
-	public void initGuestGroup() {
-		_guestGroup = new GroupImpl();
+	public void initGroups() throws Exception {
+		long guestGroupId = _counter.get();
 
-		_guestGroup.setGroupId(_counter.get());
-		_guestGroup.setClassNameId(_groupClassNameId);
-		_guestGroup.setClassPK(_guestGroup.getGroupId());
-		_guestGroup.setName(GroupConstants.GUEST);
-		_guestGroup.setFriendlyURL("/guest");
-		_guestGroup.setSite(true);
+		_guestGroup = newGroup(
+			guestGroupId, _groupClassNameId, guestGroupId, GroupConstants.GUEST,
+			"guest", true);
+
+		_groups = new ArrayList<Group>(_maxGroupsCount);
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			String name = "community" + Integer.toString(i);
+
+			Group group = newGroup(i, _groupClassNameId, i, name, name, true);
+
+			_groups.add(group);
+		}
 	}
 
 	public void initJournalArticle(int maxJournalArticleSize) throws Exception {
@@ -1046,7 +1130,7 @@ public class DataFactory {
 
 	public void initSimpleCounters() {
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
-		_dlDateCounter = new SimpleCounter();
+		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -1092,8 +1176,74 @@ public class DataFactory {
 		return userName;
 	}
 
-	protected Date newDate() {
-		return new Date(_baseCreateTime + (_dlDateCounter.get() * Time.SECOND));
+	protected AssetEntry newAssetEntry(
+		long groupId, Date createDate, Date modifiedDate, long classNameId,
+		long classPK, String uuid, long classTypeId, String mimeType,
+		String title) {
+
+		AssetEntry assetEntry = new AssetEntryImpl();
+
+		assetEntry.setEntryId(_counter.get());
+		assetEntry.setGroupId(groupId);
+		assetEntry.setCompanyId(_sampleUser.getCompanyId());
+		assetEntry.setUserId(_sampleUser.getUserId());
+		assetEntry.setUserName(_sampleUser.getFullName());
+		assetEntry.setCreateDate(createDate);
+		assetEntry.setModifiedDate(modifiedDate);
+		assetEntry.setClassNameId(classNameId);
+		assetEntry.setClassPK(classPK);
+		assetEntry.setClassUuid(uuid);
+		assetEntry.setClassTypeId(classTypeId);
+		assetEntry.setStartDate(createDate);
+		assetEntry.setEndDate(nextFutureDate());
+		assetEntry.setPublishDate(createDate);
+		assetEntry.setExpirationDate(nextFutureDate());
+		assetEntry.setVisible(true);
+		assetEntry.setMimeType(mimeType);
+		assetEntry.setTitle(title);
+
+		return assetEntry;
+	}
+
+	protected Group newGroup(
+			long groupId, long classNameId, long classPK, String name,
+			String friendlyURL, boolean site)
+		throws Exception {
+
+		Group group = new GroupImpl();
+
+		group.setCompanyId(_sampleUser.getCompanyId());
+		group.setCreatorUserId(_sampleUser.getCompanyId());
+		group.setClassNameId(classNameId);
+		group.setTreePath(group.buildTreePath());
+		group.setName(StringPool.FORWARD_SLASH + name);
+		group.setFriendlyURL(friendlyURL);
+		group.setSite(site);
+		group.setActive(true);
+		group.setGroupId(groupId);
+		group.setClassPK(classPK);
+
+		return group;
+	}
+
+	protected LayoutSet newLayoutSet(
+		long groupId, boolean privateLayout, int pageCount) {
+
+		LayoutSet layoutSet = new LayoutSetImpl();
+
+		layoutSet.setLayoutSetId(_counter.get());
+		layoutSet.setGroupId(groupId);
+		layoutSet.setCompanyId(_company.getCompanyId());
+		layoutSet.setCreateDate(new Date());
+		layoutSet.setModifiedDate(new Date());
+		layoutSet.setPrivateLayout(privateLayout);
+		layoutSet.setThemeId("classic");
+		layoutSet.setColorSchemeId("01");
+		layoutSet.setWapThemeId("mobile");
+		layoutSet.setWapColorSchemeId("01");
+		layoutSet.setPageCount(pageCount);
+
+		return layoutSet;
 	}
 
 	protected Role newRole(String name, int type) {
@@ -1124,12 +1274,12 @@ public class DataFactory {
 		user.setUuid(SequentialUUID.generate());
 		user.setUserId(userId);
 		user.setCompanyId(_company.getCompanyId());
-		user.setCreateDate(newDate());
-		user.setModifiedDate(newDate());
+		user.setCreateDate(new Date());
+		user.setModifiedDate(new Date());
 		user.setDefaultUser(defaultUser);
 		user.setContactId(_counter.get());
 		user.setPassword("test");
-		user.setPasswordModifiedDate(newDate());
+		user.setPasswordModifiedDate(new Date());
 		user.setReminderQueryQuestion("What is your screen name?");
 		user.setReminderQueryAnswer(screenName);
 		user.setEmailAddress(screenName + "@liferay.com");
@@ -1138,20 +1288,25 @@ public class DataFactory {
 		user.setGreeting("Welcome " + screenName + StringPool.EXCLAMATION);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setLoginDate(newDate());
-		user.setLastLoginDate(newDate());
-		user.setLastFailedLoginDate(newDate());
-		user.setLockoutDate(newDate());
+		user.setLoginDate(new Date());
+		user.setLastLoginDate(new Date());
+		user.setLastFailedLoginDate(new Date());
+		user.setLockoutDate(new Date());
 		user.setAgreedToTermsOfUse(true);
 		user.setEmailAddressVerified(true);
 
 		return user;
 	}
 
+	protected Date nextFutureDate() {
+		return new Date(
+			_baseFutureTime + (_futureDateCounter.get() * Time.SECOND));
+	}
+
 	private Account _account;
 	private Role _administratorRole;
-	private long _baseCreateTime = System.currentTimeMillis() + Time.YEAR;
 	private String _baseDir;
+	private long _baseFutureTime = System.currentTimeMillis() + Time.YEAR;
 	private long _blogsEntryClassNameId;
 	private List<ClassName> _classNames;
 	private Company _company;
@@ -1160,17 +1315,22 @@ public class DataFactory {
 	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
-	private SimpleCounter _dlDateCounter;
 	private long _dlFileEntryClassNameId;
 	private List<String> _firstNames;
+	private SimpleCounter _futureDateCounter;
 	private long _groupClassNameId;
+	private List<Group> _groups;
 	private Group _guestGroup;
 	private Role _guestRole;
 	private User _guestUser;
 	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
+	private Map<Long, SimpleCounter> _layoutCounters =
+		new HashMap<Long, SimpleCounter>();
+	private int _maxBlogsEntryCount;
 	private int _maxGroupsCount;
+	private int _maxMBMessageCount;
 	private int _maxUserToGroupCount;
 	private long _mbMessageClassNameId;
 	private Role _organizationAdministratorRole;

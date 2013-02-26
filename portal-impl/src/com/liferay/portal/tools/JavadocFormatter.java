@@ -421,6 +421,7 @@ public class JavadocFormatter {
 							sb.append(comment);
 						}
 						else if (tagName.equals("param") ||
+								 tagName.equals("return") ||
 								 tagName.equals("throws")) {
 
 							if (GetterUtil.getBoolean(
@@ -509,7 +510,7 @@ public class JavadocFormatter {
 			}
 			else {
 				value = curValue;
-				
+
 				break;
 			}
 		}
@@ -572,6 +573,8 @@ public class JavadocFormatter {
 			DocletTag returnDocletTag = returnDocletTags[0];
 
 			comment = GetterUtil.getString(returnDocletTag.getValue());
+
+			DocUtil.add(returnElement, "required", true);
 		}
 
 		comment = _trimMultilineText(comment);

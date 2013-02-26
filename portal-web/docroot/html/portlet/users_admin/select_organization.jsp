@@ -133,9 +133,9 @@ if (selUser != null) {
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("groupId", organization.getGroupId());
+					data.put("groupid", organization.getGroupId());
 					data.put("name", HtmlUtil.escape(organization.getName()));
-					data.put("organizationId", organization.getOrganizationId());
+					data.put("organizationid", organization.getOrganizationId());
 					data.put("type", organization.getType());
 					%>
 

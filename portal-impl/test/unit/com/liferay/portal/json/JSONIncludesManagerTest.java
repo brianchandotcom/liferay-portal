@@ -19,16 +19,17 @@ import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Igor Spasic
  */
-public class JSONIncludesManagerTest extends TestCase {
+public class JSONIncludesManagerTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -41,89 +42,95 @@ public class JSONIncludesManagerTest extends TestCase {
 			new JSONIncludesManagerImpl());
 	}
 
+	@Test
 	public void testExtendsOne() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
 			ExtendsOne.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("*", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("*", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
 			ExtendsOne.class);
 
-		assertEquals(1, includes.length);
-		assertEquals("ftwo", includes[0]);
+		Assert.assertEquals(1, includes.length);
+		Assert.assertEquals("ftwo", includes[0]);
 	}
 
+	@Test
 	public void testExtendsTwo() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
 			ExtendsTwo.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("*", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("*", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
 			ExtendsTwo.class);
 
-		assertEquals(1, includes.length);
-		assertEquals("ftwo", includes[0]);
+		Assert.assertEquals(1, includes.length);
+		Assert.assertEquals("ftwo", includes[0]);
 	}
 
+	@Test
 	public void testFour() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Four.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("*", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("*", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Four.class);
 
 		Arrays.sort(includes);
 
-		assertEquals(2, includes.length);
-		assertEquals("number", includes[0]);
-		assertEquals("value", includes[1]);
+		Assert.assertEquals(2, includes.length);
+		Assert.assertEquals("number", includes[0]);
+		Assert.assertEquals("value", includes[1]);
 
 		Four four = new Four();
 
 		String json = JSONFactoryUtil.looseSerialize(four);
 
-		assertTrue(json.contains("number"));
-		assertTrue(json.contains("value"));
+		Assert.assertTrue(json.contains("number"));
+		Assert.assertTrue(json.contains("value"));
 	}
 
+	@Test
 	public void testOne() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(One.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("not", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("not", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(One.class);
 
-		assertEquals(1, includes.length);
-		assertEquals("ftwo", includes[0]);
+		Assert.assertEquals(1, includes.length);
+		Assert.assertEquals("ftwo", includes[0]);
 	}
 
+	@Test
 	public void testThree() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Three.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("ignore", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("ignore", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Three.class);
 
-		assertEquals(0, includes.length);
+		Assert.assertEquals(0, includes.length);
 	}
 
+	@Test
 	public void testTwo() {
 		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Two.class);
 
-		assertEquals(1, excludes.length);
-		assertEquals("*", excludes[0]);
+		Assert.assertEquals(1, excludes.length);
+		Assert.assertEquals("*", excludes[0]);
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Two.class);
 
-		assertEquals(1, includes.length);
-		assertEquals("ftwo", includes[0]);
+		Assert.assertEquals(1, includes.length);
+		Assert.assertEquals("ftwo", includes[0]);
 	}
 
 }

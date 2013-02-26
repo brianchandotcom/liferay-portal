@@ -30,7 +30,6 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Set;
 
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
 
 import javax.servlet.RequestDispatcher;
@@ -40,7 +39,7 @@ import javax.servlet.ServletContext;
  * @author Brian Wing Shun Chan
  * @author Brett Randall
  */
-public class PortletContextImpl implements PortletContext {
+public class PortletContextImpl implements InternalPortletContext {
 
 	public PortletContextImpl(Portlet portlet, ServletContext servletContext) {
 		_portlet = portlet;

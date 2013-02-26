@@ -30,7 +30,8 @@ public class CamelCaseUtilTest {
 			"camel-case", CamelCaseUtil.fromCamelCase("camelCase"));
 		Assert.assertEquals(
 			"camel-case-word", CamelCaseUtil.fromCamelCase("camelCASEWord"));
-		Assert.assertEquals("camel-case", CamelCaseUtil.fromCamelCase("camelCASE"));
+		Assert.assertEquals(
+			"camel-case", CamelCaseUtil.fromCamelCase("camelCASE"));
 	}
 
 	@Test
@@ -45,10 +46,12 @@ public class CamelCaseUtilTest {
 
 	@Test
 	public void testToCamelCase() {
-		Assert.assertEquals("camelCase", CamelCaseUtil.toCamelCase("camel-case"));
+		Assert.assertEquals(
+			"camelCase", CamelCaseUtil.toCamelCase("camel-case"));
 		Assert.assertEquals(
 			"camelCASEWord", CamelCaseUtil.toCamelCase("camel-CASE-word"));
-		Assert.assertEquals("camelCASE", CamelCaseUtil.toCamelCase("camel-CASE"));
+		Assert.assertEquals(
+			"camelCASE", CamelCaseUtil.toCamelCase("camel-CASE"));
 	}
 
 }

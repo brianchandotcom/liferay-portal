@@ -79,7 +79,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(DLFileEntry.class),
+					groupId,
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 					ddmStructureKey);
 
 			if (ddmStructure == null) {

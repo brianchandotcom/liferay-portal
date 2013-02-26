@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
+import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRendererFactory;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
@@ -132,7 +132,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 				addTrashFields(
 					document, BookmarksFolder.class.getName(),
 					trashedFolder.getFolderId(), null, null,
-					BookmarksEntryAssetRendererFactory.TYPE);
+					BookmarksFolderAssetRendererFactory.TYPE);
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME,

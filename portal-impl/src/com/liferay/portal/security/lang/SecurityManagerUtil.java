@@ -29,6 +29,10 @@ import java.util.Properties;
  */
 public class SecurityManagerUtil {
 
+	public static PortalSecurityManager getPortalSecurityManager() {
+		return _portalSecurityManager;
+	}
+
 	public static void init() {
 		if (_portalSecurityManagerStrategy != null) {
 			return;
@@ -37,10 +41,18 @@ public class SecurityManagerUtil {
 		_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.parse(
 			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
 
+		if ((_portalSecurityManagerStrategy ==
+				PortalSecurityManagerStrategy.LIFERAY) ||
+			(_portalSecurityManagerStrategy ==
+				PortalSecurityManagerStrategy.SMART)) {
+
+			_portalSecurityManager = new PortalSecurityManagerImpl();
+		}
+
 		if (_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) {
 
-			System.setSecurityManager(new PortalSecurityManagerImpl());
+			System.setSecurityManager((SecurityManager)_portalSecurityManager);
 		}
 		else if (_portalSecurityManagerStrategy ==
 					PortalSecurityManagerStrategy.NONE) {
@@ -126,6 +138,8 @@ public class SecurityManagerUtil {
 
 		PACLPolicyManager.unregister(classLoader);
 	}
+
+	private static PortalSecurityManager _portalSecurityManager;
 
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;
 

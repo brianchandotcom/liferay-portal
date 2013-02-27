@@ -28,7 +28,6 @@ public class TypeTests extends BaseTestSuite {
 		testSuite.addTestSuite(Type1Test.class);
 		testSuite.addTestSuite(Type2Test.class);
 		testSuite.addTestSuite(Type3Test.class);
-		testSuite.addTestSuite(Type4Test.class);
 
 		return testSuite;
 	}

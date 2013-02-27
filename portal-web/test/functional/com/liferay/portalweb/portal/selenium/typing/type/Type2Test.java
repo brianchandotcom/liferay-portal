@@ -36,11 +36,13 @@ public class Type2Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Site Settings",
+			RuntimeVariables.replace("Site Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//select[@id='_165_type']");
 		selenium.type("//select[@id='_165_type']",
 			RuntimeVariables.replace("Test"));
+		assertNotEquals("Test",
+			selenium.getValue("//textarea[@id='_165_description']"));
 	}
 }

@@ -25,9 +25,7 @@ public class TypeKeys3Test extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent(
-			"//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.sendKeys("//input[@id='catherine']",
 			RuntimeVariables.replace("Test"));
 	}
 }

@@ -36,8 +36,8 @@ public class TypeFrame2Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Portal Settings",
-			RuntimeVariables.replace("Portal Settings"));
+		selenium.clickAt("link=Site Settings",
+			RuntimeVariables.replace("Site Settings"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//textarea[@id='_165_description']");
 		selenium.typeFrame("//textarea[@id='_165_description']",

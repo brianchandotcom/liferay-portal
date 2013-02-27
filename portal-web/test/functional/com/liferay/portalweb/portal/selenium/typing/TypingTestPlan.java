@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.selenium.typing;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.selenium.typing.type.TypeTests;
+import com.liferay.portalweb.portal.selenium.typing.typeframe.TypeFrameTests;
 import com.liferay.portalweb.portal.selenium.typing.typekeys.TypeKeysTests;
 
 import junit.framework.Test;
@@ -23,13 +25,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TypeTestPlan extends BaseTestSuite {
+public class TypingTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(TypeTests.suite());
-//		testSuite.addTest(TypeFrameTests.suite());
+		testSuite.addTest(TypeTests.suite());
+		testSuite.addTest(TypeFrameTests.suite());
 		testSuite.addTest(TypeKeysTests.suite());
 
 		return testSuite;

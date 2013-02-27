@@ -42,7 +42,7 @@ public class TypeKeys1Test extends BaseTestCase {
 		selenium.waitForVisible("//textarea[@id='_165_description']");
 		selenium.type("//textarea[@id='_165_description']",
 			RuntimeVariables.replace("Test Description"));
-		selenium.typeKeys("//textarea[@id='_165_description']",
+		selenium.sendKeys("//textarea[@id='_165_description']",
 			RuntimeVariables.replace(" - Testing typeKeys"));
 		assertEquals("Test Description - Testing typeKeys",
 			selenium.getValue("//textarea[@id='_165_description']"));

@@ -808,7 +808,7 @@ AUI.add(
 								{
 									categoryIds: categoryIds
 								},
-								A.rbind('_processCategoryDeletion', instance, instance._selectedVocabularyId, categoryIds.length)
+								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, categoryIds.length)
 							);
 						}
 					},
@@ -1831,7 +1831,7 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-category'))) {
 							instance._deleteCategory(
 								instance._selectedCategoryId,
-								A.rbind('_processCategoryDeletion', instance, instance._selectedVocabularyId, 1)
+								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, 1)
 							);
 						}
 					},
@@ -2242,10 +2242,18 @@ AUI.add(
 						);
 					},
 
-					_processCategoryDeletion: function(result, vocabularyId, categories) {
+					_processCategoryDeletion: function() {
 						var instance = this;
 
-						var exception = result.exception;
+						var vocabularyId = arguments[0];
+
+						var categories = arguments[1];
+
+						var exception;
+
+						if (arguments.length > 3) {
+							exception = arguments[2];
+						}
 
 						var vocabulary = instance._getVocabularyById(vocabularyId);
 
@@ -2286,15 +2294,21 @@ AUI.add(
 						}
 					},
 
-					_processVocabularyDeletion: function(result) {
+					_processVocabularyDeletion: function() {
 						var instance = this;
 
-						var exception = result.exception;
+						var exception;
+
+						if (arguments.length > 1) {
+							exception = arguments[0];
+						}
 
 						if (!exception) {
 							instance._closeEditSection();
 							instance._hidePanels();
 							instance._loadData();
+
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 						}
 						else {
 							var errorKey;

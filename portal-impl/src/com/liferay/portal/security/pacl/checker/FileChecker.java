@@ -41,10 +41,13 @@ import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
 
+import java.net.JarURLConnection;
+import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.security.Permission;
 
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -369,6 +372,27 @@ public class FileChecker extends BaseChecker {
 			File file = new File(System.getProperty("java.home") + "/lib");
 
 			addCanonicalPaths(paths, file);
+
+			Enumeration<URL> systemResources =
+				ClassLoader.getSystemClassLoader().getResources(
+					"META-INF/MANIFEST.MF");
+
+			while (systemResources.hasMoreElements()) {
+				URL url = systemResources.nextElement();
+
+				JarURLConnection openConnection =
+					(JarURLConnection)url.openConnection();
+
+				String filePath = openConnection.getJarFileURL().getFile();
+
+				int pos = filePath.lastIndexOf(File.separatorChar);
+
+				if (pos != -1) {
+					filePath = filePath.substring(0, pos + 1);
+				}
+
+				addCanonicalPath(paths, filePath);
+			}
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);

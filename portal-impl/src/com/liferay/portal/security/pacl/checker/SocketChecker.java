@@ -36,14 +36,18 @@ public class SocketChecker extends BaseChecker {
 		initListenPorts();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		String actions = permission.getActions();
 		String name = permission.getName();
 
 		if (!_permissions.implies(permission)) {
-			throwSecurityException(
+			logSecurityException(
 				_log, "Attempted " + actions + " for address " + name);
+
+			return false;
 		}
+
+		return true;
 	}
 
 	@Override

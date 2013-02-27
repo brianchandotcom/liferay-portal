@@ -46,7 +46,7 @@ public class PortalServiceChecker extends BaseChecker {
 		initServices();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		PortalServicePermission portalServicePermission =
 			(PortalServicePermission)permission;
 
@@ -57,11 +57,15 @@ public class PortalServiceChecker extends BaseChecker {
 			Class<?> implClass = (Class<?>)object;
 
 			if (!hasDynamicQuery(implClass)) {
-				throwSecurityException(
+				logSecurityException(
 					_log,
 					"Attempted to create a dynamic query for " + implClass);
+
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	@Override

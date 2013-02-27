@@ -28,7 +28,7 @@ public class DefaultRejectChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		if (_log.isDebugEnabled()) {
 			Thread.dumpStack();
 		}
@@ -38,16 +38,18 @@ public class DefaultRejectChecker extends BaseChecker {
 		String actions = permission.getActions();
 
 		if (Validator.isNotNull(actions)) {
-			throwSecurityException(
+			logSecurityException(
 				_log,
 				"Permission " + clazz.getName() + " attempted to " + name +
 					" on " + actions);
 		}
 		else {
-			throwSecurityException(
+			logSecurityException(
 				_log,
 				"Permission " + clazz.getName() + " attempted to " + name);
 		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DefaultRejectChecker.class);

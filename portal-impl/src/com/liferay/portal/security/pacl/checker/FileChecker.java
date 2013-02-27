@@ -152,34 +152,44 @@ public class FileChecker extends BaseChecker {
 		initPermissions();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		String name = permission.getName();
 		String actions = permission.getActions();
 
 		if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
 			if (!hasDelete(permission)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to delete file " + name);
+
+				return false;
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
 			if (!hasExecute(permission)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to execute file " + name);
+
+				return false;
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
 			if (PortalSecurityManagerThreadLocal.isCheckReadFile() &&
 				!hasRead(permission)) {
 
-				throwSecurityException(_log, "Attempted to read file " + name);
+				logSecurityException(_log, "Attempted to read file " + name);
+
+				return false;
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
 			if (!hasWrite(permission)) {
-				throwSecurityException(_log, "Attempted to write file " + name);
+				logSecurityException(_log, "Attempted to write file " + name);
+
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	@Override

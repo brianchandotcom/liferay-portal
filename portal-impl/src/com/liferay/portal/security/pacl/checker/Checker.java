@@ -26,7 +26,7 @@ public interface Checker {
 
 	public void afterPropertiesSet();
 
-	public void checkPermission(Permission permission);
+	public boolean implies(Permission permission);
 
 	public AuthorizationProperty generateAuthorizationProperty(
 		Object... arguments);

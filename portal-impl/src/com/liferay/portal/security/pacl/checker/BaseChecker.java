@@ -275,12 +275,10 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		return false;
 	}
 
-	protected void throwSecurityException(Log log, String message) {
+	protected void logSecurityException(Log log, String message) {
 		if (log.isWarnEnabled()) {
 			log.warn(message);
 		}
-
-		throw new SecurityException(message);
 	}
 
 	protected String portalImplJarLocation = PACLClassUtil.getJarLocation(

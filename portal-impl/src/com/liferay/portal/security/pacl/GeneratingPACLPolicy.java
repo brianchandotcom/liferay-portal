@@ -53,23 +53,24 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 	}
 
 	@Override
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		Checker checker = getChecker(permission.getClass());
 
-		try {
-			checker.checkPermission(permission);
+		if (checker.implies(permission)) {
+			return true;
 		}
-		catch (SecurityException se) {
-			try {
-				AuthorizationProperty authorizationProperty =
-					checker.generateAuthorizationProperty(permission);
 
-				mergeAuthorizationProperty(authorizationProperty);
-			}
-			catch (Exception e) {
-				throw se;
-			}
+		try {
+			AuthorizationProperty authorizationProperty =
+				checker.generateAuthorizationProperty(permission);
+
+			mergeAuthorizationProperty(authorizationProperty);
 		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

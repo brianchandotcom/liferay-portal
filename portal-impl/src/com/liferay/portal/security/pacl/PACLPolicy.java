@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public interface PACLPolicy {
 
-	public void checkPermission(Permission permission);
+	public boolean implies(Permission permission);
 
 	public ClassLoader getClassLoader();
 

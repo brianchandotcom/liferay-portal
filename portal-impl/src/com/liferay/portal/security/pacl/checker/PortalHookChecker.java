@@ -41,7 +41,7 @@ public class PortalHookChecker extends BaseChecker {
 		initStrutsActionPaths();
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
 		PortalHookPermission portalHookPermission =
 			(PortalHookPermission)permission;
 
@@ -50,15 +50,19 @@ public class PortalHookChecker extends BaseChecker {
 
 		if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
 			if (!_customJspDir) {
-				throwSecurityException(_log, "Attempted to set custom jsp dir");
+				logSecurityException(_log, "Attempted to set custom jsp dir");
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
 			String indexerClassName = (String)subject;
 
 			if (!_indexers.contains(indexerClassName)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to add indexer " + indexerClassName);
+
+				return false;
 			}
 		}
 		else if (name.equals(
@@ -71,42 +75,53 @@ public class PortalHookChecker extends BaseChecker {
 				!_languagePropertiesLanguageIds.contains(
 					locale.getLanguage() + "_" + locale.getCountry())) {
 
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to override locale " + locale);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
 			String key = (String)subject;
 
 			if (!_portalPropertiesKeys.contains(key)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to set portal property " + key);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
 			String serviceType = (String)subject;
 
 			if (!_services.contains(serviceType)) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to override service " + serviceType);
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
 			if (!_servletFilters) {
-				throwSecurityException(
+				logSecurityException(
 					_log, "Attempted to override serlvet filters");
+
+				return false;
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
 			String strutsActionPath = (String)subject;
 
 			if (!_strutsActionPaths.contains(strutsActionPath)) {
-				throwSecurityException(
+				logSecurityException(
 					_log,
 					"Attempted to use struts action path " + strutsActionPath);
+
+				return false;
 			}
 		}
 
+		return true;
 	}
 
 	@Override

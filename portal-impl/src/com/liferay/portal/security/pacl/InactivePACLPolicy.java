@@ -32,7 +32,8 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, classLoader, properties);
 	}
 
-	public void checkPermission(Permission permission) {
+	public boolean implies(Permission permission) {
+		return true;
 	}
 
 	public boolean hasJNDI(String name) {

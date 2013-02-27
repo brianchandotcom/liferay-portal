@@ -218,7 +218,7 @@ public class CacheFilter extends BasePortalFilter {
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.error(e);
+				_log.warn(e);
 			}
 
 			return 0;

@@ -111,7 +111,7 @@ if (fieldParamSelection.equals("0")) {
 					<aui:input label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
 				</div>
 
-				<aui:button name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
+				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>
@@ -273,7 +273,13 @@ if (fieldParamSelection.equals("0")) {
 
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
-	var REGEX_RANGE = /^\d{4}-\d{2}-\d{2}$/;
+	var REGEX_RANGE = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+
+	var customRangeFrom = A.one('#<portlet:namespace /><%= facet.getFieldName() %>from');
+	var customRangeTo = A.one('#<portlet:namespace /><%= facet.getFieldName() %>to');
+
+	var fromDateValid = false;
+	var toDateValid = false;
 
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
@@ -299,16 +305,31 @@ if (fieldParamSelection.equals("0")) {
 		customRange: true
 	};
 
+	var setValid = function(field, value) {
+		if (field === customRangeFrom) {
+			fromDateValid = value;
+		}
+		else if (field === customRangeTo) {
+			toDateValid = value;
+		}
+	};
+
 	var customRangeValidator = new A.FormValidator(
 		{
 			boundingBox: document.<portlet:namespace />fm,
 			fieldContainer: 'div',
 			on: {
 				errorField: function(event) {
+					setValid(event.validator.field, false);
+
 					Util.toggleDisabled(searchButton, true);
 				},
 				validField: function(event) {
-					Util.toggleDisabled(searchButton, false);
+					setValid(event.validator.field, true);
+
+					if (fromDateValid && toDateValid) {
+						Util.toggleDisabled(searchButton, false);
+					}
 				}
 			},
 			rules: {

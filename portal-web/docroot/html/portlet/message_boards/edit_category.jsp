@@ -93,7 +93,7 @@ if ((category == null) && (mailingList == null)) {
 			try {
 				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
 
-				parentCategoryName = HtmlUtil.escape(parentCategory.getName());
+				parentCategoryName = parentCategory.getName();
 			}
 			catch (NoSuchCategoryException nsce) {
 			}
@@ -106,7 +106,7 @@ if ((category == null) && (mailingList == null)) {
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= parentCategoryName %></aui:a>
+					<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= HtmlUtil.escape(parentCategoryName) %></aui:a>
 				</aui:field-wrapper>
 			</c:if>
 		</c:if>

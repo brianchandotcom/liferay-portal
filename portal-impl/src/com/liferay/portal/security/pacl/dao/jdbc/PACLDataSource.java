@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.jdbc.pacl;
+package com.liferay.portal.security.pacl.dao.jdbc;
 
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.log.Log;

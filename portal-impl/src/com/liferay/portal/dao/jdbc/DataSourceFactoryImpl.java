@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.jdbc;
 
-import com.liferay.portal.dao.jdbc.pacl.PACLDataSource;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactory;
@@ -29,11 +28,13 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+
 import com.liferay.util.PwdGenerator;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;

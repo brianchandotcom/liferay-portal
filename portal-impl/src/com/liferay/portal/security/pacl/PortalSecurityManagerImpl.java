@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.checker.CheckerUtil;
+import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 
 import java.lang.reflect.Field;
 

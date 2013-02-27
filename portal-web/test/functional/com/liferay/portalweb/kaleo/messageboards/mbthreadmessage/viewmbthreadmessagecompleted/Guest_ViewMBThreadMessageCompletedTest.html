@@ -14,23 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
+	<td>MB Thread Message Subject</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
@@ -43,7 +43,6 @@
 	<td>//div[@class='thread-body']</td>
 	<td>MB Thread Message Body</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -111,6 +111,7 @@ import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.text.Format;
 
@@ -126,224 +127,215 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
-		int maxUserToGroupCount) {
+			String baseDir, int maxGroupsCount, int maxJournalArticleSize,
+			int maxUserToGroupCount)
+		throws IOException {
 
-		try {
-			_baseDir = baseDir;
-			_maxGroupsCount = maxGroupsCount;
-			_maxUserToGroupCount = maxUserToGroupCount;
+		_baseDir = baseDir;
+		_maxGroupsCount = maxGroupsCount;
+		_maxUserToGroupCount = maxUserToGroupCount;
 
-			// Init JournalArticle Content
+		// Init JournalArticle Content
 
-			if (maxJournalArticleSize <= 0) {
-				maxJournalArticleSize = 1;
-			}
-
-			char[] chars = new char[maxJournalArticleSize];
-
-			for (int i = 0; i < maxJournalArticleSize; i++) {
-				chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
-			}
-
-			_journalArticleContent = new String(chars);
-
-			// Init User Names
-
-			String dependenciesDir =
-				"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder" +
-					"/dependencies/";
-
-			_firstNames = ListUtil.fromFile(
-				new File(_baseDir, dependenciesDir + "first_names.txt"));
-			_lastNames = ListUtil.fromFile(
-				new File(_baseDir, dependenciesDir + "last_names.txt"));
-
-			// Init SimpleCounters
-
-			_counter = new SimpleCounter(_maxGroupsCount + 1);
-			_futureDateCounter = new SimpleCounter();
-			_resourcePermissionCounter = new SimpleCounter();
-			_socialActivityCounter = new SimpleCounter();
-			_userScreenNameCounter = new SimpleCounter();
-
-			// Init DLFileEntryType
-
-			_defaultDLFileEntryType = _newDLFileEntryType(
-				SequentialUUID.generate(),
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-				nextFutureDate(), nextFutureDate(),
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
-
-			// Init ClassNames
-
-			_classNames = new ArrayList<ClassName>();
-
-			List<String> models = ModelHintsUtil.getModels();
-
-			for (String model : models) {
-				ClassName className = _newClassName(_counter.get(), model);
-
-				_classNames.add(className);
-
-				_classNameMap.put(model, className.getClassNameId());
-			}
-
-			// Init Guest Group
-
-			long groupId = _counter.get();
-
-			_guestGroup = _newGroup(
-				groupId, getGroupClassNameId(), groupId, GroupConstants.GUEST,
-				"/guest", true);
-
-			// Init Company
-
-			_company = _newCompany(
-				_counter.get(), _counter.get(), "liferay.com", "liferay.com",
-				true);
-
-			// Init Account
-
-			_account = _newAccount(
-				_company.getAccountId(), _company.getCompanyId(), new Date(),
-				new Date(), "Liferay", "Liferay, Inc.");
-
-			// Init Roles
-
-			_roles = new ArrayList<Role>();
-
-			long roleClassNameId = _classNameMap.get(Role.class.getName());
-
-			long roleId = _counter.get();
-
-			_administratorRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
-
-			_roles.add(_administratorRole);
-
-			roleId = _counter.get();
-
-			_guestRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
-
-			_roles.add(_guestRole);
-
-			roleId = _counter.get();
-
-			Role organizationAdministratorRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.ORGANIZATION_ADMINISTRATOR,
-				RoleConstants.TYPE_ORGANIZATION);
-
-			_roles.add(organizationAdministratorRole);
-
-			roleId = _counter.get();
-
-			Role organizationOwnerRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.ORGANIZATION_OWNER,
-				RoleConstants.TYPE_ORGANIZATION);
-
-			_roles.add(organizationOwnerRole);
-
-			roleId = _counter.get();
-
-			Role organizationUserRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.ORGANIZATION_USER,
-				RoleConstants.TYPE_ORGANIZATION);
-
-			_roles.add(organizationUserRole);
-
-			roleId = _counter.get();
-
-			_ownerRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
-
-			_roles.add(_ownerRole);
-
-			roleId = _counter.get();
-
-			_powerUserRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
-
-			_roles.add(_powerUserRole);
-
-			roleId = _counter.get();
-
-			Role siteAdministratorRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
-
-			_roles.add(siteAdministratorRole);
-
-			roleId = _counter.get();
-
-			Role siteMemberRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
-
-			_roles.add(siteMemberRole);
-
-			roleId = _counter.get();
-
-			Role siteOwnerRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
-
-			_roles.add(siteOwnerRole);
-
-			roleId = _counter.get();
-
-			_userRole = _newRole(
-				roleId, _company.getCompanyId(), roleClassNameId, roleId,
-				RoleConstants.USER, RoleConstants.TYPE_REGULAR);
-
-			_roles.add(_userRole);
-
-			// Init Users
-
-			long userId = _counter.get();
-			String screenName = String.valueOf(userId);
-
-			_defaultUser = _newUser(
-				SequentialUUID.generate(), userId, _company.getCompanyId(),
-				new Date(), new Date(), true, _counter.get(), "test",
-				new Date(), "What is your screen name?", screenName,
-				screenName + "@liferay.com", screenName, "en_US",
-				"Welcome " + screenName + StringPool.EXCLAMATION,
-				StringPool.BLANK, StringPool.BLANK, new Date(), new Date(),
-				new Date(), new Date(), true, true);
-
-			_guestUser = _newUser(
-				SequentialUUID.generate(), _counter.get(),
-				_company.getCompanyId(), new Date(), new Date(), false,
-				_counter.get(), "test", new Date(), "What is your screen name?",
-				"Test", "Test@liferay.com", "Test", "en_US", "Welcome Test!",
-				"Test", "Test", new Date(), new Date(), new Date(), new Date(),
-				true, true);
-
-			_sampleUser = _newUser(
-				SequentialUUID.generate(), _counter.get(),
-				_company.getCompanyId(), new Date(), new Date(), false,
-				_counter.get(), "test", new Date(), "What is your screen name?",
-				"Sample", "Sample@liferay.com", "Sample", "en_US",
-				"Welcome Sample!", "Sample", "Sample", new Date(), new Date(),
-				new Date(), new Date(), true, true);
-
-			// Init VirtualHost
-
-			_virtualHost = _newVirtualHost(
-				_counter.get(), _company.getCompanyId(), "localhost");
+		if (maxJournalArticleSize <= 0) {
+			maxJournalArticleSize = 1;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+
+		char[] chars = new char[maxJournalArticleSize];
+
+		for (int i = 0; i < maxJournalArticleSize; i++) {
+			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
 		}
+
+		_journalArticleContent = new String(chars);
+
+		// Init User Names
+
+		String dependenciesDir =
+			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder" +
+				"/dependencies/";
+
+		_firstNames = ListUtil.fromFile(
+			new File(_baseDir, dependenciesDir + "first_names.txt"));
+		_lastNames = ListUtil.fromFile(
+			new File(_baseDir, dependenciesDir + "last_names.txt"));
+
+		// Init SimpleCounters
+
+		_counter = new SimpleCounter(_maxGroupsCount + 1);
+		_futureDateCounter = new SimpleCounter();
+		_resourcePermissionCounter = new SimpleCounter();
+		_socialActivityCounter = new SimpleCounter();
+		_userScreenNameCounter = new SimpleCounter();
+
+		// Init DLFileEntryType
+
+		_defaultDLFileEntryType = _newDLFileEntryType(
+			SequentialUUID.generate(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			nextFutureDate(), nextFutureDate(),
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+
+		// Init ClassNames
+
+		_classNames = new ArrayList<ClassName>();
+
+		List<String> models = ModelHintsUtil.getModels();
+
+		for (String model : models) {
+			ClassName className = _newClassName(_counter.get(), model);
+
+			_classNames.add(className);
+
+			_classNameMap.put(model, className.getClassNameId());
+		}
+
+		// Init Guest Group
+
+		long groupId = _counter.get();
+
+		_guestGroup = _newGroup(
+			groupId, getGroupClassNameId(), groupId, GroupConstants.GUEST,
+			"/guest", true);
+
+		// Init Company
+
+		_company = _newCompany(
+			_counter.get(), _counter.get(), "liferay.com", "liferay.com", true);
+
+		// Init Account
+
+		_account = _newAccount(
+			_company.getAccountId(), _company.getCompanyId(), new Date(),
+			new Date(), "Liferay", "Liferay, Inc.");
+
+		// Init Roles
+
+		_roles = new ArrayList<Role>();
+
+		long roleClassNameId = _classNameMap.get(Role.class.getName());
+
+		long roleId = _counter.get();
+
+		_administratorRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_administratorRole);
+
+		roleId = _counter.get();
+
+		_guestRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_guestRole);
+
+		roleId = _counter.get();
+
+		Role organizationAdministratorRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(organizationAdministratorRole);
+
+		roleId = _counter.get();
+
+		Role organizationOwnerRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(organizationOwnerRole);
+
+		roleId = _counter.get();
+
+		Role organizationUserRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roles.add(organizationUserRole);
+
+		roleId = _counter.get();
+
+		_ownerRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_ownerRole);
+
+		roleId = _counter.get();
+
+		_powerUserRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_powerUserRole);
+
+		roleId = _counter.get();
+
+		Role siteAdministratorRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
+
+		_roles.add(siteAdministratorRole);
+
+		roleId = _counter.get();
+
+		Role siteMemberRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
+
+		_roles.add(siteMemberRole);
+
+		roleId = _counter.get();
+
+		Role siteOwnerRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
+
+		_roles.add(siteOwnerRole);
+
+		roleId = _counter.get();
+
+		_userRole = _newRole(
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
+			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
+
+		_roles.add(_userRole);
+
+		// Init Users
+
+		long userId = _counter.get();
+		String screenName = String.valueOf(userId);
+
+		_defaultUser = _newUser(
+			SequentialUUID.generate(), userId, _company.getCompanyId(),
+			new Date(), new Date(), true, _counter.get(), "test", new Date(),
+			"What is your screen name?", screenName,
+			screenName + "@liferay.com", screenName, "en_US",
+			"Welcome " + screenName + StringPool.EXCLAMATION, StringPool.BLANK,
+			StringPool.BLANK, new Date(), new Date(), new Date(), new Date(),
+			true, true);
+
+		_guestUser = _newUser(
+			SequentialUUID.generate(), _counter.get(), _company.getCompanyId(),
+			new Date(), new Date(), false, _counter.get(), "test", new Date(),
+			"What is your screen name?", "Test", "Test@liferay.com", "Test",
+			"en_US", "Welcome Test!", "Test", "Test", new Date(), new Date(),
+			new Date(), new Date(), true, true);
+
+		_sampleUser = _newUser(
+			SequentialUUID.generate(), _counter.get(), _company.getCompanyId(),
+			new Date(), new Date(), false, _counter.get(), "test", new Date(),
+			"What is your screen name?", "Sample", "Sample@liferay.com",
+			"Sample", "en_US", "Welcome Sample!", "Sample", "Sample",
+			new Date(), new Date(), new Date(), new Date(), true, true);
+
+		// Init VirtualHost
+
+		_virtualHost = _newVirtualHost(
+			_counter.get(), _company.getCompanyId(), "localhost");
 	}
 
 	public AssetEntry addAssetEntry(

@@ -131,11 +131,8 @@ public class Transformer {
 		List<TransformerListener> transformerListeners =
 			new ArrayList<TransformerListener>();
 
-		Set<String> transformerListenersClassNames =
-			getTransformerListenersClassNames();
-
 		for (String transformerListenersClassName :
-				transformerListenersClassNames) {
+				_transformerListenerClassNames) {
 
 			TransformerListener transformerListener = null;
 
@@ -230,19 +227,17 @@ public class Transformer {
 		return output;
 	}
 
-	protected String getErrorTemplateId(String langType) {
-		return _errorTemplateIds.get(langType);
-	}
-
 	protected TemplateResource getErrorTemplateResource(String langType) {
 		try {
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			URL url = classLoader.getResource(getErrorTemplateId(langType));
+			String errorTemplateId = _errorTemplateIds.get(langType);
 
-			return new URLTemplateResource(getErrorTemplateId(langType), url);
+			URL url = classLoader.getResource(errorTemplateId);
+
+			return new URLTemplateResource(errorTemplateId, url);
 		}
 		catch (Exception e) {
 		}
@@ -361,10 +356,6 @@ public class Transformer {
 		sb.append(templateId);
 
 		return sb.toString();
-	}
-
-	protected Set<String> getTransformerListenersClassNames() {
-		return _transformerListenerClassNames;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Transformer.class);

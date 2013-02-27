@@ -16,19 +16,8 @@ package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.Diff;
-import com.liferay.portal.kernel.util.DiffResult;
-import com.liferay.portal.kernel.util.DiffUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -66,8 +55,6 @@ import com.sun.syndication.io.FeedException;
 import java.io.File;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,18 +67,6 @@ import java.util.Locale;
  * @author Raymond Augé
  */
 public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
-
-	public WikiPageServiceImpl() {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		String templateId = "com/liferay/portlet/wiki/dependencies/rss.vm";
-
-		URL url = classLoader.getResource(templateId);
-
-		_templateResource = new URLTemplateResource(templateId, url);
-	}
 
 	public WikiPage addPage(
 			long nodeId, String title, String content, String summary,
@@ -297,10 +272,24 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		return pages;
 	}
 
+	/**
+	 * @deprecated {As of 6.2.0, replaced by @link #getNodePagesRSS(long, int,
+	 *             String, double, String, String, String, String)}
+	 */
 	public String getNodePagesRSS(
 			long nodeId, int max, String type, double version,
 			String displayStyle, String feedURL, String entryURL)
-		throws PortalException, SystemException {
+		throws Exception {
+
+		return getNodePagesRSS(
+			nodeId, max, type, version, displayStyle, feedURL, entryURL, null);
+	}
+
+	public String getNodePagesRSS(
+			long nodeId, int max, String type, double version,
+			String displayStyle, String feedURL, String entryURL,
+			String attachmentURLPrefix )
+		throws Exception {
 
 		WikiNodePermission.check(
 			getPermissionChecker(), nodeId, ActionKeys.VIEW);
@@ -311,7 +300,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return exportToRSS(
 			node.getCompanyId(), node.getName(), node.getDescription(), type,
-			version, displayStyle, feedURL, entryURL, pages, false, null);
+			version, displayStyle, feedURL, entryURL, attachmentURLPrefix,
+			pages, false, null);
 	}
 
 	public List<WikiPage> getOrphans(long groupId, long nodeId)
@@ -431,11 +421,27 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {As of 6.2.0, replaced by @link #getPagesRSS(long, long,
+	 *             String, int, String, double, String, String, String, String,
+	 *             java.util.Locale)}
+	 */
 	public String getPagesRSS(
 			long companyId, long nodeId, String title, int max, String type,
 			double version, String displayStyle, String feedURL,
 			String entryURL, Locale locale)
-		throws PortalException, SystemException {
+		throws Exception {
+
+		return getPagesRSS(
+			companyId, nodeId, title, max, type, version, displayStyle, feedURL,
+			entryURL, null, locale);
+	}
+
+	public String getPagesRSS(
+			long companyId, long nodeId, String title, int max, String type,
+			double version, String displayStyle, String feedURL,
+			String entryURL, String attachmentURLPrefix, Locale locale)
+		throws Exception {
 
 		WikiPagePermission.check(
 			getPermissionChecker(), nodeId, title, ActionKeys.VIEW);
@@ -445,7 +451,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return exportToRSS(
 			companyId, title, title, type, version, displayStyle, feedURL,
-			entryURL, pages, true, locale);
+			entryURL, attachmentURLPrefix, pages, true, locale);
 	}
 
 	public List<WikiPage> getRecentChanges(
@@ -605,8 +611,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	protected String exportToRSS(
 			long companyId, String name, String description, String type,
 			double version, String displayStyle, String feedURL,
-			String entryURL, List<WikiPage> pages, boolean diff, Locale locale)
-		throws SystemException {
+			String entryURL, String attachmentURLPrefix, List<WikiPage> pages,
+			boolean diff, Locale locale)
+		throws Exception {
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
@@ -649,11 +656,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					String value = null;
 
 					if (latestPage == null) {
-						value = page.getContent();
+						value = WikiUtil.convert(
+							page, null, null, attachmentURLPrefix);
 					}
 					else {
-						value = getPageDiff(
-							companyId, latestPage, page, locale);
+						value = WikiUtil.diffHtml(
+							latestPage, page, null, null, attachmentURLPrefix);
 					}
 
 					syndContent.setValue(value);
@@ -675,7 +683,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					value = StringPool.BLANK;
 				}
 				else {
-					value = page.getContent();
+					value = WikiUtil.convert(
+						page, null, null, attachmentURLPrefix);
 				}
 
 				syndContent.setValue(value);
@@ -730,44 +739,5 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			throw new SystemException(fe);
 		}
 	}
-
-	protected String getPageDiff(
-			long companyId, WikiPage latestPage, WikiPage page, Locale locale)
-		throws SystemException {
-
-		try {
-			Template template = TemplateManagerUtil.getTemplate(
-				TemplateConstants.LANG_TYPE_VM, _templateResource,
-				TemplateContextType.STANDARD);
-
-			template.put("companyId", companyId);
-			template.put("contextLine", Diff.CONTEXT_LINE);
-			template.put("diffUtil", new DiffUtil());
-			template.put("languageUtil", LanguageUtil.getLanguage());
-			template.put("locale", locale);
-
-			String sourceContent = WikiUtil.convert(
-				latestPage, null, null, null);
-			String targetContent = WikiUtil.convert(page, null, null, null);
-
-			List<DiffResult>[] diffResults = DiffUtil.diff(
-				new UnsyncStringReader(sourceContent),
-				new UnsyncStringReader(targetContent));
-
-			template.put("sourceResults", diffResults[0]);
-			template.put("targetResults", diffResults[1]);
-
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			template.processTemplate(unsyncStringWriter);
-
-			return unsyncStringWriter.toString();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	private TemplateResource _templateResource;
 
 }

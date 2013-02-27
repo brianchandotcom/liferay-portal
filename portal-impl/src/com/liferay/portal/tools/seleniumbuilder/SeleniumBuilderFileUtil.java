@@ -16,6 +16,7 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -78,6 +79,19 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		return content;
+	}
+
+	public int getParams(Element rootElement) {
+		String params = rootElement.attributeValue("params");
+
+		int paramsInteger = GetterUtil.getInteger(params);
+
+		if (paramsInteger == 0) {
+			return 1;
+		}
+		else {
+			return paramsInteger;
+		}
 	}
 
 	public String getReturnType(Element rootElement) {

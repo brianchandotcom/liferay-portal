@@ -131,7 +131,7 @@ public class WikiUtil {
 			if (c == CharPool.GREATER_THAN) {
 				insideTag = false;
 			}
-			 else if (c == CharPool.LESS_THAN) {
+			else if (c == CharPool.LESS_THAN) {
 				insideTag = true;
 			}
 

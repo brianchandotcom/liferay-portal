@@ -227,7 +227,8 @@ public class JournalTestUtil {
 	}
 
 	public static DDMStructure addDDMStructure(
-		long groupId, Locale defaultLocale) throws Exception {
+			long groupId, Locale defaultLocale)
+		throws Exception {
 
 		return addDDMStructure(
 			groupId, getSampleStructureXSD(), LocaleUtil.getDefault());

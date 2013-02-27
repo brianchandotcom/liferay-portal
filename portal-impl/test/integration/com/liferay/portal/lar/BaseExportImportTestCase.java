@@ -47,7 +47,8 @@ public class BaseExportImportTestCase extends PowerMockito {
 	}
 
 	protected Layout updateLayoutTemplateId(
-		Layout layout, String layoutTemplateId) throws Exception {
+			Layout layout, String layoutTemplateId)
+		throws Exception {
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

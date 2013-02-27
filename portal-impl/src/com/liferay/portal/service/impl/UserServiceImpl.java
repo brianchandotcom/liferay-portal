@@ -759,8 +759,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         view role members
 	 * @throws SystemException if a system exception occurred
 	 */
-	public long[] getRoleUserIds(long roleId) throws
-		PortalException, SystemException {
+	public long[] getRoleUserIds(long roleId)
+		throws PortalException, SystemException {
 
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.VIEW);

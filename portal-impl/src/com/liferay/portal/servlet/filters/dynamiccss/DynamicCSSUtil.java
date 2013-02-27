@@ -185,7 +185,8 @@ public class DynamicCSSUtil {
 	}
 
 	private static URL _getCacheResource(
-		ServletContext servletContext, String resourcePath) throws Exception {
+			ServletContext servletContext, String resourcePath)
+		throws Exception {
 
 		int pos = resourcePath.lastIndexOf(StringPool.SLASH);
 

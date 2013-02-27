@@ -80,6 +80,17 @@ public class SeleniumBuilderFileUtil {
 		return content;
 	}
 
+	public String getReturnType(Element rootElement) {
+		String returnType = rootElement.attributeValue("return");
+
+		if (returnType == null) {
+			return "void";
+		}
+		else {
+			return returnType;
+		}
+	}
+
 	public Element getRootElement(String fileName) throws Exception {
 		String content = getNormalizedContent(fileName);
 

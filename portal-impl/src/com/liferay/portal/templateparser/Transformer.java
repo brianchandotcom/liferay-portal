@@ -14,6 +14,7 @@
 
 package com.liferay.portal.templateparser;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.portlet.journal.util.JournalXSLURIResolver;
@@ -42,6 +44,7 @@ import com.liferay.portlet.journal.util.JournalXSLURIResolver;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,7 +58,29 @@ import java.util.Set;
  * @author Marcellus Tavares
  * @author Juan Fernández
  */
-public abstract class BaseTransformer implements Transformer {
+public class Transformer {
+
+	public Transformer(
+		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
+		TemplateContextType defaultTemplateContextType) {
+
+		_transformerListenerClassNames = SetUtil.fromArray(
+				PropsUtil.getArray(transformerListenerPropertyKey));
+
+		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
+			errorTemplatePropertyKey);
+
+		for (String langType : langTypes) {
+			String errorTemplateId = PropsUtil.get(
+				errorTemplatePropertyKey, new Filter(langType));
+
+			if (Validator.isNotNull(errorTemplateId)) {
+				_errorTemplateIds.put(langType, errorTemplateId);
+			}
+		}
+
+		_defaultTemplateContextType = defaultTemplateContextType;
+	}
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
@@ -104,11 +129,8 @@ public abstract class BaseTransformer implements Transformer {
 		List<TransformerListener> transformerListeners =
 			new ArrayList<TransformerListener>();
 
-		Set<String> transformerListenersClassNames =
-			getTransformerListenersClassNames();
-
 		for (String transformerListenersClassName :
-				transformerListenersClassNames) {
+				_transformerListenerClassNames) {
 
 			TransformerListener transformerListener = null;
 
@@ -203,17 +225,17 @@ public abstract class BaseTransformer implements Transformer {
 		return output;
 	}
 
-	protected abstract String getErrorTemplateId(String langType);
-
 	protected TemplateResource getErrorTemplateResource(String langType) {
 		try {
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			URL url = classLoader.getResource(getErrorTemplateId(langType));
+			String errorTemplateId = _errorTemplateIds.get(langType);
 
-			return new URLTemplateResource(getErrorTemplateId(langType), url);
+			URL url = classLoader.getResource(errorTemplateId);
+
+			return new URLTemplateResource(errorTemplateId, url);
 		}
 		catch (Exception e) {
 		}
@@ -304,8 +326,14 @@ public abstract class BaseTransformer implements Transformer {
 			templateContextType);
 	}
 
-	protected abstract TemplateContextType getTemplateContextType(
-		String langType);
+	protected TemplateContextType getTemplateContextType(String langType) {
+		if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+			return TemplateContextType.EMPTY;
+		}
+		else {
+			return _defaultTemplateContextType;
+		}
+	}
 
 	protected String getTemplateId(
 		String templateId, long companyId, long companyGroupId, long groupId) {
@@ -328,27 +356,30 @@ public abstract class BaseTransformer implements Transformer {
 		return sb.toString();
 	}
 
-	protected abstract Set<String> getTransformerListenersClassNames();
-
-	private static Log _log = LogFactoryUtil.getLog(BaseTransformer.class);
+	private static Log _log = LogFactoryUtil.getLog(Transformer.class);
 
 	private static Log _logOutputAfterListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".OutputAfterListener");
+		Transformer.class.getName() + ".OutputAfterListener");
 	private static Log _logOutputBeforeListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".OutputBeforeListener");
+		Transformer.class.getName() + ".OutputBeforeListener");
 	private static Log _logScriptAfterListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".ScriptAfterListener");
+		Transformer.class.getName() + ".ScriptAfterListener");
 	private static Log _logScriptBeforeListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".ScriptBeforeListener");
+		Transformer.class.getName() + ".ScriptBeforeListener");
 	private static Log _logTokens = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".Tokens");
+		Transformer.class.getName() + ".Tokens");
 	private static Log _logTransformBefore = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".TransformBefore");
+		Transformer.class.getName() + ".TransformBefore");
 	private static Log _logTransfromAfter = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".TransformAfter");
+		Transformer.class.getName() + ".TransformAfter");
 	private static Log _logXmlAfterListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".XmlAfterListener");
+		Transformer.class.getName() + ".XmlAfterListener");
 	private static Log _logXmlBeforeListener = LogFactoryUtil.getLog(
-		BaseTransformer.class.getName() + ".XmlBeforeListener");
+		Transformer.class.getName() + ".XmlBeforeListener");
+
+	private TemplateContextType _defaultTemplateContextType;
+	private Map<String, String> _errorTemplateIds =
+		new HashMap<String, String>();
+	private Set<String> _transformerListenerClassNames;
 
 }

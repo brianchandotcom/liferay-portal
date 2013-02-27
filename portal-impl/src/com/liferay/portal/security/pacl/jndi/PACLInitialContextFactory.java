@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jndi.pacl;
+package com.liferay.portal.security.pacl.jndi;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

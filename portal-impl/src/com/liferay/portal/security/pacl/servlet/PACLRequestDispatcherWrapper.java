@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.portal.security.pacl.servlet;
 
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;

@@ -625,21 +625,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					fileEntryTypeId, workflowDefinition));
 		}
 
-		Group group = groupLocalService.getGroup(
-			serviceContext.getScopeGroupId());
-
-		if (group.isLayout()) {
-			group = group.getParentGroup();
-		}
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
 		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
 			serviceContext.getUserId(), serviceContext.getCompanyId(),
-			group.getGroupId(), DLFolder.class.getName(), folderId,
-			workflowDefinitionOVPs);
+			serviceContext.getScopeGroupId(), DLFolder.class.getName(),
+			folderId, workflowDefinitionOVPs);
 
 		return dlFolder;
 	}

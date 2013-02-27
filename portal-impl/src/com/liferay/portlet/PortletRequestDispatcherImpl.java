@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequestDispatcher;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -55,25 +57,26 @@ import org.apache.struts.Globals;
 /**
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
+ * @author Raymond Augé
  */
 public class PortletRequestDispatcherImpl
 	implements LiferayPortletRequestDispatcher {
 
 	public PortletRequestDispatcherImpl(
 		RequestDispatcher requestDispatcher, boolean named,
-		PortletContextImpl portletContextImpl) {
+		PortletContext portletContext) {
 
-		this(requestDispatcher, named, portletContextImpl, null);
+		this(requestDispatcher, named, portletContext, null);
 	}
 
 	public PortletRequestDispatcherImpl(
 		RequestDispatcher requestDispatcher, boolean named,
-		PortletContextImpl portletContextImpl, String path) {
+		PortletContext portletContext, String path) {
 
 		_requestDispatcher = requestDispatcher;
 		_named = named;
-		_portlet = portletContextImpl.getPortlet();
-		_portletContextImpl = portletContextImpl;
+		_liferayPortletContext = (LiferayPortletContext)portletContext;
+		_portlet = _liferayPortletContext.getPortlet();
 		_path = path;
 	}
 
@@ -192,9 +195,9 @@ public class PortletRequestDispatcherImpl
 				String[] queryParamsArray = StringUtil.split(
 					queryString, CharPool.AMPERSAND);
 
-				for (int i = 0; i < queryParamsArray.length; i++) {
+				for (String element : queryParamsArray) {
 					String[] nameValuePair = StringUtil.split(
-						queryParamsArray[i], CharPool.EQUAL);
+						element, CharPool.EQUAL);
 
 					String name = nameValuePair[0];
 					String value = StringPool.BLANK;
@@ -312,7 +315,7 @@ public class PortletRequestDispatcherImpl
 			URLEncoder strutsURLEncoderObj = new StrutsURLEncoder(
 				portletServletRequest.getContextPath(),
 				themeDisplay.getPathMain(),
-				(String)_portletContextImpl.getAttribute(
+				(String)_liferayPortletContext.getAttribute(
 					Globals.SERVLET_KEY),
 				(LiferayPortletURL)portletResponseImpl.createRenderURL());
 
@@ -332,10 +335,10 @@ public class PortletRequestDispatcherImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletRequestDispatcherImpl.class);
 
+	private LiferayPortletContext _liferayPortletContext;
 	private boolean _named;
 	private String _path;
 	private Portlet _portlet;
-	private PortletContextImpl _portletContextImpl;
 	private RequestDispatcher _requestDispatcher;
 
 }

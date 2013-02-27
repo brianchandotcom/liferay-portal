@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.monitoring.statistics.portlet.PortletRequestDataSample;
 import com.liferay.portal.monitoring.statistics.portlet.PortletRequestType;
 import com.liferay.portal.util.PropsValues;
@@ -39,6 +40,7 @@ import javax.portlet.ResourceResponse;
 /**
  * @author Michael C. Han
  * @author Karthik Sudarshan
+ * @author Raymond Augé
  */
 public class MonitoringPortlet implements InvokerPortlet {
 
@@ -122,12 +124,13 @@ public class MonitoringPortlet implements InvokerPortlet {
 	}
 
 	public void init(PortletConfig portletConfig) throws PortletException {
-		PortletConfigImpl portletConfigImpl = (PortletConfigImpl)portletConfig;
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)portletConfig;
 
-		_invokerPortlet.init(portletConfigImpl);
+		_invokerPortlet.init(liferayPortletConfig);
 
 		com.liferay.portal.model.Portlet portletModel =
-			portletConfigImpl.getPortlet();
+			liferayPortletConfig.getPortlet();
 
 		_actionTimeout = portletModel.getActionTimeout();
 		_renderTimeout = portletModel.getRenderTimeout();

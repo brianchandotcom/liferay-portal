@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,6 +44,7 @@ import javax.servlet.ServletException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class StrutsPortlet extends LiferayPortlet {
 
@@ -193,7 +195,7 @@ public class StrutsPortlet extends LiferayPortlet {
 		copyRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("copy-request-parameters"), true);
 
-		_portletConfig = (PortletConfigImpl)portletConfig;
+		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
 	}
 
 	@Override
@@ -283,7 +285,7 @@ public class StrutsPortlet extends LiferayPortlet {
 
 		Map<String, Object> strutsAttributes = null;
 
-		if (_portletConfig.isWARFile()) {
+		if (_liferayPortletConfig.isWARFile()) {
 			strutsAttributes = StrutsUtil.removeStrutsAttributes(
 				getPortletContext(), renderRequest);
 		}
@@ -297,7 +299,7 @@ public class StrutsPortlet extends LiferayPortlet {
 			throw new PortletException(se);
 		}
 		finally {
-			if (_portletConfig.isWARFile()) {
+			if (_liferayPortletConfig.isWARFile()) {
 				StrutsUtil.setStrutsAttributes(renderRequest, strutsAttributes);
 			}
 		}
@@ -326,6 +328,6 @@ public class StrutsPortlet extends LiferayPortlet {
 			WebKeys.PORTLET_STRUTS_PROCESSOR);
 	}
 
-	private PortletConfigImpl _portletConfig;
+	private LiferayPortletConfig _liferayPortletConfig;
 
 }

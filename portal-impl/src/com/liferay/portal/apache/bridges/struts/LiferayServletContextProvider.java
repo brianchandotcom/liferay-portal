@@ -14,10 +14,10 @@
 
 package com.liferay.portal.apache.bridges.struts;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.servlet.ServletContextProvider;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletContextImpl;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletContext;
@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author James Schopp
  * @author Michael Young
  * @author Deepak Gothe
+ * @author Raymond Augé
  */
 public class LiferayServletContextProvider implements ServletContextProvider {
 
@@ -58,10 +59,10 @@ public class LiferayServletContextProvider implements ServletContextProvider {
 				JavaConstants.JAVAX_PORTLET_SERVLET_CONTEXT);
 
 		if (servletContext == null) {
-			PortletContextImpl portletContextImpl =
-				(PortletContextImpl)portlet.getPortletContext();
+			LiferayPortletContext liferayPortletContext =
+				(LiferayPortletContext)portlet.getPortletContext();
 
-			servletContext = portletContextImpl.getServletContext();
+			servletContext = liferayPortletContext.getServletContext();
 		}
 
 		return getServletContext(servletContext);

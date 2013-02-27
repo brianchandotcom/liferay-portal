@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
@@ -64,6 +65,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -93,6 +95,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Shuyang Zhou
+ * @author Raymond Augé
  */
 @DoPrivileged
 public class PortletContainerImpl implements PortletContainer {
@@ -458,12 +461,12 @@ public class PortletContainerImpl implements PortletContainer {
 			if ((contentType != null) &&
 				contentType.startsWith(ContentTypes.MULTIPART_FORM_DATA)) {
 
-				PortletConfigImpl invokerPortletConfigImpl =
-					(PortletConfigImpl)invokerPortlet.getPortletConfig();
+				LiferayPortletConfig liferayPortletConfig =
+					(LiferayPortletConfig)invokerPortlet.getPortletConfig();
 
 				if (invokerPortlet.isStrutsPortlet() ||
-					invokerPortletConfigImpl.isCopyRequestParameters() ||
-					!invokerPortletConfigImpl.isWARFile()) {
+					liferayPortletConfig.isCopyRequestParameters() ||
+					!liferayPortletConfig.isWARFile()) {
 
 					uploadServletRequest = new UploadServletRequestImpl(
 						request);

@@ -51,7 +51,7 @@
 			buffer.append("<a href=\"");
 			buffer.append(rowURL);
 			buffer.append("\">");
-			buffer.append(subcategory.getName());
+			buffer.append(HtmlUtil.escape(subcategory.getName()));
 			buffer.append("</a>");
 
 			if ((j + 1) < subcategories.size()) {

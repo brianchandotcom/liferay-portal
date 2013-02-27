@@ -169,12 +169,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 					<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
 						<aui:field-wrapper label="webdav-url">
-
-							<%
-							Group group = GroupLocalServiceUtil.getGroup(groupId);
-							%>
-
-							<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + group.getFriendlyURL() + "/dynamic_data_mapping/ddmTemplates/" + templateId %>' />
+							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay) %>" />
 						</aui:field-wrapper>
 					</c:if>
 				</c:if>

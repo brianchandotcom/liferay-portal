@@ -37,12 +37,16 @@ import java.util.List;
  * @author Eduardo Lundgren
  * @author Connor McKay
  * @author Marcellus Tavares
+ * @author Juan Fernández
  */
 public class DDMTemplateFinderImpl
 	extends BasePersistenceImpl<DDMTemplate> implements DDMTemplateFinder {
 
 	public static final String COUNT_BY_C_G_C_C_N_D_T_M_L =
 		DDMTemplateFinder.class.getName() + ".countByC_G_C_C_N_D_T_M_L";
+
+	public static final String FIND_BY_G_SC =
+		DDMTemplateFinder.class.getName() + ".findByG_SC";
 
 	public static final String FIND_BY_C_G_C_C_N_D_T_M_L =
 		DDMTemplateFinder.class.getName() + ".findByC_G_C_C_N_D_T_M_L";
@@ -325,6 +329,15 @@ public class DDMTemplateFinderImpl
 			orderByComparator);
 	}
 
+	public List<DDMTemplate> filterFindByG_SC(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_SC(
+			groupId, structureClassNameId, start, end, orderByComparator, true);
+	}
+
 	public List<DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -446,6 +459,16 @@ public class DDMTemplateFinderImpl
 			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
+	}
+
+	public List<DDMTemplate> findByG_SC(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByG_SC(
+			groupId, structureClassNameId, start, end, orderByComparator,
+			false);
 	}
 
 	public List<DDMTemplate> findByC_G_C_C_N_D_T_M_L(
@@ -604,6 +627,48 @@ public class DDMTemplateFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<DDMTemplate> doFindByG_SC(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_SC);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
+					groupId);
+			}
+
+			if (orderByComparator != null) {
+				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DDMTemplate", DDMTemplateImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(structureClassNameId);
+
+			return (List<DDMTemplate>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

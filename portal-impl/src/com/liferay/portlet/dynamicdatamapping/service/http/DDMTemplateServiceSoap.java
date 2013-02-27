@@ -460,6 +460,39 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplatesByClassPK(
+		long groupId, long classPK) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.getTemplatesByClassPK(groupId, classPK);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplatesByStructureClassNameId(
+		long groupId, long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.getTemplatesByStructureClassNameId(groupId,
+					structureClassNameId, start, end, orderByComparator);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

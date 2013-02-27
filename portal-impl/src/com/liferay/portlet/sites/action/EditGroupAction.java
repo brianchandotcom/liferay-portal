@@ -27,6 +27,8 @@ import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -48,6 +50,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.model.Role;
@@ -56,6 +59,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
@@ -89,6 +94,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
+ * @author Josef Sustacek
  */
 public class EditGroupAction extends PortletAction {
 
@@ -132,6 +138,9 @@ public class EditGroupAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteGroups(actionRequest);
+			}
+			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
+				resetMergeFailCountAndMerge(actionRequest);
 			}
 
 			sendRedirect(
@@ -276,6 +285,39 @@ public class EditGroupAction extends PortletAction {
 		}
 
 		return teams;
+	}
+
+	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
+		throws Exception {
+
+		long targetGroupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayoutSet = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSet");
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
+
+		LayoutSet targetLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			targetGroupId, privateLayoutSet);
+
+		SitesUtil.resetPrototype(targetLayoutSet);
+
+		Group targetGroup = GroupLocalServiceUtil.getGroup(targetGroupId);
+
+		SitesUtil.mergeLayoutSetPrototypeLayouts(targetGroup, targetLayoutSet);
+
+		layoutSetPrototype =
+			LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		if (SitesUtil.getMergeFailCount(layoutSetPrototype) > 0) {
+			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
+		}
 	}
 
 	protected void updateActive(ActionRequest actionRequest, String cmd)
@@ -700,5 +742,7 @@ public class EditGroupAction extends PortletAction {
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
+
+	private static Log _log = LogFactoryUtil.getLog(EditGroupAction.class);
 
 }

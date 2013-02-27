@@ -74,13 +74,14 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<java
 			classname="org.antlr.Tool"
 			classpathref="antlr.classpath"
+			dir="src/com/liferay/portal/parsers/creole/grammar"
 			fork="true"
 			maxmemory="1024m"
 			newenvironment="true"
 		>
 			<arg value="-o" />
-			<arg path="src/com/liferay/portal/parsers/creole/parser" />
-			<arg path="src/com/liferay/portal/parsers/creole/grammar/Creole10.g" />
+			<arg value="../parser" />
+			<arg value="Creole10.g" />
 		</java>
 
 		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">

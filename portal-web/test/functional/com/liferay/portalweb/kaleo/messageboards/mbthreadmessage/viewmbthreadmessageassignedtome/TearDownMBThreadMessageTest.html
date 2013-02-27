@@ -320,7 +320,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>recycleBinPresent</td>
 </tr>
 <tr>
@@ -330,16 +330,16 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>//a[@class='trash-empty-link']</td>
 	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
 </tr>

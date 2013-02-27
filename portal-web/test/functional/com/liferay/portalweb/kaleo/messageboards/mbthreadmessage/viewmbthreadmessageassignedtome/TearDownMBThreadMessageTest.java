@@ -202,7 +202,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean recycleBinPresent = selenium.isElementPresent(
-						"//form[@id='_182_emptyForm']/a");
+						"//a[@class='trash-empty-link']");
 
 				if (!recycleBinPresent) {
 					label = 7;
@@ -211,12 +211,12 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
-					selenium.getText("//form[@id='_182_emptyForm']/a"));
-				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					selenium.getText("//a[@class='trash-empty-link']"));
+				selenium.clickAt("//a[@class='trash-empty-link']",
 					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to empty the Recycle Bin?");
 
 			case 7:
 				assertEquals(RuntimeVariables.replace(

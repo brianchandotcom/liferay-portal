@@ -39,14 +39,19 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -82,13 +87,18 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 	}
 }

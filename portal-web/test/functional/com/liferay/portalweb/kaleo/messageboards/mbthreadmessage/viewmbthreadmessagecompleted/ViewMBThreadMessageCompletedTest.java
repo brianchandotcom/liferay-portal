@@ -42,6 +42,8 @@ public class ViewMBThreadMessageCompletedTest extends BaseTestCase {
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.clickAt("link=My Posts", RuntimeVariables.replace("My Posts"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
 			selenium.getText(
 				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
@@ -80,13 +82,18 @@ public class ViewMBThreadMessageCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 	}
 }

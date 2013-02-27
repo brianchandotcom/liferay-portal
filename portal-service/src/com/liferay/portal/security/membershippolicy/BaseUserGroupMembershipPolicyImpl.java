@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public abstract class BaseUserGroupMembershipPolicyImpl
 	implements UserGroupMembershipPolicy {
@@ -31,7 +32,8 @@ public abstract class BaseUserGroupMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkAddMembership(new long[]{userId}, new long[]{userGroupId});
+			checkMembership(
+				new long[] {userId}, new long[] {userGroupId}, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -44,7 +46,8 @@ public abstract class BaseUserGroupMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkRemoveMembership(new long[]{userId}, new long[]{userGroupId});
+			checkMembership(
+				new long[] {userId}, null, new long[] {userGroupId});
 		}
 		catch (Exception e) {
 			return true;
@@ -56,6 +59,7 @@ public abstract class BaseUserGroupMembershipPolicyImpl
 	public void verifyPolicy() throws PortalException, SystemException {
 		int start = 0;
 		int end = SEARCH_INTERVAL;
+
 		int total = UserGroupLocalServiceUtil.getUserGroupsCount();
 
 		while (start <= total) {
@@ -69,6 +73,12 @@ public abstract class BaseUserGroupMembershipPolicyImpl
 			start = end;
 			end += end;
 		}
+	}
+
+	public void verifyPolicy(UserGroup userGroup)
+		throws PortalException, SystemException {
+
+		verifyPolicy(userGroup, null, null);
 	}
 
 }

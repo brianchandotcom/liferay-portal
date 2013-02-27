@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -31,45 +30,31 @@ import java.util.Map;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class SiteMembershipPolicyUtil {
 
-	public static void checkAddMembership(long[] userIds, long[] groupIds)
+	public static void checkMembership(
+			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
 			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		siteMembershipPolicy.checkAddMembership(userIds, groupIds);
+		siteMembershipPolicy.checkMembership(
+			userIds, addGroupIds, removeGroupIds);
 	}
 
-	public static void checkAddRoles(
-			long[] userIds, long[] groupIds, long[] roleIds)
+	public static void checkRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
 			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		siteMembershipPolicy.checkAddRoles(userIds, groupIds, roleIds);
-	}
-
-	public static void checkRemoveMembership(long[] userIds, long[] groupIds)
-		throws PortalException, SystemException {
-
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		siteMembershipPolicy.checkRemoveMembership(userIds, groupIds);
-	}
-
-	public static void checkRemoveRoles(
-			long[] userIds, long[] groupIds, long[] roleIds)
-		throws PortalException, SystemException {
-
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		siteMembershipPolicy.checkRemoveRoles(userIds, groupIds, roleIds);
+		siteMembershipPolicy.checkRoles(
+			addUserGroupRoles, removeUserGroupRoles);
 	}
 
 	public static boolean isMembershipAllowed(long userId, long groupId)
@@ -131,52 +116,27 @@ public class SiteMembershipPolicyUtil {
 		return siteMembershipPolicy.isRoleRequired(userId, groupId, roleId);
 	}
 
-	public static void propagateAddMembership(long[] userIds, long[] groupIds)
+	public static void propagateMembership(
+			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
 			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		for (long groupId : groupIds) {
-			siteMembershipPolicy.propagateAddMembership(userIds, groupId);
-		}
+		siteMembershipPolicy.propagateMembership(
+			userIds, addGroupIds, removeGroupIds);
 	}
 
-	public static void propagateAddRoles(List<UserGroupRole> userGroupRoles)
-		throws PortalException, SystemException {
-
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			if (userGroupRole.getRole().getType() != RoleConstants.TYPE_SITE) {
-				userGroupRoles.remove(userGroupRole);
-			}
-		}
-
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		siteMembershipPolicy.propagateAddRoles(userGroupRoles);
-	}
-
-	public static void propagateRemoveMembership(
-			long[] userIds, long[] groupIds)
+	public static void propagateRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
 			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		for (long groupId : groupIds) {
-			siteMembershipPolicy.propagateRemoveMembership(userIds, groupId);
-		}
-	}
-
-	public static void propagateRemoveRoles(
-			long userId, long groupId, long roleId)
-		throws PortalException, SystemException {
-
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		siteMembershipPolicy.propagateRemoveRoles(userId, groupId, roleId);
+		siteMembershipPolicy.propagateRoles(
+			addUserGroupRoles, removeUserGroupRoles);
 	}
 
 	public static void verifyPolicy() throws PortalException, SystemException {
@@ -195,6 +155,21 @@ public class SiteMembershipPolicyUtil {
 		siteMembershipPolicy.verifyPolicy(group);
 	}
 
+	public static void verifyPolicy(
+			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
+			List<AssetTag> oldAssetTags,
+			Map<String, Serializable> oldExpandoAttributes,
+			String oldTypeSettings)
+		throws PortalException, SystemException {
+
+		SiteMembershipPolicy siteMembershipPolicy =
+			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
+
+		siteMembershipPolicy.verifyPolicy(
+			group, oldGroup, oldAssetCategories, oldAssetTags,
+			oldExpandoAttributes, oldTypeSettings);
+	}
+
 	public static void verifyPolicy(Role role)
 		throws PortalException, SystemException {
 
@@ -204,30 +179,15 @@ public class SiteMembershipPolicyUtil {
 		siteMembershipPolicy.verifyPolicy(role);
 	}
 
-	public static void verifyUpdatePolicy(
-			Group group, Group oldGroup,
-			List<AssetCategory> oldAssetCatergories,
-			List<AssetTag> oldAssetTags,
+	public static void verifyPolicy(
+			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException {
 
 		SiteMembershipPolicy siteMembershipPolicy =
 			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		siteMembershipPolicy.verifyUpdatePolicy(
-			group, oldGroup, oldAssetCatergories, oldAssetTags,
-			oldExpandoAttributes);
-	}
-
-	public static void verifyUpdatePolicy(
-			Group group, Group oldGroup, String oldTypeSettings)
-		throws PortalException, SystemException {
-
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		siteMembershipPolicy.verifyUpdatePolicy(
-			group, oldGroup, oldTypeSettings);
+		siteMembershipPolicy.verifyPolicy(role, oldRole, oldExpandoAttributes);
 	}
 
 }

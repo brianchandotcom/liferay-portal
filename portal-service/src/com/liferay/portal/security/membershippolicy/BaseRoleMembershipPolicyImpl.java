@@ -24,14 +24,16 @@ import java.util.List;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
-public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
+public abstract class BaseRoleMembershipPolicyImpl
+	implements RoleMembershipPolicy {
 
 	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException, SystemException {
 
 		try {
-			checkAddRoles(new long[]{userId}, new long[]{roleId});
+			checkRoles(new long[] {userId}, new long[] {roleId}, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -44,7 +46,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		throws PortalException, SystemException {
 
 		try {
-			checkRemoveRoles(new long[]{userId}, new long[]{roleId});
+			checkRoles(new long[] {userId}, null, new long[] {roleId});
 		}
 		catch (Exception e) {
 			return true;
@@ -57,12 +59,12 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		int start = 0;
 		int end = SEARCH_INTERVAL;
 
-		int total = RoleLocalServiceUtil.getRolesByTypeCount(
+		int total = RoleLocalServiceUtil.getTypeRolesCount(
 			RoleConstants.TYPE_REGULAR);
 
 		while (start <= total) {
-			List<Role> roles = RoleLocalServiceUtil.getRolesByType(
-					RoleConstants.TYPE_REGULAR, start, end);
+			List<Role> roles = RoleLocalServiceUtil.getTypeRoles(
+				RoleConstants.TYPE_REGULAR, start, end);
 
 			for (Role role : roles) {
 				verifyPolicy(role);
@@ -71,6 +73,12 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 			start = end;
 			end += end;
 		}
+	}
+
+	public void verifyPolicy(Role role)
+		throws PortalException, SystemException {
+
+		verifyPolicy(role, null, null);
 	}
 
 }

@@ -74,15 +74,6 @@ public class UsersAdminUtil {
 		return getUsersAdmin().addRequiredRoles(user, roleIds);
 	}
 
-	public static long[] filterDeleteGroupRoleUserIds(
-			PermissionChecker permissionChecker, long groupId, long roleId,
-			long[] userIds)
-		throws PortalException, SystemException {
-
-		return getUsersAdmin().filterDeleteGroupRoleUserIds(
-			permissionChecker, groupId, roleId, userIds);
-	}
-
 	public static List<Role> filterGroupRoles(
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException {

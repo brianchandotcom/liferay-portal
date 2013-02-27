@@ -25,22 +25,30 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Roberto Díaz
+ * @author Sergio González
  */
-public class DummyRoleMembershipPolicyImpl extends BaseRoleMembershipPolicy {
+public class DummyRoleMembershipPolicyImpl
+	extends BaseRoleMembershipPolicyImpl {
 
-	public void checkAddRoles(long[] userIds, long[] roleIds)
+	public void checkRoles(
+			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException {
 	}
 
-	public void checkRemoveRoles(long[] userIds, long[] roleIds)
+	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException, SystemException {
+
+		return true;
 	}
 
-	public void propagateAddRoles(long[] userIds, long roleId)
+	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException, SystemException {
+
+		return false;
 	}
 
-	public void propagateRemoveRoles(long[] userIds, long roleId)
+	public void propagateRoles(
+			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException {
 	}
 
@@ -48,9 +56,9 @@ public class DummyRoleMembershipPolicyImpl extends BaseRoleMembershipPolicy {
 		throws PortalException, SystemException {
 	}
 
-	public void verifyUpdatePolicy(
-			Role role, Role oldRole, Map<String,
-			Serializable> oldExpandoAttributes)
+	public void verifyPolicy(
+			Role role, Role oldRole,
+			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException {
 	}
 

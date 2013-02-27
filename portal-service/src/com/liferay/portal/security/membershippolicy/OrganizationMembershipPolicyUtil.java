@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -34,44 +33,27 @@ import java.util.Map;
  */
 public class OrganizationMembershipPolicyUtil {
 
-	public static void checkAddMembership(
-			long[] userIds, long[] organizationIds)
+	public static void checkMembership(
+			long[] userIds, long[] addOrganizationIds,
+			long[] removeOrganizationIds)
 		throws PortalException, SystemException {
 
 		OrganizationMembershipPolicy membershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		membershipPolicy.checkAddMembership(userIds, organizationIds);
+		membershipPolicy.checkMembership(
+			userIds, addOrganizationIds, removeOrganizationIds);
 	}
 
-	public static void checkAddRoles(
-			long[] userIds, long[] organizationIds, long[] rolesIds)
+	public static void checkRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 
 		OrganizationMembershipPolicy membershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		membershipPolicy.checkAddRoles(userIds, organizationIds, rolesIds);
-	}
-
-	public static void checkRemoveMembership(
-			long[] userIds, long[] organizationIds)
-		throws PortalException, SystemException {
-
-		OrganizationMembershipPolicy membershipPolicy =
-			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		membershipPolicy.checkRemoveMembership(userIds, organizationIds);
-	}
-
-	public static void checkRemoveRoles(
-			long[] userIds, long[] organizationIds, long[] rolesIds)
-		throws PortalException, SystemException {
-
-		OrganizationMembershipPolicy membershipPolicy =
-			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		membershipPolicy.checkRemoveRoles(userIds, organizationIds, rolesIds);
+		membershipPolicy.checkRoles(addUserGroupRoles, removeUserGroupRoles);
 	}
 
 	public static boolean isMembershipAllowed(long userId, long organizationId)
@@ -136,55 +118,28 @@ public class OrganizationMembershipPolicyUtil {
 		return membershipPolicy.isRoleRequired(userId, organizationId, roleId);
 	}
 
-	public static void propagateAddMembership(
-			long[] userIds, long[] organizationIds)
+	public static void propagateMembership(
+			long[] userIds, long[] addOrganizationIds,
+			long[] removeOrganizationIds)
 		throws PortalException, SystemException {
 
 		OrganizationMembershipPolicy membershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		for (long organizationId : organizationIds) {
-			membershipPolicy.propagateAddMembership(userIds, organizationId);
-		}
+		membershipPolicy.propagateMembership(
+			userIds, addOrganizationIds, removeOrganizationIds);
 	}
 
-	public static void propagateAddRoles(List<UserGroupRole> userGroupRoles)
-		throws PortalException, SystemException {
-
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			if (userGroupRole.getRole().getType() !=
-					RoleConstants.TYPE_ORGANIZATION) {
-
-				userGroupRoles.remove(userGroupRole);
-			}
-		}
-
-		OrganizationMembershipPolicy membershipPolicy =
-			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		membershipPolicy.propagateAddRoles(userGroupRoles);
-	}
-
-	public static void propagateRemoveMembership(
-			long[] userIds, long[] organizationIds)
+	public static void propagateRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 
 		OrganizationMembershipPolicy membershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		for (long organizationId : organizationIds) {
-			membershipPolicy.propagateRemoveMembership(userIds, organizationId);
-		}
-	}
-
-	public static void propagateRemoveRoles(
-			long userId, long organizationId, long roleId)
-		throws PortalException, SystemException {
-
-		OrganizationMembershipPolicy membershipPolicy =
-			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		membershipPolicy.propagateRemoveRole(userId, organizationId, roleId);
+		membershipPolicy.propagateRoles(
+			addUserGroupRoles, removeUserGroupRoles);
 	}
 
 	public static void verifyPolicy() throws PortalException, SystemException {
@@ -203,6 +158,20 @@ public class OrganizationMembershipPolicyUtil {
 		membershipPolicy.verifyPolicy(organization);
 	}
 
+	public static void verifyPolicy(
+			Organization organization, Organization oldOrganization,
+			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
+			Map<String, Serializable> oldExpandoAttributes)
+		throws PortalException, SystemException {
+
+		OrganizationMembershipPolicy membershipPolicy =
+			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
+
+		membershipPolicy.verifyPolicy(
+			organization, oldOrganization, oldAssetCategories, oldAssetTags,
+			oldExpandoAttributes);
+	}
+
 	public static void verifyPolicy(Role role)
 		throws PortalException, SystemException {
 
@@ -212,18 +181,15 @@ public class OrganizationMembershipPolicyUtil {
 		membershipPolicy.verifyPolicy(role);
 	}
 
-	public static void verifyUpdatePolicy(
-			Organization organization, Organization oldOrganization,
-			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
+	public static void verifyPolicy(
+			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException {
 
 		OrganizationMembershipPolicy membershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		membershipPolicy.verifyUpdatePolicy(
-			organization, oldOrganization, oldAssetCategories, oldAssetTags,
-			oldExpandoAttributes);
+		membershipPolicy.verifyPolicy(role, oldRole, oldExpandoAttributes);
 	}
 
 }

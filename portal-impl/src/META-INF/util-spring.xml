@@ -584,14 +584,14 @@
 			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
-		<property name="membershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil">
 		<property name="membershipPolicyFactory">
 			<bean class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
+		<property name="membershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">

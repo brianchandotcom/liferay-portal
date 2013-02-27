@@ -49,7 +49,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -68,7 +67,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The implementation of the role local service.
@@ -241,26 +239,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		indexer.reindex(userId);
 
 		PermissionCacheUtil.clearCache();
-	}
-
-	public void checkMembershipPolicy(User user)
-		throws PortalException, SystemException {
-
-		List<Role> roles = getUserRoles(user.getUserId());
-
-		for (Role role : roles) {
-			if (!MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				unsetUserRoles(user.getUserId(), new long[] {role.getRoleId()});
-			}
-		}
-
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(user);
-
-		for (Role role : mandatoryRoles) {
-			if (!hasUserRole(user.getUserId(), role.getRoleId())) {
-				addUserRoles(user.getUserId(), new long[] {role.getRoleId()});
-			}
-		}
 	}
 
 	/**
@@ -717,6 +695,44 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		long classNameId = PortalUtil.getClassNameId(Team.class);
 
 		return rolePersistence.findByC_C_C(companyId, classNameId, teamId);
+	}
+
+	/**
+	 * Returns a range of all the roles of the type.
+	 *
+	 * @param  type the role's type (optionally <code>0</code>)
+	 * @return the range of the roles of the type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getTypeRoles(int type) throws SystemException {
+		return rolePersistence.findByType(type);
+	}
+
+	/**
+	 * Returns a range of all the roles of the type.
+	 *
+	 * @param  type the role's type (optionally <code>0</code>)
+	 * @param  start the lower bound of the range of roles to return
+	 * @param  end the upper bound of the range of roles to return (not
+	 *         inclusive)
+	 * @return the range of the roles of the type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getTypeRoles(int type, int start, int end)
+		throws SystemException {
+
+		return rolePersistence.findByType(type, start, end);
+	}
+
+	/**
+	 * Returns the number of roles of the type.
+	 *
+	 * @param  type the role's type (optionally <code>0</code>)
+	 * @return the number of roles of the type
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getTypeRolesCount(int type) throws SystemException {
+		return rolePersistence.countByType(type);
 	}
 
 	/**

@@ -29,42 +29,52 @@ import java.util.Map;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class DummyOrganizationMembershipPolicyImpl
 	extends BaseOrganizationMembershipPolicyImpl {
 
-	public void checkAddMembership(long[] userIds, long[] organizationIds)
+	public void checkMembership(
+			long[] userIds, long[] addOrganizationIds,
+			long[] removeOrganizationIds)
 		throws PortalException, SystemException {
 	}
 
-	public void checkAddRoles(
-			long[] userIds, long[] organizationIds, long[] roleIds)
+	public void checkRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 	}
 
-	public void checkRemoveMembership(long[] userIds, long[] organizationId)
+	public boolean isMembershipAllowed(long userId, long groupId) {
+		return true;
+	}
+
+	public boolean isMembershipRequired(long userId, long groupId)
+		throws PortalException, SystemException {
+
+		return false;
+	}
+
+	public boolean isRoleAllowed(long userId, long groupId, long roleId)
+		throws PortalException, SystemException {
+
+		return true;
+	}
+
+	public boolean isRoleRequired(long userId, long groupId, long roleId) {
+		return false;
+	}
+
+	public void propagateMembership(
+			long[] userIds, long[] addOrganizationIds,
+			long[] removeOrganizationIds)
 		throws PortalException, SystemException {
 	}
 
-	public void checkRemoveRoles(
-			long[] userIds, long[] organizationIds, long[] roleIds)
-		throws PortalException, SystemException {
-	}
-
-	public void propagateAddMembership(long[] userIds, long organizationIds)
-		throws PortalException, SystemException {
-	}
-
-	public void propagateAddRoles(List<UserGroupRole> userGroupRole)
-		throws PortalException, SystemException {
-	}
-
-	public void propagateRemoveMembership(long[] userIds, long organizationIds)
-		throws PortalException, SystemException {
-	}
-
-	public void propagateRemoveRole(
-			long userId, long organizationId, long roleId)
+	public void propagateRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException {
 	}
 
@@ -72,13 +82,19 @@ public class DummyOrganizationMembershipPolicyImpl
 		throws PortalException, SystemException {
 	}
 
+	public void verifyPolicy(
+			Organization organization, Organization oldOrganization,
+			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
+			Map<String, Serializable> oldExpandoAttributes)
+		throws PortalException, SystemException {
+	}
+
 	public void verifyPolicy(Role role)
 		throws PortalException, SystemException {
 	}
 
-	public void verifyUpdatePolicy(
-			Organization organization, Organization oldOrganization,
-			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
+	public void verifyPolicy(
+			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException {
 	}

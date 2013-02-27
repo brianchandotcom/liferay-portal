@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -42,8 +43,10 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -64,7 +67,6 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * The implementation of the user remote service.
@@ -128,9 +130,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		checkAddGroupUsersMembershipPolicy(groupId, userIds);
+		SiteMembershipPolicyUtil.checkMembership(
+			userIds, new long[] {groupId}, null);
 
 		userLocalService.addGroupUsers(groupId, userIds);
+
+		SiteMembershipPolicyUtil.propagateMembership(
+			userIds, new long[] {groupId}, null);
 	}
 
 	/**
@@ -153,9 +159,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		validateOrganizationUsers(userIds);
 
-		checkAddOrganizationUsersMembershipPolicy(organizationId, userIds);
+		OrganizationMembershipPolicyUtil.checkMembership(
+			userIds, new long[] {organizationId}, null);
 
 		userLocalService.addOrganizationUsers(organizationId, userIds);
+
+		OrganizationMembershipPolicyUtil.propagateMembership(
+			userIds, new long[] {organizationId}, null);
+
 	}
 
 	/**
@@ -195,9 +206,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkAddRoleUsersMembershipPolicy(roleId, userIds);
+		RoleMembershipPolicyUtil.checkRoles(userIds, new long[] {roleId}, null);
 
 		userLocalService.addRoleUsers(roleId, userIds);
+
+		RoleMembershipPolicyUtil.propagateRoles(
+			userIds, new long[] {roleId}, null);
 	}
 
 	/**
@@ -401,9 +415,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkAddUserGroupUsersMembershipPolicy(userGroupId, userIds);
+		UserGroupMembershipPolicyUtil.checkMembership(
+			userIds, new long[] {userGroupId}, null);
 
 		userLocalService.addUserGroupUsers(userGroupId, userIds);
+
+		UserGroupMembershipPolicyUtil.propagateMembership(
+			userIds, new long[] {userGroupId}, null);
 	}
 
 	/**
@@ -479,12 +497,34 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			creatorUserId, companyId, emailAddress, groupIds, organizationIds,
 			roleIds, userGroupIds, serviceContext);
 
-		return userLocalService.addUserWithWorkflow(
+		User user = userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+
+		if (groupIds != null) {
+			SiteMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()}, groupIds, null);
+		}
+
+		if (organizationIds != null) {
+			OrganizationMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()}, organizationIds, null);
+		}
+
+		if (roleIds != null) {
+			RoleMembershipPolicyUtil.propagateRoles(
+				new long[] {user.getUserId()}, roleIds, null);
+		}
+
+		if (userGroupIds != null) {
+			UserGroupMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()}, userGroupIds, null);
+		}
+
+		return user;
 	}
 
 	/**
@@ -986,9 +1026,28 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkSetRoleUsersMembershipPolicy(roleId, userIds);
+		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
+
+		List<User> users = rolePersistence.getUsers(roleId);
+
+		for (User user : users) {
+			if (!ArrayUtil.contains(userIds, user.getUserId())) {
+				unsetUserIds.add(user.getUserId());
+			}
+		}
+
+		RoleMembershipPolicyUtil.checkRoles(
+			ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+
+		RoleMembershipPolicyUtil.checkRoles(userIds, new long[] {roleId}, null);
 
 		userLocalService.setRoleUsers(roleId, userIds);
+
+		RoleMembershipPolicyUtil.propagateRoles(
+			ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+
+		RoleMembershipPolicyUtil.propagateRoles(
+			userIds, new long[] {roleId}, null);
 	}
 
 	/**
@@ -1007,9 +1066,31 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkSetUserGroupUsersMembershipPolicy(userGroupId, userIds);
+		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
+
+		List<User> users = userGroupPersistence.getUsers(userGroupId);
+
+		for (User user : users) {
+			if (!ArrayUtil.contains(userIds, user.getUserId())) {
+				unsetUserIds.add(user.getUserId());
+			}
+		}
+
+		UserGroupMembershipPolicyUtil.checkMembership(
+			ArrayUtil.toLongArray(unsetUserIds), null,
+			new long[] {userGroupId});
+
+		UserGroupMembershipPolicyUtil.checkMembership(
+			userIds, new long[] {userGroupId}, null);
 
 		userLocalService.setUserGroupUsers(userGroupId, userIds);
+
+		UserGroupMembershipPolicyUtil.propagateMembership(
+			ArrayUtil.toLongArray(unsetUserIds), null,
+			new long[] {userGroupId});
+
+		UserGroupMembershipPolicyUtil.propagateMembership(
+			userIds, new long[] {userGroupId}, null);
 	}
 
 	/**
@@ -1089,9 +1170,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		checkUnsetGroupUsersMembershipPolicy(groupId, userIds);
+		SiteMembershipPolicyUtil.checkMembership(
+			userIds, null, new long[] {groupId});
 
 		userLocalService.unsetGroupUsers(groupId, userIds, serviceContext);
+
+		SiteMembershipPolicyUtil.propagateMembership(
+			userIds, null, new long[] {groupId});
 	}
 
 	/**
@@ -1117,9 +1202,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkUnsetOrganizationUsersMembershipPolicy(organizationId, userIds);
+		OrganizationMembershipPolicyUtil.checkMembership(
+			userIds, null, new long[] {organizationId});
 
 		userLocalService.unsetOrganizationUsers(organizationId, userIds);
+
+		OrganizationMembershipPolicyUtil.propagateMembership(
+			userIds, null, new long[] {organizationId});
 	}
 
 	/**
@@ -1157,9 +1246,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkUnsetRoleUsersMembershipPolicy(roleId, userIds);
+		RoleMembershipPolicyUtil.checkRoles(userIds, null, new long[] {roleId});
 
 		userLocalService.unsetRoleUsers(roleId, userIds);
+
+		RoleMembershipPolicyUtil.propagateRoles(
+			userIds, null, new long[] {roleId});
 	}
 
 	/**
@@ -1196,9 +1288,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
 
-		checkUnsetUserGroupUsersMembershipPolicy(userGroupId, userIds);
+		UserGroupMembershipPolicyUtil.checkMembership(
+			userIds, null, new long[] {userGroupId});
 
 		userLocalService.unsetUserGroupUsers(userGroupId, userIds);
+
+		UserGroupMembershipPolicyUtil.propagateMembership(
+			userIds, null, new long[] {userGroupId});
 	}
 
 	/**
@@ -1375,7 +1471,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
-		checkOrganizations(userId, organizationIds);
+		checkOrganizations(userId, organizationIds, null, null);
 
 		userLocalService.updateOrganizations(
 			userId, organizationIds, serviceContext);
@@ -1625,27 +1721,144 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
+		long[] oldUserGroupIds = user.getUserGroupIds();
+
+		List<Long> addUserGroupIds = new ArrayList<Long>();
+		List<Long> removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
+
+		for (long userGroupId : userGroupIds) {
+			if (ArrayUtil.contains(oldUserGroupIds, userGroupId)) {
+				removeUserGroupIds.remove(userGroupId);
+			}
+			else {
+				addUserGroupIds.add(userGroupId);
+			}
+		}
+
+		long[] oldGroupIds = user.getGroupIds();
+
+		List<Long> addGroupIds = new ArrayList<Long>();
+		List<Long> removeGroupIds = ListUtil.toList(oldGroupIds);
+
+		for (long groupId : groupIds) {
+			if (ArrayUtil.contains(oldGroupIds, groupId)) {
+				removeGroupIds.remove(groupId);
+			}
+			else {
+				addGroupIds.add(groupId);
+			}
+		}
+
 		if (groupIds != null) {
-			groupIds = checkGroups(userId, groupIds);
+			groupIds = checkGroups(
+				userId, groupIds, ArrayUtil.toLongArray(addGroupIds),
+				ArrayUtil.toLongArray(removeGroupIds));
+		}
+
+		long[] oldOrganizationIds = user.getOrganizationIds();
+
+		List<Long> addOrganizationIds = new ArrayList<Long>();
+		List<Long> removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
+
+		for (long organizationId : organizationIds) {
+			if (ArrayUtil.contains(oldOrganizationIds, organizationId)) {
+				removeOrganizationIds.remove(organizationId);
+			}
+			else {
+				addOrganizationIds.add(organizationId);
+			}
 		}
 
 		if (organizationIds != null) {
-			organizationIds = checkOrganizations(userId, organizationIds);
+			organizationIds = checkOrganizations(
+				userId, organizationIds,
+				ArrayUtil.toLongArray(addOrganizationIds),
+				ArrayUtil.toLongArray(removeOrganizationIds));
+		}
+
+		long[] oldRoleIds = user.getRoleIds();
+
+		List<Long> addRoleIds = new ArrayList<Long>();
+		List<Long> removeRoleIds = ListUtil.toList(oldRoleIds);
+
+		for (long roleId : roleIds) {
+			if (ArrayUtil.contains(oldRoleIds, roleId)) {
+				removeRoleIds.remove(roleId);
+			}
+			else {
+				addRoleIds.add(roleId);
+			}
 		}
 
 		if (roleIds != null) {
-			roleIds = checkRoles(userId, roleIds);
+			roleIds = checkRoles(
+				userId, roleIds, ArrayUtil.toLongArray(addRoleIds),
+				ArrayUtil.toLongArray(removeRoleIds));
+		}
+
+		List<UserGroupRole> oldUserGroupRoles =
+			userGroupRoleLocalService.getUserGroupRoles(userId);
+
+		List<UserGroupRole> oldSiteUserGroupRoles =
+			new ArrayList<UserGroupRole>();
+		List<UserGroupRole> oldOrganizationUserGroupRoles =
+			new ArrayList<UserGroupRole>();
+
+		for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
+			Role role = oldUserGroupRole.getRole();
+
+			if (role.getType() == RoleConstants.TYPE_SITE) {
+				oldSiteUserGroupRoles.add(oldUserGroupRole);
+			}
+			else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+				oldOrganizationUserGroupRoles.add(oldUserGroupRole);
+			}
+		}
+
+		List<UserGroupRole> addSiteUserGroupRoles =
+			new ArrayList<UserGroupRole>();
+		List<UserGroupRole> removeSiteUserGroupRoles = ListUtil.copy(
+			oldSiteUserGroupRoles);
+		List<UserGroupRole> addOrganizationUserGroupRoles =
+			new ArrayList<UserGroupRole>();
+		List<UserGroupRole> removeOrganizationUserGroupRoles = ListUtil.copy(
+			oldOrganizationUserGroupRoles);
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = userGroupRole.getRole();
+
+			if (role.getType() == RoleConstants.TYPE_SITE) {
+				if (oldSiteUserGroupRoles.contains(userGroupRole)) {
+					removeSiteUserGroupRoles.remove(userGroupRole);
+				}
+				else {
+					addSiteUserGroupRoles.add(userGroupRole);
+				}
+			}
+			else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+				if (oldOrganizationUserGroupRoles.contains(userGroupRole)) {
+					removeOrganizationUserGroupRoles.remove(userGroupRole);
+				}
+				else {
+					addOrganizationUserGroupRoles.add(userGroupRole);
+				}
+			}
 		}
 
 		if (userGroupRoles != null) {
-			userGroupRoles = checkUserGroupRoles(userId, userGroupRoles);
+			userGroupRoles = checkUserGroupRoles(
+				userId, userGroupRoles, addSiteUserGroupRoles,
+				removeSiteUserGroupRoles, addOrganizationUserGroupRoles,
+				removeOrganizationUserGroupRoles);
 		}
 
 		if (userGroupIds != null) {
-			userGroupIds = checkUserGroupIds(userId, userGroupIds);
+			userGroupIds = checkUserGroupIds(
+				userId, userGroupIds, ArrayUtil.toLongArray(addUserGroupIds),
+				ArrayUtil.toLongArray(removeUserGroupIds));
 		}
 
-		return userLocalService.updateUser(
+		user = userLocalService.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
@@ -1654,6 +1867,51 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
+
+		if (!addGroupIds.isEmpty() || !removeGroupIds.isEmpty()) {
+			SiteMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()},
+				ArrayUtil.toLongArray(addGroupIds),
+				ArrayUtil.toLongArray(removeGroupIds));
+		}
+
+		if (!addOrganizationIds.isEmpty() || !removeOrganizationIds.isEmpty()) {
+			OrganizationMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()},
+				ArrayUtil.toLongArray(addOrganizationIds),
+				ArrayUtil.toLongArray(removeOrganizationIds));
+		}
+
+		if (!addRoleIds.isEmpty() || !removeRoleIds.isEmpty()) {
+			RoleMembershipPolicyUtil.propagateRoles(
+				new long[] {user.getUserId()},
+				ArrayUtil.toLongArray(addRoleIds),
+				ArrayUtil.toLongArray(removeRoleIds));
+		}
+
+		if (!addSiteUserGroupRoles.isEmpty() ||
+			!removeSiteUserGroupRoles.isEmpty()) {
+
+			SiteMembershipPolicyUtil.propagateRoles(
+				addSiteUserGroupRoles, removeSiteUserGroupRoles);
+		}
+
+		if (!addOrganizationUserGroupRoles.isEmpty() ||
+			!removeOrganizationUserGroupRoles.isEmpty()) {
+
+			OrganizationMembershipPolicyUtil.propagateRoles(
+				addOrganizationUserGroupRoles,
+				removeOrganizationUserGroupRoles);
+		}
+
+		if (!addUserGroupIds.isEmpty() || !removeGroupIds.isEmpty()) {
+			UserGroupMembershipPolicyUtil.propagateMembership(
+				new long[] {user.getUserId()},
+				ArrayUtil.toLongArray(addUserGroupIds),
+				ArrayUtil.toLongArray(removeUserGroupIds));
+		}
+
+		return user;
 	}
 
 	/**
@@ -1742,130 +2000,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userGroupIds, null, null, null, null, null, serviceContext);
 	}
 
-	protected void checkAddGroupUsersMembershipPolicy(
-			long groupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Group group = groupPersistence.findByPrimaryKey(groupId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			if (MembershipPolicyUtil.isMembershipAllowed(group, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.GROUP_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addGroup(group);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkAddOrganizationUsersMembershipPolicy(
-			long organizationId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Organization organization = organizationPersistence.findByPrimaryKey(
-			organizationId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			if (MembershipPolicyUtil.isMembershipAllowed(organization, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.
-						ORGANIZATION_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addOrganization(organization);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkAddRoleUsersMembershipPolicy(
-			long roleId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Role role = rolePersistence.findByPrimaryKey(roleId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			if (MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addRole(role);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkAddUserGroupUsersMembershipPolicy(
-			long userGroupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-			userGroupId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			if (MembershipPolicyUtil.isMembershipAllowed(userGroup, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.
-						USER_GROUP_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addUserGroup(userGroup);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
 	protected void checkAddUserPermission(
 			long creatorUserId, long companyId, String emailAddress,
 			long[] groupIds, long[] organizationIds, long[] roleIds,
@@ -1875,19 +2009,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
 		if (groupIds != null) {
-			checkGroups(0, groupIds);
+			checkGroups(0, groupIds, null, null);
 		}
 
 		if (organizationIds != null) {
-			checkOrganizations(0, organizationIds);
+			checkOrganizations(0, organizationIds, null, null);
 		}
 
 		if (roleIds != null) {
-			checkRoles(0, roleIds);
+			checkRoles(0, roleIds, null, null);
 		}
 
 		if (userGroupIds != null) {
-			checkUserGroupIds(0, userGroupIds);
+			checkUserGroupIds(0, userGroupIds, null, null);
 		}
 
 		boolean anonymousUser = ParamUtil.getBoolean(
@@ -1917,7 +2051,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
-	protected long[] checkGroups(long userId, long[] groupIds)
+	protected long[] checkGroups(
+			long userId, long[] groupIds, long[] addGroupIds,
+			long[] removeGroupIds)
 		throws PortalException, SystemException {
 
 		long[] oldGroupIds = null;
@@ -1934,9 +2070,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			user = userPersistence.findByPrimaryKey(userId);
 
-			Set<Group> mandatoryGroups =
-				MembershipPolicyUtil.getMandatoryGroups(user);
-
 			List<Group> oldGroups = groupLocalService.getUserGroups(userId);
 
 			oldGroupIds = new long[oldGroups.size()];
@@ -1948,9 +2081,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 					(!GroupPermissionUtil.contains(
 						permissionChecker, group.getGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					 MembershipPolicyUtil.isMembershipProtected(
-						permissionChecker, group, user) ||
-					 mandatoryGroups.contains(group))) {
+					SiteMembershipPolicyUtil.isMembershipProtected(
+						permissionChecker, user.getUserId(),
+						group.getGroupId()) ||
+					SiteMembershipPolicyUtil.isMembershipRequired(
+						userId, group.getGroupId()))) {
 
 					groupIds = ArrayUtil.append(groupIds, group.getGroupId());
 				}
@@ -1961,8 +2096,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Check that the administrator has the permission to add a new group
 		// and that the group membership is allowed
-
-		MembershipPolicyException membershipPolicyException = null;
 
 		for (long groupId : groupIds) {
 			if ((oldGroupIds != null) &&
@@ -1975,33 +2108,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			GroupPermissionUtil.check(
 				permissionChecker, group, ActionKeys.ASSIGN_MEMBERS);
-
-			if (user == null) {
-				continue;
-			}
-
-			if (MembershipPolicyUtil.isMembershipAllowed(group, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.GROUP_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addUser(user);
-			}
-
-			membershipPolicyException.addGroup(group);
 		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+		if ((addGroupIds != null) || (removeGroupIds != null)) {
+			SiteMembershipPolicyUtil.checkMembership(
+				new long[] {userId}, addGroupIds, removeGroupIds);
 		}
 
 		return groupIds;
 	}
 
-	protected long[] checkOrganizations(long userId, long[] organizationIds)
+	protected long[] checkOrganizations(
+			long userId, long[] organizationIds, long[] addOrganizationIds,
+			long[] removeOrganizationIds)
 		throws PortalException, SystemException {
 
 		long[] oldOrganizationIds = null;
@@ -2018,9 +2137,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			user = userPersistence.findByPrimaryKey(userId);
 
-			Set<Organization> mandatoryOrganizations =
-				MembershipPolicyUtil.getMandatoryOrganizations(user);
-
 			List<Organization> oldOrganizations =
 				organizationLocalService.getUserOrganizations(userId);
 
@@ -2033,10 +2149,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 						organizationIds, organization.getOrganizationId()) &&
 					(!OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),
-						ActionKeys.ASSIGN_MEMBERS) ||
-					 MembershipPolicyUtil.isMembershipProtected(
-						 permissionChecker, organization, user) ||
-					 mandatoryOrganizations.contains(organization))) {
+						ActionKeys.ASSIGN_MEMBERS)) ||
+					OrganizationMembershipPolicyUtil.isMembershipProtected(
+						permissionChecker, userId,
+						organization.getOrganizationId()) ||
+					OrganizationMembershipPolicyUtil.isMembershipRequired(
+						userId, organization.getOrganizationId())) {
 
 					organizationIds = ArrayUtil.append(
 						organizationIds, organization.getOrganizationId());
@@ -2048,8 +2166,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Check that the administrator has the permission to add a new
 		// organization and that the organization membership is allowed
-
-		MembershipPolicyException membershipPolicyException = null;
 
 		for (long organizationId : organizationIds) {
 			if ((oldOrganizationIds != null) &&
@@ -2063,34 +2179,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			OrganizationPermissionUtil.check(
 				permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS);
-
-			if (user == null) {
-				continue;
-			}
-
-			if (MembershipPolicyUtil.isMembershipAllowed(organization, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.
-						ORGANIZATION_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addUser(user);
-			}
-
-			membershipPolicyException.addOrganization(organization);
 		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+		if ((addOrganizationIds != null) || (removeOrganizationIds != null)) {
+			OrganizationMembershipPolicyUtil.checkMembership(
+				new long[] {userId}, addOrganizationIds, removeOrganizationIds);
 		}
 
 		return organizationIds;
 	}
 
-	protected long[] checkRoles(long userId, long[] roleIds)
+	protected long[] checkRoles(
+			long userId, long[] roleIds, long[] addRoleIds,
+			long[] removeRoleIds)
 		throws PortalException, SystemException {
 
 		long[] oldRoleIds = null;
@@ -2107,9 +2208,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			user = userPersistence.findByPrimaryKey(userId);
 
-			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-				user);
-
 			List<Role> oldRoles = roleLocalService.getUserRoles(userId);
 
 			oldRoleIds = new long[oldRoles.size()];
@@ -2120,8 +2218,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				if (!ArrayUtil.contains(roleIds, role.getRoleId()) &&
 					(!RolePermissionUtil.contains(
 						permissionChecker, role.getRoleId(),
-						ActionKeys.ASSIGN_MEMBERS) ||
-					 mandatoryRoles.contains(role))) {
+						ActionKeys.ASSIGN_MEMBERS)) ||
+					RoleMembershipPolicyUtil.isRoleRequired(
+						userId, role.getRoleId())) {
 
 					roleIds = ArrayUtil.append(roleIds, role.getRoleId());
 				}
@@ -2133,8 +2232,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		// Check that the administrator has the permission to add a new role
 		// and that the role membership is allowed
 
-		MembershipPolicyException membershipPolicyException = null;
-
 		for (long roleId : roleIds) {
 			if ((oldRoleIds != null) &&
 				ArrayUtil.contains(oldRoleIds, roleId)) {
@@ -2142,212 +2239,21 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				continue;
 			}
 
-			Role role = rolePersistence.findByPrimaryKey(roleId);
-
 			RolePermissionUtil.check(
-				permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
-
-			if (user == null) {
-				continue;
-			}
-
-			if (MembershipPolicyUtil.isMembershipAllowed(role, user)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-				membershipPolicyException.addUser(user);
-			}
-
-			membershipPolicyException.addRole(role);
+				permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+		if ((addRoleIds != null) || (removeRoleIds != null)) {
+			RoleMembershipPolicyUtil.checkRoles(
+				new long[] {userId}, addRoleIds, removeRoleIds);
 		}
 
 		return roleIds;
 	}
 
-	protected void checkSetRoleUsersMembershipPolicy(
-			long roleId, long[] userIds)
-		throws PortalException, SystemException {
-
-		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
-
-		List<User> users = rolePersistence.getUsers(roleId);
-
-		for (User user : users) {
-			if (!ArrayUtil.contains(userIds, user.getUserId())) {
-				unsetUserIds.add(user.getUserId());
-			}
-		}
-
-		checkUnsetRoleUsersMembershipPolicy(
-			roleId, ArrayUtil.toLongArray(unsetUserIds));
-
-		checkAddRoleUsersMembershipPolicy(roleId, userIds);
-	}
-
-	protected void checkSetUserGroupUsersMembershipPolicy(
-			long userGroupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		List<Long> unsetUserIds = new ArrayList<Long>(userIds.length);
-
-		List<User> users = userGroupPersistence.getUsers(userGroupId);
-
-		for (User user : users) {
-			if (!ArrayUtil.contains(userIds, user.getUserId())) {
-				unsetUserIds.add(user.getUserId());
-			}
-		}
-
-		checkUnsetUserGroupUsersMembershipPolicy(
-			userGroupId, ArrayUtil.toLongArray(unsetUserIds));
-
-		checkAddUserGroupUsersMembershipPolicy(userGroupId, userIds);
-	}
-
-	protected void checkUnsetGroupUsersMembershipPolicy(
-			long groupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Group group = groupPersistence.findByPrimaryKey(groupId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			Set<Group> mandatoryGroups =
-				MembershipPolicyUtil.getMandatoryGroups(user);
-
-			if (!mandatoryGroups.contains(group)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.GROUP_MEMBERSHIP_REQUIRED);
-
-				membershipPolicyException.addGroup(group);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkUnsetOrganizationUsersMembershipPolicy(
-			long organizationId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Organization organization = organizationPersistence.findByPrimaryKey(
-			organizationId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			Set<Organization> mandatoryOrganizations =
-				MembershipPolicyUtil.getMandatoryOrganizations(user);
-
-			if (!mandatoryOrganizations.contains(organization)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.
-						ORGANIZATION_MEMBERSHIP_REQUIRED);
-
-				membershipPolicyException.addOrganization(organization);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkUnsetRoleUsersMembershipPolicy(
-			long roleId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		Role role = rolePersistence.findByPrimaryKey(roleId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-				user);
-
-			if (!mandatoryRoles.contains(role)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException.ROLE_MEMBERSHIP_REQUIRED);
-
-				membershipPolicyException.addRole(role);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected void checkUnsetUserGroupUsersMembershipPolicy(
-			long userGroupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		MembershipPolicyException membershipPolicyException = null;
-
-		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-			userGroupId);
-
-		for (long userId : userIds) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			Set<UserGroup> mandatoryUserGroups =
-				MembershipPolicyUtil.getMandatoryUserGroups(user);
-
-			if (!mandatoryUserGroups.contains(userGroup)) {
-				continue;
-			}
-
-			if (membershipPolicyException == null) {
-				membershipPolicyException = new MembershipPolicyException(
-					MembershipPolicyException. USER_GROUP_MEMBERSHIP_REQUIRED);
-
-				membershipPolicyException.addUserGroup(userGroup);
-			}
-
-			membershipPolicyException.addUser(user);
-		}
-
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
-		}
-	}
-
-	protected long[] checkUserGroupIds(long userId, long[] userGroupIds)
+	protected long[] checkUserGroupIds(
+			long userId, long[] userGroupIds, long[] addUserGroupIds,
+			long[] removeUserGroupIds)
 		throws PortalException, SystemException {
 
 		long[] oldUserGroupIds = null;
@@ -2363,9 +2269,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			user = userPersistence.findByPrimaryKey(userId);
 
-			Set<UserGroup> mandatoryUserGroups =
-				MembershipPolicyUtil.getMandatoryUserGroups(user);
-
 			List<UserGroup> oldUserGroups =
 				userGroupLocalService.getUserUserGroups(userId);
 
@@ -2379,7 +2282,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 					(!UserGroupPermissionUtil.contains(
 						permissionChecker, userGroup.getUserGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					 mandatoryUserGroups.contains(userGroup))) {
+					UserGroupMembershipPolicyUtil.isMembershipRequired(
+						userId, userGroup.getUserGroupId()))) {
 
 					userGroupIds = ArrayUtil.append(
 						userGroupIds, userGroup.getUserGroupId());
@@ -2388,8 +2292,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				oldUserGroupIds[i] = userGroup.getUserGroupId();
 			}
 		}
-
-		MembershipPolicyException membershipPolicyException = null;
 
 		// Check that the administrator has the permission to add a new user
 		// group and that the user group membership is allowed
@@ -2400,77 +2302,59 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 				UserGroupPermissionUtil.check(
 					permissionChecker, userGroupId, ActionKeys.ASSIGN_MEMBERS);
-
-				UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-					userGroupId);
-
-				if (!MembershipPolicyUtil.isMembershipAllowed(
-						userGroup, user)) {
-
-					if (membershipPolicyException == null) {
-						membershipPolicyException =
-							new MembershipPolicyException(
-								MembershipPolicyException.
-									USER_GROUP_MEMBERSHIP_NOT_ALLOWED);
-
-						membershipPolicyException.addUser(user);
-					}
-
-					membershipPolicyException.addUserGroup(userGroup);
-				}
 			}
 		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+		if ((addUserGroupIds != null) || (removeUserGroupIds != null)) {
+			UserGroupMembershipPolicyUtil.checkMembership(
+				new long[] {userId}, addUserGroupIds, removeUserGroupIds);
 		}
 
 		return userGroupIds;
 	}
 
 	protected List<UserGroupRole> checkUserGroupRoles(
-			long userId, List<UserGroupRole> userGroupRoles)
+			long userId, List<UserGroupRole> userGroupRoles,
+			List<UserGroupRole> addSiteUserGroupRoles,
+			List<UserGroupRole> removeSiteUserGroupRoles,
+			List<UserGroupRole> addOrganizationUserGroupRoles,
+			List<UserGroupRole> removeOrganizationUserGroupRoles)
 		throws PortalException, SystemException {
 
 		List<UserGroupRole> oldUserGroupRoles = null;
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any user group roles that the administrator does not
 			// have the rights to remove or that have a mandatory membership
-
-			Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-				user.getGroup(), user);
 
 			oldUserGroupRoles = userGroupRoleLocalService.getUserGroupRoles(
 				userId);
 
 			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
 				Role role = oldUserGroupRole.getRole();
+				Group group = oldUserGroupRole.getGroup();
+
+				if (userGroupRoles.contains(oldUserGroupRole)) {
+					continue;
+				}
 
 				if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-					Group group = oldUserGroupRole.getGroup();
-
 					Organization organization =
 						organizationPersistence.findByPrimaryKey(
 							group.getOrganizationId());
 
-					Set<Role> mandatoryOrganizationRoles =
-						MembershipPolicyUtil.getMandatoryRoles(
-							organization, user);
-
-					if (!userGroupRoles.contains(oldUserGroupRole) &&
-						(!UserGroupRolePermissionUtil.contains(
+					if (!UserGroupRolePermissionUtil.contains(
 							permissionChecker, oldUserGroupRole.getGroupId(),
 							oldUserGroupRole.getRoleId()) ||
-						 MembershipPolicyUtil.isMembershipProtected(
-							 getPermissionChecker(),
-							oldUserGroupRole.getGroup(), role, user) ||
-						 mandatoryOrganizationRoles.contains(role))) {
+						OrganizationMembershipPolicyUtil.isRoleProtected(
+							getPermissionChecker(), userId,
+							organization.getOrganizationId(),
+							role.getRoleId()) ||
+						OrganizationMembershipPolicyUtil.isRoleRequired(
+							userId, group.getGroupId(), role.getRoleId())) {
 
 						userGroupRoles.add(oldUserGroupRole);
 					}
@@ -2480,10 +2364,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 						(!UserGroupRolePermissionUtil.contains(
 							permissionChecker, oldUserGroupRole.getGroupId(),
 							oldUserGroupRole.getRoleId()) ||
-						 MembershipPolicyUtil.isMembershipProtected(
-							 getPermissionChecker(),
-							 oldUserGroupRole.getGroup(), role, user) ||
-						 mandatoryRoles.contains(role))) {
+						SiteMembershipPolicyUtil.isRoleProtected(
+							getPermissionChecker(), userId, group.getGroupId(),
+							role.getRoleId()) ||
+						SiteMembershipPolicyUtil.isRoleRequired(
+							userId, group.getGroupId(), role.getRoleId()))) {
 
 						userGroupRoles.add(oldUserGroupRole);
 					}
@@ -2491,66 +2376,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		MembershipPolicyException membershipPolicyException = null;
-
 		// Check that the administrator has the permission to add a new user
 		// group role and that the user group role membership is allowed
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			Role role = userGroupRole.getRole();
-
 			if ((oldUserGroupRoles == null) ||
 				!oldUserGroupRoles.contains(userGroupRole)) {
 
 				UserGroupRolePermissionUtil.check(
 					permissionChecker, userGroupRole.getGroupId(),
 					userGroupRole.getRoleId());
-
-				if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-					Group group = userGroupRole.getGroup();
-
-					long organizationId = group.getOrganizationId();
-
-					Organization organization =
-						organizationPersistence.findByPrimaryKey(
-							organizationId);
-
-					if (!MembershipPolicyUtil.isMembershipAllowed(
-							organization, role, user)) {
-
-						if (membershipPolicyException == null) {
-							membershipPolicyException =
-								new MembershipPolicyException(
-									MembershipPolicyException.
-										ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-							membershipPolicyException.addUser(user);
-						}
-
-						membershipPolicyException.addRole(role);
-					}
-				}
-				else if (role.getType() == RoleConstants.TYPE_SITE) {
-					if (!MembershipPolicyUtil.isMembershipAllowed(
-							userGroupRole.getGroup(), role, user)) {
-
-						if (membershipPolicyException == null) {
-							membershipPolicyException =
-								new MembershipPolicyException(
-									MembershipPolicyException.
-										ROLE_MEMBERSHIP_NOT_ALLOWED);
-
-							membershipPolicyException.addUser(user);
-						}
-
-						membershipPolicyException.addRole(role);
-					}
-				}
 			}
 		}
 
-		if (membershipPolicyException != null) {
-			throw membershipPolicyException;
+		if (!addSiteUserGroupRoles.isEmpty() ||
+			!removeSiteUserGroupRoles.isEmpty()) {
+
+			SiteMembershipPolicyUtil.checkRoles(
+				addSiteUserGroupRoles, removeSiteUserGroupRoles);
+		}
+
+		if (!addOrganizationUserGroupRoles.isEmpty() ||
+			!removeOrganizationUserGroupRoles.isEmpty()) {
+
+			OrganizationMembershipPolicyUtil.checkRoles(
+				addOrganizationUserGroupRoles,
+				removeOrganizationUserGroupRoles);
 		}
 
 		return userGroupRoles;

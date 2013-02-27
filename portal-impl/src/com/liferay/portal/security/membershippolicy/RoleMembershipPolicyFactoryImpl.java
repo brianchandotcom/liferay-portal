@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -34,7 +34,7 @@ public class RoleMembershipPolicyFactoryImpl
 			_log.debug("Instantiate " + PropsValues.MEMBERSHIP_POLICY_ROLES);
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
 			(RoleMembershipPolicy)InstanceFactory.newInstance(
@@ -43,7 +43,7 @@ public class RoleMembershipPolicyFactoryImpl
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public RoleMembershipPolicy getRolesMembershipPolicy() {
+	public RoleMembershipPolicy getRoleMembershipPolicy() {
 		return _membershipPolicy;
 	}
 

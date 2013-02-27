@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -34,7 +34,7 @@ public class UserGroupMembershipPolicyFactoryImpl
 				"Instantiate " + PropsValues.MEMBERSHIP_POLICY_USER_GROUPS);
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
 			(UserGroupMembershipPolicy)InstanceFactory.newInstance(
@@ -43,7 +43,7 @@ public class UserGroupMembershipPolicyFactoryImpl
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public UserGroupMembershipPolicy getUserGroupsMembershipPolicy() {
+	public UserGroupMembershipPolicy getUserGroupMembershipPolicy() {
 		return _membershipPolicy;
 	}
 
@@ -65,9 +65,7 @@ public class UserGroupMembershipPolicyFactoryImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		UserGroupMembershipPolicyFactory.class);
 
-	private static volatile UserGroupMembershipPolicy
-		_membershipPolicy;
-	private static UserGroupMembershipPolicy
-		_originalMembershipPolicy;
+	private static volatile UserGroupMembershipPolicy _membershipPolicy;
+	private static UserGroupMembershipPolicy _originalMembershipPolicy;
 
 }

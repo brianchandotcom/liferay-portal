@@ -19,6 +19,6 @@ package com.liferay.portal.security.membershippolicy;
  */
 public interface RoleMembershipPolicyFactory {
 
-	public RoleMembershipPolicy getRolesMembershipPolicy();
+	public RoleMembershipPolicy getRoleMembershipPolicy();
 
 }

@@ -24,26 +24,19 @@ import java.util.Map;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class UserGroupMembershipPolicyUtil {
 
-	public static void checkAddMembership(long[] userIds, long[] userGroupIds)
+	public static void checkMembership(
+			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException, SystemException {
 
 		UserGroupMembershipPolicy membershipPolicy =
 			UserGroupMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		membershipPolicy.checkAddMembership(userIds, userGroupIds);
-	}
-
-	public static void checkRemoveMembership(
-			long[] userIds, long[] userGroupIds)
-		throws PortalException, SystemException {
-
-		UserGroupMembershipPolicy membershipPolicy =
-			UserGroupMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		membershipPolicy.checkRemoveMembership(userIds, userGroupIds);
+		membershipPolicy.checkMembership(
+			userIds, addUserGroupIds, removeUserGroupIds);
 	}
 
 	public static boolean isMembershipAllowed(long userId, long userGroupId)
@@ -64,28 +57,15 @@ public class UserGroupMembershipPolicyUtil {
 		return membershipPolicy.isMembershipRequired(userId, userGroupId);
 	}
 
-	public static void propagateAddMembership(
-			long[] userIds, long[] userGroupIds)
+	public static void propagateMembership(
+			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException, SystemException {
 
 		UserGroupMembershipPolicy membershipPolicy =
 			UserGroupMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		for (long userGroupId : userGroupIds) {
-			membershipPolicy.propagateAddMembership(userIds, userGroupId);
-		}
-	}
-
-	public static void propagateRemoveMembership(
-			long[] userIds, long[] userGroupIds)
-		throws PortalException, SystemException {
-
-		UserGroupMembershipPolicy membershipPolicy =
-			UserGroupMembershipPolicyFactoryUtil.getMembershipPolicy();
-
-		for (long userGroupId : userGroupIds) {
-			membershipPolicy.propagateRemoveMembership(userIds, userGroupId);
-		}
+		membershipPolicy.propagateMembership(
+			userIds, addUserGroupIds, removeUserGroupIds);
 	}
 
 	public static void verifyPolicy() throws PortalException, SystemException {
@@ -104,7 +84,7 @@ public class UserGroupMembershipPolicyUtil {
 		membershipPolicy.verifyPolicy(userGroup);
 	}
 
-	public static void verifyUpdatePolicy(
+	public static void verifyPolicy(
 			UserGroup userGroup, UserGroup oldUserGroup,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException {
@@ -112,7 +92,7 @@ public class UserGroupMembershipPolicyUtil {
 		UserGroupMembershipPolicy membershipPolicy =
 			UserGroupMembershipPolicyFactoryUtil.getMembershipPolicy();
 
-		membershipPolicy.verifyUpdatePolicy(
+		membershipPolicy.verifyPolicy(
 			userGroup, oldUserGroup, oldExpandoAttributes);
 	}
 

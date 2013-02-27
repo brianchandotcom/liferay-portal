@@ -36,17 +36,13 @@ public interface SiteMembershipPolicy {
 
 	public static final int SEARCH_INTERVAL = 500;
 
-	public void checkAddMembership(long[] userIds, long[] groupId)
+	public void checkMembership(
+			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException;
 
-	public void checkAddRoles(long[] userIds, long[] groupIds, long[] roleIds)
-		throws PortalException, SystemException;
-
-	public void checkRemoveMembership(long[] userIds, long[] groupId)
-		throws PortalException, SystemException;
-
-	public void checkRemoveRoles(
-			long[] userIds, long[] groupIds, long[] roleIds)
+	public void checkRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException;
 
 	boolean isMembershipAllowed(long userId, long groupId)
@@ -70,16 +66,13 @@ public interface SiteMembershipPolicy {
 	boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException, SystemException;
 
-	public void propagateAddMembership(long[] userIds, long groupId)
+	public void propagateMembership(
+			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException;
 
-	public void propagateAddRoles(List<UserGroupRole> userGroupRole)
-		throws PortalException, SystemException;
-
-	public void propagateRemoveMembership(long[] userIds, long groupIds)
-		throws PortalException, SystemException;
-
-	public void propagateRemoveRoles(long user, long groupId, long roleId)
+	public void propagateRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException;
 
 	public void verifyPolicy() throws PortalException, SystemException;
@@ -87,17 +80,17 @@ public interface SiteMembershipPolicy {
 	public void verifyPolicy(Group group)
 		throws PortalException, SystemException;
 
+	public void verifyPolicy(
+			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
+			List<AssetTag> oldAssetTags,
+			Map<String, Serializable> oldExpandoAttributes,
+			String oldTypeSettings)
+		throws PortalException, SystemException;
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
-	public void verifyUpdatePolicy(
-			Group group, Group oldGroup,
-			List<AssetCategory> oldAssetCatergories,
-			List<AssetTag> oldAssetTags,
+	public void verifyPolicy(
+			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
-		throws PortalException, SystemException;
-
-	void verifyUpdatePolicy(
-			Group group, Group oldGroup, String oldTypeSettings)
 		throws PortalException, SystemException;
 
 }

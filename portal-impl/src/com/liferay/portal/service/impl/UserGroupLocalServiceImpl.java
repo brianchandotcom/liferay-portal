@@ -40,7 +40,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupConstants;
 import com.liferay.portal.security.ldap.LDAPUserGroupTransactionThreadLocal;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
@@ -54,7 +53,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The implementation of the user group local service.
@@ -187,31 +185,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		indexer.reindex(userGroup);
 
 		return userGroup;
-	}
-
-	public void checkMembershipPolicy(User user)
-		throws PortalException, SystemException {
-
-		List<UserGroup> userGroups = getUserUserGroups(user.getUserId());
-
-		for (UserGroup userGroup : userGroups) {
-			if (!MembershipPolicyUtil.isMembershipAllowed(userGroup, user)) {
-				userLocalService.unsetUserGroupUsers(
-					userGroup.getUserGroupId(), new long[] {user.getUserId()});
-			}
-		}
-
-		Set<UserGroup> mandatoryUserGroups =
-			MembershipPolicyUtil.getMandatoryUserGroups(user);
-
-		for (UserGroup userGroup : mandatoryUserGroups) {
-			if (!userLocalService.hasUserGroupUser(
-					userGroup.getUserGroupId(), user.getUserId())) {
-
-				userLocalService.addUserGroupUsers(
-					userGroup.getUserGroupId(), new long[] {user.getUserId()});
-			}
-		}
 	}
 
 	/**

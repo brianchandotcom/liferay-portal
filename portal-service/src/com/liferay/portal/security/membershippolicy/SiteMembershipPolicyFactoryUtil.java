@@ -20,7 +20,7 @@ package com.liferay.portal.security.membershippolicy;
 public class SiteMembershipPolicyFactoryUtil {
 
 	public static SiteMembershipPolicy getMembershipPolicy() {
-		return getMembershipPolicyFactory().getSitesMembershipPolicy();
+		return getMembershipPolicyFactory().getSiteMembershipPolicy();
 	}
 
 	public static SiteMembershipPolicyFactory getMembershipPolicyFactory() {

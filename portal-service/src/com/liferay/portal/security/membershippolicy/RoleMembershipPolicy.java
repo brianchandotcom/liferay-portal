@@ -24,15 +24,14 @@ import java.util.Map;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public interface RoleMembershipPolicy {
 
 	public static final int SEARCH_INTERVAL = 500;
 
-	public void checkAddRoles(long[] userIds, long[] roleIds)
-		throws PortalException, SystemException;
-
-	public void checkRemoveRoles(long[] userIds, long[] roleIds)
+	public void checkRoles(
+			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException;
 
 	boolean isRoleAllowed(long userId, long roleId)
@@ -41,17 +40,15 @@ public interface RoleMembershipPolicy {
 	boolean isRoleRequired(long userId, long roleId)
 		throws PortalException, SystemException;
 
-	public void propagateAddRoles(long[] userIds, long roleId)
-		throws PortalException, SystemException;
-
-	public void propagateRemoveRoles(long[] userIds, long roleId)
+	public void propagateRoles(
+			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException;
 
 	public void verifyPolicy() throws PortalException, SystemException;
 
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
-	public void verifyUpdatePolicy(
+	public void verifyPolicy(
 			Role role, Role oldRole,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException;

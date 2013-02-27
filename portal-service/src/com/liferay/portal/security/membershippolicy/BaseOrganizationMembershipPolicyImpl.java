@@ -20,18 +20,19 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.UserGroupRolePK;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public abstract class BaseOrganizationMembershipPolicyImpl
 	implements OrganizationMembershipPolicy {
@@ -40,7 +41,8 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkAddMembership(new long[]{userId}, new long[]{organizationId});
+			checkMembership(
+				new long[] {userId}, new long[] {organizationId}, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -54,22 +56,21 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 			long organizationId)
 		throws PortalException, SystemException {
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(organizationId);
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		Group group = organization.getGroup();
-
-		if (permissionChecker.isOrganizationOwner(group.getOrganizationId())) {
+		if (permissionChecker.isOrganizationOwner(organizationId)) {
 			return false;
 		}
+
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		Group group = organization.getGroup();
 
 		Role organizationAdministratorRole = RoleLocalServiceUtil.getRole(
 			permissionChecker.getCompanyId(),
 			RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
 		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				user.getUserId(), group.getGroupId(),
+				userId, group.getGroupId(),
 				organizationAdministratorRole.getRoleId())) {
 
 			return true;
@@ -79,7 +80,7 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 			permissionChecker.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
 
 		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				user.getUserId(), group.getGroupId(),
+				userId, group.getGroupId(),
 				organizationOwnerRole.getRoleId())) {
 
 			return true;
@@ -92,8 +93,8 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkRemoveMembership(
-				new long[]{userId}, new long[]{organizationId});
+			checkMembership(
+				new long[] {userId}, null, new long[] {organizationId});
 		}
 		catch (Exception e) {
 			return true;
@@ -105,10 +106,21 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException {
 
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+			userId, organization.getGroupId(), roleId);
+
+		UserGroupRole userGroupRole =
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		userGroupRoles.add(userGroupRole);
+
 		try {
-			checkAddRoles(
-				new long[] {userId}, new long[] {organizationId},
-				new long[] {roleId});
+			checkRoles(userGroupRoles, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -122,16 +134,11 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 			long organizationId, long roleId)
 		throws PortalException, SystemException {
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(organizationId);
-		Role role = RoleLocalServiceUtil.getRole(roleId);
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		Group group = organization.getGroup();
-
-		if (permissionChecker.isOrganizationOwner(group.getOrganizationId())) {
+		if (permissionChecker.isOrganizationOwner(organizationId)) {
 			return false;
 		}
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
 
 		String roleName = role.getName();
 
@@ -141,8 +148,13 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 			return false;
 		}
 
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		Group group = organization.getGroup();
+
 		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				user.getUserId(), group.getGroupId(), role.getRoleId())) {
+				userId, group.getGroupId(), role.getRoleId())) {
 
 			return true;
 		}
@@ -153,10 +165,21 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 	public boolean isRoleRequired(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException {
 
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+			userId, organization.getGroupId(), roleId);
+
+		UserGroupRole userGroupRole =
+			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK);
+
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		userGroupRoles.add(userGroupRole);
+
 		try {
-			checkRemoveRoles(
-				new long[] {userId}, new long[] {organizationId},
-				new long[] {roleId});
+			checkRoles(null, userGroupRoles);
 		}
 		catch (Exception e) {
 			return true;
@@ -168,6 +191,7 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 	public void verifyPolicy() throws PortalException, SystemException {
 		int start = 0;
 		int end = SEARCH_INTERVAL;
+
 		int total = OrganizationLocalServiceUtil.getOrganizationsCount();
 
 		while (start <= total) {
@@ -189,6 +213,12 @@ public abstract class BaseOrganizationMembershipPolicyImpl
 			start = end;
 			end += end;
 		}
+	}
+
+	public void verifyPolicy(Organization organization)
+		throws PortalException, SystemException {
+
+		verifyPolicy(organization, null, null, null, null);
 	}
 
 }

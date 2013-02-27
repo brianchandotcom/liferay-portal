@@ -43,7 +43,7 @@ public class SiteMembershipPolicyFactoryImpl
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public SiteMembershipPolicy getSitesMembershipPolicy() {
+	public SiteMembershipPolicy getSiteMembershipPolicy() {
 		return _membershipPolicy;
 	}
 

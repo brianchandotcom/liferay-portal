@@ -24,13 +24,16 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public abstract class BaseSiteMembershipPolicyImpl
 	implements SiteMembershipPolicy {
@@ -39,7 +42,7 @@ public abstract class BaseSiteMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkAddMembership(new long[]{userId}, new long[]{groupId});
+			checkMembership(new long[] {userId}, new long[] {groupId}, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -81,7 +84,7 @@ public abstract class BaseSiteMembershipPolicyImpl
 		throws PortalException, SystemException {
 
 		try {
-			checkRemoveMembership(new long[]{userId}, new long[]{groupId});
+			checkMembership(new long[] {userId}, null, new long[] {groupId});
 		}
 		catch (Exception e) {
 			return true;
@@ -93,9 +96,18 @@ public abstract class BaseSiteMembershipPolicyImpl
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException, SystemException {
 
+		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+			userId, groupId, roleId);
+
+		UserGroupRole userGroupRole =
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		userGroupRoles.add(userGroupRole);
+
 		try {
-			checkAddRoles(
-				new long[]{userId}, new long[]{groupId}, new long[]{roleId});
+			checkRoles(userGroupRoles, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -109,18 +121,11 @@ public abstract class BaseSiteMembershipPolicyImpl
 			long roleId)
 		throws PortalException, SystemException {
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
-
-		if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			return OrganizationMembershipPolicyUtil.isRoleProtected(
-				permissionChecker, userId, group.getOrganizationId(), roleId);
-		}
-
 		if (permissionChecker.isGroupOwner(groupId)) {
 			return false;
 		}
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
 
 		String roleName = role.getName();
 
@@ -142,9 +147,18 @@ public abstract class BaseSiteMembershipPolicyImpl
 	public boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException, SystemException {
 
+		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+			userId, groupId, roleId);
+
+		UserGroupRole userGroupRole =
+			UserGroupRoleLocalServiceUtil.fetchUserGroupRole(userGroupRolePK);
+
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+		userGroupRoles.add(userGroupRole);
+
 		try {
-			checkRemoveRoles(
-				new long[]{userId}, new long[]{groupId}, new long[]{roleId});
+			checkRoles(null, userGroupRoles);
 		}
 		catch (Exception e) {
 			return true;
@@ -157,7 +171,6 @@ public abstract class BaseSiteMembershipPolicyImpl
 		long[] companyIds = PortalUtil.getCompanyIds();
 
 		for (long companyId : companyIds) {
-
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
@@ -165,6 +178,7 @@ public abstract class BaseSiteMembershipPolicyImpl
 
 			int start = 0;
 			int end = SEARCH_INTERVAL;
+
 			int total = GroupLocalServiceUtil.getGroupsCount();
 
 			while (start <= total) {
@@ -187,6 +201,12 @@ public abstract class BaseSiteMembershipPolicyImpl
 				end += end;
 			}
 		}
+	}
+
+	public void verifyPolicy(Group group)
+		throws PortalException, SystemException {
+
+		verifyPolicy(group, null, null, null, null, null);
 	}
 
 }

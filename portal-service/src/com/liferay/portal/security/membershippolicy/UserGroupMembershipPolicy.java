@@ -24,15 +24,14 @@ import java.util.Map;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public interface UserGroupMembershipPolicy {
 
 	public static final int SEARCH_INTERVAL = 500;
 
-	public void checkAddMembership(long[] userIds, long[] userGroupIds)
-		throws PortalException, SystemException;
-
-	public void checkRemoveMembership(long[] userIds, long[] userGroupIds)
+	public void checkMembership(
+			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException, SystemException;
 
 	boolean isMembershipAllowed(long userId, long userGroupId)
@@ -41,10 +40,8 @@ public interface UserGroupMembershipPolicy {
 	boolean isMembershipRequired(long userId, long userGroupId)
 		throws PortalException, SystemException;
 
-	public void propagateAddMembership(long[] userIds, long userGroupId)
-		throws PortalException, SystemException;
-
-	public void propagateRemoveMembership(long[] userIds, long userGroupId)
+	public void propagateMembership(
+			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException, SystemException;
 
 	public void verifyPolicy() throws PortalException, SystemException;
@@ -52,7 +49,7 @@ public interface UserGroupMembershipPolicy {
 	public void verifyPolicy(UserGroup userGroup)
 		throws PortalException, SystemException;
 
-	public void verifyUpdatePolicy(
+	public void verifyPolicy(
 			UserGroup userGroup, UserGroup oldUserGroup,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException;

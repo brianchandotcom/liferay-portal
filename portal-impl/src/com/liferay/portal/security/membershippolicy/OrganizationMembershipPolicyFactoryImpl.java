@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -34,7 +34,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 				"Instantiate " + PropsValues.MEMBERSHIP_POLICY_ORGANIZATIONS);
 		}
 
-		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
 			(OrganizationMembershipPolicy)InstanceFactory.newInstance(
@@ -43,7 +43,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public OrganizationMembershipPolicy getOrganizationsMembershipPolicy() {
+	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
 		return _membershipPolicy;
 	}
 
@@ -65,8 +65,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		OrganizationMembershipPolicyFactory.class);
 
-	private static volatile OrganizationMembershipPolicy
-		_membershipPolicy;
+	private static volatile OrganizationMembershipPolicy _membershipPolicy;
 	private static OrganizationMembershipPolicy _originalMembershipPolicy;
 
 }

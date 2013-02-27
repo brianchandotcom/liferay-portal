@@ -116,7 +116,9 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -172,7 +174,7 @@ public class DataFactory {
 	public Contact addContact(User user) {
 		return _newContact(
 			user.getContactId(), user.getCompanyId(), user.getUserId(),
-			user.getFullName(), new Date(), new Date(), _userClassNameId,
+			user.getFullName(), new Date(), new Date(), getUserClassNameId(),
 			user.getUserId(), _company.getAccountId(),
 			ContactConstants.DEFAULT_PARENT_CONTACT_ID, user.getEmailAddress(),
 			user.getFirstName(), user.getLastName(), true, new Date());
@@ -250,7 +252,7 @@ public class DataFactory {
 		long classPK, long structureId) {
 
 		return _newDDMStructureLink(
-			_counter.get(), _dlFileEntryClassNameId, classPK, structureId);
+			_counter.get(), getDLFileEntryClassNameId(), classPK, structureId);
 	}
 
 	public DLFileEntry addDlFileEntry(
@@ -482,7 +484,7 @@ public class DataFactory {
 	}
 
 	public long getBlogsEntryClassNameId() {
-		return _blogsEntryClassNameId;
+		return _classNameMap.get(BlogsEntry.class.getName());
 	}
 
 	public List<ClassName> getClassNames() {
@@ -514,11 +516,11 @@ public class DataFactory {
 	}
 
 	public long getDDLRecordSetClassNameId() {
-		return _ddlRecordSetClassNameId;
+		return _classNameMap.get(DDLRecordSet.class.getName());
 	}
 
 	public long getDDMContentClassNameId() {
-		return _ddmContentClassNameId;
+		return _classNameMap.get(DDMContent.class.getName());
 	}
 
 	public DLFileEntryType getDefaultDLFileEntryType() {
@@ -534,11 +536,11 @@ public class DataFactory {
 	}
 
 	public long getDLFileEntryClassNameId() {
-		return _dlFileEntryClassNameId;
+		return _classNameMap.get(DLFileEntry.class.getName());
 	}
 
 	public long getGroupClassNameId() {
-		return _groupClassNameId;
+		return _classNameMap.get(Group.class.getName());
 	}
 
 	public Group getGuestGroup() {
@@ -554,11 +556,11 @@ public class DataFactory {
 	}
 
 	public long getJournalArticleClassNameId() {
-		return _journalArticleClassNameId;
+		return _classNameMap.get(JournalArticle.class.getName());
 	}
 
 	public long getMBMessageClassNameId() {
-		return _mbMessageClassNameId;
+		return _classNameMap.get(MBMessage.class.getName());
 	}
 
 	public Role getOrganizationAdministratorRole() {
@@ -575,10 +577,6 @@ public class DataFactory {
 
 	public Role getPowerUserRole() {
 		return _powerUserRole;
-	}
-
-	public long getRoleClassNameId() {
-		return _roleClassNameId;
 	}
 
 	public List<Role> getRoles() {
@@ -602,7 +600,7 @@ public class DataFactory {
 	}
 
 	public long getUserClassNameId() {
-		return _userClassNameId;
+		return _classNameMap.get(User.class.getName());
 	}
 
 	public Role getUserRole() {
@@ -614,7 +612,7 @@ public class DataFactory {
 	}
 
 	public long getWikiPageClassNameId() {
-		return _wikiPageClassNameId;
+		return _classNameMap.get(WikiPage.class.getName());
 	}
 
 	public void initClassNames() {
@@ -627,36 +625,7 @@ public class DataFactory {
 
 			_classNames.add(className);
 
-			if (model.equals(BlogsEntry.class.getName())) {
-				_blogsEntryClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(DDLRecordSet.class.getName())) {
-				_ddlRecordSetClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(DDMContent.class.getName())) {
-				_ddmContentClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(DLFileEntry.class.getName())) {
-				_dlFileEntryClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(Group.class.getName())) {
-				_groupClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(JournalArticle.class.getName())) {
-				_journalArticleClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(MBMessage.class.getName())) {
-				_mbMessageClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(Role.class.getName())) {
-				_roleClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(User.class.getName())) {
-				_userClassNameId = className.getClassNameId();
-			}
-			else if (model.equals(WikiPage.class.getName())) {
-				_wikiPageClassNameId = className.getClassNameId();
-			}
+			_classNameMap.put(model, className.getClassNameId());
 		}
 	}
 
@@ -681,8 +650,8 @@ public class DataFactory {
 		long groupId = _counter.get();
 
 		_guestGroup = _newGroup(
-			groupId, _groupClassNameId, groupId, GroupConstants.GUEST, "/guest",
-			true);
+			groupId, getGroupClassNameId(), groupId, GroupConstants.GUEST,
+			"/guest", true);
 	}
 
 	public void initJournalArticle(int maxJournalArticleSize) throws Exception {
@@ -702,12 +671,14 @@ public class DataFactory {
 	public void initRoles() {
 		_roles = new ArrayList<Role>();
 
+		long roleClassNameId = _classNameMap.get(Role.class.getName());
+
 		// Administrator
 
 		long roleId = _counter.get();
 
 		_administratorRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
 
 		_roles.add(_administratorRole);
@@ -717,7 +688,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_guestRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
 
 		_roles.add(_guestRole);
@@ -727,7 +698,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_organizationAdministratorRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_ADMINISTRATOR,
 			RoleConstants.TYPE_ORGANIZATION);
 
@@ -738,7 +709,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_organizationOwnerRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
 
 		_roles.add(_organizationOwnerRole);
@@ -748,7 +719,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_organizationUserRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
 
 		_roles.add(_organizationUserRole);
@@ -758,7 +729,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_ownerRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
 
 		_roles.add(_ownerRole);
@@ -768,7 +739,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_powerUserRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
 
 		_roles.add(_powerUserRole);
@@ -778,7 +749,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_siteAdministratorRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
 
 		_roles.add(_siteAdministratorRole);
@@ -788,7 +759,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_siteMemberRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
 
 		_roles.add(_siteMemberRole);
@@ -798,7 +769,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_siteOwnerRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
 
 		_roles.add(_siteOwnerRole);
@@ -808,7 +779,7 @@ public class DataFactory {
 		roleId = _counter.get();
 
 		_userRole = _newRole(
-			roleId, _company.getCompanyId(), _roleClassNameId, roleId,
+			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
 
 		_roles.add(_userRole);
@@ -1523,34 +1494,27 @@ public class DataFactory {
 	private Account _account;
 	private Role _administratorRole;
 	private String _baseDir;
-	private long _blogsEntryClassNameId;
+	private Map<String, Long> _classNameMap = new HashMap<String, Long>();
 	private List<ClassName> _classNames;
 	private Company _company;
 	private SimpleCounter _counter;
-	private long _ddlRecordSetClassNameId;
-	private long _ddmContentClassNameId;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
-	private long _dlFileEntryClassNameId;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
-	private long _groupClassNameId;
 	private Group _guestGroup;
 	private Role _guestRole;
 	private User _guestUser;
-	private long _journalArticleClassNameId;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
 	private int _maxGroupsCount;
 	private int _maxUserToGroupCount;
-	private long _mbMessageClassNameId;
 	private Role _organizationAdministratorRole;
 	private Role _organizationOwnerRole;
 	private Role _organizationUserRole;
 	private Role _ownerRole;
 	private Role _powerUserRole;
 	private SimpleCounter _resourcePermissionCounter;
-	private long _roleClassNameId;
 	private List<Role> _roles;
 	private User _sampleUser;
 	private Format _simpleDateFormat =
@@ -1559,10 +1523,8 @@ public class DataFactory {
 	private Role _siteMemberRole;
 	private Role _siteOwnerRole;
 	private SimpleCounter _socialActivityCounter;
-	private long _userClassNameId;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;
 	private VirtualHost _virtualHost;
-	private long _wikiPageClassNameId;
 
 }

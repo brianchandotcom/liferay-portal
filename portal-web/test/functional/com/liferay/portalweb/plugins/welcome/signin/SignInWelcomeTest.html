@@ -29,6 +29,16 @@
 	<td>test</td>
 </tr>
 <tr>
+	<td>storeChecked</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td>rememberMeNotChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${rememberMeNotChecked}</td>
+	<td>RememberMeChecked</td>
+</tr>
+<tr>
 	<td>assertNotChecked</td>
 	<td>//input[@id='_58_rememberMeCheckbox']</td>
 	<td>Remember Me</td>
@@ -37,6 +47,11 @@
 	<td>clickAt</td>
 	<td>//input[@id='_58_rememberMeCheckbox']</td>
 	<td>Remember Me</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>RememberMeChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -70,7 +85,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@class,'user-fullname')]</td>
+	<td>//span[@class='user-full-name']</td>
 	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>

@@ -547,10 +547,6 @@ public class DataFactory {
 		return _guestGroup;
 	}
 
-	public Role getGuestRole() {
-		return _guestRole;
-	}
-
 	public User getGuestUser() {
 		return _guestUser;
 	}
@@ -563,18 +559,6 @@ public class DataFactory {
 		return _classNameMap.get(MBMessage.class.getName());
 	}
 
-	public Role getOrganizationAdministratorRole() {
-		return _organizationAdministratorRole;
-	}
-
-	public Role getOrganizationOwnerRole() {
-		return _organizationOwnerRole;
-	}
-
-	public Role getOrganizationUserRole() {
-		return _organizationUserRole;
-	}
-
 	public Role getPowerUserRole() {
 		return _powerUserRole;
 	}
@@ -585,18 +569,6 @@ public class DataFactory {
 
 	public User getSampleUser() {
 		return _sampleUser;
-	}
-
-	public Role getSiteAdministratorRole() {
-		return _siteAdministratorRole;
-	}
-
-	public Role getSiteMemberRole() {
-		return _siteMemberRole;
-	}
-
-	public Role getSiteOwnerRole() {
-		return _siteOwnerRole;
 	}
 
 	public long getUserClassNameId() {
@@ -697,32 +669,32 @@ public class DataFactory {
 
 		roleId = _counter.get();
 
-		_organizationAdministratorRole = _newRole(
+		Role organizationAdministratorRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_ADMINISTRATOR,
 			RoleConstants.TYPE_ORGANIZATION);
 
-		_roles.add(_organizationAdministratorRole);
+		_roles.add(organizationAdministratorRole);
 
 		// Organization Owner
 
 		roleId = _counter.get();
 
-		_organizationOwnerRole = _newRole(
+		Role organizationOwnerRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
 
-		_roles.add(_organizationOwnerRole);
+		_roles.add(organizationOwnerRole);
 
 		// Organization User
 
 		roleId = _counter.get();
 
-		_organizationUserRole = _newRole(
+		Role organizationUserRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
 
-		_roles.add(_organizationUserRole);
+		_roles.add(organizationUserRole);
 
 		// Owner
 
@@ -748,31 +720,31 @@ public class DataFactory {
 
 		roleId = _counter.get();
 
-		_siteAdministratorRole = _newRole(
+		Role siteAdministratorRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
 
-		_roles.add(_siteAdministratorRole);
+		_roles.add(siteAdministratorRole);
 
 		// Site Member
 
 		roleId = _counter.get();
 
-		_siteMemberRole = _newRole(
+		Role siteMemberRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
 
-		_roles.add(_siteMemberRole);
+		_roles.add(siteMemberRole);
 
 		// Site Owner
 
 		roleId = _counter.get();
 
-		_siteOwnerRole = _newRole(
+		Role siteOwnerRole = _newRole(
 			roleId, _company.getCompanyId(), roleClassNameId, roleId,
 			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
 
-		_roles.add(_siteOwnerRole);
+		_roles.add(siteOwnerRole);
 
 		// User
 
@@ -1509,9 +1481,6 @@ public class DataFactory {
 	private List<String> _lastNames;
 	private int _maxGroupsCount;
 	private int _maxUserToGroupCount;
-	private Role _organizationAdministratorRole;
-	private Role _organizationOwnerRole;
-	private Role _organizationUserRole;
 	private Role _ownerRole;
 	private Role _powerUserRole;
 	private SimpleCounter _resourcePermissionCounter;
@@ -1519,9 +1488,6 @@ public class DataFactory {
 	private User _sampleUser;
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private Role _siteAdministratorRole;
-	private Role _siteMemberRole;
-	private Role _siteOwnerRole;
 	private SimpleCounter _socialActivityCounter;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;

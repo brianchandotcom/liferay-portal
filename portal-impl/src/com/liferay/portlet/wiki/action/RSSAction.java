@@ -25,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
+import com.liferay.portlet.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Locale;
@@ -71,14 +72,21 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		String rss = StringPool.BLANK;
 
-		if ((nodeId > 0) && Validator.isNotNull(title)) {
-			rss = WikiPageServiceUtil.getPagesRSS(
-				companyId, nodeId, title, max, type, version, displayStyle,
-				feedURL, entryURL, locale);
-		}
-		else if (nodeId > 0) {
-			rss = WikiPageServiceUtil.getNodePagesRSS(
-				nodeId, max, type, version, displayStyle, feedURL, entryURL);
+		if (nodeId > 0) {
+			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
+				title);
+
+			if (Validator.isNotNull(title)) {
+				rss = WikiPageServiceUtil.getPagesRSS(
+					companyId, nodeId, title, max, type, version, displayStyle,
+					feedURL, entryURL, attachmentURLPrefix, locale);
+			}
+			else {
+				rss = WikiPageServiceUtil.getNodePagesRSS(
+					nodeId, max, type, version, displayStyle, feedURL, entryURL,
+					attachmentURLPrefix);
+			}
 		}
 
 		return rss.getBytes(StringPool.UTF8);

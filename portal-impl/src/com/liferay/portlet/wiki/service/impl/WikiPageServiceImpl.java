@@ -273,8 +273,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getNodePagesRSS(long, int, String, double, String,
-	 *             String, String, String)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getNodePagesRSS(long, int,
+	 *             String, double, String, String, String, String)}
 	 */
 	public String getNodePagesRSS(
 			long nodeId, int max, String type, double version,
@@ -422,8 +422,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getPagesRSS(long, long, String, int, String, double,
-	 *             String, String, String, String, java.util.Locale)}
+	 * @deprecated {As of 6.2.0, replaced by @link #getPagesRSS(long, long,
+	 *             String, int, String, double, String, String, String, String,
+	 *             java.util.Locale)}
 	 */
 	public String getPagesRSS(
 			long companyId, long nodeId, String title, int max, String type,

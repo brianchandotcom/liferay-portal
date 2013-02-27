@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DiffHtmlUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -120,33 +119,6 @@ public class WikiUtil {
 		return DiffHtmlUtil.diff(
 			new UnsyncStringReader(sourceContent),
 			new UnsyncStringReader(targetContent));
-	}
-
-	public static String escapeContent(String content) {
-		StringBundler sb = new StringBundler(content.length());
-
-		boolean insideTag = false;
-
-		for (char c : content.toCharArray()) {
-			if (c == CharPool.GREATER_THAN) {
-				insideTag = false;
-			}
-			else if (c == CharPool.LESS_THAN) {
-				insideTag = true;
-			}
-
-			if (!insideTag && (c == CharPool.SPACE)) {
-				sb.append(StringPool.NBSP);
-			}
-			else if (!insideTag && (c == CharPool.TAB)) {
-				sb.append("&nbsp;&nbsp;&nbsp;");
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
@@ -471,10 +443,6 @@ public class WikiUtil {
 
 	public static String getHelpURL(String format) {
 		return _instance._getHelpURL(format);
-	}
-
-	public static WikiUtil getInstance() {
-		return _instance;
 	}
 
 	public static Map<String, Boolean> getLinks(WikiPage page)

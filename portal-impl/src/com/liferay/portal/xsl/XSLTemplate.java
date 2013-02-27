@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +72,12 @@ public class XSLTemplate implements Template {
 
 	public Object get(String key) {
 		return _context.get(key);
+	}
+
+	public String[] getKeys() {
+		Set<String> keySet = _context.keySet();
+
+		return keySet.toArray(new String[keySet.size()]);
 	}
 
 	public void prepare(HttpServletRequest request) {

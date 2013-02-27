@@ -60,6 +60,10 @@ public class VelocityTemplate extends AbstractTemplate {
 		return _velocityContext.get(key);
 	}
 
+	public String[] getKeys() {
+		return (String[]) _velocityContext.getKeys();
+	}
+
 	public void put(String key, Object value) {
 		if (value == null) {
 			return;

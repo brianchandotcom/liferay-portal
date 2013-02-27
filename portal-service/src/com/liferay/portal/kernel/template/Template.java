@@ -25,6 +25,8 @@ public interface Template {
 
 	public Object get(String key);
 
+	public String[] getKeys();
+
 	public void prepare(HttpServletRequest request);
 
 	public boolean processTemplate(Writer writer) throws TemplateException;

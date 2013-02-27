@@ -32,6 +32,7 @@ import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Mika Koivisto
@@ -63,6 +64,12 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 
 	public Object get(String key) {
 		return _context.get(key);
+	}
+
+	public String[] getKeys() {
+		Set<String> keySet = _context.keySet();
+
+		return keySet.toArray(new String[keySet.size()]);
 	}
 
 	public void put(String key, Object value) {

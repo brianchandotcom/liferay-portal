@@ -39,6 +39,10 @@ public class RestrictedTemplate implements Template {
 		return _template.get(key);
 	}
 
+	public String[] getKeys() {
+		return _template.getKeys();
+	}
+
 	public void prepare(HttpServletRequest request) {
 		_template.prepare(request);
 	}

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Juan Fernández
  */
@@ -25,6 +27,12 @@ public class DDMTemplateHelperUtil {
 
 	public static DDMStructure fetchStructure(DDMTemplate ddmTemplate) {
 		return getDDMTemplateHelper().fetchStructure(ddmTemplate);
+	}
+
+	public static String getAutocompleteJSON(HttpServletRequest request)
+		throws Exception {
+
+		return getDDMTemplateHelper().getAutocompleteJSON(request);
 	}
 
 	public static DDMTemplateHelper getDDMTemplateHelper() {

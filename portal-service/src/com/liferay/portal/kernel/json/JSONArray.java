@@ -53,6 +53,8 @@ public interface JSONArray {
 
 	public JSONArray put(long value);
 
+	public JSONArray put(Object[] values);
+
 	public JSONArray put(String value);
 
 	public String toString();

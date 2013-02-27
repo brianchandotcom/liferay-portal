@@ -148,6 +148,14 @@ public class JSONArrayImpl implements JSONArray {
 		return this;
 	}
 
+	public JSONArray put(Object[] values) {
+		for (Object value : values) {
+			_jsonArray.put(value);
+		}
+
+		return this;
+	}
+
 	public JSONArray put(String value) {
 		_jsonArray.put(value);
 

@@ -17,11 +17,16 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Juan Fernández
  */
 public interface DDMTemplateHelper {
 
 	public DDMStructure fetchStructure(DDMTemplate template);
+
+	public String getAutocompleteJSON(HttpServletRequest request)
+		throws Exception;
 
 }

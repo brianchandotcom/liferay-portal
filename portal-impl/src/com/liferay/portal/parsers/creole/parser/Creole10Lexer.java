@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2012-09-12 08:31:39
+// $ANTLR 3.0.1 /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2013-02-26 09:47:33
 
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -760,8 +760,8 @@ public class Creole10Lexer extends Lexer {
     public final void mESCAPE() throws RecognitionException {
 	try {
 	    int _type = ESCAPE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1092:12: ( '~' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1092:14: '~'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1103:12: ( '~' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1103:14: '~'
 	    {
 	    match('~'); 
 
@@ -778,8 +778,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_BLOCK_CLOSE() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_BLOCK_CLOSE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1093:21: ( NEWLINE '}}}' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1093:23: NEWLINE '}}}'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1104:21: ( NEWLINE '}}}' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1104:23: NEWLINE '}}}'
 	    {
 	    mNEWLINE(); 
 	    match("}}}"); 
@@ -798,7 +798,7 @@ public class Creole10Lexer extends Lexer {
     public final void mNEWLINE() throws RecognitionException {
 	try {
 	    int _type = NEWLINE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1094:13: ( ( CR )? LF | CR )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:13: ( ( CR )? LF | CR )
 	    int alt2=2;
 	    int LA2_0 = input.LA(1);
 
@@ -816,15 +816,15 @@ public class Creole10Lexer extends Lexer {
 	    }
 	    else {
 		NoViableAltException nvae =
-		    new NoViableAltException("1094:1: NEWLINE : ( ( CR )? LF | CR );", 2, 0, input);
+		    new NoViableAltException("1105:1: NEWLINE : ( ( CR )? LF | CR );", 2, 0, input);
 
 		throw nvae;
 	    }
 	    switch (alt2) {
 		case 1 :
-		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1094:15: ( CR )? LF
+		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:15: ( CR )? LF
 		    {
-		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1094:15: ( CR )?
+		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:15: ( CR )?
 		    int alt1=2;
 		    int LA1_0 = input.LA(1);
 
@@ -833,7 +833,7 @@ public class Creole10Lexer extends Lexer {
 		    }
 		    switch (alt1) {
 			case 1 :
-			    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1094:17: CR
+			    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:17: CR
 			    {
 			    mCR(); 
 
@@ -847,7 +847,7 @@ public class Creole10Lexer extends Lexer {
 		    }
 		    break;
 		case 2 :
-		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1095:9: CR
+		    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1106:9: CR
 		    {
 		    mCR(); 
 
@@ -865,8 +865,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start CR
     public final void mCR() throws RecognitionException {
 	try {
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1096:16: ( '\\r' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1096:18: '\\r'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1107:16: ( '\\r' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1107:18: '\\r'
 	    {
 	    match('\r'); 
 
@@ -881,8 +881,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start LF
     public final void mLF() throws RecognitionException {
 	try {
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1097:16: ( '\\n' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1097:18: '\\n'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1108:16: ( '\\n' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1108:18: '\\n'
 	    {
 	    match('\n'); 
 
@@ -898,10 +898,10 @@ public class Creole10Lexer extends Lexer {
     public final void mBLANKS() throws RecognitionException {
 	try {
 	    int _type = BLANKS;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1099:12: ( ( SPACE | TABULATOR )+ )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1099:14: ( SPACE | TABULATOR )+
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1110:12: ( ( SPACE | TABULATOR )+ )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1110:14: ( SPACE | TABULATOR )+
 	    {
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1099:14: ( SPACE | TABULATOR )+
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1110:14: ( SPACE | TABULATOR )+
 	    int cnt3=0;
 	    loop3:
 	    do {
@@ -953,8 +953,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start SPACE
     public final void mSPACE() throws RecognitionException {
 	try {
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1100:18: ( ' ' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1100:20: ' '
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1111:18: ( ' ' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1111:20: ' '
 	    {
 	    match(' '); 
 
@@ -969,8 +969,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start TABULATOR
     public final void mTABULATOR() throws RecognitionException {
 	try {
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1101:21: ( '\\t' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1101:23: '\\t'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1112:21: ( '\\t' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1112:23: '\\t'
 	    {
 	    match('\t'); 
 
@@ -986,8 +986,8 @@ public class Creole10Lexer extends Lexer {
     public final void mBRACE_CLOSE() throws RecognitionException {
 	try {
 	    int _type = BRACE_CLOSE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1103:16: ( NEWLINE '}' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1103:18: NEWLINE '}'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1114:16: ( NEWLINE '}' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1114:18: NEWLINE '}'
 	    {
 	    mNEWLINE(); 
 	    match('}'); 
@@ -1005,8 +1005,8 @@ public class Creole10Lexer extends Lexer {
     public final void mCOLON_SLASH() throws RecognitionException {
 	try {
 	    int _type = COLON_SLASH;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1104:16: ( ':' '/' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1104:18: ':' '/'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1115:16: ( ':' '/' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1115:18: ':' '/'
 	    {
 	    match(':'); 
 	    match('/'); 
@@ -1024,8 +1024,8 @@ public class Creole10Lexer extends Lexer {
     public final void mITAL() throws RecognitionException {
 	try {
 	    int _type = ITAL;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:10: ( '//' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1105:12: '//'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1116:10: ( '//' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1116:12: '//'
 	    {
 	    match("//"); 
 
@@ -1043,8 +1043,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_OPEN() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_OPEN;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1106:16: ( '{{{' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1106:18: '{{{'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1117:16: ( '{{{' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1117:18: '{{{'
 	    {
 	    match("{{{"); 
 
@@ -1062,8 +1062,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_CLOSE() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_CLOSE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1107:16: ( '}}}' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1107:18: '}}}'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1118:16: ( '}}}' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1118:18: '}}}'
 	    {
 	    match("}}}"); 
 
@@ -1081,8 +1081,8 @@ public class Creole10Lexer extends Lexer {
     public final void mLINK_OPEN() throws RecognitionException {
 	try {
 	    int _type = LINK_OPEN;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1108:14: ( '[[' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1108:16: '[['
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1119:14: ( '[[' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1119:16: '[['
 	    {
 	    match("[["); 
 
@@ -1100,8 +1100,8 @@ public class Creole10Lexer extends Lexer {
     public final void mLINK_CLOSE() throws RecognitionException {
 	try {
 	    int _type = LINK_CLOSE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1109:15: ( ']]' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1109:17: ']]'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1120:15: ( ']]' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1120:17: ']]'
 	    {
 	    match("]]"); 
 
@@ -1119,8 +1119,8 @@ public class Creole10Lexer extends Lexer {
     public final void mIMAGE_OPEN() throws RecognitionException {
 	try {
 	    int _type = IMAGE_OPEN;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1110:15: ( '{{' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1110:17: '{{'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1121:15: ( '{{' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1121:17: '{{'
 	    {
 	    match("{{"); 
 
@@ -1138,8 +1138,8 @@ public class Creole10Lexer extends Lexer {
     public final void mIMAGE_CLOSE() throws RecognitionException {
 	try {
 	    int _type = IMAGE_CLOSE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1111:16: ( '}}' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1111:18: '}}'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1122:16: ( '}}' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1122:18: '}}'
 	    {
 	    match("}}"); 
 
@@ -1157,8 +1157,8 @@ public class Creole10Lexer extends Lexer {
     public final void mFORCED_LINEBREAK() throws RecognitionException {
 	try {
 	    int _type = FORCED_LINEBREAK;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1112:19: ( '\\\\\\\\' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1112:21: '\\\\\\\\'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1123:19: ( '\\\\\\\\' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1123:21: '\\\\\\\\'
 	    {
 	    match("\\\\"); 
 
@@ -1176,8 +1176,8 @@ public class Creole10Lexer extends Lexer {
     public final void mEQUAL() throws RecognitionException {
 	try {
 	    int _type = EQUAL;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1113:11: ( '=' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1113:13: '='
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1124:11: ( '=' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1124:13: '='
 	    {
 	    match('='); 
 
@@ -1194,8 +1194,8 @@ public class Creole10Lexer extends Lexer {
     public final void mPIPE() throws RecognitionException {
 	try {
 	    int _type = PIPE;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1114:10: ( '|' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1114:12: '|'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1125:10: ( '|' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1125:12: '|'
 	    {
 	    match('|'); 
 
@@ -1212,8 +1212,8 @@ public class Creole10Lexer extends Lexer {
     public final void mPOUND() throws RecognitionException {
 	try {
 	    int _type = POUND;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1115:11: ( '#' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1115:13: '#'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1126:11: ( '#' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1126:13: '#'
 	    {
 	    match('#'); 
 
@@ -1230,8 +1230,8 @@ public class Creole10Lexer extends Lexer {
     public final void mDASH() throws RecognitionException {
 	try {
 	    int _type = DASH;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1116:10: ( '-' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1116:12: '-'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1127:10: ( '-' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1127:12: '-'
 	    {
 	    match('-'); 
 
@@ -1248,8 +1248,8 @@ public class Creole10Lexer extends Lexer {
     public final void mSTAR() throws RecognitionException {
 	try {
 	    int _type = STAR;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1117:10: ( '*' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1117:12: '*'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1128:10: ( '*' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1128:12: '*'
 	    {
 	    match('*'); 
 
@@ -1266,8 +1266,8 @@ public class Creole10Lexer extends Lexer {
     public final void mSLASH() throws RecognitionException {
 	try {
 	    int _type = SLASH;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1118:11: ( '/' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1118:13: '/'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1129:11: ( '/' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1129:13: '/'
 	    {
 	    match('/'); 
 
@@ -1284,8 +1284,8 @@ public class Creole10Lexer extends Lexer {
     public final void mEXTENSION() throws RecognitionException {
 	try {
 	    int _type = EXTENSION;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1119:14: ( '@@' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1119:16: '@@'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1130:14: ( '@@' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1130:16: '@@'
 	    {
 	    match("@@"); 
 
@@ -1303,8 +1303,8 @@ public class Creole10Lexer extends Lexer {
     public final void mTABLE_OF_CONTENTS_OPEN_MARKUP() throws RecognitionException {
 	try {
 	    int _type = TABLE_OF_CONTENTS_OPEN_MARKUP;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1121:2: ( '<<' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1121:4: '<<'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1132:2: ( '<<' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1132:4: '<<'
 	    {
 	    match("<<"); 
 
@@ -1322,8 +1322,8 @@ public class Creole10Lexer extends Lexer {
     public final void mTABLE_OF_CONTENTS_CLOSE_MARKUP() throws RecognitionException {
 	try {
 	    int _type = TABLE_OF_CONTENTS_CLOSE_MARKUP;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1124:2: ( '>>' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1124:4: '>>'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1135:2: ( '>>' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1135:4: '>>'
 	    {
 	    match(">>"); 
 
@@ -1341,8 +1341,8 @@ public class Creole10Lexer extends Lexer {
     public final void mTABLE_OF_CONTENTS_TEXT() throws RecognitionException {
 	try {
 	    int _type = TABLE_OF_CONTENTS_TEXT;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1127:2: ( '<<TableOfContents>>' )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1127:4: '<<TableOfContents>>'
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1138:2: ( '<<TableOfContents>>' )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1138:4: '<<TableOfContents>>'
 	    {
 	    match("<<TableOfContents>>"); 
 
@@ -1360,8 +1360,8 @@ public class Creole10Lexer extends Lexer {
     public final void mINSIGNIFICANT_CHAR() throws RecognitionException {
 	try {
 	    int _type = INSIGNIFICANT_CHAR;
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1129:21: ( . )
-	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1129:23: .
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1140:21: ( . )
+	    // /home/migue/development/sourcecode/liferay/liferay-portal/portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:1140:23: .
 	    {
 	    matchAny(); 
 

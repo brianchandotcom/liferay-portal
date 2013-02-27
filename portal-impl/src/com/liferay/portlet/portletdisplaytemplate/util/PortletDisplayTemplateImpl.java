@@ -20,16 +20,18 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.templateparser.BaseTransformer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
@@ -346,6 +348,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
 
-	private Transformer _transformer = new DDLTransformer();
+	private Transformer _transformer = new BaseTransformer(
+		PropsKeys.DYNAMIC_DATA_LISTS_TRANSFORMER_LISTENER,
+		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE,
+		TemplateContextType.STANDARD);
 
 }

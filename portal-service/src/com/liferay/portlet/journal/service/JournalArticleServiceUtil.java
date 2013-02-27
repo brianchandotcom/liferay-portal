@@ -350,6 +350,21 @@ public class JournalArticleServiceUtil {
 		getService().moveArticle(groupId, articleId, newFolderId);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long groupId, long resourcePrimKey, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .moveArticleFromTrash(groupId, resourcePrimKey, newFolderId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long groupId, java.lang.String articleId, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveArticleFromTrash(groupId, articleId, newFolderId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
 		long groupId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -86,6 +88,9 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteEntries(
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreEntryFromTrash(actionRequest);
 			}
 
 			String redirect = PortalUtil.escapeRedirect(
@@ -192,16 +197,28 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
 		for (long deleteFolderId : deleteFolderIds) {
-			JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+			if (moveToTrash) {
+				JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+			}
+			else {
+				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
 		}
 
 		String[] deleteArticleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "articleIds"));
 
-		for (String deleteArticleId : deleteArticleIds) {
+		long[] restoreArticleIds = new long[deleteArticleIds.length];
+
+		for (int i = 0; i < deleteArticleIds.length; i++) {
+			String deleteArticleId = deleteArticleIds[i];
+
 			if (moveToTrash) {
-				JournalArticleServiceUtil.moveArticleToTrash(
-					themeDisplay.getScopeGroupId(), deleteArticleId);
+				JournalArticle article =
+					JournalArticleServiceUtil.moveArticleToTrash(
+						themeDisplay.getScopeGroupId(), deleteArticleId);
+
+				restoreArticleIds[i] = article.getResourcePrimKey();
 			}
 			else {
 				ActionUtil.deleteArticle(actionRequest, deleteArticleId);
@@ -212,7 +229,10 @@ public class EditEntryAction extends PortletAction {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(
-				"restoreEntryIds", ArrayUtil.toStringArray(deleteArticleIds));
+				"restoreArticleIds",
+				ArrayUtil.toStringArray(restoreArticleIds));
+			data.put(
+				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));
 
 			SessionMessages.add(
 				actionRequest,
@@ -272,6 +292,24 @@ public class EditEntryAction extends PortletAction {
 		for (String articleId : articleIds) {
 			JournalArticleServiceUtil.moveArticle(
 				themeDisplay.getScopeGroupId(), articleId, newFolderId);
+		}
+	}
+
+	protected void restoreEntryFromTrash(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		long[] restoreFolderIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreFolderIds"), 0L);
+
+		for (long restoreFolderId : restoreFolderIds) {
+			JournalFolderServiceUtil.restoreFolderFromTrash(restoreFolderId);
+		}
+
+		long[] restoreArticleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreArticleIds"), 0L);
+
+		for (long restoreEntryId : restoreArticleIds) {
+			JournalArticleServiceUtil.restoreArticleFromTrash(restoreEntryId);
 		}
 	}
 

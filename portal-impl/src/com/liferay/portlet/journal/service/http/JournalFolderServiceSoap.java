@@ -94,6 +94,19 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws RemoteException {
+		try {
+			JournalFolderServiceUtil.deleteFolder(folderId,
+				includeTrashedEntries);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolderSoap getFolder(
 		long folderId) throws RemoteException {
 		try {
@@ -139,12 +152,46 @@ public class JournalFolderServiceSoap {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolderSoap[] getFolders(
+		long groupId, long parentFolderId, int status)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalFolder> returnValue =
+				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
+					status);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalFolderSoap[] getFolders(
 		long groupId, long parentFolderId, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalFolder> returnValue =
 				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
 					start, end);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalFolderSoap[] getFolders(
+		long groupId, long parentFolderId, int status, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalFolder> returnValue =
+				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
+					status, start, end);
 
 			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -252,6 +299,47 @@ public class JournalFolderServiceSoap {
 					parentFolderId, serviceContext);
 
 			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalFolderSoap moveFolderFromTrash(
+		long folderId, long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.moveFolderFromTrash(folderId,
+					parentFolderId, serviceContext);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void moveFolderToTrash(long folderId)
+		throws RemoteException {
+		try {
+			JournalFolderServiceUtil.moveFolderToTrash(folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreFolderFromTrash(long folderId)
+		throws RemoteException {
+		try {
+			JournalFolderServiceUtil.restoreFolderFromTrash(folderId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

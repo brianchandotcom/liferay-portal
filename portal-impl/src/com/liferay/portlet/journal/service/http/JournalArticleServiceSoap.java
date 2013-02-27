@@ -557,6 +557,38 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticleSoap moveArticleFromTrash(
+		long groupId, long resourcePrimKey, long newFolderId)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
+					resourcePrimKey, newFolderId);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleSoap moveArticleFromTrash(
+		long groupId, java.lang.String articleId, long newFolderId)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
+					articleId, newFolderId);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticleSoap moveArticleToTrash(
 		long groupId, java.lang.String articleId) throws RemoteException {
 		try {

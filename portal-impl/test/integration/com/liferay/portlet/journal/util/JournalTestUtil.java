@@ -131,6 +131,16 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
+			long groupId, long folderId, String title, String content,
+			boolean approved)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, title, content, LocaleUtil.getDefault(), true,
+			approved);
+	}
+
+	public static JournalArticle addArticleWithWorkflow(
 			long groupId, String title, String content, boolean approved)
 		throws Exception {
 

@@ -397,6 +397,7 @@ create index IX_742DEC1F on JournalFolder (groupId);
 create index IX_E988689E on JournalFolder (groupId, name);
 create index IX_190483C6 on JournalFolder (groupId, parentFolderId);
 create unique index IX_65026705 on JournalFolder (groupId, parentFolderId, name);
+create index IX_EFD9CAC on JournalFolder (groupId, parentFolderId, status);
 create index IX_63BDFA69 on JournalFolder (uuid_);
 create index IX_54F89E1F on JournalFolder (uuid_, companyId);
 create unique index IX_E002061 on JournalFolder (uuid_, groupId);

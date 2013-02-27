@@ -316,11 +316,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		if (category.isInTrash() || category.isInTrashContainer()) {
-			return true;
-		}
-
-		return false;
+		return category.isInTrash();
 	}
 
 	@Override

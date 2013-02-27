@@ -269,7 +269,8 @@ public class TrashImpl implements Trash {
 			return false;
 		}
 
-		return trashHandler.isInTrash(classPK);
+		return trashHandler.isInTrash(classPK) ||
+				trashHandler.isInTrashContainer(classPK);
 	}
 
 	public boolean isTrashEnabled(long groupId)

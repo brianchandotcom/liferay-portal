@@ -66,6 +66,12 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		_journalFolderService.deleteFolder(folderId);
 	}
 
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.deleteFolder(folderId, includeTrashedEntries);
+	}
+
 	public com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,10 +92,23 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
+		long groupId, long parentFolderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFolders(groupId, parentFolderId, status);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.getFolders(groupId, parentFolderId, start,
 			end);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
+		long groupId, long parentFolderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFolders(groupId, parentFolderId,
+			status, start, end);
 	}
 
 	public java.util.List<java.lang.Object> getFoldersAndArticles(
@@ -143,6 +162,27 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.moveFolder(folderId, parentFolderId,
 			serviceContext);
+	}
+
+	public com.liferay.portlet.journal.model.JournalFolder moveFolderFromTrash(
+		long folderId, long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.moveFolderFromTrash(folderId,
+			parentFolderId, serviceContext);
+	}
+
+	public void moveFolderToTrash(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.moveFolderToTrash(folderId);
+	}
+
+	public void restoreFolderFromTrash(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.restoreFolderFromTrash(folderId);
 	}
 
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(

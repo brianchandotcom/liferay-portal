@@ -202,11 +202,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
-		if (page.isInTrash() || page.isInTrashContainer()) {
-			return true;
-		}
-
-		return false;
+		return page.isInTrash();
 	}
 
 	@Override

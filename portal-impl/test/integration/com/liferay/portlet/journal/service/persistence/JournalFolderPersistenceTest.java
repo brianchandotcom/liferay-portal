@@ -130,6 +130,14 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setDescription(ServiceTestUtil.randomString());
 
+		newJournalFolder.setStatus(ServiceTestUtil.nextInt());
+
+		newJournalFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		newJournalFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		newJournalFolder.setStatusDate(ServiceTestUtil.nextDate());
+
 		_persistence.update(newJournalFolder);
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
@@ -158,6 +166,15 @@ public class JournalFolderPersistenceTest {
 			newJournalFolder.getName());
 		Assert.assertEquals(existingJournalFolder.getDescription(),
 			newJournalFolder.getDescription());
+		Assert.assertEquals(existingJournalFolder.getStatus(),
+			newJournalFolder.getStatus());
+		Assert.assertEquals(existingJournalFolder.getStatusByUserId(),
+			newJournalFolder.getStatusByUserId());
+		Assert.assertEquals(existingJournalFolder.getStatusByUserName(),
+			newJournalFolder.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingJournalFolder.getStatusDate()),
+			Time.getShortTimestamp(newJournalFolder.getStatusDate()));
 	}
 
 	@Test
@@ -329,6 +346,14 @@ public class JournalFolderPersistenceTest {
 		journalFolder.setName(ServiceTestUtil.randomString());
 
 		journalFolder.setDescription(ServiceTestUtil.randomString());
+
+		journalFolder.setStatus(ServiceTestUtil.nextInt());
+
+		journalFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		journalFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		journalFolder.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(journalFolder);
 

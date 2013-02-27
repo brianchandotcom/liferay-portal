@@ -364,10 +364,17 @@ public class EditArticleAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "articleIds"));
 		}
 
-		for (String deleteArticleId : deleteArticleIds) {
+		long[] restoreArticleIds = new long[deleteArticleIds.length];
+
+		for (int i = 0; i < deleteArticleIds.length; i++) {
+			String deleteArticleId = deleteArticleIds[i];
+
 			if (moveToTrash) {
-				JournalArticleServiceUtil.moveArticleToTrash(
-					themeDisplay.getScopeGroupId(), deleteArticleId);
+				JournalArticle article =
+					JournalArticleServiceUtil.moveArticleToTrash(
+						themeDisplay.getScopeGroupId(), deleteArticleId);
+
+				restoreArticleIds[i] = article.getResourcePrimKey();
 			}
 			else {
 				ActionUtil.deleteArticle(actionRequest, deleteArticleId);
@@ -378,7 +385,8 @@ public class EditArticleAction extends PortletAction {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(
-				"restoreEntryIds", ArrayUtil.toStringArray(deleteArticleIds));
+				"restoreArticleIds",
+				ArrayUtil.toStringArray(restoreArticleIds));
 
 			SessionMessages.add(
 				actionRequest,

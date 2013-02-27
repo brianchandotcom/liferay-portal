@@ -340,6 +340,22 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		_journalArticleService.moveArticle(groupId, articleId, newFolderId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long groupId, long resourcePrimKey, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.moveArticleFromTrash(groupId,
+			resourcePrimKey, newFolderId);
+	}
+
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long groupId, java.lang.String articleId, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.moveArticleFromTrash(groupId, articleId,
+			newFolderId);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(
 		long groupId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException,

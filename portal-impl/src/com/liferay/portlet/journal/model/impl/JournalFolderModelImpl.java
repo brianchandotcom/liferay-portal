@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -75,9 +76,13 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "parentFolderId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,name VARCHAR(100) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,name VARCHAR(100) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFolder.parentFolderId ASC, JournalFolder.name ASC";
@@ -97,7 +102,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long NAME_COLUMN_BITMASK = 4L;
 	public static long PARENTFOLDERID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long STATUS_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,6 +129,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		model.setParentFolderId(soapModel.getParentFolderId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -192,6 +202,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -262,6 +276,30 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -446,6 +484,175 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_description = description;
 	}
 
+	@JSON
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	@JSON
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+			_statusByUserUuid);
+	}
+
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_statusByUserUuid = statusByUserUuid;
+	}
+
+	@JSON
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	public long getContainerModelId() {
+		return getFolderId();
+	}
+
+	public void setContainerModelId(long containerModelId) {
+		_folderId = containerModelId;
+	}
+
+	public String getContainerModelName() {
+		return String.valueOf(getName());
+	}
+
+	public long getParentContainerModelId() {
+		return 0;
+	}
+
+	public void setParentContainerModelId(long parentContainerModelId) {
+	}
+
+	/**
+	 * @deprecated {@link #isApproved}
+	 */
+	public boolean getApproved() {
+		return isApproved();
+	}
+
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isInTrash() {
+		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -488,6 +695,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		journalFolderImpl.setParentFolderId(getParentFolderId());
 		journalFolderImpl.setName(getName());
 		journalFolderImpl.setDescription(getDescription());
+		journalFolderImpl.setStatus(getStatus());
+		journalFolderImpl.setStatusByUserId(getStatusByUserId());
+		journalFolderImpl.setStatusByUserName(getStatusByUserName());
+		journalFolderImpl.setStatusDate(getStatusDate());
 
 		journalFolderImpl.resetOriginalValues();
 
@@ -570,6 +781,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		journalFolderModelImpl._originalName = journalFolderModelImpl._name;
 
+		journalFolderModelImpl._originalStatus = journalFolderModelImpl._status;
+
+		journalFolderModelImpl._setOriginalStatus = false;
+
 		journalFolderModelImpl._columnBitmask = 0;
 	}
 
@@ -637,12 +852,33 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			journalFolderCacheModel.description = null;
 		}
 
+		journalFolderCacheModel.status = getStatus();
+
+		journalFolderCacheModel.statusByUserId = getStatusByUserId();
+
+		journalFolderCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = journalFolderCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			journalFolderCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			journalFolderCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			journalFolderCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return journalFolderCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -666,13 +902,21 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", status=");
+		sb.append(getStatus());
+		sb.append(", statusByUserId=");
+		sb.append(getStatusByUserId());
+		sb.append(", statusByUserName=");
+		sb.append(getStatusByUserName());
+		sb.append(", statusDate=");
+		sb.append(getStatusDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalFolder");
@@ -722,6 +966,22 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
+		sb.append(getStatusDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -752,6 +1012,13 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _statusByUserId;
+	private String _statusByUserUuid;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private JournalFolder _escapedModel;
 }

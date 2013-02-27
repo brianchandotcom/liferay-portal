@@ -428,6 +428,14 @@ public class JournalArticleLocalServiceWrapper
 		_journalArticleLocalService.deleteArticles(groupId, folderId);
 	}
 
+	public void deleteArticles(long groupId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleLocalService.deleteArticles(groupId, folderId,
+			includeTrashedEntries);
+	}
+
 	public void deleteLayoutArticleReferences(long groupId,
 		java.lang.String layoutUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -879,6 +887,16 @@ public class JournalArticleLocalServiceWrapper
 		long newFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalArticleLocalService.moveArticle(groupId, articleId, newFolderId);
+	}
+
+	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
+		long userId, long groupId,
+		com.liferay.portlet.journal.model.JournalArticle article,
+		long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.moveArticleFromTrash(userId,
+			groupId, article, newFolderId);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(

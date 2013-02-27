@@ -198,6 +198,25 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 	}
 
+	public JournalFolder getTrashContainer() {
+		JournalFolder folder = getFolder();
+
+		if (folder.isInTrash()) {
+			return folder;
+		}
+
+		return folder.getTrashContainer();
+	}
+
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isTemplateDriven() {
 		if (Validator.isNull(getStructureId())) {
 			return false;

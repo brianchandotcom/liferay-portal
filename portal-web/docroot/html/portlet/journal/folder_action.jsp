@@ -82,13 +82,13 @@ else {
 				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
 					<portlet:actionURL var="deleteURL">
 						<portlet:param name="struts_action" value="/journal/edit_folder" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 					</portlet:actionURL>
 
-					<liferay-ui:icon-delete url="<%= deleteURL %>" />
+					<liferay-ui:icon-delete trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
 				</c:if>
 
 				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">

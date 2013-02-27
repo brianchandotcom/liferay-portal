@@ -272,7 +272,8 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?)
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -315,7 +316,8 @@
 			FROM
 				JournalFolder
 			WHERE
-				(JournalFolder.groupId = ?)
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>

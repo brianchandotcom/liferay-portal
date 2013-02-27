@@ -164,11 +164,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-			if (dlFileEntry.isInTrashContainer() || dlFileVersion.isInTrash()) {
-				return true;
-			}
-
-			return false;
+			return dlFileVersion.isInTrash();
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;

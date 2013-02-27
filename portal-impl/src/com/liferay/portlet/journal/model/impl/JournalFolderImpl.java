@@ -59,6 +59,41 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		return JournalFolderLocalServiceUtil.getFolder(getParentFolderId());
 	}
 
+	public JournalFolder getTrashContainer() {
+		JournalFolder folder = null;
+
+		try {
+			folder = getParentFolder();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		while (folder != null) {
+			if (folder.isInTrash()) {
+				return folder;
+			}
+
+			try {
+				folder = folder.getParentFolder();
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	public boolean isInTrashContainer() {
+		if (getTrashContainer() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isRoot() {
 		if (getParentFolderId() ==
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

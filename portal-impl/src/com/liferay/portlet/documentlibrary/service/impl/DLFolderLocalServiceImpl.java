@@ -45,7 +45,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
@@ -716,12 +715,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		int oldStatus = dlFolder.getStatus();
 
-		if (dlFolder.isInTrash() &&
-			(status == WorkflowConstants.STATUS_APPROVED)) {
-
-			dlFolder.setName(TrashUtil.getOriginalTitle(dlFolder.getName()));
-		}
-
 		dlFolder.setStatus(status);
 		dlFolder.setStatusByUserId(user.getUserId());
 		dlFolder.setStatusByUserName(user.getFullName());
@@ -763,6 +756,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
 				dlFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
 				typeSettingsProperties);
+		}
+		else {
+			trashEntryLocalService.deleteEntry(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
 		// Indexer

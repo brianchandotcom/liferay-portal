@@ -24,23 +24,19 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -49,7 +45,27 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	@Override
+	public void testTrashAndDeleteDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashAndRestoreDraft() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndDelete() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
@@ -57,54 +73,42 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JournalFolder folder = (JournalFolder)parentBaseModel;
+		JournalFolder parentFolder = (JournalFolder)parentBaseModel;
 
-		return JournalTestUtil.addArticleWithWorkflow(
-			serviceContext.getScopeGroupId(), folder.getFolderId(),
-			getSearchKeywords(), getSearchKeywords(), approved);
-	}
+		String name = getSearchKeywords();
 
-	@Override
-	protected Long getAssetClassPK(ClassedModel classedModel) {
-		JournalArticle article = (JournalArticle)classedModel;
+		name += ServiceTestUtil.randomString(
+			_FOLDER_NAME_MAX_LENGTH - name.length());
 
-		try {
-			JournalArticleResource journalArticleResource =
-				JournalArticleResourceLocalServiceUtil.getArticleResource(
-					article.getResourcePrimKey());
-
-			return journalArticleResource.getResourcePrimKey();
-		}
-		catch (Exception e) {
-			return super.getAssetClassPK(classedModel);
-		}
+		return JournalTestUtil.addFolder(
+			parentFolder.getGroupId(), parentFolder.getFolderId(), name);
 	}
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return JournalArticleLocalServiceUtil.getArticle(primaryKey);
+		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return JournalArticle.class;
+		return JournalFolder.class;
 	}
 
 	@Override
 	protected String getBaseModelName(ClassedModel classedModel) {
-		JournalArticle article = (JournalArticle)classedModel;
+		JournalFolder folder = (JournalFolder)classedModel;
 
-		return article.getArticleId();
+		return folder.getName();
 	}
 
 	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
-		JournalFolder folder = (JournalFolder)parentBaseModel;
+		JournalFolder parentDLFolder = (JournalFolder)parentBaseModel;
 
-		return JournalArticleLocalServiceUtil.getNotInTrashArticlesCount(
-			folder.getGroupId(), folder.getFolderId());
+		return JournalFolderLocalServiceUtil.getFoldersCount(
+			parentDLFolder.getGroupId(), parentDLFolder.getFolderId());
 	}
 
 	@Override
@@ -118,38 +122,26 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return JournalFolder.class;
-	}
-
-	@Override
 	protected String getSearchKeywords() {
-		return "Article";
-	}
-
-	@Override
-	protected long getTrashEntryClassPK(ClassedModel classedModel) {
-		JournalArticle article = (JournalArticle)classedModel;
-
-		return article.getResourcePrimKey();
+		return "Title";
 	}
 
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
-		JournalArticle article = (JournalArticle)baseModel;
+		JournalFolder folder = (JournalFolder)baseModel;
 
-		String articleId = article.getArticleId();
+		String name = folder.getName();
 
-		return TrashUtil.getOriginalTitle(articleId);
+		return TrashUtil.getOriginalTitle(name);
 	}
 
 	@Override
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
-		JournalArticle article = (JournalArticle)classedModel;
+		JournalFolder folder = (JournalFolder)classedModel;
 
-		return article.isInTrashContainer();
+		return folder.isInTrashContainer();
 	}
 
 	@Override
@@ -161,20 +153,16 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		JournalArticleServiceUtil.moveArticleFromTrash(
-			group.getGroupId(), getAssetClassPK(classedModel),
-			(Long)parentBaseModel.getPrimaryKeyObj());
+		JournalFolderServiceUtil.moveFolderFromTrash(
+			(Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
 		return parentBaseModel;
 	}
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			primaryKey);
-
-		JournalArticleLocalServiceUtil.moveArticleToTrash(
-			TestPropsValues.getUserId(), article);
+		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Override

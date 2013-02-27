@@ -351,7 +351,11 @@ create table JournalFolder (
 	modifiedDate DATE null,
 	parentFolderId LONG,
 	name VARCHAR(100) null,
-	description STRING null
+	description STRING null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 drop index IX_228562AD on Lock_;

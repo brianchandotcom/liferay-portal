@@ -63,6 +63,10 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
 
+	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer();
+
+	public boolean isInTrashContainer();
+
 	public boolean isTemplateDriven();
 
 	@java.lang.SuppressWarnings(value = "unused")

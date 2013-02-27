@@ -59,6 +59,17 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.deleteFolder(folderId);
 	}
 
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		journalFolderLocalService.deleteFolder(folderId, includeTrashedEntries);
+	}
+
 	public JournalFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -77,16 +88,33 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public List<JournalFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
-		return journalFolderPersistence.filterFindByG_P(
-			groupId, parentFolderId);
+		return getFolders(
+			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public List<JournalFolder> getFolders(
+			long groupId, long parentFolderId, int status)
+		throws SystemException {
+
+		return journalFolderPersistence.filterFindByG_P_S(
+			groupId, parentFolderId, status);
 	}
 
 	public List<JournalFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end)
 		throws SystemException {
 
-		return journalFolderPersistence.filterFindByG_P(
-			groupId, parentFolderId, start, end);
+		return getFolders(
+			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, start,
+			end);
+	}
+
+	public List<JournalFolder> getFolders(
+			long groupId, long parentFolderId, int status, int start, int end)
+		throws SystemException {
+
+		return journalFolderPersistence.filterFindByG_P_S(
+			groupId, parentFolderId, status, start, end);
 	}
 
 	public List<Object> getFoldersAndArticles(
@@ -186,6 +214,41 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		return journalFolderLocalService.moveFolder(
 			folderId, parentFolderId, serviceContext);
+	}
+
+	public JournalFolder moveFolderFromTrash(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return journalFolderLocalService.moveFolderFromTrash(
+			getUserId(), folderId, parentFolderId, serviceContext);
+	}
+
+	public void moveFolderToTrash(long folderId)
+			throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		journalFolderLocalService.moveFolderToTrash(getUserId(), folderId);
+	}
+
+	public void restoreFolderFromTrash(long folderId)
+			throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		journalFolderLocalService.restoreFolderFromTrash(getUserId(), folderId);
 	}
 
 	public JournalFolder updateFolder(

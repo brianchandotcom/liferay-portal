@@ -437,6 +437,33 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		}
 	}
 
+	public JournalArticle moveArticleFromTrash(
+			long groupId, long resourcePrimKey, long newFolderId)
+		throws PortalException, SystemException {
+
+		JournalArticle article = getLatestArticle(resourcePrimKey);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), article, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.moveArticleFromTrash(
+			getUserId(), groupId, article, newFolderId);
+	}
+
+	public JournalArticle moveArticleFromTrash(
+			long groupId, String articleId, long newFolderId)
+		throws PortalException, SystemException {
+
+		JournalArticle article = getLatestArticle(
+			groupId, articleId, WorkflowConstants.STATUS_IN_TRASH);
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.moveArticleFromTrash(
+			getUserId(), groupId, article, newFolderId);
+	}
+
 	public JournalArticle moveArticleToTrash(long groupId, String articleId)
 		throws PortalException, SystemException {
 

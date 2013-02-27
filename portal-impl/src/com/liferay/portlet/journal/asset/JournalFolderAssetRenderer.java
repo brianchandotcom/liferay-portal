@@ -16,14 +16,17 @@ package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
 
@@ -36,7 +39,10 @@ import javax.portlet.WindowState;
 /**
  * @author Alexander Chow
  */
-public class JournalFolderAssetRenderer extends BaseAssetRenderer {
+public class JournalFolderAssetRenderer
+	extends BaseAssetRenderer implements TrashRenderer {
+
+	public static final String TYPE = "folder";
 
 	public JournalFolderAssetRenderer(JournalFolder folder) {
 		_folder = folder;
@@ -44,6 +50,10 @@ public class JournalFolderAssetRenderer extends BaseAssetRenderer {
 
 	public String getAssetRendererFactoryClassName() {
 		return JournalFolderAssetRendererFactory.CLASS_NAME;
+	}
+
+	public String getClassName() {
+		return JournalFolder.class.getName();
 	}
 
 	public long getClassPK() {
@@ -71,12 +81,22 @@ public class JournalFolderAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
+	public String getPortletId() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		return assetRendererFactory.getPortletId();
+	}
+
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}
 
 	public String getTitle(Locale locale) {
-		return _folder.getName();
+		return TrashUtil.getOriginalTitle(_folder.getName());
+	}
+
+	public String getType() {
+		return TYPE;
 	}
 
 	@Override

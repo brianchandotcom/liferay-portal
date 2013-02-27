@@ -57,6 +57,10 @@ public class JournalFolderWrapper implements JournalFolder,
 		attributes.put("parentFolderId", getParentFolderId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -126,6 +130,30 @@ public class JournalFolderWrapper implements JournalFolder,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -365,6 +393,231 @@ public class JournalFolderWrapper implements JournalFolder,
 		_journalFolder.setDescription(description);
 	}
 
+	/**
+	* Returns the status of this journal folder.
+	*
+	* @return the status of this journal folder
+	*/
+	public int getStatus() {
+		return _journalFolder.getStatus();
+	}
+
+	/**
+	* Sets the status of this journal folder.
+	*
+	* @param status the status of this journal folder
+	*/
+	public void setStatus(int status) {
+		_journalFolder.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this journal folder.
+	*
+	* @return the status by user ID of this journal folder
+	*/
+	public long getStatusByUserId() {
+		return _journalFolder.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this journal folder.
+	*
+	* @param statusByUserId the status by user ID of this journal folder
+	*/
+	public void setStatusByUserId(long statusByUserId) {
+		_journalFolder.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this journal folder.
+	*
+	* @return the status by user uuid of this journal folder
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolder.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this journal folder.
+	*
+	* @param statusByUserUuid the status by user uuid of this journal folder
+	*/
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_journalFolder.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this journal folder.
+	*
+	* @return the status by user name of this journal folder
+	*/
+	public java.lang.String getStatusByUserName() {
+		return _journalFolder.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this journal folder.
+	*
+	* @param statusByUserName the status by user name of this journal folder
+	*/
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_journalFolder.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this journal folder.
+	*
+	* @return the status date of this journal folder
+	*/
+	public java.util.Date getStatusDate() {
+		return _journalFolder.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this journal folder.
+	*
+	* @param statusDate the status date of this journal folder
+	*/
+	public void setStatusDate(java.util.Date statusDate) {
+		_journalFolder.setStatusDate(statusDate);
+	}
+
+	/**
+	* @deprecated Renamed to {@link #isApproved()}
+	*/
+	public boolean getApproved() {
+		return _journalFolder.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is approved.
+	*
+	* @return <code>true</code> if this journal folder is approved; <code>false</code> otherwise
+	*/
+	public boolean isApproved() {
+		return _journalFolder.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is denied.
+	*
+	* @return <code>true</code> if this journal folder is denied; <code>false</code> otherwise
+	*/
+	public boolean isDenied() {
+		return _journalFolder.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is a draft.
+	*
+	* @return <code>true</code> if this journal folder is a draft; <code>false</code> otherwise
+	*/
+	public boolean isDraft() {
+		return _journalFolder.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is expired.
+	*
+	* @return <code>true</code> if this journal folder is expired; <code>false</code> otherwise
+	*/
+	public boolean isExpired() {
+		return _journalFolder.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is inactive.
+	*
+	* @return <code>true</code> if this journal folder is inactive; <code>false</code> otherwise
+	*/
+	public boolean isInactive() {
+		return _journalFolder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is incomplete.
+	*
+	* @return <code>true</code> if this journal folder is incomplete; <code>false</code> otherwise
+	*/
+	public boolean isIncomplete() {
+		return _journalFolder.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this journal folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _journalFolder.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is pending.
+	*
+	* @return <code>true</code> if this journal folder is pending; <code>false</code> otherwise
+	*/
+	public boolean isPending() {
+		return _journalFolder.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal folder is scheduled.
+	*
+	* @return <code>true</code> if this journal folder is scheduled; <code>false</code> otherwise
+	*/
+	public boolean isScheduled() {
+		return _journalFolder.isScheduled();
+	}
+
+	/**
+	* Returns the container model ID of this journal folder.
+	*
+	* @return the container model ID of this journal folder
+	*/
+	public long getContainerModelId() {
+		return _journalFolder.getContainerModelId();
+	}
+
+	/**
+	* Sets the container model ID of this journal folder.
+	*
+	* @param container model ID of this journal folder
+	*/
+	public void setContainerModelId(long containerModelId) {
+		_journalFolder.setContainerModelId(containerModelId);
+	}
+
+	/**
+	* Returns the container name of this journal folder.
+	*
+	* @return the container name of this journal folder
+	*/
+	public java.lang.String getContainerModelName() {
+		return _journalFolder.getContainerModelName();
+	}
+
+	/**
+	* Returns the parent container model ID of this journal folder.
+	*
+	* @return the parent container model ID of this journal folder
+	*/
+	public long getParentContainerModelId() {
+		return _journalFolder.getParentContainerModelId();
+	}
+
+	/**
+	* Sets the parent container model ID of this journal folder.
+	*
+	* @param parent container model ID of this journal folder
+	*/
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_journalFolder.setParentContainerModelId(parentContainerModelId);
+	}
+
 	public boolean isNew() {
 		return _journalFolder.isNew();
 	}
@@ -463,6 +716,14 @@ public class JournalFolderWrapper implements JournalFolder,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolder.getParentFolder();
+	}
+
+	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer() {
+		return _journalFolder.getTrashContainer();
+	}
+
+	public boolean isInTrashContainer() {
+		return _journalFolder.isInTrashContainer();
 	}
 
 	public boolean isRoot() {

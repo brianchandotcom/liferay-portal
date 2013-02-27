@@ -106,11 +106,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		if (entry.isInTrash() || entry.isInTrashContainer()) {
-			return true;
-		}
-
-		return false;
+		return entry.isInTrash();
 	}
 
 	@Override

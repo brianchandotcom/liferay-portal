@@ -810,9 +810,9 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isAjax() || themeDisplay.isIsolated() ||
-			themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive()) {
+		if (themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || themeDisplay.isAjax() ||
+			themeDisplay.isIsolated()) {
 
 			return PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 		}
@@ -6445,13 +6445,13 @@ public class PortalImpl implements Portal {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
-	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
-		WebServerServlet.class);
-
 	private static Map<Long, String> _cdnHostHttpMap =
 		new ConcurrentHashMap<Long, String>();
+
 	private static Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<Long, String>();
+	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+		WebServerServlet.class);
 	private static MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();

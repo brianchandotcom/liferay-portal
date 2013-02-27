@@ -158,6 +158,23 @@ public class WikiUtil {
 		return orphans;
 	}
 
+	public static String getAttachmentURLPrefix(
+			String pathMain, long plid, long nodeId, String title) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(pathMain);
+		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append(plid);
+		sb.append("&nodeId=");
+		sb.append(nodeId);
+		sb.append("&title=");
+		sb.append(HttpUtil.encodeURL(title));
+		sb.append("&fileName=");
+
+		return sb.toString();
+	}
+
 	public static String getEditPage(String format) {
 		return _instance._getEditPage(format);
 	}

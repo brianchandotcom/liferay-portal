@@ -180,14 +180,26 @@ public class WikiPageServiceUtil {
 		return getService().getNodePages(nodeId, max);
 	}
 
+	/**
+	* @deprecated {@link #getNodePagesRSS(long, int, String, double, String,
+	String, String, String)}
+	*/
 	public static java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws java.lang.Exception {
 		return getService()
 				   .getNodePagesRSS(nodeId, max, type, version, displayStyle,
 			feedURL, entryURL);
+	}
+
+	public static java.lang.String getNodePagesRSS(long nodeId, int max,
+		java.lang.String type, double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		java.lang.String attachmentURLPrefix) throws java.lang.Exception {
+		return getService()
+				   .getNodePagesRSS(nodeId, max, type, version, displayStyle,
+			feedURL, entryURL, attachmentURLPrefix);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getOrphans(
@@ -254,15 +266,28 @@ public class WikiPageServiceUtil {
 		return getService().getPagesCount(groupId, userId, nodeId, status);
 	}
 
+	/**
+	* @deprecated {@link #getPagesRSS(long, long, String, int, String, double,
+	String, String, String, String, java.util.Locale)}
+	*/
 	public static java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws java.lang.Exception {
 		return getService()
 				   .getPagesRSS(companyId, nodeId, title, max, type, version,
 			displayStyle, feedURL, entryURL, locale);
+	}
+
+	public static java.lang.String getPagesRSS(long companyId, long nodeId,
+		java.lang.String title, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
+		java.util.Locale locale) throws java.lang.Exception {
+		return getService()
+				   .getPagesRSS(companyId, nodeId, title, max, type, version,
+			displayStyle, feedURL, entryURL, attachmentURLPrefix, locale);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(

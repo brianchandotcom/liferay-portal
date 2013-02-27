@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -141,10 +140,8 @@ public class ExportPageAction extends PortletAction {
 
 		String content = page.getContent();
 
-		String attachmentURLPrefix =
-			themeDisplay.getPathMain() + "/wiki/get_page_attachment?" +
-				"p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + nodeId +
-					"&title=" + HttpUtil.encodeURL(title) + "&fileName=";
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
 		try {
 			content = WikiUtil.convert(

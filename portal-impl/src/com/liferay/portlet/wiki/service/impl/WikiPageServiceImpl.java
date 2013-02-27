@@ -305,7 +305,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		throws Exception {
 
 		WikiNodePermission.check(
-				getPermissionChecker(), nodeId, ActionKeys.VIEW);
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
 
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 

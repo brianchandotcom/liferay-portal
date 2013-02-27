@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
+import com.liferay.portlet.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Locale;
@@ -73,10 +73,10 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String rss = StringPool.BLANK;
 
 		if (nodeId > 0) {
-			String attachmentURLPrefix =
-				themeDisplay.getPathMain() + "/wiki/get_page_attachment?" +
-					"p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + nodeId +
-						"&title=" + HttpUtil.encodeURL(title) + "&fileName=";
+
+			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
+				title);
 
 			if (Validator.isNotNull(title)) {
 				rss = WikiPageServiceUtil.getPagesRSS(

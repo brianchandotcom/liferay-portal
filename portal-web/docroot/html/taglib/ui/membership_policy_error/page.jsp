@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.security.auth.MembershipPolicyException" %>
+<%@ page import="com.liferay.portal.security.membershippolicy.MembershipPolicyException" %>
 
 <liferay-ui:error exception="<%= MembershipPolicyException.class %>">
 

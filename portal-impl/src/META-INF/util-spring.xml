@@ -576,14 +576,14 @@
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
-	<bean id="com.liferay.portal.security.auth.MembershipPolicyFactoryUtil" class="com.liferay.portal.security.auth.MembershipPolicyFactoryUtil">
-		<property name="membershipPolicyFactory">
-			<bean class="com.liferay.portal.security.auth.MembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.ldap.AttributesTransformerFactory" class="com.liferay.portal.security.ldap.AttributesTransformerFactory" />
+	<bean id="com.liferay.portal.security.membershippolicy.MembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.MembershipPolicyFactoryUtil">
+		<property name="membershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.MembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.security.permission.InlineSQLHelperUtil">
 		<property name="inlineSQLHelper">
 			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />

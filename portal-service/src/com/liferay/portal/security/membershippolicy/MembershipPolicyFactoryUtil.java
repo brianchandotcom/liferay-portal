@@ -12,13 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.membershippolicy;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface MembershipPolicyFactory {
+public class MembershipPolicyFactoryUtil {
 
-	public MembershipPolicy getMembershipPolicy();
+	public static MembershipPolicy getMembershipPolicy() {
+		return getMembershipPolicyFactory().getMembershipPolicy();
+	}
+
+	public static MembershipPolicyFactory getMembershipPolicyFactory() {
+		return _membershipPolicyFactory;
+	}
+
+	public void setMembershipPolicyFactory(
+		MembershipPolicyFactory membershipPolicyFactory) {
+
+		_membershipPolicyFactory = membershipPolicyFactory;
+	}
+
+	private static MembershipPolicyFactory _membershipPolicyFactory;
 
 }

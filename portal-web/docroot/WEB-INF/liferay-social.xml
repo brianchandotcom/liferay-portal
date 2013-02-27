@@ -136,6 +136,7 @@
 		<model-name>com.liferay.portlet.bookmarks.model.BookmarksFolder</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
+		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
 		<model-name>com.liferay.portlet.bookmarks.model.BookmarksFolder</model-name>

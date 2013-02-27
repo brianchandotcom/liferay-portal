@@ -134,15 +134,17 @@ public class DataFactory {
 			_maxGroupsCount = maxGroupsCount;
 			_maxUserToGroupCount = maxUserToGroupCount;
 
+			initJournalArticle(maxJournalArticleSize);
+			initUserNames();
+
 			initSimpleCounters();
 
-			initClassNames();
-			initCompany();
 			initDLFileEntryType();
+			initClassNames();
 			initGuestGroup();
-			initJournalArticle(maxJournalArticleSize);
+
+			initCompany();
 			initRoles();
-			initUserNames();
 			initUsers();
 			initVirtualHost();
 		}

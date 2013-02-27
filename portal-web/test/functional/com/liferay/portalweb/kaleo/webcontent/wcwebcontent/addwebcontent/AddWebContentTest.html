@@ -74,79 +74,24 @@
 	<td>Basic Web Content</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]</td>
-	<td>CK Editor Script</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//span[@class='cke_toolbar']/span[2]/a/span</td>
-	<td>Normal</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button cke_button__source cke_button_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>WC WebContent Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//a[@class='cke_button cke_button__source cke_button_off']</td>
-	<td>Source Button Off</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>WC WebContent Content</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

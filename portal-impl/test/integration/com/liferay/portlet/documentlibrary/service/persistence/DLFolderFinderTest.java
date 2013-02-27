@@ -40,11 +40,10 @@ import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Zsolt Berentey
@@ -281,7 +280,7 @@ public class DLFolderFinderTest {
 			_group.getGroupId(), _folder.getFolderId(),
 			new String[] {ContentTypes.TEXT_PLAIN}, false, queryDefinition);
 
-		Assert.assertEquals(results.size(), 3);
+		Assert.assertEquals(3, results.size());
 
 		for (Object result : results) {
 			if (result instanceof DLFileEntry) {

@@ -353,7 +353,7 @@ public class JournalArticleLocalServiceImpl
 				new HashMap<String, Serializable>(), serviceContext);
 		}
 
-		return article;
+		return getArticle(article.getPrimaryKey());
 	}
 
 	public JournalArticle addArticle(

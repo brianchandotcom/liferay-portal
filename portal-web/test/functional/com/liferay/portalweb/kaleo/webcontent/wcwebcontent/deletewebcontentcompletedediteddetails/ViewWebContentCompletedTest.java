@@ -45,34 +45,38 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edited')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edited')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edited')]/td[3]/a"));
 		assertTrue(selenium.isElementPresent(
-				"//tr[contains(.,'Review')]/td[4]/a"));
+				"//tr[contains(.,'WC WebContent Title Edited')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edited')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertTrue(selenium.isElementPresent(
-				"//tr[contains(.,'Review')]/td[4]/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
@@ -86,7 +90,7 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
@@ -112,7 +116,7 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edited"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
@@ -126,7 +130,7 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//tr[contains(.,'Single Approver')]/td/a"));
+			selenium.getText("//tr[contains(.,'Single Approver')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[contains(.,'Single Approver')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),

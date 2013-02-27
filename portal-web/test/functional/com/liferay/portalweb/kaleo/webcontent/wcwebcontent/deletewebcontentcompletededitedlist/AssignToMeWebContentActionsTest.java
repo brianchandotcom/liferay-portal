@@ -42,15 +42,15 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertTrue(selenium.isElementPresent(
-				"//tr[contains(.,'Review')]/td[4]/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -71,15 +71,15 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertTrue(selenium.isElementPresent(
-				"//tr[contains(.,'Review')]/td[4]/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

@@ -217,12 +217,33 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			Object innerObject = map.get(innerBeanName);
 
-			Map<String, Object> innerMap = _convertObjectToMap(
-				statement, innerObject, innerBeanName);
+			String innerPropertyName = name.substring(index + 2);
+			if (innerObject instanceof List) {
+				List<Object> innerList = (List) innerObject;
 
-			innerMap.put(name.substring(index + 2), variableResult);
+				List<Object> newInnerList =
+					new ArrayList<Object>(innerList.size());
 
-			map.put(innerBeanName, innerMap);
+				for (Object innerListElement : innerList) {
+					Map<String, Object> newInnerListElement =
+						_convertObjectToMap(
+							statement, innerListElement, innerBeanName);
+
+					newInnerListElement.put(innerPropertyName, variableResult);
+
+					newInnerList.add(newInnerListElement);
+				}
+
+				map.put(innerBeanName, newInnerList);
+			}
+			else {
+				Map<String, Object> innerMap = _convertObjectToMap(
+					statement, innerObject, innerBeanName);
+
+				innerMap.put(innerPropertyName, variableResult);
+
+				map.put(innerBeanName, innerMap);
+			}
 		}
 		else {
 			map.put(name.substring(1), variableResult);

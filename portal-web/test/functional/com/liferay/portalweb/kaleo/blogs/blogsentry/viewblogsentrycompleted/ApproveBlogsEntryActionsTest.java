@@ -32,21 +32,22 @@ public class ApproveBlogsEntryActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Blogs Entry Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -55,11 +56,11 @@ public class ApproveBlogsEntryActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]",
 			RuntimeVariables.replace("Approve"));
 		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),
@@ -80,13 +81,14 @@ public class ApproveBlogsEntryActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Blogs Entry Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[5]/a"));
 	}
 }

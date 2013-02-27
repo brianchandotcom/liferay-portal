@@ -41,7 +41,7 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -60,13 +60,14 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[contains(.,'Review')]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//tr[contains(.,'Review')]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//tr[contains(.,'Review')]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[contains(.,'Review')]/td[4]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Blogs Entry Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[contains(.,'Review')]/td[5]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[5]/a"));
 	}
 }

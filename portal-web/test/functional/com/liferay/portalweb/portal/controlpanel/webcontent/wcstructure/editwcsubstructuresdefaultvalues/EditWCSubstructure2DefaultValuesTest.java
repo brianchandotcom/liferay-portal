@@ -51,17 +51,16 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
-		selenium.waitForVisible(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
-		selenium.selectFrame(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
-		assertTrue(selenium.isVisible("//input[@name='_166_keywords']"));
+		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
 			RuntimeVariables.replace("Substructure2"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Substructure2 Name')]/td[2]/a");
 		assertTrue(selenium.isVisible(
@@ -71,10 +70,10 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 				"//tr[contains(.,'WC Substructure2 Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Substructure2 Name')]/td[4]/a"));
-		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'WC Substructure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'WC Substructure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -84,25 +83,36 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Substructure2 Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
-			RuntimeVariables.replace("Edit Event"));
+			RuntimeVariables.replace("Text Field"));
 		selenium.waitForVisible("//button[@id='editEvent']");
+		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
+		assertTrue(selenium.isVisible("//button[@id='deleteEvent']"));
 		selenium.clickAt("//button[@id='editEvent']",
 			RuntimeVariables.replace("Edit Event"));
 		selenium.waitForElementPresent(
-			"//li[contains(@class,'aui-component aui-state-active aui-tab-active')]");
+			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");
 		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
-		assertEquals(RuntimeVariables.replace("Name"),
+		assertEquals(RuntimeVariables.replace("Field Label"),
 			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[5]/td[1]"));
-		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[5]/td[2]",
-			RuntimeVariables.replace("Name"));
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[2]/td[2]",
+			RuntimeVariables.replace("Field Label Value"));
 		selenium.waitForVisible(
 			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
 		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
-			RuntimeVariables.replace("Extra"));
+			RuntimeVariables.replace("Text Edited"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Predefined Value"),
@@ -112,16 +122,42 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[6]/td[2]"));
 		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[6]/td[2]",
-			RuntimeVariables.replace("Extra"));
+			RuntimeVariables.replace("Predefined Value"));
 		selenium.waitForVisible(
 			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
 		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
-			RuntimeVariables.replace("Extra"));
+			RuntimeVariables.replace("Predefined Value Edited"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("Tip"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[7]/td[1]"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[7]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[7]/td[2]",
+			RuntimeVariables.replace("Tip Value"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textareacelleditor-content')]/div/textarea");
+		selenium.type("//form[contains(@class,'aui-textareacelleditor-content')]/div/textarea",
+			RuntimeVariables.replace("Tip Edited"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForText("//tbody[@class='yui3-datatable-data']/tr[6]/td[2]",
+			"Predefined Value Edited");
+		assertEquals(RuntimeVariables.replace("Text Edited"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Predefined Value Edited"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[6]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Tip Edited"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[7]/td[2]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

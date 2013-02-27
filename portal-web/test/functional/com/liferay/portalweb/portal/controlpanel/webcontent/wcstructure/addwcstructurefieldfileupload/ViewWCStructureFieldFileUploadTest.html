@@ -85,8 +85,8 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/store.js')]</td>
-	<td>Liferay Store</td>
+	<td>//script[contains(@src,'/aui/event-tap/event-tap-min.js')]</td>
+	<td>Event Tap Min</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -96,7 +96,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -104,49 +104,54 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[2]/a</td>
-	<td>Structure ID</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[2]/a</td>
-	<td>Structure ID</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[4]/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
-</tr>
-<tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[2]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[2]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[4]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//textarea[@id='_166_description_en_US']</td>
-	<td>WC Structure File Description</td>
+	<td>WC Structure File Upload Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -155,12 +160,12 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[2]/span/input</td>
+	<td>//input[@value='Select']</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[3]/span/input</td>
+	<td>//input[@value='Remove']</td>
 	<td>Remove</td>
 </tr>
 <tr>
@@ -184,9 +189,9 @@
 	<td>WebDAV URL</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
-	<td>File Upload</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -196,12 +201,22 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
-	<td>Edit Event</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//button[@id='editEvent']</td>
 	<td>Edit Event</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='duplicateEvent']</td>
+	<td>Duplicate Event</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='deleteEvent']</td>
+	<td>Delete Event</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -210,7 +225,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//li[contains(@class,'aui-component aui-state-active aui-tab-active')]</td>
+	<td>//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]</td>
 	<td>Settings</td>
 </tr>
 <tr>

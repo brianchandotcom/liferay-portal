@@ -91,7 +91,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -102,6 +102,11 @@
 	<td>clickAt</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -124,19 +129,19 @@
 	<td>Modified Date</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Radio Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//tr[contains(.,'WC Structure Radio Name')]/td[3]/a</td>
 	<td>WC Structure Radio Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Structure Radio Name</td>
+	<td>Name Field</td>
 </tr>
 <tr>
 	<td>assertValue</td>
@@ -155,12 +160,12 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[2]/span/input</td>
+	<td>//input[@value='Select']</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[3]/span/input</td>
+	<td>//input[@value='Remove']</td>
 	<td>Remove</td>
 </tr>
 <tr>
@@ -184,9 +189,9 @@
 	<td>WebDAV URL</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
-	<td>Radio</td>
+	<td>Radio Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -196,12 +201,22 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
-	<td>Edit Event</td>
+	<td>Radio Field</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//button[@id='editEvent']</td>
 	<td>Edit Event</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='duplicateEvent']</td>
+	<td>Duplicate Event</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='deleteEvent']</td>
+	<td>Delete Event</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -210,7 +225,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//li[contains(@class,'aui-component aui-state-active aui-tab-active')]</td>
+	<td>//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]</td>
 	<td>Settings</td>
 </tr>
 <tr>
@@ -327,6 +342,21 @@
 	<td>assertText</td>
 	<td>//tbody[@class='yui3-datatable-data']/tr[10]/td[2]</td>
 	<td>option 1, option 2, option 3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='aui-toolbar-content']/button[contains(.,'Cancel')]</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

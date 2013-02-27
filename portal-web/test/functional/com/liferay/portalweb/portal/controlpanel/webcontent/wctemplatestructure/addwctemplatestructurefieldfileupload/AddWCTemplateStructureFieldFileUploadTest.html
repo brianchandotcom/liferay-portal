@@ -89,44 +89,39 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>File Upload</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -174,9 +169,14 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -259,80 +259,79 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure File Name</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
-</tr>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[5]/span/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[5]/span/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
-	<td>Manage Templates</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
-	<td>Manage Templates</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
-	<td>Manage Templates</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
-	<td>Add</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Template Structure File Upload Name</td>
+	<td>Name Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -345,33 +344,13 @@
 	<td>WC Template Structure File Upload Description</td>
 </tr>
 <tr>
-	<td>storeVisible</td>
-	<td>//textarea[@id='_166_plainEditorField']</td>
-	<td>plainEditorNotVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${plainEditorNotVisible}</td>
-	<td>plainEditorVisible</td>
-</tr>
-<tr>
 	<td>select</td>
 	<td>//select[@id='_166_editorType']</td>
-	<td>Plain</td>
+	<td>value=rich</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>plainEditorVisible</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_166_editorType']</td>
-	<td>Plain</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_166_plainEditorField']</td>
+	<td>sendKeys</td>
+	<td>//div[@id="_166_richEditor"]/textarea</td>
 	<td><p>$file.getData()</p></td>
 </tr>
 <tr>

@@ -59,6 +59,7 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure DM Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Structure DM Name')]/td[2]/a");
 		assertTrue(selenium.isVisible(
@@ -67,10 +68,12 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'WC Structure DM Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Structure DM Name')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure DM Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure DM Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure DM Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Structure DM Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
@@ -79,12 +82,8 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Parent Structure"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/label"));
-		assertEquals("Select",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[2]/span/input"));
-		assertEquals("Remove",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[3]/span/input"));
+		assertEquals("Select", selenium.getValue("//input[@value='Select']"));
+		assertEquals("Remove", selenium.getValue("//input[@value='Remove']"));
 		assertEquals(RuntimeVariables.replace("URL"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/label"));
@@ -95,18 +94,20 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
-			RuntimeVariables.replace("Edit Event"));
+			RuntimeVariables.replace("Documents and Media Field"));
 		selenium.waitForVisible("//button[@id='editEvent']");
+		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
+		assertTrue(selenium.isVisible("//button[@id='deleteEvent']"));
 		selenium.clickAt("//button[@id='editEvent']",
 			RuntimeVariables.replace("Edit Event"));
 		selenium.waitForElementPresent(
-			"//li[contains(@class,'aui-component aui-state-active aui-tab-active')]");
+			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");
 		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
 		assertEquals(RuntimeVariables.replace("Property Name"),
 			selenium.getText(
@@ -167,6 +168,11 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("No"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[9]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Cancel"),
+			selenium.getText(
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel')]"));
+		assertTrue(selenium.isVisible("//input[@value='Save']"));
+		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.selectFrame("relative=top");
 	}
 }

@@ -54,37 +54,48 @@ public class LocalizeWCStructureTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		selenium.waitForVisible(
+			"//span[@class=\"taglib-input-localized\"]/span/a[contains(@id,'languageSelectorTrigger')]");
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(
-				"xPath=(//a[contains(.,'Other Languages (0)')])[1]"));
-		selenium.clickAt("xPath=(//a[contains(.,'Other Languages (0)')])[1]",
+				"//span[@class=\"taglib-input-localized\"]/span/a[contains(@id,'languageSelectorTrigger')]"));
+		selenium.clickAt("//span[@class=\"taglib-input-localized\"]/span/a[contains(@id,'languageSelectorTrigger')]",
 			RuntimeVariables.replace("Other Languages (0)"));
-		selenium.waitForVisible("xPath=(//select[@id='_166_languageId0'])[2]");
-		selenium.select("xPath=(//select[@id='_166_languageId0'])[2]",
-			RuntimeVariables.replace("Spanish (Spain)"));
-		selenium.waitForVisible("xPath=(//img[contains(@src,'es_ES')])[2]");
-		selenium.type("//input[@id='_166_name_es_ES']",
-			RuntimeVariables.replace("WC Structure Name Spanish"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0']");
+		selenium.select("//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0']",
+			RuntimeVariables.replace("value=es_ES"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')]");
+		assertTrue(selenium.isVisible(
+				"//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')]"));
+		selenium.type("//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/input[@id='_166_name_es_ES']",
+			RuntimeVariables.replace("WC Nombre de la estructura"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(
-				"xPath=(//a[contains(.,'Other Languages (0)')])[2]"));
-		selenium.clickAt("xPath=(//a[contains(.,'Other Languages (0)')])[2]",
+				"xPath=(//span[@class=\"taglib-input-localized\"]/span/a[contains(@id,'languageSelectorTrigger')])[2]"));
+		selenium.clickAt("xPath=(//span[@class=\"taglib-input-localized\"]/span/a[contains(@id,'languageSelectorTrigger')])[2]",
 			RuntimeVariables.replace("Other Languages (0)"));
-		selenium.waitForVisible("xPath=(//select[@id='_166_languageId0'])[2]");
-		selenium.select("xPath=(//select[@id='_166_languageId0'])[2]",
-			RuntimeVariables.replace("Spanish (Spain)"));
-		selenium.waitForVisible("xPath=(//img[contains(@src,'es_ES')])[3]");
-		selenium.type("//textarea[@id='_166_description_es_ES']",
-			RuntimeVariables.replace("WC Structure Description Spanish"));
+		selenium.waitForVisible(
+			"xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0'])[2]");
+		selenium.select("xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0'])[2]",
+			RuntimeVariables.replace("value=es_ES"));
+		selenium.waitForVisible(
+			"xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')])[2]");
+		assertTrue(selenium.isVisible(
+				"xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')])[2]"));
+		selenium.type("xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/textarea[@id='_166_description_es_ES'])[1]",
+			RuntimeVariables.replace("WC Descripci\u00f3n Estructura"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

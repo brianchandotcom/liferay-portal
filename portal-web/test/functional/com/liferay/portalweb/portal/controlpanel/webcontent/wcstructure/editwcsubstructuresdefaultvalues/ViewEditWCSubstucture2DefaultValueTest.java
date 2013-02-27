@@ -51,17 +51,16 @@ public class ViewEditWCSubstucture2DefaultValueTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
-		selenium.waitForVisible(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
-		selenium.selectFrame(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
-		assertTrue(selenium.isVisible("//input[@name='_166_keywords']"));
+		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
 			RuntimeVariables.replace("Substructure2"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Substructure2 Name')]/td[2]/a");
 		assertTrue(selenium.isVisible(
@@ -71,10 +70,10 @@ public class ViewEditWCSubstucture2DefaultValueTest extends BaseTestCase {
 				"//tr[contains(.,'WC Substructure2 Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Substructure2 Name')]/td[4]/a"));
-		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'WC Substructure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'WC Substructure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
@@ -84,14 +83,22 @@ public class ViewEditWCSubstucture2DefaultValueTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Substructure2 Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
-		assertEquals(RuntimeVariables.replace("Text"),
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+		assertEquals(RuntimeVariables.replace("Text Edited"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		assertEquals("Extra",
+		selenium.mouseOver(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/a[contains(@class,'icon-tip')]");
+		selenium.waitForVisible(
+			"//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]");
+		assertEquals(RuntimeVariables.replace("Tip Edited"),
+			selenium.getText(
+				"//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]"));
+		assertEquals("Predefined Value Edited",
 			selenium.getValue(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
 	}

@@ -60,7 +60,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.selectFrame(
 					"//iframe[contains(@src,'scopeStructureType')]");
 				selenium.waitForElementPresent(
-					"//script[contains(@src,'/liferay/search_container.js')]");
+					"//script[contains(@src,'/liferay/store.js')]");
+				Thread.sleep(1000);
 
 				boolean structure1Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a)[1]");
@@ -100,8 +101,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -109,9 +110,12 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 			case 2:
 				assertEquals(RuntimeVariables.replace("There are no templates."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-				selenium.clickAt("//a[contains(.,'\u00ab Back')]",
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
 					RuntimeVariables.replace("\u00ab Back"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
 				boolean structure2Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a)[2]");
@@ -151,8 +155,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -160,9 +164,12 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 			case 3:
 				assertEquals(RuntimeVariables.replace("There are no templates."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-				selenium.clickAt("//a[contains(.,'\u00ab Back')]",
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
 					RuntimeVariables.replace("\u00ab Back"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
 				boolean structure3Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a)[3]");
@@ -202,8 +209,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -211,9 +218,12 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 			case 4:
 				assertEquals(RuntimeVariables.replace("There are no templates."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-				selenium.clickAt("//a[contains(.,'\u00ab Back')]",
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
 					RuntimeVariables.replace("\u00ab Back"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
 				boolean structure4Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a)[4]");
@@ -253,8 +263,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -262,9 +272,12 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 			case 5:
 				assertEquals(RuntimeVariables.replace("There are no templates."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
-				selenium.clickAt("//a[contains(.,'\u00ab Back')]",
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
 					RuntimeVariables.replace("\u00ab Back"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
 				boolean structure5Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a)[5]");
@@ -304,8 +317,8 @@ public class TearDownWCTemplateStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

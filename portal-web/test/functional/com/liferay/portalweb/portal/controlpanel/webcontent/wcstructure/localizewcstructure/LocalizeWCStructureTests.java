@@ -29,7 +29,9 @@ public class LocalizeWCStructureTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCStructureTest.class);
 		testSuite.addTestSuite(LocalizeWCStructureTest.class);
+		testSuite.addTestSuite(EditDisplaySettingsLanguageEspanolTest.class);
 		testSuite.addTestSuite(ViewLocalizeWCStructureTest.class);
+		testSuite.addTestSuite(TearDownDisplaySettingsLanguageTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

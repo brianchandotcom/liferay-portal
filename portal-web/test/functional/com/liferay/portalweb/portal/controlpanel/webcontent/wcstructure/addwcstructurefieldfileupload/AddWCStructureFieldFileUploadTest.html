@@ -85,8 +85,8 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/store.js')]</td>
-	<td>Liferay Store</td>
+	<td>//script[contains(@src,'/aui/event-tap/event-tap-min.js')]</td>
+	<td>Event Tap Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -99,33 +99,33 @@
 	<td>Add</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Structure File Name</td>
+	<td>Name FIeld</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='_166_description_en_US']</td>
-	<td>WC Structure File Description</td>
+	<td>WC Structure File Upload Description</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="File Upload"]/span</td>
+	<td>File Upload Icon</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="File Upload"]/div</td>
 	<td>File Upload</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
-	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="File Upload"]/div</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
 </tr>
 <tr>
@@ -140,8 +140,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

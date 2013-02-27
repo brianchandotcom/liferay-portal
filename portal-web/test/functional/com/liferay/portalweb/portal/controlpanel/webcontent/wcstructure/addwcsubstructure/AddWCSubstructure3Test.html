@@ -75,12 +75,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
@@ -99,14 +99,9 @@
 	<td>Add</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='_166_name_en_US']</td>
-	<td>WC Substructure3 Name</td>
+	<td>Name Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -140,21 +135,6 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure Name</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[2]/a</td>
 	<td>WC Structure Name</td>
 </tr>
@@ -174,23 +154,13 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>waitForNotVisible</td>
-	<td>//iframe[contains(@src,'_166_selectParentStructure')]</td>
-	<td>Parent Structure</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//iframe[contains(@src,'_166_scopeStructureName')])[2]</td>
+	<td>xPath=(//iframe[contains(@src,'Structures')])[2]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>xPath=(//iframe[contains(@src,'_166_scopeStructureName')])[2]</td>
+	<td>xPath=(//iframe[contains(@src,'Structures')])[2]</td>
 	<td>Structures</td>
 </tr>
 <tr>
@@ -199,18 +169,28 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForVisible</td>
 	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/span</td>
+	<td>Text Field Icon</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
 	<td>Text</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
-	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
 	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
 </tr>
 <tr>

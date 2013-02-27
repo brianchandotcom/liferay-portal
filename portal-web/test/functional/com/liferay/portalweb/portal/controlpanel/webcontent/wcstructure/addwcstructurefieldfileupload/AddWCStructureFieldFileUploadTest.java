@@ -53,23 +53,24 @@ public class AddWCStructureFieldFileUploadTest extends BaseTestCase {
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/store.js')]");
+			"//script[contains(@src,'/aui/event-tap/event-tap-min.js')]");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText(
 				"//span[@class='lfr-toolbar-button add-button ']/a"));
 		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		selenium.type("//input[@id='_166_name_en_US']",
-			RuntimeVariables.replace("WC Structure File Name"));
+			RuntimeVariables.replace("WC Structure File Upload Name"));
 		selenium.type("//textarea[@id='_166_description_en_US']",
-			RuntimeVariables.replace("WC Structure File Description"));
+			RuntimeVariables.replace("WC Structure File Upload Description"));
+		selenium.waitForVisible(
+			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"File Upload\"]/span");
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div",
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"File Upload\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"File Upload\"]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -77,9 +78,9 @@ public class AddWCStructureFieldFileUploadTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WC Structure File Name"),
+		assertEquals(RuntimeVariables.replace("WC Structure File Upload Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure File Name')]/td[3]/a"));
+				"//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a"));
 		selenium.selectFrame("relative=top");
 	}
 }

@@ -75,12 +75,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
@@ -90,12 +90,12 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>storeVisible</td>
-	<td>//a[contains(.,'Advanced »')]</td>
+	<td>//a[.='Advanced »']</td>
 	<td>advancedVisible</td>
 </tr>
 <tr>
@@ -104,14 +104,24 @@
 	<td>AdvancedNotVisible</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[.='Advanced »']</td>
+	<td>Advanced »</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//a[contains(.,'Advanced »')]</td>
+	<td>//a[.='Advanced »']</td>
 	<td>Advanced »</td>
 </tr>
 <tr>
 	<td>label</td>
 	<td>AdvancedNotVisible</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class="taglib-search-toggle-advanced"]</td>
+	<td>Advanced Search Overlay</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -124,7 +134,7 @@
 	<td>Description</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
@@ -144,7 +154,7 @@
 	<td>Description1</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
@@ -164,9 +174,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a[contains(.,'« Basic')]</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class="taglib-search-toggle-basic"]</td>
+	<td>Basic Search Overlay</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

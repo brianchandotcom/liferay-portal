@@ -55,16 +55,14 @@ public class AdvancedSearchWCStructureNameTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 					RuntimeVariables.replace("Structures"));
-				selenium.waitForVisible(
-					"//iframe[contains(@src,'_166_scopeStructureName')]");
-				selenium.selectFrame(
-					"//iframe[contains(@src,'_166_scopeStructureName')]");
+				selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+				selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/store.js')]");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean advancedVisible = selenium.isVisible(
-						"//a[contains(.,'Advanced \u00bb')]");
+						"//a[.='Advanced \u00bb']");
 
 				if (!advancedVisible) {
 					label = 2;
@@ -72,15 +70,20 @@ public class AdvancedSearchWCStructureNameTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//a[contains(.,'Advanced \u00bb')]",
+				assertEquals(RuntimeVariables.replace("Advanced \u00bb"),
+					selenium.getText("//a[.='Advanced \u00bb']"));
+				selenium.clickAt("//a[.='Advanced \u00bb']",
 					RuntimeVariables.replace("Advanced \u00bb"));
 
 			case 2:
+				selenium.waitForVisible(
+					"//div[@class=\"taglib-search-toggle-advanced\"]");
 				selenium.waitForVisible("//input[@id='_166_name']");
 				selenium.type("//input[@id='_166_name']",
 					RuntimeVariables.replace("Name"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//tr[contains(.,'WC Structure Name')]/td[3]/a");
 				assertEquals(RuntimeVariables.replace("WC Structure Name"),
@@ -90,12 +93,18 @@ public class AdvancedSearchWCStructureNameTest extends BaseTestCase {
 					RuntimeVariables.replace("Name1"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//div[@class='portlet-msg-info']");
 				assertEquals(RuntimeVariables.replace("There are no results."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				assertFalse(selenium.isTextPresent("WC Structure Name"));
-				selenium.clickAt("//a[contains(.,'\u00ab Basic')]",
+				Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("\u00ab Basic"),
+					selenium.getText("//a[.='\u00ab Basic']"));
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
+				selenium.waitForVisible(
+					"//div[@class=\"taglib-search-toggle-basic\"]");
 				selenium.selectFrame("relative=top");
 
 			case 100:

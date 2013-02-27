@@ -60,16 +60,17 @@ public class AddWCStructureFieldRadioTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("WC Structure Radio Name"));
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Radio Description"));
+		selenium.waitForVisible(
+			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Radio\"]/span");
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Radio\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Radio\"]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

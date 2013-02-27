@@ -59,18 +59,24 @@ public class ViewWCStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]/a");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Structure Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Structure Name')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//input[@id='_166_name_en_US']");
+		selenium.waitForVisible("//h1[@class='header-title']");
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals("WC Structure Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
 		assertEquals("WC Structure Description",
@@ -78,12 +84,8 @@ public class ViewWCStructureTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Parent Structure"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/label"));
-		assertEquals("Select",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[2]/span/input"));
-		assertEquals("Remove",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[3]/span/input"));
+		assertTrue(selenium.isVisible("//input[@value='Select']"));
+		assertTrue(selenium.isVisible("//input[@value='Remove']"));
 		assertEquals(RuntimeVariables.replace("URL"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/label"));
@@ -94,6 +96,20 @@ public class ViewWCStructureTest extends BaseTestCase {
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input"));
+		assertTrue(selenium.isVisible("link=View"));
+		assertTrue(selenium.isVisible("link=Source"));
+		assertEquals(RuntimeVariables.replace("Default Language:"),
+			selenium.getText("//label[@for='_166_defaultLanguageId']"));
+		assertEquals(RuntimeVariables.replace("English (United States)"),
+			selenium.getText(
+				"//span[contains(@class, 'lfr-translation-manager-default-locale-text')]"));
+		assertEquals(RuntimeVariables.replace("Change"),
+			selenium.getText(
+				"//a[@class='lfr-translation-manager-change-default-locale']"));
+		assertTrue(selenium.isVisible(
+				"//ul[contains(@class,'lfr-translation-manager-icon-menu')]"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
@@ -126,99 +142,46 @@ public class ViewWCStructureTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
-		assertEquals(RuntimeVariables.replace("Integer"),
+		assertEquals(RuntimeVariables.replace("Image"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]"));
-		assertEquals(RuntimeVariables.replace("Link to Page"),
+		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]"));
-		assertEquals(RuntimeVariables.replace("Number"),
+		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
-		assertEquals(RuntimeVariables.replace("Radio"),
+		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]"));
-		assertEquals(RuntimeVariables.replace("Select"),
+		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[12]"));
-		assertEquals(RuntimeVariables.replace("Text"),
+		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[13]"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
-			RuntimeVariables.replace("Edit Event"));
-		selenium.waitForVisible("//button[@id='editEvent']");
-		selenium.clickAt("//button[@id='editEvent']",
-			RuntimeVariables.replace("Edit Event"));
-		selenium.waitForElementPresent(
-			"//li[contains(@class,'aui-component aui-state-active aui-tab-active')]");
-		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
-		assertEquals(RuntimeVariables.replace("Property Name"),
-			selenium.getText(
-				"//thead[@class='yui3-datatable-columns']/tr/th[1]"));
-		assertEquals(RuntimeVariables.replace("Value"),
-			selenium.getText(
-				"//thead[@class='yui3-datatable-columns']/tr/th[2]"));
-		assertEquals(RuntimeVariables.replace("Type"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[1]/td[1]"));
-		assertEquals(RuntimeVariables.replace("checkbox"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[1]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Field Label"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[2]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Boolean"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Show Label"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[3]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Name"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[4]/td[1]"));
 		assertTrue(selenium.isVisible(
-				"//tbody[@class='yui3-datatable-data']/tr[4]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Predefined Value"),
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[5]/td[1]"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[5]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Tip"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[6]/td[1]"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[6]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Indexable"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[7]/td[1]"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[7]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Repeatable"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText(
-				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label"));
+		assertTrue(selenium.isVisible("//input[@value='Save']"));
+		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.selectFrame("relative=top");
 	}
 }

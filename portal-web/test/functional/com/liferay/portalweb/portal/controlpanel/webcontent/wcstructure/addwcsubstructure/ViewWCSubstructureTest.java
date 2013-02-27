@@ -59,6 +59,7 @@ public class ViewWCSubstructureTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Substructure Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Substructure Name')]/td[2]/a");
 		assertTrue(selenium.isVisible(
@@ -70,7 +71,6 @@ public class ViewWCSubstructureTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC Substructure Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Substructure Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Substructure Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
@@ -82,12 +82,8 @@ public class ViewWCSubstructureTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a"));
-		assertEquals("Select",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[1]/span/input"));
-		assertEquals("Remove",
-			selenium.getValue(
-				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/span[2]/span/input"));
+		assertEquals("Select", selenium.getValue("//input[@value='Select']"));
+		assertEquals("Remove", selenium.getValue("//input[@value='Remove']"));
 		assertEquals(RuntimeVariables.replace("URL"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/label"));
@@ -98,13 +94,20 @@ public class ViewWCSubstructureTest extends BaseTestCase {
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
-			RuntimeVariables.replace("Edit Event"));
+			RuntimeVariables.replace("Text Field"));
 		selenium.waitForVisible("//button[@id='editEvent']");
+		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
+		assertTrue(selenium.isVisible("//button[@id='deleteEvent']"));
 		selenium.clickAt("//button[@id='editEvent']",
 			RuntimeVariables.replace("Edit Event"));
 		selenium.waitForElementPresent(
-			"//li[contains(@class,'aui-component aui-state-active aui-tab-active')]");
+			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");
 		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
 		assertEquals(RuntimeVariables.replace("Property Name"),
 			selenium.getText(
@@ -171,6 +174,11 @@ public class ViewWCSubstructureTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Small"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[10]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Cancel"),
+			selenium.getText(
+				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel')]"));
+		assertTrue(selenium.isVisible("//input[@value='Save']"));
+		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.selectFrame("relative=top");
 	}
 }

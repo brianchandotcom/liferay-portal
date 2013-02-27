@@ -60,16 +60,17 @@ public class AddWCStructureFieldNumberTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("WC Structure Number Name"));
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Number Description"));
+		selenium.waitForVisible(
+			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/span");
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

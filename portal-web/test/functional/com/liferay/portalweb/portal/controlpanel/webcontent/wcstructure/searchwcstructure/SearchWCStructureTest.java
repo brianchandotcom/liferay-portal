@@ -59,9 +59,10 @@ public class SearchWCStructureTest extends BaseTestCase {
 				selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/store.js')]");
+				Thread.sleep(1000);
 
 				boolean basicVisible = selenium.isVisible(
-						"//a[contains(.,'\u00ab Basic')]");
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -69,15 +70,19 @@ public class SearchWCStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//a[contains(.,'\u00ab Basic')]",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
+				assertFalse(selenium.isVisible("//a[.='\u00ab Basic']"));
+				selenium.waitForVisible(
+					"//div[@class=\"taglib-search-toggle-basic\"]");
 				selenium.waitForVisible("//input[@name='_166_keywords']");
 				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("Structure"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//tr[contains(.,'WC Structure Name')]/td[3]/a");
 				assertEquals(RuntimeVariables.replace("WC Structure Name"),
@@ -87,18 +92,12 @@ public class SearchWCStructureTest extends BaseTestCase {
 					RuntimeVariables.replace("Structure1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 				selenium.waitForVisible("//div[@class='portlet-msg-info']");
 				assertEquals(RuntimeVariables.replace("There are no results."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				assertFalse(selenium.isTextPresent("WC Structure Name"));
-				selenium.type("//input[@name='_166_keywords']",
-					RuntimeVariables.replace(""));
-				assertEquals(RuntimeVariables.replace("View All"),
-					selenium.getText(
-						"//span[@class='lfr-toolbar-button view-button current']/a"));
-				selenium.clickAt("//span[@class='lfr-toolbar-button view-button current']/a",
-					RuntimeVariables.replace("View All"));
-				selenium.waitForPageToLoad("30000");
 				selenium.selectFrame("relative=top");
 
 			case 100:

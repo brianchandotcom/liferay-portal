@@ -28,8 +28,8 @@ public class AdvancedSearchWCStructureTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCStructureTest.class);
-		testSuite.addTestSuite(AdvancedSearchWCStructureDescriptionTest.class);
 		testSuite.addTestSuite(AdvancedSearchWCStructureNameTest.class);
+		testSuite.addTestSuite(AdvancedSearchWCStructureDescriptionTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

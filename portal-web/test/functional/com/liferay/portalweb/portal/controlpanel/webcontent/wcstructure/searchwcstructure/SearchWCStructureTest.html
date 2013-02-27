@@ -89,8 +89,13 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>storeVisible</td>
-	<td>//a[contains(.,'« Basic')]</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -100,7 +105,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[contains(.,'« Basic')]</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
 </tr>
 <tr>
@@ -109,9 +114,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertNotVisible</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class="taglib-search-toggle-basic"]</td>
+	<td>Advanced Search Overlay</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -119,7 +134,7 @@
 	<td>Structure</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
@@ -139,9 +154,14 @@
 	<td>Structure1</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -157,21 +177,6 @@
 	<td>assertTextNotPresent</td>
 	<td>WC Structure Name</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_166_keywords']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='lfr-toolbar-button view-button current']/a</td>
-	<td>View All</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//span[@class='lfr-toolbar-button view-button current']/a</td>
-	<td>View All</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

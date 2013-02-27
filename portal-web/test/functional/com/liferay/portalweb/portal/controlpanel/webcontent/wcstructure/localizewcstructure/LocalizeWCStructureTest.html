@@ -89,6 +89,11 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
 	<td>WC Structure Name</td>
@@ -99,74 +104,89 @@
 	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//span[@class="taglib-input-localized"]/span/a[contains(@id,'languageSelectorTrigger')]</td>
+	<td>Other Languages (0)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[contains(.,'Other Languages (0)')])[1]</td>
+	<td>//span[@class="taglib-input-localized"]/span/a[contains(@id,'languageSelectorTrigger')]</td>
 	<td>Other Languages (0)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//a[contains(.,'Other Languages (0)')])[1]</td>
+	<td>//span[@class="taglib-input-localized"]/span/a[contains(@id,'languageSelectorTrigger')]</td>
 	<td>Other Languages (0)</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//select[@id='_166_languageId0'])[2]</td>
+	<td>//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0']</td>
 	<td>Language Selection</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xPath=(//select[@id='_166_languageId0'])[2]</td>
-	<td>Spanish (Spain)</td>
+	<td>//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0']</td>
+	<td>value=es_ES</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//img[contains(@src,'es_ES')])[2]</td>
+	<td>//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')]</td>
+	<td>Spanish Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')]</td>
 	<td>Spanish Flag</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_166_name_es_ES']</td>
-	<td>WC Structure Name Spanish</td>
+	<td>//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/input[@id='_166_name_es_ES']</td>
+	<td>WC Nombre de la estructura</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[contains(.,'Other Languages (0)')])[2]</td>
+	<td>xPath=(//span[@class="taglib-input-localized"]/span/a[contains(@id,'languageSelectorTrigger')])[2]</td>
 	<td>Other Languages (0)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//a[contains(.,'Other Languages (0)')])[2]</td>
+	<td>xPath=(//span[@class="taglib-input-localized"]/span/a[contains(@id,'languageSelectorTrigger')])[2]</td>
 	<td>Other Languages (0)</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//select[@id='_166_languageId0'])[2]</td>
+	<td>xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0'])[2]</td>
 	<td>Language Selection</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xPath=(//select[@id='_166_languageId0'])[2]</td>
-	<td>Spanish (Spain)</td>
+	<td>xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/select[@id='_166_languageId0'])[2]</td>
+	<td>value=es_ES</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//img[contains(@src,'es_ES')])[3]</td>
+	<td>xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')])[2]</td>
+	<td>Spanish Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/img[contains(@src,'es_ES')])[2]</td>
 	<td>Spanish Flag</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_166_description_es_ES']</td>
-	<td>WC Structure Description Spanish</td>
+	<td>xPath=(//div[@class='lfr-floating-container lfr-language-selector']/div/div/div/div/textarea[@id='_166_description_es_ES'])[1]</td>
+	<td>WC Descripción Estructura</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -59,17 +59,18 @@ public class SearchWCTemplateStructureTest extends BaseTestCase {
 				selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/store.js')]");
-				Thread.sleep(1000);
 				selenium.waitForVisible("//input[@name='_166_keywords']");
 				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("WC Structure Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//tr[contains(.,'WC Structure Name')]/td[3]/a");
 				assertEquals(RuntimeVariables.replace("WC Structure Name"),
 					selenium.getText(
 						"//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//tr[contains(.,'WC Structure Name')]/td[5]/span/ul/li/strong/a"));
@@ -85,7 +86,7 @@ public class SearchWCTemplateStructureTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean basicVisible = selenium.isVisible(
-						"//a[contains(.,'\u00ab Basic')]");
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -93,15 +94,18 @@ public class SearchWCTemplateStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//a[contains(.,'\u00ab Basic')]",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
+				selenium.waitForVisible(
+					"//div[@class=\"taglib-search-toggle-basic\"]");
 				selenium.waitForVisible("//input[@name='_166_keywords']");
 				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("Structure"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//tr[contains(.,'WC Template Structure Name')]/td[3]/a");
 				assertEquals(RuntimeVariables.replace(
@@ -112,18 +116,14 @@ public class SearchWCTemplateStructureTest extends BaseTestCase {
 					RuntimeVariables.replace("Structure1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 				selenium.waitForVisible("//div[@class='portlet-msg-info']");
 				assertEquals(RuntimeVariables.replace("There are no templates."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				assertFalse(selenium.isTextPresent("WC Template Structure Name"));
-				selenium.type("//input[@name='_166_keywords']",
-					RuntimeVariables.replace(""));
-				assertEquals(RuntimeVariables.replace("View All"),
-					selenium.getText(
-						"//span[@class='lfr-toolbar-button view-button current']/a"));
-				selenium.clickAt("//span[@class='lfr-toolbar-button view-button current']/a",
-					RuntimeVariables.replace("View All"));
-				selenium.waitForPageToLoad("30000");
+				assertFalse(selenium.isTextPresent(
+						"WC Template Structure Description"));
 				selenium.selectFrame("relative=top");
 
 			case 100:

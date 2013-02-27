@@ -50,10 +50,8 @@ public class AddWCSubstructureTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
-		selenium.waitForVisible(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
-		selenium.selectFrame(
-			"//iframe[contains(@src,'_166_scopeStructureName')]");
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
 		assertEquals(RuntimeVariables.replace("Add"),
@@ -62,7 +60,6 @@ public class AddWCSubstructureTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("WC Substructure Name"));
@@ -75,27 +72,28 @@ public class AddWCSubstructureTest extends BaseTestCase {
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
 		selenium.selectFrame(
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
-		selenium.waitForText("//tr[contains(.,'WC Structure Name')]/td[2]/a",
-			"WC Structure Name");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]/a");
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]/a"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[2]/a",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.selectFrame("relative=top");
-		selenium.waitForNotVisible(
-			"//iframe[contains(@src,'_166_selectParentStructure')]");
-		Thread.sleep(5000);
 		selenium.waitForVisible(
-			"xPath=(//iframe[contains(@src,'_166_scopeStructureName')])[2]");
-		selenium.selectFrame(
-			"xPath=(//iframe[contains(@src,'_166_scopeStructureName')])[2]");
+			"xPath=(//iframe[contains(@src,'Structures')])[2]");
+		selenium.selectFrame("xPath=(//iframe[contains(@src,'Structures')])[2]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
+		selenium.waitForVisible(
+			"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a"));
+		selenium.waitForVisible(
+			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/span");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

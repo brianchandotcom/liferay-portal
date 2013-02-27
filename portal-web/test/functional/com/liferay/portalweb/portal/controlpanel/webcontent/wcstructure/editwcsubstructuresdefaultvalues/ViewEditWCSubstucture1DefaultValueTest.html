@@ -75,12 +75,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe[contains(@src,'_166_scopeStructureName')]</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
@@ -89,9 +89,9 @@
 	<td>Liferay Store</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>Search</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -102,6 +102,11 @@
 	<td>clickAt</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -124,18 +129,13 @@
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Substructure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Substructure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -154,24 +154,44 @@
 	<td>Edit</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_166_name_en_US']</td>
+	<td>Name Field</td>
+</tr>
+<tr>
 	<td>assertValue</td>
 	<td>//input[@id='_166_name_en_US']</td>
 	<td>WC Substructure1 Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
-	<td>Text</td>
+	<td>Text Edited Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
-	<td>Text</td>
+	<td>Text Edited</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/a[contains(@class,'icon-tip')]</td>
+	<td>Tip Content</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]</td>
+	<td>Tip Content Overlay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]</td>
+	<td>Tip Edited</td>
 </tr>
 <tr>
 	<td>assertValue</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input</td>
-	<td>Extra</td>
+	<td>Predefined Value Edited</td>
 </tr>
 </tbody></table>
 </body>

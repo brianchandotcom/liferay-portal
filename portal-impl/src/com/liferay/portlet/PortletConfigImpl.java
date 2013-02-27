@@ -14,7 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,7 +45,7 @@ import javax.xml.namespace.QName;
  * @author Eduardo Lundgren
  * @author Shuyang Zhou
  */
-public class PortletConfigImpl implements LiferayPortletConfig {
+public class PortletConfigImpl implements InternalPortletConfig {
 
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {
 		_portletApp = portlet.getPortletApp();
@@ -191,12 +190,12 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return Collections.enumeration(supportedLocales);
 	}
 
-	public boolean isWARFile() {
-		return _portletApp.isWARFile();
+	public boolean isCopyRequestParameters() {
+		return _copyRequestParameters;
 	}
 
-	protected boolean isCopyRequestParameters() {
-		return _copyRequestParameters;
+	public boolean isWARFile() {
+		return _portletApp.isWARFile();
 	}
 
 	protected Set<javax.xml.namespace.QName> toJavaxQNames(

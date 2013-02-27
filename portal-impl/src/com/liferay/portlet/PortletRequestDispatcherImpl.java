@@ -40,7 +40,6 @@ import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,7 +55,8 @@ import org.apache.struts.Globals;
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
  */
-public class PortletRequestDispatcherImpl implements PortletRequestDispatcher {
+public class PortletRequestDispatcherImpl
+	implements InternalPortletRequestDispatcher {
 
 	public PortletRequestDispatcherImpl(
 		RequestDispatcher requestDispatcher, boolean named,

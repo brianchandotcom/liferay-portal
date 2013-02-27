@@ -44,7 +44,6 @@ import com.liferay.portlet.journal.util.JournalXSLURIResolver;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,11 +64,8 @@ public class Transformer {
 		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
 		TemplateContextType defaultTemplateContextType) {
 
-		_defaultTemplateContextType = defaultTemplateContextType;
-
-		_transformerListenerClassNames = Collections.unmodifiableSet(
-			SetUtil.fromArray(
-				PropsUtil.getArray(transformerListenerPropertyKey)));
+		_transformerListenerClassNames = SetUtil.fromArray(
+				PropsUtil.getArray(transformerListenerPropertyKey));
 
 		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
 			errorTemplatePropertyKey);
@@ -82,6 +78,8 @@ public class Transformer {
 				_errorTemplateIds.put(langType, errorTemplateId);
 			}
 		}
+
+		_defaultTemplateContextType = defaultTemplateContextType;
 	}
 
 	public String transform(

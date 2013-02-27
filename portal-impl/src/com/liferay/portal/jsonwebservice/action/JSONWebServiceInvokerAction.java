@@ -203,9 +203,30 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Object variableResult = _executeStatement(variableStatement);
 
-		Map<String, Object> map = _convertObjectToMap(statement, result);
+		Map<String, Object> map = _convertObjectToMap(statement, result, null);
 
-		map.put(name.substring(1), variableResult);
+		if (variableStatement.isInner()) {
+			int index = name.indexOf(".$");
+
+			String innerBeanName = name.substring(0, index);
+
+			if (innerBeanName.contains(StringPool.PERIOD)) {
+				throw new IllegalArgumentException(
+					"Only 1-level inner properties are supported!");
+			}
+
+			Object innerObject = map.get(innerBeanName);
+
+			Map<String, Object> innerMap = _convertObjectToMap(
+				statement, innerObject, innerBeanName);
+
+			innerMap.put(name.substring(index + 2), variableResult);
+
+			map.put(innerBeanName, innerMap);
+		}
+		else {
+			map.put(name.substring(1), variableResult);
+		}
 
 		return map;
 	}
@@ -253,10 +274,15 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Map<String, Object> _convertObjectToMap(
-		Statement statement, Object object) {
+		Statement statement, Object object, String prefix) {
 
 		if (!(object instanceof Map)) {
-			String json = JSONFactoryUtil.looseSerialize(object);
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.exclude("class");
+
+			String json = jsonSerializer.serialize(object);
 
 			Class<?> clazz = object.getClass();
 
@@ -265,6 +291,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			String[] includes = JSONIncludesManagerUtil.lookupIncludes(clazz);
 
 			for (String include : includes) {
+				if (prefix != null) {
+					include = prefix + '.' + include;
+				}
+
 				_addInclude(statement, include);
 			}
 		}
@@ -338,7 +368,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return result;
 		}
 
-		Map<String, Object> map = _convertObjectToMap(statement, result);
+		Map<String, Object> map = _convertObjectToMap(statement, result, null);
 
 		Map<String, Object> whitelistMap = new HashMap<String, Object>(
 			whitelist.length);
@@ -414,7 +444,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 				flags.add(flag);
 			}
-			else if (key.startsWith(StringPool.DOLLAR)) {
+			else if (key.startsWith(StringPool.DOLLAR) || key.contains(".$")) {
 				Map<String, Object> map =
 					(Map<String, Object>)statementBody.get(key);
 
@@ -544,6 +574,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return _whitelist;
 		}
 
+		public boolean isInner() {
+			return _inner;
+		}
+
 		public void setFlags(List<Flag> flags) {
 			_flags = flags;
 		}
@@ -553,6 +587,13 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		public void setName(String name) {
+			if (name.contains(".$")) {
+				_inner = true;
+			}
+			else {
+				_inner = false;
+			}
+
 			_name = name;
 		}
 
@@ -569,6 +610,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		private List<Flag> _flags;
+		private boolean _inner;
 		private String _method;
 		private String _name;
 		private Map<String, Object> _parameterMap;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -202,10 +202,10 @@ public class SoftwareCatalogServlet extends HttpServlet {
 		String version = ParamUtil.getString(request, "version");
 
 		String prefix =
-			PluginPackageUtil.REPOSITORY_XML_FILENAME_PREFIX + StringPool.DASH;
+			PluginPackage.REPOSITORY_XML_FILENAME_PREFIX + StringPool.DASH;
 		String extension =
 			StringPool.PERIOD +
-				PluginPackageUtil.REPOSITORY_XML_FILENAME_EXTENSION;
+				PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION;
 
 		if (Validator.isNull(version)) {
 			String path = GetterUtil.getString(request.getPathInfo());

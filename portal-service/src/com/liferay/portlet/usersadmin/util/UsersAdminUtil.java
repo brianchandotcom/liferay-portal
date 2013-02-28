@@ -48,11 +48,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UsersAdminUtil {
 
-	/**
-	 * @deprecated {@link UsersAdmin#CUSTOM_QUESTION}
-	 */
-	public static final String CUSTOM_QUESTION = "write-my-own-question";
-
 	public static void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,
 			RenderResponse renderResponse)

@@ -17,8 +17,13 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
+import com.liferay.portlet.expando.model.ExpandoColumn;
 
 import java.io.InputStream;
 
@@ -32,6 +37,33 @@ import javax.servlet.jsp.PageContext;
  * @author Daeyoung Song
  */
 public interface ResourceActions {
+
+	/**
+	 * @deprecated {@link #getActionNamePrefix}
+	 */
+	public static final String ACTION_NAME_PREFIX = "action.";
+
+	/**
+	 * @deprecated {@link #getModelResourceNamePrefix}
+	 */
+	public static final String MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
+
+	/**
+	 * @deprecated {@link #getOrganizationModelResources}
+	 */
+	public static final String[] ORGANIZATION_MODEL_RESOURCES = {
+		Organization.class.getName(), PasswordPolicy.class.getName(),
+		User.class.getName()
+	};
+
+	/**
+	 * @deprecated {@link #getPortalModelResources}
+	 */
+	public static final String[] PORTAL_MODEL_RESOURCES = {
+		ExpandoColumn.class.getName(), Organization.class.getName(),
+		PasswordPolicy.class.getName(), Role.class.getName(),
+		User.class.getName(), UserGroup.class.getName()
+	};
 
 	public void checkAction(String name, String actionId)
 		throws NoSuchResourceActionException;

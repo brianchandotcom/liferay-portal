@@ -24,6 +24,11 @@ import java.util.Properties;
  */
 public interface PluginPackage {
 
+	public static final String REPOSITORY_XML_FILENAME_EXTENSION = "xml";
+
+	public static final String REPOSITORY_XML_FILENAME_PREFIX =
+		"liferay-plugin-repository";
+
 	public String getArtifactId();
 
 	public String getArtifactURL();

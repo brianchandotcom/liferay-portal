@@ -39,16 +39,6 @@ import org.incava.util.diff.Difference;
  */
 public class DiffUtil {
 
-	public static final String CLOSE_DEL = "</del>";
-
-	public static final String CLOSE_INS = "</ins>";
-
-	public static final String CONTEXT_LINE = "#context#line#";
-
-	public static final String OPEN_DEL = "<del>";
-
-	public static final String OPEN_INS = "<ins>";
-
 	/**
 	 * This is a diff method with default values.
 	 *
@@ -62,7 +52,10 @@ public class DiffUtil {
 		int margin = 2;
 
 		return diff(
-			source, target, OPEN_INS, CLOSE_INS, OPEN_DEL, CLOSE_DEL, margin);
+			source, target, com.liferay.portal.kernel.util.Diff.OPEN_INS,
+			com.liferay.portal.kernel.util.Diff.CLOSE_INS,
+			com.liferay.portal.kernel.util.Diff.OPEN_DEL,
+			com.liferay.portal.kernel.util.Diff.CLOSE_DEL, margin);
 	}
 
 	/**
@@ -137,7 +130,8 @@ public class DiffUtil {
 						difference.getDeletedStart();
 
 				for (int i = 0; i < deletedLines; i++) {
-					changedLines.add(CONTEXT_LINE);
+					changedLines.add(
+						com.liferay.portal.kernel.util.Diff.CONTEXT_LINE);
 				}
 
 				DiffResult diffResult = new DiffResult(
@@ -165,7 +159,8 @@ public class DiffUtil {
 					difference.getAddedEnd() + 1 - difference.getAddedStart();
 
 				for (int i = 0; i < addedLines; i++) {
-					changedLines.add(CONTEXT_LINE);
+					changedLines.add(
+						com.liferay.portal.kernel.util.Diff.CONTEXT_LINE);
 				}
 
 				DiffResult diffResult = new DiffResult(
@@ -209,7 +204,7 @@ public class DiffUtil {
 		int i = startPos - margin;
 
 		for (; i < 0; i++) {
-			changedLines.add(CONTEXT_LINE);
+			changedLines.add(com.liferay.portal.kernel.util.Diff.CONTEXT_LINE);
 		}
 
 		for (; i < startPos; i++) {
@@ -286,7 +281,10 @@ public class DiffUtil {
 
 					targetResults.add(targetResult);
 
-					sourceResults.add(new DiffResult(j, CONTEXT_LINE));
+					sourceResults.add(
+						new DiffResult(
+							j,
+							com.liferay.portal.kernel.util.Diff.CONTEXT_LINE));
 				}
 			}
 
@@ -303,7 +301,9 @@ public class DiffUtil {
 
 				sourceResults.add(sourceResult);
 
-				targetResults.add(new DiffResult(i, CONTEXT_LINE));
+				targetResults.add(
+					new DiffResult(
+						i, com.liferay.portal.kernel.util.Diff.CONTEXT_LINE));
 			}
 		}
 
@@ -333,7 +333,9 @@ public class DiffUtil {
 
 			sourceResults.add(sourceResult);
 
-			targetResults.add(new DiffResult(i, CONTEXT_LINE));
+			targetResults.add(
+				new DiffResult(
+					i, com.liferay.portal.kernel.util.Diff.CONTEXT_LINE));
 		}
 
 		for (; j <= difference.getAddedEnd(); j++) {
@@ -345,7 +347,9 @@ public class DiffUtil {
 
 			targetResults.add(targetResult);
 
-			sourceResults.add(new DiffResult(j, CONTEXT_LINE));
+			sourceResults.add(
+				new DiffResult(
+					j, com.liferay.portal.kernel.util.Diff.CONTEXT_LINE));
 		}
 	}
 
@@ -368,7 +372,8 @@ public class DiffUtil {
 		int currentChangedLine = startPos - margin;
 
 		if ((lastDiff.getChangedLines().size() == 1) &&
-			lastDiff.getChangedLines().get(0).equals(CONTEXT_LINE)) {
+			lastDiff.getChangedLines().get(0).equals(
+				com.liferay.portal.kernel.util.Diff.CONTEXT_LINE)) {
 
 			currentChangedLine = currentChangedLine + 1;
 		}

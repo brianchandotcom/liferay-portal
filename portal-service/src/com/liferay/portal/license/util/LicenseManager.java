@@ -26,6 +26,18 @@ import java.util.Set;
  */
 public interface LicenseManager {
 
+	public static final int STATE_ABSENT = 1;
+
+	public static final int STATE_EXPIRED = 2;
+
+	public static final int STATE_GOOD = 3;
+
+	public static final int STATE_INACTIVE = 4;
+
+	public static final int STATE_INVALID = 5;
+
+	public static final int STATE_OVERLOAD = 6;
+
 	public void checkLicense(String productId);
 
 	public List<Map<String, String>> getClusterLicenseProperties(

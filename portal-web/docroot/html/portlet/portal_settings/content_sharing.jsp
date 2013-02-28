@@ -24,8 +24,8 @@ int contentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(company.getCom
 
 <aui:fieldset>
 	<aui:select label="allow-subsites-to-display-content-from-parent-sites" name='<%= "settings--" + PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED + "--" %>'>
-		<aui:option label="enabled-by-default" selected="<%= contentSharingWithChildrenEnabled == SitesUtil.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT %>" value="<%= SitesUtil.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled-by-default" selected="<%= contentSharingWithChildrenEnabled == SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT %>" value="<%= SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled" selected="<%= contentSharingWithChildrenEnabled == SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" value="<%= SitesUtil.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" />
+		<aui:option label="enabled-by-default" selected="<%= contentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT %>" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT %>" />
+		<aui:option label="disabled-by-default" selected="<%= contentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT %>" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED_BY_DEFAULT %>" />
+		<aui:option label="disabled" selected="<%= contentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" />
 	</aui:select>
 </aui:fieldset>

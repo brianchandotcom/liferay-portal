@@ -51,10 +51,10 @@ for (String analyticsType : analyticsTypes) {
 			<%
 			String analyticsName = TextFormatter.format(analyticsType, TextFormatter.J);
 
-			String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, SitesUtil.ANALYTICS_PREFIX + analyticsType);
+			String analyticsScript = PropertiesParamUtil.getString(groupTypeSettings, request, Sites.ANALYTICS_PREFIX + analyticsType);
 			%>
 
-			<aui:input cols="60" helpMessage='<%= LanguageUtil.format(pageContext, "set-the-script-for-x-that-will-be-used-for-this-set-of-pages", analyticsName) %>' label="<%= analyticsName %>" name="<%= SitesUtil.ANALYTICS_PREFIX + analyticsType %>" rows="15" type="textarea" value="<%= analyticsScript %>" wrap="soft" />
+			<aui:input cols="60" helpMessage='<%= LanguageUtil.format(pageContext, "set-the-script-for-x-that-will-be-used-for-this-set-of-pages", analyticsName) %>' label="<%= analyticsName %>" name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>" rows="15" type="textarea" value="<%= analyticsScript %>" wrap="soft" />
 		</c:otherwise>
 	</c:choose>
 

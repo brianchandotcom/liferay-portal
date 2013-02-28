@@ -27,18 +27,6 @@ import java.util.Set;
  */
 public class LicenseManagerUtil {
 
-	public static final int STATE_ABSENT = 1;
-
-	public static final int STATE_EXPIRED = 2;
-
-	public static final int STATE_GOOD = 3;
-
-	public static final int STATE_INACTIVE = 4;
-
-	public static final int STATE_INVALID = 5;
-
-	public static final int STATE_OVERLOAD = 6;
-
 	public static void checkLicense(String productId) {
 		getLicenseManager().checkLicense(productId);
 	}

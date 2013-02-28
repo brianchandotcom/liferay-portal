@@ -23,6 +23,11 @@ import java.util.List;
  */
 public interface ClusterLink {
 
+	public static final String CLUSTER_FORWARD_MESSAGE =
+		"CLUSTER_FORWARD_MESSAGE";
+
+	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
+
 	public List<Address> getLocalTransportAddresses();
 
 	public List<Address> getTransportAddresses(Priority priority);

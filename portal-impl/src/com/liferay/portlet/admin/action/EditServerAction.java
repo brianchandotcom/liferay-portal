@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -360,7 +360,7 @@ public class EditServerAction extends PortletAction {
 
 		if (LuceneHelperUtil.isLoadIndexFromClusterEnabled()) {
 			MessageValuesThreadLocal.setValue(
-				ClusterLinkUtil.CLUSTER_FORWARD_MESSAGE, true);
+				ClusterLink.CLUSTER_FORWARD_MESSAGE, true);
 		}
 
 		Set<String> usedSearchEngineIds = new HashSet<String>();

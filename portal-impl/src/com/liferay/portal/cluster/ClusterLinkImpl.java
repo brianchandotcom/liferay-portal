@@ -38,8 +38,6 @@ import org.jgroups.JChannel;
 @DoPrivileged
 public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 
-	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
-
 	@Override
 	public void destroy() {
 		if (!isEnabled()) {

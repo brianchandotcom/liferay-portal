@@ -26,9 +26,9 @@ int trashEntriesMaxAge = PrefsPropsUtil.getInteger(company.getCompanyId(), Props
 
 <aui:fieldset>
 	<aui:select label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>'>
-		<aui:option label="enabled-by-default" selected="<%= trashEnabled == TrashUtil.TRASH_ENABLED_BY_DEFAULT %>" value="<%= TrashUtil.TRASH_ENABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled-by-default" selected="<%= trashEnabled == TrashUtil.TRASH_DISABLED_BY_DEFAULT %>" value="<%= TrashUtil.TRASH_DISABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled" selected="<%= trashEnabled == TrashUtil.TRASH_DISABLED %>" value="<%= TrashUtil.TRASH_DISABLED %>" />
+		<aui:option label="enabled-by-default" selected="<%= trashEnabled == Trash.TRASH_ENABLED_BY_DEFAULT %>" value="<%= Trash.TRASH_ENABLED_BY_DEFAULT %>" />
+		<aui:option label="disabled-by-default" selected="<%= trashEnabled == Trash.TRASH_DISABLED_BY_DEFAULT %>" value="<%= Trash.TRASH_DISABLED_BY_DEFAULT %>" />
+		<aui:option label="disabled" selected="<%= trashEnabled == Trash.TRASH_DISABLED %>" value="<%= Trash.TRASH_DISABLED %>" />
 	</aui:select>
 
 	<aui:input label="number-of-days-that-files-will-be-kept-in-the-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENTRIES_MAX_AGE + "--" %>' type="text" value="<%= trashEntriesMaxAge %>">

@@ -91,11 +91,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class PluginPackageUtil {
 
-	public static final String REPOSITORY_XML_FILENAME_EXTENSION = "xml";
-
-	public static final String REPOSITORY_XML_FILENAME_PREFIX =
-		"liferay-plugin-repository";
-
 	public static void endPluginPackageInstallation(String preliminaryContext) {
 		_instance._endPluginPackageInstallation(preliminaryContext);
 	}
@@ -635,11 +630,11 @@ public class PluginPackageUtil {
 
 		sb.append(repositoryURL);
 		sb.append(StringPool.SLASH);
-		sb.append(REPOSITORY_XML_FILENAME_PREFIX);
+		sb.append(PluginPackage.REPOSITORY_XML_FILENAME_PREFIX);
 		sb.append(StringPool.DASH);
 		sb.append(ReleaseInfo.getVersion());
 		sb.append(StringPool.PERIOD);
-		sb.append(REPOSITORY_XML_FILENAME_EXTENSION);
+		sb.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
 
 		String pluginsXmlURL = sb.toString();
 
@@ -673,9 +668,9 @@ public class PluginPackageUtil {
 
 					sb.append(repositoryURL);
 					sb.append(StringPool.SLASH);
-					sb.append(REPOSITORY_XML_FILENAME_PREFIX);
+					sb.append(PluginPackage.REPOSITORY_XML_FILENAME_PREFIX);
 					sb.append(StringPool.PERIOD);
-					sb.append(REPOSITORY_XML_FILENAME_EXTENSION);
+					sb.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
 
 					pluginsXmlURL = sb.toString();
 

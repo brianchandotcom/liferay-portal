@@ -50,10 +50,10 @@ import org.apache.commons.lang.time.StopWatch;
  *
  * <p>
  * Permissions in Liferay are defined for resource/action pairs. Some resources,
- * known as model resources, define actions that the end-user can perform with
- * respect to the service/persistence layer. Other resources, known as portlet
- * resources or simply resources, define actions that end-user can perform with
- * respect to a portlet window.
+ * known as portlet resources, define actions that end-user can perform with
+ * respect to a portlet window. Other resources, known as model resources,
+ * define actions that the end-user can perform with respect to the
+ * service/persistence layer.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -65,10 +65,13 @@ import org.apache.commons.lang.time.StopWatch;
 public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	/**
-	 * Adds a model resource using a model
+	 * Adds model resources for the model. Four resources are created for the
+	 * model with individual, group, group template, and company scopes,
+	 * respectively.
 	 *
-	 * @param  auditedModel the model corresponding to the resource
-	 * @param  serviceContext the resource's service context
+	 * @param  auditedModel the model corresponding to the resources
+	 * @param  serviceContext the resource's service context. Can set whether to
+	 *         derive default permissions for the model.
 	 * @throws PortalException if a PortalException occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -106,15 +109,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a model resource using a <code>long</code> representation of the
-	 * resource's primary key
+	 * Adds model resources for the model using a numerical representation of
+	 * the model's primary key. Four resources are created for the model with
+	 * individual, group, group template, and company scopes, respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of user adding the resource
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource, optionally
-	 *         <code>0</code>
+	 * @param  userId the primary key of user adding the resources
+	 * @param  name the name of the type of resource. By convention, it is
+	 *         recommended to use the class name of the model.
+	 * @param  primKey a numerical representation of the primary key of the
+	 *         current instance of the model, optionally <code>0</code> if there
+	 *         is no current instance of the model.
 	 * @param  groupPermissions the group permissions to be added
 	 * @param  guestPermissions the guest permissions to be added
 	 * @throws PortalException if a portal exception occurred
@@ -131,15 +137,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a model resource using a <code>String</code> representation of the
-	 * resource's primary key
+	 * Adds model resources for the model using the model's primary key. Four
+	 * resources are created for the model with individual, group, group
+	 * template, and company scopes, respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of user adding the resource
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource, optionally
-	 *         <code>null</code>
+	 * @param  userId the primary key of user adding the resources
+	 * @param  name the name of the type of resource. By convention, it is
+	 *         recommended to use the class name of the model.
+	 * @param  primKey the primary key of the current instance of the model,
+	 *         optionally empty if there is no current instance of the model.
 	 * @param  groupPermissions the group permissions to be added
 	 * @param  guestPermissions the guest permissions to be added
 	 * @throws PortalException if a portal exception occurred
@@ -157,17 +165,20 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a resource using a <code>long</code> representation of the
-	 * resource's primary key
+	 * Adds resources using a numerical representation of the entry's primary
+	 * key. Four resources are created for the entry with individual, group,
+	 * group template, and company scopes, respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of the user adding the resource
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource, optionally
-	 *         <code>0</code>
+	 * @param  userId the primary key of the user adding the resources
+	 * @param  name the name of the type of resource. By convention, it is
+	 *         recommended to use the class name that represents this type of
+	 *         entry.
+	 * @param  primKey the primary key of the entry, optionally <code>0</code>
+	 *         if there is no current instance of the entry.
 	 * @param  portletActions whether to associate portlet actions with the
-	 *         resource
+	 *         resource.
 	 * @param  addGroupPermissions whether to add group permissions
 	 * @param  addGuestPermissions whether to add guest permissions
 	 * @throws PortalException if a portal exception occurred
@@ -185,15 +196,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a resource using a <code>String</code> representation of the
-	 * resource's primary key
+	 * Adds resources using the entry's primary key. Four resources are created
+	 * for the entry with individual, group, group template, and company scopes,
+	 * respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
 	 * @param  userId the primary key of the user adding the resource
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource, optionally
-	 *         <code>null</code>
+	 * @param  name the name of the type of resource. By convention, it is
+	 *         recommended to use the class name that represents this type of
+	 *         entry.
+	 * @param  primKey the primary key of the entry, optionally empty if there
+	 *         is no current instance of the entry.
 	 * @param  portletActions whether to associate portlet actions with the
 	 *         resource
 	 * @param  addGroupPermissions whether to add group permissions
@@ -213,11 +227,16 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a resource without specifying a user or a primary key
+	 * Adds resources without specifying a user or the entry's primary key. Four
+	 * resources are created for the entry with individual, group, group
+	 * template, and company scopes, respectively. Use this method if the user
+	 * is unknown or irrelevant and there is no current instance of the entry.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  name the name of the resource
+	 * @param  name the name of the type of resource. By convention, it is
+	 *         recommended to use the class name that represents this type of
+	 *         entry.
 	 * @param  portletActions whether to associate portlet actions with the
 	 *         resource
 	 * @throws PortalException if a portal exception occurred
@@ -232,13 +251,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes a model resource using a model
+	 * Deletes a model resource using a model. Note that deleting a individually
+	 * scoped resource also deletes corresponding group-scoped, group
+	 * template-scoped, and company-scoped resources, if they exist.
 	 *
 	 * @param  auditedModel the model corresponding to the resource
-	 * @param  scope the scope of the resource
+	 * @param  scope the scope of the resource. For more information see {@link
+	 *         com.liferay.portal.model.ResourceConstants}
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.model.ResourceConstants
 	 */
 	public void deleteResource(AuditedModel auditedModel, int scope)
 		throws PortalException, SystemException {
@@ -252,16 +273,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes a resource using a <code>long</code> representation of the
-	 * resource's primary key
+	 * Deletes a resource using a numerical representation of the primary key of
+	 * the entry corresponding to the resource. Note that deleting a
+	 * individually scoped resource also deletes corresponding group-scoped,
+	 * group template-scoped, and company-scoped resources, if they exist.
 	 *
 	 * @param  companyId the primary key of the portal instance
-	 * @param  name the name of the resource
-	 * @param  scope the scope of the resource
-	 * @param  primKey the primary key of the resource
+	 * @param  name the name of the type of resource
+	 * @param  scope the scope of the resource. For more information see {@link
+	 *         com.liferay.portal.model.ResourceConstants}
+	 * @param  primKey the primary key of the entry corresponding to resource
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.model.ResourceConstants
 	 */
 	public void deleteResource(
 			long companyId, String name, int scope, long primKey)
@@ -271,16 +294,19 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes a resource using a <code>String</code> representation of the
-	 * resource's primary key
+	 * Deletes a resource using the primary key of the entry corresponding to
+	 * the resource. Note that deleting a individually scoped resource also
+	 * deletes corresponding group-scoped, group template-scoped, and
+	 * company-scoped resources, if they exist.
 	 *
 	 * @param  companyId the primary key of the portal instance
-	 * @param  name the name of the resource
-	 * @param  scope the scope of the resource
-	 * @param  primKey the primary key of the resource
+	 * @param  name the name of the type of resource
+	 * @param  scope the scope of the resource. For more information see {@link
+	 *         com.liferay.portal.model.ResourceConstants}
+	 * @param  primKey the primary key of the entry corresponding to the
+	 *         resource
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.model.ResourceConstants
 	 */
 	public void deleteResource(
 			long companyId, String name, int scope, String primKey)
@@ -290,13 +316,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the specified resource
+	 * Returns the specified resource.
 	 *
 	 * @param companyId the primary key of the portal instance
-	 * @param name the name of the resource
-	 * @param scope the scope of the resource
+	 * @param name the name of the type of resource
+	 * @param scope the scope of the resource. For more information see {@link
+	 *        com.liferay.portal.model.ResourceConstants}
 	 * @param primKey the primary key of the resource
-	 * @see   com.liferay.portal.model.ResourceConstants
 	 */
 	public Resource getResource(
 		long companyId, String name, int scope, String primKey) {
@@ -312,15 +338,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the roles have permission at the scope to
-	 * perform the action on the resources.
+	 * Returns <code>true</code> if the roles have permission to perform the
+	 * action.
 	 *
-	 * @param  userId the primary key of the user whose permissions are to be
-	 *         checked
+	 * @param  userId the primary key of the user performing the permission
+	 *         check
 	 * @param  resourceId the primary key of the resource for which permissions
 	 *         are to be checked
 	 * @param  resources the resources for which permissions are to be checked
-	 * @param  actionId the primary key of the action that be performed on the
+	 * @param  actionId the primary key of the action to be performed on the
 	 *         resources
 	 * @param  roleIds the primary keys of the roles whose permissions are to be
 	 *         checked
@@ -352,10 +378,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a model resource using a model
+	 * Updates the model resources for the model. Four resources are updated for
+	 * the entry with individual, group, group template, and company scopes,
+	 * respectively.
 	 *
-	 * @param  auditedModel the model corresponding to the resource
-	 * @param  serviceContext the resource's service context
+	 * @param  auditedModel the model corresponding to the resources
+	 * @param  serviceContext the resource's service context. Can set default
+	 *         group permissions and default guest permissions.
 	 * @throws PortalException if a PortalException occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -375,13 +404,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a resource using a <code>long</code> representation of the
-	 * resource's primary key
+	 * Updates resources using a numerical representation of the entry's primary
+	 * key. Four resources are updated for the entry with individual, group,
+	 * group template, and company scopes, respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource
+	 * @param  name the name of the type of resource
+	 * @param  primKey the primary key of the entry corresponding to the
+	 *         resources
 	 * @param  groupPermissions the group permissions to be added
 	 * @param  guestPermissions the guest permissions to be added
 	 * @throws PortalException if a portal exception occurred
@@ -398,13 +429,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a resource using a <code>String</code> representation of the
-	 * resource's primary key
+	 * Updates resources using the entry's primary key. Four resources are
+	 * updated for the entry with individual, group, group template, and company
+	 * scopes, respectively.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
-	 * @param  name the name of the resource
-	 * @param  primKey the primary key of the resource
+	 * @param  name the name of the type of resource
+	 * @param  primKey the primary key of the entry corresponding to the
+	 *         resources
 	 * @param  groupPermissions the group permissions to be added
 	 * @param  guestPermissions the guest permissions to be added
 	 * @throws PortalException if a portal exception occurred
@@ -421,16 +454,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a resource, replacing the resource's old primary key with a new
-	 * primary key
+	 * Updates resources, replacing the primary key of the entry corresponding
+	 * to the resources with a new primary key
 	 *
 	 * @param  companyId the primary key of the portal instance
-	 * @param  name the name of the resource
-	 * @param  scope the scope of the resource
-	 * @param  primKey the old primary key of the resource
-	 * @param  newPrimKey the new primary key of the resource
+	 * @param  name the name of the type of resource
+	 * @param  scope the scope of the resource. For more information see {@link
+	 *         com.liferay.portal.model.ResourceConstants}
+	 * @param  primKey the old primary key of the entry corresponding to the
+	 *         resources
+	 * @param  newPrimKey the new primary key of the entry corresponding to the
+	 *         resources
 	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.model.ResourceConstants
 	 */
 	public void updateResources(
 			long companyId, String name, int scope, String primKey,

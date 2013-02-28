@@ -30,6 +30,7 @@ import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
+import javax.portlet.CacheControl;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
@@ -152,6 +153,8 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		portletSession.setAttribute(
 			WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
+
+		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
 		CaptchaServletUtil.writeImage(
 			resourceResponse.getPortletOutputStream(),

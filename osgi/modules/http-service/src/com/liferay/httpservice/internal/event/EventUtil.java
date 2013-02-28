@@ -14,6 +14,7 @@
 
 package com.liferay.httpservice.internal.event;
 
+import com.liferay.httpservice.HttpServicePropsKeys;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,10 +107,13 @@ public class EventUtil
 
 		Map<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put("bundle", bundle);
-		properties.put("bundle.id", bundle.getBundleId());
-		properties.put("bundle.symbolicName", bundle.getSymbolicName());
-		properties.put("bundle.version", bundle.getVersion());
+		properties.put(HttpServicePropsKeys.BUNDLE, bundle);
+		properties.put(HttpServicePropsKeys.BUNDLE_ID, bundle.getBundleId());
+		properties.put(
+			HttpServicePropsKeys.BUNDLE_SYMBOLIC_NAME,
+			bundle.getSymbolicName());
+		properties.put(
+			HttpServicePropsKeys.BUNDLE_VERSION, bundle.getVersion());
 
 		if (collision) {
 			properties.put("collision", servletContextPath);

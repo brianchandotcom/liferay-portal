@@ -14,6 +14,7 @@
 
 package com.liferay.httpservice.internal.servlet;
 
+import com.liferay.httpservice.HttpServicePropsKeys;
 import com.liferay.httpservice.internal.http.DefaultHttpContext;
 import com.liferay.httpservice.internal.http.HttpServiceTracker;
 import com.liferay.portal.apache.bridges.struts.LiferayServletContext;
@@ -329,10 +330,13 @@ public class BundleServletContext extends LiferayServletContext {
 	public void open() throws DocumentException {
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put("bundle", _bundle);
-		properties.put("bundle.id", _bundle.getBundleId());
-		properties.put("bundle.symbolicName", _bundle.getSymbolicName());
-		properties.put("bundle.version", _bundle.getVersion());
+		properties.put(HttpServicePropsKeys.BUNDLE, _bundle);
+		properties.put(HttpServicePropsKeys.BUNDLE_ID, _bundle.getBundleId());
+		properties.put(
+			HttpServicePropsKeys.BUNDLE_SYMBOLIC_NAME,
+			_bundle.getSymbolicName());
+		properties.put(
+			HttpServicePropsKeys.BUNDLE_VERSION, _bundle.getVersion());
 		properties.put(
 			_WEB_CONTEXT_PATH, StringPool.SLASH.concat(_servletContextName));
 

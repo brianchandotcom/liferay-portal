@@ -77,8 +77,14 @@ public class SeleniumBuilderContext {
 
 				_functionNames.add(functionName);
 
-				_functionRootElements.put(
-					functionName, _getRootElement(fileName));
+				Element rootElement = _getRootElement(fileName);
+
+				_functionParams.put(functionName, _getParams(rootElement));
+
+				_functionReturnTypes.put(
+					functionName, _getReturnType(rootElement));
+
+				_functionRootElements.put(functionName, rootElement);
 			}
 			else if (fileName.endsWith(".macro")) {
 				String macroName = _getName(fileName);
@@ -206,6 +212,14 @@ public class SeleniumBuilderContext {
 
 	public Set<String> getFunctionNames() {
 		return _functionNames;
+	}
+
+	public Integer getFunctionParam(String functionName) {
+		return _functionParams.get(functionName);
+	}
+
+	public String getFunctionReturnType(String functionName) {
+		return _functionReturnTypes.get(functionName);
 	}
 
 	public Element getFunctionRootElement(String functionName) {
@@ -340,6 +354,14 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getName(fileName);
 	}
 
+	private int _getParams(Element rootElement) throws Exception {
+		return _seleniumBuilderFileUtil.getParams(rootElement);
+	}
+
+	private String _getReturnType(Element rootElement) throws Exception {
+		return _seleniumBuilderFileUtil.getReturnType(rootElement);
+	}
+
 	private Element _getRootElement(String fileName) throws Exception {
 		return _seleniumBuilderFileUtil.getRootElement(fileName);
 	}
@@ -361,6 +383,10 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _functionFileNames =
 		new HashMap<String, String>();
 	private Set<String> _functionNames = new HashSet<String>();
+	private Map<String, Integer> _functionParams =
+		new HashMap<String, Integer>();
+	private Map<String, String> _functionReturnTypes =
+		new HashMap<String, String>();
 	private Map<String, Element> _functionRootElements =
 		new HashMap<String, Element>();
 	private Map<String, String> _macroClassNames =

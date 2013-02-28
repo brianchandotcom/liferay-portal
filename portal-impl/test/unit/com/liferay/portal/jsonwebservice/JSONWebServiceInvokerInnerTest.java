@@ -54,7 +54,7 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		String json = invoke(map);
 
-		String expected = prepareExpectedResult(false, false);
+		String expected = prepareExpectedResult(false, false, false);
 
 		Assert.assertEquals(expected, json);
 
@@ -81,7 +81,7 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		String json = invoke(map);
 
-		String expected = prepareExpectedResult(true, false);
+		String expected = prepareExpectedResult(true, false, false);
 
 		Assert.assertEquals(expected, json);
 	}
@@ -112,7 +112,40 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		String json = invoke(map);
 
-		String expected = prepareExpectedResult(true, true);
+		String expected = prepareExpectedResult(true, true, false);
+
+		Assert.assertEquals(expected, json);
+	}
+
+	@Test
+	public void testAddVariableToRootInnerAndListPropertyAndListReference()
+			throws Exception {
+
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("$p = /foo/get-foo-page", params);
+
+		Map<String, Object> map2 = new LinkedHashMap<String, Object>();
+
+		params.put("$XXX1 = /foo/hello-world", map2);
+		map2.put("@userId", "$p.page");
+		map2.put("worldName", "galaxy");
+
+		Map<String, Object> map3 = new LinkedHashMap<String, Object>();
+		params.put("data.$XXX2 = /foo/hello-world", map3);
+		map3.put("@userId", "$p.page");
+		map3.put("worldName", "star");
+
+		Map<String, Object> map4 = new LinkedHashMap<String, Object>();
+		params.put("list.$XXX3 = /foo/hello-world", map4);
+		map4.put("@userId", "$p.list.id");
+		map4.put("worldName", "pulsar");
+
+		String json = invoke(map);
+
+		String expected = prepareExpectedResult(true, true, true);
 
 		Assert.assertEquals(expected, json);
 	}
@@ -130,7 +163,9 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		return invokerResult.toJSONString();
 	}
 
-	protected String prepareExpectedResult(boolean xxx1, boolean xxx3) {
+	protected String prepareExpectedResult(
+			boolean xxx1, boolean xxx3, boolean index) {
+
 		LinkedHashMap<String, Object> resultMap =
 			new LinkedHashMap<String, Object>();
 
@@ -170,15 +205,27 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		resultElement.put("name", "John Doe");
 		resultElement.put("value", "foo!");
 
+		if (index) {
+			resultElement.put("XXX3", "Welcome 1 to pulsar");
+		}
+
 		resultList.add(resultElement);
 
 		resultElement = (LinkedHashMap<String, Object>)resultElement.clone();
 		resultElement.put("id", Integer.valueOf(2));
 
+		if (index) {
+			resultElement.put("XXX3", "Welcome 2 to pulsar");
+		}
+
 		resultList.add(resultElement);
 
 		resultElement = (LinkedHashMap<String, Object>)resultElement.clone();
 		resultElement.put("id", Integer.valueOf(3));
+
+		if (index) {
+			resultElement.put("XXX3", "Welcome 3 to pulsar");
+		}
 
 		resultList.add(resultElement);
 

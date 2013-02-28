@@ -219,10 +219,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			String innerPropertyName = name.substring(index + 2);
 			if (innerObject instanceof List) {
-				List<Object> innerList = (List) innerObject;
+				List<Object> innerList = (List)innerObject;
 
-				List<Object> newInnerList =
-					new ArrayList<Object>(innerList.size());
+				List<Object> newInnerList = new ArrayList<Object>(
+					innerList.size());
 
 				for (Object innerListElement : innerList) {
 					Map<String, Object> newInnerListElement =
@@ -337,14 +337,39 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		if (variableStatements != null) {
 			for (Statement variableStatement : variableStatements) {
+				boolean innerStatement = variableStatement.isInner();
+
+				Object originalResult = result;
+
+				if (innerStatement) {
+					result = _pushInnerStatement(
+						statement, variableStatement, result);
+				}
+
 				if (result instanceof List) {
 					result = _addVariableStatementList(
 						statement, variableStatement, result,
 						new ArrayList<Object>());
+
+					variableStatement.setExecuted(true);
+
+					if (innerStatement) {
+						result = _popInnerStatement(
+							statement, variableStatement, result,
+							originalResult);
+					}
 				}
 				else {
+					if (innerStatement) {
+						result = _popInnerStatement(
+							statement, variableStatement, result,
+							originalResult);
+					}
+
 					result = _addVariableStatement(
 						statement, variableStatement, result);
+
+					variableStatement.setExecuted(true);
 				}
 			}
 		}
@@ -493,6 +518,29 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return statement;
 	}
 
+	private Object _popInnerStatement(
+			Statement statement, Statement variableStatement, Object result,
+			Object resultObject) {
+
+		String statementName = statement.getName();
+
+		int index = statementName.lastIndexOf('.');
+
+		String beanName = statementName.substring(index + 1);
+
+		statementName = statementName.substring(0, index);
+
+		statement.setName(statementName);
+
+		variableStatement.setName(beanName + '.' + variableStatement.getName());
+
+		BeanUtil.setDeclaredProperty(resultObject, beanName, result);
+
+		result = resultObject;
+
+		return result;
+	}
+
 	private Object _populateFlags(Statement statement, Object result) {
 		if (result instanceof List) {
 			result = _populateFlagsList(
@@ -534,6 +582,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		name = name.concat(StringPool.PERIOD);
 
 		for (Statement statement : _statements) {
+			if (statement.isExecuted()) {
+				continue;
+			}
+
 			List<Flag> flags = statement.getFlags();
 
 			if (flags == null) {
@@ -555,6 +607,26 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				parameterMap.put(flag.getName(), propertyValue);
 			}
 		}
+	}
+
+	private Object _pushInnerStatement(
+			Statement statement, Statement variableStatement, Object result) {
+
+		String variableName = variableStatement.getName();
+
+		int index = variableName.indexOf(".$");
+
+		String beanName = variableName.substring(0, index);
+
+		result = BeanUtil.getDeclaredProperty(result, beanName);
+
+		statement.setName(statement.getName() + '.' + beanName);
+
+		variableName = variableName.substring(index + 1);
+
+		variableStatement.setName(variableName);
+
+		return result;
 	}
 
 	private String _command;
@@ -595,8 +667,16 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return _whitelist;
 		}
 
+		public boolean isExecuted() {
+			return _executed;
+		}
+
 		public boolean isInner() {
 			return _inner;
+		}
+
+		public void setExecuted(boolean executed) {
+			_executed = executed;
 		}
 
 		public void setFlags(List<Flag> flags) {
@@ -630,6 +710,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			_whitelist = whitelist;
 		}
 
+		private boolean _executed;
 		private List<Flag> _flags;
 		private boolean _inner;
 		private String _method;

@@ -582,7 +582,7 @@ public class DDMImpl implements DDM {
 		}
 
 		DLStoreUtil.addFile(
-			companyId, CompanyConstants.SYSTEM, fileName, inputStream);
+			companyId, CompanyConstants.SYSTEM, fileName, false, inputStream);
 
 		return fileName;
 	}

@@ -49,14 +49,20 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	public String getClassName(String fileName, String classSuffix) {
-		int x = fileName.lastIndexOf(StringPool.SLASH);
+		String filePath = getFilePath(fileName);
 
 		String packagePath = StringUtil.replace(
-			fileName.substring(0, x + 1), StringPool.SLASH, StringPool.PERIOD);
+			filePath, StringPool.SLASH, StringPool.PERIOD);
 
 		String simpleClassName = getName(fileName) + classSuffix;
 
-		return packagePath + simpleClassName;
+		return packagePath + "." + simpleClassName;
+	}
+
+	public String getFilePath(String fileName) {
+		int x = fileName.lastIndexOf(StringPool.SLASH);
+
+		return fileName.substring(0, x);
 	}
 
 	public String getName(String fileName) {

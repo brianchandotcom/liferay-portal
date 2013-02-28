@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -36,6 +37,7 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -155,9 +157,23 @@ public class JSONWebServiceActionsManagerImpl
 		path = paths[1];
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Require JSON web service action with path " + path +
-					" and method " + method + " for /" + servletContextPath);
+			StringBundler message = new StringBundler(6);
+
+			message.append("Require JSON web service: ");
+
+			if (method == null) {
+				message.append(StringPool.STAR);
+			}
+			else {
+				message.append(method);
+			}
+
+			message.append(StringPool.SPACE);
+			message.append(servletContextPath);
+			message.append(path);
+			message.append(Arrays.toString(parameterNames));
+
+			_log.debug(message.toString());
 		}
 
 		int jsonWebServiceActionConfigIndex =

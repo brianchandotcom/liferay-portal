@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>CPBlogs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBlogs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBlogs</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

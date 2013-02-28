@@ -85,7 +85,7 @@ public class TemplateParser {
 				Element rootElement = document.getRootElement();
 
 				List<TemplateNode> templateNodes = getTemplateNodes(
-					rootElement);
+					_themeDisplay, rootElement);
 
 				if (templateNodes != null) {
 					for (TemplateNode templateNode : templateNodes) {
@@ -107,7 +107,8 @@ public class TemplateParser {
 				}
 			}
 
-			populateTemplateContext(_template);
+			populateTemplateContext(
+				_template, _themeDisplay, _tokens, _languageId, _viewMode);
 
 			load = mergeTemplate(_template, unsyncStringWriter);
 		}
@@ -134,51 +135,62 @@ public class TemplateParser {
 		return unsyncStringWriter.toString();
 	}
 
-	protected Company getCompany() throws Exception {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getCompany();
+	protected Company getCompany(
+			ThemeDisplay themeDisplay, Map<String, String> tokens)
+		throws Exception {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getCompany();
 		}
 
-		return CompanyLocalServiceUtil.getCompany(getCompanyId());
+		return CompanyLocalServiceUtil.getCompany(
+			getCompanyId(themeDisplay, tokens));
 	}
 
-	protected long getCompanyId() {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getCompanyId();
+	protected long getCompanyId(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getCompanyId();
 		}
 
-		return GetterUtil.getLong(_tokens.get("company_id"));
+		return GetterUtil.getLong(tokens.get("company_id"));
 	}
 
-	protected Device getDevice() {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getDevice();
+	protected Device getDevice(ThemeDisplay themeDisplay) {
+		if (themeDisplay != null) {
+			return themeDisplay.getDevice();
 		}
 
 		return UnknownDevice.getInstance();
 	}
 
-	protected long getGroupId() {
-		if (_themeDisplay != null) {
-			return _themeDisplay.getScopeGroupId();
+	protected long getGroupId(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getScopeGroupId();
 		}
 
-		return GetterUtil.getLong(_tokens.get("group_id"));
+		return GetterUtil.getLong(tokens.get("group_id"));
 	}
 
-	protected String getJournalTemplatesPath() {
+	protected String getJournalTemplatesPath(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
 		sb.append(StringPool.SLASH);
-		sb.append(getCompanyId());
+		sb.append(getCompanyId(themeDisplay, tokens));
 		sb.append(StringPool.SLASH);
-		sb.append(getGroupId());
+		sb.append(getGroupId(themeDisplay, tokens));
 
 		return sb.toString();
 	}
 
-	protected List<TemplateNode> getTemplateNodes(Element element)
+	protected List<TemplateNode> getTemplateNodes(
+			ThemeDisplay themeDisplay, Element element)
 		throws Exception {
 
 		List<TemplateNode> templateNodes = new ArrayList<TemplateNode>();
@@ -211,11 +223,11 @@ public class TemplateParser {
 				"type", StringPool.BLANK);
 
 			TemplateNode templateNode = new TemplateNode(
-				_themeDisplay, name, stripCDATA(data), type);
+				themeDisplay, name, stripCDATA(data), type);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
-					getTemplateNodes(dynamicElementElement));
+					getTemplateNodes(themeDisplay, dynamicElementElement));
 			}
 			else if ((dynamicContentElement != null) &&
 					 (dynamicContentElement.element("option") != null)) {
@@ -307,20 +319,26 @@ public class TemplateParser {
 		return template.processTemplate(unsyncStringWriter);
 	}
 
-	protected void populateTemplateContext(Template template) throws Exception {
-		template.put("company", getCompany());
-		template.put("companyId", getCompanyId());
-		template.put("device", getDevice());
-		template.put("groupId", getGroupId());
-		template.put("journalTemplatesPath", getJournalTemplatesPath());
+	protected void populateTemplateContext(
+			Template template, ThemeDisplay themeDisplay, Map<String,
+			String> tokens, String languageId, String viewMode)
+		throws Exception {
 
-		Locale locale = LocaleUtil.fromLanguageId(_languageId);
+		template.put("company", getCompany(themeDisplay, tokens));
+		template.put("companyId", getCompanyId(themeDisplay, tokens));
+		template.put("device", getDevice(themeDisplay));
+		template.put("groupId", getGroupId(themeDisplay, tokens));
+		template.put(
+			"journalTemplatesPath",
+			getJournalTemplatesPath(themeDisplay, tokens));
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		template.put("locale", locale);
 
 		template.put(
 			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
-		template.put("viewMode", _viewMode);
+		template.put("viewMode", viewMode);
 
 		String randomNamespace =
 			PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +

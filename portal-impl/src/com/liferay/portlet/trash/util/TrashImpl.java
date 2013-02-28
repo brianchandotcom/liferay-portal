@@ -286,25 +286,15 @@ public class TrashImpl implements Trash {
 		UnicodeProperties typeSettingsProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
-		int companyTrashEnabled = PrefsPropsUtil.getInteger(
+		boolean companyTrashEnabled = PrefsPropsUtil.getBoolean(
 			group.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
-		if (companyTrashEnabled == TRASH_DISABLED) {
+		if (!companyTrashEnabled) {
 			return false;
 		}
 
-		int groupTrashEnabled = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("trashEnabled"),
-			TRASH_DEFAULT_VALUE);
-
-		if ((groupTrashEnabled == TRASH_ENABLED) ||
-			((companyTrashEnabled == TRASH_ENABLED_BY_DEFAULT) &&
-			 (groupTrashEnabled == TRASH_DEFAULT_VALUE))) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("trashEnabled"), true);
 	}
 
 	protected void addBreadcrumbEntries(

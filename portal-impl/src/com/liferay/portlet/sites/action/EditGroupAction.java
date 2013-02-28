@@ -74,7 +74,6 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.trash.util.Trash;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -550,11 +549,10 @@ public class EditGroupAction extends PortletAction {
 		typeSettingsProperties.setProperty("false-robots.txt", publicRobots);
 		typeSettingsProperties.setProperty("true-robots.txt", privateRobots);
 
-		int trashEnabled = ParamUtil.getInteger(
+		boolean trashEnabled = ParamUtil.getBoolean(
 			actionRequest, "trashEnabled",
-			GetterUtil.getInteger(
-				typeSettingsProperties.getProperty("trashEnabled"),
-				Trash.TRASH_DEFAULT_VALUE));
+			GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("trashEnabled"), true));
 
 		typeSettingsProperties.setProperty(
 			"trashEnabled", String.valueOf(trashEnabled));

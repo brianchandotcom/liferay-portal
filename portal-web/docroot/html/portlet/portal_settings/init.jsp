@@ -29,7 +29,6 @@ page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.servlet.filters.sso.opensso.OpenSSOUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFileException" %><%@
-page import="com.liferay.portlet.trash.util.Trash" %><%@
 page import="com.liferay.util.ldap.LDAPUtil" %>
 
 <%@ page import="java.net.HttpURLConnection" %><%@

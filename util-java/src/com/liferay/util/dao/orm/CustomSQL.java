@@ -310,9 +310,9 @@ public class CustomSQL {
 				_functionIsNotNull = functionIsNotNull;
 
 				if (_log.isDebugEnabled()) {
-					_log.info(
+					_log.debug(
 						"functionIsNull is manually set to " + functionIsNull);
-					_log.info(
+					_log.debug(
 						"functionIsNotNull is manually set to " +
 							functionIsNotNull);
 				}

@@ -203,7 +203,7 @@ public class LanguageResources {
 				URL url = enu.nextElement();
 
 				if (_log.isInfoEnabled()) {
-					_log.debug("Loading " + name + " from " + url);
+					_log.info("Loading " + name + " from " + url);
 				}
 
 				InputStream inputStream = url.openStream();

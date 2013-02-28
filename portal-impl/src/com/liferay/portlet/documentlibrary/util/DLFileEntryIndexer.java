@@ -210,7 +210,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		DDMStructure tikaRawMetadataStructure =
 			DDMStructureLocalServiceUtil.fetchStructure(
 				group.getGroupId(),
-				PortalUtil.getClassNameId(DLFileEntry.class),
+				PortalUtil.getClassNameId(RawMetadataProcessor.class),
 				"TikaRawMetadata");
 
 		if (tikaRawMetadataStructure != null) {

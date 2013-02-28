@@ -214,7 +214,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		}
 	}
 
-	protected String buildDLRawMetadataElementXML(String name, Field field) {
+	protected String buildDLRawMetadataElementXML(Field field) {
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
@@ -258,7 +258,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append("\">");
 
 		for (Field field : fields) {
-			sb.append(buildDLRawMetadataElementXML(name, field));
+			sb.append(buildDLRawMetadataElementXML(field));
 		}
 
 		sb.append("</root></structure>");

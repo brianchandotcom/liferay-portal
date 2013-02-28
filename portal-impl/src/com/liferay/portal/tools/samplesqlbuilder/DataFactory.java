@@ -112,6 +112,7 @@ import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.text.Format;
 
@@ -127,29 +128,25 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-		String baseDir, int maxGroupsCount, int maxJournalArticleSize,
-		int maxUserToGroupCount) {
+			String baseDir, int maxGroupsCount, int maxJournalArticleSize,
+			int maxUserToGroupCount)
+		throws IOException {
 
-		try {
-			_baseDir = baseDir;
-			_maxGroupsCount = maxGroupsCount;
-			_maxUserToGroupCount = maxUserToGroupCount;
+		_baseDir = baseDir;
+		_maxGroupsCount = maxGroupsCount;
+		_maxUserToGroupCount = maxUserToGroupCount;
 
-			initSimpleCounters();
+		initSimpleCounters();
 
-			initClassNames();
-			initCompany();
-			initDLFileEntryType();
-			initGuestGroup();
-			initJournalArticle(maxJournalArticleSize);
-			initRoles();
-			initUserNames();
-			initUsers();
-			initVirtualHost();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		initClassNames();
+		initCompany();
+		initDLFileEntryType();
+		initGuestGroup();
+		initJournalArticle(maxJournalArticleSize);
+		initRoles();
+		initUserNames();
+		initUsers();
+		initVirtualHost();
 	}
 
 	public Account getAccount() {
@@ -342,7 +339,7 @@ public class DataFactory {
 		_guestGroup.setSite(true);
 	}
 
-	public void initJournalArticle(int maxJournalArticleSize) throws Exception {
+	public void initJournalArticle(int maxJournalArticleSize) {
 		if (maxJournalArticleSize <= 0) {
 			maxJournalArticleSize = 1;
 		}
@@ -443,7 +440,7 @@ public class DataFactory {
 		_userScreenNameCounter = new SimpleCounter();
 	}
 
-	public void initUserNames() throws Exception {
+	public void initUserNames() throws IOException {
 		String dependenciesDir =
 			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
 				"dependencies/";
@@ -461,7 +458,7 @@ public class DataFactory {
 		_sampleUser = newUser("Sample", "Sample", "Sample", false);
 	}
 
-	public void initVirtualHost() throws Exception {
+	public void initVirtualHost() {
 		_virtualHost = new VirtualHostImpl();
 
 		_virtualHost.setVirtualHostId(_counter.get());

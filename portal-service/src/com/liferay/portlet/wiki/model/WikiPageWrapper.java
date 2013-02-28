@@ -881,6 +881,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		_wikiPage.persist();
 	}
 
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.addAttachmentsFolder();
+	}
+
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

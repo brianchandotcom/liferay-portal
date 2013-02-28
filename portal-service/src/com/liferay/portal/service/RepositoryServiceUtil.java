@@ -55,9 +55,10 @@ public class RepositoryServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static long addRepository(long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, java.lang.String portletId,
+	public static com.liferay.portal.model.Repository addRepository(
+		long groupId, long classNameId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,

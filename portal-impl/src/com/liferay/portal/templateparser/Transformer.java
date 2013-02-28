@@ -15,8 +15,11 @@
 package com.liferay.portal.templateparser;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -24,10 +27,13 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -35,17 +41,30 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.portlet.journal.util.JournalXSLURIResolver;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.util.PwdGenerator;
+
+import java.io.IOException;
 
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,9 +113,31 @@ public class Transformer {
 		Template template = getTemplate(
 			themeDisplay, contextObjects, script, langType);
 
-		TemplateParser templateParser = new TemplateParser();
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		return templateParser.transform(themeDisplay, contextObjects, template);
+		boolean load = false;
+
+		try {
+			if (contextObjects != null) {
+				for (String key : contextObjects.keySet()) {
+					template.put(key, contextObjects.get(key));
+				}
+			}
+
+			populateTemplateContext(template, themeDisplay, null, null, null);
+
+			load = mergeTemplate(template, unsyncStringWriter);
+		}
+		catch (Exception e) {
+			throw new TransformException("Unhandled exception", e);
+		}
+
+		if (!load) {
+			throw new TransformException(
+				"Unable to dynamically load transform script");
+		}
+
+		return unsyncStringWriter.toString();
 	}
 
 	public String transform(
@@ -194,10 +235,60 @@ public class Transformer {
 			Template template = getTemplate(
 				themeDisplay, tokens, languageId, xml, script, langType);
 
-			TemplateParser templateParser = new TemplateParser();
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			output = templateParser.transform(
-				themeDisplay, tokens, viewMode, languageId, xml, template);
+			boolean load = false;
+
+			try {
+				if (Validator.isNotNull(xml)) {
+					Document document = SAXReaderUtil.read(xml);
+
+					Element rootElement = document.getRootElement();
+
+					List<TemplateNode> templateNodes = getTemplateNodes(
+						themeDisplay, rootElement);
+
+					if (templateNodes != null) {
+						for (TemplateNode templateNode : templateNodes) {
+							template.put(templateNode.getName(), templateNode);
+						}
+					}
+
+					Element requestElement = rootElement.element("request");
+
+					template.put(
+						"request", insertRequestVariables(requestElement));
+
+					template.put("xmlRequest", requestElement.asXML());
+				}
+
+				populateTemplateContext(
+					template, themeDisplay, tokens, languageId, viewMode);
+
+				load = mergeTemplate(template, unsyncStringWriter);
+			}
+			catch (Exception e) {
+				if (e instanceof DocumentException) {
+					throw new TransformException(
+						"Unable to read XML document", e);
+				}
+				else if (e instanceof IOException) {
+					throw new TransformException("Error reading template", e);
+				}
+				else if (e instanceof TransformException) {
+					throw (TransformException)e;
+				}
+				else {
+					throw new TransformException("Unhandled exception", e);
+				}
+			}
+
+			if (!load) {
+				throw new TransformException(
+					"Unable to dynamically load transform script");
+			}
+
+			output = unsyncStringWriter.toString();
 		}
 
 		// Postprocess output
@@ -224,6 +315,36 @@ public class Transformer {
 		return output;
 	}
 
+	protected Company getCompany(
+			ThemeDisplay themeDisplay, Map<String, String> tokens)
+		throws Exception {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getCompany();
+		}
+
+		return CompanyLocalServiceUtil.getCompany(
+			getCompanyId(themeDisplay, tokens));
+	}
+
+	protected long getCompanyId(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getCompanyId();
+		}
+
+		return GetterUtil.getLong(tokens.get("company_id"));
+	}
+
+	protected Device getDevice(ThemeDisplay themeDisplay) {
+		if (themeDisplay != null) {
+			return themeDisplay.getDevice();
+		}
+
+		return UnknownDevice.getInstance();
+	}
+
 	protected TemplateResource getErrorTemplateResource(String langType) {
 		try {
 			Class<?> clazz = getClass();
@@ -240,6 +361,30 @@ public class Transformer {
 		}
 
 		return null;
+	}
+
+	protected long getGroupId(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
+		if (themeDisplay != null) {
+			return themeDisplay.getScopeGroupId();
+		}
+
+		return GetterUtil.getLong(tokens.get("group_id"));
+	}
+
+	protected String getJournalTemplatesPath(
+		ThemeDisplay themeDisplay, Map<String, String> tokens) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
+		sb.append(StringPool.SLASH);
+		sb.append(getCompanyId(themeDisplay, tokens));
+		sb.append(StringPool.SLASH);
+		sb.append(getGroupId(themeDisplay, tokens));
+
+		return sb.toString();
 	}
 
 	protected Template getTemplate(
@@ -352,6 +497,176 @@ public class Transformer {
 		sb.append(templateId);
 
 		return sb.toString();
+	}
+
+	protected List<TemplateNode> getTemplateNodes(
+			ThemeDisplay themeDisplay, Element element)
+		throws Exception {
+
+		List<TemplateNode> templateNodes = new ArrayList<TemplateNode>();
+
+		Map<String, TemplateNode> prototypeTemplateNodes =
+			new HashMap<String, TemplateNode>();
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			Element dynamicContentElement = dynamicElementElement.element(
+				"dynamic-content");
+
+			String data = StringPool.BLANK;
+
+			if (dynamicContentElement != null) {
+				data = dynamicContentElement.getText();
+			}
+
+			String name = dynamicElementElement.attributeValue(
+				"name", StringPool.BLANK);
+
+			if (name.length() == 0) {
+				throw new TransformException(
+					"Element missing \"name\" attribute");
+			}
+
+			String type = dynamicElementElement.attributeValue(
+				"type", StringPool.BLANK);
+
+			TemplateNode templateNode = new TemplateNode(
+				themeDisplay, name, stripCDATA(data), type);
+
+			if (dynamicElementElement.element("dynamic-element") != null) {
+				templateNode.appendChildren(
+					getTemplateNodes(themeDisplay, dynamicElementElement));
+			}
+			else if ((dynamicContentElement != null) &&
+					 (dynamicContentElement.element("option") != null)) {
+
+				List<Element> optionElements = dynamicContentElement.elements(
+					"option");
+
+				for (Element optionElement : optionElements) {
+					templateNode.appendOption(
+						stripCDATA(optionElement.getText()));
+				}
+			}
+
+			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(
+				name);
+
+			if (prototypeTemplateNode == null) {
+				prototypeTemplateNode = templateNode;
+
+				prototypeTemplateNodes.put(name, prototypeTemplateNode);
+
+				templateNodes.add(templateNode);
+			}
+
+			prototypeTemplateNode.appendSibling(templateNode);
+		}
+
+		return templateNodes;
+	}
+
+	protected Map<String, Object> insertRequestVariables(Element element) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		if (element == null) {
+			return map;
+		}
+
+		for (Element childElement : element.elements()) {
+			String name = childElement.getName();
+
+			if (name.equals("attribute")) {
+				Element nameElement = childElement.element("name");
+				Element valueElement = childElement.element("value");
+
+				map.put(nameElement.getText(), valueElement.getText());
+			}
+			else if (name.equals("parameter")) {
+				Element nameElement = childElement.element("name");
+
+				List<Element> valueElements = childElement.elements("value");
+
+				if (valueElements.size() == 1) {
+					Element valueElement = valueElements.get(0);
+
+					map.put(nameElement.getText(), valueElement.getText());
+				}
+				else {
+					List<String> values = new ArrayList<String>();
+
+					for (Element valueElement : valueElements) {
+						values.add(valueElement.getText());
+					}
+
+					map.put(nameElement.getText(), values);
+				}
+			}
+			else if (childElement.elements().size() > 0) {
+				map.put(name, insertRequestVariables(childElement));
+			}
+			else {
+				map.put(name, childElement.getText());
+			}
+		}
+
+		return map;
+	}
+
+	protected boolean mergeTemplate(
+			Template template, UnsyncStringWriter unsyncStringWriter)
+		throws Exception {
+
+		VelocityTaglib velocityTaglib = (VelocityTaglib)template.get(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
+
+		if (velocityTaglib != null) {
+			velocityTaglib.setTemplate(template);
+		}
+
+		return template.processTemplate(unsyncStringWriter);
+	}
+
+	protected void populateTemplateContext(
+			Template template, ThemeDisplay themeDisplay,
+			Map<String, String> tokens, String languageId, String viewMode)
+		throws Exception {
+
+		template.put("company", getCompany(themeDisplay, tokens));
+		template.put("companyId", getCompanyId(themeDisplay, tokens));
+		template.put("device", getDevice(themeDisplay));
+		template.put("groupId", getGroupId(themeDisplay, tokens));
+		template.put(
+			"journalTemplatesPath",
+			getJournalTemplatesPath(themeDisplay, tokens));
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		template.put("locale", locale);
+
+		template.put(
+			"permissionChecker", PermissionThreadLocal.getPermissionChecker());
+		template.put("viewMode", viewMode);
+
+		String randomNamespace =
+			PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
+				StringPool.UNDERLINE;
+
+		template.put("randomNamespace", randomNamespace);
+	}
+
+	protected String stripCDATA(String s) {
+		if (s.startsWith(StringPool.CDATA_OPEN) &&
+			s.endsWith(StringPool.CDATA_CLOSE)) {
+
+			s = s.substring(
+				StringPool.CDATA_OPEN.length(),
+				s.length() - StringPool.CDATA_CLOSE.length());
+		}
+
+		return s;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Transformer.class);

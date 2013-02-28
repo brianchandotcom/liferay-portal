@@ -52,65 +52,73 @@ import java.util.Map;
  */
 public class TemplateParser {
 
-	public TemplateParser(
-		ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-		Template template) {
+	public String transform(
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			Template template)
+		throws TransformException {
 
-		_themeDisplay = themeDisplay;
-		_contextObjects = contextObjects;
-		_template = template;
-	}
-
-	public TemplateParser(
-		ThemeDisplay themeDisplay, Map<String, String> tokens, String viewMode,
-		String languageId, String xml, Template template) {
-
-		_themeDisplay = themeDisplay;
-		_tokens = tokens;
-		_viewMode = viewMode;
-		_languageId = languageId;
-		_xml = xml;
-		_template = template;
-	}
-
-	public String transform() throws TransformException {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		boolean load = false;
 
 		try {
-			if (Validator.isNotNull(_xml)) {
-				Document document = SAXReaderUtil.read(_xml);
+			if (contextObjects != null) {
+				for (String key : contextObjects.keySet()) {
+					template.put(key, contextObjects.get(key));
+				}
+			}
+
+			populateTemplateContext(template, themeDisplay, null, null, null);
+
+			load = mergeTemplate(template, unsyncStringWriter);
+		}
+		catch (Exception e) {
+			throw new TransformException("Unhandled exception", e);
+		}
+
+		if (!load) {
+			throw new TransformException(
+				"Unable to dynamically load transform script");
+		}
+
+		return unsyncStringWriter.toString();
+	}
+
+	public String transform(
+			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			String viewMode, String languageId, String xml, Template template)
+		throws TransformException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		boolean load = false;
+
+		try {
+			if (Validator.isNotNull(xml)) {
+				Document document = SAXReaderUtil.read(xml);
 
 				Element rootElement = document.getRootElement();
 
 				List<TemplateNode> templateNodes = getTemplateNodes(
-					_themeDisplay, rootElement);
+					themeDisplay, rootElement);
 
 				if (templateNodes != null) {
 					for (TemplateNode templateNode : templateNodes) {
-						_template.put(templateNode.getName(), templateNode);
+						template.put(templateNode.getName(), templateNode);
 					}
 				}
 
 				Element requestElement = rootElement.element("request");
 
-				_template.put(
-					"request", insertRequestVariables(requestElement));
+				template.put("request", insertRequestVariables(requestElement));
 
-				_template.put("xmlRequest", requestElement.asXML());
-			}
-
-			if (_contextObjects != null) {
-				for (String key : _contextObjects.keySet()) {
-					_template.put(key, _contextObjects.get(key));
-				}
+				template.put("xmlRequest", requestElement.asXML());
 			}
 
 			populateTemplateContext(
-				_template, _themeDisplay, _tokens, _languageId, _viewMode);
+				template, themeDisplay, tokens, languageId, viewMode);
 
-			load = mergeTemplate(_template, unsyncStringWriter);
+			load = mergeTemplate(template, unsyncStringWriter);
 		}
 		catch (Exception e) {
 			if (e instanceof DocumentException) {
@@ -358,13 +366,5 @@ public class TemplateParser {
 
 		return s;
 	}
-
-	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
-	private String _languageId;
-	private Template _template;
-	private ThemeDisplay _themeDisplay;
-	private Map<String, String> _tokens;
-	private String _viewMode;
-	private String _xml;
 
 }

@@ -94,10 +94,9 @@ public class Transformer {
 		Template template = getTemplate(
 			themeDisplay, contextObjects, script, langType);
 
-		TemplateParser templateParser = new TemplateParser(
-			themeDisplay, contextObjects, template);
+		TemplateParser templateParser = new TemplateParser();
 
-		return templateParser.transform();
+		return templateParser.transform(themeDisplay, contextObjects, template);
 	}
 
 	public String transform(
@@ -195,10 +194,10 @@ public class Transformer {
 			Template template = getTemplate(
 				themeDisplay, tokens, languageId, xml, script, langType);
 
-			TemplateParser templateParser = new TemplateParser(
-				themeDisplay, tokens, viewMode, languageId, xml, template);
+			TemplateParser templateParser = new TemplateParser();
 
-			output = templateParser.transform();
+			output = templateParser.transform(
+				themeDisplay, tokens, viewMode, languageId, xml, template);
 		}
 
 		// Postprocess output

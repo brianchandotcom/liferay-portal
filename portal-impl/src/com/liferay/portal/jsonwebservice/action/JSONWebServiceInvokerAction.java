@@ -194,8 +194,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _addVariableStatement(
-			Statement statement, Statement variableStatement, Object result)
+			Statement variableStatement, Object result)
 		throws Exception {
+
+		Statement statement = variableStatement.getParentStatement();
 
 		result = _populateFlags(statement, result);
 
@@ -253,8 +255,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _addVariableStatementList(
-			Statement statement, Statement variableStatement, Object result,
-			List<Object> results)
+			Statement variableStatement, Object result, List<Object> results)
 		throws Exception {
 
 		List<Object> list = _convertObjectToList(result);
@@ -262,13 +263,12 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		for (Object object : list) {
 			if (object instanceof List) {
 				Object value = _addVariableStatementList(
-					statement, variableStatement, object, results);
+					variableStatement, object, results);
 
 				results.add(value);
 			}
 			else {
-				Object value = _addVariableStatement(
-					statement, variableStatement, object);
+				Object value = _addVariableStatement(variableStatement, object);
 
 				results.add(value);
 			}
@@ -339,35 +339,26 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			for (Statement variableStatement : variableStatements) {
 				boolean innerStatement = variableStatement.isInner();
 
-				Object originalResult = result;
-
 				if (innerStatement) {
-					result = _pushInnerStatement(
-						statement, variableStatement, result);
+					result = variableStatement.push(result);
 				}
 
 				if (result instanceof List) {
 					result = _addVariableStatementList(
-						statement, variableStatement, result,
-						new ArrayList<Object>());
+						variableStatement, result, new ArrayList<Object>());
 
 					variableStatement.setExecuted(true);
 
 					if (innerStatement) {
-						result = _popInnerStatement(
-							statement, variableStatement, result,
-							originalResult);
+						result = variableStatement.pop(result);
 					}
 				}
 				else {
 					if (innerStatement) {
-						result = _popInnerStatement(
-							statement, variableStatement, result,
-							originalResult);
+						result = variableStatement.pop(result);
 					}
 
-					result = _addVariableStatement(
-						statement, variableStatement, result);
+					result = _addVariableStatement(variableStatement, result);
 
 					variableStatement.setExecuted(true);
 				}
@@ -518,29 +509,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return statement;
 	}
 
-	private Object _popInnerStatement(
-			Statement statement, Statement variableStatement, Object result,
-			Object resultObject) {
-
-		String statementName = statement.getName();
-
-		int index = statementName.lastIndexOf('.');
-
-		String beanName = statementName.substring(index + 1);
-
-		statementName = statementName.substring(0, index);
-
-		statement.setName(statementName);
-
-		variableStatement.setName(beanName + '.' + variableStatement.getName());
-
-		BeanUtil.setDeclaredProperty(resultObject, beanName, result);
-
-		result = resultObject;
-
-		return result;
-	}
-
 	private Object _populateFlags(Statement statement, Object result) {
 		if (result instanceof List) {
 			result = _populateFlagsList(
@@ -609,26 +577,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 	}
 
-	private Object _pushInnerStatement(
-			Statement statement, Statement variableStatement, Object result) {
-
-		String variableName = variableStatement.getName();
-
-		int index = variableName.indexOf(".$");
-
-		String beanName = variableName.substring(0, index);
-
-		result = BeanUtil.getDeclaredProperty(result, beanName);
-
-		statement.setName(statement.getName() + '.' + beanName);
-
-		variableName = variableName.substring(index + 1);
-
-		variableStatement.setName(variableName);
-
-		return result;
-	}
-
 	private String _command;
 	private List<String> _includes;
 	private HttpServletRequest _request;
@@ -639,7 +587,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	private class Statement {
 
-		public Statement(Statement parentStatement) {
+		private Statement(Statement parentStatement) {
 			_parentStatement = parentStatement;
 		}
 
@@ -659,6 +607,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return _parameterMap;
 		}
 
+		public Statement getParentStatement() {
+			return _parentStatement;
+		}
+
 		public List<Statement> getVariableStatements() {
 			return _variableStatements;
 		}
@@ -673,6 +625,62 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		public boolean isInner() {
 			return _inner;
+		}
+
+		public Object push(Object result) {
+
+			if (_parentStatement == null) {
+				return null;
+			}
+
+			_pushTarget = result;
+
+			Statement statement = getParentStatement();
+
+			String variableName = getName();
+
+			int index = variableName.indexOf(".$");
+
+			String beanName = variableName.substring(0, index);
+
+			result = BeanUtil.getDeclaredProperty(result, beanName);
+
+			statement.setName(statement.getName() + '.' + beanName);
+
+			variableName = variableName.substring(index + 1);
+
+			setName(variableName);
+
+			return result;
+		}
+
+		public Object pop(Object result) {
+
+			if (_pushTarget == null) {
+				return null;
+			}
+
+			Statement statement = getParentStatement();
+
+			String statementName = statement.getName();
+
+			int index = statementName.lastIndexOf('.');
+
+			String beanName = statementName.substring(index + 1);
+
+			statementName = statementName.substring(0, index);
+
+			statement.setName(statementName);
+
+			setName(beanName + '.' + getName());
+
+			BeanUtil.setDeclaredProperty(_pushTarget, beanName, result);
+
+			result = _pushTarget;
+
+			_pushTarget = null;
+
+			return result;
 		}
 
 		public void setExecuted(boolean executed) {
@@ -717,6 +725,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		private String _name;
 		private Map<String, Object> _parameterMap;
 		private Statement _parentStatement;
+		private Object _pushTarget;
 		private List<Statement> _variableStatements;
 		private String[] _whitelist;
 

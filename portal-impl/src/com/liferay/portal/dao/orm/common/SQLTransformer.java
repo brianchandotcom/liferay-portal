@@ -232,6 +232,10 @@ public class SQLTransformer {
 		return sql;
 	}
 
+	private String _replaceEmptinessComparison(String sql) {
+		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
+	}
+
 	private String _replaceIntegerDivision(String sql) {
 		Matcher matcher = _integerDivisionPattern.matcher(sql);
 
@@ -301,6 +305,9 @@ public class SQLTransformer {
 			if (!db.isSupportsStringCaseSensitiveQuery()) {
 				newSQL = _removeLower(newSQL);
 			}
+		}
+		else if (_vendorOracle) {
+			newSQL = _replaceEmptinessComparison(newSQL);
 		}
 		else if (_vendorPostgreSQL) {
 			newSQL = _replaceNegativeComparison(newSQL);
@@ -414,6 +421,7 @@ public class SQLTransformer {
 		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+
 	private static Pattern _integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _jpqlCountPattern = Pattern.compile(

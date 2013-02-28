@@ -970,20 +970,18 @@ public class WebDriverToSeleniumBridge
 	public void select(String selectLocator, String optionLocator) {
 		WebElement webElement = getWebElement(selectLocator);
 
-		webElement.click();
-
 		Select select = new Select(webElement);
 
 		List<WebElement> options = select.getOptions();
 
-		WebElement optionWebElement = null;
+		String label = optionLocator;
 
 		if (optionLocator.startsWith("index=")) {
 			String index = optionLocator.substring(6);
 
 			int optionIndex = GetterUtil.getInteger(index);
 
-			optionWebElement = options.get(optionIndex);
+			label = options.get(optionIndex).getText();
 		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
@@ -999,7 +997,7 @@ public class WebDriverToSeleniumBridge
 					Matcher matcher = pattern.matcher(optionValue);
 
 					if (matcher.matches()) {
-						optionWebElement = option;
+						label = option.getText();
 
 						break;
 					}
@@ -1010,7 +1008,7 @@ public class WebDriverToSeleniumBridge
 					String optionValue = option.getAttribute("value");
 
 					if (optionValue.equals(value)) {
-						optionWebElement = option;
+						label = option.getText();
 
 						break;
 					}
@@ -1018,34 +1016,12 @@ public class WebDriverToSeleniumBridge
 			}
 		}
 		else {
-			String label = optionLocator;
-
 			if (optionLocator.startsWith("label=")) {
 				label = optionLocator.substring(6);
 			}
-
-			for (WebElement option : options) {
-				String optionText = option.getText();
-
-				if (optionText.equals(label)) {
-					optionWebElement = option;
-
-					break;
-				}
-			}
 		}
 
-		WrapsDriver wrapsDriver = (WrapsDriver)optionWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
-		actions.doubleClick(optionWebElement);
-
-		Action action = actions.build();
-
-		action.perform();
+		webElement.sendKeys(label);
 	}
 
 	public void selectFrame(String locator) {

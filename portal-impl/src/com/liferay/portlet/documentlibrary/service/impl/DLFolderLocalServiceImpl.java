@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.ExpiredLockException;
+import com.liferay.portal.InvalidLockException;
+import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,8 +31,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -43,6 +48,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -554,6 +560,29 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	public Lock lockFolder(long userId, long folderId)
+		throws PortalException, SystemException {
+
+		return lockFolder(
+			userId, folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
+	}
+
+	public Lock lockFolder(
+			long userId, long folderId, String owner, boolean inheritable,
+			long expirationTime)
+		throws PortalException, SystemException {
+
+		if ((expirationTime <= 0) ||
+			(expirationTime > DLFolderImpl.LOCK_EXPIRATION_TIME)) {
+
+			expirationTime = DLFolderImpl.LOCK_EXPIRATION_TIME;
+		}
+
+		return lockLocalService.lock(
+			userId, DLFolder.class.getName(), folderId, owner, inheritable,
+			expirationTime);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
@@ -576,6 +605,40 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlAppHelperLocalService.moveFolder(new LiferayFolder(dlFolder));
 
 		return dlFolder;
+	}
+
+	public void unlockFolder(long groupId, long folderId, String lockUuid)
+		throws PortalException, SystemException {
+
+		if (Validator.isNotNull(lockUuid)) {
+			try {
+				Lock lock = lockLocalService.getLock(
+					DLFolder.class.getName(), folderId);
+
+				if (!lockUuid.equals(lock.getUuid())) {
+					throw new InvalidLockException("UUIDs do not match");
+				}
+			}
+			catch (PortalException pe) {
+				if (pe instanceof ExpiredLockException ||
+					pe instanceof NoSuchLockException) {
+				}
+				else {
+					throw pe;
+				}
+			}
+		}
+
+		lockLocalService.unlock(DLFolder.class.getName(), folderId);
+	}
+
+	public void unlockFolder(
+			long groupId, long parentFolderId, String name, String lockUuid)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getFolder(groupId, parentFolderId, name);
+
+		unlockFolder(groupId, dlFolder.getFolderId(), lockUuid);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

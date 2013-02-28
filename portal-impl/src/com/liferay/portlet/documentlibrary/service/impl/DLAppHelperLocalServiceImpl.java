@@ -578,7 +578,8 @@ public class DLAppHelperLocalServiceImpl
 		Lock lock = null;
 
 		if (!hasLock) {
-			lock = dlFolderService.lockFolder(folder.getFolderId());
+			lock = dlFolderLocalService.lockFolder(
+				userId, folder.getFolderId());
 		}
 
 		try {
@@ -586,7 +587,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 		finally {
 			if (!hasLock) {
-				dlFolderService.unlockFolder(
+				dlFolderLocalService.unlockFolder(
 					folder.getGroupId(), folder.getFolderId(), lock.getUuid());
 			}
 		}

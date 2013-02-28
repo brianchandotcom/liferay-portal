@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -207,48 +209,48 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Map<String, Object> map = _convertObjectToMap(statement, result, null);
 
-		if (variableStatement.isInner()) {
-			int index = name.indexOf(".$");
+		if (!variableStatement.isInner()) {
+			map.put(name.substring(1), variableResult);
 
-			String innerBeanName = name.substring(0, index);
+			return map;
+		}
 
-			if (innerBeanName.contains(StringPool.PERIOD)) {
-				throw new IllegalArgumentException(
-					"Only 1-level inner properties are supported!");
+		int index = name.indexOf(".$");
+
+		String innerBeanName = name.substring(0, index);
+
+		if (innerBeanName.contains(StringPool.PERIOD)) {
+			throw new IllegalArgumentException(
+				"Inner properties with more than 1 level are not supported");
+		}
+
+		Object innerObject = map.get(innerBeanName);
+
+		String innerPropertyName = name.substring(index + 2);
+
+		if (innerObject instanceof List) {
+			List<Object> innerList = (List)innerObject;
+
+			List<Object> newInnerList = new ArrayList<Object>(innerList.size());
+
+			for (Object innerListElement : innerList) {
+				Map<String, Object> newInnerListElement = _convertObjectToMap(
+					statement, innerListElement, innerBeanName);
+
+				newInnerListElement.put(innerPropertyName, variableResult);
+
+				newInnerList.add(newInnerListElement);
 			}
 
-			Object innerObject = map.get(innerBeanName);
-
-			String innerPropertyName = name.substring(index + 2);
-			if (innerObject instanceof List) {
-				List<Object> innerList = (List)innerObject;
-
-				List<Object> newInnerList = new ArrayList<Object>(
-					innerList.size());
-
-				for (Object innerListElement : innerList) {
-					Map<String, Object> newInnerListElement =
-						_convertObjectToMap(
-							statement, innerListElement, innerBeanName);
-
-					newInnerListElement.put(innerPropertyName, variableResult);
-
-					newInnerList.add(newInnerListElement);
-				}
-
-				map.put(innerBeanName, newInnerList);
-			}
-			else {
-				Map<String, Object> innerMap = _convertObjectToMap(
-					statement, innerObject, innerBeanName);
-
-				innerMap.put(innerPropertyName, variableResult);
-
-				map.put(innerBeanName, innerMap);
-			}
+			map.put(innerBeanName, newInnerList);
 		}
 		else {
-			map.put(name.substring(1), variableResult);
+			Map<String, Object> innerMap = _convertObjectToMap(
+				statement, innerObject, innerBeanName);
+
+			innerMap.put(innerPropertyName, variableResult);
+
+			map.put(innerBeanName, innerMap);
 		}
 
 		return map;
@@ -297,27 +299,28 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private Map<String, Object> _convertObjectToMap(
 		Statement statement, Object object, String prefix) {
 
-		if (!(object instanceof Map)) {
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
+		if (object instanceof Map) {
+			return (Map<String, Object>)object;
+		}
 
-			jsonSerializer.exclude("class");
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-			String json = jsonSerializer.serialize(object);
+		jsonSerializer.exclude("class");
 
-			Class<?> clazz = object.getClass();
+		String json = jsonSerializer.serialize(object);
 
-			object = JSONFactoryUtil.looseDeserialize(json, HashMap.class);
+		Class<?> clazz = object.getClass();
 
-			String[] includes = JSONIncludesManagerUtil.lookupIncludes(clazz);
+		object = JSONFactoryUtil.looseDeserialize(json, HashMap.class);
 
-			for (String include : includes) {
-				if (prefix != null) {
-					include = prefix + '.' + include;
-				}
+		String[] includes = JSONIncludesManagerUtil.lookupIncludes(clazz);
 
-				_addInclude(statement, include);
+		for (String include : includes) {
+			if (Validator.isNotNull(prefix)) {
+				include = prefix + StringPool.PERIOD + include;
 			}
+
+			_addInclude(statement, include);
 		}
 
 		return (Map<String, Object>)object;
@@ -335,33 +338,35 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		List<Statement> variableStatements = statement.getVariableStatements();
 
-		if (variableStatements != null) {
-			for (Statement variableStatement : variableStatements) {
-				boolean innerStatement = variableStatement.isInner();
+		if (variableStatements == null) {
+			return result;
+		}
+
+		for (Statement variableStatement : variableStatements) {
+			boolean innerStatement = variableStatement.isInner();
+
+			if (innerStatement) {
+				result = variableStatement.push(result);
+			}
+
+			if (result instanceof List) {
+				result = _addVariableStatementList(
+					variableStatement, result, new ArrayList<Object>());
+
+				variableStatement.setExecuted(true);
 
 				if (innerStatement) {
-					result = variableStatement.push(result);
+					result = variableStatement.pop(result);
+				}
+			}
+			else {
+				if (innerStatement) {
+					result = variableStatement.pop(result);
 				}
 
-				if (result instanceof List) {
-					result = _addVariableStatementList(
-						variableStatement, result, new ArrayList<Object>());
+				result = _addVariableStatement(variableStatement, result);
 
-					variableStatement.setExecuted(true);
-
-					if (innerStatement) {
-						result = variableStatement.pop(result);
-					}
-				}
-				else {
-					if (innerStatement) {
-						result = variableStatement.pop(result);
-					}
-
-					result = _addVariableStatement(variableStatement, result);
-
-					variableStatement.setExecuted(true);
-				}
+				variableStatement.setExecuted(true);
 			}
 		}
 
@@ -549,7 +554,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		String pushedName = null;
 
-		int index = name.indexOf('.');
+		int index = name.indexOf(CharPool.PERIOD);
 
 		if (index != -1) {
 			pushedName = name.substring(0, index + 1);
@@ -659,7 +664,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		public Object push(Object result) {
-
 			if (_parentStatement == null) {
 				return null;
 			}
@@ -676,7 +680,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			result = BeanUtil.getDeclaredProperty(result, beanName);
 
-			statement.setName(statement.getName() + '.' + beanName);
+			statement.setName(
+				statement.getName() + StringPool.PERIOD + beanName);
 
 			variableName = variableName.substring(index + 1);
 
@@ -686,7 +691,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		public Object pop(Object result) {
-
 			if (_pushTarget == null) {
 				return null;
 			}
@@ -703,7 +707,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			statement.setName(statementName);
 
-			setName(beanName + '.' + getName());
+			setName(beanName + StringPool.PERIOD + getName());
 
 			BeanUtil.setDeclaredProperty(_pushTarget, beanName, result);
 

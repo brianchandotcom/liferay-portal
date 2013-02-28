@@ -77,10 +77,11 @@ public class FooService {
 
 	public static FooDataPage getFooPage() {
 		FooDataAltImpl fooData = new FooDataAltImpl();
+
 		fooData.setArray(9, 5, 7);
+		fooData.setHeight(8);
 		fooData.setId(2);
 		fooData.setName("life");
-		fooData.setHeight(8);
 
 		return new FooDataPage(fooData, getFooDatas(), 3);
 	}

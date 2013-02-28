@@ -136,9 +136,39 @@ public class DataFactory {
 		_maxGroupsCount = maxGroupsCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
 
-		initSimpleCounters();
+		// Init SimpleCounters
 
-		initClassNames();
+		_counter = new SimpleCounter(_maxGroupsCount + 1);
+		_futureDateCounter = new SimpleCounter();
+		_resourcePermissionCounter = new SimpleCounter();
+		_socialActivityCounter = new SimpleCounter();
+		_userScreenNameCounter = new SimpleCounter();
+
+		// Init ClassNames
+
+		_classNames = new ArrayList<ClassName>();
+
+		List<String> models = ModelHintsUtil.getModels();
+
+		for (String model : models) {
+			ClassName className = new ClassNameImpl();
+
+			long classNameId = _counter.get();
+
+			className.setClassNameId(classNameId);
+
+			className.setValue(model);
+
+			_classNames.add(className);
+
+			_classNameMap.put(model, classNameId);
+		}
+
+		// Init IDs
+
+		_companyId = _counter.get();
+		_accountId = _counter.get();
+
 		initCompany();
 		initDLFileEntryType();
 		initGuestGroup();
@@ -170,7 +200,7 @@ public class DataFactory {
 	}
 
 	public long getCompanyId() {
-		return _company.getCompanyId();
+		return _companyId;
 	}
 
 	public SimpleCounter getCounter() {
@@ -277,39 +307,19 @@ public class DataFactory {
 		return _classNameMap.get(WikiPage.class.getName());
 	}
 
-	public void initClassNames() {
-		_classNames = new ArrayList<ClassName>();
-
-		List<String> models = ModelHintsUtil.getModels();
-
-		for (String model : models) {
-			ClassName className = new ClassNameImpl();
-
-			long classNameId = _counter.get();
-
-			className.setClassNameId(classNameId);
-
-			className.setValue(model);
-
-			_classNames.add(className);
-
-			_classNameMap.put(model, classNameId);
-		}
-	}
-
 	public void initCompany() {
 		_company = new CompanyImpl();
 
-		_company.setCompanyId(_counter.get());
-		_company.setAccountId(_counter.get());
+		_company.setCompanyId(_companyId);
+		_company.setAccountId(_accountId);
 		_company.setWebId("liferay.com");
 		_company.setMx("liferay.com");
 		_company.setActive(true);
 
 		_account = new AccountImpl();
 
-		_account.setAccountId(_company.getAccountId());
-		_account.setCompanyId(_company.getCompanyId());
+		_account.setAccountId(_accountId);
+		_account.setCompanyId(_companyId);
 		_account.setCreateDate(new Date());
 		_account.setModifiedDate(new Date());
 		_account.setName("Liferay");
@@ -432,14 +442,6 @@ public class DataFactory {
 		_roles.add(_userRole);
 	}
 
-	public void initSimpleCounters() {
-		_counter = new SimpleCounter(_maxGroupsCount + 1);
-		_futureDateCounter = new SimpleCounter();
-		_resourcePermissionCounter = new SimpleCounter();
-		_socialActivityCounter = new SimpleCounter();
-		_userScreenNameCounter = new SimpleCounter();
-	}
-
 	public void initUserNames() throws IOException {
 		String dependenciesDir =
 			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
@@ -462,7 +464,7 @@ public class DataFactory {
 		_virtualHost = new VirtualHostImpl();
 
 		_virtualHost.setVirtualHostId(_counter.get());
-		_virtualHost.setCompanyId(_company.getCompanyId());
+		_virtualHost.setCompanyId(_companyId);
 		_virtualHost.setHostname("localhost");
 	}
 
@@ -519,7 +521,7 @@ public class DataFactory {
 		contact.setModifiedDate(new Date());
 		contact.setClassNameId(getUserClassNameId());
 		contact.setClassPK(user.getUserId());
-		contact.setAccountId(_company.getAccountId());
+		contact.setAccountId(_accountId);
 		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
 		contact.setEmailAddress(user.getEmailAddress());
 		contact.setFirstName(user.getFirstName());
@@ -1034,7 +1036,7 @@ public class DataFactory {
 		Role role = new RoleImpl();
 
 		role.setRoleId(_counter.get());
-		role.setCompanyId(_company.getCompanyId());
+		role.setCompanyId(_companyId);
 		role.setClassNameId(_classNameMap.get(Role.class.getName()));
 		role.setClassPK(role.getRoleId());
 		role.setName(name);
@@ -1057,7 +1059,7 @@ public class DataFactory {
 
 		user.setUuid(SequentialUUID.generate());
 		user.setUserId(userId);
-		user.setCompanyId(_company.getCompanyId());
+		user.setCompanyId(_companyId);
 		user.setCreateDate(new Date());
 		user.setModifiedDate(new Date());
 		user.setDefaultUser(defaultUser);
@@ -1091,11 +1093,13 @@ public class DataFactory {
 		System.currentTimeMillis() + Time.YEAR;
 
 	private Account _account;
+	private long _accountId;
 	private Role _administratorRole;
 	private String _baseDir;
 	private Map<String, Long> _classNameMap = new HashMap<String, Long>();
 	private List<ClassName> _classNames;
 	private Company _company;
+	private long _companyId;
 	private SimpleCounter _counter;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;

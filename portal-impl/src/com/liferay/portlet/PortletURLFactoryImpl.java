@@ -14,8 +14,13 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 
@@ -40,5 +45,56 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 
 		return new PortletURLImpl(portletRequest, portletId, plid, lifecycle);
 	}
+
+	public LiferayPortletURL createControlPanel(
+		HttpServletRequest request, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		try {
+			plid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+		} catch (Exception e) {
+			_log.error("Unable to determine control panel layout id", e);
+		}
+
+		LiferayPortletURL portletURL = new PortletURLImpl(
+			request, portletId, plid, lifecycle);
+
+		portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		portletURL.setRefererPlid(themeDisplay.getPlid());
+
+		return portletURL;
+	}
+
+	public LiferayPortletURL createControlPanel(
+		PortletRequest portletRequest, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long plid = 0;
+
+		try {
+			plid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+		} catch (Exception e) {
+			_log.error("Unable to determine control panel layout id", e);
+		}
+
+		LiferayPortletURL portletURL = new PortletURLImpl(
+			portletRequest, portletId, plid, lifecycle);
+
+		portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		portletURL.setRefererPlid(themeDisplay.getPlid());
+
+		return portletURL;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletURLFactoryImpl.class);
 
 }

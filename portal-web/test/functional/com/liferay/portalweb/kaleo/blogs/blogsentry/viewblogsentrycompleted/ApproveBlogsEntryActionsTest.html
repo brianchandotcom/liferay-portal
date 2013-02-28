@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -30,27 +50,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[3]/a</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
@@ -70,17 +90,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
@@ -105,12 +125,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
+	<td>//div[@id='workflowMyTasksPanel']/div[2]/div</td>
 	<td>There are no pending tasks assigned to you.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']/div[2]/div</td>
 	<td>There are no pending tasks assigned to your roles.</td>
 </tr>
 <tr>
@@ -120,30 +140,29 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[2]/a</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[3]/a</td>
 	<td>Blogs Entry</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Blogs Entry Title')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

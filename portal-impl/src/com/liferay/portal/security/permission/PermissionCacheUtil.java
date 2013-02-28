@@ -222,6 +222,10 @@ public class PermissionCacheUtil {
 
 		@Override
 		public boolean equals(Object obj) {
+			if (!(obj instanceof BagKey)) {
+				return false;
+			}
+
 			BagKey bagKey = (BagKey)obj;
 
 			if ((bagKey._userId == _userId) && (bagKey._groupId == _groupId)) {
@@ -261,6 +265,10 @@ public class PermissionCacheUtil {
 
 		@Override
 		public boolean equals(Object obj) {
+			if (!(obj instanceof PermissionKey)) {
+				return false;
+			}
+
 			PermissionKey permissionKey = (PermissionKey)obj;
 
 			if ((permissionKey._userId == _userId) &&
@@ -319,6 +327,10 @@ public class PermissionCacheUtil {
 
 		@Override
 		public boolean equals(Object obj) {
+			if (!(obj instanceof ResourceBlockIdsBagKey)) {
+				return false;
+			}
+
 			ResourceBlockIdsBagKey resourceBlockIdsKey =
 				(ResourceBlockIdsBagKey)obj;
 

@@ -34,6 +34,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.PortletPreferences;
@@ -49,6 +50,7 @@ import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
@@ -871,6 +873,15 @@ public class DataFactory {
 		return layout;
 	}
 
+	public List<LayoutSet> newLayoutSets(long groupId, int pageCount) {
+		List<LayoutSet> layoutSets = new ArrayList<LayoutSet>(2);
+
+		layoutSets.add(newLayoutSet(groupId, true, 0));
+		layoutSets.add(newLayoutSet(groupId, false, pageCount));
+
+		return layoutSets;
+	}
+
 	public MBCategory newMBCategory(
 		long categoryId, long groupId, long companyId, long userId, String name,
 		String description, int threadCount, int messageCount) {
@@ -1090,6 +1101,26 @@ public class DataFactory {
 		group.setClassPK(classPK);
 
 		return group;
+	}
+
+	protected LayoutSet newLayoutSet(
+		long groupId, boolean privateLayout, int pageCount) {
+
+		LayoutSet layoutSet = new LayoutSetImpl();
+
+		layoutSet.setLayoutSetId(_counter.get());
+		layoutSet.setGroupId(groupId);
+		layoutSet.setCompanyId(_companyId);
+		layoutSet.setCreateDate(new Date());
+		layoutSet.setModifiedDate(new Date());
+		layoutSet.setPrivateLayout(privateLayout);
+		layoutSet.setThemeId("classic");
+		layoutSet.setColorSchemeId("01");
+		layoutSet.setWapThemeId("mobile");
+		layoutSet.setWapColorSchemeId("01");
+		layoutSet.setPageCount(pageCount);
+
+		return layoutSet;
 	}
 
 	protected Role newRole(String name, int type) {

@@ -130,7 +130,7 @@ public class DataFactory {
 	public DataFactory(
 			String baseDir, int maxGroupsCount, int maxJournalArticleSize,
 			int maxUserToGroupCount)
-		throws IOException {
+		throws Exception {
 
 		_baseDir = baseDir;
 		_maxGroupsCount = maxGroupsCount;
@@ -160,12 +160,13 @@ public class DataFactory {
 			_classNamesMap.put(model, classNameId);
 		}
 
-		_companyId = _counter.get();
 		_accountId = _counter.get();
+		_companyId = _counter.get();
+		_sampleUserId = _counter.get();
 
 		initCompany();
 		initDLFileEntryType();
-		initGuestGroup();
+		initGroups();
 		initJournalArticle(maxJournalArticleSize);
 		initRoles();
 		initUserNames();
@@ -239,6 +240,10 @@ public class DataFactory {
 
 	public long getGroupClassNameId() {
 		return _classNamesMap.get(Group.class.getName());
+	}
+
+	public List<Group> getGroups() {
+		return _groups;
 	}
 
 	public Group getGuestGroup() {
@@ -332,15 +337,24 @@ public class DataFactory {
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 	}
 
-	public void initGuestGroup() {
-		_guestGroup = new GroupImpl();
+	public void initGroups() throws Exception {
+		long groupClassNameId = getGroupClassNameId();
 
-		_guestGroup.setGroupId(_counter.get());
-		_guestGroup.setClassNameId(getGroupClassNameId());
-		_guestGroup.setClassPK(_guestGroup.getGroupId());
-		_guestGroup.setName(GroupConstants.GUEST);
-		_guestGroup.setFriendlyURL("/guest");
-		_guestGroup.setSite(true);
+		long guestGroupId = _counter.get();
+
+		_guestGroup = newGroup(
+			guestGroupId, groupClassNameId, guestGroupId, GroupConstants.GUEST,
+			"guest", true);
+
+		_groups = new ArrayList<Group>(_maxGroupsCount);
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			String name = "community" + Integer.toString(i);
+
+			Group group = newGroup(i, groupClassNameId, i, name, name, true);
+
+			_groups.add(group);
+		}
 	}
 
 	public void initJournalArticle(int maxJournalArticleSize) {
@@ -449,9 +463,11 @@ public class DataFactory {
 
 	public void initUsers() {
 		_defaultUser = newUser(
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
-		_guestUser = newUser("Test", "Test", "Test", false);
-		_sampleUser = newUser("Sample", "Sample", "Sample", false);
+			_counter.get(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, true);
+		_guestUser = newUser(_counter.get(), "Test", "Test", "Test", false);
+		_sampleUser = newUser(
+			_sampleUserId, "Sample", "Sample", "Sample", false);
 	}
 
 	public void initVirtualHost() {
@@ -753,20 +769,10 @@ public class DataFactory {
 		return dlSync;
 	}
 
-	public Group newGroup(
-		long groupId, long classNameId, long classPK, String name,
-		String friendlyURL, boolean site) {
-
-		Group group = new GroupImpl();
-
-		group.setGroupId(groupId);
-		group.setClassNameId(classNameId);
-		group.setClassPK(classPK);
-		group.setName(name);
-		group.setFriendlyURL(friendlyURL);
-		group.setSite(site);
-
-		return group;
+	public Group newGroup(User user) throws Exception {
+		return newGroup(
+			_counter.get(), getUserClassNameId(), user.getUserId(),
+			Long.toString(user.getUserId()), user.getScreenName(), false);
 	}
 
 	public IntegerWrapper newInteger() {
@@ -979,8 +985,8 @@ public class DataFactory {
 		String[] userName = nextUserName(currentIndex - 1);
 
 		return newUser(
-			userName[0], userName[1], "test" + _userScreenNameCounter.get(),
-			false);
+			_counter.get(), userName[0], userName[1],
+			"test" + _userScreenNameCounter.get(), false);
 	}
 
 	public WikiNode newWikiNode(
@@ -1026,6 +1032,27 @@ public class DataFactory {
 		return userName;
 	}
 
+	protected Group newGroup(
+			long groupId, long classNameId, long classPK, String name,
+			String friendlyURL, boolean site)
+		throws Exception {
+
+		Group group = new GroupImpl();
+
+		group.setCompanyId(_companyId);
+		group.setCreatorUserId(_sampleUserId);
+		group.setClassNameId(classNameId);
+		group.setTreePath(group.buildTreePath());
+		group.setName(name);
+		group.setFriendlyURL(StringPool.FORWARD_SLASH + friendlyURL);
+		group.setSite(site);
+		group.setActive(true);
+		group.setGroupId(groupId);
+		group.setClassPK(classPK);
+
+		return group;
+	}
+
 	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
@@ -1040,10 +1067,8 @@ public class DataFactory {
 	}
 
 	protected User newUser(
-		String firstName, String lastName, String screenName,
+		long userId, String firstName, String lastName, String screenName,
 		boolean defaultUser) {
-
-		long userId = _counter.get();
 
 		if (Validator.isNull(screenName)) {
 			screenName = String.valueOf(userId);
@@ -1099,6 +1124,7 @@ public class DataFactory {
 	private User _defaultUser;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
+	private List<Group> _groups;
 	private Group _guestGroup;
 	private Role _guestRole;
 	private User _guestUser;
@@ -1111,6 +1137,7 @@ public class DataFactory {
 	private SimpleCounter _resourcePermissionCounter;
 	private List<Role> _roles;
 	private User _sampleUser;
+	private long _sampleUserId;
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private SimpleCounter _socialActivityCounter;

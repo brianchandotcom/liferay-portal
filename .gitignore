@@ -38,6 +38,8 @@ _sass_cache_*.css
 /benchmarks/lib
 /benchmarks/log
 
+/cobertura-agent/classes
+
 /classes/Test.class
 
 /intellij

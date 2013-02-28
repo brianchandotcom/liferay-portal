@@ -393,7 +393,7 @@ AUI.add(
 							instance._extendText = Liferay.Language.get('extend');
 
 							instance._warningText = Liferay.Language.get('warning-your-session-will-expire');
-							instance._warningText = Lang.sub(instance._warningText, ['<span class="countdown-timer">{0}</span>', host.get('warningLength') / 60000]);
+							instance._warningText = Lang.sub(instance._warningText, ['<span class="countdown-timer">{0}</span>', host.get('sessionLength') / 60000]);
 
 							host.on('sessionStateChange', instance._onHostSessionStateChange, instance);
 

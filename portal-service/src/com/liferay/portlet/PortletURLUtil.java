@@ -228,8 +228,14 @@ public class PortletURLUtil {
 			}
 		}
 
-		sb.append("&p_p_isolated=1&p_v_l_s_g_id=");
-		sb.append(themeDisplay.getSiteGroupId());
+		sb.append("&p_p_isolated=1");
+
+		long sourceGroupId = ParamUtil.getLong(request, "p_v_l_s_g_id");
+
+		if (sourceGroupId > 0) {
+			sb.append("&p_v_l_s_g_id=");
+			sb.append(sourceGroupId);
+		}
 
 		String doAsUserId = themeDisplay.getDoAsUserId();
 

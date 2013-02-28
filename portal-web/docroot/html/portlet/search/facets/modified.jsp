@@ -273,13 +273,13 @@ if (fieldParamSelection.equals("0")) {
 
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
-	var REGEX_RANGE = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+	var REGEX_DATE = /^(19|20)\d\d([-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/;
 
 	var customRangeFrom = A.one('#<portlet:namespace /><%= facet.getFieldName() %>from');
 	var customRangeTo = A.one('#<portlet:namespace /><%= facet.getFieldName() %>to');
 
-	var fromDateValid = false;
-	var toDateValid = false;
+	var dateFromValid = false;
+	var dateToValid = false;
 
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
@@ -295,7 +295,7 @@ if (fieldParamSelection.equals("0")) {
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
 			customRange: function(val, fieldNode, ruleValue) {
-				return REGEX_RANGE.test(val);
+				return REGEX_DATE.test(val);
 			}
 		},
 		true
@@ -307,10 +307,10 @@ if (fieldParamSelection.equals("0")) {
 
 	var setValid = function(field, value) {
 		if (field === customRangeFrom) {
-			fromDateValid = value;
+			dateFromValid = value;
 		}
 		else if (field === customRangeTo) {
-			toDateValid = value;
+			dateToValid = value;
 		}
 	};
 
@@ -327,7 +327,7 @@ if (fieldParamSelection.equals("0")) {
 				validField: function(event) {
 					setValid(event.validator.field, true);
 
-					if (fromDateValid && toDateValid) {
+					if (dateFromValid && dateToValid) {
 						Util.toggleDisabled(searchButton, false);
 					}
 				}

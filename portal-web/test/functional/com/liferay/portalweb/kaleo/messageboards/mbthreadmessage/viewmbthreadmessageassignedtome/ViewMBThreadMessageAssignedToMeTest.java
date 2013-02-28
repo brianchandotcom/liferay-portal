@@ -32,8 +32,8 @@ public class ViewMBThreadMessageAssignedToMeTest extends BaseTestCase {
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
-		assertFalse(selenium.isTextPresent("Pending (Review)"));
 		assertFalse(selenium.isTextPresent("MB Thread Message Body"));
+		assertFalse(selenium.isTextPresent("Pending (Review)"));
 		selenium.clickAt("link=My Posts", RuntimeVariables.replace("My Posts"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//tr[contains(.,'MB Thread Message Subject')]/td[1]/a",

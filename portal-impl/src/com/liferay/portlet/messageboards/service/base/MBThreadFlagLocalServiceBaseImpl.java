@@ -237,6 +237,20 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the message boards thread flag with the UUID in the group.
+	 *
+	 * @param uuid the UUID of message boards thread flag
+	 * @param groupId the group id of the message boards thread flag
+	 * @return the message boards thread flag
+	 * @throws PortalException if a message boards thread flag with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThreadFlag getMBThreadFlagByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException, SystemException {
+		return mbThreadFlagPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the message boards thread flags.
 	 *
 	 * <p>

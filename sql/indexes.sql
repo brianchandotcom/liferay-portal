@@ -549,6 +549,9 @@ create index IX_CC993ECB on MBThread (rootMessageId);
 create index IX_8CB0A24A on MBThreadFlag (threadId);
 create index IX_A28004B on MBThreadFlag (userId);
 create unique index IX_33781904 on MBThreadFlag (userId, threadId);
+create index IX_F36BBB83 on MBThreadFlag (uuid_);
+create index IX_DCE308C5 on MBThreadFlag (uuid_, companyId);
+create unique index IX_FEB0FC87 on MBThreadFlag (uuid_, groupId);
 
 create index IX_FD90786C on MDRAction (ruleGroupInstanceId);
 create index IX_77BB5E9D on MDRAction (uuid_);

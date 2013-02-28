@@ -188,6 +188,23 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	/**
+	* Returns the message boards thread flag with the UUID in the group.
+	*
+	* @param uuid the UUID of message boards thread flag
+	* @param groupId the group id of the message boards thread flag
+	* @return the message boards thread flag
+	* @throws PortalException if a message boards thread flag with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbThreadFlagLocalService.getMBThreadFlagByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards thread flags.
 	*
 	* <p>
@@ -248,10 +265,11 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	public void addThreadFlag(long userId,
-		com.liferay.portlet.messageboards.model.MBThread thread)
+		com.liferay.portlet.messageboards.model.MBThread thread,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_mbThreadFlagLocalService.addThreadFlag(userId, thread);
+		_mbThreadFlagLocalService.addThreadFlag(userId, thread, serviceContext);
 	}
 
 	public void deleteThreadFlag(long threadFlagId)

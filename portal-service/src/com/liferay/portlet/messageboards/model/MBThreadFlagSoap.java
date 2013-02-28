@@ -30,8 +30,13 @@ public class MBThreadFlagSoap implements Serializable {
 	public static MBThreadFlagSoap toSoapModel(MBThreadFlag model) {
 		MBThreadFlagSoap soapModel = new MBThreadFlagSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setThreadFlagId(model.getThreadFlagId());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setThreadId(model.getThreadId());
 
@@ -86,6 +91,14 @@ public class MBThreadFlagSoap implements Serializable {
 		setThreadFlagId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getThreadFlagId() {
 		return _threadFlagId;
 	}
@@ -94,12 +107,44 @@ public class MBThreadFlagSoap implements Serializable {
 		_threadFlagId = threadFlagId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
 
 	public void setUserId(long userId) {
 		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	public Date getModifiedDate() {
@@ -118,8 +163,13 @@ public class MBThreadFlagSoap implements Serializable {
 		_threadId = threadId;
 	}
 
+	private String _uuid;
 	private long _threadFlagId;
+	private long _groupId;
+	private long _companyId;
 	private long _userId;
+	private String _userName;
+	private Date _createDate;
 	private Date _modifiedDate;
 	private long _threadId;
 }

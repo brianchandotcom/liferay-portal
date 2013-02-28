@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -59,12 +60,17 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	 */
 	public static final String TABLE_NAME = "MBThreadFlag";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "threadFlagId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "threadId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (threadFlagId LONG not null primary key,userId LONG,modifiedDate DATE null,threadId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbThreadFlag.threadFlagId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBThreadFlag.threadFlagId ASC";
@@ -80,9 +86,12 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThreadFlag"),
 			true);
-	public static long THREADID_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long THREADFLAGID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long THREADID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long THREADFLAGID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBThreadFlag"));
 
@@ -117,8 +126,13 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("threadFlagId", getThreadFlagId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
 
@@ -127,16 +141,46 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long threadFlagId = (Long)attributes.get("threadFlagId");
 
 		if (threadFlagId != null) {
 			setThreadFlagId(threadFlagId);
 		}
 
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
@@ -152,12 +196,73 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		}
 	}
 
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
 	public long getThreadFlagId() {
 		return _threadFlagId;
 	}
 
 	public void setThreadFlagId(long threadFlagId) {
 		_threadFlagId = threadFlagId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -186,6 +291,27 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	public long getOriginalUserId() {
 		return _originalUserId;
+	}
+
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	public Date getModifiedDate() {
@@ -222,7 +348,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBThreadFlag.class.getName(), getPrimaryKey());
 	}
 
@@ -247,8 +373,13 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public Object clone() {
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
+		mbThreadFlagImpl.setUuid(getUuid());
 		mbThreadFlagImpl.setThreadFlagId(getThreadFlagId());
+		mbThreadFlagImpl.setGroupId(getGroupId());
+		mbThreadFlagImpl.setCompanyId(getCompanyId());
 		mbThreadFlagImpl.setUserId(getUserId());
+		mbThreadFlagImpl.setUserName(getUserName());
+		mbThreadFlagImpl.setCreateDate(getCreateDate());
 		mbThreadFlagImpl.setModifiedDate(getModifiedDate());
 		mbThreadFlagImpl.setThreadId(getThreadId());
 
@@ -305,6 +436,16 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public void resetOriginalValues() {
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = this;
 
+		mbThreadFlagModelImpl._originalUuid = mbThreadFlagModelImpl._uuid;
+
+		mbThreadFlagModelImpl._originalGroupId = mbThreadFlagModelImpl._groupId;
+
+		mbThreadFlagModelImpl._setOriginalGroupId = false;
+
+		mbThreadFlagModelImpl._originalCompanyId = mbThreadFlagModelImpl._companyId;
+
+		mbThreadFlagModelImpl._setOriginalCompanyId = false;
+
 		mbThreadFlagModelImpl._originalUserId = mbThreadFlagModelImpl._userId;
 
 		mbThreadFlagModelImpl._setOriginalUserId = false;
@@ -320,9 +461,38 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	public CacheModel<MBThreadFlag> toCacheModel() {
 		MBThreadFlagCacheModel mbThreadFlagCacheModel = new MBThreadFlagCacheModel();
 
+		mbThreadFlagCacheModel.uuid = getUuid();
+
+		String uuid = mbThreadFlagCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbThreadFlagCacheModel.uuid = null;
+		}
+
 		mbThreadFlagCacheModel.threadFlagId = getThreadFlagId();
 
+		mbThreadFlagCacheModel.groupId = getGroupId();
+
+		mbThreadFlagCacheModel.companyId = getCompanyId();
+
 		mbThreadFlagCacheModel.userId = getUserId();
+
+		mbThreadFlagCacheModel.userName = getUserName();
+
+		String userName = mbThreadFlagCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mbThreadFlagCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbThreadFlagCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			mbThreadFlagCacheModel.createDate = Long.MIN_VALUE;
+		}
 
 		Date modifiedDate = getModifiedDate();
 
@@ -340,12 +510,22 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{threadFlagId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", threadFlagId=");
 		sb.append(getThreadFlagId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
 		sb.append(", threadId=");
@@ -356,19 +536,39 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBThreadFlag");
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>threadFlagId</column-name><column-value><![CDATA[");
 		sb.append(getThreadFlagId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
@@ -388,11 +588,21 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBThreadFlag.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _threadFlagId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
+	private String _userName;
+	private Date _createDate;
 	private Date _modifiedDate;
 	private long _threadId;
 	private long _originalThreadId;

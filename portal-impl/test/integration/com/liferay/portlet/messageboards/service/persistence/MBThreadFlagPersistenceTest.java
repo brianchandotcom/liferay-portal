@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -109,7 +110,17 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag newMBThreadFlag = _persistence.create(pk);
 
+		newMBThreadFlag.setUuid(ServiceTestUtil.randomString());
+
+		newMBThreadFlag.setGroupId(ServiceTestUtil.nextLong());
+
+		newMBThreadFlag.setCompanyId(ServiceTestUtil.nextLong());
+
 		newMBThreadFlag.setUserId(ServiceTestUtil.nextLong());
+
+		newMBThreadFlag.setUserName(ServiceTestUtil.randomString());
+
+		newMBThreadFlag.setCreateDate(ServiceTestUtil.nextDate());
 
 		newMBThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
 
@@ -119,10 +130,21 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
+		Assert.assertEquals(existingMBThreadFlag.getUuid(),
+			newMBThreadFlag.getUuid());
 		Assert.assertEquals(existingMBThreadFlag.getThreadFlagId(),
 			newMBThreadFlag.getThreadFlagId());
+		Assert.assertEquals(existingMBThreadFlag.getGroupId(),
+			newMBThreadFlag.getGroupId());
+		Assert.assertEquals(existingMBThreadFlag.getCompanyId(),
+			newMBThreadFlag.getCompanyId());
 		Assert.assertEquals(existingMBThreadFlag.getUserId(),
 			newMBThreadFlag.getUserId());
+		Assert.assertEquals(existingMBThreadFlag.getUserName(),
+			newMBThreadFlag.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThreadFlag.getCreateDate()),
+			Time.getShortTimestamp(newMBThreadFlag.getCreateDate()));
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBThreadFlag.getModifiedDate()),
 			Time.getShortTimestamp(newMBThreadFlag.getModifiedDate()));
@@ -257,6 +279,12 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlagModelImpl existingMBThreadFlagModelImpl = (MBThreadFlagModelImpl)_persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(
+				existingMBThreadFlagModelImpl.getUuid(),
+				existingMBThreadFlagModelImpl.getOriginalUuid()));
+		Assert.assertEquals(existingMBThreadFlagModelImpl.getGroupId(),
+			existingMBThreadFlagModelImpl.getOriginalGroupId());
+
 		Assert.assertEquals(existingMBThreadFlagModelImpl.getUserId(),
 			existingMBThreadFlagModelImpl.getOriginalUserId());
 		Assert.assertEquals(existingMBThreadFlagModelImpl.getThreadId(),
@@ -268,7 +296,17 @@ public class MBThreadFlagPersistenceTest {
 
 		MBThreadFlag mbThreadFlag = _persistence.create(pk);
 
+		mbThreadFlag.setUuid(ServiceTestUtil.randomString());
+
+		mbThreadFlag.setGroupId(ServiceTestUtil.nextLong());
+
+		mbThreadFlag.setCompanyId(ServiceTestUtil.nextLong());
+
 		mbThreadFlag.setUserId(ServiceTestUtil.nextLong());
+
+		mbThreadFlag.setUserName(ServiceTestUtil.randomString());
+
+		mbThreadFlag.setCreateDate(ServiceTestUtil.nextDate());
 
 		mbThreadFlag.setModifiedDate(ServiceTestUtil.nextDate());
 

@@ -379,6 +379,8 @@ update MBMessage set status = 2 where status = 9;
 
 alter table MBMessage drop column attachments;
 
+alter table MBThreadFlag add uuid_ VARCHAR(75) null;
+
 drop table OrgGroupPermission;
 
 alter table PasswordPolicy add regex VARCHAR(75) null;

@@ -859,7 +859,12 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			return;
 		}
 
-		MBThreadFlagLocalServiceUtil.addThreadFlag(userId, thread);
+		ServiceContext serviceContext =
+			portletDataContext.createServiceContext(
+				threadFlagElement, threadFlag, NAMESPACE);
+
+		MBThreadFlagLocalServiceUtil.addThreadFlag(
+			userId, thread, serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MBPortletDataHandler.class);

@@ -46,8 +46,13 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("threadFlagId", getThreadFlagId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
 
@@ -55,16 +60,46 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long threadFlagId = (Long)attributes.get("threadFlagId");
 
 		if (threadFlagId != null) {
 			setThreadFlagId(threadFlagId);
 		}
 
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
@@ -99,6 +134,24 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	/**
+	* Returns the uuid of this message boards thread flag.
+	*
+	* @return the uuid of this message boards thread flag
+	*/
+	public java.lang.String getUuid() {
+		return _mbThreadFlag.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this message boards thread flag.
+	*
+	* @param uuid the uuid of this message boards thread flag
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_mbThreadFlag.setUuid(uuid);
+	}
+
+	/**
 	* Returns the thread flag ID of this message boards thread flag.
 	*
 	* @return the thread flag ID of this message boards thread flag
@@ -114,6 +167,42 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	public void setThreadFlagId(long threadFlagId) {
 		_mbThreadFlag.setThreadFlagId(threadFlagId);
+	}
+
+	/**
+	* Returns the group ID of this message boards thread flag.
+	*
+	* @return the group ID of this message boards thread flag
+	*/
+	public long getGroupId() {
+		return _mbThreadFlag.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this message boards thread flag.
+	*
+	* @param groupId the group ID of this message boards thread flag
+	*/
+	public void setGroupId(long groupId) {
+		_mbThreadFlag.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this message boards thread flag.
+	*
+	* @return the company ID of this message boards thread flag
+	*/
+	public long getCompanyId() {
+		return _mbThreadFlag.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this message boards thread flag.
+	*
+	* @param companyId the company ID of this message boards thread flag
+	*/
+	public void setCompanyId(long companyId) {
+		_mbThreadFlag.setCompanyId(companyId);
 	}
 
 	/**
@@ -152,6 +241,42 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	public void setUserUuid(java.lang.String userUuid) {
 		_mbThreadFlag.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this message boards thread flag.
+	*
+	* @return the user name of this message boards thread flag
+	*/
+	public java.lang.String getUserName() {
+		return _mbThreadFlag.getUserName();
+	}
+
+	/**
+	* Sets the user name of this message boards thread flag.
+	*
+	* @param userName the user name of this message boards thread flag
+	*/
+	public void setUserName(java.lang.String userName) {
+		_mbThreadFlag.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this message boards thread flag.
+	*
+	* @return the create date of this message boards thread flag
+	*/
+	public java.util.Date getCreateDate() {
+		return _mbThreadFlag.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this message boards thread flag.
+	*
+	* @param createDate the create date of this message boards thread flag
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_mbThreadFlag.setCreateDate(createDate);
 	}
 
 	/**

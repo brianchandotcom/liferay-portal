@@ -9,7 +9,7 @@
 
 		<#assign userGroup = dataFactory.newGroup(user)>
 
-		${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(1, "Home", "/home", "", "33,")])}
+		${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(userGroup.groupId, "home", "", "33,")])}
 
 		${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 	</#list>

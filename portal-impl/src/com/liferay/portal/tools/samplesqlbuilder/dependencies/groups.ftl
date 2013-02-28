@@ -1,17 +1,11 @@
 <#setting number_format = "0">
 
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.newLayout(1, "Welcome", "/welcome", "58,", "47,")])}
+${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")])}
 
 <#list dataFactory.groups as group>
 	<#assign groupId = group.groupId>
 
-	<#assign publicLayouts = [
-		dataFactory.newLayout(1, "Welcome", "/welcome", "58,", "47,"),
-		dataFactory.newLayout(2, "Blogs", "/blogs", "", "33,")
-		dataFactory.newLayout(3, "Document Library", "/document_library", "", "20,")
-		dataFactory.newLayout(4, "Forums", "/forums", "", "19,")
-		dataFactory.newLayout(5, "Wiki", "/wiki", "", "36,")
-	]>
+	<#assign publicLayouts = dataFactory.newCommonLayouts(groupId)>
 
 	<#include "users.ftl">
 

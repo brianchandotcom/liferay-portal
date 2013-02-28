@@ -33,6 +33,7 @@ import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.PortletPreferences;
@@ -520,6 +521,32 @@ public class DataFactory {
 		return blogsStatsUser;
 	}
 
+	public List<Layout> newCommonLayouts(long groupId) {
+		List<Layout> layouts = new ArrayList<Layout>();
+
+		Layout layout = newLayout(groupId, "welcome", "58,", "47,");
+
+		layouts.add(layout);
+
+		layout = newLayout(groupId, "blogs", "", "33,");
+
+		layouts.add(layout);
+
+		layout = newLayout(groupId, "document_library", "", "20,");
+
+		layouts.add(layout);
+
+		layout = newLayout(groupId, "forums", "", "19,");
+
+		layouts.add(layout);
+
+		layout = newLayout(groupId, "wiki", "", "36,");
+
+		layouts.add(layout);
+
+		return layouts;
+	}
+
 	public Contact newContact(User user) {
 		Contact contact = new ContactImpl();
 
@@ -806,16 +833,15 @@ public class DataFactory {
 	}
 
 	public Layout newLayout(
-		int layoutId, String name, String friendlyURL, String column1,
-		String column2) {
+		long groupId, String name, String column1, String column2) {
 
-		Layout layout = new LayoutImpl();
+		SimpleCounter simpleCounter = _layoutCounters.get(groupId);
 
-		layout.setPlid(_counter.get());
-		layout.setPrivateLayout(false);
-		layout.setLayoutId(layoutId);
-		layout.setName(name);
-		layout.setFriendlyURL(friendlyURL);
+		if (simpleCounter == null) {
+			simpleCounter = new SimpleCounter();
+
+			_layoutCounters.put(groupId, simpleCounter);
+		}
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
@@ -827,6 +853,19 @@ public class DataFactory {
 		String typeSettings = StringUtil.replace(
 			typeSettingsProperties.toString(), "\n", "\\n");
 
+		Layout layout = new LayoutImpl();
+
+		layout.setUuid(SequentialUUID.generate());
+		layout.setPlid(_counter.get());
+		layout.setGroupId(groupId);
+		layout.setCompanyId(_companyId);
+		layout.setCreateDate(new Date());
+		layout.setModifiedDate(new Date());
+		layout.setLayoutId(simpleCounter.get());
+		layout.setName(
+			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
+		layout.setType(LayoutConstants.TYPE_PORTLET);
+		layout.setFriendlyURL(StringPool.FORWARD_SLASH + name);
 		layout.setTypeSettings(typeSettings);
 
 		return layout;
@@ -1130,6 +1169,8 @@ public class DataFactory {
 	private User _guestUser;
 	private String _journalArticleContent;
 	private List<String> _lastNames;
+	private Map<Long, SimpleCounter> _layoutCounters =
+		new HashMap<Long, SimpleCounter>();
 	private int _maxGroupsCount;
 	private int _maxUserToGroupCount;
 	private Role _ownerRole;

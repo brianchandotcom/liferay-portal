@@ -23,7 +23,7 @@ ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#assign userGroup = dataFactory.newGroup(user)>
 
-${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(1, "Home", "/home", "", "33,")])}
+${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(userGroup.groupId, "home", "", "33,")])}
 
 <#assign groupIds = 1..maxGroupCount>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>

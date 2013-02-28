@@ -24,15 +24,15 @@ AnnouncementsDelivery delivery = (AnnouncementsDelivery)row.getObject();
 
 boolean defaultValue = false;
 boolean disabled = false;
-String param = "announcementsType" + delivery.getType();
 String messageKey = StringPool.BLANK;
+String param = "announcementsType" + delivery.getType();
 
 int index = entry.getIndex();
 
 if (index == 1) {
 	defaultValue = delivery.isEmail();
-	param += "Email";
 	messageKey = "receive-x-announcements-via-email";
+	param += "Email";
 }
 else if (index == 2) {
 	defaultValue = delivery.isSms();

@@ -61,7 +61,7 @@ import java.util.Set;
 public class Transformer {
 
 	public Transformer(
-		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
+		String errorTemplatePropertyKey, String transformerListenerPropertyKey,
 		TemplateContextType defaultTemplateContextType) {
 
 		_transformerListenerClassNames = SetUtil.fromArray(

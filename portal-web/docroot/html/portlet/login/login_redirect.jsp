@@ -64,7 +64,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 					},
 					on: {
 						failure: function(event, id, obj) {
-							message = Liferay.Language.get('your-request-failed-to-complete');
+							message = '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>';
 
 							<portlet:namespace />showStatusMessage('error', message);
 
@@ -92,7 +92,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 								A.one('.anonymous-account').hide();
 							}
 							else {
-								message = Liferay.Language.get('your-request-failed-to-complete');
+								message = '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>';
 
 								<portlet:namespace />showStatusMessage('error', message);
 

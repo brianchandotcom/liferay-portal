@@ -64,8 +64,6 @@ String openSsoLastNameAttr = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 		function() {
 			var A = AUI();
 
-			var title = 'OpenSSO';
-
 			var data = {};
 
 			data.<portlet:namespace />openSsoLoginURL = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.OPEN_SSO_LOGIN_URL %>--'].value;
@@ -83,7 +81,7 @@ String openSsoLastNameAttr = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 					align: Liferay.Util.Window.ALIGN_CENTER,
 					destroyOnClose: true,
 					modal: true,
-					title: Liferay.Language.get(title),
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "OpenSSO") %>',
 					width: 600
 				}
 			).render();

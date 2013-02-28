@@ -400,7 +400,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 						align: Liferay.Util.Window.ALIGN_CENTER,
 						destroyOnClose: true,
 						modal: true,
-						title: Liferay.Language.get('ldap'),
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "ldap") %>',
 						width: 600
 					}
 				).render();

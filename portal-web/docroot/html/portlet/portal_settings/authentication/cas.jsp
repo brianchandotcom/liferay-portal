@@ -70,8 +70,6 @@ String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(
 		function() {
 			var A = AUI();
 
-			var title = 'CAS';
-
 			var data = {};
 
 			data.<portlet:namespace />casLoginURL = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.CAS_LOGIN_URL %>--'].value;
@@ -86,7 +84,7 @@ String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(
 					align: Liferay.Util.Window.ALIGN_CENTER,
 					destroyOnClose: true,
 					modal: true,
-					title: Liferay.Language.get(title),
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "CAS") %>',
 					width: 600
 				}
 			).render();

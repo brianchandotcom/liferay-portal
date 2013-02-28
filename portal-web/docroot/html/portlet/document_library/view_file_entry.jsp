@@ -844,7 +844,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					null,
 					function(exception) {
 						var errorMessage = A.Lang.sub(
-							Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
+							'<%= UnicodeLanguageUtil.get(pageContext, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
 							[exception.message]
 						);
 

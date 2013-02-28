@@ -1216,6 +1216,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(versionPage);
 		}
 
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			page.getNodeId(), page.getTitle());
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(trashTitle);
+
+			wikiPagePersistence.update(redirectPage);
+		}
+
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.fetchByPrimaryKey(
 				page.getResourcePrimKey());
@@ -1279,10 +1288,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String title = TrashUtil.getOriginalTitle(page.getTitle());
 
-		page.setTitle(title);
-
-		wikiPagePersistence.update(page);
-
 		List<WikiPage> versionPages = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
@@ -1292,6 +1297,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(versionPage);
 		}
 
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			page.getNodeId(), page.getTitle());
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(title);
+
+			wikiPagePersistence.update(redirectPage);
+		}
+
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.fetchByPrimaryKey(
 				page.getResourcePrimKey());
@@ -1299,6 +1313,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		pageResource.setTitle(title);
 
 		wikiPageResourcePersistence.update(pageResource);
+
+		page.setTitle(title);
+
+		wikiPagePersistence.update(page);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());

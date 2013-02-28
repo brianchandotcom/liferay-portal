@@ -31,7 +31,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -185,8 +184,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(DLFileEntry.class),
-					name);
+					groupId,
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class), name);
 
 			if (ddmStructure != null) {
 				ddmStructure.setXsd(structureElementRootXML);
@@ -206,8 +205,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 				DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-					PortalUtil.getClassNameId(DLFileEntry.class), name, nameMap,
-					descriptionMap, structureElementRootXML, "xml",
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class), name,
+					nameMap, descriptionMap, structureElementRootXML, "xml",
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}

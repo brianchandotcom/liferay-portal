@@ -645,10 +645,8 @@ public class DLFileEntryLocalServiceImpl
 				toFileVersionId, fieldsMap, serviceContext);
 		}
 
-		long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
-
 		ddmStructures = ddmStructureLocalService.getClassStructures(
-			companyId, classNameId);
+			companyId, PortalUtil.getClassNameId(DLFileEntryMetadata.class));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			try {

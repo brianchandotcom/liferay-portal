@@ -1137,27 +1137,17 @@ public class SitesImpl implements Sites {
 	public void resetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
-		layout.setModifiedDate(null);
+		checkResetPrototypePermissions(layout.getGroup(), layout);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		resetPrototype(layoutSet);
+		doResetPrototype(layout);
 	}
 
 	public void resetPrototype(LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
+		checkResetPrototypePermissions(layoutSet.getGroup(), null);
 
-		settingsProperties.remove(LAST_MERGE_TIME);
-
-		settingsProperties.setProperty(
-			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
-
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+		doResetPrototype(layoutSet);
 	}
 
 	public void setMergeFailCount(
@@ -1177,7 +1167,11 @@ public class SitesImpl implements Sites {
 				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
 		}
 
-		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
+		LayoutServiceUtil.updateLayout(
+			layoutPrototypeLayout.getGroupId(),
+			layoutPrototypeLayout.getPrivateLayout(),
+			layoutPrototypeLayout.getLayoutId(),
+			layoutPrototypeLayout.getTypeSettings());
 	}
 
 	public void setMergeFailCount(
@@ -1198,7 +1192,10 @@ public class SitesImpl implements Sites {
 				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
 		}
 
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetPrototypeLayoutSet);
+		LayoutSetServiceUtil.updateSettings(
+			layoutSetPrototypeLayoutSet.getGroupId(),
+			layoutSetPrototypeLayoutSet.getPrivateLayout(),
+			layoutSetPrototypeLayoutSet.getSettings());
 	}
 
 	public void updateLayoutScopes(
@@ -1262,6 +1259,31 @@ public class SitesImpl implements Sites {
 		updateLayoutSetPrototypeLink(
 			group.getGroupId(), false, publicLayoutSetPrototypeId,
 			publicLayoutSetPrototypeLinkEnabled);
+	}
+
+	protected void checkResetPrototypePermissions(Group group, Layout layout)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((layout != null) &&
+			!LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.UPDATE)) {
+
+			throw new PrincipalException();
+		}
+		else if (!group.isUser() &&
+				 !GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.UPDATE)) {
+
+			throw new PrincipalException();
+		}
+		else if (group.isUser() &&
+				(permissionChecker.getUserId() != group.getClassPK())) {
+
+			throw new PrincipalException();
+		}
 	}
 
 	protected void doMergeLayoutPrototypeLayout(Group group, Layout layout)
@@ -1368,6 +1390,32 @@ public class SitesImpl implements Sites {
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layout.getPlid()), owner, false);
 		}
+	}
+
+	protected void doResetPrototype(Layout layout)
+		throws PortalException, SystemException {
+
+		layout.setModifiedDate(null);
+
+		LayoutLocalServiceUtil.updateLayout(layout);
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		doResetPrototype(layoutSet);
+	}
+
+	protected void doResetPrototype(LayoutSet layoutSet)
+		throws SystemException {
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.remove(LAST_MERGE_TIME);
+
+		settingsProperties.setProperty(
+			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
 	protected Map<String, String[]> getLayoutSetPrototypesParameters(

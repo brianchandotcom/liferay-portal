@@ -39,17 +39,23 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	public String getClassName(String fileName) {
-		int x = fileName.indexOf(CharPool.PERIOD);
-
-		String fileSuffix = fileName.substring(x + 1);
-
-		String classSuffix = StringUtil.upperCaseFirstLetter(fileSuffix);
+		String classSuffix = getClassSuffix(fileName);
 
 		return getClassName(fileName, classSuffix);
 	}
 
 	public String getClassName(String fileName, String classSuffix) {
-		return getPackageName(fileName) + "." + getName(fileName) + classSuffix;
+		return
+			getPackageName(fileName) + "." +
+				getSimpleClassName(fileName, classSuffix);
+	}
+
+	public String getClassSuffix(String fileName) {
+		int x = fileName.indexOf(CharPool.PERIOD);
+
+		String fileSuffix = fileName.substring(x + 1);
+
+		return StringUtil.upperCaseFirstLetter(fileSuffix);
 	}
 
 	public String getName(String fileName) {
@@ -104,6 +110,16 @@ public class SeleniumBuilderFileUtil {
 		validateDocument(fileName, rootElement);
 
 		return rootElement;
+	}
+
+	public String getSimpleClassName(String fileName) {
+		String classSuffix = getClassSuffix(fileName);
+
+		return getSimpleClassName(fileName, classSuffix);
+	}
+
+	public String getSimpleClassName(String fileName, String classSuffix) {
+		return getName(fileName) + classSuffix;
 	}
 
 	public int getTargetCount(Element rootElement) {

@@ -78,7 +78,7 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 			redirect.setPortletId('<%= portletDisplay.getId() %>');
 
-			redirect.setParameter('struts_action', '/wiki/view_page_activities');
+			redirect.setParameter('struts_action', '/wiki/view_page_history');
 
 			<%
 			WikiNode node = wikiPage.getNode();

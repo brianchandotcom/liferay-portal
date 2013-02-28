@@ -47,15 +47,17 @@ else if (type.equals("draft_pages") && type.equals("pending_pages")) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "draft-pages"), portletURL.toString());
 }
 else if (type.equals("history")) {
+	PortletURL viewPageHistoryURL = PortletURLUtil.clone(portletURL, renderResponse);
+
 	if (wikiPage != null) {
 		portletURL.setParameter("struts_action", "/wiki/view");
 
 		PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), portletURL.toString());
 	}
 
-	portletURL.setParameter("struts_action", "/wiki/view_page_history");
+	viewPageHistoryURL.setParameter("struts_action", "/wiki/view_page_activities");
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "history"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "history"), viewPageHistoryURL.toString());
 }
 else if (type.equals("incoming_links")) {
 	if (wikiPage != null) {

@@ -22,6 +22,14 @@
 	<liferay-util:param name="tabs1" value="history" />
 </liferay-util:include>
 
+<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp">
+	<liferay-util:param name="tabs3" value="versions" />
+</liferay-util:include>
+
 <liferay-util:include page="/html/portlet/wiki/page_iterator.jsp">
 	<liferay-util:param name="type" value="history" />
 </liferay-util:include>
+
+<%
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "versions"), null);
+%>

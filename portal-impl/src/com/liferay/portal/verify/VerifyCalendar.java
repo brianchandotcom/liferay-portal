@@ -116,8 +116,8 @@ public class VerifyCalendar extends VerifyProcess {
 
 			String sql =
 				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +
-					"recurrence) is not null or CAST_TEXT(recurrence) != '') " +
-						"and recurrence not like '%serializable%'";
+					"recurrence) != '') and recurrence not like " +
+					"'%serializable%'";
 
 			sql = SQLTransformer.transform(sql);
 

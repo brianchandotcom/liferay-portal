@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -89,11 +90,18 @@ public class UpgradeAsset extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select resourcePrimKey, structureId from JournalArticle " +
-					"where structureId != ''");
+			StringBundler sb = new StringBundler(2);
 
-			rs = ps.executeQuery();
+			sb.append("select resourcePrimKey, structureId ");
+			sb.append("from JournalArticle where structureId != ''");
+
+			String sql = sb.toString();
+
+			sql = SQLTransformer.transform(sql);
+
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery(sql);
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -114,16 +115,18 @@ public class UpgradeLayout extends UpgradeProcess {
 			// template. If the layoutUuid points to a page template, remove
 			// it. Otherwise, it points to a site template page, so leave it.
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("select plid, layoutPrototypeUuid, ");
 			sb.append("sourcePrototypeLayoutUuid from Layout where ");
-			sb.append("layoutPrototypeUuid is not null and ");
 			sb.append("layoutPrototypeUuid != '' and ");
-			sb.append("sourcePrototypeLayoutUuid is not null and ");
 			sb.append("sourcePrototypeLayoutUuid != ''");
 
-			ps = con.prepareStatement(sb.toString());
+			String sql = sb.toString();
+
+			sql = SQLTransformer.transform(sql);
+
+			ps = con.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 

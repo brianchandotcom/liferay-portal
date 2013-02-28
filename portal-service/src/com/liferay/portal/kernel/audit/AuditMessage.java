@@ -264,7 +264,7 @@ public class AuditMessage implements Serializable {
 		jsonObj.put(_CLASS_PK, _classPK);
 		jsonObj.put(_CLASS_NAME, _className);
 		jsonObj.put(_CLIENT_IP, _clientIP);
-		jsonObj.put(_clientHost, _clientHost);
+		jsonObj.put(_CLIENT_HOST, _clientHost);
 		jsonObj.put(_MESSAGE, _message);
 		jsonObj.put(_SERVER_PORT, _serverPort);
 		jsonObj.put(_SERVER_NAME, _serverName);

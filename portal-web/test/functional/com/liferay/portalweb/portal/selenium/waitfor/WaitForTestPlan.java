@@ -15,16 +15,15 @@
 package com.liferay.portalweb.portal.selenium.waitfor;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.waitfor.confirmation.WaitForConfirmationTests;
-import com.liferay.portalweb.portal.selenium.waitfor.elementpresent.WaitForElementPresentTests;
-import com.liferay.portalweb.portal.selenium.waitfor.partialtext.WaitForPartialTextTests;
-import com.liferay.portalweb.portal.selenium.waitfor.popup.WaitForPopupTests;
-import com.liferay.portalweb.portal.selenium.waitfor.selectedlabel.WaitForSelectedLabelTests;
-import com.liferay.portalweb.portal.selenium.waitfor.text.WaitForTextTests;
-import com.liferay.portalweb.portal.selenium.waitfor.textpresent.WaitForTextPresentTests;
-import com.liferay.portalweb.portal.selenium.waitfor.value.WaitForValueTests;
-import com.liferay.portalweb.portal.selenium.waitfor.visible.WaitForVisibleTests;
-
+import com.liferay.portalweb.portal.selenium.waitfor.waitforconfirmation.WaitForConfirmationTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforelementpresent.WaitForElementPresentTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforpartialtext.WaitForPartialTextTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforpopup.WaitForPopupTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforselectedlabel.WaitForSelectedLabelTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitfortext.WaitForTextTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitfortextpresent.WaitForTextPresentTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforvalue.WaitForValueTests;
+import com.liferay.portalweb.portal.selenium.waitfor.waitforvisible.WaitForVisibleTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -46,7 +45,6 @@ public class WaitForTestPlan extends BaseTestSuite {
 		testSuite.addTest(WaitForTextPresentTests.suite());
 		testSuite.addTest(WaitForValueTests.suite());
 		testSuite.addTest(WaitForVisibleTests.suite());
-
 
 		return testSuite;
 	}

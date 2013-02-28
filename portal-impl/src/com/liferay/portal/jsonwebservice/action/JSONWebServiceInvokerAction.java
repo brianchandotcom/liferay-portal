@@ -547,6 +547,14 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return;
 		}
 
+		String pushedName = null;
+
+		int index = name.indexOf('.');
+
+		if (index != -1) {
+			pushedName = name.substring(0, index + 1);
+		}
+
 		name = name.concat(StringPool.PERIOD);
 
 		for (Statement statement : _statements) {
@@ -563,16 +571,30 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			for (Flag flag : flags) {
 				String value = flag.getValue();
 
-				if ((value == null) || !value.startsWith(name)) {
+				if (value == null) {
 					continue;
 				}
 
-				Map<String, Object> parameterMap = statement.getParameterMap();
+				if (value.startsWith(name)) {
+					Map<String, Object> parameterMap =
+						statement.getParameterMap();
 
-				Object propertyValue = BeanUtil.getDeclaredProperty(
-					object, value.substring(name.length()));
+					Object propertyValue = BeanUtil.getDeclaredProperty(
+						object, value.substring(name.length()));
 
-				parameterMap.put(flag.getName(), propertyValue);
+					parameterMap.put(flag.getName(), propertyValue);
+				}
+				else if (statement.isPushed() && value.startsWith(pushedName)) {
+					Map<String, Object> parameterMap =
+						statement.getParameterMap();
+
+					Object target = statement._pushTarget;
+
+					Object propertyValue = BeanUtil.getDeclaredProperty(
+						target, value.substring(pushedName.length()));
+
+					parameterMap.put(flag.getName(), propertyValue);
+				}
 			}
 		}
 	}
@@ -625,6 +647,15 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		public boolean isInner() {
 			return _inner;
+		}
+
+		public boolean isPushed() {
+			if (_pushTarget != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		public Object push(Object result) {

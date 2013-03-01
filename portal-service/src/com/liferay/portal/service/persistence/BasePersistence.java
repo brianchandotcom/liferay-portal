@@ -294,7 +294,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * model listeners.
 	 *
 	 * @param  model the model instance to update
-	 * @param  serviceContext the service context to perform the update in
+	 * @param  serviceContext the service context to be applied
 	 * @return the model instance that was updated
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -80,9 +80,9 @@ public class DDMStructureServiceSoap {
 	* @param nameMap the structure's locales and localized names
 	* @param descriptionMap the structure's locales and localized descriptions
 	* @param xsd the structure's XML schema definition
-	* @param serviceContext the structure's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the structure.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the structure.
 	* @return the structure
 	* @throws PortalException if a user with the primary key could not be
 	found, if the user did not have permission to add the structure,
@@ -135,9 +135,9 @@ public class DDMStructureServiceSoap {
 	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
-	* @param serviceContext the structure's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the structure.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the structure.
 	* @return the structure
 	* @throws PortalException if the user did not have permission to add the
 	structure, if the XSD is not well formed, or if a portal

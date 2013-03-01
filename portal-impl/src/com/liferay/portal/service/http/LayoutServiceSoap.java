@@ -103,12 +103,12 @@ public class LayoutServiceSoap {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must set the UUID for the
-	layout. Can set the creation date, modification date and the
-	expando bridge attributes for the layout. For layouts that belong
-	to a layout set prototype, an attribute named 'layoutUpdateable'
-	can be used to specify whether site administrators can modify
-	this page within their site.
+	* @param serviceContext the service context to be applied. Must set the
+	UUID for the layout. Can set the creation date, modification date
+	and the expando bridge attributes for the layout. For layouts
+	that belong to a layout set prototype, an attribute named
+	'layoutUpdateable' can be used to specify whether site
+	administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the layouts
@@ -191,12 +191,12 @@ public class LayoutServiceSoap {
 	normalized when accessed see {@link
 	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	String)}.
-	* @param serviceContext the service context. Must set the UUID for the
-	layout. Can specify the creation date, modification date and the
-	expando bridge attributes for the layout. For layouts that belong
-	to a layout set prototype, an attribute named 'layoutUpdateable'
-	can be used to specify whether site administrators can modify
-	this page within their site.
+	* @param serviceContext the service context to be applied. Must set the
+	UUID for the layout. Can specify the creation date, modification
+	date and the expando bridge attributes for the layout. For
+	layouts that belong to a layout set prototype, an attribute named
+	'layoutUpdateable' can be used to specify whether site
+	administrators can modify this page within their site.
 	* @return the layout
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the layouts
@@ -230,7 +230,7 @@ public class LayoutServiceSoap {
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
-	* @param serviceContext the service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the user did not have permission to delete the
 	layout, if a matching layout could not be found , or if some
 	other portal exception occurred
@@ -255,7 +255,7 @@ public class LayoutServiceSoap {
 	* layouts, and associated resources.
 	*
 	* @param plid the primary key of the layout
-	* @param serviceContext the service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if the user did not have permission to delete the
 	layout, if a layout with the primary key could not be found , or
 	if some other portal exception occurred
@@ -464,7 +464,7 @@ public class LayoutServiceSoap {
 	* @param privateLayout whether the layout is private to the group
 	* @param parentLayoutId the primary key of the parent layout
 	* @param layoutIds the primary keys of the layouts
-	* @param serviceContext the service context
+	* @param serviceContext the service context to be applied
 	* @throws PortalException if a group or layout with the primary key could
 	not be found, if the group did not have permission to manage the
 	layouts, if no layouts were specified, if the first layout was
@@ -570,8 +570,8 @@ public class LayoutServiceSoap {
 	String)}.
 	* @param iconImage whether the icon image will be updated
 	* @param iconBytes the byte array of the layout's new icon image
-	* @param serviceContext the service context. Can set the modification date
-	and expando bridge attributes for the layout.
+	* @param serviceContext the service context to be applied. Can set the
+	modification date and expando bridge attributes for the layout.
 	* @return the updated layout
 	* @throws PortalException if a group or layout with the primary key could
 	not be found, if the user did not have permission to update the

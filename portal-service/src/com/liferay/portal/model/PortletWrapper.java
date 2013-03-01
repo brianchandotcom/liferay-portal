@@ -1323,9 +1323,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Returns the names of the classes that represent social activity interpreters associated with the portlet.
+	* Returns the names of the classes that represent social activity
+	* interpreters associated with the portlet.
 	*
-	* @return the names of the classes that represent social activity interpreters associated with the portlet
+	* @return the names of the classes that represent social activity
+	interpreters associated with the portlet
 	*/
 	public java.util.List<java.lang.String> getSocialActivityInterpreterClasses() {
 		return _portlet.getSocialActivityInterpreterClasses();
@@ -2766,8 +2768,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the names of the classes that represent social activity interpreters associated with
-	* the portlet.
+	* Sets the names of the classes that represent social activity interpreters
+	* associated with the portlet.
 	*
 	* @param socialActivityInterpreterClasses the names of the classes that
 	represent social activity interpreters associated with the portlet

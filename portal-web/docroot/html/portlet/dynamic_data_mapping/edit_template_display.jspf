@@ -76,7 +76,7 @@ boolean useRichEditor = editorType.equals("rich");
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-plugin,aui-ace-autocomplete-freemarker">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin">
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
 	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
@@ -154,9 +154,7 @@ boolean useRichEditor = editorType.equals("rich");
 			richEditor.editor.resize();
 		}
 
-		var uri = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_display" /></portlet:renderURL>&editorType=' + newEditorType;
-
-		A.io.request(uri);
+		A.io.request('<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_display" /></portlet:renderURL>&editorType=' + newEditorType);
 
 		editorType = newEditorType;
 	}

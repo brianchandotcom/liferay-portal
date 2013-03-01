@@ -240,11 +240,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			AssetCategory category = assetCategoryPersistence.fetchByPrimaryKey(
 				categoryId);
 
-			if (category == null) {
-				continue;
-			}
-
-			if (AssetCategoryPermission.contains(
+			if ((category != null) &&
+				AssetCategoryPermission.contains(
 					getPermissionChecker(), categoryId, ActionKeys.VIEW)) {
 
 				viewableCategoryIds.add(categoryId);

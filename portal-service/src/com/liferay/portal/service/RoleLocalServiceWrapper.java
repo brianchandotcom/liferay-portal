@@ -322,7 +322,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @param subType the role's subtype (optionally <code>null</code>)
-	* @param serviceContext the roles's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set expando bridge attributes for the
 	role.
 	* @return the role
@@ -1064,7 +1064,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param descriptionMap the new localized descriptions (optionally
 	<code>null</code>) to replace those existing for the role
 	* @param subtype the role's new subtype (optionally <code>null</code>)
-	* @param serviceContext the roles's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set expando bridge attributes for the
 	role.
 	* @return the role with the primary key

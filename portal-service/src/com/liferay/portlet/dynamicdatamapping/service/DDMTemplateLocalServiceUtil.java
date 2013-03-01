@@ -286,9 +286,9 @@ public class DDMTemplateLocalServiceUtil {
 	see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	* @param script the template's script
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
@@ -333,9 +333,9 @@ public class DDMTemplateLocalServiceUtil {
 	<code>null</code>)
 	* @param smallImageFile the template's small image file (optionally
 	<code>null</code>)
-	* @param serviceContext the template's service context. Can set the UUID,
-	creation date, modification date, guest permissions, and group
-	permissions for the template.
+	* @param serviceContext the service context to be applied. Can set the
+	UUID, creation date, modification date, guest permissions, and
+	group permissions for the template.
 	* @return the template
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred

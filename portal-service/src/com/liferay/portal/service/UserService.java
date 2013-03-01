@@ -65,7 +65,8 @@ public interface UserService extends BaseService {
 	*
 	* @param groupId the primary key of the group
 	* @param userIds the primary keys of the users
-	* @param serviceContext the service context (optionally <code>null</code>)
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
 	* @throws PortalException if a group or user with the primary key could not
 	be found, if the user did not have permission to assign group
 	members, or if the operation was not allowed by the membership
@@ -175,7 +176,7 @@ public interface UserService extends BaseService {
 	* @param userGroupIds the primary keys of the user's user groups
 	* @param sendEmail whether to send the user an email notification about
 	their new account
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
@@ -244,7 +245,7 @@ public interface UserService extends BaseService {
 	* @param announcementsDelivers the announcements deliveries
 	* @param sendEmail whether to send the user an email notification about
 	their new account
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
@@ -329,7 +330,7 @@ public interface UserService extends BaseService {
 	* @param userGroupIds the primary keys of the user's user groups
 	* @param sendEmail whether to send the user an email notification about
 	their new account
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
@@ -398,7 +399,7 @@ public interface UserService extends BaseService {
 	* @param announcementsDelivers the announcements deliveries
 	* @param sendEmail whether to send the user an email notification about
 	their new account
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
@@ -735,7 +736,8 @@ public interface UserService extends BaseService {
 	*
 	* @param groupId the primary key of the group
 	* @param userIds the primary keys of the users
-	* @param serviceContext the service context (optionally <code>null</code>)
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
 	* @throws PortalException if the current user did not have permission to
 	modify group assignments or if the operation was not allowed by
 	the membership policy
@@ -836,9 +838,9 @@ public interface UserService extends BaseService {
 	* @param password the user's password
 	* @param emailAddress1 the user's new email address
 	* @param emailAddress2 the user's new email address confirmation
-	* @param serviceContext the service context. Must set the portal URL, main
-	path, primary key of the layout, remote address, remote host, and
-	agent for the user.
+	* @param serviceContext the service context to be applied. Must set the
+	portal URL, main path, primary key of the layout, remote address,
+	remote host, and agent for the user.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
@@ -882,7 +884,7 @@ public interface UserService extends BaseService {
 	* @param updateUserInformation whether to update the user's information
 	* @param sendEmail whether to send the user an email notification about
 	their new account
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the expando bridge attributes for the
 	user.
 	* @return the user
@@ -940,8 +942,8 @@ public interface UserService extends BaseService {
 	*
 	* @param userId the primary key of the user
 	* @param organizationIds the primary keys of the organizations
-	* @param serviceContext the service context. Must set whether user
-	indexing is enabled.
+	* @param serviceContext the service context to be applied. Must set
+	whether user indexing is enabled.
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
@@ -1089,7 +1091,7 @@ public interface UserService extends BaseService {
 	* @param phones the user's phone numbers
 	* @param websites the user's websites
 	* @param announcementsDelivers the announcements deliveries
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
@@ -1176,7 +1178,7 @@ public interface UserService extends BaseService {
 	* @param roleIds the primary keys of the user's roles
 	* @param userGroupRoles the user user's group roles
 	* @param userGroupIds the primary keys of the user's user groups
-	* @param serviceContext the user's service context (optionally
+	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the UUID (with the <code>uuid</code>
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.

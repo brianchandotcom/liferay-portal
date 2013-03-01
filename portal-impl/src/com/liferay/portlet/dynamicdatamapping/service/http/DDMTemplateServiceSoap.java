@@ -85,7 +85,7 @@ public class DDMTemplateServiceSoap {
 	see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
 	* @param script the template's script
-	* @param serviceContext the template's service context. Must have the
+	* @param serviceContext the service context to be applied. Must have the
 	<code>ddmResource</code> attribute to check permissions. Can set
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.

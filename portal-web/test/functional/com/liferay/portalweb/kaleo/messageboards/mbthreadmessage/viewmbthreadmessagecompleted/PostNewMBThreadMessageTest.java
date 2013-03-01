@@ -33,29 +33,15 @@ public class PostNewMBThreadMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Thread Message Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__19_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("MB Thread Message Body"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_19_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__19_editor']/iframe");
-		selenium.waitForText("//body", "MB Thread Message Body");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -66,17 +52,15 @@ public class PostNewMBThreadMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertTrue(selenium.isElementNotPresent(
-				"//h1[@class='header-title']/span"));
-		assertTrue(selenium.isElementNotPresent(
-				"//strong[@class='workflow-status-pending']"));
-		assertTrue(selenium.isElementNotPresent("//div[@class='thread-body']"));
+		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
+		assertFalse(selenium.isTextPresent("MB Thread Message Body"));
+		assertFalse(selenium.isTextPresent("Pending (Review)"));
 	}
 }

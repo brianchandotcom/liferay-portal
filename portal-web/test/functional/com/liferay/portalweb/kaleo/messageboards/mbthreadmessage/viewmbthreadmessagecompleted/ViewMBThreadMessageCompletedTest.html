@@ -14,23 +14,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
+	<td>MB Thread Message Subject</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
@@ -49,13 +49,18 @@
 	<td>My Posts</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
+	<td>MB Thread Message Subject</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
@@ -77,6 +82,16 @@
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -115,7 +130,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div</td>
 	<td>There are no pending tasks assigned to your roles.</td>
 </tr>
 <tr>
@@ -125,27 +140,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[2]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[3]/a</td>
 	<td>Message Boards Message</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 </tbody></table>

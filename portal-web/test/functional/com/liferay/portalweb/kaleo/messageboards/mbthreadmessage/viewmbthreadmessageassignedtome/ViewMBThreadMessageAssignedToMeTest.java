@@ -25,7 +25,6 @@ public class ViewMBThreadMessageAssignedToMeTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Message Boards Test Page");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -33,13 +32,16 @@ public class ViewMBThreadMessageAssignedToMeTest extends BaseTestCase {
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
-		assertFalse(selenium.isTextPresent("Pending (Review)"));
 		assertFalse(selenium.isTextPresent("MB Thread Message Body"));
+		assertFalse(selenium.isTextPresent("Pending (Review)"));
 		selenium.clickAt("link=My Posts", RuntimeVariables.replace("My Posts"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//tr[contains(.,'MB Thread Message Subject')]/td[1]/a",
+			"MB Thread Message Subject");
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'MB Thread Message Subject')]/td[1]/a",
 			RuntimeVariables.replace("MB Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
@@ -49,6 +51,10 @@ public class ViewMBThreadMessageAssignedToMeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("MB Thread Message Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -56,20 +62,24 @@ public class ViewMBThreadMessageAssignedToMeTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=My Workflow Tasks",
-			RuntimeVariables.replace("My Workflow Tasks"));
+		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.kaleo.messageboards.mbthreadmessage.viewmbthreadmessagecompleted;
 
+import com.liferay.portalweb.kaleo.messageboards.mbthreadmessage.viewmbthreadmessageassignedtome.TearDownMBThreadMessageTest;
+import com.liferay.portalweb.kaleo.messageboards.mbthreadmessage.viewmbthreadmessageassignedtome.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;

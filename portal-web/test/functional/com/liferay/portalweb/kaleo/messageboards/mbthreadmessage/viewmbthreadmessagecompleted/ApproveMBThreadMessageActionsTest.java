@@ -25,6 +25,10 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,14 +39,19 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -57,10 +66,12 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a",
 			RuntimeVariables.replace("Approve"));
-		selenium.waitForVisible("//div[3]/span/span/button");
+		selenium.waitForVisible(
+			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
 		assertEquals(RuntimeVariables.replace("OK"),
-			selenium.getText("//div[3]/span/span/button"));
-		selenium.clickAt("//div[3]/span/span/button",
+			selenium.getText(
+				"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]"));
+		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -71,17 +82,23 @@ public class ApproveMBThreadMessageActionsTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText(
+				"xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
 	}
 }

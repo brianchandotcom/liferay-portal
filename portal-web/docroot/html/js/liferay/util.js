@@ -1311,6 +1311,11 @@
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 			ddmURL.setParameter('scopeTitle', config.title);
 
+			if ('refererWebDavToken' in config) {
+				ddmURL.setParameter(
+					'refererWebDavToken', config.refererWebDavToken);
+			}
+
 			if ('showGlobalScope' in config) {
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}

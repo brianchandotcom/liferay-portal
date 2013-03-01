@@ -70,7 +70,16 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		return _smallImageType;
 	}
 
-	public String getWebDavURL(ThemeDisplay themeDisplay) {
+	/**
+	 * Returns the webdav url to access the template
+	 *
+	 * @param themeDisplay the theme display needed to build the url. It can set
+	 *        https access, the server name, the server port, the path context
+	 *        and the scope group
+	 * @param webDavToken the webdav token for the url
+	 * @return the webdav url
+	 */
+	public String getWebDavURL(ThemeDisplay themeDisplay, String webDavToken) {
 		StringBundler sb = new StringBundler(11);
 
 		boolean secure = false;
@@ -94,6 +103,8 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 
 		sb.append(group.getFriendlyURL());
 
+		sb.append(StringPool.SLASH);
+		sb.append(webDavToken);
 		sb.append(StringPool.SLASH);
 		sb.append("Templates");
 		sb.append(StringPool.SLASH);

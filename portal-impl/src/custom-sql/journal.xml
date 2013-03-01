@@ -43,38 +43,24 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_R">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(companyId = ?) AND
-						(groupId = ?) AND
-						([$FOLDER_ID$]) AND
-						(classNameId = ?) AND
-						([$STATUS$]) AND
-						(
-							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(version = ?) [$AND_OR_CONNECTOR$]
-							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-						)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
 			WHERE
+				(groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(classNameId = ?) AND
+				([$STATUS$]) AND
+				(
+					(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(version = ?) [$AND_OR_CONNECTOR$]
+					(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				) AND
 				(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

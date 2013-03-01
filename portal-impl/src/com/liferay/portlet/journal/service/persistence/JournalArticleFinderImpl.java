@@ -967,8 +967,6 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(companyId);
-
 			if (groupId > 0) {
 				qPos.add(groupId);
 			}

@@ -614,10 +614,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	private class Statement {
 
-		private Statement(Statement parentStatement) {
-			_parentStatement = parentStatement;
-		}
-
 		public List<Flag> getFlags() {
 			return _flags;
 		}
@@ -751,6 +747,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		public void setWhitelist(String[] whitelist) {
 			_whitelist = whitelist;
+		}
+
+		private Statement(Statement parentStatement) {
+			_parentStatement = parentStatement;
 		}
 
 		private boolean _executed;

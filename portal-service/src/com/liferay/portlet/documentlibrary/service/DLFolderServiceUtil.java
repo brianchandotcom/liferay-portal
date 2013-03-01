@@ -287,18 +287,17 @@ public class DLFolderServiceUtil {
 				   .refreshFolderLock(lockUuid, companyId, expirationTime);
 	}
 
-	public static void unlockFolder(long groupId, long folderId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().unlockFolder(groupId, folderId, lockUuid);
-	}
-
 	public static void unlockFolder(long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unlockFolder(groupId, parentFolderId, name, lockUuid);
+	}
+
+	public static void unlockFolder(long folderId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unlockFolder(folderId, lockUuid);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(

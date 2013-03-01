@@ -103,7 +103,7 @@ public interface BaseModel<T>
 	 * Sets the expando bridge attributes for this model instance to the
 	 * attributes stored in the service context.
 	 *
-	 * @param serviceContext the service context
+	 * @param serviceContext the service context to be applied
 	 * @see   com.liferay.portal.service.ServiceContext#getExpandoBridgeAttributes(
 	 *        )
 	 */

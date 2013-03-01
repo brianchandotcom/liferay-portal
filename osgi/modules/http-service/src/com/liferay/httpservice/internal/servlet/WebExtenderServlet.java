@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -142,9 +144,19 @@ public class WebExtenderServlet extends PortletServlet implements StrutsAction {
 
 		printHeaders(request);
 
-		Portlet portlet = null;
-
 		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+		String requestURI = request.getRequestURI();
+
+		ServletContext servletContext = getServletContext(
+			portletId, requestURI);
+
+		service(request, response, servletContext, portletId, requestURI);
+	}
+
+	protected ServletContext getServletContext(
+		String portletId, String requestURI) {
+
+		Portlet portlet = null;
 
 		if (Validator.isNotNull(portletId)) {
 			try {
@@ -164,14 +176,38 @@ public class WebExtenderServlet extends PortletServlet implements StrutsAction {
 			PortletApp portletApp = portlet.getPortletApp();
 
 			servletContextName = portletApp.getServletContextName();
+		} else {
+			if (requestURI != null) {
+				String pathContext = PortalUtil.getPathContext();
+				String requestURITemp = requestURI;
+
+				if (Validator.isNotNull(pathContext) &&
+					requestURITemp.startsWith(pathContext)) {
+
+					requestURITemp = requestURITemp.substring(
+						pathContext.length());
+				}
+
+				if (requestURITemp.startsWith(Portal.PATH_MODULE)) {
+					requestURITemp = requestURITemp.substring(
+						Portal.PATH_MODULE.length());
+				}
+
+				servletContextName = requestURITemp;
+
+				if (servletContextName.startsWith(StringPool.SLASH)) {
+					servletContextName = servletContextName.substring(1);
+				}
+
+				int index = servletContextName.indexOf(StringPool.SLASH);
+
+				if (index != -1) {
+					servletContextName = servletContextName.substring(0, index);
+				}
+			}
 		}
 
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
-
-		service(
-			request, response, servletContext, portletId,
-			request.getRequestURI());
+		return ServletContextPool.get(servletContextName);
 	}
 
 	protected void printHeaders(HttpServletRequest request) {

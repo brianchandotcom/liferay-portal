@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.windowselection.selectwindow;
+package com.liferay.portalweb.portal.selenium.selection.selectwindow;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -36,25 +36,12 @@ public class SelectWindow2Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Site Pages",
+			RuntimeVariables.replace("Site Pages"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
-		assertEquals(RuntimeVariables.replace("User"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='_125_organizationsLink']",
-			RuntimeVariables.replace("Organizations"));
-		selenium.waitForVisible("link=Select");
-		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
+		assertEquals(RuntimeVariables.replace("View Pages"),
+			selenium.getText("//button[.='View Pages']"));
+		selenium.click("//button[.='View Pages']");
 		selenium.selectWindow("title=Catherine");
 	}
 }

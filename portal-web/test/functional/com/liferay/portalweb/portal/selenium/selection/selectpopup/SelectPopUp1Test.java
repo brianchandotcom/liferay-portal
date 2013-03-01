@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.windowselection.selectframe;
+package com.liferay.portalweb.portal.selenium.selection.selectpopup;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectFrame2Test extends BaseTestCase {
-	public void testSelectFrame2() throws Exception {
+public class SelectPopUp1Test extends BaseTestCase {
+	public void testSelectPopUp1() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -36,19 +36,15 @@ public class SelectFrame2Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
+		selenium.clickAt("link=Site Pages",
+			RuntimeVariables.replace("Site Pages"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText(
-				"//span[@class='lfr-toolbar-button add-button ']/a"));
-		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_161_title']",
-			RuntimeVariables.replace("Blogs Entry Title"));
-		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
-		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
-		selenium.selectFrame("//iframe[contains(@title,'Catherine')]");
+		assertEquals(RuntimeVariables.replace("View Pages"),
+			selenium.getText("//button[.='View Pages']"));
+		selenium.click("//button[.='View Pages']");
+		selenium.selectPopUp("");
+		selenium.waitForVisible("css=img[alt=\"Liferay\"]");
+		assertTrue(selenium.isVisible("css=img[alt=\"Liferay\"]"));
+		selenium.close();
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.windowselection.selectpopup;
+package com.liferay.portalweb.portal.selenium.selection.selectpopup;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 

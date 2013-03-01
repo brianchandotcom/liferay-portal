@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.windowselection.selectpopup;
+package com.liferay.portalweb.portal.selenium.selection.selectframe;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectPopUp1Test extends BaseTestCase {
-	public void testSelectPopUp1() throws Exception {
+public class SelectFrame2Test extends BaseTestCase {
+	public void testSelectFrame2() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -36,25 +36,19 @@ public class SelectPopUp1Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
-		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='_125_organizationsLink']",
-			RuntimeVariables.replace("Organizations"));
-		selenium.waitForVisible("link=Select");
-		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
-		selenium.selectPopUp("null");
+		selenium.type("//input[@id='_161_title']",
+			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Catherine')]");
 	}
 }

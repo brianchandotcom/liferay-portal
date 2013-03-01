@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.windowselection.selectframe;
+package com.liferay.portalweb.portal.selenium.selection;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.selenium.selection.selectframe.SelectFrameTests;
+import com.liferay.portalweb.portal.selenium.selection.selectpopup.SelectPopUpTests;
+import com.liferay.portalweb.portal.selenium.selection.selectwindow.SelectWindowTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,12 +25,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectFrameTests extends BaseTestSuite {
+public class SelectionTestPlan extends BaseTestSuite {
+
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectFrame1Test.class);
-		testSuite.addTestSuite(SelectFrame2Test.class);
+
+		testSuite.addTest(SelectFrameTests.suite());
+		testSuite.addTest(SelectPopUpTests.suite());
+		testSuite.addTest(SelectWindowTests.suite());
 
 		return testSuite;
 	}
+
 }

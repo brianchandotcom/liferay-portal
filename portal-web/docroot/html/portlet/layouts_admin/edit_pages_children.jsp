@@ -216,10 +216,6 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 			<c:if test="<%= rle.getType() == RequiredLayoutException.FIRST_LAYOUT_TYPE %>">
 				<liferay-ui:message key="your-first-page-must-have-one-of-the-following-types" />: <%= PortalUtil.getFirstPageLayoutTypes(pageContext) %>
 			</c:if>
-
-			<c:if test="<%= rle.getType() == RequiredLayoutException.FIRST_LAYOUT_HIDDEN %>">
-				<liferay-ui:message key="your-first-page-must-not-be-hidden" />
-			</c:if>
 		</liferay-ui:error>
 
 		<liferay-ui:message key="set-the-display-order-of-child-pages" />

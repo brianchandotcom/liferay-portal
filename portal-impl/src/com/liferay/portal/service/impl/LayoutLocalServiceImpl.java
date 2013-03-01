@@ -1619,11 +1619,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				throw new RequiredLayoutException(
 					RequiredLayoutException.FIRST_LAYOUT_TYPE);
 			}
-
-			if (layout.isHidden()) {
-				throw new RequiredLayoutException(
-					RequiredLayoutException.FIRST_LAYOUT_HIDDEN);
-			}
 		}
 
 		Set<Long> layoutIdsSet = new LinkedHashSet<Long>();

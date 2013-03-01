@@ -17,7 +17,6 @@ package com.liferay.portlet.layoutsadmin.action;
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.LayoutHiddenException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.LayoutPrototypeException;
@@ -258,7 +257,6 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (e instanceof ImageTypeException ||
 					 e instanceof LayoutFriendlyURLException ||
-					 e instanceof LayoutHiddenException ||
 					 e instanceof LayoutNameException ||
 					 e instanceof LayoutParentLayoutIdException ||
 					 e instanceof LayoutSetVirtualHostException ||

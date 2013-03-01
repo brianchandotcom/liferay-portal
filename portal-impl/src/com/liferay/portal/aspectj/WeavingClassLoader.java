@@ -31,6 +31,8 @@ import java.security.ProtectionDomain;
 
 import java.util.Arrays;
 
+import org.aspectj.bridge.AbortException;
+
 /**
  * @author Shuyang Zhou
  */
@@ -77,7 +79,14 @@ public class WeavingClassLoader extends URLClassLoader {
 
 			byte[] oldData = data;
 
-			data = _urlWeavingAdaptor.weaveClass(name, data, false);
+			try {
+				data = _urlWeavingAdaptor.weaveClass(name, data, false);
+			}
+			catch (AbortException ae) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Abort weaving class " + name, ae);
+				}
+			}
 
 			if (Arrays.equals(oldData, data)) {
 				return _generateClass(name, data);

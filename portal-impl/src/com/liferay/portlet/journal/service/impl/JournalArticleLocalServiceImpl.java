@@ -1636,8 +1636,15 @@ public class JournalArticleLocalServiceImpl
 	public int getNotInTrashArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return journalArticlePersistence.countByG_F_NotST(
-			groupId, folderId, WorkflowConstants.STATUS_IN_TRASH);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return journalArticleFinder.countByG_F(
+			groupId, folderIds, queryDefinition);
 	}
 
 	public List<JournalArticle> getStructureArticles(
@@ -1738,7 +1745,9 @@ public class JournalArticleLocalServiceImpl
 			long userId, long groupId, JournalArticle article, long newFolderId)
 		throws PortalException, SystemException {
 
-		restoreArticleFromTrash(userId, article);
+		if (article.isInTrash()) {
+			restoreArticleFromTrash(userId, article);
+		}
 
 		moveArticle(groupId, article.getArticleId(), newFolderId);
 

@@ -38,7 +38,6 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -179,17 +178,6 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
 
 		return dlFileEntry.getFileVersion();
-	}
-
-	@Override
-	protected boolean isInTrashContainer(ClassedModel classedModel)
-		throws Exception {
-
-		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		return dlFileVersion.isInTrashContainer();
 	}
 
 	@Override

@@ -67,12 +67,17 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	public void testTrashVersionAndDelete() throws Exception {
+	public void testTrashVersionBaseModelAndDelete() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
-	public void testTrashVersionAndRestore() throws Exception {
+	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashVersionParentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
@@ -156,15 +161,6 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
-	protected boolean isInTrashContainer(ClassedModel classedModel)
-		throws Exception {
-
-		BookmarksEntry entry = (BookmarksEntry)baseModel;
-
-		return entry.isInTrashContainer();
-	}
-
-	@Override
 	protected BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)
@@ -190,22 +186,6 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			primaryKey);
-
-		String description = "Content: Enterprise. Open Source. For Life.";
-
-		return BookmarksEntryLocalServiceUtil.updateEntry(
-			entry.getUserId(), primaryKey, entry.getGroupId(),
-			entry.getFolderId(), entry.getName(), entry.getUrl(), description,
-			serviceContext);
 	}
 
 }

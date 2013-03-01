@@ -104,6 +104,33 @@
 				(reviewDate <= ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_F">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				(
+					SELECT
+						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
+					FROM
+						JournalArticle
+					WHERE
+						(groupId = ?) AND
+					GROUP BY
+						groupId, articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON
+						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
+						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
+						(TEMP_TABLE.tempVersion = JournalArticle.version)
+			WHERE
+				([$STATUS$]) AND
+				[$FOLDER_ID$]
+			ORDER BY
+				id_ ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByR_D">
 		<![CDATA[
 			SELECT

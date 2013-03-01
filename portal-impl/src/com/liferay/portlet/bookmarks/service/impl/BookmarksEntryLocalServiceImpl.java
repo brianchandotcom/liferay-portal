@@ -300,7 +300,11 @@ public class BookmarksEntryLocalServiceImpl
 			long userId, long entryId, long parentFolderId)
 		throws PortalException, SystemException {
 
-		restoreEntryFromTrash(userId, entryId);
+		BookmarksEntry entry = getBookmarksEntry(entryId);
+
+		if (entry.isInTrash()) {
+			restoreEntryFromTrash(userId, entryId);
+		}
 
 		return moveEntry(entryId, parentFolderId);
 	}

@@ -220,6 +220,13 @@ public class JournalArticleFinderUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F(
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().filterFindByG_F(groupId, folderIds, queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_C(
 		long groupId, long userId, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
@@ -322,6 +329,13 @@ public class JournalArticleFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByReviewDate(classNameId, reviewDateLT, reviewDateGT);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F(
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByG_F(groupId, folderIds, queryDefinition);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle findByR_D(

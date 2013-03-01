@@ -627,13 +627,9 @@ public class BookmarksFolderLocalServiceImpl
 
 					// Asset
 
-					if (entry.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-						assetEntryLocalService.updateVisible(
-							BookmarksEntry.class.getName(), entry.getEntryId(),
-							false);
-					}
+					assetEntryLocalService.updateVisible(
+						BookmarksEntry.class.getName(), entry.getEntryId(),
+						false);
 
 					// Social
 

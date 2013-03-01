@@ -273,7 +273,7 @@ if (fieldParamSelection.equals("0")) {
 
 	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
 
-	var REGEX_DATE = /^(19|20)\d\d([-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/;
+	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
 
 	var customRangeFrom = A.one('#<portlet:namespace /><%= facet.getFieldName() %>from');
 	var customRangeTo = A.one('#<portlet:namespace /><%= facet.getFieldName() %>to');
@@ -286,7 +286,7 @@ if (fieldParamSelection.equals("0")) {
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
-			customRange: Liferay.Language.get('search-custom-range-format')
+			customRange: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-format") %>'
 		},
 		true
 	);

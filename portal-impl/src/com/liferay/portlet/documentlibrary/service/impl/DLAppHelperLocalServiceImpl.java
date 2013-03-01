@@ -541,12 +541,14 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		boolean hasLock = dlFolderService.hasFolderLock(folder.getFolderId());
+		boolean hasLock = dlFolderLocalService.hasFolderLock(
+			userId, folder.getFolderId());
 
 		Lock lock = null;
 
 		if (!hasLock) {
-			lock = dlFolderService.lockFolder(folder.getFolderId());
+			lock = dlFolderLocalService.lockFolder(
+				userId, folder.getFolderId());
 		}
 
 		try {
@@ -555,8 +557,8 @@ public class DLAppHelperLocalServiceImpl
 		}
 		finally {
 			if (!hasLock) {
-				dlFolderService.unlockFolder(
-					folder.getGroupId(), folder.getFolderId(), lock.getUuid());
+				dlFolderLocalService.unlockFolder(
+					folder.getFolderId(), lock.getUuid());
 			}
 		}
 	}
@@ -573,7 +575,8 @@ public class DLAppHelperLocalServiceImpl
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 
-		boolean hasLock = dlFolderService.hasFolderLock(folder.getFolderId());
+		boolean hasLock = dlFolderLocalService.hasFolderLock(
+			userId, folder.getFolderId());
 
 		Lock lock = null;
 
@@ -588,7 +591,7 @@ public class DLAppHelperLocalServiceImpl
 		finally {
 			if (!hasLock) {
 				dlFolderLocalService.unlockFolder(
-					folder.getGroupId(), folder.getFolderId(), lock.getUuid());
+					folder.getFolderId(), lock.getUuid());
 			}
 		}
 	}

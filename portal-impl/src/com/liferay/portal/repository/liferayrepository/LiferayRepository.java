@@ -673,8 +673,7 @@ public class LiferayRepository
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
-		dlFolderService.unlockFolder(
-			getGroupId(), toFolderId(folderId), lockUuid);
+		dlFolderService.unlockFolder(toFolderId(folderId), lockUuid);
 	}
 
 	public void unlockFolder(long parentFolderId, String title, String lockUuid)

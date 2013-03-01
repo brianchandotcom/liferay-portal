@@ -2144,10 +2144,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return layout;
 		}
 
-		Date now = new Date();
-
-		layout.setModifiedDate(now);
-
 		int oldPriority = layout.getPriority();
 
 		int nextPriority = layoutLocalServiceHelper.getNextPriority(
@@ -2155,6 +2151,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getParentLayoutId(), layout.getSourcePrototypeLayoutUuid(),
 			priority);
 
+		if (oldPriority == nextPriority) {
+			return layout;
+		}
+
+		Date now = new Date();
+
+		layout.setModifiedDate(now);
 		layout.setPriority(nextPriority);
 
 		layoutPersistence.update(layout);
@@ -2175,13 +2178,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		priority = 0;
 
 		for (Layout curLayout : layouts) {
-			curLayout.setModifiedDate(now);
+			int curOldPriority = curLayout.getPriority();
 
 			int curNextPriority = layoutLocalServiceHelper.getNextPriority(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getParentLayoutId(),
 				curLayout.getSourcePrototypeLayoutUuid(), priority++);
 
+			if (curOldPriority == curNextPriority) {
+				continue;
+			}
+
+			curLayout.setModifiedDate(now);
 			curLayout.setPriority(curNextPriority);
 
 			layoutPersistence.update(curLayout);

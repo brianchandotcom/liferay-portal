@@ -1965,11 +1965,13 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<SCProductVersion>> listenersList = new ArrayList<ModelListener<SCProductVersion>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SCProductVersion>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

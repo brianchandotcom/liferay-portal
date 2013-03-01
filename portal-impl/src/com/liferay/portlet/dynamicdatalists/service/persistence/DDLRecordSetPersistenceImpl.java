@@ -3209,11 +3209,13 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<DDLRecordSet>> listenersList = new ArrayList<ModelListener<DDLRecordSet>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DDLRecordSet>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

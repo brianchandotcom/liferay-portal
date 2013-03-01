@@ -2291,11 +2291,13 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<ExpandoColumn>> listenersList = new ArrayList<ModelListener<ExpandoColumn>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ExpandoColumn>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

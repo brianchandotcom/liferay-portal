@@ -11143,11 +11143,13 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<DDMTemplate>> listenersList = new ArrayList<ModelListener<DDMTemplate>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DDMTemplate>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

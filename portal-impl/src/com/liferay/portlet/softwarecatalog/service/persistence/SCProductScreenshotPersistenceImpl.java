@@ -1930,11 +1930,13 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<SCProductScreenshot>> listenersList = new ArrayList<ModelListener<SCProductScreenshot>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SCProductScreenshot>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

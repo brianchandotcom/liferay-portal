@@ -5121,11 +5121,13 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<WikiNode>> listenersList = new ArrayList<ModelListener<WikiNode>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<WikiNode>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

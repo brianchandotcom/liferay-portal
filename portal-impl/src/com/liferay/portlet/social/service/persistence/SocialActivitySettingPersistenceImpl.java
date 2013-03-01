@@ -3170,11 +3170,13 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<SocialActivitySetting>> listenersList = new ArrayList<ModelListener<SocialActivitySetting>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialActivitySetting>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

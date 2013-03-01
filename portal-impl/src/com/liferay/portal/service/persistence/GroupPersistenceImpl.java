@@ -7698,11 +7698,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Group>> listenersList = new ArrayList<ModelListener<Group>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Group>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

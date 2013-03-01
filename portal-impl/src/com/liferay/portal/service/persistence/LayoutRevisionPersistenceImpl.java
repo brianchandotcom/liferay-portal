@@ -6361,11 +6361,13 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<LayoutRevision>> listenersList = new ArrayList<ModelListener<LayoutRevision>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<LayoutRevision>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -7346,11 +7346,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<DDMStructure>> listenersList = new ArrayList<ModelListener<DDMStructure>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DDMStructure>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

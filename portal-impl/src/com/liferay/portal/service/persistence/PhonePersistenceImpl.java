@@ -3304,11 +3304,13 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Phone>> listenersList = new ArrayList<ModelListener<Phone>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Phone>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

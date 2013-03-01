@@ -3778,11 +3778,13 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<SCProductEntry>> listenersList = new ArrayList<ModelListener<SCProductEntry>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SCProductEntry>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

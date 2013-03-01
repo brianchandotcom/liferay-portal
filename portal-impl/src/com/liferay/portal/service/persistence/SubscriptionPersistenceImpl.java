@@ -2953,11 +2953,13 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Subscription>> listenersList = new ArrayList<ModelListener<Subscription>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Subscription>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

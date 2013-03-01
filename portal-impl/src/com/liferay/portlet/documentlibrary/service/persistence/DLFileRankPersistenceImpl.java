@@ -4450,11 +4450,13 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<DLFileRank>> listenersList = new ArrayList<ModelListener<DLFileRank>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DLFileRank>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

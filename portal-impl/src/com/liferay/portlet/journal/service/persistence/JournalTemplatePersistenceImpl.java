@@ -5574,11 +5574,13 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<JournalTemplate>> listenersList = new ArrayList<ModelListener<JournalTemplate>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalTemplate>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

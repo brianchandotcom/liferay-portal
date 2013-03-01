@@ -1491,11 +1491,13 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<ResourceAction>> listenersList = new ArrayList<ModelListener<ResourceAction>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ResourceAction>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -2757,11 +2757,13 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Team>> listenersList = new ArrayList<ModelListener<Team>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Team>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

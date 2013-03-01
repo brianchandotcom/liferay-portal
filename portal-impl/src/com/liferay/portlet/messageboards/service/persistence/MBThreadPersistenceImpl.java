@@ -12006,11 +12006,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<MBThread>> listenersList = new ArrayList<ModelListener<MBThread>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MBThread>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

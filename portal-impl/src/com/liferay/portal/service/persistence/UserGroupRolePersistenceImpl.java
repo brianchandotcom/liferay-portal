@@ -3156,11 +3156,13 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<UserGroupRole>> listenersList = new ArrayList<ModelListener<UserGroupRole>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<UserGroupRole>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

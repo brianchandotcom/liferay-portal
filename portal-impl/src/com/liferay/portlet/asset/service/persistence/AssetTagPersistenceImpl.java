@@ -2291,11 +2291,13 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<AssetTag>> listenersList = new ArrayList<ModelListener<AssetTag>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AssetTag>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

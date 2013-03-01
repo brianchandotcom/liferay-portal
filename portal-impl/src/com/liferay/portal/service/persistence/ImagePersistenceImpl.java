@@ -1045,11 +1045,13 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Image>> listenersList = new ArrayList<ModelListener<Image>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Image>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

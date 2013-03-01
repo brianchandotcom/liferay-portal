@@ -2131,11 +2131,13 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<UserTracker>> listenersList = new ArrayList<ModelListener<UserTracker>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<UserTracker>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

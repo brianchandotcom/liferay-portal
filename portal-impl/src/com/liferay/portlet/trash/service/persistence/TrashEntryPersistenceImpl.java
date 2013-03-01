@@ -2417,11 +2417,13 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<TrashEntry>> listenersList = new ArrayList<ModelListener<TrashEntry>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<TrashEntry>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

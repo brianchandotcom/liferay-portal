@@ -7841,11 +7841,13 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<MBCategory>> listenersList = new ArrayList<ModelListener<MBCategory>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MBCategory>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -9177,11 +9177,13 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<DLFolder>> listenersList = new ArrayList<ModelListener<DLFolder>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DLFolder>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

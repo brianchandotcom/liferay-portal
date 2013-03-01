@@ -26577,11 +26577,13 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<JournalArticle>> listenersList = new ArrayList<ModelListener<JournalArticle>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalArticle>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

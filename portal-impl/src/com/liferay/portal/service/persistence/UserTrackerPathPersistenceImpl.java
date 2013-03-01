@@ -1111,11 +1111,13 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<UserTrackerPath>> listenersList = new ArrayList<ModelListener<UserTrackerPath>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<UserTrackerPath>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

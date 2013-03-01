@@ -8735,11 +8735,13 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<BookmarksEntry>> listenersList = new ArrayList<ModelListener<BookmarksEntry>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<BookmarksEntry>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

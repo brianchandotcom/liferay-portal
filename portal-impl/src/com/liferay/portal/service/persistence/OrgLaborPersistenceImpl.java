@@ -1111,11 +1111,13 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<OrgLabor>> listenersList = new ArrayList<ModelListener<OrgLabor>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<OrgLabor>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

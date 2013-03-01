@@ -8744,11 +8744,13 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Layout>> listenersList = new ArrayList<ModelListener<Layout>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Layout>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

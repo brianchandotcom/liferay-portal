@@ -3934,11 +3934,13 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Address>> listenersList = new ArrayList<ModelListener<Address>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Address>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

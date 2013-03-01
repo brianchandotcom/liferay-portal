@@ -8037,11 +8037,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<CalEvent>> listenersList = new ArrayList<ModelListener<CalEvent>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<CalEvent>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

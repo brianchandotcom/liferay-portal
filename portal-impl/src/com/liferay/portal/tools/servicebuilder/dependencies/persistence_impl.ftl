@@ -1721,10 +1721,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<${entity.name}>> listenersList = new ArrayList<ModelListener<${entity.name}>>();
 
 				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<${entity.name}>)InstanceFactory.newInstance(listenerClassName));
+					listenersList.add((ModelListener<${entity.name}>)InstanceFactory.newInstance(clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

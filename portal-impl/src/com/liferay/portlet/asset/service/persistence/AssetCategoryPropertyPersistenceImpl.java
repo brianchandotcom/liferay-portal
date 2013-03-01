@@ -2531,11 +2531,13 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<AssetCategoryProperty>> listenersList = new ArrayList<ModelListener<AssetCategoryProperty>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AssetCategoryProperty>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -2226,11 +2226,13 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<ResourceBlock>> listenersList = new ArrayList<ModelListener<ResourceBlock>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ResourceBlock>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

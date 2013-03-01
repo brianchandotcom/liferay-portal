@@ -1424,11 +1424,13 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<ResourceBlockPermission>> listenersList = new ArrayList<ModelListener<ResourceBlockPermission>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ResourceBlockPermission>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

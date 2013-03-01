@@ -592,11 +592,13 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<ClusterGroup>> listenersList = new ArrayList<ModelListener<ClusterGroup>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ClusterGroup>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

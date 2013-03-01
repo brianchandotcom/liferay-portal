@@ -5170,11 +5170,13 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<JournalContentSearch>> listenersList = new ArrayList<ModelListener<JournalContentSearch>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalContentSearch>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -1890,11 +1890,13 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Company>> listenersList = new ArrayList<ModelListener<Company>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Company>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

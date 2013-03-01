@@ -4563,11 +4563,13 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		if (listenerClassNames.length > 0) {
 			try {
+				Class<?> clazz = getClass();
+
 				List<ModelListener<Organization>> listenersList = new ArrayList<ModelListener<Organization>>();
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Organization>)InstanceFactory.newInstance(
-							listenerClassName));
+							clazz.getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

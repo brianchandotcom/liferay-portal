@@ -303,7 +303,7 @@ if (Validator.isNull(mainLanguageValue)) {
 
 		if (languageSelectorTrigger) {
 			Liferay.component(
-				'<%= namespace + name %>languageSelector',
+				'<%= namespace + id %>languageSelector',
 				function(event) {
 					if (handle) {
 						handle.detach();
@@ -329,7 +329,7 @@ if (Validator.isNull(mainLanguageValue)) {
 			var handle = languageSelectorTrigger.once(
 				'click',
 				function(event) {
-					Liferay.component('<%= namespace + name %>languageSelector');
+					Liferay.component('<%= namespace + id %>languageSelector');
 				}
 			);
 		}

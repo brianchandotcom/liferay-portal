@@ -271,18 +271,17 @@ public class DLFolderServiceWrapper implements DLFolderService,
 			expirationTime);
 	}
 
-	public void unlockFolder(long groupId, long folderId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_dlFolderService.unlockFolder(groupId, folderId, lockUuid);
-	}
-
 	public void unlockFolder(long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlFolderService.unlockFolder(groupId, parentFolderId, name, lockUuid);
+	}
+
+	public void unlockFolder(long folderId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderService.unlockFolder(folderId, lockUuid);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(

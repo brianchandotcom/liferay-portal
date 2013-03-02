@@ -15,13 +15,11 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.ExpiredLockException;
-import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -71,29 +69,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.DELETE);
 
-		boolean hasLock = hasFolderLock(folderId);
-
-		Lock lock = null;
-
-		if (!hasLock) {
-
-			// Lock
-
-			lock = doLockFolder(
-				folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
-		}
-
-		try {
-			dlFolderLocalService.deleteFolder(folderId, includeTrashedEntries);
-		}
-		finally {
-			if (!hasLock) {
-
-				// Unlock
-
-				doUnlockFolder(dlFolder.getGroupId(), folderId, lock.getUuid());
-			}
-		}
+		dlFolderLocalService.deleteFolder(
+			getUserId(), folderId, includeTrashedEntries);
 	}
 
 	public void deleteFolder(long groupId, long parentFolderId, String name)
@@ -392,7 +369,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), dlFolder, ActionKeys.UPDATE);
 
-		return doLockFolder(folderId, owner, inheritable, expirationTime);
+		return dlFolderLocalService.lockFolder(
+			getUserId(), folderId, owner, inheritable, expirationTime);
 	}
 
 	public DLFolder moveFolder(
@@ -410,29 +388,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			permissionChecker, serviceContext.getScopeGroupId(), parentFolderId,
 			ActionKeys.ADD_FOLDER);
 
-		boolean hasLock = hasFolderLock(folderId);
-
-		Lock lock = null;
-
-		if (!hasLock) {
-
-			// Lock
-
-			lock = lockFolder(folderId);
-		}
-
-		try {
-			return dlFolderLocalService.moveFolder(
-				folderId, parentFolderId, serviceContext);
-		}
-		finally {
-			if (!hasLock) {
-
-				// Unlock
-
-				unlockFolder(dlFolder.getGroupId(), folderId, lock.getUuid());
-			}
-		}
+		return dlFolderLocalService.moveFolder(
+			getUserId(), folderId, parentFolderId, serviceContext);
 	}
 
 	public Lock refreshFolderLock(
@@ -442,7 +399,16 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
-	public void unlockFolder(long groupId, long folderId, String lockUuid)
+	public void unlockFolder(
+			long groupId, long parentFolderId, String name, String lockUuid)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getFolder(groupId, parentFolderId, name);
+
+		unlockFolder(dlFolder.getFolderId(), lockUuid);
+	}
+
+	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
 		try {
@@ -454,16 +420,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		catch (NoSuchFolderException nsfe) {
 		}
 
-		doUnlockFolder(groupId, folderId, lockUuid);
-	}
-
-	public void unlockFolder(
-			long groupId, long parentFolderId, String name, String lockUuid)
-		throws PortalException, SystemException {
-
-		DLFolder dlFolder = getFolder(groupId, parentFolderId, name);
-
-		unlockFolder(groupId, dlFolder.getFolderId(), lockUuid);
+		dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
 
 	public DLFolder updateFolder(
@@ -476,32 +433,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
 			ActionKeys.UPDATE);
 
-		boolean hasLock = hasFolderLock(folderId);
-
-		Lock lock = null;
-
-		if (!hasLock) {
-
-			// Lock
-
-			lock = doLockFolder(
-				folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
-		}
-
-		try {
-			return dlFolderLocalService.updateFolder(
-				folderId, name, description, defaultFileEntryTypeId,
-				fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
-		}
-		finally {
-			if (!hasLock) {
-
-				// Unlock
-
-				unlockFolder(
-					serviceContext.getScopeGroupId(), folderId, lock.getUuid());
-			}
-		}
+		return dlFolderLocalService.updateFolder(
+			folderId, name, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
@@ -526,47 +460,6 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 
 		return verified;
-	}
-
-	protected Lock doLockFolder(
-			long folderId, String owner, boolean inheritable,
-			long expirationTime)
-		throws PortalException, SystemException {
-
-		if ((expirationTime <= 0) ||
-			(expirationTime > DLFolderImpl.LOCK_EXPIRATION_TIME)) {
-
-			expirationTime = DLFolderImpl.LOCK_EXPIRATION_TIME;
-		}
-
-		return lockLocalService.lock(
-			getUserId(), DLFolder.class.getName(), folderId, owner, inheritable,
-			expirationTime);
-	}
-
-	protected void doUnlockFolder(long groupId, long folderId, String lockUuid)
-		throws PortalException, SystemException {
-
-		if (Validator.isNotNull(lockUuid)) {
-			try {
-				Lock lock = lockLocalService.getLock(
-					DLFolder.class.getName(), folderId);
-
-				if (!lockUuid.equals(lock.getUuid())) {
-					throw new InvalidLockException("UUIDs do not match");
-				}
-			}
-			catch (PortalException pe) {
-				if (pe instanceof ExpiredLockException ||
-					pe instanceof NoSuchLockException) {
-				}
-				else {
-					throw pe;
-				}
-			}
-		}
-
-		lockLocalService.unlock(DLFolder.class.getName(), folderId);
 	}
 
 }

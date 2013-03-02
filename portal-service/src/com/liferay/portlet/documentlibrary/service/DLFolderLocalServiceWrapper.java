@@ -328,6 +328,14 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 			includeTrashedEntries);
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
+		long userId, long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.deleteFolder(userId, folderId,
+			includeTrashedEntries);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
 		long groupId, long parentFolderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -543,13 +551,47 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public boolean hasFolderLock(long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.hasFolderLock(userId, folderId);
+	}
+
+	public com.liferay.portal.model.Lock lockFolder(long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.lockFolder(userId, folderId);
+	}
+
+	public com.liferay.portal.model.Lock lockFolder(long userId, long folderId,
+		java.lang.String owner, boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolderLocalService.lockFolder(userId, folderId, owner,
+			inheritable, expirationTime);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(
-		long folderId, long parentFolderId,
+		long userId, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderLocalService.moveFolder(folderId, parentFolderId,
-			serviceContext);
+		return _dlFolderLocalService.moveFolder(userId, folderId,
+			parentFolderId, serviceContext);
+	}
+
+	public void unlockFolder(long groupId, long parentFolderId,
+		java.lang.String name, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.unlockFolder(groupId, parentFolderId, name,
+			lockUuid);
+	}
+
+	public void unlockFolder(long folderId, java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(

@@ -14,8 +14,34 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.FileUtil;
+
 /**
  * @author Michael Hashimoto
  */
 public class FunctionConverter extends BaseConverter {
+
+	public FunctionConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void generateFunction(String functionName) throws Exception {
+		String baseDir = _getBaseDir();
+		String functionFileName = _getFunctionFileName(functionName);
+
+		if (!FileUtil.exists(baseDir + "/" + functionFileName)) {
+			return;
+		}
+	}
+
+	private String _getBaseDir() {
+		return _seleniumBuilderContext.getBaseDir();
+	}
+
+	private String _getFunctionFileName(String functionName) {
+		return _seleniumBuilderContext.getFunctionFileName(functionName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

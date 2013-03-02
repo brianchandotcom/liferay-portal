@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Translator Test Page</td>
-	<td>Translator Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Translator Test Page</td>
 	<td>Translator Test Page</td>
@@ -30,8 +25,13 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_26_id']</td>
-	<td>English to French</td>
+	<td>//select[@id='_26_fromLanguageId']</td>
+	<td>English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_26_toLanguageId']</td>
+	<td>French</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -43,7 +43,6 @@
 	<td>Mon nom est traducteur de Liferay, fluent dans plus de 6 millions de formes de communication.</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

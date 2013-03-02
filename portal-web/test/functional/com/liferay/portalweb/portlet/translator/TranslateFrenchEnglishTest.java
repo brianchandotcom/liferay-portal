@@ -25,15 +25,16 @@ public class TranslateFrenchEnglishTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Translator Test Page");
 		selenium.clickAt("link=Translator Test Page",
 			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"Mon nom est traducteur de Liferay, fluent dans plus de 6 millions de formes de communication."));
-		selenium.select("//select[@id='_26_id']",
-			RuntimeVariables.replace("French to English"));
+		selenium.select("//select[@id='_26_fromLanguageId']",
+			RuntimeVariables.replace("French"));
+		selenium.select("//select[@id='_26_toLanguageId']",
+			RuntimeVariables.replace("English"));
 		selenium.clickAt("//input[@value='Translate']",
 			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");

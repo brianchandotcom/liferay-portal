@@ -25,15 +25,16 @@ public class TranslateJapaneseEnglishTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Translator Test Page");
 		selenium.clickAt("link=Translator Test Page",
 			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"\u79c1\u306e\u540d\u524d\u306f\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3\u306e6,000,000\u306e\u5f62\u614b\u306e\u6d41\u66a2\u306aLiferay\u306e\u8a33\u8005\u3067\u3042\u308b\u3002"));
-		selenium.select("//select[@id='_26_id']",
-			RuntimeVariables.replace("Japanese to English"));
+		selenium.select("//select[@id='_26_fromLanguageId']",
+			RuntimeVariables.replace("Japanese"));
+		selenium.select("//select[@id='_26_toLanguageId']",
+			RuntimeVariables.replace("English"));
 		selenium.clickAt("//input[@value='Translate']",
 			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");

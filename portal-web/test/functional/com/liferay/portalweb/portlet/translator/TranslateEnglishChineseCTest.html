@@ -9,16 +9,6 @@
 <tr><td rowspan="1" colspan="3">TranslateEnglishChineseCTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Translator Test Page</td>
-	<td>Translator Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Translator Test Page</td>
 	<td>Translator Test Page</td>
@@ -30,8 +20,13 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_26_id']</td>
-	<td>English to Chinese (China)</td>
+	<td>//select[@id='_26_fromLanguageId']</td>
+	<td>English</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_26_toLanguageId']</td>
+	<td>Chinese (China)</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -39,11 +34,15 @@
 	<td>Translate</td>
 </tr>
 <tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertTextPresent</td>
 	<td>我的名字是Liferay译者，流利完全成功6通信的百万个形式。</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -55,7 +55,7 @@ import javax.servlet.ServletContext;
 public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static String getDefaultRegularThemeId() {
 		return PortalUtil.getJsSafePortletId(
@@ -72,7 +72,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static String getDefaultWapThemeId() {
 		return PortalUtil.getJsSafePortletId(PropsValues.DEFAULT_WAP_THEME_ID);

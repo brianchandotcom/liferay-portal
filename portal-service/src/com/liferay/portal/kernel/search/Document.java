@@ -103,12 +103,12 @@ public interface Document extends Cloneable, Serializable {
 	public void addLocalizedText(String name, Map<Locale, String> values);
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate();
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate(Date modifiedDate);
 

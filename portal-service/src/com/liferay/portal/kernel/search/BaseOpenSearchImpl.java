@@ -268,7 +268,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	protected Object[] addSearchResults(
 		String keywords, int startPage, int itemsPerPage, int total, int start,

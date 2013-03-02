@@ -77,7 +77,7 @@ public class Field implements Serializable {
 	};
 
 	/**
-	 * @deprecated {@link #MODIFIED_DATE}
+	 * @deprecated As of 6.1.0, replaced by {@link #MODIFIED_DATE}
 	 */
 	public static final String MODIFIED = "modified";
 
@@ -146,7 +146,7 @@ public class Field implements Serializable {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public Field(String name, String value, boolean tokenized) {
 		this(name, value);
@@ -160,7 +160,7 @@ public class Field implements Serializable {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public Field(String name, String[] values, boolean tokenized) {
 		this(name, values);
@@ -169,7 +169,7 @@ public class Field implements Serializable {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public Field(String name, String[] values, boolean tokenized, float boost) {
 		this(name, values);

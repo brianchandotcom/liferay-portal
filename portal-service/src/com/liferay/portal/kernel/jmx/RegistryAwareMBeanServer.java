@@ -112,7 +112,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public ObjectInputStream deserialize(ObjectName objectName, byte[] data)
 		throws InstanceNotFoundException, OperationsException {
@@ -123,7 +123,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public ObjectInputStream deserialize(String className, byte[] data)
 		throws OperationsException, ReflectionException {
@@ -132,7 +132,7 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public ObjectInputStream deserialize(
 			String className, ObjectName loaderObjectName, byte[] data)

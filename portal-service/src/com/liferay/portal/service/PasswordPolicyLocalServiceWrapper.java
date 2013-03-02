@@ -306,7 +306,7 @@ public class PasswordPolicyLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long organizationId, long locationId)

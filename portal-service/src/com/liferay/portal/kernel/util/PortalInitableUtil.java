@@ -19,7 +19,7 @@ import java.util.Vector;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link PortalLifecycleUtil}
+ * @deprecated As of 6.1.0, replaced by {@link PortalLifecycleUtil}
  */
 public class PortalInitableUtil {
 

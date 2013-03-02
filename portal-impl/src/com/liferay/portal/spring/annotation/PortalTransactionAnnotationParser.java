@@ -29,7 +29,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author     Michael Young
  * @author     Shuyang Zhou
- * @deprecated
+ * @deprecated As of 6.1.0
  */
 public class PortalTransactionAnnotationParser
 	implements TransactionAnnotationParser, Serializable {

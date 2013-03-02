@@ -37,14 +37,14 @@ public class ParallelDestination extends BaseAsyncDestination {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public ParallelDestination(String name) {
 		super(name);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public ParallelDestination(
 		String name, int workersCoreSize, int workersMaxSize) {

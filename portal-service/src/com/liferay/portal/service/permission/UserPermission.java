@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public interface UserPermission {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void check(
 			PermissionChecker permissionChecker, long userId,
@@ -40,7 +40,7 @@ public interface UserPermission {
 		throws PrincipalException;
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId, long organizationId,

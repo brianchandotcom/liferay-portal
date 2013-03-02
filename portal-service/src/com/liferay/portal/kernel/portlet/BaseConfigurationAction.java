@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.portlet;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Julio Camarero
- * @deprecated {@link DefaultConfigurationAction}
+ * @deprecated As of 6.1.0, replaced by {@link DefaultConfigurationAction}
  */
 public class BaseConfigurationAction extends DefaultConfigurationAction {
 }

@@ -77,7 +77,7 @@ public class ClassLoaderProxy {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public Object invoke(String methodName, Object[] args) throws Throwable {
 		Thread currentThread = Thread.currentThread();

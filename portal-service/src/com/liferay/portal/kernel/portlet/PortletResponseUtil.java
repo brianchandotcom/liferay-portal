@@ -50,7 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PortletResponseUtil {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, byte[] bytes)
@@ -60,7 +60,7 @@ public class PortletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, byte[] bytes,
@@ -71,7 +71,7 @@ public class PortletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream is)
@@ -81,7 +81,7 @@ public class PortletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream is,
@@ -92,7 +92,7 @@ public class PortletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream is,

@@ -18,7 +18,8 @@ import java.util.Set;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.concurrent.ConcurrentHashSet}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.concurrent.ConcurrentHashSet}
  */
 public class ConcurrentHashSet<E>
 	extends com.liferay.portal.kernel.concurrent.ConcurrentHashSet<E> {

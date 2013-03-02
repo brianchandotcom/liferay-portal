@@ -133,7 +133,8 @@ public interface ResourceActions {
 		String portletResource, String modelResource);
 
 	/**
-	 * @deprecated {@link #getRoles(long, Group, String, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getRoles(long, Group,
+	 *             String, int[])}
 	 */
 	public List<Role> getRoles(
 			long companyId, Group group, String modelResource)

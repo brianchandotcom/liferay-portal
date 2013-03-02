@@ -442,7 +442,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	@Override
 	public boolean isRequestedSessionIdFromUrl() {

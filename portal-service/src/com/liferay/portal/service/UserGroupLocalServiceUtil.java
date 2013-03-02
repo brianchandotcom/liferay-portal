@@ -383,7 +383,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws PortalException if any one of the users could not be found or
 	if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -399,7 +399,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws PortalException if a user with the primary key could not be
 	found or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,

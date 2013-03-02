@@ -102,7 +102,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * @deprecated {@link
+	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #setPlatformTransactionManager(PlatformTransactionManager)}
 	 */
 	public void setTransactionManager(

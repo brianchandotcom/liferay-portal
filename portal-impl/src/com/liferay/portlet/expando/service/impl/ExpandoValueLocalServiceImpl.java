@@ -594,8 +594,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             boolean[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, boolean[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -609,8 +609,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             boolean[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, boolean[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -624,7 +624,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, Date[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, Date[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -638,7 +639,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, Date[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, Date[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -652,8 +654,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             double[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, double[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -667,8 +669,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             double[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, double[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -682,8 +684,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             float[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, float[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -697,8 +699,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             float[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, float[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -712,7 +714,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, int[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -726,7 +729,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, int[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -740,7 +744,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, long[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, long[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -754,7 +759,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, long[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, long[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -768,7 +774,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long, Object)}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, Object)}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -782,8 +789,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             short[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, short[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -797,8 +804,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             short[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, short[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -812,8 +819,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             String[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, String[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -827,8 +834,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #addValue(long, String, String, String, long,
-	 *             String[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #addValue(long, String,
+	 *             String, String, long, String[])}
 	 */
 	public ExpandoValue addValue(
 			String className, String tableName, String columnName, long classPK,
@@ -1168,8 +1175,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getColumnValues(long, String, String, String, String,
-	 *             int, int)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getColumnValues(long,
+	 *             String, String, String, String, int, int)}
 	 */
 	public List<ExpandoValue> getColumnValues(
 			String className, String tableName, String columnName, String data,
@@ -1247,8 +1254,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getColumnValuesCount(long, String, String, String,
-	 *             String)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getColumnValuesCount(long,
+	 *             String, String, String, String)}
 	 */
 	public int getColumnValuesCount(
 			String className, String tableName, String columnName, String data)
@@ -1618,7 +1625,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long)}
 	 */
 	public Serializable getData(
 			String className, String tableName, String columnName, long classPK)
@@ -1631,8 +1639,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             boolean[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, boolean[])}
 	 */
 	public boolean getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1646,8 +1654,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             boolean[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, boolean[])}
 	 */
 	public boolean[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1661,7 +1669,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, Date[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, Date[])}
 	 */
 	public Date getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1675,7 +1684,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, Date[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, Date[])}
 	 */
 	public Date[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1689,8 +1699,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             double[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, double[])}
 	 */
 	public double getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1704,8 +1714,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             double[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, double[])}
 	 */
 	public double[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1719,7 +1729,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, float[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, float[])}
 	 */
 	public float getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1733,7 +1744,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, float[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, float[])}
 	 */
 	public float[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1747,7 +1759,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, int[])}
 	 */
 	public int getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1761,7 +1774,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, int[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, int[])}
 	 */
 	public int[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1775,7 +1789,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, long[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, long[])}
 	 */
 	public long getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1789,7 +1804,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, long[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, long[])}
 	 */
 	public long[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1803,7 +1819,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, short[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, short[])}
 	 */
 	public short getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1817,7 +1834,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long, short[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, short[])}
 	 */
 	public short[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1831,8 +1849,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             String[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, String[])}
 	 */
 	public String getData(
 			String className, String tableName, String columnName, long classPK,
@@ -1846,8 +1864,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getData(long, String, String, String, long,
-	 *             String[])}
+	 * @deprecated As of 6.1.0, replaced by {@link #getData(long, String,
+	 *             String, String, long, String[])}
 	 */
 	public String[] getData(
 			String className, String tableName, String columnName, long classPK,
@@ -2008,7 +2026,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getValue(long, long, String, String, long)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getValue(long, long, String,
+	 *             String, long)}
 	 */
 	public ExpandoValue getValue(
 			long classNameId, String tableName, String columnName, long classPK)
@@ -2032,7 +2051,8 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getValue(long, String, String, String, long)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getValue(long, String,
+	 *             String, String, long)}
 	 */
 	public ExpandoValue getValue(
 			String className, String tableName, String columnName, long classPK)

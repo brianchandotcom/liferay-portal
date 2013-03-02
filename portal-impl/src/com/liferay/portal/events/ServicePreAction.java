@@ -1879,7 +1879,7 @@ public class ServicePreAction extends Action {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	protected boolean isViewableCommunity(
 			User user, long groupId, boolean privateLayout,
@@ -1891,7 +1891,7 @@ public class ServicePreAction extends Action {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	protected boolean isViewableGroup(
 			User user, long groupId, boolean privateLayout, long layoutId,

@@ -16,7 +16,8 @@ package com.liferay.portal.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.facebook.FacebookConnectUtil}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.facebook.FacebookConnectUtil}
  */
 public class FacebookConnectUtil
 	extends com.liferay.portal.kernel.facebook.FacebookConnectUtil {

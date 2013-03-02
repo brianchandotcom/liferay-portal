@@ -26,7 +26,7 @@ import javax.naming.NamingException;
 /**
  * @author     Ganesh Ram
  * @author     Brian Wing Shun Chan
- * @deprecated {@link DBFactoryUtil}
+ * @deprecated As of 6.1.0, replaced by {@link DBFactoryUtil}
  */
 public class DatabaseUtil {
 

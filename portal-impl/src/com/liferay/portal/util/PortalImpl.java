@@ -1140,7 +1140,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated {@link #getCDNHost(boolean)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getCDNHost(boolean)}
 	 */
 	public String getCDNHost() {
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -3070,7 +3070,7 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated {@link #getPortalPort(boolean)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getPortalPort(boolean)}
 	 */
 	public int getPortalPort() {
 		return _portalPort.get();
@@ -3212,7 +3212,8 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated {@link #getPortletBreadcrumbs(HttpServletRequest)}
+	 * @deprecated As of 6.1.0, replaced by {@link
+	 *             #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {

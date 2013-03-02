@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender
 
 /**
  * @author     Bruno Farache
- * @deprecated {@link
+ * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.messaging.LayoutsRemotePublisherMessageListener}
  */
 public class LayoutsRemotePublisherMessageListener
@@ -29,7 +29,7 @@ public class LayoutsRemotePublisherMessageListener
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public LayoutsRemotePublisherMessageListener(
 		SingleDestinationMessageSender statusSender,

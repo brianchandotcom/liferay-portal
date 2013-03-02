@@ -16,7 +16,8 @@ package com.liferay.portal.servlet;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.facebook.FacebookServlet}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.facebook.FacebookServlet}
  */
 public class FacebookServlet
 	extends com.liferay.portal.facebook.FacebookServlet {

@@ -37,7 +37,8 @@ public class ExpandoBridgeFactoryUtil {
 	}
 
 	/**
-	 * @deprecated {@link #getExpandoBridge(long, String)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getExpandoBridge(long,
+	 *             String)}
 	 */
 	public static ExpandoBridge getExpandoBridge(String className) {
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -46,7 +47,8 @@ public class ExpandoBridgeFactoryUtil {
 	}
 
 	/**
-	 * @deprecated {@link #getExpandoBridge(long, String, long)}
+	 * @deprecated As of 6.1.0, replaced by {@link #getExpandoBridge(long,
+	 *             String, long)}
 	 */
 	public static ExpandoBridge getExpandoBridge(
 		String className, long classPK) {

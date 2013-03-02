@@ -246,7 +246,8 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #addTable(long, long, String)}
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
+	String)}
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable addTable(
 		long classNameId, java.lang.String name)
@@ -259,7 +260,8 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #addTable(long, String, String)}
+	* @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
+	String)}
 	*/
 	public com.liferay.portlet.expando.model.ExpandoTable addTable(
 		java.lang.String className, java.lang.String name)
@@ -329,7 +331,8 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getTable(long, long, String)}
+	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, long,
+	String)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoTable getTable(
@@ -344,7 +347,8 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getTable(long, String, String)}
+	* @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
+	String)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoTable getTable(

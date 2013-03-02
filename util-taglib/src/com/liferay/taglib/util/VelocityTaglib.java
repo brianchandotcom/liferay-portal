@@ -48,9 +48,9 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean,
-	 *             String, long, long, String, Boolean, Boolean, long, long,
-	 *             Boolean, String)}
+	 * @deprecated As of 6.1.0, replaced by {@link #actionURL(String, String,
+	 *             Boolean, Boolean, Boolean, String, long, long, String,
+	 *             Boolean, Boolean, long, long, Boolean, String)}
 	 */
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
@@ -207,12 +207,12 @@ public interface VelocityTaglib {
 	public void metaTags() throws Exception;
 
 	/**
-	 * @deprecated {@link #mySites}
+	 * @deprecated As of 6.1.0, replaced by {@link #mySites}
 	 */
 	public void myPlaces() throws Exception;
 
 	/**
-	 * @deprecated {@link #mySites(int)}
+	 * @deprecated As of 6.1.0, replaced by {@link #mySites(int)}
 	 */
 	public void myPlaces(int max) throws Exception;
 
@@ -256,9 +256,9 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean,
-	 *             long, long, String, Boolean, Boolean, long, long, Boolean,
-	 *             String)}
+	 * @deprecated As of 6.1.0, replaced by {@link #renderURL(String, String,
+	 *             Boolean, Boolean, Boolean, long, long, String, Boolean,
+	 *             Boolean, long, long, Boolean, String)}
 	 */
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,

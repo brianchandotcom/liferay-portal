@@ -16,7 +16,8 @@ package com.liferay.util;
 
 /**
  * @author     Neil Griffin
- * @deprecated {@link com.liferay.portal.kernel.util.ResourceBundleUtil}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.util.ResourceBundleUtil}
  */
 public class ResourceBundleUtil
 	extends com.liferay.portal.kernel.util.ResourceBundleUtil {

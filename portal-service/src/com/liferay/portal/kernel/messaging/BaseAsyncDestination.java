@@ -46,14 +46,14 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public BaseAsyncDestination(String name) {
 		this(name, _WORKERS_CORE_SIZE, _WORKERS_MAX_SIZE);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public BaseAsyncDestination(
 		String name, int workersCoreSize, int workersMaxSize) {

@@ -56,7 +56,7 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -196,7 +196,7 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,

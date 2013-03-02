@@ -35,7 +35,7 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static ServiceMonitorAdvice getInstance() {
 		return new ServiceMonitorAdvice();

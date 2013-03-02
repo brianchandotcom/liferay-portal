@@ -586,14 +586,14 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static String highlight(String s, String keywords) {
 		return highlight(s, keywords, "<span class=\"highlight\">", "</span>");
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static String highlight(
 		String s, String keywords, String highlight1, String highlight2) {

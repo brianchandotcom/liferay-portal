@@ -267,7 +267,7 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
@@ -405,7 +405,7 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,

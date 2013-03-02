@@ -51,7 +51,7 @@ public class AssetVocabularyLocalServiceImpl
 	extends AssetVocabularyLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary addVocabulary(
 			long userId, Map<Locale, String> titleMap,
@@ -331,7 +331,7 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,

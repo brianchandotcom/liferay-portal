@@ -52,7 +52,7 @@ public class LayoutsLocalPublisherMessageListener
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public LayoutsLocalPublisherMessageListener(
 		SingleDestinationMessageSender statusSender,

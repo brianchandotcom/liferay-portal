@@ -16,7 +16,8 @@ package com.liferay.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.util.LocalizationUtil}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.util.LocalizationUtil}
  */
 public class LocalizationUtil
 	extends com.liferay.portal.kernel.util.LocalizationUtil {

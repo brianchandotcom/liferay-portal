@@ -299,14 +299,14 @@ public class DocumentImpl implements Document {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate() {
 		addModifiedDate(new Date());
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void addModifiedDate(Date modifiedDate) {
 		addDate(Field.MODIFIED, modifiedDate);

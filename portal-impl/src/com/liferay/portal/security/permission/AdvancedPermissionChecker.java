@@ -1204,7 +1204,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 

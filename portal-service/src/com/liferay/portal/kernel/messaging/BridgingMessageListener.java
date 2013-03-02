@@ -25,7 +25,7 @@ public class BridgingMessageListener implements MessageListener {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public BridgingMessageListener(
 		SingleDestinationMessageSender singleDestinationMessageSender) {

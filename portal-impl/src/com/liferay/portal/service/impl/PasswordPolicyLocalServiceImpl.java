@@ -223,7 +223,7 @@ public class PasswordPolicyLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public PasswordPolicy getPasswordPolicy(
 			long companyId, long organizationId, long locationId)

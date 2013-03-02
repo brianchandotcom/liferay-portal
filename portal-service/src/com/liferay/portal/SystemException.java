@@ -16,7 +16,8 @@ package com.liferay.portal;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.exception.SystemException}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.exception.SystemException}
  */
 public class SystemException
 	extends com.liferay.portal.kernel.exception.SystemException {

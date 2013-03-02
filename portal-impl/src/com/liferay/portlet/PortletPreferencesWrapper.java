@@ -72,7 +72,7 @@ public class PortletPreferencesWrapper
 	}
 
 	/**
-	 * @deprecated {@link #getPortletPreferencesImpl}
+	 * @deprecated As of 6.1.0, replaced by {@link #getPortletPreferencesImpl}
 	 */
 	public PortletPreferencesImpl getPreferencesImpl() {
 		return getPortletPreferencesImpl();

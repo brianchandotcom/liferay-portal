@@ -106,7 +106,7 @@ public class StringUtil_IW {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords) {
@@ -114,7 +114,7 @@ public class StringUtil_IW {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords, java.lang.String highlight1,

@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * @author     Bruno Farache
- * @deprecated {@link
+ * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.messaging.LayoutsRemotePublisherRequest}
  */
 public class LayoutsRemotePublisherRequest

@@ -29,7 +29,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class ToggleValueTag extends TagSupport {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void doTag(
 			String id, PageContext pageContext, HttpServletRequest request)

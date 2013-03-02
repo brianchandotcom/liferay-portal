@@ -54,7 +54,7 @@ public class PwdEncryptor {
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
 	/**
-	 * @deprecated {@link #TYPE_UFC_CRYPT}
+	 * @deprecated As of 6.1.0, replaced by {@link #TYPE_UFC_CRYPT}
 	 */
 	public static final String TYPE_CRYPT = "CRYPT";
 

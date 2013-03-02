@@ -58,7 +58,7 @@ public class LiferayFileUpload extends ServletFileUpload {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")

@@ -269,7 +269,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(

@@ -169,7 +169,7 @@ public class ServletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			HttpServletResponse response, String fileName, byte[] bytes)
@@ -179,7 +179,7 @@ public class ServletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			HttpServletResponse response, String fileName, byte[] bytes,
@@ -190,7 +190,7 @@ public class ServletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			HttpServletResponse response, String fileName, InputStream is)
@@ -200,7 +200,7 @@ public class ServletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			HttpServletResponse response, String fileName, InputStream is,
@@ -211,7 +211,7 @@ public class ServletResponseUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
 			HttpServletResponse response, String fileName, InputStream is,

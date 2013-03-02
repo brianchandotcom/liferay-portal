@@ -26,7 +26,7 @@ public class DefaultSingleDestinationMessageSender
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public DefaultSingleDestinationMessageSender(
 		String destinationName, MessageSender messageSender) {

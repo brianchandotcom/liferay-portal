@@ -48,7 +48,7 @@ import java.util.Map;
 public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary addVocabulary(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -251,7 +251,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,

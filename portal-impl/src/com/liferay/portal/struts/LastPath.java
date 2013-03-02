@@ -18,7 +18,8 @@ import java.util.Map;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.struts.LastPath}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.struts.LastPath}
  */
 public class LastPath extends com.liferay.portal.kernel.struts.LastPath {
 

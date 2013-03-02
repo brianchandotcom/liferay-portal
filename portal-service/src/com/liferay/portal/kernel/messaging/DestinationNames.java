@@ -24,7 +24,7 @@ public interface DestinationNames {
 	public static final String AUDIT = "liferay/audit";
 
 	/**
-	 * @deprecated {@link #SUBSCRIPTION_SENDER}
+	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
 	public static final String BLOGS = "liferay/blogs";
 
@@ -67,7 +67,7 @@ public interface DestinationNames {
 		"liferay/ip_geocoder/response";
 
 	/**
-	 * @deprecated {@link #SUBSCRIPTION_SENDER}
+	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
 	public static final String JOURNAL = "liferay/journal";
 
@@ -86,7 +86,7 @@ public interface DestinationNames {
 	public static final String MARKETPLACE = "liferay/marketplace";
 
 	/**
-	 * @deprecated {@link #SUBSCRIPTION_SENDER}
+	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
 	public static final String MESSAGE_BOARDS = "liferay/message_boards";
 
@@ -134,7 +134,7 @@ public interface DestinationNames {
 	public static final String TEST_TRANSACTION = "liferay/test_transaction";
 
 	/**
-	 * @deprecated {@link #SUBSCRIPTION_SENDER}
+	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
 	public static final String WIKI = "liferay/wiki";
 

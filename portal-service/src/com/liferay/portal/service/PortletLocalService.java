@@ -239,7 +239,7 @@ public interface PortletLocalService extends BaseLocalService,
 	public void clearCompanyPortletsPool();
 
 	/**
-	* @deprecated {@link #clonePortlet(String)}
+	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
 	*/
 	public com.liferay.portal.model.Portlet clonePortlet(long companyId,
 		java.lang.String portletId);

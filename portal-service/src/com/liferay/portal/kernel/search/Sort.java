@@ -23,6 +23,9 @@ import java.io.Serializable;
  */
 public class Sort implements Serializable {
 
+	/**
+	 * @deprecated As of 6.1.0
+	 */
 	@Deprecated
 	public static final int AUTO_TYPE = 2;
 

@@ -69,7 +69,7 @@ import java.util.Map;
  */
 public class AssetVocabularyServiceSoap {
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap addVocabulary(
 		java.lang.String[] titleMapLanguageIds,
@@ -369,7 +369,7 @@ public class AssetVocabularyServiceSoap {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.1.0
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap updateVocabulary(
 		long vocabularyId, java.lang.String[] titleMapLanguageIds,

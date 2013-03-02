@@ -29,7 +29,7 @@ public class GlobalDestinationEventListener
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public GlobalDestinationEventListener(
 		MessageListener messageListener, List<String> ignoredDestinations) {

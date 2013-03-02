@@ -23,7 +23,8 @@ import javax.naming.NamingException;
 /**
  * @author     Ganesh Ram
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.kernel.dao.db.DB}
+ * @deprecated As of 6.1.0, replaced by {@link
+ *             com.liferay.portal.kernel.dao.db.DB}
  */
 public interface Database {
 

@@ -57,21 +57,21 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public javax.servlet.http.HttpSessionContext getSessionContext() {
 		return _session.getSessionContext();
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public Object getValue(String name) {
 		return _session.getValue(name);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public String[] getValueNames() {
 		return _session.getValueNames();
@@ -90,7 +90,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void putValue(String name, Object value) {
 		_session.putValue(name, value);
@@ -101,7 +101,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public void removeValue(String name) {
 		_session.removeValue(name);

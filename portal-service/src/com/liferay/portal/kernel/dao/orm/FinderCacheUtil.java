@@ -48,7 +48,7 @@ public class FinderCacheUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static Object getResult(
 		String className, String methodName, String[] params, Object[] args,
@@ -66,7 +66,7 @@ public class FinderCacheUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.1.0
 	 */
 	public static void putResult(
 		boolean classNameCacheEnabled, String className, String methodName,

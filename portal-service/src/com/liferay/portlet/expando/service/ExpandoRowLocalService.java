@@ -313,7 +313,8 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getRows(long, String, String, int, int)}
+	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
+	String, int, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
@@ -335,7 +336,8 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getRowsCount(long, String, String)}
+	* @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
+	String)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowsCount(java.lang.String className,

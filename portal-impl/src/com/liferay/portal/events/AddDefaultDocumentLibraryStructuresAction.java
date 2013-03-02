@@ -31,10 +31,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -79,7 +79,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(DLFileEntry.class),
+					groupId,
+					PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 					ddmStructureKey);
 
 			if (ddmStructure == null) {
@@ -184,7 +185,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(DLFileEntry.class),
+					groupId,
+					PortalUtil.getClassNameId(RawMetadataProcessor.class),
 					name);
 
 			if (ddmStructure != null) {
@@ -205,14 +207,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 				DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-					PortalUtil.getClassNameId(DLFileEntry.class), name, nameMap,
-					descriptionMap, structureElementRootXML, "xml",
+					PortalUtil.getClassNameId(RawMetadataProcessor.class), name,
+					nameMap, descriptionMap, structureElementRootXML, "xml",
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}
 	}
 
-	protected String buildDLRawMetadataElementXML(String name, Field field) {
+	protected String buildDLRawMetadataElementXML(Field field) {
 		StringBundler sb = new StringBundler(16);
 
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
@@ -256,7 +258,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append("\">");
 
 		for (Field field : fields) {
-			sb.append(buildDLRawMetadataElementXML(name, field));
+			sb.append(buildDLRawMetadataElementXML(field));
 		}
 
 		sb.append("</root></structure>");

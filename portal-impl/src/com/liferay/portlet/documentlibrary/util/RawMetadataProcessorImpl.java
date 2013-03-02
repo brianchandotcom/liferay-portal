@@ -36,7 +36,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -156,8 +155,8 @@ public class RawMetadataProcessorImpl
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
 				fileVersion.getCompanyId(),
-				PortalUtil.getClassNameId(DLFileEntry.class), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				PortalUtil.getClassNameId(RawMetadataProcessor.class),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -5578,7 +5578,7 @@ public class JournalTemplatePersistenceImpl extends BasePersistenceImpl<JournalT
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalTemplate>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

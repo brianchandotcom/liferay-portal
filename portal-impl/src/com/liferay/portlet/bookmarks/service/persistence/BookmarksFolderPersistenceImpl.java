@@ -6545,7 +6545,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<BookmarksFolder>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

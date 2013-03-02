@@ -2310,7 +2310,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<LayoutBranch>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

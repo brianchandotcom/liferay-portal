@@ -3504,7 +3504,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AssetLink>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

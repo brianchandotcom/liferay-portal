@@ -3420,7 +3420,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SCFrameworkVersion>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

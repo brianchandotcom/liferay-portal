@@ -904,7 +904,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<PortalPreferences>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

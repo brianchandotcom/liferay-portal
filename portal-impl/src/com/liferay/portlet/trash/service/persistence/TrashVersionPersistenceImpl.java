@@ -1631,7 +1631,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<TrashVersion>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

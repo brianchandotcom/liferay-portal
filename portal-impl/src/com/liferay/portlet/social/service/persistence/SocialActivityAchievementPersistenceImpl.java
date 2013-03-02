@@ -3736,7 +3736,7 @@ public class SocialActivityAchievementPersistenceImpl
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialActivityAchievement>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

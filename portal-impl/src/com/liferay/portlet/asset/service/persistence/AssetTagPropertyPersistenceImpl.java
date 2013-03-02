@@ -2508,7 +2508,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AssetTagProperty>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

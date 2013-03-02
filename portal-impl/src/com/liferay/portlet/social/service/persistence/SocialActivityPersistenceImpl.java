@@ -6719,7 +6719,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialActivity>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

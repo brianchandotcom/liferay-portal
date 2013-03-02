@@ -3177,7 +3177,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<UserGroupGroupRole>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

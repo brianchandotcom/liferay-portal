@@ -2993,7 +2993,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DLFileEntryMetadata>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

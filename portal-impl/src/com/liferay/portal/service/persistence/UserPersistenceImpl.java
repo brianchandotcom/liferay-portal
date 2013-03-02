@@ -9787,7 +9787,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<User>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

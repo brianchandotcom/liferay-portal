@@ -2659,7 +2659,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialActivityCounter>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

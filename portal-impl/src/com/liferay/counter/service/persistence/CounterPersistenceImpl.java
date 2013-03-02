@@ -589,7 +589,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Counter>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

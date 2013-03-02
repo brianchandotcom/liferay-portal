@@ -2106,7 +2106,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialActivityLimit>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

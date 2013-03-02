@@ -890,7 +890,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<RatingsStats>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

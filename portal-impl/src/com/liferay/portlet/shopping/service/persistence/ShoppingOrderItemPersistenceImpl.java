@@ -1113,7 +1113,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ShoppingOrderItem>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

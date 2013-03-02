@@ -5811,7 +5811,7 @@ public class JournalStructurePersistenceImpl extends BasePersistenceImpl<Journal
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalStructure>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

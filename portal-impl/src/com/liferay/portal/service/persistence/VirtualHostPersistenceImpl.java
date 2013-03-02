@@ -1158,7 +1158,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<VirtualHost>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

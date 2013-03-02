@@ -1934,7 +1934,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SCProductScreenshot>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

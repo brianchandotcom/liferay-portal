@@ -1431,7 +1431,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AnnouncementsFlag>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

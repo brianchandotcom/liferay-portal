@@ -5334,7 +5334,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AnnouncementsEntry>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

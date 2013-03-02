@@ -3727,7 +3727,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<AssetVocabulary>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -2727,7 +2727,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MembershipRequest>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -2147,7 +2147,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Contact>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

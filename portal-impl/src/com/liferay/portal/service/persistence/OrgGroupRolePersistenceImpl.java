@@ -1586,7 +1586,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<OrgGroupRole>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

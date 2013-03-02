@@ -2784,7 +2784,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<JournalArticleImage>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

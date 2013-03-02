@@ -2908,7 +2908,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Repository>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

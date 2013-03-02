@@ -6181,7 +6181,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<SocialRelation>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

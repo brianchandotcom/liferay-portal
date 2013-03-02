@@ -1498,7 +1498,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<ServiceComponent>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

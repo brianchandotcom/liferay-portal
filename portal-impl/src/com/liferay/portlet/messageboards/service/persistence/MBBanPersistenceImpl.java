@@ -3754,7 +3754,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<MBBan>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

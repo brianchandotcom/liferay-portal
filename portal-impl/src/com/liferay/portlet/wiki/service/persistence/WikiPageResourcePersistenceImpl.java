@@ -1479,7 +1479,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<WikiPageResource>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -1869,7 +1869,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DDMStructureLink>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

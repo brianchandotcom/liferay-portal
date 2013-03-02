@@ -3308,7 +3308,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<Phone>)InstanceFactory.newInstance(
-							listenerClassName));
+							getClass().getClassLoader(), listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

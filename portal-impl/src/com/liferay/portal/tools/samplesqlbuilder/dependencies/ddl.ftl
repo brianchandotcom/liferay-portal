@@ -8,10 +8,10 @@
 	insert into DDMStructure values ('${portalUUIDUtil.generate()}', ${ddmStructure.structureId}, ${ddmStructure.groupId}, ${ddmStructure.companyId}, ${ddmStructure.userId}, '', '${createDate}', '${createDate}', 0, ${ddmStructure.classNameId}, 'Test DDM Structure', '<?xml version="1.0" encoding="UTF-8"?><root available-locales="en_US" default-locale="en_US"><Name language-id="en_US">Test DDM Structure</Name></root>', '', '<?xml version="1.0"?><root available-locales="en_US" default-locale="en_US"><dynamic-element dataType="string" name="text2102" type="text"><meta-data locale="en_US"><entry name="label"><![CDATA[Name]]></entry><entry name="showLabel"><![CDATA[true]]></entry><entry name="required"><![CDATA[false]]></entry><entry name="predefinedValue"><![CDATA[]]></entry><entry name="tip"><![CDATA[]]></entry><entry name="width"><![CDATA[25]]></entry><entry name="fieldCssClass"><![CDATA[aui-w25]]></entry></meta-data></dynamic-element></root>', 'xml', 0);
 
 	<#list 1..maxDDLRecordSetCount as ddlRecordSetCount>
-		<#assign ddlFriendlyURL = "dynamic_data_list_display_" + ddlRecordSetCount>
+		<#assign ddlLayoutName = "dynamic_data_list_display_" + ddlRecordSetCount>
 		<#assign ddlPortletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
 
-		<#assign ddlDisplayLayout = dataFactory.newLayout(publicLayouts?size + ddlRecordSetCount, "Dynamic Data List Display " + ddlRecordSetCount, "/" + ddlFriendlyURL, "", ddlPortletId)>
+		<#assign ddlDisplayLayout = dataFactory.newLayout(groupId, ddlLayoutName, "", ddlPortletId)>
 
 		<#assign publicLayouts = publicLayouts + [ddlDisplayLayout]>
 
@@ -25,7 +25,7 @@
 
 				${sampleSQLBuilder.insertDDLRecord(ddlRecord, ddlRecordSet, ddlRecordCount)}
 
-				${writerDynamicDataListsCSV.write(ddlFriendlyURL + "," + ddlPortletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "\n")}
+				${writerDynamicDataListsCSV.write(ddlLayoutName + "," + ddlPortletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "\n")}
 			</#list>
 		</#if>
 

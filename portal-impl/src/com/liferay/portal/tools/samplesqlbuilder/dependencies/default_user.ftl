@@ -6,7 +6,7 @@ ${sampleSQLBuilder.insertUser(null, null, dataFactory.defaultUser)}
 
 <#assign user = dataFactory.guestUser>
 
-<#assign userGroup = dataFactory.newGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.newGroup(user)>
 
 ${sampleSQLBuilder.insertGroup(userGroup, [])}
 
@@ -21,9 +21,9 @@ ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#assign sampleUserId = user.userId>
 
-<#assign userGroup = dataFactory.newGroup(counter.get(), dataFactory.userClassNameId, user.userId, stringUtil.valueOf(user.userId), "/" + user.screenName, false)>
+<#assign userGroup = dataFactory.newGroup(user)>
 
-${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(1, "Home", "/home", "", "33,")])}
+${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(userGroup.groupId, "home", "", "33,")])}
 
 <#assign groupIds = 1..maxGroupCount>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
@@ -31,11 +31,11 @@ ${sampleSQLBuilder.insertGroup(userGroup, [dataFactory.newLayout(1, "Home", "/ho
 ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#list groupIds as groupId>
-	<#assign blogsStatsUser = dataFactory.newBlogsStatsUser(groupId, user.userId)>
+	<#assign blogsStatsUser = dataFactory.newBlogsStatsUser(groupId)>
 
-	insert into BlogsStatsUser (statsUserId, groupId, companyId, userId) values (${counter.get()}, ${blogsStatsUser.groupId}, ${companyId}, ${blogsStatsUser.userId});
+	insert into BlogsStatsUser values (${blogsStatsUser.statsUserId}, ${blogsStatsUser.groupId}, ${blogsStatsUser.companyId}, ${blogsStatsUser.userId}, ${blogsStatsUser.entryCount}, '${dataFactory.getDateString(blogsStatsUser.lastPostDate)}', ${blogsStatsUser.ratingsTotalEntries}, ${blogsStatsUser.ratingsTotalScore}, ${blogsStatsUser.ratingsAverageScore});
 
-	<#assign mbStatsUser = dataFactory.newMBStatsUser(groupId, user.userId)>
+	<#assign mbStatsUser = dataFactory.newMBStatsUser(groupId)>
 
-	insert into MBStatsUser (statsUserId, groupId, userId) values (${counter.get()}, ${mbStatsUser.groupId}, ${mbStatsUser.userId});
+	insert into MBStatsUser values (${mbStatsUser.statsUserId}, ${mbStatsUser.groupId}, ${mbStatsUser.userId}, ${mbStatsUser.messageCount}, '${dataFactory.getDateString(mbStatsUser.lastPostDate)}');
 </#list>

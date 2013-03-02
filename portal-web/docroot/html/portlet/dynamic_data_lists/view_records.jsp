@@ -100,7 +100,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			rowURL.setParameter("struts_action", "/dynamic_data_lists/view_record");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-			rowURL.setParameter("editable", String.valueOf(editable));
+			rowURL.setParameter("version", recordVersion.getVersion());
 			rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 			// Columns

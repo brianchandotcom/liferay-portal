@@ -36,11 +36,7 @@ String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERS
 
 DDLRecordVersion recordVersion = record.getRecordVersion(version);
 
-boolean editable = ParamUtil.getBoolean(request, "editable");
-
-if (editable) {
-	recordVersion = record.getLatestRecordVersion();
-}
+DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 %>
 
 <liferay-ui:header
@@ -81,6 +77,18 @@ if (editable) {
 	%>
 
 	<aui:button-row>
+		<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && Validator.equals(version, latestRecordVersion.getVersion()) %>">
+			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
+			</portlet:renderURL>
+
+			<aui:button href="<%= editRecordURL %>" name="edit" value="edit" />
+		</c:if>
+
 		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:fieldset>

@@ -168,8 +168,6 @@ public class AssetEntryFinderImpl
 	protected void buildAnyCategoriesSQL(long[] categoryIds, StringBundler sb)
 		throws SystemException {
 
-		sb.append(" AND (");
-
 		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
 
 		String categoryIdsString = null;
@@ -182,12 +180,17 @@ public class AssetEntryFinderImpl
 					AssetCategoryFinderUtil.findByG_L(categoryId));
 			}
 
+			if (categoryIdsList.isEmpty()) {
+				return;
+			}
+
 			categoryIdsString = StringUtil.merge(categoryIdsList);
 		}
 		else {
 			categoryIdsString = StringUtil.merge(categoryIds);
 		}
 
+		sb.append(" AND (");
 		sb.append(
 			StringUtil.replace(sql, "[$CATEGORY_ID$]", categoryIdsString));
 		sb.append(StringPool.CLOSE_PARENTHESIS);

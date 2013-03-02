@@ -173,8 +173,12 @@ public class AssetUtil {
 
 				for (long assetCategoryId : allAssetCategoryIds) {
 					AssetCategory assetCategory =
-						AssetCategoryLocalServiceUtil.getAssetCategory(
+						AssetCategoryLocalServiceUtil.fetchAssetCategory(
 							assetCategoryId);
+
+					if (assetCategory == null) {
+						continue;
+					}
 
 					long assetVocabularyId = assetCategory.getVocabularyId();
 

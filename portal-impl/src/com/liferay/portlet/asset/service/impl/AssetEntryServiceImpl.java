@@ -29,6 +29,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
@@ -236,7 +237,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		List<Long> viewableCategoryIds = new ArrayList<Long>();
 
 		for (long categoryId : categoryIds) {
-			if (AssetCategoryPermission.contains(
+			AssetCategory category = assetCategoryPersistence.fetchByPrimaryKey(
+				categoryId);
+
+			if ((category != null) &&
+				AssetCategoryPermission.contains(
 					getPermissionChecker(), categoryId, ActionKeys.VIEW)) {
 
 				viewableCategoryIds.add(categoryId);

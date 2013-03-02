@@ -62,6 +62,19 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	public SocialActivityFeedEntry interpret(
+		SocialActivity activity, ThemeDisplay themeDisplay) {
+
+		try {
+			return doInterpret(activity, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error("Unable to interpret activity", e);
+		}
+
+		return null;
+	}
+
+	public SocialActivityFeedEntry interpret(
 		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
 		try {

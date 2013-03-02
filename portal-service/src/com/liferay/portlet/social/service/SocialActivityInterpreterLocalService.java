@@ -72,6 +72,10 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	public void deleteActivityInterpreter(
 		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
 
+	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
 	/**
 	* Creates a human readable activity feed entry for the activity using an
 	* available compatible activity interpreter.

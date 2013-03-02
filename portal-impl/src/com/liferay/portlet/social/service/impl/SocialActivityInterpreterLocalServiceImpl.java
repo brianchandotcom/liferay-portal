@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -87,6 +88,62 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 
 		activityInterpreters.remove(activityInterpreter);
+	}
+
+	public SocialActivityFeedEntry interpret(
+		SocialActivity activity, ThemeDisplay themeDisplay) {
+
+		try {
+			if (activity.getUserId() == themeDisplay.getDefaultUserId()) {
+				return null;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (activity.getMirrorActivityId() > 0) {
+			SocialActivity mirrorActivity = null;
+
+			try {
+				mirrorActivity = socialActivityLocalService.getActivity(
+					activity.getMirrorActivityId());
+			}
+			catch (Exception e) {
+			}
+
+			if (mirrorActivity != null) {
+				activity = mirrorActivity;
+			}
+		}
+
+		List<SocialActivityInterpreter> activityInterpreters =
+			_activityInterpreters.get(StringPool.BLANK);
+
+		if (activityInterpreters == null) {
+			return null;
+		}
+
+		String className = PortalUtil.getClassName(activity.getClassNameId());
+
+		for (int i = 0; i < activityInterpreters.size(); i++) {
+			SocialActivityInterpreterImpl activityInterpreter =
+				(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+
+			if (activityInterpreter.hasClassName(className)) {
+				SocialActivityFeedEntry activityFeedEntry =
+					activityInterpreter.interpret(activity, themeDisplay);
+
+				if (activityFeedEntry != null) {
+					activityFeedEntry.setPortletId(
+						activityInterpreter.getPortletId());
+
+					return activityFeedEntry;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	/**

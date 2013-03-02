@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -67,6 +68,12 @@ public class SocialActivityInterpreterImpl
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return _activityInterpreter.interpret(activity, serviceContext);
+	}
+
+	public SocialActivityFeedEntry interpret(
+		SocialActivity activity, ThemeDisplay themeDisplay) {
+
+		return _activityInterpreter.interpret(activity, themeDisplay);
 	}
 
 	public SocialActivityFeedEntry interpret(

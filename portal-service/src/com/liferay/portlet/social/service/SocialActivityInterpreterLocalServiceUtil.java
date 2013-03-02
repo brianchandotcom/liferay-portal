@@ -75,6 +75,12 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		getService().deleteActivityInterpreter(activityInterpreter);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
+		com.liferay.portlet.social.model.SocialActivity activity,
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return getService().interpret(activity, themeDisplay);
+	}
+
 	/**
 	* Creates a human readable activity feed entry for the activity using an
 	* available compatible activity interpreter.

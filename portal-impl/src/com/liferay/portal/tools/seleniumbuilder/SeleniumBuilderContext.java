@@ -83,6 +83,10 @@ public class SeleniumBuilderContext {
 				Element rootElement = _getRootElement(fileName);
 
 				_functionRootElements.put(functionName, rootElement);
+
+				_functionSimpleClassNames.put(
+					functionName, _getSimpleClassName(fileName));
+
 				_functionTargetCounts.put(
 					functionName, _getTargetCount(rootElement));
 			}
@@ -100,6 +104,9 @@ public class SeleniumBuilderContext {
 
 				_macroNames.add(macroName);
 
+				_macroSimpleClassNames.put(
+					macroName, _getSimpleClassName(fileName));
+
 				_macroRootElements.put(macroName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".path")) {
@@ -107,6 +114,9 @@ public class SeleniumBuilderContext {
 
 				_actionClassNames.put(
 					pathName, _getClassName(fileName, "Action"));
+
+				_actionSimpleClassNames.put(
+					pathName, _getSimpleClassName(fileName, "Action"));
 
 				_pathClassNames.put(pathName, _getClassName(fileName));
 
@@ -120,6 +130,9 @@ public class SeleniumBuilderContext {
 				_pathNames.add(pathName);
 
 				_pathRootElements.put(pathName, _getRootElement(fileName));
+
+				_pathSimpleClassNames.put(
+					pathName, _getSimpleClassName(fileName));
 			}
 			else if (fileName.endsWith(".testcase")) {
 				String testCaseName = _getName(fileName);
@@ -137,6 +150,9 @@ public class SeleniumBuilderContext {
 
 				_testCaseRootElements.put(
 					testCaseName, _getRootElement(fileName));
+
+				_testCaseSimpleClassNames.put(
+					testCaseName, _getSimpleClassName(fileName));
 			}
 			else if (fileName.endsWith(".testsuite")) {
 				String testSuiteName = _getName(fileName);
@@ -155,6 +171,9 @@ public class SeleniumBuilderContext {
 
 				_testSuiteRootElements.put(
 					testSuiteName, _getRootElement(fileName));
+
+				_testSuiteSimpleClassNames.put(
+					testSuiteName, _getSimpleClassName(fileName));
 			}
 			else {
 				throw new IllegalArgumentException("Invalid file " + fileName);
@@ -176,6 +195,10 @@ public class SeleniumBuilderContext {
 
 	public Element getActionRootElement(String actionName) {
 		return _actionRootElements.get(actionName);
+	}
+
+	public String getActionSimpleClassName(String actionName) {
+		return _actionSimpleClassNames.get(actionName);
 	}
 
 	public String getBaseDir() {
@@ -202,6 +225,10 @@ public class SeleniumBuilderContext {
 		return _functionRootElements.get(functionName);
 	}
 
+	public String getFunctionSimpleClassName(String functionName) {
+		return _functionSimpleClassNames.get(functionName);
+	}
+
 	public Integer getFunctionTargetCount(String functionName) {
 		return _functionTargetCounts.get(functionName);
 	}
@@ -222,6 +249,10 @@ public class SeleniumBuilderContext {
 		return _macroRootElements.get(macroName);
 	}
 
+	public String getMacroSimpleClassName(String macroName) {
+		return _macroSimpleClassNames.get(macroName);
+	}
+
 	public String getPathClassName(String pathName) {
 		return _pathClassNames.get(pathName);
 	}
@@ -236,6 +267,10 @@ public class SeleniumBuilderContext {
 
 	public Element getPathRootElement(String pathName) {
 		return _pathRootElements.get(pathName);
+	}
+
+	public String getPathSimpleClassName(String pathName) {
+		return _pathSimpleClassNames.get(pathName);
 	}
 
 	public String getTestCaseClassName(String testCaseName) {
@@ -254,6 +289,10 @@ public class SeleniumBuilderContext {
 		return _testCaseRootElements.get(testCaseName);
 	}
 
+	public String getTestCaseSimpleClassName(String testCaseName) {
+		return _testCaseSimpleClassNames.get(testCaseName);
+	}
+
 	public String getTestSuiteClassName(String testSuiteName) {
 		return _testSuiteClassNames.get(testSuiteName);
 	}
@@ -268,6 +307,10 @@ public class SeleniumBuilderContext {
 
 	public Element getTestSuiteRootElement(String testSuiteName) {
 		return _testSuiteRootElements.get(testSuiteName);
+	}
+
+	public String getTestSuiteSimpleClassName(String testCaseName) {
+		return _testSuiteSimpleClassNames.get(testCaseName);
 	}
 
 	private String _getClassName(String fileName) {
@@ -290,6 +333,15 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getRootElement(fileName);
 	}
 
+	private String _getSimpleClassName(String fileName) {
+		return _seleniumBuilderFileUtil.getSimpleClassName(fileName);
+	}
+
+	private String _getSimpleClassName(String fileName, String classSuffix) {
+		return
+			_seleniumBuilderFileUtil.getSimpleClassName(fileName, classSuffix);
+	}
+
 	private int _getTargetCount(Element rootElement) throws Exception {
 		return _seleniumBuilderFileUtil.getTargetCount(rootElement);
 	}
@@ -305,6 +357,8 @@ public class SeleniumBuilderContext {
 	private Set<String> _actionNames = new HashSet<String>();
 	private Map<String, Element> _actionRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _actionSimpleClassNames =
+		new HashMap<String, String>();
 	private String _baseDir;
 	private Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
@@ -315,6 +369,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, Element> _functionRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _functionSimpleClassNames =
+		new HashMap<String, String>();
 	private Map<String, Integer> _functionTargetCounts =
 		new HashMap<String, Integer>();
 	private Map<String, String> _macroClassNames =
@@ -323,11 +379,15 @@ public class SeleniumBuilderContext {
 	private Set<String> _macroNames = new HashSet<String>();
 	private Map<String, Element> _macroRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _macroSimpleClassNames =
+		new HashMap<String, String>();
 	private Map<String, String> _pathClassNames = new HashMap<String, String>();
 	private Map<String, String> _pathFileNames = new HashMap<String, String>();
 	private Set<String> _pathNames = new HashSet<String>();
 	private Map<String, Element> _pathRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _pathSimpleClassNames =
+		new HashMap<String, String>();
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Map<String, String> _testCaseClassNames =
 		new HashMap<String, String>();
@@ -336,6 +396,8 @@ public class SeleniumBuilderContext {
 	private Set<String> _testCaseNames = new HashSet<String>();
 	private Map<String, Element> _testCaseRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _testCaseSimpleClassNames =
+		new HashMap<String, String>();
 	private Map<String, String> _testSuiteClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _testSuiteFileNames =
@@ -343,5 +405,7 @@ public class SeleniumBuilderContext {
 	private Set<String> _testSuiteNames = new HashSet<String>();
 	private Map<String, Element> _testSuiteRootElements =
 		new HashMap<String, Element>();
+	private Map<String, String> _testSuiteSimpleClassNames =
+		new HashMap<String, String>();
 
 }

@@ -111,7 +111,7 @@ if (fieldParamSelection.equals("0")) {
 					<aui:input label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
 				</div>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
+				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>
@@ -264,6 +264,78 @@ if (fieldParamSelection.equals("0")) {
 			event.halt();
 
 			A.one('#<%= randomNamespace + "custom-range" %>').toggle();
+		}
+	);
+</aui:script>
+
+<aui:script use="aui-form-validator">
+	var Util = Liferay.Util;
+
+	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+
+	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
+
+	var customRangeFrom = A.one('#<portlet:namespace /><%= facet.getFieldName() %>from');
+	var customRangeTo = A.one('#<portlet:namespace /><%= facet.getFieldName() %>to');
+
+	var dateFromValid = false;
+	var dateToValid = false;
+
+	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
+
+	A.mix(
+		DEFAULTS_FORM_VALIDATOR.STRINGS,
+		{
+			customRange: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-format") %>'
+		},
+		true
+	);
+
+	A.mix(
+		DEFAULTS_FORM_VALIDATOR.RULES,
+		{
+			customRange: function(val, fieldNode, ruleValue) {
+				return REGEX_DATE.test(val);
+			}
+		},
+		true
+	);
+
+	var ruleCustomRange = {
+		customRange: true
+	};
+
+	var setValid = function(field, value) {
+		if (field === customRangeFrom) {
+			dateFromValid = value;
+		}
+		else if (field === customRangeTo) {
+			dateToValid = value;
+		}
+	};
+
+	var customRangeValidator = new A.FormValidator(
+		{
+			boundingBox: document.<portlet:namespace />fm,
+			fieldContainer: 'div',
+			on: {
+				errorField: function(event) {
+					setValid(event.validator.field, false);
+
+					Util.toggleDisabled(searchButton, true);
+				},
+				validField: function(event) {
+					setValid(event.validator.field, true);
+
+					if (dateFromValid && dateToValid) {
+						Util.toggleDisabled(searchButton, false);
+					}
+				}
+			},
+			rules: {
+				<portlet:namespace /><%= facet.getFieldName() %>from: ruleCustomRange,
+				<portlet:namespace /><%= facet.getFieldName() %>to: ruleCustomRange
+			}
 		}
 	);
 </aui:script>

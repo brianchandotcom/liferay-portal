@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,13 +49,53 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=Advanced »'))</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='Advanced »']</td>
 	<td>advancedVisible</td>
 </tr>
 <tr>
@@ -54,8 +104,13 @@
 	<td>AdvancedNotVisible</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//a[.='Advanced »']</td>
+	<td>Advanced »</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>link=Advanced »</td>
+	<td>//a[.='Advanced »']</td>
 	<td>Advanced »</td>
 </tr>
 <tr>
@@ -65,53 +120,53 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_15_description']</td>
+	<td>//div[@class="taglib-search-toggle-advanced"]</td>
+	<td>Advanced Search Overlay</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_166_description']</td>
 	<td>Description</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_15_description']</td>
+	<td>//input[@id='_166_description']</td>
 	<td>Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_15_description']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>WC Structure Description</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_15_description']</td>
+	<td>//input[@id='_166_description']</td>
 	<td>Description1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
+	<td>xPath=(//input[@value='Search'])[2]</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_15_description']</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no results.</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=« Basic</td>
-	<td>« Basic</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no results.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -119,14 +174,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>WC Structure Description</td>
+	<td>pause</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>No structures were found.</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class="taglib-search-toggle-basic"]</td>
+	<td>Basic Search Overlay</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

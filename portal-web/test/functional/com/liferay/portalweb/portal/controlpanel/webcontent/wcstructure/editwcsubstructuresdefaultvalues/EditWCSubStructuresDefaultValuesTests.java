@@ -15,12 +15,11 @@
 package com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.editwcsubstructuresdefaultvalues;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructure1Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructureTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructures.AddWCSubstructure1Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructures.AddWCSubstructure2Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructures.AddWCSubstructure3Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructures.TearDownWCSubStructuresTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructure.AddWCSubstructure1Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructure.AddWCSubstructure2Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcsubstructure.AddWCSubstructure3Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,7 +30,7 @@ import junit.framework.TestSuite;
 public class EditWCSubStructuresDefaultValuesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddWCStructure1Test.class);
+		testSuite.addTestSuite(AddWCStructureTest.class);
 		testSuite.addTestSuite(AddWCSubstructure1Test.class);
 		testSuite.addTestSuite(EditWCSubstructure1DefaultValuesTest.class);
 		testSuite.addTestSuite(ViewEditWCSubstucture1DefaultValueTest.class);
@@ -41,7 +40,6 @@ public class EditWCSubStructuresDefaultValuesTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCSubstructure3Test.class);
 		testSuite.addTestSuite(EditWCSubstructure3DefaultValuesTest.class);
 		testSuite.addTestSuite(ViewEditWCSubstucture3DefaultValueTest.class);
-		testSuite.addTestSuite(TearDownWCSubStructuresTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

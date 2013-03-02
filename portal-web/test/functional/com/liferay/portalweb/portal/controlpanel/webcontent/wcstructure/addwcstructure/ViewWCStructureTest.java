@@ -25,6 +25,10 @@ public class ViewWCStructureTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,64 +39,149 @@ public class ViewWCStructureTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Structures",
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+			RuntimeVariables.replace("Manage"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+		assertEquals(RuntimeVariables.replace("Structures"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
-		selenium.waitForPageToLoad("30000");
-
-		String structureID = selenium.getText("//td[2]/a");
-		RuntimeVariables.setValue("structureID", structureID);
-		assertEquals(RuntimeVariables.replace("${structureID}"),
-			selenium.getText("//td[2]/a"));
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/store.js')]");
+		selenium.waitForVisible("//input[@name='_166_keywords']");
+		selenium.type("//input[@name='_166_keywords']",
+			RuntimeVariables.replace("WC Structure Name"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Description"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[3]/a",
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure Name')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//span[@class='portlet-title-text']"));
-		assertEquals(RuntimeVariables.replace(
-				"Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets."),
-			selenium.getText("//div[@id='cpContextPanelTemplate']"));
+		selenium.waitForVisible("//h1[@class='header-title']");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//h1[@class='header-title']/span"));
-		assertTrue(selenium.isPartialText(
-				"//fieldset/div/div/div[contains(.,'ID')]",
-				RuntimeVariables.getValue("structureID")));
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals("WC Structure Name",
-			selenium.getValue("//input[@id='_15_name_en_US']"));
-		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
-			selenium.getText(
-				"//input[@id='_15_name_en_US']/following-sibling::span/a"));
+			selenium.getValue("//input[@id='_166_name_en_US']"));
 		assertEquals("WC Structure Description",
-			selenium.getValue("//textarea[@id='_15_description_en_US']"));
-		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
+			selenium.getValue("//textarea[@id='_166_description_en_US']"));
+		assertEquals(RuntimeVariables.replace("Parent Structure"),
 			selenium.getText(
-				"//textarea[@id='_15_description_en_US']/following-sibling::span/a"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//span[@id='_15_parentStructureName']"));
-		assertEquals("Select",
-			selenium.getValue(
-				"//span[@id='_15_parentStructureName']/following-sibling::span/span/input"));
-		assertEquals("Remove",
-			selenium.getValue(
-				"//span[@id='_15_parentStructureName']/following-sibling::span[2]/span/input"));
-		assertTrue(selenium.isVisible("//input[@value='Add Row']"));
-		assertTrue(selenium.isVisible("//input[@value='Launch Editor']"));
-		assertTrue(selenium.isVisible("//input[@value='Download']"));
-		assertEquals("Text",
-			selenium.getSelectedLabel("//select[@id='_15_structure_el0_type']"));
-		assertEquals("text",
-			selenium.getValue("//input[@id='_15_structure_el0_name']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='_15_structure_el0_repeatable']"));
-		assertTrue(selenium.isVisible("//img[@alt='Add']"));
-		assertTrue(selenium.isVisible("//img[@alt='Remove']"));
-		assertTrue(selenium.isVisible("//input[@value='Save']"));
-		assertTrue(selenium.isVisible("//input[@value='Save and Continue']"));
+				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/label"));
+		assertTrue(selenium.isVisible("//input[@value='Select']"));
+		assertTrue(selenium.isVisible("//input[@value='Remove']"));
+		assertEquals(RuntimeVariables.replace("URL"),
+			selenium.getText(
+				"//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//input[@value='Save and Edit Default Values']"));
+				"//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/input"));
+		assertEquals(RuntimeVariables.replace("WebDAV URL"),
+			selenium.getText(
+				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input"));
+		assertTrue(selenium.isVisible("link=View"));
+		assertTrue(selenium.isVisible("link=Source"));
+		assertEquals(RuntimeVariables.replace("Default Language:"),
+			selenium.getText("//label[@for='_166_defaultLanguageId']"));
+		assertEquals(RuntimeVariables.replace("English (United States)"),
+			selenium.getText(
+				"//span[contains(@class, 'lfr-translation-manager-default-locale-text')]"));
+		assertEquals(RuntimeVariables.replace("Change"),
+			selenium.getText(
+				"//a[@class='lfr-translation-manager-change-default-locale']"));
+		assertTrue(selenium.isVisible(
+				"//ul[contains(@class,'lfr-translation-manager-icon-menu')]"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
+		assertEquals(RuntimeVariables.replace("Boolean"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[2]"));
+		assertEquals(RuntimeVariables.replace("Date"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
+		assertEquals(RuntimeVariables.replace("Decimal"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
+		assertEquals(RuntimeVariables.replace("File Upload"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
+		assertEquals(RuntimeVariables.replace("HTML"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]"));
+		assertEquals(RuntimeVariables.replace("Integer"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]"));
+		assertEquals(RuntimeVariables.replace("Link to Page"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
+		assertEquals(RuntimeVariables.replace("Number"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]"));
+		assertEquals(RuntimeVariables.replace("Radio"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[12]"));
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[13]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]"));
+		assertEquals(RuntimeVariables.replace("Text Box"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label"));
+		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
+		selenium.selectFrame("relative=top");
 	}
 }

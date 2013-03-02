@@ -30,11 +30,9 @@ public class AddWCStructuresTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCStructure1Test.class);
-		testSuite.addTestSuite(ViewWCStructure1Test.class);
 		testSuite.addTestSuite(AddWCStructure2Test.class);
-		testSuite.addTestSuite(ViewWCStructure2Test.class);
 		testSuite.addTestSuite(AddWCStructure3Test.class);
-		testSuite.addTestSuite(ViewWCStructure3Test.class);
+		testSuite.addTestSuite(ViewWCStructuresTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

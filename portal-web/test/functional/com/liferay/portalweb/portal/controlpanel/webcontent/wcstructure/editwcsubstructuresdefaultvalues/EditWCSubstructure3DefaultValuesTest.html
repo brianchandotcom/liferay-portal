@@ -49,158 +49,268 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@name='_15_keywords']</td>
-	<td>Search</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='_15_keywords']</td>
+	<td>//input[@name='_166_keywords']</td>
 	<td>Substructure3</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
-	<td>storeText</td>
-	<td>//td[2]/a</td>
-	<td>structureID</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>${structureID}</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
-	<td>WC Substructure3 Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>WC Substructure3 Description</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[2]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[2]/a</td>
+	<td>Structure ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
-	<td>Edit Default Values</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
-	<td>Edit Default Values</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Default Values')]/a</td>
-	<td>Edit Default Values</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h1[@class='header-title']</td>
-	<td>Structure Default Values</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[3]/a</td>
 	<td>WC Substructure3 Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//label[@for='_15_null_en_US']</td>
-	<td>Title</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='_15_title_en_US']</td>
-	<td>Give the Web Content a Name</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[4]/a</td>
+	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//label[@for='Head']</td>
-	<td>Head</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='Head']</td>
-	<td>Article's Title Here</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Subtitle']</td>
-	<td>Subtitle</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='Subtitle']</td>
-	<td>Article's Subtitle Here</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Content']</td>
-	<td>Content</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='Content']</td>
-	<td>Enter Article Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='ImageBox']</td>
-	<td>ImageBox</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Image']</td>
-	<td>Image</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Summary']</td>
-	<td>Summary</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Photographer']</td>
-	<td>Photographer</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Documents and Media']</td>
-	<td>Documents and Media</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//label[@for='Extra']</td>
-	<td>Extra</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_15_publishButton']</td>
+	<td>//tr[contains(.,'WC Substructure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_166_name_en_US']</td>
+	<td>Name Field</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_166_name_en_US']</td>
+	<td>WC Substructure3 Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
+	<td>Text Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
+	<td>Text Field</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[@id='editEvent']</td>
+	<td>Edit Event</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@id='editEvent']</td>
+	<td>Edit Event</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//table[@class='yui3-datatable-table']</td>
+	<td>Properties Table</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[1]</td>
+	<td>Field Label</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Field Label Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Field Label Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Text Edited</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[6]/td[1]</td>
+	<td>Predefined Value</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[6]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[6]/td[2]</td>
+	<td>Predefined Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Predefined Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Predefined Value Edited</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[7]/td[1]</td>
+	<td>Tip</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[7]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[7]/td[2]</td>
+	<td>Tip Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textareacelleditor-content')]/div/textarea</td>
+	<td>Tip Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textareacelleditor-content')]/div/textarea</td>
+	<td>Tip Edited</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[6]/td[2]</td>
+	<td>Predefined Value Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[6]/td[2]</td>
+	<td>Predefined Value Edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[7]/td[2]</td>
+	<td>Tip Edited</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>

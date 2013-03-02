@@ -30,6 +30,10 @@ public class SearchWCStructureTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -40,11 +44,25 @@ public class SearchWCStructureTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Structures",
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+					RuntimeVariables.replace("Manage"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+				assertEquals(RuntimeVariables.replace("Structures"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 					RuntimeVariables.replace("Structures"));
-				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+				selenium.selectFrame("//iframe[contains(@src,'Structures')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/store.js')]");
+				Thread.sleep(1000);
 
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
 
 				if (!basicVisible) {
 					label = 2;
@@ -52,35 +70,35 @@ public class SearchWCStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("link=\u00ab Basic",
+				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 
 			case 2:
-				selenium.waitForVisible("//input[@name='_15_keywords']");
-				selenium.type("//input[@name='_15_keywords']",
+				assertFalse(selenium.isVisible("//a[.='\u00ab Basic']"));
+				selenium.waitForVisible(
+					"//div[@class=\"taglib-search-toggle-basic\"]");
+				selenium.waitForVisible("//input[@name='_166_keywords']");
+				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("Structure"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@name='_15_keywords']",
-					RuntimeVariables.replace(""));
+				selenium.waitForVisible(
+					"//tr[contains(.,'WC Structure Name')]/td[3]/a");
 				assertEquals(RuntimeVariables.replace("WC Structure Name"),
-					selenium.getText("//td[3]/a"));
-				assertEquals(RuntimeVariables.replace(
-						"WC Structure Description"),
-					selenium.getText("//td[4]/a"));
-				selenium.type("//input[@name='_15_keywords']",
+					selenium.getText(
+						"//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+				selenium.type("//input[@name='_166_keywords']",
 					RuntimeVariables.replace("Structure1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@name='_15_keywords']",
-					RuntimeVariables.replace(""));
-				assertFalse(selenium.isTextPresent("WC Structure Name"));
-				assertFalse(selenium.isTextPresent("WC Structure Description"));
-				assertEquals(RuntimeVariables.replace(
-						"No structures were found."),
+				Thread.sleep(1000);
+				selenium.waitForVisible("//div[@class='portlet-msg-info']");
+				assertEquals(RuntimeVariables.replace("There are no results."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertFalse(selenium.isTextPresent("WC Structure Name"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

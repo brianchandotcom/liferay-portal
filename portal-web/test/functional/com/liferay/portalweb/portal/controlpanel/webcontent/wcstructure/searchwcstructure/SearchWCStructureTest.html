@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,13 +49,53 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isVisible('link=« Basic'))</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
 	<td>basicVisible</td>
 </tr>
 <tr>
@@ -55,7 +105,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=« Basic</td>
+	<td>//a[.='« Basic']</td>
 	<td>« Basic</td>
 </tr>
 <tr>
@@ -64,13 +114,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertNotVisible</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//input[@name='_15_keywords']</td>
-	<td>Search</td>
+	<td>//div[@class="taglib-search-toggle-basic"]</td>
+	<td>Advanced Search Overlay</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='_15_keywords']</td>
+	<td>//input[@name='_166_keywords']</td>
 	<td>Structure</td>
 </tr>
 <tr>
@@ -79,23 +139,18 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_15_keywords']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>WC Structure Description</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='_15_keywords']</td>
+	<td>//input[@name='_166_keywords']</td>
 	<td>Structure1</td>
 </tr>
 <tr>
@@ -104,9 +159,19 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@name='_15_keywords']</td>
+	<td>pause</td>
+	<td>1000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no results.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no results.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -114,14 +179,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>WC Structure Description</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>No structures were found.</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

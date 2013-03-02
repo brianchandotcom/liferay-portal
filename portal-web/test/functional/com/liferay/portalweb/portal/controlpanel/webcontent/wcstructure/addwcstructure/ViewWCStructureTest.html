@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,129 +49,324 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
-	<td>storeText</td>
-	<td>//td[2]/a</td>
-	<td>structureID</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>${structureID}</td>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_166_keywords']</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[2]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>WC Structure Description</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[4]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Header Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@class='portlet-title-text']</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='cpContextPanelTemplate']</td>
-	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td>WC Structure Name</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//fieldset/div/div/div[contains(.,'ID')]</td>
-	<td>${structureID}</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_15_name_en_US']</td>
+	<td>//input[@id='_166_name_en_US']</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//input[@id='_15_name_en_US']/following-sibling::span/a</td>
-	<td>Other Languages (0)</td>
-</tr>
-<tr>
 	<td>assertValue</td>
-	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>//textarea[@id='_166_description_en_US']</td>
 	<td>WC Structure Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//textarea[@id='_15_description_en_US']/following-sibling::span/a</td>
-	<td>Other Languages (0)</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/label</td>
+	<td>Parent Structure</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@id='_15_parentStructureName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//span[@id='_15_parentStructureName']/following-sibling::span/span/input</td>
+	<td>assertVisible</td>
+	<td>//input[@value='Select']</td>
 	<td>Select</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//span[@id='_15_parentStructureName']/following-sibling::span[2]/span/input</td>
+	<td>assertVisible</td>
+	<td>//input[@value='Remove']</td>
 	<td>Remove</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Add Row']</td>
-	<td>Add Row</td>
+	<td>assertText</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/label</td>
+	<td>URL</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//input[@value='Launch Editor']</td>
-	<td>Launch Editor</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[3]/div/input</td>
+	<td>URL</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/label</td>
+	<td>WebDAV URL</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//input[@value='Download']</td>
-	<td>Download</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input</td>
+	<td>WebDAV URL</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_15_structure_el0_type']</td>
+	<td>assertVisible</td>
+	<td>link=View</td>
+	<td>View</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=Source</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//label[@for='_166_defaultLanguageId']</td>
+	<td>Default Language:</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(@class, 'lfr-translation-manager-default-locale-text')]</td>
+	<td>English (United States)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@class='lfr-translation-manager-change-default-locale']</td>
+	<td>Change</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//ul[contains(@class,'lfr-translation-manager-icon-menu')]</td>
+	<td>Add Translation</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
+	<td>Boolean Field</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]</td>
+	<td>Boolean Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>Boolean</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
+	<td>Boolean Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
+	<td>Decimal Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
+	<td>Documents and Media Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
+	<td>HTML Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
+	<td>HTML</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>Image Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]</td>
+	<td>Integer Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label</td>
+	<td>Integer</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]</td>
+	<td>Link to Page Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
+	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]</td>
+	<td>Number Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label</td>
+	<td>Number</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]</td>
+	<td>Radio Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label</td>
+	<td>Radio</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]</td>
+	<td>Select Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]</td>
+	<td>Text Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label</td>
 	<td>Text</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@id='_15_structure_el0_name']</td>
-	<td>text</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='_15_structure_el0_repeatable']</td>
-	<td>Repeatable</td>
-</tr>
-<tr>
 	<td>assertVisible</td>
-	<td>//img[@alt='Add']</td>
-	<td>Add</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]</td>
+	<td>Text Box Field</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//img[@alt='Remove']</td>
-	<td>Remove</td>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label</td>
+	<td>Text Box</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -170,18 +375,13 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//input[@value='Save and Continue']</td>
-	<td>Save and Continue</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//input[@value='Save and Edit Default Values']</td>
-	<td>Save and Edit Default Values</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

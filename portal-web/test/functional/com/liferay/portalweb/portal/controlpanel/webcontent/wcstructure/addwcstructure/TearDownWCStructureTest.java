@@ -45,9 +45,8 @@ public class TearDownWCStructureTest extends BaseTestCase {
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage"),
-					selenium.getText(
-						"//span[@title='Manage']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 					RuntimeVariables.replace("Manage"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
@@ -61,7 +60,8 @@ public class TearDownWCStructureTest extends BaseTestCase {
 				selenium.selectFrame(
 					"//iframe[contains(@src,'scopeStructureType')]");
 				selenium.waitForElementPresent(
-					"//script[contains(@src,'/liferay/search_container.js')]");
+					"//script[contains(@src,'/liferay/store.js')]");
+				Thread.sleep(1000);
 
 				boolean structurePresent = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -78,8 +78,8 @@ public class TearDownWCStructureTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

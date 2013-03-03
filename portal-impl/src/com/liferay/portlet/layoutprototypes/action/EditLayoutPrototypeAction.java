@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -43,6 +45,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Jorge Ferrer
  * @author Vilmos Papp
+ * @author Josef Sustacek
  */
 public class EditLayoutPrototypeAction extends PortletAction {
 
@@ -60,6 +63,9 @@ public class EditLayoutPrototypeAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteLayoutPrototypes(actionRequest);
+			}
+			else if (cmd.equals("reset_merge_fail_count")) {
+				resetMergeFailCount(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -123,6 +129,18 @@ public class EditLayoutPrototypeAction extends PortletAction {
 		for (long layoutPrototypeId : layoutPrototypeIds) {
 			LayoutPrototypeServiceUtil.deleteLayoutPrototype(layoutPrototypeId);
 		}
+	}
+
+	protected void resetMergeFailCount(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutPrototypeId");
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPrototypeId);
+
+		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 	}
 
 	protected void updateLayoutPrototype(ActionRequest actionRequest)

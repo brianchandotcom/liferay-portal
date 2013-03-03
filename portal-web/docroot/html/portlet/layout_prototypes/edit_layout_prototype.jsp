@@ -47,6 +47,13 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 	title='<%= layoutPrototype.isNew() ? "new-page-template" : layoutPrototype.getName(locale) %>'
 />
 
+<%
+request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
+request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
+%>
+
+<liferay-util:include page="/html/portlet/layout_prototypes/merge_alert.jsp" />
+
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveLayoutPrototype();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

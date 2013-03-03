@@ -93,6 +93,8 @@ if (showPrototypes && (group != null)) {
 	</c:if>
 </liferay-ui:error>
 
+<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
+
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= (liveGroup != null) && PortalUtil.isSystemGroup(liveGroup.getName()) %>">
@@ -193,6 +195,17 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 									<c:choose>
 										<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+
+											<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>publicLayoutSetPrototypeMergeAlert">
+
+												<%
+												request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
+												request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", publicLayoutSetPrototype);
+												request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
+												%>
+
+												<liferay-util:include page="/html/portlet/layout_set_prototypes/merge_alert.jsp" />
+											</div>
 										</c:when>
 										<c:when test="<%= publicLayoutSetPrototype != null %>">
 											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" />
@@ -265,6 +278,18 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 									<c:choose>
 										<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+
+											<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>privateLayoutSetPrototypeMergeAlert">
+
+												<%
+												request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
+												request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", privateLayoutSetPrototype);
+												request.setAttribute("edit_layout_set_prototype.jsp-privateLayoutSet", String.valueOf(true));
+												request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
+												%>
+
+												<liferay-util:include page="/html/portlet/layout_set_prototypes/merge_alert.jsp" />
+											</div>
 										</c:when>
 										<c:when test="<%= privateLayoutSetPrototype != null %>">
 											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" />
@@ -479,8 +504,8 @@ if (parentGroup != null) {
 		['liferay-search-container']
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
-	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />publicLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />publicLayoutSetPrototypeMergeAlert');
+	Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
 </aui:script>
 
 <aui:script use="liferay-search-container">

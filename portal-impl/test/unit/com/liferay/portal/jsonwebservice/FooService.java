@@ -75,6 +75,17 @@ public class FooService {
 		return fooDataList;
 	}
 
+	public static FooDataPage getFooPage() {
+		FooDataAltImpl fooData = new FooDataAltImpl();
+
+		fooData.setArray(9, 5, 7);
+		fooData.setHeight(8);
+		fooData.setId(2);
+		fooData.setName("life");
+
+		return new FooDataPage(fooData, getFooDatas(), 3);
+	}
+
 	public static String hello() {
 		return "world";
 	}

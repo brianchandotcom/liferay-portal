@@ -156,7 +156,7 @@ public class JSONWebServiceActionsManagerImpl
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Require JSON web service action with path " + path +
+				"Request JSON web service action with path " + path +
 					" and method " + method + " for /" + servletContextPath);
 		}
 

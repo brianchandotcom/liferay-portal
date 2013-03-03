@@ -12,46 +12,38 @@
  * details.
  */
 
-package com.liferay.portlet.journal.webdav;
+package com.liferay.portlet.portletdisplaytemplate.webdav;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
  * @author Juan Fernández
  */
-public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
+public class ApplicationDisplayTemplateWebDAVStorageImpl
+	extends BaseWebDAVStorageImpl {
 
 	@Override
 	public int deleteResource(WebDAVRequest webDavRequest)
 		throws WebDAVException {
 
 		return DDMWebDavUtil.deleteResource(
-			webDavRequest, getRootPath(), getToken(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			webDavRequest, getRootPath(), getToken(), 0);
 	}
 
 	public Resource getResource(WebDAVRequest webDavRequest)
 		throws WebDAVException {
 
 		return DDMWebDavUtil.getResource(
-			webDavRequest, getRootPath(), getToken(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			webDavRequest, getRootPath(), getToken(), 0);
 	}
 
 	public List<Resource> getResources(WebDAVRequest webDavRequest)
@@ -64,14 +56,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				return getFolders(webDavRequest);
 			}
 			else if (pathArray.length == 3) {
-				String type = pathArray[2];
-
-				if (type.equals(DDMWebDavUtil.TYPE_STRUCTURES)) {
-					return getStructures(webDavRequest);
-				}
-				else if (type.equals(DDMWebDavUtil.TYPE_TEMPLATES)) {
-					return getTemplates(webDavRequest);
-				}
+				return getTemplates(webDavRequest);
 			}
 
 			return new ArrayList<Resource>();
@@ -84,8 +69,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	@Override
 	public int putResource(WebDAVRequest webDavRequest) throws WebDAVException {
 		return DDMWebDavUtil.putResource(
-			webDavRequest, getRootPath(), getToken(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			webDavRequest, getRootPath(), getToken(), 0);
 	}
 
 	protected List<Resource> getFolders(WebDAVRequest webDavRequest)
@@ -95,35 +79,10 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		folders.add(
 			DDMWebDavUtil.toResource(
-				webDavRequest, DDMWebDavUtil.TYPE_STRUCTURES, getRootPath(),
-				true));
-
-		folders.add(
-			DDMWebDavUtil.toResource(
 				webDavRequest, DDMWebDavUtil.TYPE_TEMPLATES, getRootPath(),
 				true));
 
 		return folders;
-	}
-
-	protected List<Resource> getStructures(WebDAVRequest webDavRequest)
-		throws Exception {
-
-		List<Resource> resources = new ArrayList<Resource>();
-
-		List<DDMStructure> ddmStructures =
-			DDMStructureLocalServiceUtil.getStructures(
-				webDavRequest.getGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = DDMWebDavUtil.toResource(
-				webDavRequest, ddmStructure, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
 	}
 
 	protected List<Resource> getTemplates(WebDAVRequest webDavRequest)
@@ -132,10 +91,8 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<Resource>();
 
 		List<DDMTemplate> ddmTemplates =
-			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(
-				webDavRequest.getGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			DDMTemplateLocalServiceUtil.getTemplatesByClassPK(
+				webDavRequest.getGroupId(), 0);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			Resource resource = DDMWebDavUtil.toResource(

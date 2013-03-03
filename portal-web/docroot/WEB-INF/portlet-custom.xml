@@ -3301,6 +3301,10 @@
 		<display-name>Application Display Templates</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
+			<name>refererWebDavToken</name>
+			<value>application_display_template</value>
+		</init-param>
+		<init-param>
 			<name>view-action</name>
 			<value>/dynamic_data_mapping/view_template</value>
 		</init-param>

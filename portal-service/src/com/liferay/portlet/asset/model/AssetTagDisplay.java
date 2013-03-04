@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.json.JSON;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -21,16 +23,64 @@ import java.util.List;
 /**
  * @author Igor Spasic
  */
-public interface AssetTagDisplay extends Serializable {
+public class AssetTagDisplay implements Serializable {
 
-	public int getEnd();
+	public AssetTagDisplay() {
+	}
 
-	public int getPage();
+	public AssetTagDisplay(List<AssetTag> tags, int total, int start, int end) {
+		_tags = tags;
+		_total = total;
+		_start = start;
+		_end = end;
+	}
 
-	public int getStart();
+	public int getEnd() {
+		return _end;
+	}
 
-	public List<AssetTag> getTags();
+	public int getPage() {
+		if ((_end > 0) && (_start > 0)) {
+			return _end / (_end - _start);
+		}
 
-	public int getTotal();
+		return 0;
+	}
+
+	public int getStart() {
+		return _start;
+	}
+
+	public List<AssetTag> getTags() {
+		return _tags;
+	}
+
+	public int getTotal() {
+		return _total;
+	}
+
+	public void setEnd(int end) {
+		_end = end;
+	}
+
+	public void setStart(int start) {
+		_start = start;
+	}
+
+	public void setTags(List<AssetTag> tags) {
+		_tags = tags;
+	}
+
+	public void setTotal(int total) {
+		_total = total;
+	}
+
+	private int _end;
+	private int _start;
+
+	@JSON
+	private List<AssetTag> _tags;
+
+	private int _total;
 
 }

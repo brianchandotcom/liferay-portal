@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.json.JSON;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -21,16 +23,65 @@ import java.util.List;
 /**
  * @author Igor Spasic
  */
-public interface AssetVocabularyDisplay extends Serializable {
+public class AssetVocabularyDisplay implements Serializable {
 
-	public int getEnd();
+	public AssetVocabularyDisplay() {
+	}
 
-	public int getPage();
+	public AssetVocabularyDisplay(
+		List<AssetVocabulary> vocabularies, int total, int start, int end) {
 
-	public int getStart();
+		_vocabularies = vocabularies;
+		_total = total;
+		_start = start;
+		_end = end;
+	}
 
-	public int getTotal();
+	public int getEnd() {
+		return _end;
+	}
 
-	public List<AssetVocabulary> getVocabularies();
+	public int getPage() {
+		if ((_end > 0) && (_start > 0)) {
+			return _end / (_end - _start);
+		}
+
+		return 0;
+	}
+
+	public int getStart() {
+		return _start;
+	}
+
+	public int getTotal() {
+		return _total;
+	}
+
+	public List<AssetVocabulary> getVocabularies() {
+		return _vocabularies;
+	}
+
+	public void setEnd(int end) {
+		_end = end;
+	}
+
+	public void setStart(int start) {
+		_start = start;
+	}
+
+	public void setTotal(int total) {
+		_total = total;
+	}
+
+	public void setVocabularies(List<AssetVocabulary> vocabularies) {
+		_vocabularies = vocabularies;
+	}
+
+	private int _end;
+	private int _start;
+	private int _total;
+
+	@JSON
+	private List<AssetVocabulary> _vocabularies;
 
 }

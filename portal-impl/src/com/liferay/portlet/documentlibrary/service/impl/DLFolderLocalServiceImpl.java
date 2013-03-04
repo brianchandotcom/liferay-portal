@@ -331,8 +331,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getFileEntriesAndFileShortcuts(long,
-	 *             long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
 	 */
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
@@ -354,8 +354,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
-	 *             long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getFileEntriesAndFileShortcutsCount(long, long,
+	 *             QueryDefinition)}
 	 */
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)

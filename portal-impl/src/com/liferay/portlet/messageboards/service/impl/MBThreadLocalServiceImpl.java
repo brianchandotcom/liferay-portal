@@ -264,7 +264,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
+	 *             QueryDefinition)}
 	 */
 	public List<MBThread> getGroupThreads(
 			long groupId, int status, int start, int end)
@@ -924,7 +925,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
+	 *             int)}
 	 */
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {

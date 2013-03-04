@@ -2515,8 +2515,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateArticleTranslation(long, String, double,
-	 *             Locale, String, String, String, Map, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #updateArticleTranslation(long, String, double, Locale,
+	 *             String, String, String, Map, ServiceContext)}
 	 */
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,

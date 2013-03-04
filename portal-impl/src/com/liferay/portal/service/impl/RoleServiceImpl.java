@@ -91,8 +91,8 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 *             the class name or the role name were invalid, or if the role
 	 *             is a duplicate
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #addRole(String, long, String, Map, Map, int, String,
-	 *             ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
+	 *             String, Map, Map, int, String, ServiceContext)}
 	 */
 	public Role addRole(
 			String name, Map<Locale, String> titleMap,

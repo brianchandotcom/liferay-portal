@@ -110,8 +110,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @return     the user group
 	 * @throws     PortalException if the user group's information was invalid
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long, String, String,
-	 *             ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
+	 *             String, String, ServiceContext)}
 	 */
 	public UserGroup addUserGroup(
 			long userId, long companyId, String name, String description)
@@ -763,8 +763,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     PortalException if a user group with the primary key could
 	 *             not be found or if the new information was invalid
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long, String, String,
-	 *             ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
+	 *             String, String, ServiceContext)}
 	 */
 	public UserGroup updateUserGroup(
 			long companyId, long userGroupId, String name, String description)

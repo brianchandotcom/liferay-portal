@@ -573,7 +573,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long, long)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	 *             long)}
 	 */
 	public List<DDMStructure> getClassStructures(long classNameId)
 		throws SystemException {
@@ -582,7 +583,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long, long, int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	 *             long, int, int)}
 	 */
 	public List<DDMStructure> getClassStructures(
 			long classNameId, int start, int end)
@@ -661,7 +663,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long, long, OrderByComparator)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	 *             long, OrderByComparator)}
 	 */
 	public List<DDMStructure> getClassStructures(
 			long classNameId, OrderByComparator orderByComparator)
@@ -805,7 +808,8 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
+	 *             int)}
 	 */
 	public List<DDMStructure> getStructureEntries(
 			long groupId, int start, int end)

@@ -133,6 +133,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
+import com.liferay.util.PwdGenerator;
 
 import java.awt.image.RenderedImage;
 
@@ -4068,6 +4069,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String jobTitle, boolean updateUserInformation, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		if (facebookId > 0) {
+			autoPassword = false;
+
+			if ((password1 == null) || (password2 == null)) {
+				password1 = PwdGenerator.getPassword();
+				password2 = password1;
+			}
+
+			sendEmail = false;
+		}
 
 		User user = getUserByEmailAddress(companyId, emailAddress);
 

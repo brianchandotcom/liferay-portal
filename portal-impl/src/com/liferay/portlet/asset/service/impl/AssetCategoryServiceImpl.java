@@ -31,7 +31,6 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryDisplay;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.model.impl.AssetCategoryDisplayImpl;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.Autocomplete;
@@ -274,7 +273,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			assetCategoryLocalService.getVocabularyCategories(
 				vocabularyId, start, end, obc));
 
-		return new AssetCategoryDisplayImpl(
+		return new AssetCategoryDisplay(
 			categories, categories.size(), start, end);
 	}
 
@@ -298,7 +297,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			total = getVocabularyCategoriesCount(groupId, vocabularyId);
 		}
 
-		return new AssetCategoryDisplayImpl(categories, total, start, end);
+		return new AssetCategoryDisplay(categories, total, start, end);
 	}
 
 	public List<AssetCategory> getVocabularyRootCategories(

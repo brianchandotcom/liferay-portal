@@ -28,7 +28,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
-import com.liferay.portlet.asset.model.impl.AssetVocabularyDisplayImpl;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
@@ -193,7 +192,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			total = getGroupVocabulariesCount(groupId);
 		}
 
-		return new AssetVocabularyDisplayImpl(vocabularies, total, start, end);
+		return new AssetVocabularyDisplay(vocabularies, total, start, end);
 	}
 
 	@Deprecated

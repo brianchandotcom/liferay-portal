@@ -299,7 +299,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	/**
-	 * @deprecated {@link #update(BaseModel)}}
+	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel)}}
 	 */
 	public T update(T model, boolean merge) throws SystemException {
 		if (model instanceof ModelWrapper) {
@@ -334,7 +334,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	/**
-	 * @deprecated {@link #update(BaseModel, ServiceContext)}}
+	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel, ServiceContext)}}
 	 */
 	public T update(T model, boolean merge, ServiceContext serviceContext)
 		throws SystemException {
@@ -431,7 +431,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	/**
-	 * @deprecated {@link #updateImpl(BaseModel)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateImpl(BaseModel)}
 	 */
 	protected T updateImpl(T model, boolean merge) throws SystemException {
 		return updateImpl(model);

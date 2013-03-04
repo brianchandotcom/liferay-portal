@@ -29,7 +29,7 @@ import java.util.List;
 public class ClusterLinkUtil {
 
 	/**
-	 * @deprecated {@link ClusterLink#CLUSTER_FORWARD_MESSAGE}
+	 * @deprecated As of 6.2.0, replaced by {@link ClusterLink#CLUSTER_FORWARD_MESSAGE}
 	 */
 	public static final String CLUSTER_FORWARD_MESSAGE =
 		ClusterLink.CLUSTER_FORWARD_MESSAGE;

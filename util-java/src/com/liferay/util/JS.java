@@ -70,7 +70,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated Use <code>encodeURIComponent</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #encodeURIComponent}
 	 */
 	public static String escape(String s) {
 		return encodeURIComponent(s);
@@ -138,7 +138,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated Use <code>decodeURIComponent</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #decodeURIComponent}
 	 */
 	public static String unescape(String s) {
 		return decodeURIComponent(s);

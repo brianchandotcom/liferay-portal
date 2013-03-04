@@ -557,7 +557,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
@@ -565,7 +566,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long, int, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
@@ -632,7 +634,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, OrderByComparator)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long, OrderByComparator)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
@@ -727,14 +730,14 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures(long)}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
@@ -742,7 +745,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getStructures(long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
+	int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(

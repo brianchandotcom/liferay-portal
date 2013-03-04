@@ -42,7 +42,8 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author     Brian Chan
  * @author     Jorge Ferrer
- * @deprecated {@link com.liferay.taglib.ui.InputPermissionsParamsTag}
+ * @deprecated As of 6.2.0, replaced by {@link
+ *             com.liferay.taglib.ui.InputPermissionsParamsTag}
  */
 public class InputPermissionsParamsTagUtil {
 

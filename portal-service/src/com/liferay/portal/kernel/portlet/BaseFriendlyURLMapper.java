@@ -73,7 +73,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	/**
-	 * @deprecated use {@link #addParameter(Map, String, Object)} instead
+	 * @deprecated As of 6.2.0, replaced by {@link #addParameter(Map, String, Object)}
 	 */
 	protected void addParam(
 		Map<String, String[]> parameterMap, String name, Object value) {
@@ -82,8 +82,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	/**
-	 * @deprecated use {@link #addParameter(String, Map, String, String)}
-	 *             instead
+	 * @deprecated As of 6.2.0, replaced by {@link #addParameter(String, Map, String, String)}
 	 */
 	protected void addParam(
 		Map<String, String[]> parameterMap, String name, String value) {

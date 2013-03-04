@@ -23,7 +23,7 @@ import com.liferay.portal.model.ClassedModel;
 /**
  * @author     Raymond Augé
  * @author     Brian Wing Shun Chan
- * @deprecated See LPS-30598.
+ * @deprecated As of 6.2.0, see LPS-30598.
  */
 public class BatchSessionImpl implements BatchSession {
 

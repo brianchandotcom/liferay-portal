@@ -16,7 +16,8 @@ package com.liferay.portal.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated Moved to {@link com.liferay.portal.kernel.util.InstancePool}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.kernel.util.InstancePool}
  */
 public class InstancePool {
 

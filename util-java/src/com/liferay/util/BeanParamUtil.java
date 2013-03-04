@@ -16,7 +16,7 @@ package com.liferay.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated Moved to {@link com.liferay.portal.kernel.bean.BeanParamUtil}
+ * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.bean.BeanParamUtil}
  */
 public class BeanParamUtil
 	extends com.liferay.portal.kernel.bean.BeanParamUtil {

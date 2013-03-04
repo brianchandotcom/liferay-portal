@@ -68,9 +68,10 @@ public class CalEventServiceWrapper implements CalEventService,
 	}
 
 	/**
-	* @deprecated {@link #addEvent(String, String, String, int, int, int, int,
-	int, int, int, boolean, boolean, String, boolean,
-	TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addEvent(String, String,
+	String, int, int, int, int, int, int, int, boolean, boolean,
+	String, boolean, TZSRecurrence, int, int, int,
+	ServiceContext)}
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent addEvent(
 		java.lang.String title, java.lang.String description,
@@ -206,9 +207,10 @@ public class CalEventServiceWrapper implements CalEventService,
 	}
 
 	/**
-	* @deprecated {@link #updateEvent(long, String, String, String, int, int,
-	int, int, int, int, int, boolean, boolean, String, boolean,
-	TZSRecurrence, int, int, int, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateEvent(long, String,
+	String, String, int, int, int, int, int, int, int, boolean,
+	boolean, String, boolean, TZSRecurrence, int, int, int,
+	ServiceContext)}
 	*/
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long eventId, java.lang.String title, java.lang.String description,

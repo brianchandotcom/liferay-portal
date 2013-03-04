@@ -479,7 +479,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	/**
-	 * @deprecated {@link #addSearchLocalizedTerm(BooleanQuery, SearchContext,
+	 * @deprecated As of 6.2.0, replaced by {@link #addSearchLocalizedTerm(BooleanQuery, SearchContext,
 	 *             String, boolean)}
 	 */
 	protected void addLocalizedSearchTerm(

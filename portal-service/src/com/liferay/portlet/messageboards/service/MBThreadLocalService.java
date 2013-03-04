@@ -264,7 +264,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupThreads(long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
@@ -464,7 +465,8 @@ public interface MBThreadLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #incrementViewCounter(long, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
+	int)}
 	*/
 	public com.liferay.portlet.messageboards.model.MBThread updateThread(
 		long threadId, int viewCount)

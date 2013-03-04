@@ -75,7 +75,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getFileVersionFileEntryMetadatasCount(long)}
 	 */
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws SystemException {

@@ -180,7 +180,8 @@ public class AssetTagServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #getGroupTagsDisplay(long, String, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
+	String, int, int)}
 	*/
 	public static java.lang.String getJSONGroupTags(long groupId,
 		java.lang.String name, int start, int end) throws RemoteException {

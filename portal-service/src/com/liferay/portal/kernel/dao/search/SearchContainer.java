@@ -46,7 +46,7 @@ public class SearchContainer<R> {
 	public static final String DEFAULT_CUR_PARAM = "cur";
 
 	/**
-	 * @deprecated Use <code>DEFAULT_CUR</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #DEFAULT_CUR}.
 	 */
 	public static final int DEFAULT_CUR_VALUE = DEFAULT_CUR;
 
@@ -58,7 +58,7 @@ public class SearchContainer<R> {
 	public static final String DEFAULT_DELTA_PARAM = "delta";
 
 	/**
-	 * @deprecated LPS-6312
+	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
 	public static final int DEFAULT_MAX_PAGES = 25;
 
@@ -173,7 +173,7 @@ public class SearchContainer<R> {
 	}
 
 	/**
-	 * @deprecated Use <code>getCur</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #getCur}
 	 */
 	public int getCurValue() {
 		return getCur();
@@ -253,7 +253,7 @@ public class SearchContainer<R> {
 	}
 
 	/**
-	 * @deprecated LPS-6312
+	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
 	public int getMaxPages() {
 		return _maxPages;
@@ -380,7 +380,7 @@ public class SearchContainer<R> {
 	}
 
 	/**
-	 * @deprecated LPS-6312
+	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
 	public void setMaxPages(int maxPages) {
 		_maxPages = maxPages;
@@ -475,7 +475,7 @@ public class SearchContainer<R> {
 	private PortletURL _iteratorURL;
 
 	/**
-	 * @deprecated LPS-6312
+	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
 	private int _maxPages = DEFAULT_MAX_PAGES;
 

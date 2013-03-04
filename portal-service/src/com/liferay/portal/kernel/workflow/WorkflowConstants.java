@@ -82,7 +82,7 @@ public class WorkflowConstants {
 	public static final int STATUS_DRAFT = 2;
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public static final int STATUS_DRAFT_FROM_APPROVED = 9;
 

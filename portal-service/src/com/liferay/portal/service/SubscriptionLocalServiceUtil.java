@@ -421,7 +421,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param userId the primary key of the user
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @param
 	* @return the range of subscriptions of the user
 	* @throws SystemException if a system exception occurred
 	*/

@@ -18,7 +18,8 @@ import com.liferay.portal.util.ClassLoaderUtil;
 
 /**
  * @author     Raymond Augé
- * @deprecated Moved to {@link com.liferay.portal.util.ClassLoaderUtil}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.util.ClassLoaderUtil}
  */
 public class PACLClassLoaderUtil extends ClassLoaderUtil {
 }

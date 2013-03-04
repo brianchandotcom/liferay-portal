@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Manuel de la Peña
- * @deprecated {@link com.liferay.portal.format.USAPhoneNumberFormatImpl}
+ * @deprecated As of 6.2.0, replaced by {@link com.liferay.portal.format.USAPhoneNumberFormatImpl}
  */
 public class USAPhoneNumberFormat implements PhoneNumberFormat {
 

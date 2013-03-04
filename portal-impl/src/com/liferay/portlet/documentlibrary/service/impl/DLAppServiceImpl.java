@@ -483,7 +483,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #checkInFileEntry(long, String, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
+	 *             String, ServiceContext)}
 	 */
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
@@ -2003,7 +2004,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
+	 *             ServiceContext)}
 	 */
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
@@ -2016,8 +2018,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, String, long,
-	 *             ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
+	 *             String, long, ServiceContext)}
 	 */
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
@@ -2541,8 +2543,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Use {@link #checkInFileEntry(long, boolean, String,
-	 *             ServiceContext)}.
+	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
+	 *             boolean, String, ServiceContext)}.
 	 */
 	public void unlockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
@@ -2552,7 +2554,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Use {@link #checkInFileEntry(long, String)}.
+	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
+	 *             String)}.
 	 */
 	public void unlockFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {

@@ -266,12 +266,12 @@ public interface PermissionChecker extends Cloneable {
 	public boolean isSignedIn();
 
 	/**
-	 * @deprecated Does nothing
+	 * @deprecated As of 6.2.0, does nothing
 	 */
 	public void resetValues();
 
 	/**
-	 * @deprecated Does nothing
+	 * @deprecated As of 6.2.0, does nothing
 	 */
 	public void setValues(PortletRequest portletRequest);
 

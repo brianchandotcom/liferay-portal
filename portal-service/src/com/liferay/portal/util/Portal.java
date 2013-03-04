@@ -382,7 +382,7 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	/**
-	 * @deprecated Replaced by the more general {@link #getCDNHost(boolean)}
+	 * @deprecated As of 6.2.0, replaced by the more general {@link #getCDNHost(boolean)}
 	 */
 	public String getCDNHost();
 
@@ -814,7 +814,7 @@ public interface Portal {
 	public String getPortalLibDir();
 
 	/**
-	 * @deprecated Replaced by the more general {@link #getPortalPort(boolean)}
+	 * @deprecated As of 6.2.0, replaced by the more general {@link #getPortalPort(boolean)}
 	 */
 	public int getPortalPort();
 
@@ -846,7 +846,7 @@ public interface Portal {
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 
 	/**
-	 * @deprecated Renamed to {@link #getPortletBreadcrumbs(HttpServletRequest)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request);

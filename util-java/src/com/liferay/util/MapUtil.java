@@ -17,7 +17,7 @@ package com.liferay.util;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Aug�
- * @deprecated Moved to {@link com.liferay.portal.kernel.util.MapUtil}
+ * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.util.MapUtil}
  */
 public class MapUtil extends com.liferay.portal.kernel.util.MapUtil {
 }

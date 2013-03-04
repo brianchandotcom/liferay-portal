@@ -282,8 +282,9 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #addRepository(long, long, long, long, String, String,
-	String, UnicodeProperties, boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addRepository(long, long,
+	long, long, String, String, String, UnicodeProperties,
+	boolean, ServiceContext)}
 	*/
 	public static long addRepository(long userId, long groupId,
 		long classNameId, long parentFolderId, java.lang.String name,

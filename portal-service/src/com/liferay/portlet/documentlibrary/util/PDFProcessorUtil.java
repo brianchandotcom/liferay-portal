@@ -152,7 +152,7 @@ public class PDFProcessorUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPDFProcessor(PDFProcessor pdfProcessor) {
 	}

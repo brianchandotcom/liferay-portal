@@ -137,7 +137,8 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	 */
 	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
 		throws PortalException, SystemException {

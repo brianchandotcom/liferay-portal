@@ -388,8 +388,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #search(long, long[], long, String, String, int, int,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	String, String, int, int, int)}
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
@@ -410,8 +410,9 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #search(long, long[], long, String, String, String,
-	String, String, String, int, boolean, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	String, String, String, String, String, String, int, boolean,
+	int, int)}
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
@@ -439,8 +440,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #search(long, long[], long, String, String, int, int,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	String, String, int, int, int)}
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, java.lang.String className, java.lang.String keywords,
@@ -480,9 +481,10 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #updateEntry(long, long, String, long, String, long,
-	long[], String[], boolean, Date, Date, Date, String, String,
-	String, String, String, String, int, int, Integer, boolean)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
+	String, long, String, long, long[], String[], boolean, Date,
+	Date, Date, String, String, String, String, String, String,
+	int, int, Integer, boolean)}
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long userId, long groupId, java.lang.String className, long classPK,
@@ -504,10 +506,10 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #updateEntry(long, long, Date, Date, String, long,
-	String, long, long[], String[], boolean, Date, Date, Date,
-	String, String, String, String, String, String, int, int,
-	Integer, boolean)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
+	Date, Date, String, long, String, long, long[], String[],
+	boolean, Date, Date, Date, String, String, String, String,
+	String, String, int, int, Integer, boolean)}
 	*/
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long userId, long groupId, java.lang.String className, long classPK,

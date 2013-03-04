@@ -53,7 +53,7 @@ public abstract class AbstractIntegrationJUnitTestRunner
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	@Override
 	protected Statement withAfters(
@@ -77,7 +77,7 @@ public abstract class AbstractIntegrationJUnitTestRunner
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	@Override
 	protected Statement withBefores(

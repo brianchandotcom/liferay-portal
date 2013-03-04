@@ -98,6 +98,14 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return JournalArticleServiceUtil.getGroupFileEntriesCount(
+			groupId, userId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
@@ -120,6 +128,12 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return JournalFolder.class;
+	}
+
+	@Override
+	protected int getRecentBaseModelsCount(long groupId) throws Exception {
+		return JournalArticleServiceUtil.getGroupFileEntriesCount(
+			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override
@@ -154,7 +168,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		JournalArticleServiceUtil.moveArticleFromTrash(
 			group.getGroupId(), getAssetClassPK(classedModel),
-			(Long)parentBaseModel.getPrimaryKeyObj());
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
 		return parentBaseModel;
 	}

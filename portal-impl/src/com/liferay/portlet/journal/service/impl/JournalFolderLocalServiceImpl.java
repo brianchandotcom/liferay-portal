@@ -379,7 +379,8 @@ public class JournalFolderLocalServiceImpl
 			updateStatus(userId, folder, WorkflowConstants.STATUS_APPROVED);
 		}
 
-		return moveFolder(folderId, parentFolderId, serviceContext);
+		return journalFolderLocalService.moveFolder(
+			folderId, parentFolderId, serviceContext);
 	}
 
 	public void moveFolderToTrash(long userId, long folderId)

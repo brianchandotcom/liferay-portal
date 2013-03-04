@@ -116,6 +116,13 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected int getMineBaseModelsCount(long groupId, long userId)
+			throws Exception {
+
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
+	}
+
+	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
@@ -139,6 +146,11 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return BookmarksFolder.class;
+	}
+
+	@Override
+	protected int getRecentBaseModelsCount(long groupId) throws Exception {
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
 	}
 
 	@Override

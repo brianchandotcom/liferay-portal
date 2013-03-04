@@ -13,7 +13,7 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_C">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_F_C">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -22,6 +22,7 @@
 			WHERE
 				(groupId = ?) AND
 				(userId = ?) AND
+				([$FOLDER_ID$]) AND
 				(classNameId = ?) AND
 				([$STATUS$])
 		]]>
@@ -130,7 +131,7 @@
 					FROM
 						JournalArticle
 					WHERE
-						(groupId = ?) AND
+						(groupId = ?)
 					GROUP BY
 						groupId, articleId
 				) TEMP_TABLE
@@ -146,7 +147,7 @@
 				id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_C">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_F_C">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -169,6 +170,7 @@
 						(TEMP_TABLE.tempVersion = JournalArticle.version)
 			WHERE
 				(userId = ?) AND
+				([$FOLDER_ID$]) AND
 				([$STATUS$])
 			ORDER BY
 				id_ ASC

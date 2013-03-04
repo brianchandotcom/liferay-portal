@@ -56,6 +56,16 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	public void testTrashMineBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashMoveBaseModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testTrashParentAndDeleteParent() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
@@ -67,6 +77,11 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	public void testTrashParentAndRestoreModel() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testTrashRecentBaseModel() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 

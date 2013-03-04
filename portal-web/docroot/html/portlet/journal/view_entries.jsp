@@ -178,11 +178,17 @@ int total = 0;
 %>
 
 <c:choose>
-	<c:when test='<%= displayTerms.getNavigation().equals("mine") %>'>
+	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
 
 		<%
-		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, entryStart, entryEnd, searchContainer.getOrderByComparator());
-		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId(), JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+		long userId = 0;
+
+		if (displayTerms.getNavigation().equals("mine")) {
+			userId = themeDisplay.getUserId();
+		}
+
+		results = JournalArticleServiceUtil.getGroupFileEntries(scopeGroupId, userId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		total = JournalArticleServiceUtil.getGroupFileEntriesCount(scopeGroupId, userId, folderId);
 
 		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
@@ -200,7 +206,7 @@ int total = 0;
 		%>
 
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.isNavigationRecent() %>">
+	<c:when test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
 
 		<%
 		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());

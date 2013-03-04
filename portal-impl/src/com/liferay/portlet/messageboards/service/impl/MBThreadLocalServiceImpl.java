@@ -603,6 +603,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
 		}
 
+		// Thread
+
+		thread.setCategoryId(categoryId);
+
+		mbThreadPersistence.update(thread);
+
 		// Messages
 
 		List<MBMessage> messages = mbMessagePersistence.findByG_C_T(
@@ -622,12 +628,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				indexer.reindex(message);
 			}
 		}
-
-		// Thread
-
-		thread.setCategoryId(categoryId);
-
-		mbThreadPersistence.update(thread);
 
 		// Category
 

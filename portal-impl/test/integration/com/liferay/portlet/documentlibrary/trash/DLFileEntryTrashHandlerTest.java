@@ -130,6 +130,15 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected int getMineBaseModelsCount(long groupId, long userId)
+			throws Exception {
+
+		return DLAppServiceUtil.getGroupFileEntriesCount(
+			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 
@@ -155,6 +164,13 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return DLFolder.class;
+	}
+
+	@Override
+	protected int getRecentBaseModelsCount(long groupId) throws Exception {
+		return DLAppServiceUtil.getGroupFileEntriesCount(
+			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

@@ -374,24 +374,6 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getArticlesByUserId(
-		long groupId, long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws RemoteException {
-		try {
-			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
-				JournalArticleServiceUtil.getArticlesByUserId(groupId, userId,
-					classNameId, start, end, obc);
-
-			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static int getArticlesCount(long groupId, long folderId)
 		throws RemoteException {
 		try {
@@ -453,21 +435,6 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	public static int getArticlesCountByUserId(long groupId, long userId,
-		long classNameId) throws RemoteException {
-		try {
-			int returnValue = JournalArticleServiceUtil.getArticlesCountByUserId(groupId,
-					userId, classNameId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.journal.model.JournalArticleSoap getDisplayArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle) throws RemoteException {
 		try {
@@ -488,6 +455,39 @@ public class JournalArticleServiceSoap {
 		try {
 			int returnValue = JournalArticleServiceUtil.getFoldersAndArticlesCount(groupId,
 					ListUtil.toList(folderIds));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getGroupFileEntries(
+		long groupId, long userId, long rootFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getGroupFileEntries(groupId, userId,
+					rootFolderId, start, end, orderByComparator);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId) throws RemoteException {
+		try {
+			int returnValue = JournalArticleServiceUtil.getGroupFileEntriesCount(groupId,
+					userId, rootFolderId);
 
 			return returnValue;
 		}
@@ -558,11 +558,12 @@ public class JournalArticleServiceSoap {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleSoap moveArticleFromTrash(
-		long groupId, long resourcePrimKey, long newFolderId)
+		long groupId, long resourcePrimKey, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
-					resourcePrimKey, newFolderId);
+					resourcePrimKey, newFolderId, serviceContext);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
 		}
@@ -574,11 +575,12 @@ public class JournalArticleServiceSoap {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleSoap moveArticleFromTrash(
-		long groupId, java.lang.String articleId, long newFolderId)
+		long groupId, java.lang.String articleId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.journal.model.JournalArticle returnValue = JournalArticleServiceUtil.moveArticleFromTrash(groupId,
-					articleId, newFolderId);
+					articleId, newFolderId, serviceContext);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModel(returnValue);
 		}

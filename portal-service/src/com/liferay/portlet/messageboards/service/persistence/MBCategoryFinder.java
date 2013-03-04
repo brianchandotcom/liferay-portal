@@ -19,18 +19,22 @@ package com.liferay.portlet.messageboards.service.persistence;
  */
 public interface MBCategoryFinder {
 	public int countByS_G_U_P(long groupId, long userId,
-		long[] parentCategoryIds)
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int filterCountByS_G_U_P(long groupId, long userId,
-		long[] parentCategoryIds)
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> filterFindByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds, int start, int end)
+		long groupId, long userId, long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> findByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds, int start, int end)
+		long groupId, long userId, long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

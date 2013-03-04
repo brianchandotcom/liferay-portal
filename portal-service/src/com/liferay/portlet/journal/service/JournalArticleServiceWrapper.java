@@ -254,14 +254,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			ddmStructureKey, start, end, obc);
 	}
 
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByUserId(
-		long groupId, long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.getArticlesByUserId(groupId, userId,
-			classNameId, start, end, obc);
-	}
-
 	public int getArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getArticlesCount(groupId, folderId);
@@ -288,13 +280,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			ddmStructureKey);
 	}
 
-	public int getArticlesCountByUserId(long groupId, long userId,
-		long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleService.getArticlesCountByUserId(groupId, userId,
-			classNameId);
-	}
-
 	public com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -308,6 +293,23 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.getFoldersAndArticlesCount(groupId,
 			folderIds);
+	}
+
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupFileEntries(
+		long groupId, long userId, long rootFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getGroupFileEntries(groupId, userId,
+			rootFolderId, start, end, orderByComparator);
+	}
+
+	public int getGroupFileEntriesCount(long groupId, long userId,
+		long rootFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getGroupFileEntriesCount(groupId, userId,
+			rootFolderId);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
@@ -341,19 +343,21 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
-		long groupId, long resourcePrimKey, long newFolderId)
+		long groupId, long resourcePrimKey, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.moveArticleFromTrash(groupId,
-			resourcePrimKey, newFolderId);
+			resourcePrimKey, newFolderId, serviceContext);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
-		long groupId, java.lang.String articleId, long newFolderId)
+		long groupId, java.lang.String articleId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleService.moveArticleFromTrash(groupId, articleId,
-			newFolderId);
+			newFolderId, serviceContext);
 	}
 
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(

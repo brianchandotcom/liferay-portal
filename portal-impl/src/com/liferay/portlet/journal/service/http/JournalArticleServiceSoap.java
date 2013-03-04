@@ -465,13 +465,13 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getGroupFileEntries(
+	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getGroupArticles(
 		long groupId, long userId, long rootFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
-				JournalArticleServiceUtil.getGroupFileEntries(groupId, userId,
+				JournalArticleServiceUtil.getGroupArticles(groupId, userId,
 					rootFolderId, start, end, orderByComparator);
 
 			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
@@ -483,10 +483,10 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
-	public static int getGroupFileEntriesCount(long groupId, long userId,
+	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId) throws RemoteException {
 		try {
-			int returnValue = JournalArticleServiceUtil.getGroupFileEntriesCount(groupId,
+			int returnValue = JournalArticleServiceUtil.getGroupArticlesCount(groupId,
 					userId, rootFolderId);
 
 			return returnValue;

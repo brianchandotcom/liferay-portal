@@ -1028,7 +1028,7 @@ public class JournalArticleServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupFileEntries(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
 		long rootFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -1036,7 +1036,7 @@ public class JournalArticleServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
-					"getGroupFileEntries", _getGroupFileEntriesParameterTypes26);
+					"getGroupArticles", _getGroupArticlesParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId, rootFolderId, start, end, orderByComparator);
@@ -1067,14 +1067,14 @@ public class JournalArticleServiceHttp {
 		}
 	}
 
-	public static int getGroupFileEntriesCount(HttpPrincipal httpPrincipal,
+	public static int getGroupArticlesCount(HttpPrincipal httpPrincipal,
 		long groupId, long userId, long rootFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
-					"getGroupFileEntriesCount",
-					_getGroupFileEntriesCountParameterTypes27);
+					"getGroupArticlesCount",
+					_getGroupArticlesCountParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId, rootFolderId);
@@ -2229,11 +2229,11 @@ public class JournalArticleServiceHttp {
 	private static final Class<?>[] _getFoldersAndArticlesCountParameterTypes25 = new Class[] {
 			long.class, java.util.List.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesParameterTypes26 = new Class[] {
+	private static final Class<?>[] _getGroupArticlesParameterTypes26 = new Class[] {
 			long.class, long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGroupFileEntriesCountParameterTypes27 = new Class[] {
+	private static final Class<?>[] _getGroupArticlesCountParameterTypes27 = new Class[] {
 			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getLatestArticleParameterTypes28 = new Class[] {

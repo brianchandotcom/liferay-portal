@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -67,6 +68,23 @@ public class PortletFileRepositoryUtil {
 			inputStream, fileName, mimeType);
 	}
 
+	public static Folder addPortletFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFolder(
+			userId, repositoryId, parentFolderId, folderName, serviceContext);
+	}
+
+	public static Repository addPortletRepository(
+			long groupId, String portletId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletRepository(
+			groupId, portletId, serviceContext);
+	}
+
 	public static void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -105,6 +123,14 @@ public class PortletFileRepositoryUtil {
 		throws PortalException, SystemException {
 
 		getPortletFileRepository().deletePortletRepository(groupId, portletId);
+	}
+
+	public static Repository fetchPortletRepository(
+			long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().fetchPortletRepository(
+			groupId, portletId);
 	}
 
 	public static List<FileEntry> getPortletFileEntries(
@@ -180,15 +206,7 @@ public class PortletFileRepositoryUtil {
 		throws PortalException, SystemException {
 
 		return getPortletFileRepository().getPortletFolder(
-			userId, repositoryId, parentFolderId, folderName, serviceContext);
-	}
-
-	public static long getPortletRepositoryId(
-			long groupId, String portletId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return getPortletFileRepository().getPortletRepositoryId(
-			groupId, portletId, serviceContext);
+			repositoryId, parentFolderId, folderName);
 	}
 
 	public static void movePortletFileEntryToTrash(

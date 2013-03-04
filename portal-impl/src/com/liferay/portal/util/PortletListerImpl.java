@@ -53,8 +53,10 @@ public class PortletListerImpl implements PortletLister {
 
 		_list = new ArrayList<TreeNodeView>();
 
+		TreeNodeView rootNodeView = null;
+
 		if (_rootNodeName != null) {
-			TreeNodeView rootNodeView = new TreeNodeView(_nodeId);
+			rootNodeView = new TreeNodeView(_nodeId);
 
 			rootNodeView.setLeaf(false);
 			rootNodeView.setName(_rootNodeName);
@@ -68,9 +70,13 @@ public class PortletListerImpl implements PortletLister {
 		List<PortletCategory> portletCategories = ListUtil.fromCollection(
 			portletCategory.getCategories());
 
-		iteratePortletCategories(portletCategories, _nodeId, 0);
+		iteratePortletCategories(rootNodeView, portletCategories, _nodeId, 0);
 
 		return new TreeView(_list, _depth);
+	}
+
+	public void setHierarchicalTree(boolean hierarchicalTree) {
+		_hierarchicalTree = hierarchicalTree;
 	}
 
 	public void setIncludeInstanceablePortlets(
@@ -104,6 +110,7 @@ public class PortletListerImpl implements PortletLister {
 	}
 
 	protected void iteratePortletCategories(
+			TreeNodeView parentNodeView,
 			List<PortletCategory> portletCategories, long parentId, int depth)
 		throws PortalException, SystemException {
 
@@ -142,26 +149,33 @@ public class PortletListerImpl implements PortletLister {
 			nodeView.setObjId(portletCategory.getPath());
 			nodeView.setParentId(parentId);
 
-			_list.add(nodeView);
+			if (_hierarchicalTree) {
+				if (parentNodeView != null) {
+					parentNodeView.addChild(nodeView);
+				}
+			}
+			else {
+				_list.add(nodeView);
+			}
 
 			int nodeId = _nodeId;
 
 			List<PortletCategory> subCategories = ListUtil.fromCollection(
 				portletCategory.getCategories());
 
-			iteratePortletCategories(subCategories, nodeId, depth);
+			iteratePortletCategories(nodeView, subCategories, nodeId, depth);
 
 			if (_iteratePortlets) {
 				iteratePortlets(
-					portletCategory, portletCategory.getPortletIds(), nodeId,
-					depth + 1);
+					nodeView, portletCategory, portletCategory.getPortletIds(),
+					nodeId, depth + 1);
 			}
 		}
 	}
 
 	protected void iteratePortlets(
-			PortletCategory portletCategory, Set<String> portletIds,
-			int parentNodeId, int depth)
+			TreeNodeView parentNodeView, PortletCategory portletCategory,
+			Set<String> portletIds, int parentNodeId, int depth)
 		throws PortalException, SystemException {
 
 		List<Portlet> portlets = new ArrayList<Portlet>();
@@ -235,11 +249,17 @@ public class PortletListerImpl implements PortletLister {
 			nodeView.setObjId(portlet.getRootPortletId());
 			nodeView.setParentId(parentNodeId);
 
-			_list.add(nodeView);
+			if (_hierarchicalTree) {
+				parentNodeView.addChild(nodeView);
+			}
+			else {
+				_list.add(nodeView);
+			}
 		}
 	}
 
 	private int _depth;
+	private boolean _hierarchicalTree;
 	private boolean _includeInstanceablePortlets;
 	private boolean _iteratePortlets;
 	private LayoutTypePortlet _layoutTypePortlet;

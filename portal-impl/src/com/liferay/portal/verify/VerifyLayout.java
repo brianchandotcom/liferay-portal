@@ -49,10 +49,9 @@ public class VerifyLayout extends VerifyProcess {
 		verifyUuid("AssetEntry");
 		verifyUuid("JournalArticle");
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
-		sb.append("sourcePrototypeLayoutUuid is not null and ");
 		sb.append("sourcePrototypeLayoutUuid != '' and ");
 		sb.append("uuid_ != sourcePrototypeLayoutUuid");
 
@@ -60,7 +59,7 @@ public class VerifyLayout extends VerifyProcess {
 	}
 
 	protected void verifyUuid(String tableName) throws Exception {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("update ");
 		sb.append(tableName);
@@ -68,7 +67,6 @@ public class VerifyLayout extends VerifyProcess {
 		sb.append("Layout where ");
 		sb.append(tableName);
 		sb.append(".layoutUuid = Layout.uuid_ and ");
-		sb.append("Layout.sourcePrototypeLayoutUuid is not null and ");
 		sb.append("Layout.sourcePrototypeLayoutUuid != '' and ");
 		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid)");
 

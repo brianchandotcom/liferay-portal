@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -80,9 +81,14 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select resourcePrimKey, groupId, companyId, userId, " +
-					"userName, nodeId from WikiPage group by resourcePrimKey");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("select resourcePrimKey, groupId, companyId, ");
+			sb.append("MIN(userId) as userId, MIN(userName) as userName, ");
+			sb.append("nodeId from WikiPage group by resourcePrimKey, ");
+			sb.append("groupId, companyId, nodeId");
+
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 

@@ -36,37 +36,38 @@ public class ViewActionResponseExclusiveStateMiscTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download File"),
 			selenium.getText("//p[3]/a"));
 		selenium.clickAt("//p[3]/a", RuntimeVariables.replace("Download File"));
-		BrowserCommands.downloadTempFile("logo(2).png");
+		BrowserCommands.downloadTempFile("logo(1).png");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadTempFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("logo(2).png"));
+			RuntimeVariables.replace("logo(1).png"));
+		Thread.sleep(5000);
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Exclusive State)"));
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace(
 				"Portlet Response (ActionResponse,Exclusive State)"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='portlet-msg-success']",
-			"Your request completed successfully.");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

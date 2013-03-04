@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select;
+package com.liferay.portalweb.portal.selenium.list;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.select.addselection.AddSelectionTests;
-import com.liferay.portalweb.portal.selenium.select.select.SelectTests;
-import com.liferay.portalweb.portal.selenium.select.selectandwait.SelectAndWaitTests;
+import com.liferay.portalweb.portal.selenium.list.addselection.AddSelectionTests;
+import com.liferay.portalweb.portal.selenium.list.select.SelectTests;
+import com.liferay.portalweb.portal.selenium.list.selectandwait.SelectAndWaitTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectTestPlan extends BaseTestSuite {
+public class ListTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();

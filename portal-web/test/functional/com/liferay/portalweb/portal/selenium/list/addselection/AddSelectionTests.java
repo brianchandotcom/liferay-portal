@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select.selectandwait;
+package com.liferay.portalweb.portal.selenium.list.addselection;
 
+import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
+import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,12 +25,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectAndWaitTests extends BaseTestSuite {
+public class AddSelectionTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(SelectAndWait1Test.class);
-		testSuite.addTestSuite(SelectAndWait2Test.class);
-		testSuite.addTestSuite(SelectAndWait3Test.class);
+		testSuite.addTestSuite(AddPageAPTest.class);
+		testSuite.addTestSuite(AddPortletAPTest.class);
+		testSuite.addTestSuite(AddSelection1Test.class);
+		testSuite.addTestSuite(AddSelection2Test.class);
+		testSuite.addTestSuite(AddSelection3Test.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

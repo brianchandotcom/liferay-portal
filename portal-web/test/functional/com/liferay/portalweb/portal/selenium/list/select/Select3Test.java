@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select.select;
+package com.liferay.portalweb.portal.selenium.list.select;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Select2Test extends BaseTestCase {
-	public void testSelect2() throws Exception {
+public class Select3Test extends BaseTestCase {
+	public void testSelect3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -51,7 +51,8 @@ public class Select2Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_125_birthdaymonth']",
-			RuntimeVariables.replace("Catherine"));
+		selenium.select("//select[@id='Catherine']",
+			RuntimeVariables.replace("September"));
+		selenium.waitForPageToLoad("30000");
 	}
 }

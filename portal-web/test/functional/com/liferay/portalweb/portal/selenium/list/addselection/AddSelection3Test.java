@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select.addselection;
+package com.liferay.portalweb.portal.selenium.list.addselection;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddSelection2Test extends BaseTestCase {
-	public void testAddSelection2() throws Exception {
+public class AddSelection3Test extends BaseTestCase {
+	public void testAddSelection3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -50,7 +50,7 @@ public class AddSelection2Test extends BaseTestCase {
 		selenium.select("//select[@id='_86_anyAssetType']",
 			RuntimeVariables.replace("Select More Than One..."));
 		selenium.waitForVisible("//select[@id='_86_currentClassNameIds']");
-		selenium.addSelection("//select[@id='_86_currentClassNameIds']",
-			RuntimeVariables.replace("Catherine"));
+		selenium.addSelection("//select[@id='Catherine']",
+			RuntimeVariables.replace("Blogs Entry"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select.select;
+package com.liferay.portalweb.portal.selenium.list.selectandwait;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Select1Test extends BaseTestCase {
-	public void testSelect1() throws Exception {
+public class SelectAndWait3Test extends BaseTestCase {
+	public void testSelectAndWait3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -36,24 +36,23 @@ public class Select1Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
+		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
-		assertEquals(RuntimeVariables.replace("User"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+		selenium.type("//input[@id='_128_keywords']",
+			RuntimeVariables.replace("Power"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_125_birthdaymonth']",
-			RuntimeVariables.replace("September"));
-		assertEquals("September",
-			selenium.getSelectedLabel("//select[@id='_125_birthdaymonth']"));
+		assertEquals(RuntimeVariables.replace("Power User"),
+			selenium.getText("//tr[contains(.,'Power')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Power')]/td[1]/a",
+			RuntimeVariables.replace("Power User"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Define Permissions",
+			RuntimeVariables.replace("Define Permissions"));
+		selenium.waitForPageToLoad("30000");
+		selenium.select("//select[@id='Catherine']",
+			RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
 	}
 }

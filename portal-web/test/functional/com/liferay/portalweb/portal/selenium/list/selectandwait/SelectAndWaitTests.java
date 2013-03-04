@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.select.select;
+package com.liferay.portalweb.portal.selenium.list.selectandwait;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -22,12 +22,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectTests extends BaseTestSuite {
+public class SelectAndWaitTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(Select1Test.class);
-		testSuite.addTestSuite(Select2Test.class);
-		testSuite.addTestSuite(Select3Test.class);
+		testSuite.addTestSuite(SelectAndWait1Test.class);
+		testSuite.addTestSuite(SelectAndWait2Test.class);
+		testSuite.addTestSuite(SelectAndWait3Test.class);
 
 		return testSuite;
 	}

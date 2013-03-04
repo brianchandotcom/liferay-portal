@@ -120,6 +120,15 @@ public class BundleServletContext extends LiferayServletContext {
 		ServletContext servletContext) {
 
 		super(servletContext);
+
+		_bundle = bundle;
+	}
+
+	public void close() {
+	}
+
+	public Bundle getBundle() {
+		return _bundle;
 	}
 
 	public ClassLoader getClassLoader() {
@@ -140,9 +149,14 @@ public class BundleServletContext extends LiferayServletContext {
 		return null;
 	}
 
+	public void open() {
+	}
+
 	public void setServletContextName(String servletContextName) {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BundleServletContext.class);
+
+	private Bundle _bundle;
 
 }

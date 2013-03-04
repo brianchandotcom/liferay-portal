@@ -114,12 +114,10 @@ public class VerifyCalendar extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			String sql =
+			String sql = SQLTransformer.transform(
 				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +
 					"recurrence) != '') and recurrence not like " +
-					"'%serializable%'";
-
-			sql = SQLTransformer.transform(sql);
+						"'%serializable%'");
 
 			ps = con.prepareStatement(sql);
 

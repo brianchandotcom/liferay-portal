@@ -232,10 +232,6 @@ public class SQLTransformer {
 		return sql;
 	}
 
-	private String _replaceEmptinessComparison(String sql) {
-		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
-	}
-
 	private String _replaceIntegerDivision(String sql) {
 		Matcher matcher = _integerDivisionPattern.matcher(sql);
 
@@ -267,6 +263,10 @@ public class SQLTransformer {
 		Matcher matcher = _negativeComparisonPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 ($2)");
+	}
+
+	private String _replaceNonEmptinessComparison(String sql) {
+		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
 	}
 
 	private String _replaceReplace(String newSQL) {
@@ -307,7 +307,7 @@ public class SQLTransformer {
 			}
 		}
 		else if (_vendorOracle) {
-			newSQL = _replaceEmptinessComparison(newSQL);
+			newSQL = _replaceNonEmptinessComparison(newSQL);
 		}
 		else if (_vendorPostgreSQL) {
 			newSQL = _replaceNegativeComparison(newSQL);

@@ -90,18 +90,13 @@ public class UpgradeAsset extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("select resourcePrimKey, structureId ");
-			sb.append("from JournalArticle where structureId != ''");
-
-			String sql = sb.toString();
-
-			sql = SQLTransformer.transform(sql);
+			String sql = SQLTransformer.transform(
+				"select resourcePrimKey, structureId from JournalArticle " +
+					"where structureId != ''");
 
 			ps = con.prepareStatement(sql);
 
-			rs = ps.executeQuery(sql);
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");

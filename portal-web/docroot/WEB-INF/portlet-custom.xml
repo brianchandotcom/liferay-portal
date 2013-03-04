@@ -3004,10 +3004,6 @@
 				<value>-1</value>
 			</preference>
 			<preference>
-				<name>delta</name>
-				<value>5</value>
-			</preference>
-			<preference>
 				<name>displayStyle</name>
 				<value>title-list</value>
 			</preference>

@@ -179,6 +179,11 @@ String orderByType1 = GetterUtil.getString(preferences.getValue("orderByType1", 
 String orderByType2 = GetterUtil.getString(preferences.getValue("orderByType2", "ASC"));
 boolean excludeZeroViewCount = GetterUtil.getBoolean(preferences.getValue("excludeZeroViewCount", null));
 int delta = GetterUtil.getInteger(preferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
+
+if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
+	delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
+}
+
 String paginationType = GetterUtil.getString(preferences.getValue("paginationType", "none"));
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);

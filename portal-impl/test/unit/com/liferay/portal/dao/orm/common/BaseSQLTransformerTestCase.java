@@ -15,31 +15,29 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.dao.db.DBFactoryImpl;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Before;
 
 /**
- * @author Alberto Chaparro
+ * @author Miguel Pastor
  */
-public class SQLTransformerTest {
+public abstract class BaseSQLTransformerTestCase {
 
-	@Test
-	public void testReplaceEmptinessComparisonOracle() {
-		setDatabase(DB.TYPE_ORACLE);
-
-		String sql = SQLTransformer.transform(
-			"SELECT * FROM table where field != ''");
-
-		Assert.assertEquals("SELECT * FROM table where field IS NOT NULL", sql);
-	}
-
-	protected void setDatabase(String type) {
+	@Before
+	public void setUp() {
 		DBFactoryUtil.setDBFactory(new DBFactoryImpl());
 
-		DBFactoryUtil.setDB(type);
+		DBFactoryUtil.setDB(getDBType());
 	}
+
+	protected abstract String getDBType();
+
+	protected String transformSQL(String sql) {
+		return SQLTransformer.transform(sql);
+	}
+
+	protected static final String NON_EMPTY_FIELD_COMPARISON =
+		"SELECT * FROM table where field != ''";
 
 }

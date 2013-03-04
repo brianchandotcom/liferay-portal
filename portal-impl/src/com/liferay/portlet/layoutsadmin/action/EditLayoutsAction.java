@@ -169,6 +169,21 @@ public class EditLayoutsAction extends PortletAction {
 					closeRedirect, null, layout, oldFriendlyURL);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
+				long plid = ParamUtil.getLong(actionRequest, "plid");
+
+				if (plid <= 0) {
+					long groupId = ParamUtil.getLong(actionRequest, "groupId");
+					boolean privateLayout = ParamUtil.getBoolean(
+						actionRequest, "privateLayout");
+					long layoutId = ParamUtil.getLong(
+						actionRequest, "layoutId");
+
+					layout = LayoutLocalServiceUtil.getLayout(
+						groupId, privateLayout, layoutId);
+
+					plid = layout.getPlid();
+				}
+
 				Object[] returnValue = SitesUtil.deleteLayout(
 					actionRequest, actionResponse);
 
@@ -178,8 +193,13 @@ public class EditLayoutsAction extends PortletAction {
 
 				redirect = updateCloseRedirect(
 					redirect, group, null, oldFriendlyURL);
-				redirect = HttpUtil.setParameter(
-					redirect, "refererPlid", newRefererPlid);
+
+				long refererPlid = themeDisplay.getRefererPlid();
+
+				if (plid == refererPlid) {
+					redirect = HttpUtil.setParameter(
+						redirect, "refererPlid", newRefererPlid);
+				}
 
 				closeRedirect = updateCloseRedirect(
 					closeRedirect, group, null, oldFriendlyURL);

@@ -103,6 +103,10 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			userGroupRoles.add(userGroupRole);
 		}
 
+		if (userGroupRoles.isEmpty()) {
+			return;
+		}
+
 		Role role = roleLocalService.getRole(roleId);
 
 		if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {

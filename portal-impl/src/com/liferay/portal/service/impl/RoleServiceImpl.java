@@ -136,6 +136,10 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	public void addUserRoles(long userId, long[] roleIds)
 		throws PortalException, SystemException {
 
+		if (roleIds.length == 0) {
+			return;
+		}
+
 		checkUserRolesPermission(userId, roleIds);
 
 		RoleMembershipPolicyUtil.checkRoles(new long[] {userId}, roleIds, null);
@@ -369,6 +373,10 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 */
 	public void unsetUserRoles(long userId, long[] roleIds)
 		throws PortalException, SystemException {
+
+		if (roleIds.length == 0) {
+			return;
+		}
 
 		checkUserRolesPermission(userId, roleIds);
 

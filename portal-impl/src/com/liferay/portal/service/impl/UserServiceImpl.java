@@ -96,6 +96,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (userIds.length == 0) {
+			return;
+		}
+
 		try {
 			GroupPermissionUtil.check(
 				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
@@ -106,10 +110,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			boolean hasPermission = false;
 
-			if (userIds.length == 0) {
-				hasPermission = true;
-			}
-			else if (userIds.length == 1) {
+			if (userIds.length == 1) {
 				User user = getUser();
 
 				if (user.getUserId() == userIds[0]) {
@@ -153,6 +154,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public void addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException, SystemException {
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
@@ -202,6 +207,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
@@ -411,6 +420,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
@@ -1036,18 +1049,27 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		RoleMembershipPolicyUtil.checkRoles(
-			ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+		if (!unsetUserIds.isEmpty()) {
+			RoleMembershipPolicyUtil.checkRoles(
+				ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+		}
 
-		RoleMembershipPolicyUtil.checkRoles(userIds, new long[] {roleId}, null);
+		if (userIds.length > 0) {
+			RoleMembershipPolicyUtil.checkRoles(
+				userIds, new long[] {roleId}, null);
+		}
 
 		userLocalService.setRoleUsers(roleId, userIds);
 
-		RoleMembershipPolicyUtil.propagateRoles(
-			ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+		if (!unsetUserIds.isEmpty()) {
+			RoleMembershipPolicyUtil.propagateRoles(
+				ArrayUtil.toLongArray(unsetUserIds), null, new long[] {roleId});
+		}
 
-		RoleMembershipPolicyUtil.propagateRoles(
-			userIds, new long[] {roleId}, null);
+		if (userIds.length > 0) {
+			RoleMembershipPolicyUtil.propagateRoles(
+				userIds, new long[] {roleId}, null);
+		}
 	}
 
 	/**
@@ -1076,21 +1098,29 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		UserGroupMembershipPolicyUtil.checkMembership(
-			ArrayUtil.toLongArray(unsetUserIds), null,
-			new long[] {userGroupId});
+		if (!unsetUserIds.isEmpty()) {
+			UserGroupMembershipPolicyUtil.checkMembership(
+				ArrayUtil.toLongArray(unsetUserIds), null,
+				new long[] {userGroupId});
+		}
 
-		UserGroupMembershipPolicyUtil.checkMembership(
-			userIds, new long[] {userGroupId}, null);
+		if (userIds.length > 0) {
+			UserGroupMembershipPolicyUtil.checkMembership(
+				userIds, new long[] {userGroupId}, null);
+		}
 
 		userLocalService.setUserGroupUsers(userGroupId, userIds);
 
-		UserGroupMembershipPolicyUtil.propagateMembership(
-			ArrayUtil.toLongArray(unsetUserIds), null,
-			new long[] {userGroupId});
+		if (!unsetUserIds.isEmpty()) {
+			UserGroupMembershipPolicyUtil.propagateMembership(
+				ArrayUtil.toLongArray(unsetUserIds), null,
+				new long[] {userGroupId});
+		}
 
-		UserGroupMembershipPolicyUtil.propagateMembership(
-			userIds, new long[] {userGroupId}, null);
+		if (userIds.length > 0) {
+			UserGroupMembershipPolicyUtil.propagateMembership(
+				userIds, new long[] {userGroupId}, null);
+		}
 	}
 
 	/**
@@ -1127,14 +1157,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		userIds = UsersAdminUtil.filterUnsetGroupUserIds(
+			getPermissionChecker(), groupId, userIds);
+
+		if (userIds.length == 0) {
+			return;
+		}
+
 		try {
-			userIds = UsersAdminUtil.filterUnsetGroupUserIds(
-				getPermissionChecker(), groupId, userIds);
-
-			if (userIds.length == 0) {
-				return;
-			}
-
 			GroupPermissionUtil.check(
 				getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
 		}
@@ -1144,10 +1174,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			boolean hasPermission = false;
 
-			if (userIds.length == 0) {
-				hasPermission = true;
-			}
-			else if (userIds.length == 1) {
+			if (userIds.length == 1) {
 				User user = getUser();
 
 				if (user.getUserId() == userIds[0]) {
@@ -1243,6 +1270,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public void unsetRoleUsers(long roleId, long[] userIds)
 		throws PortalException, SystemException {
 
+		if (userIds.length == 0) {
+			return;
+		}
+
 		RolePermissionUtil.check(
 			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
@@ -1284,6 +1315,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 */
 	public void unsetUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
+
+		if (userIds.length == 0) {
+			return;
+		}
 
 		UserGroupPermissionUtil.check(
 			getPermissionChecker(), userGroupId, ActionKeys.ASSIGN_MEMBERS);
@@ -2243,7 +2278,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 
-		if ((addRoleIds != null) || (removeRoleIds != null)) {
+		if (((addRoleIds != null) && (addRoleIds.length > 0)) ||
+			((removeRoleIds != null) && (removeRoleIds.length > 0))) {
+
 			RoleMembershipPolicyUtil.checkRoles(
 				new long[] {userId}, addRoleIds, removeRoleIds);
 		}

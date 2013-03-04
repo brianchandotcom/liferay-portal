@@ -27,7 +27,7 @@ else {
 }
 
 if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
-	backURL = HtmlUtil.escape(HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL)));
+	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
 }
 
 String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : title;

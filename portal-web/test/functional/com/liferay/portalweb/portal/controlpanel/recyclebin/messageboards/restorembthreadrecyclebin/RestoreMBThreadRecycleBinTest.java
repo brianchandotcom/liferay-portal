@@ -42,16 +42,17 @@ public class RestoreMBThreadRecycleBinTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
 			selenium.getText(
 				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/span/a"));
-		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]");
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
-			RuntimeVariables.replace("Restore"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The item has been restored to Home"),
@@ -62,5 +63,6 @@ public class RestoreMBThreadRecycleBinTest extends BaseTestCase {
 				"//div[@class='lfr-message-info taglib-trash-empty']"));
 		assertEquals(RuntimeVariables.replace("The Recycle Bin is empty."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertFalse(selenium.isTextPresent("MB Thread Message Subject"));
 	}
 }

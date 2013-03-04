@@ -32,11 +32,11 @@ public class RecycleBinTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		//testSuite.addTest(BlogsTestPlan.suite());
-		//testSuite.addTest(BookmarksTestPlan.suite());
+		testSuite.addTest(BlogsTestPlan.suite());
+		testSuite.addTest(BookmarksTestPlan.suite());
 		testSuite.addTest(MessageBoardsTestPlan.suite());
-		//testSuite.addTest(WebContentTestPlan.suite());
-		//testSuite.addTest(WikiTestPlan.suite());
+		testSuite.addTest(WebContentTestPlan.suite());
+		testSuite.addTest(WikiTestPlan.suite());
 
 		return testSuite;
 	}

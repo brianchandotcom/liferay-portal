@@ -14,21 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>MB Category Name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/web/guest/home/</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//div[@id='dockbar']</td>
 	<td>Dockbar</td>
@@ -61,6 +46,11 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Recycle Bin</td>
+	<td>Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
 	<td>Recycle Bin</td>
 </tr>
 <tr>
@@ -105,7 +95,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'MB Category Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'MB Category Name')]/td[5]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

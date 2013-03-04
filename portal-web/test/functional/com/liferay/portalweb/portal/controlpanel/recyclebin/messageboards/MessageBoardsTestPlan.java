@@ -36,7 +36,6 @@ public class MessageBoardsTestPlan extends BaseTestSuite {
 		testSuite.addTest(RestoreMBCategoryRecycleBinTests.suite());
 		testSuite.addTest(RestoreMBThreadRecycleBinTests.suite());
 
-
 		return testSuite;
 	}
 

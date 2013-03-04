@@ -49,7 +49,12 @@
 	<td>Recycle Bin</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'MB Category Name')]/td[1]/span/a</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
@@ -60,12 +65,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
+	<td>Restore</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]</td>
 	<td>Restore</td>
 </tr>
 <tr>
@@ -82,6 +92,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-info']</td>
 	<td>The Recycle Bin is empty.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>MB Category Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

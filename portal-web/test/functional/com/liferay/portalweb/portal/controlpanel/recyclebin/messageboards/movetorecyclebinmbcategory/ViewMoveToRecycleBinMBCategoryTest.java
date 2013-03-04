@@ -25,11 +25,6 @@ public class ViewMoveToRecycleBinMBCategoryTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Message Boards Test Page",
-			RuntimeVariables.replace("Message Boards Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("MB Category Name"));
-		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(
@@ -44,6 +39,8 @@ public class ViewMoveToRecycleBinMBCategoryTest extends BaseTestCase {
 		selenium.clickAt("link=Recycle Bin",
 			RuntimeVariables.replace("Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Recycle Bin"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace(
 				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin"),
 			selenium.getText(
@@ -63,7 +60,7 @@ public class ViewMoveToRecycleBinMBCategoryTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'MB Category Name')]/td[4]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'MB Category Name')]/td[5]/span/ul/li/strong/a"));
+				"//tr[contains(.,'MB Category Name')]/td[5]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

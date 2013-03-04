@@ -14,58 +14,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='dockbar']</td>
-	<td>Dockbar</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
-	<td>AUI Editable Min</td>
+	<td>clickAtAndWait</td>
+	<td>link=Message Boards Test Page</td>
+	<td>Message Boards Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li[@id='_145_mySites']/a/span</td>
-	<td>Go to</td>
-</tr>
-<tr>
-	<td>mouseOver</td>
-	<td>//li[@id='_145_mySites']/a/span</td>
-	<td>Go to</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Control Panel</td>
-	<td>Control Panel</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Control Panel</td>
-	<td>Control Panel</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Message Boards</td>
+	<td>//span[@class='portlet-title-text']</td>
 	<td>Message Boards</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='aui-tabview-list']/li[1]</td>
+	<td>//ul[@class='top-links-navigation']/li/span[contains(.,'Message Boards Home')]/span</td>
 	<td>Message Boards Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='aui-tabview-list']/li[2]</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a[contains(.,'Recent Posts')]/span</td>
 	<td>Recent Posts</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='aui-tabview-list']/li[3]</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a[contains(.,'My Posts')]/span</td>
+	<td>My Posts</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a[contains(.,'My Subscriptions')]/span</td>
+	<td>My Subscriptions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a[contains(.,'Statistics')]/span</td>
 	<td>Statistics</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='aui-tabview-list']/li[4]</td>
+	<td>//ul[@class='top-links-navigation']/li/span/a[contains(.,'Banned Users')]/span</td>
 	<td>Banned Users</td>
 </tr>
 <tr>
@@ -77,6 +62,16 @@
 	<td>assertVisible</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='category-subscription-types']/span/a[contains(.,'RSS')]/span</td>
+	<td>RSS</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='category-subscription-types']/span/a[contains(.,'Subscribe')]/span</td>
+	<td>Subscribe</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -94,19 +89,29 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>xpath=(//input[@value='Move to the Recycle Bin'])</td>
-	<td>Move to the Recycle Bin</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-title']/span[contains(.,'Threads')]</td>
+	<td>Threads</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'MB Thread Message Subject')]/td[2]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[1]/a</td>
 	<td>MB Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'MB Thread Message Subject')]/td[4]/a</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[3]/a</td>
 	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[4]/a</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -114,18 +119,13 @@
 	<td>1</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>//tr[contains(.,'MB Thread Message Subject')]/td[6]/a</td>
-	<td>1</td>
+	<td>Last Post Date</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'MB Thread Message Subject')]/td[7]/a</td>
-	<td>Last Post</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[contains(.,'MB Thread Message Subject')]/td[8]/span/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'MB Thread Message Subject')]/td[7]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

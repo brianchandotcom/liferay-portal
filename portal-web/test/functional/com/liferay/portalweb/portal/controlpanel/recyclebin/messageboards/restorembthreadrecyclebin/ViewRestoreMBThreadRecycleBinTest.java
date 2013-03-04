@@ -25,51 +25,63 @@ public class ViewRestoreMBThreadRecycleBinTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Go to"),
-			selenium.getText("//li[@id='_145_mySites']/a/span"));
-		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-		selenium.waitForVisible("link=Control Panel");
-		selenium.clickAt("link=Control Panel",
-			RuntimeVariables.replace("Control Panel"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Message Boards",
-			RuntimeVariables.replace("Message Boards"));
-		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Message Boards"),
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Message Boards Home"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[1]"));
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span[contains(.,'Message Boards Home')]/span"));
 		assertEquals(RuntimeVariables.replace("Recent Posts"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[2]"));
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a[contains(.,'Recent Posts')]/span"));
+		assertEquals(RuntimeVariables.replace("My Posts"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a[contains(.,'My Posts')]/span"));
+		assertEquals(RuntimeVariables.replace("My Subscriptions"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a[contains(.,'My Subscriptions')]/span"));
 		assertEquals(RuntimeVariables.replace("Statistics"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[3]"));
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a[contains(.,'Statistics')]/span"));
 		assertEquals(RuntimeVariables.replace("Banned Users"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[4]"));
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li/span/a[contains(.,'Banned Users')]/span"));
 		assertTrue(selenium.isVisible("//input[@title='Search Messages']"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertEquals(RuntimeVariables.replace("RSS"),
+			selenium.getText(
+				"//div[@class='category-subscription-types']/span/a[contains(.,'RSS')]/span"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText(
+				"//div[@class='category-subscription-types']/span/a[contains(.,'Subscribe')]/span"));
 		assertTrue(selenium.isVisible("//input[@value='Add Category']"));
 		assertTrue(selenium.isVisible("//input[@value='Post New Thread']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
-		assertTrue(selenium.isVisible(
-				"xpath=(//input[@value='Move to the Recycle Bin'])"));
+		assertEquals(RuntimeVariables.replace("Threads"),
+			selenium.getText(
+				"//div[@class='lfr-panel-title']/span[contains(.,'Threads')]"));
 		assertEquals(RuntimeVariables.replace("MB Thread Message Subject"),
 			selenium.getText(
-				"//tr[contains(.,'MB Thread Message Subject')]/td[2]/a"));
+				"//tr[contains(.,'MB Thread Message Subject')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText(
 				"//tr[contains(.,'MB Thread Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText(
 				"//tr[contains(.,'MB Thread Message Subject')]/td[5]/a"));
-		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'MB Thread Message Subject')]/td[6]/a"));
-		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'MB Thread Message Subject')]/td[7]/a"));
-		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'MB Thread Message Subject')]/td[8]/span/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'MB Thread Message Subject')]/td[7]/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

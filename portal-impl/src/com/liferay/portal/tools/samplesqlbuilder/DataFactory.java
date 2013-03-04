@@ -357,7 +357,7 @@ public class DataFactory {
 		_groups = new ArrayList<Group>(_maxGroupsCount);
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
-			String name = "Site " + i;
+			String name = "Site" + i;
 
 			Group group = newGroup(i, groupClassNameId, i, name, name, true);
 

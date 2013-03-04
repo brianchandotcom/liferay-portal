@@ -72,7 +72,7 @@ String backLabel = (String)request.getAttribute("liferay-ui:tabs:backLabel");
 String backURL = (String)request.getAttribute("liferay-ui:tabs:backURL");
 
 if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
-	backURL = HtmlUtil.escape(HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL)));
+	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
 }
 
 // Refresh

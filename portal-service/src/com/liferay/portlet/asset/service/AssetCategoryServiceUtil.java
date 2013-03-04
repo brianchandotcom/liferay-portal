@@ -118,7 +118,8 @@ public class AssetCategoryServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #search(long[], String, long[], int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #search(long[], String,
+	long[], int, int)}
 	*/
 	public static com.liferay.portal.kernel.json.JSONArray getJSONSearch(
 		long groupId, java.lang.String name, long[] vocabularyIds, int start,
@@ -130,7 +131,8 @@ public class AssetCategoryServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getVocabularyCategoriesDisplay(long, int, int,
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyCategoriesDisplay(long, int, int,
 	OrderByComparator)}
 	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
@@ -143,8 +145,9 @@ public class AssetCategoryServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getVocabularyCategoriesDisplay(long, String, long,
-	int, int, OrderByComparator)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyCategoriesDisplay(long, String, long, int, int,
+	OrderByComparator)}
 	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long groupId, java.lang.String name, long vocabularyId, int start,

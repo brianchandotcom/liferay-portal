@@ -87,8 +87,8 @@ public class MBMessageServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #addMessage(long, String, String, String,
-	java.util.List, boolean, double, boolean,
+	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
+	String, String, java.util.List, boolean, double, boolean,
 	com.liferay.portal.service.ServiceContext)}
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap addMessage(

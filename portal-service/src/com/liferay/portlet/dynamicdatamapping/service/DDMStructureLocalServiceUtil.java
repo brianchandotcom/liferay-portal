@@ -621,7 +621,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long)}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
@@ -630,7 +631,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long, int, int)}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
@@ -703,7 +705,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getClassStructures(long, long, OrderByComparator)}
+	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
+	long, OrderByComparator)}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
@@ -806,7 +809,7 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getStructures}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -814,7 +817,7 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getStructures(long)}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId)
@@ -823,7 +826,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getStructures(long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
+	int)}
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId, int start, int end)

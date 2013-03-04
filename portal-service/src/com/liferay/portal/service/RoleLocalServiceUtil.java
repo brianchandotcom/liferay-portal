@@ -266,8 +266,8 @@ public class RoleLocalServiceUtil {
 	invalid, if the role is a duplicate, or if a user with the
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
+	String, Map, Map, int, String, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,
@@ -302,8 +302,8 @@ public class RoleLocalServiceUtil {
 	invalid, if the role is a duplicate, or if a user with the
 	primary key could not be found
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
-	String, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
+	String, Map, Map, int, String, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Role addRole(long userId,
 		long companyId, java.lang.String name,

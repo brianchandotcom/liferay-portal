@@ -121,7 +121,8 @@ public class UserGroupServiceSoap {
 	* @throws PortalException if the user group's information was invalid
 	or if the user did not have permission to add the user group
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addUserGroup(String, String, serviceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
+	serviceContext)}
 	*/
 	public static com.liferay.portal.model.UserGroupSoap addUserGroup(
 		java.lang.String name, java.lang.String description)
@@ -318,8 +319,8 @@ public class UserGroupServiceSoap {
 	found, if the new information was invalid, or if the user did
 	not have permission to update the user group information
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #updateUserGroup(long, String, String,
-	serviceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
+	String, String, serviceContext)}
 	*/
 	public static com.liferay.portal.model.UserGroupSoap updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)

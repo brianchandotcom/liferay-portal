@@ -279,7 +279,8 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFileVersionFileEntryMetadatasCount(long)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getFileVersionFileEntryMetadatasCount(long)}
 	*/
 	public static long getFileEntryMetadataCount(long fileEntryId,
 		long fileVersionId)

@@ -306,22 +306,21 @@ public class JournalArticleServiceUtil {
 		return getService().getFoldersAndArticlesCount(groupId, folderIds);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupFileEntries(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
 		long groupId, long userId, long rootFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getGroupArticles(groupId, userId, rootFolderId, start,
-			end, orderByComparator);
+				   .getGroupArticles(groupId, userId, rootFolderId, start, end,
+			orderByComparator);
 	}
 
-	public static int getGroupFileEntriesCount(long groupId, long userId,
+	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getGroupArticlesCount(groupId, userId, rootFolderId);
+		return getService().getGroupArticlesCount(groupId, userId, rootFolderId);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle getLatestArticle(
@@ -573,8 +572,9 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #updateArticleTranslation(long, String, double,
-	Locale, String, String, String, Map, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#updateArticleTranslation(long, String, double, Locale,
+	String, String, String, Map, ServiceContext)}
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,

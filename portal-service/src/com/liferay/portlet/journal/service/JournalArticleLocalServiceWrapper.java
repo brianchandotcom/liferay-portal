@@ -1120,8 +1120,9 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated {@link #updateArticleTranslation(long, String, double,
-	Locale, String, String, String, Map, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#updateArticleTranslation(long, String, double, Locale,
+	String, String, String, Map, ServiceContext)}
 	*/
 	public com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,

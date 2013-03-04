@@ -130,7 +130,7 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 			ps = con.prepareStatement(
 				"update MBThreadFlag set groupId = ?, companyId = ?, " +
-					"userName = ?, createdDate = modifiedDate where " +
+					"userName = ?, createDate = modifiedDate where " +
 						"threadFlagId = ?");
 
 			ps.setLong(1, groupId);

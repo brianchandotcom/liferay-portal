@@ -124,7 +124,7 @@ public class NavItem implements Serializable {
 	}
 
 	public String getURL() throws Exception {
-		return HtmlUtil.escape(HtmlUtil.escapeHREF(getRegularFullURL()));
+		return HtmlUtil.escapeHREF(getRegularFullURL());
 	}
 
 	public boolean hasChildren() throws Exception {

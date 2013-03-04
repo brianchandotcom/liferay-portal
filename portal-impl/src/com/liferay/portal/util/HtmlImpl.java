@@ -224,11 +224,11 @@ public class HtmlImpl implements Html {
 			String protocol = href.substring(0, 10).toLowerCase();
 
 			if (protocol.equals("javascript")) {
-				return StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
+				href = StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
 			}
 		}
 
-		return href;
+		return escapeAttribute(href);
 	}
 
 	public String escapeJS(String js) {

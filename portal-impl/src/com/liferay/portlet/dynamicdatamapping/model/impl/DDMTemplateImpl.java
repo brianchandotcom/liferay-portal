@@ -70,6 +70,15 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		return _smallImageType;
 	}
 
+	/**
+	 * Returns the WebDAV URL to access the template.
+	 *
+	 * @param  themeDisplay the theme display needed to build the URL. It can
+	 *         set HTTPS access, the server name, the server port, the path
+	 *         context, and the scope group.
+	 * @param  webDAVToken the WebDAV token for the URL
+	 * @return the WebDAV URL
+	 */
 	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
 		StringBundler sb = new StringBundler(11);
 

@@ -35,41 +35,91 @@ String panelSelectedPortlets = typeSettingsProperties.getProperty("panelSelected
 String panelTreeKey = "panelSelectedPortletsPanelTree";
 %>
 
+<div class="lfr-tree-loading" id="<portlet:namespace />panelSelectPortletsTree">
+	<span class="aui-icon aui-icon-loading lfr-tree-loading-icon"></span>
+</div>
+
 <div id="<portlet:namespace />panelSelectPortletsOutput" style="margin: 4px;"></div>
 
-<aui:script use="aui-tree-view">
-	var initPanelSelectPortlets = function(event) {
-		var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
-		var selectedPortlets = panelSelectedPortletsEl.val().split(',');
+<aui:script use="aui-io-request,aui-tree-view,dataschema-xml,datatype-xml,json-parse">
+	var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
+	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
-		var onCheck = function(event, plid) {
-			var node = event.target;
-			var add = A.Array.indexOf(selectedPortlets, plid) == -1;
+	var TreeUtil = {
+		afterRenderTree: function(event) {
+			var rootNode = event.target.item(0);
 
-			if (plid && add) {
-				selectedPortlets.push(plid);
+			var loadingEl = A.one('#<portlet:namespace />panelSelectPortletsTree');
 
-				panelSelectedPortletsEl.val(selectedPortlets.join(','));
-			}
-		};
+			loadingEl.hide();
 
-		var onUncheck = function(event, plid) {
-			var node = event.target;
+			rootNode.expand();
+		},
 
-			if (plid) {
-				if (selectedPortlets.length) {
-					A.Array.removeItem(selectedPortlets, plid);
+		formatJSONResults: function(json) {
+			var output = [];
+
+			A.each(
+				json.children.list,
+				function(item, index, collection) {
+					var childPortlets = [];
+					var total = 0;
+
+					var name = item.name;
+					var nodeChildren = item.children;
+					var id = item.id;
+					var leaf = item.leaf;
+					var plid = item.objId;
+
+					var checked = plid && (plid in selectedPortlets);
+
+					if (nodeChildren) {
+						childPortlets = nodeChildren.list;
+						total = childPortlets.length;
+					}
+
+					var newNode = {
+						after: {
+							checkedChange: function(event) {
+								if (plid) {
+									if (event.newVal && checked) {
+										selectedPortlets[plid] = true;
+
+										panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
+									}
+									else {
+										if (selectedPortlets[plid]) {
+											delete selectedPortlets[plid];
+										}
+
+										panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
+									}
+								}
+							}
+						},
+						alwaysShowHitArea: total,
+						checked: checked,
+						draggable: false,
+						expanded: false,
+						id: id,
+						label: name,
+						leaf: leaf,
+						type: 'task'
+					}
+
+					if (nodeChildren) {
+						newNode.children = TreeUtil.formatJSONResults(item);
+					}
+
+					output.push(newNode);
 				}
+			);
 
-				panelSelectedPortletsEl.val(selectedPortlets.join(','));
-			}
-		};
+			return output;
+		}
+	};
 
-		var treeView = new A.TreeView(
-			{
-				boundingBox: '#<portlet:namespace />panelSelectPortletsOutput'
-			}
-		).render();
+	var initPanelSelectPortlets = function(event) {
 
 		<%
 		PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
@@ -81,45 +131,36 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		portletLister.setServletContext(application);
 		portletLister.setThemeDisplay(themeDisplay);
 		portletLister.setUser(user);
+		portletLister.setHierarchicalTree(true);
 
-		TreeView treeView = portletLister.getTreeView();
-
-		List<TreeNodeView> treeNodeViews = treeView.getList();
-
-		for (int i = 0; i < treeNodeViews.size(); i++) {
-			TreeNodeView treeNodeView = treeNodeViews.get(i);
+		JSONObject portletsJSON = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView()));
 		%>
 
-			var parentNode<%= i %> = treeView.getNodeById('treePanel<%= treeNodeView.getParentId() %>') || treeView;
-			var objId<%= i %> = '<%= treeNodeView.getObjId() %>';
-			var checked<%= i %> = objId<%= i %> ? (A.Array.indexOf(selectedPortlets, objId<%= i %>) > -1) : false;
-			var label<%= i %> = '<%= UnicodeFormatter.toString(LanguageUtil.get(user.getLocale(), treeNodeView.getName())) %>';
+		var tree = <%= portletsJSON %>;
 
-			parentNode<%= i %>.appendChild(
-				new A.TreeNodeTask(
-					{
-						after: {
-							checkedChange: function(event) {
-								if (event.newVal) {
-									onCheck(event, objId<%= i %>);
-								}
-								else {
-									onUncheck(event, objId<%= i %>);
-								}
-							}
-						},
-						checked: checked<%= i %>,
-						expanded: <%= treeNodeView.getDepth() == 0 %>,
-						id: 'treePanel<%= treeNodeView.getId() %>',
-						label: label<%= i %>,
-						leaf: <%= treeNodeView.isLeaf() %>
-					}
-				)
-			);
+		var portletList = tree.serializable.list.list[0];
 
-		<%
-		}
-		%>
+		var rootNode = new A.TreeNodeTask(
+			{
+				alwaysShowHitArea: true,
+				children: TreeUtil.formatJSONResults(portletList),
+				draggable: false,
+				id: '<portlet:namespace />panelSelectPortlets',
+				label: portletList.name,
+				leaf: false
+			}
+		);
+
+		var treeview = new A.TreeView(
+			{
+				after: {
+					render: TreeUtil.afterRenderTree
+				},
+				boundingBox: '#<portlet:namespace />panelSelectPortletsOutput',
+				children: [rootNode],
+				type: 'file'
+			}
+		).render();
 
 		initPanelSelectPortlets = A.Lang.emptyFn;
 	};

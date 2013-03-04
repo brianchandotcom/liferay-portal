@@ -383,7 +383,7 @@ alter table MBThreadFlag add uuid_ VARCHAR(75) null;
 alter table MBThreadFlag add groupId LONG;
 alter table MBThreadFlag add companyId LONG;
 alter table MBThreadFlag add userName VARCHAR(75) null;
-alter table MBThreadFlag add createdDate DATE null;
+alter table MBThreadFlag add createDate DATE null;
 
 drop table OrgGroupPermission;
 

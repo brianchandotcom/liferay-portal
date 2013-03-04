@@ -1913,7 +1913,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 				for (String listenerClassName : listenerClassNames) {
 					listenersList.add((ModelListener<DDMStorageLink>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
+							listenerClassName));
 				}
 
 				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);

@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.portlet.bookmarks.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceTestUtil;

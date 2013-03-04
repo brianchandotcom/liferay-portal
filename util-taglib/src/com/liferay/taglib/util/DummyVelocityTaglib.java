@@ -51,7 +51,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #actionURL(String, String, Boolean, Boolean, Boolean,
+	 * @deprecated As of 6.2.0, replaced by {@link #actionURL(String, String, Boolean, Boolean, Boolean,
 	 *             String, long, long, String, Boolean, Boolean, long, long,
 	 *             Boolean, String)}
 	 */
@@ -279,13 +279,13 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #mySites}
+	 * @deprecated As of 6.2.0, replaced by {@link #mySites}
 	 */
 	public void myPlaces() throws Exception {
 	}
 
 	/**
-	 * @deprecated {@link #mySites(int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #mySites(int)}
 	 */
 	public void myPlaces(int max) throws Exception {
 	}
@@ -304,7 +304,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #permissionsURL(String, String, String, long, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String, String, String, long, String,
 	 *             String, int[])}
 	 */
 	public void permissionsURL(
@@ -338,7 +338,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	/**
-	 * @deprecated {@link #renderURL(String, String, Boolean, Boolean, Boolean,
+	 * @deprecated As of 6.2.0, replaced by {@link #renderURL(String, String, Boolean, Boolean, Boolean,
 	 *             long, long, String, Boolean, Boolean, long, long, Boolean,
 	 *             String)}
 	 */

@@ -28,7 +28,7 @@ public class PermissionCheckerFactoryUtil {
 	}
 
 	/**
-	 * @deprecated {@link #create(User)}
+	 * @deprecated As of 6.2.0, replaced by {@link #create(User)}
 	 */
 	public static PermissionChecker create(User user, boolean checkGuest)
 		throws Exception {

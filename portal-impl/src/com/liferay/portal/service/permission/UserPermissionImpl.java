@@ -37,7 +37,7 @@ import com.liferay.portal.util.PortalUtil;
 public class UserPermissionImpl implements UserPermission {
 
 	/**
-	 * @deprecated Replaced by {@link #check(PermissionChecker, long, long[],
+	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker, long, long[],
 	 *             String)}
 	 */
 	public void check(
@@ -70,7 +70,7 @@ public class UserPermissionImpl implements UserPermission {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link #contains(PermissionChecker, long, long[],
+	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker, long, long[],
 	 *             String)}
 	 */
 	public boolean contains(

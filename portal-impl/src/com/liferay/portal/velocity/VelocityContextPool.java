@@ -20,7 +20,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated This class has been renamed to {@link ServletContextPool}.
+ * @deprecated As of 6.2.0, renamed to {@link ServletContextPool}.
  */
 public class VelocityContextPool {
 

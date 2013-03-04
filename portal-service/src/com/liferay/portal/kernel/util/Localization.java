@@ -177,8 +177,7 @@ public interface Localization {
 		String parameter);
 
 	/**
-	 * @deprecated Use {@link #getLocalizationMap(PortletRequest, String)}
-	 *             instead.
+	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap(PortletRequest, String)}
 	 */
 	public Map<Locale, String> getLocalizedParameter(
 		PortletRequest portletRequest, String parameter);

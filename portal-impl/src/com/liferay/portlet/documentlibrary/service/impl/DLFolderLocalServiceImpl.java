@@ -331,7 +331,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcuts(long,
+	 * @deprecated As of 6.2.0, replaced by {@link #getFileEntriesAndFileShortcuts(long,
 	 *             long, QueryDefinition)}
 	 */
 	public List<Object> getFileEntriesAndFileShortcuts(
@@ -354,7 +354,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
+	 * @deprecated As of 6.2.0, replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
 	 *             long, QueryDefinition)}
 	 */
 	public int getFileEntriesAndFileShortcutsCount(
@@ -447,7 +447,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link
+	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
@@ -465,7 +465,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link
+	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
@@ -492,7 +492,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link
+	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
@@ -508,7 +508,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated Replaced by {@link
+	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
@@ -862,7 +862,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException, SystemException {

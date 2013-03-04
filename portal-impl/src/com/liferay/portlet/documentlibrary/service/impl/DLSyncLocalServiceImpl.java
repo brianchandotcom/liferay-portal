@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated {@link #addSync(long, String, long, long, long, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #addSync(long, String, long, long, long, String,
 	 *             String, String, String)}
 	 */
 	public DLSync addSync(
@@ -82,7 +82,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateSync(long, long, String, String, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #updateSync(long, long, String, String, String,
 	 *             String)}
 	 */
 	public DLSync updateSync(

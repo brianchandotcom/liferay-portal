@@ -16,7 +16,7 @@ package com.liferay.portal.captcha;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated This class has been renamed to <code>CaptchaPortletAction</code>.
+ * @deprecated As of 6.2.0, renamed to <code>CaptchaPortletAction</code>.
  */
 public class CaptchaAction extends CaptchaPortletAction {
 }

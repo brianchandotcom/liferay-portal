@@ -204,7 +204,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	@SuppressWarnings("rawtypes")
 	public List getKeysNoDuplicateCheck() throws IllegalStateException {

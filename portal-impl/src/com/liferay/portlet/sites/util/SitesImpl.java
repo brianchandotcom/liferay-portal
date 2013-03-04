@@ -1013,7 +1013,7 @@ public class SitesImpl implements Sites {
 	}
 
 	/**
-	 * @deprecated {@link #mergeLayoutPrototypeLayout(Group, Layout)}
+	 * @deprecated As of 6.2.0, replaced by {@link #mergeLayoutPrototypeLayout(Group, Layout)}
 	 */
 	public void mergeLayoutProtypeLayout(Group group, Layout layout)
 		throws Exception {
@@ -1122,7 +1122,7 @@ public class SitesImpl implements Sites {
 	}
 
 	/**
-	 * @deprecated {@link #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
+	 * @deprecated As of 6.2.0, replaced by {@link #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
 	 */
 	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {

@@ -114,7 +114,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 	}
 
 	/**
-	 * @deprecated {@link #setGroupName(String)}
+	 * @deprecated As of 6.2.0, replaced by {@link #setGroupName(String)}
 	 */
 	public void setClassName(String className) {
 		_groupName = className;

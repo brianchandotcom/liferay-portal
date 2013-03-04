@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated {@link com.liferay.portal.service.BaseServiceImpl}
+ * @deprecated As of 6.2.0, replaced by {@link com.liferay.portal.service.BaseServiceImpl}
  */
 public class PrincipalBean {
 

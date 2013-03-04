@@ -312,7 +312,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated Use <code>getPathThemeImages</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #getPathThemeImages}
 	 */
 	public String getPathThemeImage() {
 		return getPathThemeImages();
@@ -351,7 +351,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated Use <code>getScopeGroupId</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link #getScopeGroupId}
 	 */
 	public long getPortletGroupId() {
 		return getScopeGroupId();

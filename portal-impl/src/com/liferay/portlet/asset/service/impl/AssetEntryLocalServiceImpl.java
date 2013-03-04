@@ -350,7 +350,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long, String, String, int, int,
 	 *             int)}
 	 */
 	public Hits search(
@@ -411,7 +411,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long, String, String, String,
 	 *             String, String, String, int, boolean, int, int)}
 	 */
 	public Hits search(
@@ -483,7 +483,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long, String, String, int, int,
 	 *             int)}
 	 */
 	public Hits search(
@@ -749,7 +749,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, long, String, long, String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long, String, long, String, long,
 	 *             long[], String[], boolean, Date, Date, Date, String, String,
 	 *             String, String, String, String, int, int, Integer, boolean)}
 	 */
@@ -771,7 +771,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, long, Date, Date, String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long, Date, Date, String, long,
 	 *             String, long, long[], String[], boolean, Date, Date, Date,
 	 *             String, String, String, String, String, String, int, int,
 	 *             Integer, boolean)}

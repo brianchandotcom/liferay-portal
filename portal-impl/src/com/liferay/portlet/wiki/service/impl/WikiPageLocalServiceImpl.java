@@ -945,7 +945,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getRecentChanges(long, long, int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long, int, int)}
 	 */
 	public List<WikiPage> getRecentChanges(long nodeId, int start, int end)
 		throws PortalException, SystemException {
@@ -968,7 +968,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getRecentChangesCount(long, long)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long, long)}
 	 */
 	public int getRecentChangesCount(long nodeId)
 		throws PortalException, SystemException {

@@ -393,7 +393,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             found, or if a valid friendly URL could not be created for
 	 *             the group
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated {@link #addGroup(long, long, String, long, long, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String, long, long, String,
 	 *             String, int, String, boolean, boolean, ServiceContext)}
 	 */
 	public Group addGroup(

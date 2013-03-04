@@ -39,17 +39,17 @@ import javax.servlet.jsp.PageContext;
 public interface ResourceActions {
 
 	/**
-	 * @deprecated {@link #getActionNamePrefix}
+	 * @deprecated As of 6.2.0, replaced by {@link #getActionNamePrefix}
 	 */
 	public static final String ACTION_NAME_PREFIX = "action.";
 
 	/**
-	 * @deprecated {@link #getModelResourceNamePrefix}
+	 * @deprecated As of 6.2.0, replaced by {@link #getModelResourceNamePrefix}
 	 */
 	public static final String MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
 
 	/**
-	 * @deprecated {@link #getOrganizationModelResources}
+	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationModelResources}
 	 */
 	public static final String[] ORGANIZATION_MODEL_RESOURCES = {
 		Organization.class.getName(), PasswordPolicy.class.getName(),
@@ -57,7 +57,7 @@ public interface ResourceActions {
 	};
 
 	/**
-	 * @deprecated {@link #getPortalModelResources}
+	 * @deprecated As of 6.2.0, replaced by {@link #getPortalModelResources}
 	 */
 	public static final String[] PORTAL_MODEL_RESOURCES = {
 		ExpandoColumn.class.getName(), Organization.class.getName(),

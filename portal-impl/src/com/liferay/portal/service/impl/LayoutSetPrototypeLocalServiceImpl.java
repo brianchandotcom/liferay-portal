@@ -153,7 +153,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getLayoutSetPrototypeByUuidAndCompanyId(String,
+	 * @deprecated As of 6.2.0, replaced by {@link #getLayoutSetPrototypeByUuidAndCompanyId(String,
 	 *             long)}
 	 */
 	public LayoutSetPrototype getLayoutSetPrototypeByUuid(String uuid)

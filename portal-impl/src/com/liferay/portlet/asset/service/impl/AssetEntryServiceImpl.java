@@ -165,7 +165,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, String, long, String, long, long[],
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, String, long, String, long, long[],
 	 *             String[], boolean, Date, Date, Date, String, String, String,
 	 *             String, String, String, int, int, Integer, boolean)}
 	 */
@@ -189,7 +189,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, Date, Date. String, long, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, Date, Date. String, long, String,
 	 *             long, long[], String[], boolean, Date, Date, Date, String,
 	 *             String, String, String, String, String, int, int, Integer,
 	 *             boolean)}

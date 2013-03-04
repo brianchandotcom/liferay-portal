@@ -74,7 +74,7 @@ public interface Staging {
 		throws SystemException;
 
 	/**
-	 * @deprecated {@link #disableStaging(Group, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(Group, ServiceContext)}
 	 */
 	public void disableStaging(
 			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
@@ -84,7 +84,7 @@ public interface Staging {
 		throws Exception;
 
 	/**
-	 * @deprecated {@link #disableStaging(PortletRequest, Group,
+	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(PortletRequest, Group,
 	 *             ServiceContext)}
 	 */
 	public void disableStaging(

@@ -343,7 +343,7 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #getUserLayoutSetBranch(long, long, boolean, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long, long, boolean, long,
 	 *             long)}
 	 */
 	public LayoutSetBranch getUserLayoutSetBranch(

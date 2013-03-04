@@ -142,7 +142,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long[], String, long[], int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long[], String, long[], int, int)}
 	 */
 	public JSONArray getJSONSearch(
 			long groupId, String name, long[] vocabularyIds, int start, int end)
@@ -152,7 +152,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getVocabularyCategoriesDisplay(long, int, int,
+	 * @deprecated As of 6.2.0, replaced by {@link #getVocabularyCategoriesDisplay(long, int, int,
 	 *             OrderByComparator)}
 	 */
 	public JSONObject getJSONVocabularyCategories(
@@ -172,7 +172,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getVocabularyCategoriesDisplay(long, String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #getVocabularyCategoriesDisplay(long, String, long,
 	 *             int, int, OrderByComparator)}
 	 */
 	public JSONObject getJSONVocabularyCategories(

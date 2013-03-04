@@ -659,7 +659,7 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated {@link #getPreviewURL(FileEntry, FileVersion, ThemeDisplay,
+	 * @deprecated As of 6.2.0, replaced by {@link #getPreviewURL(FileEntry, FileVersion, ThemeDisplay,
 	 *             String, boolean, boolean)}
 	 */
 	public String getPreviewURL(

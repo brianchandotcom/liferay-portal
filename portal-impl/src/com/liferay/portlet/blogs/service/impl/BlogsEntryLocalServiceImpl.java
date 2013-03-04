@@ -371,7 +371,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int start, int end)
@@ -384,7 +384,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int start, int end,
@@ -416,7 +416,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getCompanyEntriesCount(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long, Date, QueryDefinition)}
 	 */
 	public int getCompanyEntriesCount(
 			long companyId, Date displayDate, int status)
@@ -465,7 +465,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int start, int end)
@@ -478,7 +478,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int start, int end,
@@ -510,7 +510,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end)
@@ -523,7 +523,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end, OrderByComparator obc)
@@ -554,7 +554,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntriesCount(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long, Date, QueryDefinition)}
 	 */
 	public int getGroupEntriesCount(long groupId, Date displayDate, int status)
 		throws SystemException {
@@ -579,7 +579,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupEntriesCount(long, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long, QueryDefinition)}
 	 */
 	public int getGroupEntriesCount(long groupId, int status)
 		throws SystemException {
@@ -604,7 +604,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupsEntries(long, long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupsEntries(
 			long companyId, long groupId, Date displayDate, int status,
@@ -628,7 +628,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupUserEntries(long, long, Date,
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long, long, Date,
 	 *             QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupUserEntries(
@@ -644,7 +644,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupUserEntries(long, long, Date,
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long, long, Date,
 	 *             QueryDefinition)}
 	 */
 	public List<BlogsEntry> getGroupUserEntries(
@@ -679,7 +679,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getGroupUserEntriesCount(long, long, Date,
+	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntriesCount(long, long, Date,
 	 *             QueryDefinition)}
 	 */
 	public int getGroupUserEntriesCount(
@@ -712,7 +712,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int start,
@@ -727,7 +727,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long, Date, QueryDefinition)}
 	 */
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int start,
@@ -751,7 +751,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #getOrganizationEntriesCount(long, Date,
+	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntriesCount(long, Date,
 	 *             QueryDefinition)}
 	 */
 	public int getOrganizationEntriesCount(

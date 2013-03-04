@@ -398,7 +398,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #checkInFileEntry(long, long, String, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long, String, ServiceContext)}
 	 */
 	public void checkInFileEntry(long userId, long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
@@ -435,7 +435,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, long, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long, long, ServiceContext)}
 	 */
 	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId)
 		throws PortalException, SystemException {
@@ -453,7 +453,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@link #checkOutFileEntry(long, long, String, long,
+	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long, long, String, long,
 	 *             ServiceContext)}
 	 */
 	public DLFileEntry checkOutFileEntry(

@@ -65,7 +65,7 @@ public class RSSUtil {
 	public static final String RSS = "rss";
 
 	/**
-	 * @deprecated Renamed to {@link #FORMAT_DEFAULT}
+	 * @deprecated As of 6.2.0, replaced by {@link #FORMAT_DEFAULT}
 	 */
 	public static final String TYPE_DEFAULT = FORMAT_DEFAULT;
 

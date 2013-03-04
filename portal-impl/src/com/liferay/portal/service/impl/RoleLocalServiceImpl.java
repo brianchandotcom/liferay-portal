@@ -94,7 +94,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *             invalid, if the role is a duplicate, or if a user with the
 	 *             primary key could not be found
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
+	 * @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long, String, Map, Map, int,
 	 *             String, ServiceContext)}
 	 */
 	public Role addRole(
@@ -128,7 +128,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *             invalid, if the role is a duplicate, or if a user with the
 	 *             primary key could not be found
 	 * @throws     SystemException if a system exception occurred
-	 * @deprecated {@link #addRole(long, String, long, String, Map, Map, int,
+	 * @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long, String, Map, Map, int,
 	 *             String, ServiceContext)}
 	 */
 	public Role addRole(

@@ -54,7 +54,7 @@ import java.util.Calendar;
 
 /**
  * @author     Jonathan Lennox
- * @deprecated Moved to {@link com.liferay.portal.kernel.cal.DayAndPosition}
+ * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.cal.DayAndPosition}
  */
 public class DayAndPosition implements Cloneable, Serializable {
 

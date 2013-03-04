@@ -230,8 +230,8 @@ public interface DLSyncLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
-	* @deprecated {@link #addSync(long, String, long, long, long, String,
-	String, String, String)}
+	* @deprecated As of 6.2.0, replaced by {@link #addSync(long, String, long,
+	long, long, String, String, String, String)}
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSync addSync(
 		long fileId, java.lang.String fileUuid, long companyId,
@@ -249,8 +249,8 @@ public interface DLSyncLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #updateSync(long, long, String, String, String,
-	String)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateSync(long, long,
+	String, String, String, String)}
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSync updateSync(
 		long fileId, long parentFolderId, java.lang.String name,

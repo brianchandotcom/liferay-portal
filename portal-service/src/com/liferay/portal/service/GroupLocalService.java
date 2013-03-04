@@ -283,8 +283,9 @@ public interface GroupLocalService extends BaseLocalService,
 	found, or if a valid friendly URL could not be created for
 	the group
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #addGroup(long, long, String, long, long, String,
-	String, int, String, boolean, boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
+	long, long, String, String, int, String, boolean, boolean,
+	ServiceContext)}
 	*/
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,

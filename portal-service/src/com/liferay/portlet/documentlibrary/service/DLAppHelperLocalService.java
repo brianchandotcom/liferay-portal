@@ -108,7 +108,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getFileShortcuts(long, long, boolean, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
+	boolean, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
@@ -121,7 +122,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getFileShortcutsCount(long, long, boolean, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
+	long, boolean, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileShortcutsCount(long groupId, long folderId, int status)

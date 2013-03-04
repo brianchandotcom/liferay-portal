@@ -357,8 +357,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link #getFileEntriesAndFileShortcuts(long,
-	long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
 	*/
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
@@ -378,8 +378,9 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link #getFileEntriesAndFileShortcutsCount(long,
-	long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getFileEntriesAndFileShortcutsCount(long, long,
+	QueryDefinition)}
 	*/
 	public static int getFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status)
@@ -447,7 +448,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link
+	* @deprecated As of 6.2.0, replaced by {@link
 	#getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
@@ -461,7 +462,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link
+	* @deprecated As of 6.2.0, replaced by {@link
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
@@ -486,7 +487,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link
+	* @deprecated As of 6.2.0, replaced by {@link
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
@@ -499,7 +500,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated Replaced by {@link
+	* @deprecated As of 6.2.0, replaced by {@link
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
@@ -652,7 +653,7 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.2.0
 	*/
 	public static void updateLastPostDate(long folderId,
 		java.util.Date lastPostDate)

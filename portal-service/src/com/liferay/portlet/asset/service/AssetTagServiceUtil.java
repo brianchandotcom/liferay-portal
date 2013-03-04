@@ -106,7 +106,8 @@ public class AssetTagServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getGroupTagsDisplay(long, String, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
+	String, int, int)}
 	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)

@@ -1633,7 +1633,8 @@ public class UserLocalServiceUtil {
 	* @return the user with the UUID
 	* @throws PortalException if a user with the UUID could not be found
 	* @throws SystemException if a system exception occurred
-	* @deprecated {@link #getUserByUuidAndCompanyId(String, long)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getUserByUuidAndCompanyId(String, long)}
 	*/
 	public static com.liferay.portal.model.User getUserByUuid(
 		java.lang.String uuid)

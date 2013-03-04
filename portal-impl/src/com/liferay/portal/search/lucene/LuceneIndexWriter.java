@@ -134,12 +134,13 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 	private void _addLuceneFieldable(
 		org.apache.lucene.document.Document luceneDocument, String name,
-		boolean numeric, boolean tokenized, float boost, String value) {
+		boolean numeric, Class<? extends Number> numericType, boolean tokenized,
+		float boost, String value) {
 
 		org.apache.lucene.document.Fieldable luceneFieldable = null;
 
 		if (numeric) {
-			luceneFieldable = LuceneFields.getNumber(name, value);
+			luceneFieldable = LuceneFields.getNumber(name, value, numericType);
 		}
 		else {
 			if (tokenized) {
@@ -166,6 +167,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		for (Field field : fields) {
 			String name = field.getName();
 			boolean numeric = field.isNumeric();
+			Class<? extends Number> numericType = field.getNumericType();
 			boolean tokenized = field.isTokenized();
 			float boost = field.getBoost();
 
@@ -176,7 +178,8 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 					}
 
 					_addLuceneFieldable(
-						luceneDocument, name, numeric, tokenized, boost, value);
+						luceneDocument, name, numeric, numericType, tokenized,
+						boost, value);
 				}
 			}
 			else {
@@ -201,16 +204,16 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 					if (languageId.equals(defaultLanguageId)) {
 						_addLuceneFieldable(
-							luceneDocument, name, numeric, tokenized, boost,
-							value);
+							luceneDocument, name, numeric, numericType,
+							tokenized, boost, value);
 					}
 
 					String localizedName = DocumentImpl.getLocalizedName(
 						locale, name);
 
 					_addLuceneFieldable(
-						luceneDocument, localizedName, numeric, tokenized,
-						boost, value);
+						luceneDocument, localizedName, numeric, numericType,
+						tokenized, boost, value);
 				}
 			}
 

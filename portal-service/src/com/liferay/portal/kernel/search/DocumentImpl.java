@@ -313,80 +313,93 @@ public class DocumentImpl implements Document {
 	}
 
 	public void addNumber(String name, double value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Double.class);
 	}
 
 	public void addNumber(String name, Double value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Double.class);
 	}
 
 	public void addNumber(String name, double[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Double.class);
 	}
 
 	public void addNumber(String name, Double[] values) {
-		addNumber(name, String.valueOf(ArrayUtil.toStringArray(values)));
+		addNumber(name, ArrayUtil.toStringArray(values), Double.class);
 	}
 
 	public void addNumber(String name, float value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Float.class);
 	}
 
 	public void addNumber(String name, Float value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Float.class);
 	}
 
 	public void addNumber(String name, float[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Float.class);
 	}
 
 	public void addNumber(String name, Float[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Float.class);
 	}
 
 	public void addNumber(String name, int value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Integer.class);
 	}
 
 	public void addNumber(String name, int[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Integer.class);
 	}
 
 	public void addNumber(String name, Integer value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Integer.class);
 	}
 
 	public void addNumber(String name, Integer[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Integer.class);
 	}
 
 	public void addNumber(String name, long value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Long.class);
 	}
 
 	public void addNumber(String name, Long value) {
-		addNumber(name, String.valueOf(value));
+		addNumber(name, String.valueOf(value), Long.class);
 	}
 
 	public void addNumber(String name, long[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Long.class);
 	}
 
 	public void addNumber(String name, Long[] values) {
-		addNumber(name, ArrayUtil.toStringArray(values));
+		addNumber(name, ArrayUtil.toStringArray(values), Long.class);
 	}
 
 	public void addNumber(String name, String value) {
+		addNumber(name, value, Long.class);
+	}
+
+	public void addNumber(
+		String name, String value, Class<? extends Number> type) {
+
 		if (Validator.isNotNull(value)) {
 			Field field = new Field(name, value);
 
 			field.setNumeric(true);
+			field.setNumericType(type);
 
 			_fields.put(name, field);
 		}
 	}
 
 	public void addNumber(String name, String[] values) {
+		addNumber(name, values, Long.class);
+	}
+
+	public void addNumber(
+		String name, String[] values, Class<? extends Number> type) {
+
 		if (values == null) {
 			return;
 		}
@@ -394,6 +407,7 @@ public class DocumentImpl implements Document {
 		Field field = new Field(name, values);
 
 		field.setNumeric(true);
+		field.setNumericType(type);
 
 		_fields.put(name, field);
 	}

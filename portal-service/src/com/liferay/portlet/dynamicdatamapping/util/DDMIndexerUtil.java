@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.util.Locale;
+
 /**
  * @author Alexander Chow
  */
@@ -32,6 +34,12 @@ public class DDMIndexerUtil {
 
 	public static String encodeName(long ddmStructureId, String fieldName) {
 		return getDDMIndexer().encodeName(ddmStructureId, fieldName);
+	}
+
+	public static String encodeName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		return getDDMIndexer().encodeName(ddmStructureId, fieldName, locale);
 	}
 
 	public static DDMIndexer getDDMIndexer() {

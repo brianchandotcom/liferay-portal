@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -24,6 +25,11 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -46,6 +52,29 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	@Override
 	public void testSearchAttachments() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithStructure(
+			BaseModel<?> parentBaseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String xsd = DDMStructureTestUtil.getSampleStructureXSD("name");
+
+		_ddmStructure = DDMStructureTestUtil.addDDMStructure(
+			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
+			xsd);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addDDMTemplate(
+			serviceContext.getScopeGroupId(), _ddmStructure.getStructureId());
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", getSearchKeywords());
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			serviceContext.getScopeGroupId(), content,
+			_ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
 	}
 
 	@Override
@@ -81,5 +110,13 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	protected String getSearchKeywords() {
 		return "Title";
 	}
+
+	@Override
+	protected String getStructureField() {
+		return DDMIndexerUtil.encodeName(
+			_ddmStructure.getStructureId(), "name", LocaleUtil.getDefault());
+	}
+
+	private DDMStructure _ddmStructure;
 
 }

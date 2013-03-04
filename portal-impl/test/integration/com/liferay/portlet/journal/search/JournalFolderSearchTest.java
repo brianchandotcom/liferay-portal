@@ -49,7 +49,17 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	public void testSearchByStructureField() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testSearchComments() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchWithinStructure() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 

@@ -98,7 +98,7 @@
 			<finder-column name="structureKey" />
 		</finder>
 		<finder name="G_C" return-type="Collection" >
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">

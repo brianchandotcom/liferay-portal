@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
@@ -74,9 +75,19 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	public void testSearchByStructureField() throws Exception {
+		searchByStructureField();
+	}
+
+	@Test
 	@Transactional
 	public void testSearchComments() throws Exception {
 		searchComments();
+	}
+
+	@Test
+	public void testSearchWithinStructure() throws Exception {
+		searchWithinStructure();
 	}
 
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
@@ -100,6 +111,14 @@ public abstract class BaseSearchTestCase {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	protected BaseModel<?> addBaseModelWithStructure(
+			BaseModel<?> parentBaseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModel(parentBaseModel, true, keywords, serviceContext);
 	}
 
 	protected abstract BaseModel<?> addBaseModelWithWorkflow(
@@ -147,6 +166,10 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected abstract String getSearchKeywords();
+
+	protected String getStructureField() {
+		return StringPool.BLANK;
+	}
 
 	protected void searchAttachments() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -232,10 +255,36 @@ public abstract class BaseSearchTestCase {
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
-					group, serviceContext);
+			group, serviceContext);
 
 		baseModel = addBaseModel(
 			parentBaseModel, true, getSearchKeywords(), serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void searchByStructureField() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModelWithStructure(
+			parentBaseModel, getSearchKeywords(), serviceContext);
+
+		searchContext.setAttribute("structureField", getStructureField());
+		searchContext.setAttribute("structureValue", getSearchKeywords());
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -272,6 +321,31 @@ public abstract class BaseSearchTestCase {
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 2,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void searchWithinStructure() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(getSearchKeywords());
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModelWithStructure(
+			parentBaseModel,  getSearchKeywords(), serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
 	}

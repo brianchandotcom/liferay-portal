@@ -87,12 +87,9 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		if ((folderIds != null) && (folderIds.length > 0)) {
-			if (folderIds[0] ==
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				return;
-			}
+		if ((folderIds != null) && (folderIds.length > 0) &&
+			(folderIds[0] !=
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
 			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
 				searchContext);

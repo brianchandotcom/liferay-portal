@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.util.Locale;
+
 /**
  * @author Alexander Chow
  */
@@ -27,5 +29,8 @@ public interface DDMIndexer {
 		Document document, DDMStructure ddmStructure, Fields fields);
 
 	public String encodeName(long ddmStructureId, String fieldName);
+
+	public String encodeName(
+		long ddmStructureId, String fieldName, Locale locale);
 
 }

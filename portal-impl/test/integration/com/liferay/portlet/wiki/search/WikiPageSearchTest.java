@@ -37,6 +37,7 @@ import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import java.io.File;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -50,6 +51,16 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class WikiPageSearchTest extends BaseSearchTestCase {
+
+	@Override
+	public void testSearchByStructureField() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchWithinStructure() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
 
 	@Override
 	protected void addAttachment(ClassedModel classedModel) throws Exception {

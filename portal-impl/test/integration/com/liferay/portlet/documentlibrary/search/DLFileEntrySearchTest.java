@@ -17,6 +17,10 @@ package com.liferay.portlet.documentlibrary.search;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.BaseSearchTestCase;
@@ -26,10 +30,18 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -49,6 +61,46 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	public void testSearchAttachments() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithStructure(
+			BaseModel<?> parentBaseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String xsd = DDMStructureTestUtil.getSampleStructureXSD("name");
+
+		_ddmStructure = DDMStructureTestUtil.addDDMStructure(
+			serviceContext.getScopeGroupId(), DLFileEntry.class.getName(), xsd);
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+				"Structure", StringPool.BLANK,
+				new long[] {_ddmStructure.getStructureId()}, serviceContext);
+
+		String content = "Content: Enterprise. Open Source. For Life.";
+
+		Fields fields = new Fields();
+
+		Field textField = new Field(
+			_ddmStructure.getStructureId(), "name", getSearchKeywords());
+
+		fields.put(textField);
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId",dlFileEntryType.getFileEntryTypeId());
+		serviceContext.setAttribute(
+			Fields.class.getName() + _ddmStructure.getStructureId(), fields);
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
+			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
+			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 	@Override
@@ -88,6 +140,13 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		return "Title";
 	}
 
+	@Override
+	protected String getStructureField() {
+		return DDMIndexerUtil.encodeName(
+			_ddmStructure.getStructureId(), "name", LocaleUtil.getDefault());
+	}
+
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+	private DDMStructure _ddmStructure;
 
 }

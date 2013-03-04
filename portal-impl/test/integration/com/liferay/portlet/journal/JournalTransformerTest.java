@@ -28,6 +28,8 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -61,11 +63,12 @@ public class JournalTransformerTest {
 
 		String xsd = document.asXML();
 
-		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(xsd);
+		DDMStructure ddmStructure = DDMStructureTestUtil.addDDMStructure(
+			JournalArticle.class.getName(), xsd);
 
 		String xsl = "$name.getData()";
 
-		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addDDMTemplate(
 			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM, xsl);
 
 		document = JournalTestUtil.createDocument("en_US", "en_US");
@@ -106,7 +109,8 @@ public class JournalTransformerTest {
 	public void testFTLTransformation() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = JournalTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", "Joe Bloggs");
 
 		String script = "${name.getData()} - ${viewMode}";
 
@@ -160,7 +164,8 @@ public class JournalTransformerTest {
 	public void testRegexTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = JournalTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", "Joe Bloggs");
 
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
@@ -176,7 +181,7 @@ public class JournalTransformerTest {
 	public void testTokensTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = JournalTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent();
 
 		String script = "@company_id@";
 
@@ -203,7 +208,7 @@ public class JournalTransformerTest {
 
 		tokens.put("article_resource_pk", "1");
 
-		String xml = JournalTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent();
 
 		String script = "@view_counter@";
 
@@ -227,7 +232,8 @@ public class JournalTransformerTest {
 	public void testVMTransformation() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		String xml = JournalTestUtil.getSampleStructuredContent();
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", "Joe Bloggs");
 
 		String script = "$name.getData()";
 

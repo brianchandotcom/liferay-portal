@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +29,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * @author Alexander Chow
@@ -50,31 +52,33 @@ public class DDMIndexerImpl implements DDMIndexer {
 					continue;
 				}
 
-				String name = encodeName(
-					ddmStructure.getStructureId(), field.getName());
+				for (Locale locale : fields.getAvailableLocales()) {
+					String name = encodeName(
+						ddmStructure.getStructureId(), field.getName(), locale);
 
-				Serializable value = field.getValue();
+					Serializable value = field.getValue(locale, 0);
 
-				if (value instanceof Boolean) {
-					document.addKeyword(name, (Boolean)value);
-				}
-				else if (value instanceof Date) {
-					document.addDate(name, (Date)value);
-				}
-				else if (value instanceof Double) {
-					document.addKeyword(name, (Double)value);
-				}
-				else if (value instanceof Integer) {
-					document.addKeyword(name, (Integer)value);
-				}
-				else {
-					String valueString = String.valueOf(value);
-
-					if (indexType.equals("keyword")) {
-						document.addKeyword(name, valueString);
+					if (value instanceof Boolean) {
+						document.addKeyword(name, (Boolean)value);
+					}
+					else if (value instanceof Date) {
+						document.addDate(name, (Date)value);
+					}
+					else if (value instanceof Double) {
+						document.addKeyword(name, (Double)value);
+					}
+					else if (value instanceof Integer) {
+						document.addKeyword(name, (Integer)value);
 					}
 					else {
-						document.addText(name, valueString);
+						String valueString = String.valueOf(value);
+
+						if (indexType.equals("keyword")) {
+							document.addKeyword(name, valueString);
+						}
+						else {
+							document.addText(name, valueString);
+						}
 					}
 				}
 			}
@@ -87,13 +91,24 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	public String encodeName(long ddmStructureId, String fieldName) {
-		StringBundler sb = new StringBundler(5);
+		return encodeName(ddmStructureId, fieldName, null);
+	}
+
+	public String encodeName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(_FIELD_NAMESPACE);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(ddmStructureId);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(fieldName);
+
+		if (Validator.isNotNull(locale)) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(LocaleUtil.toLanguageId(locale));
+		}
 
 		return sb.toString();
 	}

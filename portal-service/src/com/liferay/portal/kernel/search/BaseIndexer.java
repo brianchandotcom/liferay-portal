@@ -805,6 +805,21 @@ public abstract class BaseIndexer implements Indexer {
 		addSearchExpando(searchQuery, searchContext, keywords);
 	}
 
+	protected void addSearchLocalizedDDMStructure(
+			BooleanQuery searchQuery, SearchContext searchContext,
+			DDMStructure ddmStructure)
+		throws Exception {
+
+		Set<String> fieldNames = ddmStructure.getFieldNames();
+
+		for (String fieldName : fieldNames) {
+			String name = DDMIndexerUtil.encodeName(
+				ddmStructure.getStructureId(), fieldName);
+
+			addSearchLocalizedTerm(searchQuery, searchContext, name, false);
+		}
+	}
+
 	protected void addSearchLocalizedTerm(
 			BooleanQuery searchQuery, SearchContext searchContext, String field,
 			boolean like)

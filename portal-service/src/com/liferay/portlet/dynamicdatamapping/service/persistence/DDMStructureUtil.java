@@ -1462,6 +1462,127 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Returns all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @return the matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long[] groupIds, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByG_C(groupIds, classNameId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long[] groupIds, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C(groupIds, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> filterFindByG_C(
+		long[] groupIds, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByG_C(groupIds, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @return the matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long[] groupIds, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C(groupIds, classNameId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long[] groupIds, long classNameId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByG_C(groupIds, classNameId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByG_C(
+		long[] groupIds, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByG_C(groupIds, classNameId, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the d d m structures where groupId = &#63; and classNameId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1487,6 +1608,19 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Returns the number of d d m structures where groupId = any &#63; and classNameId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_C(long[] groupIds, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_C(groupIds, classNameId);
+	}
+
+	/**
 	* Returns the number of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
@@ -1497,6 +1631,19 @@ public class DDMStructureUtil {
 	public static int filterCountByG_C(long groupId, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().filterCountByG_C(groupId, classNameId);
+	}
+
+	/**
+	* Returns the number of d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param classNameId the class name ID
+	* @return the number of matching d d m structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByG_C(long[] groupIds, long classNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByG_C(groupIds, classNameId);
 	}
 
 	/**

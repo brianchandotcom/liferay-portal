@@ -47,6 +47,16 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	public void testSearchByStructureField() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchWithinStructure() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved, String keywords,
 			ServiceContext serviceContext)

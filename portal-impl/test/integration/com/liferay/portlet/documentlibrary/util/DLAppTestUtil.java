@@ -97,11 +97,20 @@ public abstract class DLAppTestUtil {
 			String mimeType, String title, byte[] bytes, int workflowAction)
 		throws Exception {
 
+		return addFileEntry(
+			userId, groupId, folderId, sourceFileName, mimeType, title, bytes,
+			workflowAction, new ServiceContext());
+	}
+
+	public static FileEntry addFileEntry(
+			long userId, long groupId, long folderId, String sourceFileName,
+			String mimeType, String title, byte[] bytes, int workflowAction,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
 			bytes = _CONTENT.getBytes();
 		}
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);

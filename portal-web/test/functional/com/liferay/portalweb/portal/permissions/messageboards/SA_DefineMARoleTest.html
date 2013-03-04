@@ -79,14 +79,24 @@
 	<td>Message Boards</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
-	<td>Select All [Message Boards]</td>
+	<td>selectAllMessageBoardsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${selectAllMessageBoardsChecked}</td>
+	<td>SelectAllMessageBoardsChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[1]</td>
 	<td>Select All [Message Boards]</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SelectAllMessageBoardsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -94,14 +104,24 @@
 	<td>Select All [Message Boards]</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
-	<td>Select All [Message Board Category]</td>
+	<td>selectAllMessageBoardsCategoryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${selectAllMessageBoardsCategoryChecked}</td>
+	<td>SelectAllMessageBoardsCategoryChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[2]</td>
 	<td>Select All [Message Board Category]</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SelectAllMessageBoardsCategoryChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -109,14 +129,24 @@
 	<td>Select All [Message Board Category]</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[3]</td>
-	<td>Select All [Message Board Message]</td>
+	<td>selectAllMessageBoardMessageChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${selectAllMessageBoardMessageChecked}</td>
+	<td>SelectAllMessageBoardMessageChecked</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>xPath=(//input[@name='_128_allRowIds'])[3]</td>
 	<td>Select All [Message Board Message]</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SelectAllMessageBoardMessageChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
@@ -132,6 +162,111 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsADD_CATEGORY']</td>
+	<td>Message Boards Add Category</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsADD_FILE']</td>
+	<td>Message Boards Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsADD_MESSAGE']</td>
+	<td>Message Boards Add Message</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsLOCK_THREAD']</td>
+	<td>Message Boards Lock Thread</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsMOVE_THREAD']</td>
+	<td>Message Boards Move Thread</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsPERMISSIONS']</td>
+	<td>Message Boards Permissions</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsREPLY_TO_MESSAGE']</td>
+	<td>Message Boards Reply to Message</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsSUBSCRIBE']</td>
+	<td>Message Boards Subscribe</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsUPDATE_THREAD_PRIORITY']</td>
+	<td>Message Boards Update Thread Priority</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboardsVIEW']</td>
+	<td>Message Boards View</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_MESSAGE']</td>
+	<td>Message Boards Category Add Message</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_SUBCATEGORY']</td>
+	<td>Message Boards Category Add Subcategory</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@value='com.liferay.portlet.messageboards.model.MBCategoryADD_FILE']</td>
+	<td>Message Boards Category Add File</td>
 </tr>
 </tbody></table>
 </body>

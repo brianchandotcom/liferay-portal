@@ -103,9 +103,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
-		assertEquals(RuntimeVariables.replace("Unsubscribe"),
+		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]"));
 		assertEquals(RuntimeVariables.replace("Lock Thread"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Lock Thread')]"));

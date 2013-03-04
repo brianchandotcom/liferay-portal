@@ -31,10 +31,6 @@ public class Member_LoginTest extends BaseTestCase {
 			RuntimeVariables.replace("member@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
 			RuntimeVariables.replace("test"));
-		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
-		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
-			RuntimeVariables.replace("Remember Me"));
-		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");

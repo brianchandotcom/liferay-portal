@@ -65,8 +65,8 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
-		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

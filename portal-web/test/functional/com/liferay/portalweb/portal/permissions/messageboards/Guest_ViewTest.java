@@ -25,7 +25,9 @@ public class Guest_ViewTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		Thread.sleep(1000);
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
+		Thread.sleep(1000);
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		assertTrue(selenium.isVisible("//a[@id='sign-in']"));
 		selenium.open("/web/site-name/");

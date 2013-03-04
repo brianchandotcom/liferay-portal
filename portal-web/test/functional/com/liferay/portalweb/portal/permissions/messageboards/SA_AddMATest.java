@@ -63,11 +63,11 @@ public class SA_AddMATest extends BaseTestCase {
 			RuntimeVariables.replace("Liferay"));
 		selenium.select("//select[@id='_125_suffixId']",
 			RuntimeVariables.replace("Phd."));
-		selenium.select("//select[@id='_125_birthdayMonth']",
+		selenium.select("//select[@id='_125_birthdaymonth']",
 			RuntimeVariables.replace("July"));
-		selenium.select("//select[@id='_125_birthdayDay']",
+		selenium.select("//select[@id='_125_birthdayday']",
 			RuntimeVariables.replace("26"));
-		selenium.select("//select[@id='_125_birthdayYear']",
+		selenium.select("//select[@id='_125_birthdayyear']",
 			RuntimeVariables.replace("1987"));
 		selenium.select("//select[@id='_125_male']",
 			RuntimeVariables.replace("Female"));

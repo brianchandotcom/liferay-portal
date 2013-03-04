@@ -440,8 +440,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	}
 
 	/**
-	 *  Returns an ordered range of all the templates matching the group and
-	 *  belonging to a structure that matches the structure className.
+	 * Returns an ordered range of all the templates matching the group and
+	 * structure class name ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -453,8 +453,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * result set.
 	 * </p>
 	 *
-	 * @param groupId the primary key of the group
-	 * @param structureClassNameId the class name id of the structure
+	 * @param  groupId the primary key of the group
+	 * @param  structureClassNameId the primary key of the class name for the
+	 *         template's related structure
 	 * @param  start the lower bound of the range of templates to return
 	 * @param  end the upper bound of the range of templates to return (not
 	 *         inclusive)

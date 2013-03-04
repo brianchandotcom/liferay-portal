@@ -350,8 +350,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
-	 *             int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	 *             String, String, int, int, int)}
 	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
@@ -411,8 +411,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, String,
-	 *             String, String, String, int, boolean, int, int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	 *             String, String, String, String, String, String, int, boolean,
+	 *             int, int)}
 	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
@@ -483,8 +484,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #search(long, long[], long, String, String, int, int,
-	 *             int)}
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
+	 *             String, String, int, int, int)}
 	 */
 	public Hits search(
 			long companyId, long[] groupIds, String className, String keywords,
@@ -749,9 +750,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, long, String, long, String, long,
-	 *             long[], String[], boolean, Date, Date, Date, String, String,
-	 *             String, String, String, String, int, int, Integer, boolean)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
+	 *             String, long, String, long, long[], String[], boolean, Date,
+	 *             Date, Date, String, String, String, String, String, String,
+	 *             int, int, Integer, boolean)}
 	 */
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
@@ -771,10 +773,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated {@link #updateEntry(long, long, Date, Date, String, long,
-	 *             String, long, long[], String[], boolean, Date, Date, Date,
-	 *             String, String, String, String, String, String, int, int,
-	 *             Integer, boolean)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
+	 *             Date, Date, String, long, String, long, long[], String[],
+	 *             boolean, Date, Date, Date, String, String, String, String,
+	 *             String, String, int, int, Integer, boolean)}
 	 */
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,

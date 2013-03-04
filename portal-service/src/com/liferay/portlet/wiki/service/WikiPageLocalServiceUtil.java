@@ -647,7 +647,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getRecentChanges(long, long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
+	int, int)}
 	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
 		long nodeId, int start, int end)
@@ -663,7 +664,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getRecentChangesCount(long, long)}
+	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
+	long)}
 	*/
 	public static int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,

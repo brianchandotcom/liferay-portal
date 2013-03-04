@@ -30,7 +30,7 @@ public class Field implements Serializable {
 	public static final String ASSET_CATEGORY_IDS = "assetCategoryIds";
 
 	/**
-	 * @deprecated {@link #ASSET_CATEGORY_TITLES}
+	 * @deprecated As of 6.2.0, replaced by {@link #ASSET_CATEGORY_TITLES}
 	 */
 	public static final String ASSET_CATEGORY_NAMES = "assetCategoryNames";
 

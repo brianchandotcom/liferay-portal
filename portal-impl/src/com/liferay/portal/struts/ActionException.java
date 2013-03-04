@@ -16,7 +16,8 @@ package com.liferay.portal.struts;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated Moved to {@link com.liferay.portal.kernel.events.ActionException}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.kernel.events.ActionException}
  */
 public class ActionException
 	extends com.liferay.portal.kernel.events.ActionException {

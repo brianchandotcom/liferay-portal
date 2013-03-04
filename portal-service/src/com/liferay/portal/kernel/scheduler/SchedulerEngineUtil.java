@@ -19,7 +19,7 @@ package com.liferay.portal.kernel.scheduler;
  * @author     Shuyang Zhou
  * @author     Tina Tian
  * @author     Raymond Augé
- * @deprecated {@link SchedulerEngineHelperUtil}
+ * @deprecated As of 6.2.0, replaced by {@link SchedulerEngineHelperUtil}
  */
 public class SchedulerEngineUtil extends SchedulerEngineHelperUtil {
 }

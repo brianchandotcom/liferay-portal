@@ -30,7 +30,7 @@ import java.util.List;
  * </p>
  *
  * @author     Bruno Farache
- * @deprecated Moved to {@link com.liferay.portal.kernel.util.DiffResult}
+ * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.util.DiffResult}
  */
 public class DiffResult {
 

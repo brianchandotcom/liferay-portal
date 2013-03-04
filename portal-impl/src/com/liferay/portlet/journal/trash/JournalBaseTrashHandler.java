@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Eudaldo Alonso
  */
 public abstract class JournalBaseTrashHandler extends BaseTrashHandler {

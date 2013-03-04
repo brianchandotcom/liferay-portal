@@ -255,7 +255,7 @@ public class PasswordPolicyLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.2.0
 	*/
 	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
@@ -349,7 +349,7 @@ public class PasswordPolicyLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.2.0
 	*/
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,

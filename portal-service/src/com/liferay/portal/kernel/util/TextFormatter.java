@@ -148,7 +148,7 @@ public class TextFormatter {
 	}
 
 	/**
-	 * @deprecated {@link #formatStorageSize(double, Locale)}
+	 * @deprecated As of 6.2.0, replaced by {@link #formatStorageSize(double, Locale)}
 	 */
 	public static String formatKB(double size, Locale locale) {
 		NumberFormat numberFormat = NumberFormat.getInstance(locale);
@@ -160,7 +160,7 @@ public class TextFormatter {
 	}
 
 	/**
-	 * @deprecated {@link #formatStorageSize(int, Locale)}
+	 * @deprecated As of 6.2.0, replaced by {@link #formatStorageSize(int, Locale)}
 	 */
 	public static String formatKB(int size, Locale locale) {
 		return formatKB((double)size, locale);

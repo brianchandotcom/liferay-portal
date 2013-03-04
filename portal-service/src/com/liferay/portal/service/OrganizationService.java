@@ -210,7 +210,8 @@ public interface OrganizationService extends BaseService {
 	* @return the organizations which the user has permission to manage
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated Replaced by {@link #getOrganizations(long, long, int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
+	int, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(

@@ -44,7 +44,8 @@ import javax.servlet.http.HttpSession;
 public class CASAutoLogin extends BaseAutoLogin {
 
 	/**
-	 * @deprecated Use <code>importLDAPUser</code>.
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             PortalLDAPImporterUtil#importLDAPUser(long, String, String)}
 	 */
 	protected User addUser(long companyId, String screenName) throws Exception {
 		return PortalLDAPImporterUtil.importLDAPUser(

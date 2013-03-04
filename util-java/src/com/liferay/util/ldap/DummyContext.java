@@ -16,7 +16,7 @@ package com.liferay.util.ldap;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated Moved to {@link com.liferay.portal.kernel.ldap.DummyContext}
+ * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.ldap.DummyContext}
  */
 public class DummyContext extends com.liferay.portal.kernel.ldap.DummyContext {
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Manuel de la Peña
- * @deprecated Moved to {@link PhoneNumberFormatUtil}
+ * @deprecated As of 6.2.0, moved to {@link PhoneNumberFormatUtil}
  */
 public class PhoneNumberUtil extends PhoneNumberFormatUtil {
 }

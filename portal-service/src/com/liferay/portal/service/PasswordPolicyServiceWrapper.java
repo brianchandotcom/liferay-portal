@@ -49,7 +49,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.2.0
 	*/
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		java.lang.String name, java.lang.String description,
@@ -96,7 +96,7 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 	}
 
 	/**
-	* @deprecated
+	* @deprecated As of 6.2.0
 	*/
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,

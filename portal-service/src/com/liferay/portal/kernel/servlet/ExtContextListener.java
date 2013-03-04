@@ -19,7 +19,7 @@ import javax.servlet.ServletContextListener;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated
+ * @deprecated As of 6.2.0
  */
 public class ExtContextListener implements ServletContextListener {
 

@@ -63,8 +63,8 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	/**
-	* @deprecated {@link #addMessage(long, String, String, String,
-	java.util.List, boolean, double, boolean,
+	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
+	String, String, java.util.List, boolean, double, boolean,
 	com.liferay.portal.service.ServiceContext)}
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(

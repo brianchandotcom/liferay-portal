@@ -199,7 +199,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #search(long[], String, long[], int, int)}
+	* @deprecated As of 6.2.0, replaced by {@link #search(long[], String,
+	long[], int, int)}
 	*/
 	public static java.lang.String getJSONSearch(long groupId,
 		java.lang.String name, long[] vocabularyIds, int start, int end)
@@ -218,7 +219,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #getVocabularyCategoriesDisplay(long, int, int,
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyCategoriesDisplay(long, int, int,
 	OrderByComparator)}
 	*/
 	public static java.lang.String getJSONVocabularyCategories(
@@ -239,8 +241,9 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated {@link #getVocabularyCategoriesDisplay(long, String, long,
-	int, int, OrderByComparator)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyCategoriesDisplay(long, String, long, int, int,
+	OrderByComparator)}
 	*/
 	public static java.lang.String getJSONVocabularyCategories(long groupId,
 		java.lang.String name, long vocabularyId, int start, int end,

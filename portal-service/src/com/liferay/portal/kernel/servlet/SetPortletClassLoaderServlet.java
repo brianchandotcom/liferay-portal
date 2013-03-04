@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated
+ * @deprecated As of 6.2.0
  */
 public class SetPortletClassLoaderServlet extends HttpServlet {
 }

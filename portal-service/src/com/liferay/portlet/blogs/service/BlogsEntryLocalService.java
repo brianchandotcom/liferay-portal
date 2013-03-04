@@ -296,7 +296,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
@@ -304,7 +305,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
@@ -319,7 +321,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getCompanyEntriesCount(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyEntriesCount(long companyId,
@@ -350,7 +353,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
@@ -358,7 +362,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
@@ -373,7 +378,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
@@ -381,7 +387,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
@@ -396,7 +403,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntriesCount(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
@@ -408,7 +416,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupEntriesCount(long, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
+	QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId, int status)
@@ -420,7 +429,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupsEntries(long, long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
@@ -435,8 +445,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupUserEntries(long, long, Date,
-	QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
+	long, Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
@@ -445,8 +455,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupUserEntries(long, long, Date,
-	QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
+	long, Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
@@ -461,8 +471,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getGroupUserEntriesCount(long, long, Date,
-	QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUserEntriesCount(long groupId, long userId,
@@ -480,7 +490,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
@@ -488,7 +499,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		int end) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
+	Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
@@ -503,8 +515,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated {@link #getOrganizationEntriesCount(long, Date,
-	QueryDefinition)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getOrganizationEntriesCount(long, Date, QueryDefinition)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationEntriesCount(long organizationId,

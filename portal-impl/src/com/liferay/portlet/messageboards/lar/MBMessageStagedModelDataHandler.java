@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -104,7 +105,11 @@ public class MBMessageStagedModelDataHandler
 					binPath, fileEntry.getContentStream());
 			}
 
-			message.setAttachmentsFolderId(message.getAttachmentsFolderId());
+			long folderId = message.getAttachmentsFolderId();
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				message.setAttachmentsFolderId(folderId);
+			}
 		}
 
 		portletDataContext.addClassedModel(

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.trash;
 
-import com.liferay.ibm.icu.util.Calendar;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -35,6 +34,8 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;

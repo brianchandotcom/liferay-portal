@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -328,18 +329,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ddmStructureKey, queryDefinition);
 	}
 
-	public List<JournalArticle> getArticlesByUserId(
-			long groupId, long userId, long classNameId, int start, int end,
-			OrderByComparator obc)
-		throws SystemException {
-
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY, start, end, obc);
-
-		return journalArticleFinder.filterFindByG_U_C(
-			groupId, userId, classNameId, queryDefinition);
-	}
-
 	public int getArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
@@ -377,15 +366,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ddmStructureKey, WorkflowConstants.STATUS_ANY);
 	}
 
-	public int getArticlesCountByUserId(
-			long groupId, long userId, long classNameId)
-		throws SystemException {
-
-		return journalArticleFinder.filterCountByG_U_C(
-			groupId, userId, classNameId,
-			new QueryDefinition(WorkflowConstants.STATUS_ANY));
-	}
-
 	public JournalArticle getDisplayArticleByUrlTitle(
 			long groupId, String urlTitle)
 		throws PortalException, SystemException {
@@ -406,6 +386,55 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticlePersistence.filterCountByG_F(
 			groupId,
 			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])));
+	}
+
+	public List<JournalArticle> getGroupFileEntries(
+			long groupId, long userId, long rootFolderId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		List<Long> folderIds = journalFolderService.getFolderIds(
+			groupId, rootFolderId);
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, orderByComparator);
+
+		if (folderIds.size() == 0) {
+			return Collections.emptyList();
+		}
+		else if (userId <= 0) {
+			return journalArticleFinder.filterFindByG_F(
+				groupId, folderIds, queryDefinition);
+		}
+		else {
+			return journalArticleFinder.filterFindByG_U_F_C(
+				groupId, userId, folderIds,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
+		}
+	}
+
+	public int getGroupFileEntriesCount(
+			long groupId, long userId, long rootFolderId)
+		throws PortalException, SystemException {
+
+		List<Long> folderIds = journalFolderService.getFolderIds(
+			groupId, rootFolderId);
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		if (folderIds.size() == 0) {
+			return 0;
+		}
+		else if (userId <= 0) {
+			return journalArticleFinder.filterCountByG_F(
+				groupId, folderIds, queryDefinition);
+		}
+		else {
+			return journalArticleFinder.filterCountByG_U_F_C(
+				groupId, userId, folderIds,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
+		}
 	}
 
 	public JournalArticle getLatestArticle(long resourcePrimKey)
@@ -459,7 +488,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	public JournalArticle moveArticleFromTrash(
-			long groupId, long resourcePrimKey, long newFolderId)
+			long groupId, long resourcePrimKey, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getLatestArticle(resourcePrimKey);
@@ -468,11 +498,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.moveArticleFromTrash(
-			getUserId(), groupId, article, newFolderId);
+			getUserId(), groupId, article, newFolderId, serviceContext);
 	}
 
 	public JournalArticle moveArticleFromTrash(
-			long groupId, String articleId, long newFolderId)
+			long groupId, String articleId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		JournalArticle article = getLatestArticle(
@@ -482,7 +513,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), groupId, articleId, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.moveArticleFromTrash(
-			getUserId(), groupId, article, newFolderId);
+			getUserId(), groupId, article, newFolderId, serviceContext);
 	}
 
 	public JournalArticle moveArticleToTrash(long groupId, String articleId)

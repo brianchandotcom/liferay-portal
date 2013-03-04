@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -217,6 +218,10 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, categoryId);
 
 		for (MBCategory category : categories) {
+			if (category.isInTrash() || category.isInTrashContainer()) {
+				continue;
+			}
+
 			categoryIds.add(category.getCategoryId());
 
 			getSubcategoryIds(
@@ -237,8 +242,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			return Collections.emptyList();
 		}
 		else {
+			QueryDefinition queryDefinition = new QueryDefinition(
+				WorkflowConstants.STATUS_ANY, start, end, null);
+
 			return mbCategoryFinder.filterFindByS_G_U_P(
-				groupId, userId, categoryIds, start, end);
+				groupId, userId, categoryIds, queryDefinition);
 		}
 	}
 
@@ -252,8 +260,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			return 0;
 		}
 		else {
+			QueryDefinition queryDefinition = new QueryDefinition(
+				WorkflowConstants.STATUS_ANY);
+
 			return mbCategoryFinder.filterCountByS_G_U_P(
-				groupId, userId, categoryIds);
+				groupId, userId, categoryIds, queryDefinition);
 		}
 	}
 

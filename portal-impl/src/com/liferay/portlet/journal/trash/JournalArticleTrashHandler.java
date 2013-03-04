@@ -199,7 +199,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 		JournalArticleServiceUtil.moveArticleFromTrash(
-			article.getGroupId(), article.getArticleId(), containerId);
+			article.getGroupId(), article.getArticleId(), containerId,
+			serviceContext);
 	}
 
 	public void restoreTrashEntries(long[] classPKs)

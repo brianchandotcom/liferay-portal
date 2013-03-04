@@ -331,7 +331,7 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_U_C">
 		<![CDATA[
 			SELECT
-				DISTINCT MBThread.threadId
+				DISTINCT {MBThread.*}
 			FROM
 				MBThread
 			INNER JOIN
@@ -405,7 +405,7 @@
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder.findByG_U_C_A">
 		<![CDATA[
 			SELECT
-				DISTINCT MBThread.threadId
+				DISTINCT {MBThread.*}
 			FROM
 				MBThread
 			INNER JOIN

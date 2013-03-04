@@ -305,8 +305,11 @@ public class BookmarksEntryLocalServiceImpl
 		if (entry.isInTrash()) {
 			restoreEntryFromTrash(userId, entryId);
 		}
+		else {
+			updateStatus(userId, entry, entry.getStatus());
+		}
 
-		return moveEntry(entryId, parentFolderId);
+		return bookmarksEntryLocalService.moveEntry(entryId, parentFolderId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

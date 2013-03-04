@@ -121,6 +121,21 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			java.util.List<java.lang.Long> returnValue = JournalFolderServiceUtil.getFolderIds(groupId,
+					folderId);
+
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolderSoap[] getFolders(
 		long groupId) throws RemoteException {
 		try {

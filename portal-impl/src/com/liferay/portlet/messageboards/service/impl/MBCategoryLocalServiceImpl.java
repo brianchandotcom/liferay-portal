@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -449,14 +450,21 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			long groupId, long userId, int start, int end)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, null);
+
 		return mbCategoryFinder.findByS_G_U_P(
-			groupId, userId, null, start, end);
+			groupId, userId, null, queryDefinition);
 	}
 
 	public int getSubscribedCategoriesCount(long groupId, long userId)
 		throws SystemException {
 
-		return mbCategoryFinder.countByS_G_U_P(groupId, userId, null);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		return mbCategoryFinder.countByS_G_U_P(
+			groupId, userId, null, queryDefinition);
 	}
 
 	public void moveCategoriesToTrash(long groupId, long userId)

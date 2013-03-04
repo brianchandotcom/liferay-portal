@@ -1728,8 +1728,9 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	public void moveArticle(long groupId, String articleId, long newFolderId)
-		throws SystemException {
+	public JournalArticle moveArticle(
+			long groupId, String articleId, long newFolderId)
+		throws PortalException, SystemException {
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 			groupId, articleId);
@@ -1739,19 +1740,26 @@ public class JournalArticleLocalServiceImpl
 
 			journalArticlePersistence.update(article);
 		}
+
+		return getArticle(groupId, articleId);
 	}
 
 	public JournalArticle moveArticleFromTrash(
-			long userId, long groupId, JournalArticle article, long newFolderId)
+			long userId, long groupId, JournalArticle article, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (article.isInTrash()) {
 			restoreArticleFromTrash(userId, article);
 		}
+		else {
+			updateStatus(
+				userId, article, article.getStatus(), null,
+				new HashMap<String, Serializable>(), serviceContext);
+		}
 
-		moveArticle(groupId, article.getArticleId(), newFolderId);
-
-		return article;
+		return journalArticleLocalService.moveArticle(
+			groupId, article.getArticleId(), newFolderId);
 	}
 
 	public JournalArticle moveArticleToTrash(

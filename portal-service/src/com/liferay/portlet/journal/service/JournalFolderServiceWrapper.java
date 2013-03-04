@@ -79,6 +79,13 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		return _journalFolderService.getFolder(folderId);
 	}
 
+	public java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFolderIds(groupId, folderId);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getFolders(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {

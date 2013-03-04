@@ -702,14 +702,16 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void moveArticle(long groupId, java.lang.String articleId,
-		long newFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portlet.journal.model.JournalArticle moveArticle(
+		long groupId, java.lang.String articleId, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
 		long userId, long groupId,
 		com.liferay.portlet.journal.model.JournalArticle article,
-		long newFolderId)
+		long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

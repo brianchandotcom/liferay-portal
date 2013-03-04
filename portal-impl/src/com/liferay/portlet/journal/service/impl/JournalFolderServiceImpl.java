@@ -81,6 +81,19 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return folder;
 	}
 
+	public List<Long> getFolderIds(long groupId, long folderId)
+			throws PortalException, SystemException {
+
+		JournalFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+
+		List<Long> folderIds = getSubfolderIds(groupId, folderId, true);
+
+		folderIds.add(0, folderId);
+
+		return folderIds;
+	}
+
 	public List<JournalFolder> getFolders(long groupId) throws SystemException {
 		return journalFolderPersistence.filterFindByGroupId(groupId);
 	}
@@ -185,6 +198,10 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, folderId);
 
 		for (JournalFolder folder : folders) {
+			if (folder.isInTrash() || folder.isInTrashContainer()) {
+				continue;
+			}
+
 			folderIds.add(folder.getFolderId());
 
 			getSubfolderIds(

@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.service.persistence;
 
 import com.liferay.portal.NoSuchSubscriptionException;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -55,40 +56,44 @@ public class MBCategoryFinderImpl
 		MBCategoryFinder.class.getName() + ".findByS_G_U_P";
 
 	public int countByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds)
+			long groupId, long userId, long[] parentCategoryIds,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByS_G_U_P(groupId, userId, parentCategoryIds, false);
+		return doCountByS_G_U_P(
+			groupId, userId, parentCategoryIds, queryDefinition, false);
 	}
 
 	public int filterCountByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds)
+			long groupId, long userId, long[] parentCategoryIds,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
-		return doCountByS_G_U_P(groupId, userId, parentCategoryIds, true);
+		return doCountByS_G_U_P(
+			groupId, userId, parentCategoryIds, queryDefinition, true);
 	}
 
 	public List<MBCategory> filterFindByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds, int start,
-			int end)
+			long groupId, long userId, long[] parentCategoryIds,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		return doFindByS_G_U_P(
-			groupId, userId, parentCategoryIds, start, end, true);
+			groupId, userId, parentCategoryIds, queryDefinition, true);
 	}
 
 	public List<MBCategory> findByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds, int start,
-			int end)
+			long groupId, long userId, long[] parentCategoryIds,
+			QueryDefinition queryDefinition)
 		throws SystemException {
 
 		return doFindByS_G_U_P(
-			groupId, userId, parentCategoryIds, start, end, false);
+			groupId, userId, parentCategoryIds, queryDefinition, false);
 	}
 
 	protected int doCountByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds,
-			boolean inlineSQLHelper)
+			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -114,6 +119,8 @@ public class MBCategoryFinderImpl
 							" OR MBCategory.parentCategoryId = "));
 			}
 
+			sql = updateSQL(sql, queryDefinition);
+
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, MBCategory.class.getName(), "MBCategory.categoryId",
@@ -129,6 +136,10 @@ public class MBCategoryFinderImpl
 			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
 
 			int count = 0;
 
@@ -165,8 +176,8 @@ public class MBCategoryFinderImpl
 	}
 
 	protected List<MBCategory> doFindByS_G_U_P(
-			long groupId, long userId, long[] parentCategoryIds, int start,
-			int end, boolean inlineSQLHelper)
+			long groupId, long userId, long[] parentCategoryIds,
+			QueryDefinition queryDefinition, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -192,6 +203,8 @@ public class MBCategoryFinderImpl
 							" OR MBCategory.parentCategoryId = "));
 			}
 
+			sql = updateSQL(sql, queryDefinition);
+
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, MBCategory.class.getName(), "MBCategory.categoryId",
@@ -207,6 +220,10 @@ public class MBCategoryFinderImpl
 			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
 
 			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
@@ -241,7 +258,9 @@ public class MBCategoryFinderImpl
 			}
 
 			return new UnmodifiableList<MBCategory>(
-				ListUtil.subList(list, start, end));
+				ListUtil.subList(
+					list, queryDefinition.getStart(),
+					queryDefinition.getEnd()));
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -249,6 +268,19 @@ public class MBCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected String updateSQL(String sql, QueryDefinition queryDefinition) {
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			return sql;
+		}
+
+		if (queryDefinition.isExcludeStatus()) {
+			return CustomSQLUtil.appendCriteria(
+				sql, "AND (MBCategory.status != ?)");
+		}
+
+		return CustomSQLUtil.appendCriteria(sql, "AND (MBCategory.status = ?)");
 	}
 
 }

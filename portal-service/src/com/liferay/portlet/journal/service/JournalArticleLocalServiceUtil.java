@@ -886,20 +886,23 @@ public class JournalArticleLocalServiceUtil {
 		return getService().isLatestVersion(groupId, articleId, version, status);
 	}
 
-	public static void moveArticle(long groupId, java.lang.String articleId,
-		long newFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().moveArticle(groupId, articleId, newFolderId);
+	public static com.liferay.portlet.journal.model.JournalArticle moveArticle(
+		long groupId, java.lang.String articleId, long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveArticle(groupId, articleId, newFolderId);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle moveArticleFromTrash(
 		long userId, long groupId,
 		com.liferay.portlet.journal.model.JournalArticle article,
-		long newFolderId)
+		long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .moveArticleFromTrash(userId, groupId, article, newFolderId);
+				   .moveArticleFromTrash(userId, groupId, article, newFolderId,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle moveArticleToTrash(

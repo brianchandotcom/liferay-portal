@@ -22,31 +22,39 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class MBCategoryFinderUtil {
 	public static int countByS_G_U_P(long groupId, long userId,
-		long[] parentCategoryIds)
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByS_G_U_P(groupId, userId, parentCategoryIds);
+		return getFinder()
+				   .countByS_G_U_P(groupId, userId, parentCategoryIds,
+			queryDefinition);
 	}
 
 	public static int filterCountByS_G_U_P(long groupId, long userId,
-		long[] parentCategoryIds)
+		long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .filterCountByS_G_U_P(groupId, userId, parentCategoryIds);
+				   .filterCountByS_G_U_P(groupId, userId, parentCategoryIds,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBCategory> filterFindByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds, int start, int end)
+		long groupId, long userId, long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .filterFindByS_G_U_P(groupId, userId, parentCategoryIds,
-			start, end);
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBCategory> findByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds, int start, int end)
+		long groupId, long userId, long[] parentCategoryIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByS_G_U_P(groupId, userId, parentCategoryIds, start, end);
+				   .findByS_G_U_P(groupId, userId, parentCategoryIds,
+			queryDefinition);
 	}
 
 	public static MBCategoryFinder getFinder() {

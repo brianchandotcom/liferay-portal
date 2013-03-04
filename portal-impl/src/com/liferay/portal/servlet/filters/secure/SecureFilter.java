@@ -38,7 +38,6 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.HashSet;
@@ -275,24 +274,18 @@ public class SecureFilter extends BasePortalFilter {
 				_log.debug("Not securing " + completeURL);
 			}
 
-			// This authentication should only be run if specified by web.xml
-			// and JAAS is disabled. Make sure to run this once per session and
-			// wrap the request if necessary.
+			User user = PortalUtil.getUser(request);
 
-			if (!PropsValues.PORTAL_JAAS_ENABLE) {
-				User user = PortalUtil.getUser(request);
-
-				if ((user != null) && !user.isDefaultUser()) {
-					request = setCredentials(
-						request, request.getSession(), user.getUserId(), null);
+			if ((user != null) && !user.isDefaultUser()) {
+				request = setCredentials(
+					request, request.getSession(), user.getUserId(), null);
+			}
+			else {
+				if (_digestAuthEnabled) {
+					request = digestAuth(request, response);
 				}
-				else {
-					if (_digestAuthEnabled) {
-						request = digestAuth(request, response);
-					}
-					else if (_basicAuthEnabled) {
-						request = basicAuth(request, response);
-					}
+				else if (_basicAuthEnabled) {
+					request = basicAuth(request, response);
 				}
 			}
 

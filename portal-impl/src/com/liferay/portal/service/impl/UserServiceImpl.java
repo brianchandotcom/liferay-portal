@@ -1833,6 +1833,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Roles Membership Policy
 
+		roleIds = UsersAdminUtil.addRequiredRoles(userId, roleIds);
+
 		long[] oldRoleIds = user.getRoleIds();
 
 		List<Long> addRoleIds = new ArrayList<Long>();

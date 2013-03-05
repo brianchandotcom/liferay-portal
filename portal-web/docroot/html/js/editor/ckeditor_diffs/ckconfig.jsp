@@ -57,6 +57,8 @@ if (!CKEDITOR.stylesSet.get('liferayStyles')) {
 	);
 }
 
+CKEDITOR.config.autoParagraph = false;
+
 CKEDITOR.config.autoSaveTimeout = 3000;
 
 CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';

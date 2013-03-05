@@ -18,4 +18,20 @@ package com.liferay.portal.tools.seleniumbuilder;
  * @author Michael Hashimoto
  */
 public class FunctionConverter extends BaseConverter {
+
+	public FunctionConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void convert(String functionName) {
+		String functionSimpleClassName = _getFunctionSimpleClassName(
+			functionName);
+	}
+
+	private String _getFunctionSimpleClassName(String functionName) {
+		return _seleniumBuilderContext.getFunctionSimpleClassName(functionName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

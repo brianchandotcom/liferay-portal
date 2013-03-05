@@ -70,14 +70,16 @@ public class UserGroupChecker extends RowChecker {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			if ((isChecked(user) &&
-				SiteMembershipPolicyUtil.isMembershipRequired(
-					user.getUserId(), _group.getGroupId())) ||
-				(!isChecked(user) &&
+			if ((!isChecked(user) &&
 				!SiteMembershipPolicyUtil.isMembershipAllowed(
 					user.getUserId(), _group.getGroupId())) ||
+				(isChecked(user) &&
 				SiteMembershipPolicyUtil.isMembershipProtected(
-					permissionChecker, user.getUserId(), _group.getGroupId())) {
+					permissionChecker, user.getUserId(),
+					_group.getGroupId())) ||
+				(isChecked(user) &&
+					SiteMembershipPolicyUtil.isMembershipRequired(
+						user.getUserId(), _group.getGroupId()))) {
 
 				return true;
 			}

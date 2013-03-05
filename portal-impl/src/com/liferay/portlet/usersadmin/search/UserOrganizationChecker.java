@@ -70,15 +70,16 @@ public class UserOrganizationChecker extends RowChecker {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			if ((isChecked(user) &&
-				OrganizationMembershipPolicyUtil.isMembershipRequired(
-					user.getUserId(), _organization.getOrganizationId())) ||
-				(!isChecked(user) &&
+			if ((!isChecked(user) &&
 				!OrganizationMembershipPolicyUtil.isMembershipAllowed(
 					user.getUserId(), _organization.getOrganizationId())) ||
+				(isChecked(user) &&
 				OrganizationMembershipPolicyUtil.isMembershipProtected(
 					permissionChecker, user.getUserId(),
-					_organization.getOrganizationId())) {
+					_organization.getOrganizationId())) ||
+				(isChecked(user) &&
+				OrganizationMembershipPolicyUtil.isMembershipRequired(
+					user.getUserId(), _organization.getOrganizationId()))) {
 
 				return true;
 			}

@@ -55,11 +55,11 @@ public class UserRoleChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			if ((isChecked(user) &&
-				RoleMembershipPolicyUtil.isRoleRequired(
-					user.getUserId(), _role.getRoleId())) ||
-				(!isChecked(user) &&
+			if ((!isChecked(user) &&
 				!RoleMembershipPolicyUtil.isRoleAllowed(
+					user.getUserId(), _role.getRoleId())) ||
+				(isChecked(user) &&
+				RoleMembershipPolicyUtil.isRoleRequired(
 					user.getUserId(), _role.getRoleId()))) {
 
 				return true;

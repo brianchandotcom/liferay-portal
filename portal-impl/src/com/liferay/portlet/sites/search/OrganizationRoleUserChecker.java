@@ -21,6 +21,8 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -60,12 +62,19 @@ public class OrganizationRoleUserChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			if ((isChecked(user) &&
-				OrganizationMembershipPolicyUtil.isRoleRequired(
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if ((!isChecked(user) &&
+				!OrganizationMembershipPolicyUtil.isRoleAllowed(
 					user.getUserId(), _organization.getOrganizationId(),
 					_role.getRoleId())) ||
-				(!isChecked(user) &&
-				!OrganizationMembershipPolicyUtil.isRoleAllowed(
+				(isChecked(user) &&
+				OrganizationMembershipPolicyUtil.isRoleProtected(
+					permissionChecker, user.getUserId(),
+					_organization.getOrganizationId(), _role.getRoleId())) ||
+				(isChecked(user) &&
+				OrganizationMembershipPolicyUtil.isRoleRequired(
 					user.getUserId(), _organization.getOrganizationId(),
 					_role.getRoleId()))) {
 

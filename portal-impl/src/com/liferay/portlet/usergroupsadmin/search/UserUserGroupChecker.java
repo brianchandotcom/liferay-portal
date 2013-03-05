@@ -57,11 +57,11 @@ public class UserUserGroupChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			if ((isChecked(user) &&
-				UserGroupMembershipPolicyUtil.isMembershipRequired(
-					user.getUserId(), _userGroup.getUserGroupId())) ||
-				(!isChecked(user) &&
+			if ((!isChecked(user) &&
 				!UserGroupMembershipPolicyUtil.isMembershipAllowed(
+					user.getUserId(), _userGroup.getUserGroupId())) ||
+				(isChecked(user) &&
+				UserGroupMembershipPolicyUtil.isMembershipRequired(
 					user.getUserId(), _userGroup.getUserGroupId()))) {
 
 				return true;

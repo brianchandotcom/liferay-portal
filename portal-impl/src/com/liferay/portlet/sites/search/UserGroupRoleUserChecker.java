@@ -59,14 +59,14 @@ public class UserGroupRoleUserChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			if ((isChecked(user) &&
-				SiteMembershipPolicyUtil.isRoleRequired(
-					user.getUserId(), _group.getGroupId(),
-					_role.getRoleId())) ||
-				(!isChecked(user) &&
+			if ((!isChecked(user) &&
 				!SiteMembershipPolicyUtil.isRoleAllowed(
 					user.getUserId(), _group.getGroupId(),
-					_role.getRoleId()))) {
+					_role.getRoleId())) ||
+				(isChecked(user) &&
+					SiteMembershipPolicyUtil.isRoleRequired(
+						user.getUserId(), _group.getGroupId(),
+						_role.getRoleId()))) {
 
 				return true;
 			}

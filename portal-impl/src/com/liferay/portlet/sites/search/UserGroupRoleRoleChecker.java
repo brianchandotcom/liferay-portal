@@ -21,6 +21,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -59,12 +61,19 @@ public class UserGroupRoleRoleChecker extends RowChecker {
 		Role role = (Role)obj;
 
 		try {
-			if ((isChecked(role) &&
-				SiteMembershipPolicyUtil.isRoleRequired(
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if ((!isChecked(role) &&
+				!SiteMembershipPolicyUtil.isRoleAllowed(
 					_user.getUserId(), _group.getGroupId(),
 					role.getRoleId())) ||
-				(!isChecked(role) &&
-				!SiteMembershipPolicyUtil.isRoleAllowed(
+				(isChecked(role) &&
+				SiteMembershipPolicyUtil.isRoleProtected(
+					permissionChecker, _user.getUserId(), _group.getGroupId(),
+					role.getRoleId())) ||
+				(isChecked(role) &&
+				SiteMembershipPolicyUtil.isRoleRequired(
 					_user.getUserId(), _group.getGroupId(),
 					role.getRoleId()))) {
 

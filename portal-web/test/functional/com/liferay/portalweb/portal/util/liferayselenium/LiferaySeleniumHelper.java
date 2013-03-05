@@ -279,9 +279,7 @@ public class LiferaySeleniumHelper {
 
 		value = value.replace("\\", "\\\\");
 
-		String script = "document.body.innerHTML = '" + value + "'";
-
-		liferaySelenium.runScript(script);
+		liferaySelenium.runScript("document.body.innerHTML = '" + value + "'");
 
 		liferaySelenium.selectFrame("relative=top");
 	}

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -38,11 +38,20 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
-public class MetaInfoCacheServletResponseTest extends TestCase {
+public class MetaInfoCacheServletResponseTest {
 
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
 	public void testAddCookie() {
 		final List<Cookie> cookies = new ArrayList<Cookie>();
 
@@ -62,19 +71,19 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		Collection<String> headerNames =
 			metaInfoCacheServletResponse.getHeaderNames();
 
-		assertEquals(0, headerNames.size());
-		assertNull(
+		Assert.assertEquals(0, headerNames.size());
+		Assert.assertNull(
 			metaInfoCacheServletResponse.getHeader(HttpHeaders.SET_COOKIE));
 
 		Collection<String> setCookieHeaders =
 			metaInfoCacheServletResponse.getHeaders(HttpHeaders.SET_COOKIE);
 
-		assertEquals(0, setCookieHeaders.size());
+		Assert.assertEquals(0, setCookieHeaders.size());
 
 		// First add
 
@@ -82,8 +91,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addCookie(cookie1);
 
-		assertEquals(1, headers.size());
-		assertTrue(
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(
 			metaInfoCacheServletResponse.containsHeader(
 				HttpHeaders.SET_COOKIE));
 
@@ -91,20 +100,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		Set<Header> cookieHeaders = headers.get(HttpHeaders.SET_COOKIE);
 
-		assertEquals(1, cookieHeaders.size());
-		assertTrue(cookieHeaders.contains(cookieHeader1));
-		assertEquals(1, cookies.size());
-		assertEquals(cookie1, cookies.get(0));
+		Assert.assertEquals(1, cookieHeaders.size());
+		Assert.assertTrue(cookieHeaders.contains(cookieHeader1));
+		Assert.assertEquals(1, cookies.size());
+		Assert.assertEquals(cookie1, cookies.get(0));
 
 		setCookieHeaders = metaInfoCacheServletResponse.getHeaders(
 			HttpHeaders.SET_COOKIE);
 
-		assertEquals(1, setCookieHeaders.size());
-		assertTrue(setCookieHeaders.contains(cookieHeader1.toString()));
-		assertEquals(
+		Assert.assertEquals(1, setCookieHeaders.size());
+		Assert.assertTrue(setCookieHeaders.contains(cookieHeader1.toString()));
+		Assert.assertEquals(
 			cookieHeader1.toString(),
 			metaInfoCacheServletResponse.getHeader(HttpHeaders.SET_COOKIE));
-		assertTrue(headerNames.contains(HttpHeaders.SET_COOKIE));
+		Assert.assertTrue(headerNames.contains(HttpHeaders.SET_COOKIE));
 
 		// Second add
 
@@ -112,8 +121,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addCookie(cookie2);
 
-		assertEquals(1, headers.size());
-		assertTrue(
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(
 			metaInfoCacheServletResponse.containsHeader(
 				HttpHeaders.SET_COOKIE));
 
@@ -121,18 +130,19 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		cookieHeaders = headers.get(HttpHeaders.SET_COOKIE);
 
-		assertEquals(2, cookieHeaders.size());
-		assertTrue(cookieHeaders.contains(cookieHeader2));
-		assertEquals(2, cookies.size());
-		assertEquals(cookie2, cookies.get(1));
+		Assert.assertEquals(2, cookieHeaders.size());
+		Assert.assertTrue(cookieHeaders.contains(cookieHeader2));
+		Assert.assertEquals(2, cookies.size());
+		Assert.assertEquals(cookie2, cookies.get(1));
 
 		setCookieHeaders = metaInfoCacheServletResponse.getHeaders(
 			HttpHeaders.SET_COOKIE);
 
-		assertEquals(2, setCookieHeaders.size());
-		assertTrue(setCookieHeaders.contains(cookieHeader2.toString()));
+		Assert.assertEquals(2, setCookieHeaders.size());
+		Assert.assertTrue(setCookieHeaders.contains(cookieHeader2.toString()));
 	}
 
+	@Test
 	public void testAddDateHeader() {
 		final List<ObjectValuePair<String, Long>> objectValuePairs =
 			new ArrayList<ObjectValuePair<String, Long>>();
@@ -154,21 +164,21 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// First add
 
 		metaInfoCacheServletResponse.addDateHeader("date1", 1);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
 
 		Set<Header> dateHeaders1 = headers.get("date1");
 
-		assertEquals(1, dateHeaders1.size());
-		assertTrue(dateHeaders1.contains(new Header(1L)));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, dateHeaders1.size());
+		Assert.assertTrue(dateHeaders1.contains(new Header(1L)));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date1", 1L),
 			objectValuePairs.get(0));
 
@@ -176,15 +186,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addDateHeader("date1", 2);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
 
 		dateHeaders1 = headers.get("date1");
 
-		assertEquals(2, dateHeaders1.size());
-		assertTrue(dateHeaders1.contains(new Header(2L)));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(2, dateHeaders1.size());
+		Assert.assertTrue(dateHeaders1.contains(new Header(2L)));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date1", 2L),
 			objectValuePairs.get(1));
 
@@ -192,19 +202,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addDateHeader("date2", 1);
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date2"));
 
 		Set<Header> dateHeaders2 = headers.get("date2");
 
-		assertEquals(1, dateHeaders2.size());
-		assertTrue(dateHeaders2.contains(new Header(1L)));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, dateHeaders2.size());
+		Assert.assertTrue(dateHeaders2.contains(new Header(1L)));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date2", 1L),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testAddHeader() {
 		final AtomicReference<String> contentTypeReference =
 			new AtomicReference<String>();
@@ -238,32 +249,32 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// Add content type
 
 		metaInfoCacheServletResponse.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.TEXT_HTML);
 
-		assertEquals(0, headers.size());
-		assertEquals(
+		Assert.assertEquals(0, headers.size());
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			metaInfoCacheServletResponse.getContentType());
-		assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
+		Assert.assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
 
 		// First add
 
 		metaInfoCacheServletResponse.addHeader("name1", "value1");
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		Set<Header> headers1 = headers.get("name1");
 
-		assertEquals(1, headers1.size());
-		assertTrue(headers1.contains(new Header("value1")));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, headers1.size());
+		Assert.assertTrue(headers1.contains(new Header("value1")));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name1", "value1"),
 			objectValuePairs.get(0));
 
@@ -271,15 +282,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addHeader("name1", "value2");
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		headers1 = headers.get("name1");
 
-		assertEquals(2, headers1.size());
-		assertTrue(headers1.contains(new Header("value2")));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(2, headers1.size());
+		Assert.assertTrue(headers1.contains(new Header("value2")));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name1", "value2"),
 			objectValuePairs.get(1));
 
@@ -287,19 +298,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addHeader("name2", "value1");
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
 
 		Set<Header> headers2 = headers.get("name2");
 
-		assertEquals(1, headers2.size());
-		assertTrue(headers2.contains(new Header("value1")));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, headers2.size());
+		Assert.assertTrue(headers2.contains(new Header("value1")));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name2", "value1"),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testAddIntHeader() {
 		final List<ObjectValuePair<String, Integer>> objectValuePairs =
 			new ArrayList<ObjectValuePair<String, Integer>>();
@@ -321,21 +333,21 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// First add
 
 		metaInfoCacheServletResponse.addIntHeader("name1", 1);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		Set<Header> intHeaders1 = headers.get("name1");
 
-		assertEquals(1, intHeaders1.size());
-		assertTrue(intHeaders1.contains(new Header(1)));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, intHeaders1.size());
+		Assert.assertTrue(intHeaders1.contains(new Header(1)));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name1", 1),
 			objectValuePairs.get(0));
 
@@ -343,15 +355,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addIntHeader("name1", 2);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		intHeaders1 = headers.get("name1");
 
-		assertEquals(2, intHeaders1.size());
-		assertTrue(intHeaders1.contains(new Header(2)));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(2, intHeaders1.size());
+		Assert.assertTrue(intHeaders1.contains(new Header(2)));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name1", 2),
 			objectValuePairs.get(1));
 
@@ -359,19 +371,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.addIntHeader("name2", 1);
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
 
 		Set<Header> intHeaders2 = headers.get("name2");
 
-		assertEquals(1, intHeaders2.size());
-		assertTrue(intHeaders2.contains(new Header(1)));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, intHeaders2.size());
+		Assert.assertTrue(intHeaders2.contains(new Header(1)));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name2", 1),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testConstructor() {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse();
@@ -379,11 +392,12 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		assertSame(
+		Assert.assertSame(
 			stubHttpServletResponse,
 			metaInfoCacheServletResponse.getResponse());
 	}
 
+	@Test
 	public void testFinishResponse() throws IOException {
 		final AtomicLong contentLengthReference = new AtomicLong();
 		final AtomicReference<String> locationReference =
@@ -474,18 +488,18 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			innerMetaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(2, headers.size());
+		Assert.assertEquals(2, headers.size());
 
 		Set<Header> headers1 = headers.get("name1");
 
-		assertEquals(2, headers1.size());
-		assertTrue(headers1.contains(new Header("value1")));
-		assertTrue(headers1.contains(new Header("value2")));
+		Assert.assertEquals(2, headers1.size());
+		Assert.assertTrue(headers1.contains(new Header("value1")));
+		Assert.assertTrue(headers1.contains(new Header("value2")));
 
 		Set<Header> headers2 = headers.get("name2");
 
-		assertEquals(1, headers2.size());
-		assertTrue(headers2.contains(new Header("value1")));
+		Assert.assertEquals(1, headers2.size());
+		Assert.assertTrue(headers2.contains(new Header("value1")));
 
 		// Send redirect
 
@@ -504,7 +518,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		fromMetaInfoCacheServletResponse.finishResponse();
 
-		assertEquals("testURL", locationReference.get());
+		Assert.assertEquals("testURL", locationReference.get());
 
 		// Send error
 
@@ -524,8 +538,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		fromMetaInfoCacheServletResponse.finishResponse();
 
-		assertEquals("Bad Page", messageReference.get());
-		assertEquals(400, statusReference.get());
+		Assert.assertEquals("Bad Page", messageReference.get());
+		Assert.assertEquals(400, statusReference.get());
 
 		// Normal
 
@@ -550,17 +564,17 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		fromMetaInfoCacheServletResponse.finishResponse();
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.UTF8,
 			toMetaInfoCacheServletResponse.getCharacterEncoding());
-		assertEquals(
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			toMetaInfoCacheServletResponse.getContentType());
-		assertEquals(
+		Assert.assertEquals(
 			Locale.ENGLISH, toMetaInfoCacheServletResponse.getLocale());
-		assertEquals(2048, contentLengthReference.get());
-		assertEquals("moved", messageReference.get());
-		assertEquals(302, statusReference.get());
+		Assert.assertEquals(2048, contentLengthReference.get());
+		Assert.assertEquals("moved", messageReference.get());
+		Assert.assertEquals(302, statusReference.get());
 
 		// Finish response after commit
 
@@ -581,9 +595,10 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		fromMetaInfoCacheServletResponse.finishResponse();
 
-		assertNull(locationReference.get());
+		Assert.assertNull(locationReference.get());
 	}
 
+	@Test
 	public void testFlushBuffer() throws IOException {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
@@ -598,14 +613,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		assertFalse(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertFalse(metaInfoCacheServletResponse.isCommitted());
 
 		metaInfoCacheServletResponse.flushBuffer();
 
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
 	}
 
 	@SuppressWarnings("cast")
+	@Test
 	public void testGetMetaInfoDataBag() {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse();
@@ -616,10 +632,11 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse.MetaData metaData =
 			metaInfoCacheServletResponse.getMetaData();
 
-		assertNotNull(metaData);
-		assertTrue(metaData instanceof Serializable);
+		Assert.assertNotNull(metaData);
+		Assert.assertTrue(metaData instanceof Serializable);
 	}
 
+	@Test
 	public void testGetOutputStream() throws IOException {
 		final AtomicBoolean calledGetOutputStreamReference =
 			new AtomicBoolean();
@@ -639,15 +656,16 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		assertFalse(metaInfoCacheServletResponse.calledGetOutputStream);
-		assertFalse(calledGetOutputStreamReference.get());
+		Assert.assertFalse(metaInfoCacheServletResponse.calledGetOutputStream);
+		Assert.assertFalse(calledGetOutputStreamReference.get());
 
 		metaInfoCacheServletResponse.getOutputStream();
 
-		assertTrue(metaInfoCacheServletResponse.calledGetOutputStream);
-		assertTrue(calledGetOutputStreamReference.get());
+		Assert.assertTrue(metaInfoCacheServletResponse.calledGetOutputStream);
+		Assert.assertTrue(calledGetOutputStreamReference.get());
 	}
 
+	@Test
 	public void testGetSetBufferSize() throws IOException {
 		final AtomicInteger bufferSizeReference = new AtomicInteger();
 
@@ -671,14 +689,14 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Get default
 
-		assertEquals(0, metaInfoCacheServletResponse.getBufferSize());
+		Assert.assertEquals(0, metaInfoCacheServletResponse.getBufferSize());
 
 		// Normal set
 
 		metaInfoCacheServletResponse.setBufferSize(1024);
 
-		assertEquals(1024, metaInfoCacheServletResponse.getBufferSize());
-		assertEquals(1024, bufferSizeReference.get());
+		Assert.assertEquals(1024, metaInfoCacheServletResponse.getBufferSize());
+		Assert.assertEquals(1024, bufferSizeReference.get());
 
 		// Set after commit
 
@@ -691,6 +709,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetSetCharacterEncoding() throws IOException {
 		final AtomicReference<String> characterEncodingReference =
 			new AtomicReference<String>();
@@ -720,7 +739,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Get default
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.DEFAULT_CHARSET_NAME,
 			metaInfoCacheServletResponse.getCharacterEncoding());
 
@@ -728,20 +747,21 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setCharacterEncoding(null);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.DEFAULT_CHARSET_NAME,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertNull(characterEncodingReference.get());
+		Assert.assertNull(characterEncodingReference.get());
 
 		// Normal set
 
 		metaInfoCacheServletResponse.setCharacterEncoding(
 			StringPool.ISO_8859_1);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.ISO_8859_1,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertEquals(StringPool.ISO_8859_1, characterEncodingReference.get());
+		Assert.assertEquals(
+			StringPool.ISO_8859_1, characterEncodingReference.get());
 
 		characterEncodingReference.set(null);
 
@@ -751,10 +771,10 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.ISO_8859_1,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertNull(characterEncodingReference.get());
+		Assert.assertNull(characterEncodingReference.get());
 
 		// Set after commit
 
@@ -762,12 +782,13 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.ISO_8859_1,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertNull(characterEncodingReference.get());
+		Assert.assertNull(characterEncodingReference.get());
 	}
 
+	@Test
 	public void testGetSetContentType() throws IOException {
 		final AtomicReference<String> characterEncodingReference =
 			new AtomicReference<String>();
@@ -799,25 +820,25 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		// Get default
 
-		assertNull(metaInfoCacheServletResponse.getContentType());
+		Assert.assertNull(metaInfoCacheServletResponse.getContentType());
 
 		// Null set
 
 		metaInfoCacheServletResponse.setContentType(null);
 
-		assertNull(metaInfoCacheServletResponse.getContentType());
-		assertNull(contentTypeReference.get());
+		Assert.assertNull(metaInfoCacheServletResponse.getContentType());
+		Assert.assertNull(contentTypeReference.get());
 
 		// Set with character encoding
 
 		metaInfoCacheServletResponse.setContentType(
 			ContentTypes.TEXT_HTML_UTF8);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.UTF8,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertEquals(StringPool.UTF8, characterEncodingReference.get());
-		assertEquals(
+		Assert.assertEquals(StringPool.UTF8, characterEncodingReference.get());
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML_UTF8,
 			metaInfoCacheServletResponse.getContentType());
 
@@ -827,28 +848,29 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setContentType(ContentTypes.TEXT_HTML);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.DEFAULT_CHARSET_NAME,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertNull(characterEncodingReference.get());
-		assertEquals(
+		Assert.assertNull(characterEncodingReference.get());
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			metaInfoCacheServletResponse.getContentType());
-		assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
+		Assert.assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
 
 		// Set with broken character encoding
 
 		metaInfoCacheServletResponse.setContentType(
 			"text/html; charset0=UTF-8");
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.DEFAULT_CHARSET_NAME,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertNull(characterEncodingReference.get());
-		assertEquals(
+		Assert.assertNull(characterEncodingReference.get());
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			metaInfoCacheServletResponse.getContentType());
-		assertEquals("text/html; charset0=UTF-8", contentTypeReference.get());
+		Assert.assertEquals(
+			"text/html; charset0=UTF-8", contentTypeReference.get());
 
 		characterEncodingReference.set(null);
 		contentTypeReference.set(null);
@@ -860,16 +882,17 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		metaInfoCacheServletResponse.setContentType(
 			ContentTypes.TEXT_HTML_UTF8);
 
-		assertEquals(
+		Assert.assertEquals(
 			StringPool.DEFAULT_CHARSET_NAME,
 			metaInfoCacheServletResponse.getCharacterEncoding());
-		assertEquals(
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			metaInfoCacheServletResponse.getContentType());
-		assertNull(characterEncodingReference.get());
-		assertNull(contentTypeReference.get());
+		Assert.assertNull(characterEncodingReference.get());
+		Assert.assertNull(contentTypeReference.get());
 	}
 
+	@Test
 	public void testGetSetLocale() throws IOException {
 		final AtomicReference<Locale> localeReference =
 			new AtomicReference<Locale>();
@@ -896,8 +919,9 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setLocale(Locale.ENGLISH);
 
-		assertEquals(Locale.ENGLISH, metaInfoCacheServletResponse.getLocale());
-		assertEquals(Locale.ENGLISH, localeReference.get());
+		Assert.assertEquals(
+			Locale.ENGLISH, metaInfoCacheServletResponse.getLocale());
+		Assert.assertEquals(Locale.ENGLISH, localeReference.get());
 
 		localeReference.set(null);
 
@@ -907,10 +931,12 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setLocale(Locale.FRENCH);
 
-		assertEquals(Locale.ENGLISH, metaInfoCacheServletResponse.getLocale());
-		assertNull(localeReference.get());
+		Assert.assertEquals(
+			Locale.ENGLISH, metaInfoCacheServletResponse.getLocale());
+		Assert.assertNull(localeReference.get());
 	}
 
+	@Test
 	public void testGetWriter() throws IOException {
 		final AtomicBoolean calledGetWriter = new AtomicBoolean();
 
@@ -929,15 +955,16 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		assertFalse(metaInfoCacheServletResponse.calledGetWriter);
-		assertFalse(calledGetWriter.get());
+		Assert.assertFalse(metaInfoCacheServletResponse.calledGetWriter);
+		Assert.assertFalse(calledGetWriter.get());
 
 		metaInfoCacheServletResponse.getWriter();
 
-		assertTrue(metaInfoCacheServletResponse.calledGetWriter);
-		assertTrue(calledGetWriter.get());
+		Assert.assertTrue(metaInfoCacheServletResponse.calledGetWriter);
+		Assert.assertTrue(calledGetWriter.get());
 	}
 
+	@Test
 	public void testIsCommitted() throws IOException {
 		final AtomicBoolean committed = new AtomicBoolean();
 
@@ -954,13 +981,13 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		assertFalse(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertFalse(metaInfoCacheServletResponse.isCommitted());
 
 		// Commit wrapped instance
 
 		committed.set(true);
 
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
 
 		committed.set(false);
 
@@ -968,15 +995,16 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.flushBuffer();
 
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
 
 		// Commit both
 
 		committed.set(true);
 
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
 	}
 
+	@Test
 	public void testReset() throws IOException {
 		final AtomicBoolean calledResetReference = new AtomicBoolean();
 
@@ -1006,7 +1034,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.reset();
 
-		assertTrue(calledResetReference.get());
+		Assert.assertTrue(calledResetReference.get());
 
 		// Reset buffer after commit
 
@@ -1019,6 +1047,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testResetBuffer() throws IOException {
 		final AtomicBoolean calledResetBufferReference = new AtomicBoolean();
 
@@ -1044,7 +1073,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.resetBuffer();
 
-		assertTrue(calledResetBufferReference.get());
+		Assert.assertTrue(calledResetBufferReference.get());
 
 		// Reset buffer after commit
 
@@ -1057,6 +1086,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSendError() throws IOException {
 		final AtomicReference<String> messageReference =
 			new AtomicReference<String>();
@@ -1089,10 +1119,10 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.sendError(400, "Bad Page");
 
-		assertEquals("Bad Page", messageReference.get());
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
-		assertEquals(400, metaInfoCacheServletResponse.getStatus());
-		assertEquals(400, statusReference.get());
+		Assert.assertEquals("Bad Page", messageReference.get());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertEquals(400, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(400, statusReference.get());
 
 		messageReference.set(null);
 		statusReference.set(0);
@@ -1104,10 +1134,10 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.sendError(404);
 
-		assertNull(messageReference.get());
-		assertTrue(metaInfoCacheServletResponse.isCommitted());
-		assertEquals(404, metaInfoCacheServletResponse.getStatus());
-		assertEquals(404, statusReference.get());
+		Assert.assertNull(messageReference.get());
+		Assert.assertTrue(metaInfoCacheServletResponse.isCommitted());
+		Assert.assertEquals(404, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(404, statusReference.get());
 
 		messageReference.set(null);
 		statusReference.set(0);
@@ -1122,12 +1152,13 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		try {
 			metaInfoCacheServletResponse.sendError(500, "After commit");
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalStateException ise) {
 		}
 	}
 
+	@Test
 	public void testSendRedirect() throws IOException {
 		final AtomicReference<String> locationReference =
 			new AtomicReference<String>();
@@ -1166,7 +1197,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.sendRedirect("testURL");
 
-		assertEquals("testURL", locationReference.get());
+		Assert.assertEquals("testURL", locationReference.get());
 
 		// Send after commit
 
@@ -1175,12 +1206,13 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		try {
 			metaInfoCacheServletResponse.sendRedirect("testURL");
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalStateException ise) {
 		}
 	}
 
+	@Test
 	public void testSetContentLength() throws IOException {
 		final AtomicLong contentLengthReference = new AtomicLong();
 
@@ -1206,7 +1238,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setContentLength(1024);
 
-		assertEquals(1024, contentLengthReference.get());
+		Assert.assertEquals(1024, contentLengthReference.get());
 
 		contentLengthReference.set(0);
 
@@ -1216,9 +1248,10 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setContentLength(2048);
 
-		assertEquals(0, contentLengthReference.get());
+		Assert.assertEquals(0, contentLengthReference.get());
 	}
 
+	@Test
 	public void testSetDateHeader() {
 		final List<ObjectValuePair<String, Long>> objectValuePairs =
 			new ArrayList<ObjectValuePair<String, Long>>();
@@ -1240,21 +1273,21 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// First set
 
 		metaInfoCacheServletResponse.setDateHeader("date1", 1);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
 
 		Set<Header> dateHeaders1 = headers.get("date1");
 
-		assertEquals(1, dateHeaders1.size());
-		assertTrue(dateHeaders1.contains(new Header(1L)));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, dateHeaders1.size());
+		Assert.assertTrue(dateHeaders1.contains(new Header(1L)));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date1", 1L),
 			objectValuePairs.get(0));
 
@@ -1262,15 +1295,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setDateHeader("date1", 2);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date1"));
 
 		dateHeaders1 = headers.get("date1");
 
-		assertEquals(1, dateHeaders1.size());
-		assertTrue(dateHeaders1.contains(new Header(2L)));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, dateHeaders1.size());
+		Assert.assertTrue(dateHeaders1.contains(new Header(2L)));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date1", 2L),
 			objectValuePairs.get(1));
 
@@ -1278,19 +1311,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setDateHeader("date2", 1);
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("date2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("date2"));
 
 		Set<Header> dateHeaders2 = headers.get("date2");
 
-		assertEquals(1, dateHeaders2.size());
-		assertTrue(dateHeaders2.contains(new Header(1L)));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, dateHeaders2.size());
+		Assert.assertTrue(dateHeaders2.contains(new Header(1L)));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Long>("date2", 1L),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testSetGetStatus() throws IOException {
 		final AtomicReference<String> messageReference =
 			new AtomicReference<String>();
@@ -1319,9 +1353,9 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setStatus(400, "Bad Page");
 
-		assertEquals("Bad Page", messageReference.get());
-		assertEquals(400, metaInfoCacheServletResponse.getStatus());
-		assertEquals(400, statusReference.get());
+		Assert.assertEquals("Bad Page", messageReference.get());
+		Assert.assertEquals(400, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(400, statusReference.get());
 
 		messageReference.set(null);
 		statusReference.set(0);
@@ -1330,9 +1364,9 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setStatus(404);
 
-		assertNull(messageReference.get());
-		assertEquals(404, metaInfoCacheServletResponse.getStatus());
-		assertEquals(404, statusReference.get());
+		Assert.assertNull(messageReference.get());
+		Assert.assertEquals(404, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(404, statusReference.get());
 
 		messageReference.set(null);
 		statusReference.set(0);
@@ -1343,11 +1377,12 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setStatus(500, "After commit");
 
-		assertNull(messageReference.get());
-		assertEquals(404, metaInfoCacheServletResponse.getStatus());
-		assertEquals(0, statusReference.get());
+		Assert.assertNull(messageReference.get());
+		Assert.assertEquals(404, metaInfoCacheServletResponse.getStatus());
+		Assert.assertEquals(0, statusReference.get());
 	}
 
+	@Test
 	public void testSetHeader() {
 		final AtomicReference<String> contentTypeReference =
 			new AtomicReference<String>();
@@ -1381,32 +1416,32 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// Set content type
 
 		metaInfoCacheServletResponse.setHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.TEXT_HTML);
 
-		assertEquals(0, headers.size());
-		assertEquals(
+		Assert.assertEquals(0, headers.size());
+		Assert.assertEquals(
 			ContentTypes.TEXT_HTML,
 			metaInfoCacheServletResponse.getContentType());
-		assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
+		Assert.assertEquals(ContentTypes.TEXT_HTML, contentTypeReference.get());
 
 		// First set
 
 		metaInfoCacheServletResponse.setHeader("name1", "value1");
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		Set<Header> headers1 = headers.get("name1");
 
-		assertEquals(1, headers1.size());
-		assertTrue(headers1.contains(new Header("value1")));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, headers1.size());
+		Assert.assertTrue(headers1.contains(new Header("value1")));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name1", "value1"),
 			objectValuePairs.get(0));
 
@@ -1414,15 +1449,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setHeader("name1", "value2");
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		headers1 = headers.get("name1");
 
-		assertEquals(1, headers1.size());
-		assertTrue(headers1.contains(new Header("value2")));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, headers1.size());
+		Assert.assertTrue(headers1.contains(new Header("value2")));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name1", "value2"),
 			objectValuePairs.get(1));
 
@@ -1430,19 +1465,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setHeader("name2", "value1");
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
 
 		Set<Header> headers2 = headers.get("name2");
 
-		assertEquals(1, headers2.size());
-		assertTrue(headers2.contains(new Header("value1")));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, headers2.size());
+		Assert.assertTrue(headers2.contains(new Header("value1")));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, String>("name2", "value1"),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testSetIntHeader() {
 		final List<ObjectValuePair<String, Integer>> objectValuePairs =
 			new ArrayList<ObjectValuePair<String, Integer>>();
@@ -1464,21 +1500,21 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		Map<String, Set<Header>> headers =
 			metaInfoCacheServletResponse.getHeaders();
 
-		assertEquals(0, headers.size());
+		Assert.assertEquals(0, headers.size());
 
 		// First set
 
 		metaInfoCacheServletResponse.setIntHeader("name1", 1);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		Set<Header> intHeaders1 = headers.get("name1");
 
-		assertEquals(1, intHeaders1.size());
-		assertTrue(intHeaders1.contains(new Header(1)));
-		assertEquals(1, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, intHeaders1.size());
+		Assert.assertTrue(intHeaders1.contains(new Header(1)));
+		Assert.assertEquals(1, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name1", 1),
 			objectValuePairs.get(0));
 
@@ -1486,15 +1522,15 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setIntHeader("name1", 2);
 
-		assertEquals(1, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
+		Assert.assertEquals(1, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name1"));
 
 		intHeaders1 = headers.get("name1");
 
-		assertEquals(1, intHeaders1.size());
-		assertTrue(intHeaders1.contains(new Header(2)));
-		assertEquals(2, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, intHeaders1.size());
+		Assert.assertTrue(intHeaders1.contains(new Header(2)));
+		Assert.assertEquals(2, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name1", 2),
 			objectValuePairs.get(1));
 
@@ -1502,19 +1538,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 
 		metaInfoCacheServletResponse.setIntHeader("name2", 1);
 
-		assertEquals(2, headers.size());
-		assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
+		Assert.assertEquals(2, headers.size());
+		Assert.assertTrue(metaInfoCacheServletResponse.containsHeader("name2"));
 
 		Set<Header> intHeaders2 = headers.get("name2");
 
-		assertEquals(1, intHeaders2.size());
-		assertTrue(intHeaders2.contains(new Header(1)));
-		assertEquals(3, objectValuePairs.size());
-		assertEquals(
+		Assert.assertEquals(1, intHeaders2.size());
+		Assert.assertTrue(intHeaders2.contains(new Header(1)));
+		Assert.assertEquals(3, objectValuePairs.size());
+		Assert.assertEquals(
 			new ObjectValuePair<String, Integer>("name2", 1),
 			objectValuePairs.get(2));
 	}
 
+	@Test
 	public void testToString() {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
@@ -1536,7 +1573,8 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		sb.append("errorMessage=null, headers={}, location=null, ");
 		sb.append("locale=null, status=200}");
 
-		assertEquals(sb.toString(), metaInfoCacheServletResponse.toString());
+		Assert.assertEquals(
+			sb.toString(), metaInfoCacheServletResponse.toString());
 	}
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.cluster.messaging.ClusterForwardMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,6 +47,7 @@ import org.jgroups.View;
 import org.jgroups.util.UUID;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,6 +57,10 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class ClusterLinkImplTest extends BaseClusterTestCase {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
 
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test

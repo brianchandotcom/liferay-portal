@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -23,12 +24,17 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class OutputStreamWriterTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
 
 	@Test
 	public void testClose() throws IOException {

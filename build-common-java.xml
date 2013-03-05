@@ -19,6 +19,7 @@
 	<target name="clean">
 		<delete dir="classes" />
 		<delete dir="test-classes" />
+		<delete dir="test-coverage" />
 		<delete dir="test-results" />
 		<delete dir="woven-classes" />
 		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
@@ -212,6 +213,16 @@
 						<manifest file="classes/META-INF/MANIFEST.MF" mode="update">
 							<attribute name="Bundle-Name" value="${manifest.bundle.name}" />
 							<attribute name="Bundle-SymbolicName" value="${manifest.bundle.symbolic.name}" />
+						</manifest>
+					</then>
+				</if>
+
+				<if>
+					<isset property="manifest.premain.class" />
+					<then>
+						<manifest file="classes/META-INF/MANIFEST.MF" mode="update">
+							<attribute name="Premain-Class" value="${manifest.premain.class}" />
+							<attribute name="Can-Retransform-Classes" value="${manifest.can.retransform.classes}" />
 						</manifest>
 					</then>
 				</if>

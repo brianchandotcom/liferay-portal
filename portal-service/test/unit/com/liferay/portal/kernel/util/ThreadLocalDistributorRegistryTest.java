@@ -14,13 +14,20 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class ThreadLocalDistributorRegistryTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
 
 	@Test
 	public void testThreadLocalDistributorRegistry() {

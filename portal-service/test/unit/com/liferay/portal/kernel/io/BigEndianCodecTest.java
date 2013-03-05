@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.io;
 
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
@@ -27,12 +29,17 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class BigEndianCodecTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
 
 	@Test
 	public void testBoolean() {

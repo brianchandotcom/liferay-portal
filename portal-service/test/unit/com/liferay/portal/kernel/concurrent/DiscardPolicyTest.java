@@ -14,16 +14,25 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
-public class DiscardPolicyTest extends TestCase {
+public class DiscardPolicyTest {
 
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
 	public void testDiscardPolicy1() {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1,
@@ -36,9 +45,10 @@ public class DiscardPolicyTest extends TestCase {
 
 		threadPoolExecutor.execute(markerBlockingJob);
 
-		assertFalse(markerBlockingJob.isEnded());
+		Assert.assertFalse(markerBlockingJob.isEnded());
 	}
 
+	@Test
 	public void testDiscardPolicy2() throws InterruptedException {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1,
@@ -56,28 +66,28 @@ public class DiscardPolicyTest extends TestCase {
 
 			threadPoolExecutor.execute(markerBlockingJob2);
 
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(1, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(1, threadPoolExecutor.getPendingTaskCount());
 
 			threadPoolExecutor.execute(markerBlockingJob3);
 
-			assertFalse(markerBlockingJob3.isStarted());
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(1, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertFalse(markerBlockingJob3.isStarted());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(1, threadPoolExecutor.getPendingTaskCount());
 
 			markerBlockingJob1.unBlock();
 			markerBlockingJob2.waitUntilBlock();
 
-			assertTrue(markerBlockingJob1.isEnded());
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(0, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertTrue(markerBlockingJob1.isEnded());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(0, threadPoolExecutor.getPendingTaskCount());
 
 			markerBlockingJob2.unBlock();
 
 			TestUtil.waitUntilEnded(markerBlockingJob2);
 
-			assertEquals(0, threadPoolExecutor.getActiveCount());
-			assertEquals(0, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertEquals(0, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(0, threadPoolExecutor.getPendingTaskCount());
 		}
 		finally {
 			TestUtil.closePool(threadPoolExecutor);

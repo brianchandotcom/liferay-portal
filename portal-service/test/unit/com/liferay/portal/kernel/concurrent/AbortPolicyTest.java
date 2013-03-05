@@ -14,17 +14,26 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
-public class AbortPolicyTest extends TestCase {
+public class AbortPolicyTest {
 
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
 	public void testAbortPolicy() {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			1, 2, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 3,
@@ -36,7 +45,7 @@ public class AbortPolicyTest extends TestCase {
 		try {
 			threadPoolExecutor.execute(new MarkerBlockingJob());
 
-			fail();
+			Assert.fail();
 		}
 		catch (RejectedExecutionException ree) {
 		}

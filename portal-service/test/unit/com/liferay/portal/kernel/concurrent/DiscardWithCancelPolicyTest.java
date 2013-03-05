@@ -14,17 +14,26 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
-public class DiscardWithCancelPolicyTest extends TestCase {
+public class DiscardWithCancelPolicyTest {
 
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
 	public void testDiscardWithCancelPolicy1() {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1,
@@ -37,16 +46,17 @@ public class DiscardWithCancelPolicyTest extends TestCase {
 
 		threadPoolExecutor.execute(markerBlockingJob);
 
-		assertFalse(markerBlockingJob.isEnded());
+		Assert.assertFalse(markerBlockingJob.isEnded());
 
 		markerBlockingJob = new MarkerBlockingJob();
 
 		Future<?> future = threadPoolExecutor.submit(markerBlockingJob);
 
-		assertFalse(markerBlockingJob.isEnded());
-		assertTrue(future.isCancelled());
+		Assert.assertFalse(markerBlockingJob.isEnded());
+		Assert.assertTrue(future.isCancelled());
 	}
 
+	@Test
 	public void testDiscardWithCancelPolicy2() throws InterruptedException {
 		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1,
@@ -64,33 +74,33 @@ public class DiscardWithCancelPolicyTest extends TestCase {
 
 			Future<?> future2 = threadPoolExecutor.submit(markerBlockingJob2);
 
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(1, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(1, threadPoolExecutor.getPendingTaskCount());
 
 			Future<?> future3 = threadPoolExecutor.submit(markerBlockingJob3);
 
-			assertFalse(markerBlockingJob3.isStarted());
-			assertTrue(future3.isCancelled());
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(1, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertFalse(markerBlockingJob3.isStarted());
+			Assert.assertTrue(future3.isCancelled());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(1, threadPoolExecutor.getPendingTaskCount());
 
 			markerBlockingJob1.unBlock();
 			markerBlockingJob2.waitUntilBlock();
 
-			assertTrue(markerBlockingJob1.isEnded());
-			assertTrue(future1.isDone());
-			assertFalse(future1.isCancelled());
-			assertEquals(1, threadPoolExecutor.getActiveCount());
-			assertEquals(0, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertTrue(markerBlockingJob1.isEnded());
+			Assert.assertTrue(future1.isDone());
+			Assert.assertFalse(future1.isCancelled());
+			Assert.assertEquals(1, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(0, threadPoolExecutor.getPendingTaskCount());
 
 			markerBlockingJob2.unBlock();
 
 			TestUtil.waitUntilEnded(markerBlockingJob2);
 
-			assertTrue(future2.isDone());
-			assertFalse(future2.isCancelled());
-			assertEquals(0, threadPoolExecutor.getActiveCount());
-			assertEquals(0, threadPoolExecutor.getPendingTaskCount());
+			Assert.assertTrue(future2.isDone());
+			Assert.assertFalse(future2.isCancelled());
+			Assert.assertEquals(0, threadPoolExecutor.getActiveCount());
+			Assert.assertEquals(0, threadPoolExecutor.getPendingTaskCount());
 		}
 		finally {
 			TestUtil.closePool(threadPoolExecutor);

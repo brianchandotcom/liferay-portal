@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<project name="cobertura-agent" basedir="." default="deploy">
+	<import file="../build-common-java.xml" />
+
+	<property name="deploy.dir" value="." />
+	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.premain.class" value="net.sourceforge.cobertura.instrument.InstrumentationAgent" />
+	<property name="manifest.can.retransform.classes" value="true" />
+</project>

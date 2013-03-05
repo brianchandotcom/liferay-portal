@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.Serializer.BufferNode;
 import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -37,10 +38,12 @@ import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,6 +52,18 @@ import org.junit.runner.RunWith;
  */
 @RunWith(NewClassLoaderJUnitTestRunner.class)
 public class SerializerTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(AnnotatedObjectInputStream.class);
+				assertClasses.add(AnnotatedObjectOutputStream.class);
+			}
+
+		};
 
 	@Before
 	public void setUp() {

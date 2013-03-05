@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.annotation;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -27,6 +27,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
 
 /**
  * <table>
@@ -184,8 +188,13 @@ import java.util.Queue;
  *
  * @author Shuyang Zhou
  */
-public class AnnotationLocatorTest extends TestCase {
+public class AnnotationLocatorTest {
 
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
 	public void testClassListLocate() {
 		_classListLocate(TestClass.class, Arrays.asList(_type(1), _mix(2)));
 
@@ -210,6 +219,7 @@ public class AnnotationLocatorTest extends TestCase {
 		_classListLocate(OriginInterface1.class, Arrays.asList(_type(9)));
 	}
 
+	@Test
 	public void testClassSingleLocate() {
 		_classSingleLocate(TestClass.class, 2, 1);
 
@@ -230,10 +240,12 @@ public class AnnotationLocatorTest extends TestCase {
 		_classSingleLocate(OriginInterface1.class, -1, 9);
 	}
 
+	@Test
 	public void testConstructor() {
 		new AnnotationLocator();
 	}
 
+	@Test
 	public void testInheritedHierarchyWalking() throws Exception {
 		List<Class<?>> expectedClassHierarchy = Arrays.asList(
 			TestClass.class, SuperClass.class, TestInterface2.class,
@@ -255,9 +267,10 @@ public class AnnotationLocatorTest extends TestCase {
 			_queueSuperTypesMethod.invoke(null, queue, clazz);
 		}
 
-		assertEquals(expectedClassHierarchy, actualClassHierarchy);
+		Assert.assertEquals(expectedClassHierarchy, actualClassHierarchy);
 	}
 
+	@Test
 	public void testMethodListLocate() {
 		_methodListLocate(
 			TestClass.class,
@@ -335,6 +348,7 @@ public class AnnotationLocatorTest extends TestCase {
 				new Annotation[0], new Annotation[0]));
 	}
 
+	@Test
 	public void testMethodSingleLocate() {
 		_methodSingleLocate(
 			TestClass.class, new int[] {1, 2, 2, 1, 1, 3},
@@ -382,7 +396,7 @@ public class AnnotationLocatorTest extends TestCase {
 
 		List<Annotation> actualAnnotations = AnnotationLocator.locate(clazz);
 
-		assertEquals(
+		Assert.assertEquals(
 			clazz.getName(), expectedAnnotations.size(),
 			actualAnnotations.size());
 
@@ -390,7 +404,7 @@ public class AnnotationLocatorTest extends TestCase {
 			Annotation expectedAnnotation = expectedAnnotations.get(i);
 			Annotation actualAnnotation = actualAnnotations.get(i);
 
-			assertEquals(
+			Assert.assertEquals(
 				clazz.getName(), expectedAnnotation.annotationType(),
 				actualAnnotation.annotationType());
 
@@ -398,7 +412,7 @@ public class AnnotationLocatorTest extends TestCase {
 				Mix expectedMix = (Mix)expectedAnnotation;
 				Mix actualMix = (Mix)actualAnnotation;
 
-				assertEquals(
+				Assert.assertEquals(
 					"@Mix : " + clazz.getName(), expectedMix.value(),
 					actualMix.value());
 			}
@@ -406,7 +420,7 @@ public class AnnotationLocatorTest extends TestCase {
 				Type expectedType = (Type)expectedAnnotation;
 				Type actualType = (Type)actualAnnotation;
 
-				assertEquals(
+				Assert.assertEquals(
 					"@Type : ", expectedType.value(), actualType.value());
 			}
 		}
@@ -418,10 +432,10 @@ public class AnnotationLocatorTest extends TestCase {
 		Mix actualMix = AnnotationLocator.locate(clazz, Mix.class);
 
 		if (expectedMixValue == -1) {
-			assertNull("@Mix : " + clazz.getName(), actualMix);
+			Assert.assertNull("@Mix : " + clazz.getName(), actualMix);
 		}
 		else {
-			assertEquals(
+			Assert.assertEquals(
 				"@Mix : " + clazz.getName(), expectedMixValue,
 				actualMix.value());
 		}
@@ -429,10 +443,10 @@ public class AnnotationLocatorTest extends TestCase {
 		Type actualType = AnnotationLocator.locate(clazz, Type.class);
 
 		if (expectedTypeValue == -1) {
-			assertNull("@Type : " + clazz.getName(), actualType);
+			Assert.assertNull("@Type : " + clazz.getName(), actualType);
 		}
 		else {
-			assertEquals(
+			Assert.assertEquals(
 				"@Type : " + clazz.getName(), expectedTypeValue,
 				actualType.value());
 		}
@@ -464,7 +478,7 @@ public class AnnotationLocatorTest extends TestCase {
 			List<Annotation> actualAnnotations = AnnotationLocator.locate(
 				method, clazz);
 
-			assertEquals(
+			Assert.assertEquals(
 				method.getName() + "()@" + clazz.getName(),
 				expectedAnnotations.length, actualAnnotations.size());
 
@@ -472,7 +486,7 @@ public class AnnotationLocatorTest extends TestCase {
 				Annotation expectedAnnotation = expectedAnnotations[j];
 				Annotation actualAnnotation = actualAnnotations.get(j);
 
-				assertEquals(
+				Assert.assertEquals(
 					method.getName() + "()@" + clazz.getName(),
 					expectedAnnotation.annotationType(),
 					actualAnnotation.annotationType());
@@ -481,7 +495,7 @@ public class AnnotationLocatorTest extends TestCase {
 					Mix expectedMix = (Mix)expectedAnnotation;
 					Mix actualMix = (Mix)actualAnnotation;
 
-					assertEquals(
+					Assert.assertEquals(
 						"@Mix : " + method.getName() + "()@" + clazz.getName(),
 						expectedMix.value(), actualMix.value());
 				}
@@ -489,7 +503,7 @@ public class AnnotationLocatorTest extends TestCase {
 					Method expectedType = (Method)expectedAnnotation;
 					Method actualMethod = (Method)actualAnnotation;
 
-					assertEquals(
+					Assert.assertEquals(
 						"@Method : " + method.getName() + "()@" +
 							clazz.getName(),
 						expectedType.value(), actualMethod.value());
@@ -498,7 +512,7 @@ public class AnnotationLocatorTest extends TestCase {
 					Type expectedType = (Type)expectedAnnotation;
 					Type actualType = (Type)actualAnnotation;
 
-					assertEquals(
+					Assert.assertEquals(
 						"@Type : " + method.getName() + "()@" + clazz.getName(),
 						expectedType.value(), actualType.value());
 				}
@@ -510,7 +524,7 @@ public class AnnotationLocatorTest extends TestCase {
 
 				actualAnnotations = AnnotationLocator.locate(method, null);
 
-				assertEquals(
+				Assert.assertEquals(
 					method.getName() + "()@" + clazz.getName(),
 					expectedAnnotations.length, actualAnnotations.size());
 
@@ -518,7 +532,7 @@ public class AnnotationLocatorTest extends TestCase {
 					Annotation expectedAnnotation = expectedAnnotations[j];
 					Annotation actualAnnotation = actualAnnotations.get(j);
 
-					assertEquals(
+					Assert.assertEquals(
 						method.getName() + "()@" + clazz.getName(),
 						expectedAnnotation.annotationType(),
 						actualAnnotation.annotationType());
@@ -527,7 +541,7 @@ public class AnnotationLocatorTest extends TestCase {
 						Mix expectedMix = (Mix)expectedAnnotation;
 						Mix actualMix = (Mix)actualAnnotation;
 
-						assertEquals(
+						Assert.assertEquals(
 							"@Mix : " + method.getName() + "()@" +
 								clazz.getName(),
 							expectedMix.value(), actualMix.value());
@@ -538,7 +552,7 @@ public class AnnotationLocatorTest extends TestCase {
 						Method expectedType = (Method)expectedAnnotation;
 						Method actualMethod = (Method)actualAnnotation;
 
-						assertEquals(
+						Assert.assertEquals(
 							"@Method : " + method.getName() + "()@" +
 								clazz.getName(),
 							expectedType.value(), actualMethod.value());
@@ -547,7 +561,7 @@ public class AnnotationLocatorTest extends TestCase {
 						Type expectedType = (Type)expectedAnnotation;
 						Type actualType = (Type)actualAnnotation;
 
-						assertEquals(
+						Assert.assertEquals(
 							"@Type : " + method.getName() + "()@" +
 							clazz.getName(), expectedType.value(),
 							actualType.value());
@@ -571,13 +585,13 @@ public class AnnotationLocatorTest extends TestCase {
 				method, clazz, Method.class);
 
 			if (methodAnnotation == null) {
-				assertEquals(
+				Assert.assertEquals(
 					"@Method : " + clazz.getName(), -1, expectedMethodValue);
 
 				continue;
 			}
 
-			assertEquals(
+			Assert.assertEquals(
 				"@Method : " + method.getName() + "()@" + clazz.getName(),
 				expectedMethodValue, methodAnnotation.value());
 
@@ -588,7 +602,7 @@ public class AnnotationLocatorTest extends TestCase {
 				methodAnnotation = AnnotationLocator.locate(
 					method, null, Method.class);
 
-				assertEquals(
+				Assert.assertEquals(
 					method.getName() + "()@" + clazz.getName(),
 					expectedMethodValue, methodAnnotation.value());
 			}
@@ -604,11 +618,13 @@ public class AnnotationLocatorTest extends TestCase {
 				method, clazz, Mix.class);
 
 			if (mixAnnotation == null) {
-				assertEquals("@Mix : " + clazz.getName(), -1, expectedMixValue);
+				Assert.assertEquals(
+					"@Mix : " + clazz.getName(), -1, expectedMixValue);
+
 				continue;
 			}
 
-			assertEquals(
+			Assert.assertEquals(
 				"@Mix : " + method.getName() + "()@" + clazz.getName(),
 				expectedMixValue, mixAnnotation.value());
 
@@ -619,7 +635,7 @@ public class AnnotationLocatorTest extends TestCase {
 				mixAnnotation = AnnotationLocator.locate(
 					method, null, Mix.class);
 
-				assertEquals(
+				Assert.assertEquals(
 					method.getName() + "()@" + clazz.getName(),
 					expectedMixValue, mixAnnotation.value());
 			}
@@ -635,13 +651,13 @@ public class AnnotationLocatorTest extends TestCase {
 				method, clazz, Type.class);
 
 			if (typeAnnotation == null) {
-				assertEquals(
+				Assert.assertEquals(
 					"@Type : " + clazz.getName(), -1, expectedTypeValue);
 
 				continue;
 			}
 
-			assertEquals(
+			Assert.assertEquals(
 				"@Type : " + method.getName() + "()@" + clazz.getName(),
 				expectedTypeValue, typeAnnotation.value());
 
@@ -652,7 +668,7 @@ public class AnnotationLocatorTest extends TestCase {
 				typeAnnotation = AnnotationLocator.locate(
 					method, null, Type.class);
 
-				assertEquals(
+				Assert.assertEquals(
 					method.getName() + "()@" + clazz.getName(),
 					expectedTypeValue, typeAnnotation.value());
 			}

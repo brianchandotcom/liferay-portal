@@ -196,6 +196,8 @@ public class MethodKey implements Externalizable {
 			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private Class<?> _declaringClass;
 
 	private String _methodName;

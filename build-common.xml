@@ -397,6 +397,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</then>
 	</if>
 
+	<property name="agent.path" location="${project.dir}/${junit.cobertura.agent.jar}" />
+	<property name="junit.cobertura.agent" value="-javaagent:${agent.path}=${junit.cobertura.includes};${junit.cobertura.excludes}" />
+
 	<if>
 		<not>
 			<equals arg1="${junit.debug}" arg2="true" />
@@ -523,30 +526,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</java>
 	</target>
 
-	<target name="instrument-test-coverage">
-		<delete dir="test-coverage" />
-
-		<if>
-			<equals arg1="${junit.code.coverage}" arg2="true" />
-			<then>
-				<cobertura-instrument datafile="test-coverage/cobertura.ser" maxmemory="512m" todir="test-coverage">
-					<fileset dir="${project.dir}/portal-impl/classes">
-						<include name="**/*.class" />
-					</fileset>
-					<fileset dir="${project.dir}/portal-service/classes">
-						<include name="**/*.class" />
-					</fileset>
-					<fileset dir="${project.dir}/util-java/classes">
-						<include name="**/*.class" />
-					</fileset>
-					<fileset dir="${project.dir}/util-taglib/classes">
-						<include name="**/*.class" />
-					</fileset>
-				</cobertura-instrument>
-			</then>
-		</if>
-	</target>
-
 	<target name="print-current-time">
 		<tstamp>
 			<format property="current.time" pattern="MMMM d, yyyy 'at' hh:mm aa" />
@@ -565,6 +544,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					format="${junit.cobertura.report.format}"
 				>
 					<fileset dir="${project.dir}/portal-impl/src">
+						<include name="**/*.java" />
+					</fileset>
+					<fileset dir="${project.dir}/portal-impl/test/unit">
 						<include name="**/*.java" />
 					</fileset>
 					<fileset dir="${project.dir}/portal-service/src">
@@ -646,7 +628,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<delete dir="woven-classes" />
 
 		<antcall target="compile" />
-		<antcall target="instrument-test-coverage" />
 		<antcall target="compile-test" />
 
 		<fileset dir="test-classes" id="test.suite.classes">
@@ -664,11 +645,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<isset property="test.suite.classes.available" />
 			</not>
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" printsummary="on">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+					<jvmarg line="${junit.cobertura.agent}" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
 					<jvmarg value="-XX:MaxPermSize=256m" />
@@ -684,11 +667,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</junit>
 			</then>
 			<else>
-				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" printsummary="on">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+					<jvmarg line="${junit.cobertura.agent}" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
 					<jvmarg value="-XX:MaxPermSize=256m" />
@@ -708,7 +693,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<antcall target="report-test-coverage" />
 	</target>
 
-	<target name="test-class" depends="compile,instrument-test-coverage,compile-test">
+	<target name="test-class" depends="compile,compile-test">
 		<if>
 			<available file="test/functional" type="dir" />
 			<then>
@@ -769,11 +754,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+				<junit dir="${project.dir}" fork="on" forkmode="perTest" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+					<jvmarg line="${junit.cobertura.agent}" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx${junit.java.mx}" />
 					<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
@@ -801,7 +788,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</if>
 	</target>
 
-	<target name="test-integration" depends="compile,instrument-test-coverage,compile-test-integration">
+	<target name="test-integration" depends="compile,compile-test-integration">
 		<var name="class" value="*Test" />
 
 		<ant target="test-cmd">
@@ -818,12 +805,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<antcall target="report-test-coverage" />
 	</target>
 
-	<target name="test-method" depends="compile,instrument-test-coverage,compile-test">
+	<target name="test-method" depends="compile,compile-test">
 		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
 			<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+			<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 			<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 			<sysproperty key="junit.debug" value="${junit.debug}" />
 			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+			<jvmarg line="${junit.cobertura.agent}" />
 			<jvmarg line="${junit.debug.jpda}" />
 			<jvmarg value="-Xmx${junit.java.mx}" />
 			<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
@@ -837,7 +826,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</junit>
 	</target>
 
-	<target name="test-unit" depends="compile,instrument-test-coverage,compile-test-unit">
+	<target name="test-unit" depends="compile,compile-test-unit">
 		<property name="class" value="*Test" />
 
 		<ant target="test-cmd">

@@ -18,4 +18,20 @@ package com.liferay.portal.tools.seleniumbuilder;
  * @author Michael Hashimoto
  */
 public class TestCaseConverter extends BaseConverter {
+
+	public TestCaseConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void convert(String testCaseName) throws Exception {
+		String testCaseSimpleClassName = _getTestCaseSimpleClassName(
+			testCaseName);
+	}
+
+	private String _getTestCaseSimpleClassName(String testCaseName) {
+		return _seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

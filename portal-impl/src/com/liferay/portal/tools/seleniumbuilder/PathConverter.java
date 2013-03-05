@@ -18,4 +18,19 @@ package com.liferay.portal.tools.seleniumbuilder;
  * @author Michael Hashimoto
  */
 public class PathConverter extends BaseConverter {
+
+	public PathConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void convert(String pathName) throws Exception {
+		String pathSimpleClassName = _getPathSimpleClassName(pathName);
+	}
+
+	private String _getPathSimpleClassName(String pathName) {
+		return _seleniumBuilderContext.getPathSimpleClassName(pathName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

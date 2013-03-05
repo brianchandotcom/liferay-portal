@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Michael Hashimoto
  */
@@ -24,8 +26,32 @@ public class FunctionConverter extends BaseConverter {
 	}
 
 	public void convert(String functionName) {
-		String functionSimpleClassName = _getFunctionSimpleClassName(
-			functionName);
+		StringBundler sb = new StringBundler();
+
+		sb.append("package ");
+		sb.append(_getFunctionPackageName(functionName));
+		sb.append(";\n\n");
+
+		sb.append("import com.liferay.portalweb.portal.util.liferayselenium.");
+		sb.append("LiferaySelenium;\n");
+
+		sb.append("public class ");
+		sb.append(_getFunctionSimpleClassName(functionName));
+		sb.append(" extends BaseFunctions {\n\n");
+
+		sb.append("public ");
+		sb.append(_getFunctionSimpleClassName(functionName));
+		sb.append("(LiferaySelenium liferaySelenium) {\n");
+
+		sb.append("super(liferaySelenium);\n");
+
+		sb.append("}\n");
+
+		sb.append("}");
+	}
+
+	private String _getFunctionPackageName(String functionName) {
+		return _seleniumBuilderContext.getFunctionPackageName(functionName);
 	}
 
 	private String _getFunctionSimpleClassName(String functionName) {

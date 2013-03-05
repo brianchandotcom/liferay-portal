@@ -97,9 +97,9 @@ if ((contentSharingWithChildrenEnabledEnabled == 0) && ArrayUtil.contains(advanc
 	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
 }
 
-int trashEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
+boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
-if ((trashEnabled == 0) && ArrayUtil.contains(advancedSections, "recycle-bin")) {
+if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 

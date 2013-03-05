@@ -17,21 +17,34 @@
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
 <%
-int trashEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
-
-int trashEntriesMaxAge = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
+boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
 %>
 
 <h3><liferay-ui:message key="recycle-bin" /></h3>
 
 <aui:fieldset>
-	<aui:select label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>'>
-		<aui:option label="enabled-by-default" selected="<%= trashEnabled == Trash.TRASH_ENABLED_BY_DEFAULT %>" value="<%= Trash.TRASH_ENABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled-by-default" selected="<%= trashEnabled == Trash.TRASH_DISABLED_BY_DEFAULT %>" value="<%= Trash.TRASH_DISABLED_BY_DEFAULT %>" />
-		<aui:option label="disabled" selected="<%= trashEnabled == Trash.TRASH_DISABLED %>" value="<%= Trash.TRASH_DISABLED %>" />
-	</aui:select>
-
-	<aui:input label="number-of-days-that-files-will-be-kept-in-the-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENTRIES_MAX_AGE + "--" %>' type="text" value="<%= trashEntriesMaxAge %>">
-		<aui:validator name="min">1</aui:validator>
-	</aui:input>
+	<aui:input class="aui-field-label" helpMessage="enable-recycle-bin-default" id="trashEnabled" label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>' type="checkbox" value="<%= trashEnabled %>" />
 </aui:fieldset>
+
+<aui:script use="aui-base">
+	var trashEnabledCheckbox = A.one('#<portlet:namespace />trashEnabledCheckbox');
+
+	var trashEnabledDefault = trashEnabledCheckbox.attr('checked');
+
+	trashEnabledCheckbox.on(
+		'change',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var trashEnabled = currentTarget.attr('checked');
+
+			if (!trashEnabled && trashEnabledDefault) {
+				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "disabling-the-recycle-bin-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
+					currentTarget.attr('checked', true);
+
+					trashEnabled = true;
+				}
+			}
+		}
+	);
+</aui:script>

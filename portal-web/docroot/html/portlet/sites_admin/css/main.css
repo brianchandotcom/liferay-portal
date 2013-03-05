@@ -1,4 +1,8 @@
 .portlet-site-settings {
+	.trash-entries-max-age {
+		margin-left: 1.5em;
+	}
+
 	.staging-section {
 		margin-left: 1.5em;
 	}

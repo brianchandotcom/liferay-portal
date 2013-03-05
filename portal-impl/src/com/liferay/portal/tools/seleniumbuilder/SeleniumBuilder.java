@@ -14,10 +14,13 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -34,14 +37,27 @@ public class SeleniumBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String baseDir = arguments.get("selenium.base.dir");
-		String types = arguments.get("selenium.types");
-
-		System.out.println(types);
 
 		SeleniumBuilderContext seleniumBuilderContext =
 			new SeleniumBuilderContext(baseDir);
 
-		System.out.println(seleniumBuilderContext);
+		String types = arguments.get("selenium.types");
+
+		String[] typesArray = StringUtil.split(types);
+
+		Set<String> typesSet = SetUtil.fromArray(typesArray);
+
+		if (typesSet.contains("function")) {
+			FunctionConverter functionConverter = new FunctionConverter(
+				seleniumBuilderContext);
+
+			Set<String> functionNames =
+				seleniumBuilderContext.getFunctionNames();
+
+			for (String functionName : functionNames) {
+				functionConverter.convert(functionName);
+			}
+		}
 	}
 
 }

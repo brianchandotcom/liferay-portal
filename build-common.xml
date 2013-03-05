@@ -53,6 +53,7 @@
 	</path>
 
 	<path id="test.classpath">
+		<pathelement path="test-classes/${test.type}" />
 		<pathelement path="${classpath}" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
@@ -474,7 +475,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<mkdir dir="test-results/${test.type}" />
 
 				<copy todir="test-classes/${test.type}">
-					<fileset dir="test" includes="*.properties,META-INF/*.xml" />
+					<fileset dir="test" includes="*.properties,META-INF/*.dtd,META-INF/*.xml" />
 					<fileset dir="test/${test.type}" includes="**/*.properties,**/dependencies/**,META-INF/*.xml" />
 				</copy>
 

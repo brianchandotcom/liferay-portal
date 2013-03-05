@@ -719,18 +719,33 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</if>
 
 		<if>
-			<equals arg1="${test.functional.count}" arg2="1" />
+			<and>
+				<isset property="test.functional.count"/>
+				<not>
+					<equals arg1="${test.functional.count}" arg2="0" />
+				</not>
+			</and>
 			<then>
 				<var name="test.type" value="functional" />
 			</then>
 			<elseif>
-				<equals arg1="${test.integration.count}" arg2="1" />
+				<and>
+					<isset property="test.integration.count"/>
+					<not>
+						<equals arg1="${test.integration.count}" arg2="0" />
+					</not>
+				</and>
 				<then>
 					<var name="test.type" value="integration" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${test.unit.count}" arg2="1" />
+				<and>
+					<isset property="test.unit.count"/>
+					<not>
+						<equals arg1="${test.unit.count}" arg2="0" />
+					</not>
+				</and>
 				<then>
 					<var name="test.type" value="unit" />
 				</then>

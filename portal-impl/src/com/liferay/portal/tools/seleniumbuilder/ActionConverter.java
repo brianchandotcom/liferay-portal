@@ -18,4 +18,19 @@ package com.liferay.portal.tools.seleniumbuilder;
  * @author Michael Hashimoto
  */
 public class ActionConverter extends BaseConverter {
+
+	public ActionConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void convert(String actionName) throws Exception {
+		String actionSimpleClassName = _getActionSimpleClassName(actionName);
+	}
+
+	private String _getActionSimpleClassName(String actionName) {
+		return _seleniumBuilderContext.getActionSimpleClassName(actionName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

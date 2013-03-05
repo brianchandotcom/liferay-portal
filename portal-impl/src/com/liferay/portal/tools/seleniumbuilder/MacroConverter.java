@@ -18,4 +18,19 @@ package com.liferay.portal.tools.seleniumbuilder;
  * @author Michael Hashimoto
  */
 public class MacroConverter extends BaseConverter {
+
+	public MacroConverter(SeleniumBuilderContext seleniumBuilderContext) {
+		_seleniumBuilderContext = seleniumBuilderContext;
+	}
+
+	public void convert(String macroName) throws Exception {
+		String macroSimpleClassName = _getMacroSimpleClassName(macroName);
+	}
+
+	private String _getMacroSimpleClassName(String macroName) {
+		return _seleniumBuilderContext.getMacroSimpleClassName(macroName);
+	}
+
+	private SeleniumBuilderContext _seleniumBuilderContext;
+
 }

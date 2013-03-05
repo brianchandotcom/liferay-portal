@@ -1833,8 +1833,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Roles Membership Policy
 
-		roleIds = UsersAdminUtil.addRequiredRoles(userId, roleIds);
-
 		long[] oldRoleIds = user.getRoleIds();
 
 		List<Long> addRoleIds = new ArrayList<Long>();
@@ -2213,15 +2211,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		User user = null;
-
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any mandatory organizations or organizations that the
 			// administrator does not have the rights to remove and check that
 			// he has the permission to add a new organization
-
-			user = userPersistence.findByPrimaryKey(userId);
 
 			List<Organization> oldOrganizations =
 				organizationLocalService.getUserOrganizations(userId);
@@ -2277,15 +2271,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		User user = null;
-
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any mandatory roles or roles that the administrator
 			// does not have the rights to remove and check that he has the
 			// permission to add a new role
-
-			user = userPersistence.findByPrimaryKey(userId);
 
 			List<Role> oldRoles = roleLocalService.getUserRoles(userId);
 
@@ -2322,7 +2312,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 
-		return roleIds;
+		return UsersAdminUtil.addRequiredRoles(userId, roleIds);
 	}
 
 	protected long[] checkUserGroupIds(long userId, long[] userGroupIds)
@@ -2332,14 +2322,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		User user = null;
-
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any user groups that the administrator does not have the
 			// rights to remove or that have a mandatory membership
-
-			user = userPersistence.findByPrimaryKey(userId);
 
 			List<UserGroup> oldUserGroups =
 				userGroupLocalService.getUserUserGroups(userId);

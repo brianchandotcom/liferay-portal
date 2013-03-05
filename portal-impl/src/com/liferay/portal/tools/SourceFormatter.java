@@ -1292,7 +1292,9 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			if (_isGenerated(content)) {
+			if (_isGenerated(content) &&
+				!fileName.endsWith("JavadocFormatter.java")) {
+
 				continue;
 			}
 

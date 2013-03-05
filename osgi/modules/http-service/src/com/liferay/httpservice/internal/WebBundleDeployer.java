@@ -14,6 +14,7 @@
 
 package com.liferay.httpservice.internal;
 
+import com.liferay.httpservice.internal.event.EventUtil;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 import com.liferay.httpservice.internal.servlet.WebExtenderServlet;
 import com.liferay.portal.kernel.log.Log;
@@ -75,10 +76,14 @@ public class WebBundleDeployer {
 			return;
 		}
 
+		EventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
+
 		ServletContext servletContext = ServletContextPool.get(
 			servletContextName);
 
 		if (servletContext != null) {
+			EventUtil.sendEvent(bundle, EventUtil.FAILED, null, true);
+
 			_collidedWABBundleIds.add(bundle.getBundleId());
 
 			return;
@@ -93,11 +98,13 @@ public class WebBundleDeployer {
 			bundleServletContext.open();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			EventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
 		}
 	}
 
 	public void doStop(Bundle bundle, String servletContextName) {
+		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYING, null, false);
+
 		BundleServletContext bundleServletContext = null;
 
 		ServletContext servletContext = ServletContextPool.get(
@@ -110,6 +117,8 @@ public class WebBundleDeployer {
 		}
 
 		if (bundleServletContext == null) {
+			EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
+
 			return;
 		}
 
@@ -117,8 +126,10 @@ public class WebBundleDeployer {
 			bundleServletContext.close();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			EventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
 		}
+
+		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
 
 		handleCollidedWABs(bundle, servletContextName);
 	}

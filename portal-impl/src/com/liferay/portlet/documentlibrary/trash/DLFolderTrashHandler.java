@@ -186,9 +186,14 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrashContainer(long classPK)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = getDLFolder(classPK);
+		try {
+			DLFolder dlFolder = getDLFolder(classPK);
 
-		return dlFolder.isInTrashContainer();
+			return dlFolder.isInTrashContainer();
+		}
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override

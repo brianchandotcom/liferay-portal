@@ -175,9 +175,14 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrashContainer(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+		try {
+			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		return dlFileEntry.isInTrashContainer();
+			return dlFileEntry.isInTrashContainer();
+		}
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override

@@ -787,7 +787,7 @@
 		</constructor-arg>
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil">
-		<property name="DLProcessorRegistry">
+		<property name="dLProcessorRegistry">
 			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
 		</property>
 	</bean>

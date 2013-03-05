@@ -146,15 +146,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Group group = addGroup(
+		return addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 			description, type, friendlyURL, site, active, serviceContext);
-
-		if (site) {
-			SiteMembershipPolicyUtil.verifyPolicy(group);
-		}
-
-		return group;
 	}
 
 	/**

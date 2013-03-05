@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.selenium;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.selenium.alerts.AlertsTestPlan;
 import com.liferay.portalweb.portal.selenium.assertions.AssertionsTestPlan;
 import com.liferay.portalweb.portal.selenium.browsercommands.BrowserCommandsTestPlan;
 import com.liferay.portalweb.portal.selenium.clicking.ClickingTestPlan;
@@ -34,6 +35,7 @@ public class SeleniumTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AlertsTestPlan.suite());
 		testSuite.addTest(AssertionsTestPlan.suite());
 		testSuite.addTest(BrowserCommandsTestPlan.suite());
 		testSuite.addTest(ClickingTestPlan.suite());

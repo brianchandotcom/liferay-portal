@@ -279,38 +279,42 @@ if (parentOrganization != null) {
 		'.modify-link'
 	);
 
-	A.one('#<portlet:namespace />selectOrganizationLink').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						constrain: true,
-						modal: true,
-						stack: true,
-						width: 600
+	var selectOrganizationLink = A.one('#<portlet:namespace />selectOrganizationLink');
+
+	if (selectOrganizationLink) {
+		selectOrganizationLink.on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
+							constrain: true,
+							modal: true,
+							stack: true,
+							width: 600
+						},
+						id: '<portlet:namespace />selectOrganization',
+						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
-					id: '<portlet:namespace />selectOrganization',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
-				},
-				function(event){
-					var rowColumns = [];
+					function(event){
+						var rowColumns = [];
 
-					var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + event.organizationid;
+						var href = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=" + event.organizationid;
 
-					rowColumns.push(<portlet:namespace />createURL(href, event.name));
-					rowColumns.push(<portlet:namespace />createURL(href, event.type));
-					rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+						rowColumns.push(<portlet:namespace />createURL(href, event.name));
+						rowColumns.push(<portlet:namespace />createURL(href, event.type));
+						rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
-					searchContainer.deleteRow(1, searchContainer.getData());
-					searchContainer.addRow(rowColumns, event.organizationid);
-					searchContainer.updateDataStore(event.organizationid);
-				}
-			);
-		}
-	);
+						searchContainer.deleteRow(1, searchContainer.getData());
+						searchContainer.addRow(rowColumns, event.organizationid);
+						searchContainer.updateDataStore(event.organizationid);
+					}
+				);
+			}
+		);
+	}
 </aui:script>
 
 <c:if test="<%= organization == null %>">

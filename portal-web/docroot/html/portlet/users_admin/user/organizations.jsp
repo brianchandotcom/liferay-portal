@@ -122,35 +122,39 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 		'.modify-link'
 	);
 
-	A.one('#<portlet:namespace />selectOrganizationLink').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						constrain: true,
-						modal: true,
-						stack: true,
-						width: 600
+	var selectOrganizationLink = A.one('#<portlet:namespace />selectOrganizationLink');
+
+	if (selectOrganizationLink) {
+		selectOrganizationLink.on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
+							constrain: true,
+							modal: true,
+							stack: true,
+							width: 600
+						},
+						id: '<portlet:namespace />selectOrganization',
+						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= selUser == null ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
-					id: '<portlet:namespace />selectOrganization',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= selUser == null ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
-				},
-				function(event){
-					var rowColumns = [];
+					function(event){
+						var rowColumns = [];
 
-					rowColumns.push(event.name);
-					rowColumns.push(event.type);
-					rowColumns.push('');
-					rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+						rowColumns.push(event.name);
+						rowColumns.push(event.type);
+						rowColumns.push('');
+						rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
-					searchContainer.addRow(rowColumns, event.organizationid);
+						searchContainer.addRow(rowColumns, event.organizationid);
 
-					searchContainer.updateDataStore();
-				}
-			);
-		}
-	);
+						searchContainer.updateDataStore();
+					}
+				);
+			}
+		);
+	}
 </aui:script>

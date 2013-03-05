@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TreeNodeView;
@@ -145,7 +146,9 @@ public class PortletListerImpl implements PortletLister {
 				nodeView.setLs("0");
 			}
 
-			nodeView.setName(portletCategory.getName());
+			nodeView.setName(
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), portletCategory.getName()));
 			nodeView.setObjId(portletCategory.getPath());
 			nodeView.setParentId(parentId);
 

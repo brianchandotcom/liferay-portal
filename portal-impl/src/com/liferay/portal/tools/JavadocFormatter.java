@@ -547,8 +547,7 @@ public class JavadocFormatter {
 		}
 	}
 
-	private void _addReturnElement(
-			Element methodElement, JavaMethod javaMethod)
+	private void _addReturnElement(Element methodElement, JavaMethod javaMethod)
 		throws Exception {
 
 		Type returns = javaMethod.getReturns();
@@ -649,7 +648,7 @@ public class JavadocFormatter {
 
 		if (Validator.isNotNull(elementName)) {
 			if (Validator.isNotNull(comment)) {
-				comment = elementName  + StringPool.SPACE + comment;
+				comment = elementName + StringPool.SPACE + comment;
 			}
 			else {
 				comment = elementName;
@@ -951,7 +950,7 @@ public class JavadocFormatter {
 		for (Annotation annotation : annotations) {
 			int annotationLineNumber = annotation.getLineNumber();
 
-			Map<String, String> propertyMap = annotation.getPropertyMap(); 
+			Map<String, String> propertyMap = annotation.getPropertyMap();
 
 			if (propertyMap.isEmpty()) {
 				annotationLineNumber--;
@@ -1287,7 +1286,7 @@ public class JavadocFormatter {
 		}
 	}
 
- 	private boolean _hasPublicModifier(AbstractJavaEntity abstractJavaEntity) {
+	private boolean _hasPublicModifier(AbstractJavaEntity abstractJavaEntity) {
 		String[] modifiers = abstractJavaEntity.getModifiers();
 
 		if (modifiers == null) {
@@ -1303,7 +1302,7 @@ public class JavadocFormatter {
 		return false;
 	}
 
-	private boolean  _isOverrideMethod(
+	private boolean _isOverrideMethod(
 		JavaClass javaClass, JavaMethod javaMethod,
 		Collection<JavaClass> ancestorJavaClasses) {
 
@@ -1362,9 +1361,7 @@ public class JavadocFormatter {
 		return false;
 	}
 
-	private String _removeJavadocFromJava(
-		JavaClass javaClass, String content) {
-
+	private String _removeJavadocFromJava(JavaClass javaClass, String content) {
 		Set<Integer> lineNumbers = new HashSet<Integer>();
 
 		lineNumbers.add(_getJavaClassLineNumber(javaClass));
@@ -1532,7 +1529,7 @@ public class JavadocFormatter {
 						_getIndent(lines, javaMethod) + "@Override\n";
 
 					if (Validator.isNotNull(javaMethodComment)) {
-						javaMethodComment =	javaMethodComment + overrideLine;
+						javaMethodComment = javaMethodComment + overrideLine;
 					}
 					else {
 						javaMethodComment = overrideLine;
@@ -1607,8 +1604,7 @@ public class JavadocFormatter {
 			while (matcher.find()) {
 				String wrapped = _formatInlines(matcher.group());
 
-				wrapped = StringUtil.wrap(
-					wrapped, 80 - indentLength, "\n");
+				wrapped = StringUtil.wrap(wrapped, 80 - indentLength, "\n");
 
 				matcher.appendReplacement(sb, wrapped);
 			}

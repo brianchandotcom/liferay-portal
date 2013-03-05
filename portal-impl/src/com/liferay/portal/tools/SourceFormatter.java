@@ -1464,7 +1464,7 @@ public class SourceFormatter {
 
 				_sourceFormatterHelper.printError(
 					fileName,
-					"Assign ProcessCallable implementation a " + 
+					"Assign ProcessCallable implementation a " +
 						"serialVersionUID: " + fileName);
 			}
 
@@ -1835,8 +1835,7 @@ public class SourceFormatter {
 				 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
 				_sourceFormatterHelper.printError(
-					fileName,
-					"line break: " + fileName + " " + lineCount);
+					fileName, "line break: " + fileName + " " + lineCount);
 			}
 
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
@@ -2850,7 +2849,6 @@ public class SourceFormatter {
 					"entity");
 				String referencePackagePath = referenceElement.attributeValue(
 					"package-path");
-
 
 				if (Validator.isNotNull(previousReferencePackagePath)) {
 					if ((previousReferencePackagePath.compareToIgnoreCase(

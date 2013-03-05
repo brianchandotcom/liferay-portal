@@ -75,7 +75,7 @@ public class UpgradeOptimizedConnectionHandler implements InvocationHandler {
 		sql = PortalUtil.transformSQL(sql);
 
 		if (!_useUpgradeOptimizedPreparedStatementHandler) {
-			_connection.prepareStatement(sql);
+			return _connection.prepareStatement(sql);
 		}
 
 		PreparedStatement preparedStatement = _connection.prepareStatement(

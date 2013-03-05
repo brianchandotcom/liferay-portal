@@ -984,6 +984,17 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructures(groupIds);
 	}
 
+	/**
+	* Returns all the structures matching the class name ID and belonging to
+	* the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @return the structures matching the class name ID and belonging to the
+	groups
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
 		long[] groupIds, long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {

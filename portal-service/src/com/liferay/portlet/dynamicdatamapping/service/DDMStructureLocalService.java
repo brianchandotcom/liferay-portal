@@ -892,6 +892,17 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all the structures matching the class name ID and belonging to
+	* the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param classNameId the primary key of the class name for the structure's
+	related model
+	* @return the structures matching the class name ID and belonging to the
+	groups
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructures(
 		long[] groupIds, long classNameId)

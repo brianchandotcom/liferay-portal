@@ -81,8 +81,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getDLControlPanelLink(
 			portletRequest, fileShortcut.getFolderId());
@@ -92,8 +91,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getAbsolutePath(
 			portletRequest, fileShortcut.getFolderId());
@@ -103,8 +101,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return new DLFileShortcutTrashRenderer(fileShortcut);
 	}
@@ -127,8 +124,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return fileShortcut.isInTrash();
 	}
@@ -137,8 +133,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public boolean isInTrashContainer(long classPK)
 		throws PortalException, SystemException {
 
-		DLFileShortcut fileShortcut =
-			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
 		return fileShortcut.isInTrashContainer();
 	}

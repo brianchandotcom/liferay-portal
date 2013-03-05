@@ -277,6 +277,8 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.selectFrame(locator);
 
+		value = value.replace("\\", "\\\\");
+
 		liferaySelenium.runScript("document.body.innerHTML = '" + value + "'");
 
 		liferaySelenium.selectFrame("relative=top");

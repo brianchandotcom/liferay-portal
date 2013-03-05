@@ -16,7 +16,7 @@ package com.liferay.portal.util.comparator;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, renamed to <code>UserFirstNameComparator</code>.
+ * @deprecated As of 6.2.0, renamed to {@link UserFirstNameComparator}
  */
 public class ContactFirstNameComparator extends UserFirstNameComparator {
 

@@ -45,22 +45,32 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />trashEnabledCheckbox').on(
+	var trashEnabledCheckbox = A.one('#<portlet:namespace />trashEnabledCheckbox');
+
+	var trashEnabledDefault = trashEnabledCheckbox.attr('checked');
+
+	trashEnabledCheckbox.on(
 		'change',
 		function(event) {
-			var target = event.currentTarget;
+			var currentTarget = event.currentTarget;
 
-			var trashEnabled = target.attr('checked');
+			var trashEnabled = currentTarget.attr('checked');
 
-			if (!trashEnabled) {
+			if (!trashEnabled && trashEnabledDefault) {
 				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "disabling-the-recycle-bin-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
-					target.attr('checked', true);
+					currentTarget.attr('checked', true);
 
 					trashEnabled = true;
 				}
 			}
 
-			A.one('#<portlet:namespace />trashEntriesMaxAge').attr('disabled', !trashEnabled);
+			var trashEntriesMaxAge = A.one('#<portlet:namespace />trashEntriesMaxAge');
+
+			if (trashEntriesMaxAge) {
+				trashEntriesMaxAge.attr('disabled', !trashEnabled);
+
+				trashEntriesMaxAge.ancestor('.aui-field').toggleClass('aui-field-disabled', !trashEnabled);
+			}
 		}
 	);
 </aui:script>

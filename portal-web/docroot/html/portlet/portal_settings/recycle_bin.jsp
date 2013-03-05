@@ -23,20 +23,24 @@ boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKe
 <h3><liferay-ui:message key="recycle-bin" /></h3>
 
 <aui:fieldset>
-	<aui:input class="aui-field-label" helpMessage="enable-it-by-default-while-allowing-site-administrators-to-disable-it-per-site" id="trashEnabled" label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>' type="checkbox" value="<%= trashEnabled %>" />
+	<aui:input class="aui-field-label" helpMessage="enable-recycle-bin-default" id="trashEnabled" label="enable-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENABLED + "--" %>' type="checkbox" value="<%= trashEnabled %>" />
 </aui:fieldset>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />trashEnabledCheckbox').on(
+	var trashEnabledCheckbox = A.one('#<portlet:namespace />trashEnabledCheckbox');
+
+	var trashEnabledDefault = trashEnabledCheckbox.attr('checked');
+
+	trashEnabledCheckbox.on(
 		'change',
 		function(event) {
-			var target = event.currentTarget;
+			var currentTarget = event.currentTarget;
 
-			var trashEnabled = target.attr('checked');
+			var trashEnabled = currentTarget.attr('checked');
 
-			if (!trashEnabled) {
-				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "disabling-the-recycle-bin-will-affect-any-existing-sites-that-have-it-enabled-and-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
-					target.attr('checked', true);
+			if (!trashEnabled && trashEnabledDefault) {
+				if (!confirm('<%= HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "disabling-the-recycle-bin-will-prevent-the-restoring-of-content-that-has-been-moved-to-the-recycle-bin")) %>')) {
+					currentTarget.attr('checked', true);
 
 					trashEnabled = true;
 				}

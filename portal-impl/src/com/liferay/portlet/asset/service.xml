@@ -68,6 +68,11 @@
 			<finder-column name="name" />
 			<finder-column name="vocabularyId" />
 		</finder>
+		<finder name="G_P_V" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentCategoryId" />
+			<finder-column name="vocabularyId" />
+		</finder>
 		<finder name="G_LikeN_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="name" comparator="LIKE" />

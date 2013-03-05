@@ -6296,6 +6296,966 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _FINDER_COLUMN_N_V_NAME_2 = "assetCategory.name = ? AND ";
 	private static final String _FINDER_COLUMN_N_V_NAME_3 = "(assetCategory.name IS NULL OR assetCategory.name = '') AND ";
 	private static final String _FINDER_COLUMN_N_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_V = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
+			AssetCategoryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_P_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_V = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
+			AssetCategoryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByG_P_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			AssetCategoryModelImpl.GROUPID_COLUMN_BITMASK |
+			AssetCategoryModelImpl.PARENTCATEGORYID_COLUMN_BITMASK |
+			AssetCategoryModelImpl.VOCABULARYID_COLUMN_BITMASK |
+			AssetCategoryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_V = new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @return the matching asset categories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> findByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId) throws SystemException {
+		return findByG_P_V(groupId, parentCategoryId, vocabularyId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @return the range of matching asset categories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> findByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId, int start, int end) throws SystemException {
+		return findByG_P_V(groupId, parentCategoryId, vocabularyId, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset categories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> findByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_V;
+			finderArgs = new Object[] { groupId, parentCategoryId, vocabularyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_V;
+			finderArgs = new Object[] {
+					groupId, parentCategoryId, vocabularyId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AssetCategory> list = (List<AssetCategory>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AssetCategory assetCategory : list) {
+				if ((groupId != assetCategory.getGroupId()) ||
+						(parentCategoryId != assetCategory.getParentCategoryId()) ||
+						(vocabularyId != assetCategory.getVocabularyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_ASSETCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetCategoryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(parentCategoryId);
+
+				qPos.add(vocabularyId);
+
+				if (!pagination) {
+					list = (List<AssetCategory>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<AssetCategory>(list);
+				}
+				else {
+					list = (List<AssetCategory>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a matching asset category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory findByG_P_V_First(long groupId, long parentCategoryId,
+		long vocabularyId, OrderByComparator orderByComparator)
+		throws NoSuchCategoryException, SystemException {
+		AssetCategory assetCategory = fetchByG_P_V_First(groupId,
+				parentCategoryId, vocabularyId, orderByComparator);
+
+		if (assetCategory != null) {
+			return assetCategory;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", parentCategoryId=");
+		msg.append(parentCategoryId);
+
+		msg.append(", vocabularyId=");
+		msg.append(vocabularyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCategoryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory fetchByG_P_V_First(long groupId,
+		long parentCategoryId, long vocabularyId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<AssetCategory> list = findByG_P_V(groupId, parentCategoryId,
+				vocabularyId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a matching asset category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory findByG_P_V_Last(long groupId, long parentCategoryId,
+		long vocabularyId, OrderByComparator orderByComparator)
+		throws NoSuchCategoryException, SystemException {
+		AssetCategory assetCategory = fetchByG_P_V_Last(groupId,
+				parentCategoryId, vocabularyId, orderByComparator);
+
+		if (assetCategory != null) {
+			return assetCategory;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", parentCategoryId=");
+		msg.append(parentCategoryId);
+
+		msg.append(", vocabularyId=");
+		msg.append(vocabularyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCategoryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory fetchByG_P_V_Last(long groupId, long parentCategoryId,
+		long vocabularyId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_P_V(groupId, parentCategoryId, vocabularyId);
+
+		List<AssetCategory> list = findByG_P_V(groupId, parentCategoryId,
+				vocabularyId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param categoryId the primary key of the current asset category
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset category
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory[] findByG_P_V_PrevAndNext(long categoryId,
+		long groupId, long parentCategoryId, long vocabularyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCategoryException, SystemException {
+		AssetCategory assetCategory = findByPrimaryKey(categoryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetCategory[] array = new AssetCategoryImpl[3];
+
+			array[0] = getByG_P_V_PrevAndNext(session, assetCategory, groupId,
+					parentCategoryId, vocabularyId, orderByComparator, true);
+
+			array[1] = assetCategory;
+
+			array[2] = getByG_P_V_PrevAndNext(session, assetCategory, groupId,
+					parentCategoryId, vocabularyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetCategory getByG_P_V_PrevAndNext(Session session,
+		AssetCategory assetCategory, long groupId, long parentCategoryId,
+		long vocabularyId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETCATEGORY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetCategoryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(parentCategoryId);
+
+		qPos.add(vocabularyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetCategory);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetCategory> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @return the matching asset categories that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> filterFindByG_P_V(long groupId,
+		long parentCategoryId, long vocabularyId) throws SystemException {
+		return filterFindByG_P_V(groupId, parentCategoryId, vocabularyId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @return the range of matching asset categories that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> filterFindByG_P_V(long groupId,
+		long parentCategoryId, long vocabularyId, int start, int end)
+		throws SystemException {
+		return filterFindByG_P_V(groupId, parentCategoryId, vocabularyId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset categories that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetCategory> filterFindByG_P_V(long groupId,
+		long parentCategoryId, long vocabularyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_V(groupId, parentCategoryId, vocabularyId, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AssetCategoryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AssetCategoryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetCategory.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, AssetCategoryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, AssetCategoryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentCategoryId);
+
+			qPos.add(vocabularyId);
+
+			return (List<AssetCategory>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the asset categories before and after the current asset category in the ordered set of asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param categoryId the primary key of the current asset category
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset category
+	 * @throws com.liferay.portlet.asset.NoSuchCategoryException if a asset category with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetCategory[] filterFindByG_P_V_PrevAndNext(long categoryId,
+		long groupId, long parentCategoryId, long vocabularyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCategoryException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_V_PrevAndNext(categoryId, groupId,
+				parentCategoryId, vocabularyId, orderByComparator);
+		}
+
+		AssetCategory assetCategory = findByPrimaryKey(categoryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetCategory[] array = new AssetCategoryImpl[3];
+
+			array[0] = filterGetByG_P_V_PrevAndNext(session, assetCategory,
+					groupId, parentCategoryId, vocabularyId, orderByComparator,
+					true);
+
+			array[1] = assetCategory;
+
+			array[2] = filterGetByG_P_V_PrevAndNext(session, assetCategory,
+					groupId, parentCategoryId, vocabularyId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetCategory filterGetByG_P_V_PrevAndNext(Session session,
+		AssetCategory assetCategory, long groupId, long parentCategoryId,
+		long vocabularyId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ASSETCATEGORY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AssetCategoryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AssetCategoryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetCategory.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, AssetCategoryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, AssetCategoryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(parentCategoryId);
+
+		qPos.add(vocabularyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetCategory);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetCategory> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId) throws SystemException {
+		for (AssetCategory assetCategory : findByG_P_V(groupId,
+				parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(assetCategory);
+		}
+	}
+
+	/**
+	 * Returns the number of asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @return the number of matching asset categories
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_V;
+
+		Object[] finderArgs = new Object[] {
+				groupId, parentCategoryId, vocabularyId
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_ASSETCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(parentCategoryId);
+
+				qPos.add(vocabularyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param vocabularyId the vocabulary ID
+	 * @return the number of matching asset categories that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByG_P_V(long groupId, long parentCategoryId,
+		long vocabularyId) throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_V(groupId, parentCategoryId, vocabularyId);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_ASSETCATEGORY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_V_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_P_V_VOCABULARYID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AssetCategory.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentCategoryId);
+
+			qPos.add(vocabularyId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_P_V_GROUPID_2 = "assetCategory.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_P_V_PARENTCATEGORYID_2 = "assetCategory.parentCategoryId = ? AND ";
+	private static final String _FINDER_COLUMN_G_P_V_VOCABULARYID_2 = "assetCategory.vocabularyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN_V =
 		new FinderPath(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
@@ -9859,6 +10819,29 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_V, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_V,
+					args);
+			}
+
+			if ((assetCategoryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						assetCategoryModelImpl.getOriginalGroupId(),
+						assetCategoryModelImpl.getOriginalParentCategoryId(),
+						assetCategoryModelImpl.getOriginalVocabularyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_V,
+					args);
+
+				args = new Object[] {
+						assetCategoryModelImpl.getGroupId(),
+						assetCategoryModelImpl.getParentCategoryId(),
+						assetCategoryModelImpl.getVocabularyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_V,
 					args);
 			}
 

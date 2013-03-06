@@ -135,4 +135,21 @@
 	color: #575757;
 	font-size: 0.9em;
 	text-align: right;
+    width: 25%;
+}
+
+.lfr-categories-selector-radio {
+    -moz-appearance: radio;
+    -webkit-appearance: radio;
+}
+
+.lfr-categories-selector-radio-image {
+    background: url(@theme_image_path@/aui/radios.png) no-repeat scroll 0 50% transparent;
+    float: left;
+    height: 15px;
+    width: 18px;
+}
+
+.lfr-categories-selector-radio-checked div {
+    background-position: -16px 50%;
 }

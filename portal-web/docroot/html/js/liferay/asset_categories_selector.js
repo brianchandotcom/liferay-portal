@@ -24,13 +24,20 @@ AUI.add(
 		var TPL_INPUT =
 			'<label title="{name}">' +
 				'<span class="lfr-categories-selector-category-name" title="{name}">' +
-					'<input data-categoryId="{categoryId}" type="checkbox" value="{name}" {checked} />' +
+                    '{radioImage}' +
+					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" type="checkbox" value="{name}" {id} {class} {checked} />' +
 					'{name}' +
 				'</span>' +
 				'<span class="lfr-categories-selector-search-results-path" title="{path}">{path}</span>' +
 			'</label>';
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
+
+        var TPL_RADIO_CLASS = ' class="{0}" ';
+
+        var TPL_RADIO_ID = ' id="{0}" ';
+
+        var TPL_RADIO_IMAGE = '<div class="lfr-categories-selector-radio-image category{0}"></div>';
 
 		var TPL_SEARCH_QUERY = '%{0}%';
 
@@ -357,6 +364,10 @@ AUI.add(
 
 						popup.entriesNode.append(searchResults);
 
+                        var onSelectChange = A.bind('_onSelectChange', instance);
+
+                        popup.entriesNode.delegate('click', onSelectChange, '.lfr-categories-selector-radio');
+
 						instance._searchBuffer = [];
 					},
 
@@ -393,13 +404,13 @@ AUI.add(
 					},
 
 					_onCheckedChange: function(event) {
-						var intance = this;
+						var instance = this;
 
 						if (event.newVal) {
-							intance._onCheckboxCheck(event);
+							instance._onCheckboxCheck(event);
 						}
 						else {
-							intance._onCheckboxUncheck(event);
+							instance._onCheckboxUncheck(event);
 						}
 					},
 
@@ -432,6 +443,54 @@ AUI.add(
 						instance.entries.removeKey(assetId);
 					},
 
+                    _onSelectChange: function(event) {
+                        var instance = this;
+
+                        var currentTarget = event.currentTarget;
+                        var parentNode = currentTarget.get('parentNode');
+
+                        var categoryId = currentTarget.attr('data-categoryid');
+                        var vocabularyId = currentTarget.attr('data-vocabularyid');
+
+                        var entries = A.all('#radio-vocabulary' + vocabularyId);
+
+                        var buffer = instance._searchBuffer;
+
+                        buffer.length = 0;
+
+                        A.each(
+                            entries,
+                            function(item, index, collection) {
+                                var removeId = item.attr('data-categoryid');
+                                if (item.get('checked') && categoryId != removeId) {
+                                    item.set('checked', false);
+                                    buffer.push(removeId);
+                                }
+                            }
+                        );
+
+                        if (buffer.length == 1) {
+                            instance.entries.removeKey(buffer[0]);
+                        }
+
+                        var previousRadio = A.one('div.category' + buffer[0]);
+
+                        if (currentTarget.attr('checked')) {
+                            instance._onCheckboxUncheck(event);
+                            currentTarget.set('checked', false);
+                            parentNode.removeClass('lfr-categories-selector-radio-checked');
+
+                            if (previousRadio != null) {
+                                previousRadio.get('parentNode').removeClass('lfr-categories-selector-radio-checked');
+                            }
+                        }
+                        else {
+                            instance._onCheckboxCheck(event);
+                            currentTarget.set('checked', true);
+                            parentNode.addClass('lfr-categories-selector-radio-checked');
+                        }
+                    },
+
 					_processSearchResults: function(searchResults, results) {
 						var instance = this;
 
@@ -443,7 +502,16 @@ AUI.add(
 							A.each(
 								results,
 								function(item, index, collection) {
+                                    var singleSelect = instance.get('singleSelect');
+
+                                    var radioClass = singleSelect ? Lang.sub(TPL_RADIO_CLASS, ['lfr-categories-selector-radio aui-helper-hidden']) : '';
+                                    var radioId = singleSelect ? Lang.sub(TPL_RADIO_ID, ['radio-vocabulary' + item.vocabularyId]) : '';
+                                    var radioImage = singleSelect ? Lang.sub(TPL_RADIO_IMAGE, [item.categoryId]) : '';
+
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
+                                    item.class = radioClass;
+                                    item.id = radioId;
+                                    item.radioImage = radioImage;
 
 									var input = Lang.sub(TPL_INPUT, item);
 

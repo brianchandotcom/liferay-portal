@@ -113,13 +113,13 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 							handler: function() {
 								submitForm(form, url, false);
 							},
-							label: Liferay.Language.get('ok')
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
 						},
 						{
 							handler: function() {
 								this.close();
 							},
-							label: Liferay.Language.get('cancel')
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
 						}
 					],
 					modal: true,

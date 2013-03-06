@@ -773,7 +773,7 @@
 				<isset property="selenium.types" />
 			</not>
 			<then>
-				<property name="selenium.types" value="action,function,macro,path,testcase,testplan,testsuite" />
+				<property name="selenium.types" value="action,function,macro,path,testcase,testsuite" />
 			</then>
 		</if>
 
@@ -817,12 +817,6 @@
 	<target name="build-selenium-new-test-case">
 		<antcall target="build-selenium-new">
 			<param name="selenium.types" value="testcase" />
-		</antcall>
-	</target>
-
-	<target name="build-selenium-new-test-plan">
-		<antcall target="build-selenium-new">
-			<param name="selenium.types" value="testplan" />
 		</antcall>
 	</target>
 

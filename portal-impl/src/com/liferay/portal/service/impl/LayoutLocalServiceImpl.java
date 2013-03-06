@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -71,6 +72,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.sites.util.Sites;
@@ -422,6 +425,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			descriptionMap, new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), type, hidden, friendlyURL,
 			serviceContext);
+	}
+
+	public Throwable checkCause(Throwable cause) throws PortalException {
+		Throwable cause2 = cause.getCause();
+
+		if ((cause2 instanceof LocaleException) ||
+			(cause2 instanceof StructureDuplicateStructureKeyException) ||
+			(cause2 instanceof RecordSetDuplicateRecordSetKeyException)) {
+				throw (PortalException)cause2;
+		}
+
+		return cause2;
 	}
 
 	/**
@@ -1529,8 +1544,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
 
-			if (cause instanceof LocaleException) {
+			if ((cause instanceof LocaleException) ||
+				(cause instanceof StructureDuplicateStructureKeyException) ||
+				(cause instanceof RecordSetDuplicateRecordSetKeyException)) {
 				throw (PortalException)cause;
+			}
+
+			while (cause instanceof PortletDataException) {
+				cause = checkCause(cause);
 			}
 
 			throw pe;

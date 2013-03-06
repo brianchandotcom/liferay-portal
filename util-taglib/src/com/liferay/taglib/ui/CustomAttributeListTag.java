@@ -35,6 +35,10 @@ public class CustomAttributeListTag extends IncludeTag {
 		_editable = editable;
 	}
 
+	public void setIgnore(String ignore) {
+		_ignore = ignore;
+	}
+
 	public void setLabel(boolean label) {
 		_label = label;
 	}
@@ -44,6 +48,7 @@ public class CustomAttributeListTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_editable = false;
+		_ignore = null;
 		_label = false;
 	}
 
@@ -63,6 +68,8 @@ public class CustomAttributeListTag extends IncludeTag {
 			"liferay-ui:custom-attribute-list:editable",
 			String.valueOf(_editable));
 		request.setAttribute(
+			"liferay-ui:custom-attribute-list:ignore", _ignore);
+		request.setAttribute(
 			"liferay-ui:custom-attribute-list:label", String.valueOf(_label));
 	}
 
@@ -72,6 +79,7 @@ public class CustomAttributeListTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private boolean _editable;
+	private String _ignore;
 	private boolean _label;
 
 }

@@ -16,7 +16,9 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,7 +33,8 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
 
-import java.util.Enumeration;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -67,9 +70,11 @@ public class CustomAttributesAvailableTag extends TagSupport {
 					companyId, _className, _classPK);
 			}
 
-			Enumeration<String> enu = expandoBridge.getAttributeNames();
+			List<String> attributeNames = ListUtil.remove(
+				Collections.list(expandoBridge.getAttributeNames()),
+				ListUtil.fromString(_ignore, StringPool.COMMA));
 
-			if (!enu.hasMoreElements()) {
+			if (attributeNames.isEmpty()) {
 				return SKIP_BODY;
 			}
 
@@ -80,9 +85,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
-			while (enu.hasMoreElements()) {
-				String attributeName = enu.nextElement();
-
+			for (String attributeName : attributeNames) {
 				Serializable value = expandoBridge.getAttribute(attributeName);
 
 				if (Validator.isNull(value)) {
@@ -134,6 +137,7 @@ public class CustomAttributesAvailableTag extends TagSupport {
 				_classPK = 0;
 				_companyId = 0;
 				_editable = false;
+				_ignore = null;
 			}
 		}
 	}
@@ -154,9 +158,14 @@ public class CustomAttributesAvailableTag extends TagSupport {
 		_editable = editable;
 	}
 
+	public void setIgnore(String ignore) {
+		_ignore = ignore;
+	}
+
 	private String _className;
 	private long _classPK;
 	private long _companyId;
 	private boolean _editable;
+	private String _ignore;
 
 }

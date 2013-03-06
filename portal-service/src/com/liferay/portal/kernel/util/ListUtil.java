@@ -180,6 +180,10 @@ public class ListUtil {
 		return fromArray(StringUtil.splitLines(s));
 	}
 
+	public static List<String> fromString(String s, String delimiter) {
+		return fromArray(StringUtil.split(s, delimiter));
+	}
+
 	/**
 	 * @deprecated As of 6.2.0
 	 */
@@ -197,6 +201,22 @@ public class ListUtil {
 		}
 
 		return false;
+	}
+
+	public static <E> List<E> remove(List<E> list, List<E> remove) {
+		if ((list == null) || (list.isEmpty()) ||
+			(remove == null)|| (remove.isEmpty())) {
+
+			return list;
+		}
+
+		list = copy(list);
+
+		for (E element : remove) {
+			list.remove(element);
+		}
+
+		return list;
 	}
 
 	public static <E> List<E> sort(List<E> list) {

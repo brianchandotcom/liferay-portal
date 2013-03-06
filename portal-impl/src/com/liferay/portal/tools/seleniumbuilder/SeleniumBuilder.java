@@ -44,6 +44,17 @@ public class SeleniumBuilder {
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
+		if (types.contains("action")) {
+			ActionConverter actionConverter = new ActionConverter(
+				seleniumBuilderContext);
+
+			Set<String> actionNames = seleniumBuilderContext.getActionNames();
+
+			for (String actionName : actionNames) {
+				actionConverter.convert(actionName);
+			}
+		}
+
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
 				seleniumBuilderContext);

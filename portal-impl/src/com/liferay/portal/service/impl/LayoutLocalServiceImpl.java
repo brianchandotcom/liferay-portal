@@ -427,18 +427,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext);
 	}
 
-	public Throwable checkCause(Throwable cause) throws PortalException {
-		Throwable cause2 = cause.getCause();
-
-		if ((cause2 instanceof LocaleException) ||
-			(cause2 instanceof StructureDuplicateStructureKeyException) ||
-			(cause2 instanceof RecordSetDuplicateRecordSetKeyException)) {
-				throw (PortalException)cause2;
-		}
-
-		return cause2;
-	}
-
 	/**
 	 * Deletes the layout, its child layouts, and its associated resources.
 	 *
@@ -1545,14 +1533,26 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
 
-			if ((cause instanceof LocaleException) ||
-				(cause instanceof StructureDuplicateStructureKeyException) ||
-				(cause instanceof RecordSetDuplicateRecordSetKeyException)) {
-				throw (PortalException)cause;
-			}
+			while (true) {
+				if (cause == null) {
+					break;
+				}
 
-			while (cause instanceof PortletDataException) {
-				cause = checkCause(cause);
+				if ((cause instanceof LocaleException) ||
+					(cause instanceof
+						RecordSetDuplicateRecordSetKeyException) ||
+					(cause instanceof
+						StructureDuplicateStructureKeyException)) {
+
+					throw (PortalException)cause;
+				}
+
+				if (cause instanceof PortletDataException) {
+					cause = cause.getCause();
+				}
+				else {
+					break;
+				}
 			}
 
 			throw pe;

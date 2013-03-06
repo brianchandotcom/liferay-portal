@@ -541,14 +541,14 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public CalEventLocalService getWrappedCalEventLocalService() {
 		return _calEventLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedCalEventLocalService(
 		CalEventLocalService calEventLocalService) {

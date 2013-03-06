@@ -471,7 +471,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public Lock getWrappedLock() {
 		return _lock;

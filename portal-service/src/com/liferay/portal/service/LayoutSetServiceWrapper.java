@@ -130,14 +130,14 @@ public class LayoutSetServiceWrapper implements LayoutSetService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public LayoutSetService getWrappedLayoutSetService() {
 		return _layoutSetService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedLayoutSetService(LayoutSetService layoutSetService) {
 		_layoutSetService = layoutSetService;

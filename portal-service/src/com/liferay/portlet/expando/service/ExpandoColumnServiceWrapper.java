@@ -95,14 +95,14 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ExpandoColumnService getWrappedExpandoColumnService() {
 		return _expandoColumnService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedExpandoColumnService(
 		ExpandoColumnService expandoColumnService) {

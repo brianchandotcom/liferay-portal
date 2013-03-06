@@ -352,14 +352,14 @@ public class RoleServiceWrapper implements RoleService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public RoleService getWrappedRoleService() {
 		return _roleService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedRoleService(RoleService roleService) {
 		_roleService = roleService;

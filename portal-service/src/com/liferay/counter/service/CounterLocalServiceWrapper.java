@@ -280,14 +280,14 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public CounterLocalService getWrappedCounterLocalService() {
 		return _counterLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedCounterLocalService(
 		CounterLocalService counterLocalService) {

@@ -586,7 +586,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
-	* @deprecated Renamed to {@link #isApproved()}
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	public boolean getApproved() {
 		return _bookmarksEntry.getApproved();
@@ -774,7 +774,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public BookmarksEntry getWrappedBookmarksEntry() {
 		return _bookmarksEntry;

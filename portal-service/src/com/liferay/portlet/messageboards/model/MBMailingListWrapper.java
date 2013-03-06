@@ -874,7 +874,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public MBMailingList getWrappedMBMailingList() {
 		return _mbMailingList;

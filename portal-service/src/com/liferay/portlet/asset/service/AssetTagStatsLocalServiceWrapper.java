@@ -372,14 +372,14 @@ public class AssetTagStatsLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AssetTagStatsLocalService getWrappedAssetTagStatsLocalService() {
 		return _assetTagStatsLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAssetTagStatsLocalService(
 		AssetTagStatsLocalService assetTagStatsLocalService) {

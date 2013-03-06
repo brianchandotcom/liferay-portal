@@ -1045,7 +1045,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public DLFileEntry getWrappedDLFileEntry() {
 		return _dlFileEntry;

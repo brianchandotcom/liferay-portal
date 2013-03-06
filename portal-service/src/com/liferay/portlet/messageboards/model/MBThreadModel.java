@@ -429,7 +429,7 @@ public interface MBThreadModel extends BaseModel<MBThread>, GroupedModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * @deprecated Renamed to {@link #isApproved()}
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
 	public boolean getApproved();
 

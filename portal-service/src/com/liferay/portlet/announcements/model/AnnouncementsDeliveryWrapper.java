@@ -381,7 +381,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public AnnouncementsDelivery getWrappedAnnouncementsDelivery() {
 		return _announcementsDelivery;

@@ -372,7 +372,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 	<#if entity.isWorkflowEnabled()>
 		/**
-		 * @deprecated {@link #isApproved}
+		 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 		 */
 		public boolean getApproved() {
 			return isApproved();

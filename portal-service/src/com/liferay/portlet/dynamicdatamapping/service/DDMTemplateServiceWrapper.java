@@ -785,14 +785,14 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public DDMTemplateService getWrappedDDMTemplateService() {
 		return _ddmTemplateService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {

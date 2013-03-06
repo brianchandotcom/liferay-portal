@@ -318,14 +318,14 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AssetCategoryPropertyLocalService getWrappedAssetCategoryPropertyLocalService() {
 		return _assetCategoryPropertyLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAssetCategoryPropertyLocalService(
 		AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {

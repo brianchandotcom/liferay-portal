@@ -279,14 +279,14 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public UserIdMapperLocalService getWrappedUserIdMapperLocalService() {
 		return _userIdMapperLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedUserIdMapperLocalService(
 		UserIdMapperLocalService userIdMapperLocalService) {

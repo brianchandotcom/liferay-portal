@@ -109,14 +109,14 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public CountryService getWrappedCountryService() {
 		return _countryService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedCountryService(CountryService countryService) {
 		_countryService = countryService;

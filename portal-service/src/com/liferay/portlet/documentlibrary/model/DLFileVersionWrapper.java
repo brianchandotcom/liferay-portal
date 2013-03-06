@@ -736,7 +736,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
-	* @deprecated Renamed to {@link #isApproved()}
+	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	public boolean getApproved() {
 		return _dlFileVersion.getApproved();
@@ -949,7 +949,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public DLFileVersion getWrappedDLFileVersion() {
 		return _dlFileVersion;

@@ -268,7 +268,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ClusterGroup getWrappedClusterGroup() {
 		return _clusterGroup;

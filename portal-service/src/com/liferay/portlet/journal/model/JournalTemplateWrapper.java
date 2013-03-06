@@ -881,7 +881,7 @@ public class JournalTemplateWrapper implements JournalTemplate,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public JournalTemplate getWrappedJournalTemplate() {
 		return _journalTemplate;

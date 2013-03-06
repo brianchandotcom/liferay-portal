@@ -48,14 +48,14 @@ public class PortalLocalServiceWrapper implements PortalLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public PortalLocalService getWrappedPortalLocalService() {
 		return _portalLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedPortalLocalService(
 		PortalLocalService portalLocalService) {

@@ -2918,14 +2918,14 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public UserLocalService getWrappedUserLocalService() {
 		return _userLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;

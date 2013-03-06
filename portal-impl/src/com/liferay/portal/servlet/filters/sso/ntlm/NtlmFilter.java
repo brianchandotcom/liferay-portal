@@ -48,8 +48,6 @@ import javax.servlet.http.HttpSession;
 
 import jcifs.Config;
 
-import jcifs.http.NtlmHttpFilter;
-
 import jcifs.util.Base64;
 
 /**
@@ -67,10 +65,6 @@ public class NtlmFilter extends BasePortalFilter {
 		super.init(filterConfig);
 
 		try {
-			NtlmHttpFilter ntlmFilter = new NtlmHttpFilter();
-
-			ntlmFilter.init(filterConfig);
-
 			Properties properties = PropsUtil.getProperties("jcifs.", false);
 
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {

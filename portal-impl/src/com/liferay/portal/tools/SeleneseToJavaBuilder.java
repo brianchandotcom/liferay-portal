@@ -877,6 +877,36 @@ public class SeleneseToJavaBuilder {
 				sb.append(param2);
 				sb.append("\"));");
 			}
+			else if (param1.equals("assertXMLTagNotPresent") ||
+					 param1.equals("assertXMLTagPresent")) {
+
+				if (param1.equals("assertXMLTagNotPresent")) {
+					sb.append("assertFalse");
+				}
+				else if (param1.equals("assertXMLTagPresent")) {
+					sb.append("assertTrue");
+				}
+
+				sb.append("(selenium.isXMLTagPresent(\"");
+				sb.append(param2);
+				sb.append("\", ");
+
+				if (param3.startsWith("${")) {
+					sb.append("RuntimeVariables.getValue(\"");
+
+					String text = param3.substring(2, param3.length() - 1);
+
+					sb.append(text);
+					sb.append("\")");
+				}
+				else {
+					sb.append("\"");
+					sb.append(param3);
+					sb.append("\"");
+				}
+
+				sb.append("));");
+			}
 			else if (param1.equals("captureEntirePageScreenshot")) {
 				int pos = param2.lastIndexOf("\\");
 

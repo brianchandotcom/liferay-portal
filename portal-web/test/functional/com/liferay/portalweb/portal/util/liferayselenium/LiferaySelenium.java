@@ -125,6 +125,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isValue(String locator, String value);
 
+	public boolean isXMLTagPresent(String tagName, String value)
+		throws Exception;
+
 	public void keyDownAndWait(String locator, String keySequence);
 
 	public void keyPressAndWait(String locator, String keySequence);

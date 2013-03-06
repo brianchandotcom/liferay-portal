@@ -20,8 +20,6 @@ insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifie
 
 ${sampleSQLBuilder.insertMBDiscussion(groupId, sampleUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get(), counter.get(), 0)}
 
-<#assign publicLayoutsSize = publicLayouts?size>
-
 <#list 1..maxJournalArticleCount as journalArticleCount>
 	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", "56,")>
 

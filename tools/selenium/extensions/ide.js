@@ -13,6 +13,28 @@ Selenium.prototype.continueFromRow = function(rowNum) {
 Selenium.prototype.doDownloadTempFile = function(value) {
 };
 
+Selenium.prototype.isXMLTagPresent = function(tag, value) {
+	var x = value.indexOf("=");
+
+	var tagType = value.substring(0, x);
+
+	var tagString = value.substring(x + 1);
+
+	var pattern =  ".*" + tag + ".*" + tagType + ".=." + tagString + ".*";
+
+	if (tagType === "text") {
+		pattern = ".*" + tag + ".*>" + tagString + "<.*";
+	}
+
+	var allText = this.browserbot.getDocument().xml;
+
+	if (allText == null) {
+		allText = new XMLSerializer().serializeToString(this.browserbot.getDocument());
+	}
+
+	return allText.match(pattern);
+};
+
 Selenium.prototype.doGotoIf = function(condition, label) {
 	if (eval(condition)) {
 		if (gotoLabels[label] == undefined) {

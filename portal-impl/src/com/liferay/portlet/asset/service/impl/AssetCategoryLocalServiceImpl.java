@@ -340,6 +340,13 @@ public class AssetCategoryLocalServiceImpl
 			start, end, obc);
 	}
 
+	public int getVocabularyRootCategoriesCount(long vocabularyId)
+		throws SystemException {
+
+		return assetCategoryPersistence.countByP_V(
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId);
+	}
+
 	public void mergeCategories(long fromCategoryId, long toCategoryId)
 		throws PortalException, SystemException {
 

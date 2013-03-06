@@ -447,6 +447,11 @@ public class AssetCategoryLocalServiceUtil {
 				   .getVocabularyRootCategories(vocabularyId, start, end, obc);
 	}
 
+	public static int getVocabularyRootCategoriesCount(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getVocabularyRootCategoriesCount(vocabularyId);
+	}
+
 	public static void mergeCategories(long fromCategoryId, long toCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

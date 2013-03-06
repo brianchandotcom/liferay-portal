@@ -303,13 +303,38 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return new AssetCategoryDisplay(categories, total, start, end);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #
+	 *             getVocabularyRootCategories(long, long, int, int,
+	 *             OrderByComparator)}
+	 */
 	public List<AssetCategory> getVocabularyRootCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return filterCategories(
-			assetCategoryLocalService.getVocabularyRootCategories(
-				vocabularyId, start, end, obc));
+		AssetVocabulary vocabulary = assetVocabularyLocalService.getVocabulary(
+			vocabularyId);
+
+		return getVocabularyRootCategories(
+			vocabulary.getGroupId(), vocabularyId, start, end, obc);
+	}
+
+	public List<AssetCategory> getVocabularyRootCategories(
+			long groupId, long vocabularyId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return assetCategoryPersistence.filterFindByG_P_V(
+			groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			vocabularyId, start, end, obc);
+	}
+
+	public int getVocabularyRootCategoriesCount(long groupId, long vocabularyId)
+		throws SystemException {
+
+		return assetCategoryPersistence.filterCountByG_P_V(
+			groupId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			vocabularyId);
 	}
 
 	public AssetCategory moveCategory(

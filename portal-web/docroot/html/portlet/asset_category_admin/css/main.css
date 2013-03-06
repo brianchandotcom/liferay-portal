@@ -252,6 +252,12 @@
 
 		.aui-tree-node {
 			background: #F5F5F5;
+
+			.aui-tree-icon {
+				background: none;
+				height: 0;
+				width: 0;
+			}
 		}
 
 		.aui-tree-node-over {
@@ -259,8 +265,10 @@
 		}
 
 		.aui-tree-node-content {
+			height: 33px;
+
 			.aui-tree-hitarea {
-				height: 33px;
+				padding-top: 13px;
 			}
 
 			&.aui-tree-collapsed .aui-tree-hitarea {

@@ -24,6 +24,7 @@ import com.liferay.portalweb.portal.controlpanel.organizations.organizationphone
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationservice.OrganizationServiceTestPlan;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationteam.OrganizationTeamTestPlan;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.OrganizationWebsiteTestPlan;
+import com.liferay.portalweb.portal.controlpanel.organizations.suborganization.SubOrganizationTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,6 +46,7 @@ public class OrganizationsTestPlan extends BaseTestSuite {
 		testSuite.addTest(OrganizationServiceTestPlan.suite());
 		testSuite.addTest(OrganizationTeamTestPlan.suite());
 		testSuite.addTest(OrganizationWebsiteTestPlan.suite());
+		testSuite.addTest(SubOrganizationTestPlan.suite());
 
 		return testSuite;
 	}

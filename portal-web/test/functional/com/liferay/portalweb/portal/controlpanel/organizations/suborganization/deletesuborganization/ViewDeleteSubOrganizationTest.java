@@ -44,7 +44,34 @@ public class ViewDeleteSubOrganizationTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Users and Organizations"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals(RuntimeVariables.replace("Browse"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
+		assertEquals(RuntimeVariables.replace("View Organizations"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Organizations')]"));
+		assertEquals(RuntimeVariables.replace("View Users"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]/span"));
+		assertEquals(RuntimeVariables.replace("Export Users"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
+		assertTrue(selenium.isVisible(
+				"//input[@title='Search Users and Organizations']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertEquals(RuntimeVariables.replace(
+				"Organizations (Search All Organizations)"),
+			selenium.getText(
+				"//div[@class='lfr-panel-title']/span[contains(.,'Organizations')]"));
 		assertEquals(RuntimeVariables.replace("No organizations were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertEquals(RuntimeVariables.replace("Search All Users"),
+			selenium.getText(
+				"//a[@class=' taglib-icon']/span[contains(.,'Search All Users')]"));
 	}
 }

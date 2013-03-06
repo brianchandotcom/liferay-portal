@@ -36,7 +36,7 @@ public class DeleteSubOrganizationAssignMembersTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSubOrganizationTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(AssignMembersSubOrganizationUserTest.class);
-		testSuite.addTestSuite(DeleteSubOrganizationTest.class);
+		testSuite.addTestSuite(DeleteSubOrganizationAssignMembersTest.class);
 		testSuite.addTestSuite(ViewDeleteSubOrganizationAssignMembersTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownSubOrganizationTest.class);

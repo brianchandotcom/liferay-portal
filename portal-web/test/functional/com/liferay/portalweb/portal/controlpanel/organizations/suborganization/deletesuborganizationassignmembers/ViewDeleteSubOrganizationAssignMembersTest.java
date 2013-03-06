@@ -65,7 +65,8 @@ public class ViewDeleteSubOrganizationAssignMembersTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]/span	"));
 		assertEquals(RuntimeVariables.replace("Export Users"),
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
@@ -114,7 +115,8 @@ public class ViewDeleteSubOrganizationAssignMembersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[contains(.,'userfn')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+			selenium.getText(
+				"//tr[contains(.,'userfn')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 		assertTrue(selenium.isVisible("//div[@class='lfr-asset-summary']/img"));

@@ -50,6 +50,9 @@ public class AssignMembersSubOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Suborganization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -60,8 +63,8 @@ public class AssignMembersSubOrganizationUserTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Available",
 					RuntimeVariables.replace("Available"));

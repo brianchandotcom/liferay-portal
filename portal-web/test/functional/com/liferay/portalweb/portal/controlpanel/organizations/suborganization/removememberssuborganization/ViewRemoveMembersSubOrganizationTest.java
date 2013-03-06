@@ -65,7 +65,8 @@ public class ViewRemoveMembersSubOrganizationTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]"));
 		assertEquals(RuntimeVariables.replace("Export Users"),
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));

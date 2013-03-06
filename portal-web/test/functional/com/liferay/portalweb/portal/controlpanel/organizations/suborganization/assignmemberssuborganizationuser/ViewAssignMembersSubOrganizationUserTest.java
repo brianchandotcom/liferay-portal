@@ -63,7 +63,8 @@ public class ViewAssignMembersSubOrganizationUserTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]/span"));
 		assertEquals(RuntimeVariables.replace("Export Users"),
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
@@ -72,8 +73,10 @@ public class ViewAssignMembersSubOrganizationUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"\u00ab Back to Organization Name"),
 			selenium.getText("//span[@class='header-back-to']/a"));
+		assertEquals(RuntimeVariables.replace("1 User"),
+			selenium.getText("//div[@id='usersAdminUsersPanel']/div/div/span"));
 		assertTrue(selenium.isVisible("//input[@value='Deactivate']"));
-		assertFalse(selenium.isChecked(
+		assertTrue(selenium.isVisible(
 				"//tr[@class='portlet-section-header results-header']/th[1]/input"));
 		assertEquals(RuntimeVariables.replace("First Name"),
 			selenium.getText(
@@ -96,7 +99,7 @@ public class ViewAssignMembersSubOrganizationUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[8]"));
-		assertFalse(selenium.isChecked("//tr[contains(.,'userfn')]/td[1]/input"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'userfn')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("userfn"),
 			selenium.getText("//tr[contains(.,'userfn')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("userln"),
@@ -110,7 +113,8 @@ public class ViewAssignMembersSubOrganizationUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[contains(.,'userfn')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+			selenium.getText(
+				"//tr[contains(.,'userfn')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 		assertTrue(selenium.isVisible("//div[@class='lfr-asset-summary']/img"));

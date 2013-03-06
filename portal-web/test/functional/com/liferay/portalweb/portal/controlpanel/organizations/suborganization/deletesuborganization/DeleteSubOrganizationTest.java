@@ -22,60 +22,48 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class DeleteSubOrganizationTest extends BaseTestCase {
 	public void testDeleteSubOrganization() throws Exception {
-		int label = 1;
-
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.selectWindow("null");
-				selenium.selectFrame("relative=top");
-				selenium.open("/web/guest/home/");
-				selenium.clickAt("//div[@id='dockbar']",
-					RuntimeVariables.replace("Dockbar"));
-				selenium.waitForElementPresent(
-					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-				assertEquals(RuntimeVariables.replace("Go to"),
-					selenium.getText("//li[@id='_145_mySites']/a/span"));
-				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
-				selenium.waitForVisible("link=Control Panel");
-				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace("Control Panel"));
-				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Users and Organizations",
-					RuntimeVariables.replace("Users and Organizations"));
-				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("Suborganization*"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-
-				boolean subOrganizationCheckbox = selenium.isChecked(
-						"//input[@name='_125_rowIds']");
-
-				if (subOrganizationCheckbox) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_125_rowIds']",
-					RuntimeVariables.replace("Suborganization Checkbox"));
-
-			case 2:
-				assertTrue(selenium.isChecked("//input[@name='_125_rowIds']"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				selenium.waitForConfirmation(
-					"Are you sure you want to delete this? It will be deleted immediately.");
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 100:
-				label = -1;
-			}
-		}
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Suborganization*"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Suborganization Name"),
+			selenium.getText(
+				"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+			RuntimeVariables.replace("Delete"));
+		selenium.waitForPageToLoad("30000");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Suborganization Name"));
 	}
 }

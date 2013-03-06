@@ -59,33 +59,33 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>storeChecked</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>subOrganizationCheckbox</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Suborganization Name')]/td[2]/a/strong</td>
+	<td>Suborganization Name</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>${subOrganizationCheckbox}</td>
-	<td>SubOrganizationCheckbox</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Suborganization Checkbox</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>SubOrganizationCheckbox</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_125_rowIds']</td>
-	<td>Suborganization Checkbox</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -97,6 +97,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Suborganization Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

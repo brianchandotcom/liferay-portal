@@ -60,6 +60,16 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//tr[contains(.,'Suborganization Name')]/td[2]/a/strong</td>
+	<td>Suborganization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Suborganization Name')]/td[2]/em</td>
+	<td>1 User</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
@@ -79,7 +89,7 @@
 	<td>Assign Users</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td>Assign Users</td>
 </tr>
@@ -92,6 +102,36 @@
 	<td>clickAtAndWait</td>
 	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
 	<td>Available</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>storeVisible</td>
+	<td>//a[.='« Basic']</td>
+	<td>basicVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${basicVisible}</td>
+	<td>BasicNotVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[.='« Basic']</td>
+	<td>« Basic</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BasicNotVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -142,6 +182,16 @@
 	<td>assertNotChecked</td>
 	<td>//input[@name='_125_rowIds']</td>
 	<td>Select User</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Current')]</td>
+	<td>Current</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>userfn</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

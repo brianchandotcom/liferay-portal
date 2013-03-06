@@ -45,20 +45,6 @@ public class EditSubOrganizationSiteTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("Organization Name"));
-				selenium.clickAt("//input[@value='Search']",
-					RuntimeVariables.replace("Search"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Organization Name"),
-					selenium.getText(
-						"//tr[contains(.,'Organization Name')]/td[2]/a/strong"));
-				assertEquals(RuntimeVariables.replace("1 Suborganization"),
-					selenium.getText(
-						"//tr/td/em[contains(.,'1 Suborganization')]"));
-				selenium.clickAt("link=Users and Organizations",
-					RuntimeVariables.replace("Users and Organizations"));
-				selenium.waitForPageToLoad("30000");
-				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Suborganization*"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -79,10 +65,9 @@ public class EditSubOrganizationSiteTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//a[@id='_125_organizationSiteLink']");
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_125_organizationSiteLink']",
 						"Organization Site"));

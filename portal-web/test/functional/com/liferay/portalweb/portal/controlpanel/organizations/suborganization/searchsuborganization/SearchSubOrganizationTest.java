@@ -46,6 +46,6 @@ public class SearchSubOrganizationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Suborganization Name"),
 			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[2]/a[2]/strong"));
+				"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
 	}
 }

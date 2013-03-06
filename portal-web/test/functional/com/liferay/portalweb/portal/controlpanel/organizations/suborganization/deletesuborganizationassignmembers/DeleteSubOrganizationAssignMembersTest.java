@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.suborganization.addsuborganization;
+package com.liferay.portalweb.portal.controlpanel.organizations.suborganization.deletesuborganizationassignmembers;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddSubOrganization3Test extends BaseTestCase {
-	public void testAddSubOrganization3() throws Exception {
+public class DeleteSubOrganizationAssignMembersTest extends BaseTestCase {
+	public void testDeleteSubOrganizationAssignMembers()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -40,38 +41,35 @@ public class AddSubOrganization3Test extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Organization Name"));
+			RuntimeVariables.replace("Suborganization*"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Organization Name"),
+		assertEquals(RuntimeVariables.replace("Suborganization Name"),
 			selenium.getText(
-				"//tr[contains(.,'Organization Name')]/td[2]/a/strong"));
-		assertEquals(RuntimeVariables.replace("Regular Organization"),
-			selenium.getText("//tr[contains(.,'Organization Name')]/td[3]/a"));
+				"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
+		assertEquals(RuntimeVariables.replace("1 User"),
+			selenium.getText(
+				"//tr[contains(.,'Suborganization Name')]/td[2]/em"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]");
-		assertEquals(RuntimeVariables.replace("Add Regular Organization"),
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]",
-			RuntimeVariables.replace("Add Regular Organization"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]",
+			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Suborganization3 Name"));
-		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("Regular Organization"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Suborganization3 Name"),
-			selenium.getText("//h1[@class='header-title']"));
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"You cannot delete organizations that have suborganizations or users."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

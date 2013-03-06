@@ -48,7 +48,7 @@ public class AddSubOrganizationTest extends BaseTestCase {
 			selenium.getText(
 				"//tr[contains(.,'Organization Name')]/td[2]/a/strong"));
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
-			selenium.getText("//tr[contains(.,'Regular Organization')]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'Organization Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -64,7 +64,7 @@ public class AddSubOrganizationTest extends BaseTestCase {
 		selenium.type("//input[@id='_125_name']",
 			RuntimeVariables.replace("Suborganization Name"));
 		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("label=Regular Organization"));
+			RuntimeVariables.replace("Regular Organization"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

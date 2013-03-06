@@ -67,8 +67,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
@@ -103,8 +103,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -137,8 +137,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
@@ -173,8 +173,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -207,8 +207,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
@@ -243,8 +243,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -277,8 +277,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
@@ -313,8 +313,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -347,8 +347,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
@@ -383,8 +383,8 @@ public class TearDownSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");

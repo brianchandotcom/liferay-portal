@@ -81,7 +81,8 @@ public class ViewSubOrganizationSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText("//tr[contains(.,'Suborganization Name')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+			selenium.getText(
+				"//tr[contains(.,'Suborganization Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'Suborganization Name')]/td[2]/a",
 			RuntimeVariables.replace("Suborganization Name"));
 		selenium.waitForPageToLoad("30000");
@@ -94,7 +95,8 @@ public class ViewSubOrganizationSiteTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]"));
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]"));
 		assertEquals(RuntimeVariables.replace("Suborganization Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(

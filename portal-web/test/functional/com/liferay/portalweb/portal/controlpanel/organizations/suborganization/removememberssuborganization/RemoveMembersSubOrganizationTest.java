@@ -49,6 +49,12 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Suborganization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
+				assertEquals(RuntimeVariables.replace("1 User"),
+					selenium.getText(
+						"//tr[contains(.,'Suborganization Name')]/td[2]/em"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
@@ -59,8 +65,8 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]",
+					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Available"),
 					selenium.getText(
@@ -68,6 +74,22 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
+
+				boolean basicVisible = selenium.isVisible(
+						"//a[.='\u00ab Basic']");
+
+				if (!basicVisible) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//a[.='\u00ab Basic']",
+					RuntimeVariables.replace("\u00ab Basic"));
+				selenium.waitForVisible("//input[@name='_125_keywords']");
+
+			case 2:
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("userfn"));
 				selenium.clickAt("//input[@value='Search']",
@@ -78,7 +100,7 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 						"//input[@name='_125_rowIds']");
 
 				if (!selectUserCheckbox) {
-					label = 2;
+					label = 3;
 
 					continue;
 				}
@@ -86,7 +108,7 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@name='_125_rowIds']",
 					RuntimeVariables.replace("Select User"));
 
-			case 2:
+			case 3:
 				assertFalse(selenium.isChecked("//input[@name='_125_rowIds']"));
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
@@ -95,6 +117,10 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isChecked("//input[@name='_125_rowIds']"));
+				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Current')]",
+					RuntimeVariables.replace("Current"));
+				selenium.waitForPageToLoad("30000");
+				assertFalse(selenium.isTextPresent("userfn"));
 
 			case 100:
 				label = -1;

@@ -40,21 +40,21 @@ public class AddOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]");
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]",
+			RuntimeVariables.replace("Regular Organization"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_name']",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("label=Regular Organization"));
+			RuntimeVariables.replace("Regular Organization"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

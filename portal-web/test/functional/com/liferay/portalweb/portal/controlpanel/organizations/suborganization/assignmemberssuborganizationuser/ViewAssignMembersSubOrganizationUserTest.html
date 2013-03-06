@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -109,12 +109,17 @@
 	<td>« Back to Organization Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@id='usersAdminUsersPanel']/div/div/span</td>
+	<td>1 User</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//input[@value='Deactivate']</td>
 	<td>Deactivate</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>assertVisible</td>
 	<td>//tr[@class='portlet-section-header results-header']/th[1]/input</td>
 	<td>Checkbox</td>
 </tr>
@@ -154,7 +159,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>assertVisible</td>
 	<td>//tr[contains(.,'userfn')]/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
@@ -190,7 +195,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
+	<td>//tr[contains(.,'userfn')]/td[8]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -243,7 +248,6 @@
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

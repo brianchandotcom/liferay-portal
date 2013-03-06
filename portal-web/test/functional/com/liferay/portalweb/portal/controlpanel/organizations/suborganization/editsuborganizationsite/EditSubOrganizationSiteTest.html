@@ -51,31 +51,6 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_125_keywords']</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Organization Name')]/td[2]/a/strong</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr/td/em[contains(.,'1 Suborganization')]</td>
-	<td>1 Suborganization</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Users and Organizations</td>
-	<td>Users and Organizations</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@name='_125_keywords']</td>
 	<td>Suborganization*</td>
 </tr>
 <tr>
@@ -114,14 +89,9 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>clickAtAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//a[@id='_125_organizationSiteLink']</td>
-	<td>Organization Site</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>

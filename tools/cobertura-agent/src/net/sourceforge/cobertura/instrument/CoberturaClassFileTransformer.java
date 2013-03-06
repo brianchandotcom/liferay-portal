@@ -70,15 +70,17 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 				public void run() {
 					File dataFile =
-							CoverageDataFileHandler.getDefaultDataFile();
+						CoverageDataFileHandler.getDefaultDataFile();
 
 					Collection<ProjectData> projectDatas =
-							_projectDatas.values();
+						_projectDatas.values();
 
 					ProjectDataUtil.mergeSave(
 						dataFile, lockFile,
 						projectDatas.toArray(
 							new ProjectData[projectDatas.size()]));
+
+					_projectDatas.clear();
 				}
 
 			}
@@ -86,7 +88,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		);
 	}
 
-	public boolean _matches(String className) {
+	public boolean matches(String className) {
 		if (_excludePatterns.length != 0) {
 			for (Pattern excludePattern : _excludePatterns) {
 
@@ -117,7 +119,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 			ProtectionDomain protectionDomain, byte[] classfileBuffer)
 		throws IllegalClassFormatException {
 
-		if (_matches(className)) {
+		if (matches(className)) {
+			InstrumentationAgent.recordInstrumentation(
+				classLoader, className, classfileBuffer);
+
 			ProjectData projectData = _projectDatas.get(classLoader);
 
 			if (projectData == null) {
@@ -135,11 +140,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 			ClassVisitor classVisitor = classWriter;
 
-			if (refinedClass != null) {
-
-				// This is retransform. The HasBeenInstrumented mark interface
-				// has to be removed to satisfy the JVM instrument tool.
-
+			if (!InstrumentationAgent.isStaticallyInstrumented()) {
 				classVisitor = new RemoveHasBeenInstrumentedClassVisitor(
 					classVisitor);
 			}

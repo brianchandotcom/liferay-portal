@@ -17,6 +17,7 @@ package net.sourceforge.cobertura.instrument;
 import java.io.File;
 import java.io.IOException;
 
+import java.lang.instrument.ClassDefinition;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 
@@ -39,26 +40,56 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+		try {
+			File dataFile = CoverageDataFileHandler.getDefaultDataFile();
 
-		ProjectData projectData = ProjectDataUtil.captureProjectData(
-			dataFile, _lockFile);
+			ProjectData projectData = ProjectDataUtil.captureProjectData(
+				dataFile, _lockFile);
 
-		for (Class<?> clazz : classes) {
-			ClassData classData = projectData.getClassData(clazz.getName());
+			for (Class<?> clazz : classes) {
+				ClassData classData = projectData.getClassData(clazz.getName());
 
-			_assertClassDataCoverage(clazz, classData);
+				_assertClassDataCoverage(clazz, classData);
 
-			Class<?>[] declaredClasses = clazz.getDeclaredClasses();
+				Class<?>[] declaredClasses = clazz.getDeclaredClasses();
 
-			for (Class<?> declaredClass : declaredClasses) {
-				classData = projectData.getClassData(declaredClass.getName());
+				for (Class<?> declaredClass : declaredClasses) {
+					classData = projectData.getClassData(
+						declaredClass.getName());
 
-				_assertClassDataCoverage(declaredClass, classData);
+					_assertClassDataCoverage(declaredClass, classData);
+				}
 			}
 		}
+		finally {
+			System.clearProperty("parent.dynamically.instrument");
+			System.clearProperty("junit.code.coverage");
 
-		System.clearProperty("junit.code.coverage");
+			_dynamicallyInstrumented = false;
+
+			_instrumentation.removeTransformer(_coberturaClassFileTransformer);
+
+			if (_originalClassDefinitions == null) {
+				return;
+			}
+
+			try {
+				ClassDefinition[] classDefinitions =
+					new ClassDefinition[_originalClassDefinitions.size()];
+
+				for (int i = 0; i < _originalClassDefinitions.size(); i++) {
+					classDefinitions[i] = _originalClassDefinitions.get(
+						i).toClassDefinition();
+				}
+
+				_originalClassDefinitions = null;
+
+				_instrumentation.redefineClasses(classDefinitions);
+			}
+			catch (Exception e) {
+				throw new RuntimeException("Failed to uninstrument classes", e);
+			}
+		}
 	}
 
 	public static synchronized void dynamicallyInstrument(
@@ -77,10 +108,12 @@ public class InstrumentationAgent {
 			excludes = _excludes;
 		}
 
-		CoberturaClassFileTransformer coberturaClassFileTransformer =
-			new CoberturaClassFileTransformer(includes, excludes, _lockFile);
+		if (_coberturaClassFileTransformer == null) {
+			_coberturaClassFileTransformer = new CoberturaClassFileTransformer(
+				includes, excludes, _lockFile);
+		}
 
-		_instrumentation.addTransformer(coberturaClassFileTransformer, true);
+		_instrumentation.addTransformer(_coberturaClassFileTransformer, true);
 
 		Class<?>[] allLoadedClasses =_instrumentation.getAllLoadedClasses();
 
@@ -88,7 +121,11 @@ public class InstrumentationAgent {
 
 		for (Class<?> loadedClass : allLoadedClasses) {
 			if (_instrumentation.isModifiableClass(loadedClass)) {
-				modifiableClasses.add(loadedClass);
+				String className = loadedClass.getName().replace('.', '/');
+
+				if (_coberturaClassFileTransformer.matches(className)) {
+					modifiableClasses.add(loadedClass);
+				}
 			}
 		}
 
@@ -96,7 +133,9 @@ public class InstrumentationAgent {
 			modifiableClasses.toArray(new Class<?>[modifiableClasses.size()]));
 
 		_dynamicallyInstrumented = true;
+		_originalClassDefinitions = null;
 
+		System.setProperty("parent.dynamically.instrument", "true");
 		System.setProperty("junit.code.coverage", "true");
 	}
 
@@ -118,6 +157,10 @@ public class InstrumentationAgent {
 		);
 	}
 
+	public static boolean isStaticallyInstrumented() {
+		return _staticallyInstrumented;
+	}
+
 	public static synchronized void premain(
 		String agentArguments, Instrumentation instrumentation) {
 
@@ -127,6 +170,16 @@ public class InstrumentationAgent {
 		String[] excludes = arguments[1].split(",");
 
 		boolean junitCodeCoverage = Boolean.getBoolean("junit.code.coverage");
+
+		boolean parentDynamicallyInstrument = Boolean.getBoolean(
+			"parent.dynamically.instrument");
+
+		// For sub process, it is only considered as statically instrumented
+		// when itself is configured so and its parent is not dynamically
+		// instrumented.
+
+		_staticallyInstrumented =
+			junitCodeCoverage && !parentDynamicallyInstrument;
 
 		if (junitCodeCoverage) {
 			CoberturaClassFileTransformer coberturaClassFileTransformer =
@@ -152,6 +205,24 @@ public class InstrumentationAgent {
 				"Current JVM does not support class retransform. " +
 					"Dynamic instrumententation is disabled.");
 		}
+	}
+
+	public static synchronized void recordInstrumentation(
+		ClassLoader classLoader, String name, byte[] classfileBuffer) {
+
+		if (!_dynamicallyInstrumented) {
+			return;
+		}
+
+		if (_originalClassDefinitions == null) {
+			_originalClassDefinitions =
+				new ArrayList<OriginalClassDefinition>();
+		}
+
+		OriginalClassDefinition originalClassDefinition =
+			new OriginalClassDefinition(classLoader, name, classfileBuffer);
+
+		_originalClassDefinitions.add(originalClassDefinition);
 	}
 
 	private static void _assertClassDataCoverage(
@@ -206,9 +277,36 @@ public class InstrumentationAgent {
 		}
 	}
 
+	private static CoberturaClassFileTransformer _coberturaClassFileTransformer;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
+	private static List<OriginalClassDefinition> _originalClassDefinitions;
+	private static boolean _staticallyInstrumented;
+
+	private static class OriginalClassDefinition {
+
+		public OriginalClassDefinition(
+			ClassLoader classLoader, String className, byte[] classfileBuffer) {
+
+			_classLoader = classLoader;
+			_className = className.replace('/', '.');
+			_classfileBuffer = classfileBuffer;
+		}
+
+		public ClassDefinition toClassDefinition()
+			throws ClassNotFoundException {
+
+			Class<?> clazz = _classLoader.loadClass(_className);
+
+			return new ClassDefinition(clazz, _classfileBuffer);
+		}
+
+		private final byte[] _classfileBuffer;
+		private final ClassLoader _classLoader;
+		private final String _className;
+
+	}
 
 }

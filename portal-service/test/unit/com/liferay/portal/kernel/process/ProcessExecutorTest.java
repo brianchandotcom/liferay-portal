@@ -1066,6 +1066,13 @@ public class ProcessExecutorTest {
 			arguments.add("-Djunit.code.coverage=true");
 		}
 
+		boolean parentDynamicallyInstrument = Boolean.getBoolean(
+			"parent.dynamically.instrument");
+
+		if (parentDynamicallyInstrument) {
+			arguments.add("-Dparent.dynamically.instrument=true");
+		}
+
 		boolean junitDebug = Boolean.getBoolean("junit.debug");
 
 		if (junitDebug) {

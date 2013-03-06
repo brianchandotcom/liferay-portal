@@ -7,6 +7,7 @@
 
 	<property name="deploy.dir" value="." />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.can.redefine.classes" value="true" />
 	<property name="manifest.can.retransform.classes" value="true" />
 	<property name="manifest.premain.class" value="net.sourceforge.cobertura.instrument.InstrumentationAgent" />
 </project>

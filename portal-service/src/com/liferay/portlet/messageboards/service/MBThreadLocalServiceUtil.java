@@ -193,6 +193,22 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	/**
+	* Returns the message boards thread with the UUID in the group.
+	*
+	* @param uuid the UUID of message boards thread
+	* @param groupId the group id of the message boards thread
+	* @return the message boards thread
+	* @throws PortalException if a message boards thread with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBThread getMBThreadByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMBThreadByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards threads.
 	*
 	* <p>
@@ -254,10 +270,11 @@ public class MBThreadLocalServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBThread addThread(
 		long categoryId,
-		com.liferay.portlet.messageboards.model.MBMessage message)
+		com.liferay.portlet.messageboards.model.MBMessage message,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addThread(categoryId, message);
+		return getService().addThread(categoryId, message, serviceContext);
 	}
 
 	public static void deleteThread(long threadId)

@@ -547,6 +547,9 @@ create index IX_485F7E98 on MBThread (groupId, categoryId, status);
 create index IX_E1E7142B on MBThread (groupId, status);
 create index IX_AEDD9CB5 on MBThread (lastPostDate, priority);
 create index IX_CC993ECB on MBThread (rootMessageId);
+create index IX_7E264A0F on MBThread (uuid_);
+create index IX_F8CA2AB9 on MBThread (uuid_, companyId);
+create unique index IX_3A200B7B on MBThread (uuid_, groupId);
 
 create index IX_8CB0A24A on MBThreadFlag (threadId);
 create index IX_A28004B on MBThreadFlag (userId);

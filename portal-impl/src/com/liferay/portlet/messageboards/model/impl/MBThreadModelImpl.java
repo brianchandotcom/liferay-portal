@@ -67,9 +67,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	 */
 	public static final String TABLE_NAME = "MBThread";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "threadId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "categoryId", Types.BIGINT },
 			{ "rootMessageId", Types.BIGINT },
 			{ "rootMessageUserId", Types.BIGINT },
@@ -84,7 +89,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBThread (threadId LONG not null primary key,groupId LONG,companyId LONG,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,messageCount INTEGER,viewCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,question BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBThread (uuid_ VARCHAR(75) null,threadId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,rootMessageId LONG,rootMessageUserId LONG,messageCount INTEGER,viewCount INTEGER,lastPostByUserId LONG,lastPostDate DATE null,priority DOUBLE,question BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBThread";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbThread.priority DESC, mbThread.lastPostDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBThread.priority DESC, MBThread.lastPostDate DESC";
@@ -101,11 +106,13 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThread"),
 			true);
 	public static long CATEGORYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long LASTPOSTDATE_COLUMN_BITMASK = 4L;
-	public static long PRIORITY_COLUMN_BITMASK = 8L;
-	public static long ROOTMESSAGEID_COLUMN_BITMASK = 16L;
-	public static long STATUS_COLUMN_BITMASK = 32L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long LASTPOSTDATE_COLUMN_BITMASK = 8L;
+	public static long PRIORITY_COLUMN_BITMASK = 16L;
+	public static long ROOTMESSAGEID_COLUMN_BITMASK = 32L;
+	public static long STATUS_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -120,9 +127,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		MBThread model = new MBThreadImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setThreadId(soapModel.getThreadId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCategoryId(soapModel.getCategoryId());
 		model.setRootMessageId(soapModel.getRootMessageId());
 		model.setRootMessageUserId(soapModel.getRootMessageUserId());
@@ -194,9 +206,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("threadId", getThreadId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("rootMessageId", getRootMessageId());
 		attributes.put("rootMessageUserId", getRootMessageUserId());
@@ -216,6 +233,12 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long threadId = (Long)attributes.get("threadId");
 
 		if (threadId != null) {
@@ -232,6 +255,30 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long categoryId = (Long)attributes.get("categoryId");
@@ -314,6 +361,28 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
 	public long getThreadId() {
 		return _threadId;
 	}
@@ -349,7 +418,68 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@JSON
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	@JSON
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@JSON
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@JSON
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -682,9 +812,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public Object clone() {
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
+		mbThreadImpl.setUuid(getUuid());
 		mbThreadImpl.setThreadId(getThreadId());
 		mbThreadImpl.setGroupId(getGroupId());
 		mbThreadImpl.setCompanyId(getCompanyId());
+		mbThreadImpl.setUserId(getUserId());
+		mbThreadImpl.setUserName(getUserName());
+		mbThreadImpl.setCreateDate(getCreateDate());
+		mbThreadImpl.setModifiedDate(getModifiedDate());
 		mbThreadImpl.setCategoryId(getCategoryId());
 		mbThreadImpl.setRootMessageId(getRootMessageId());
 		mbThreadImpl.setRootMessageUserId(getRootMessageUserId());
@@ -768,9 +903,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public void resetOriginalValues() {
 		MBThreadModelImpl mbThreadModelImpl = this;
 
+		mbThreadModelImpl._originalUuid = mbThreadModelImpl._uuid;
+
 		mbThreadModelImpl._originalGroupId = mbThreadModelImpl._groupId;
 
 		mbThreadModelImpl._setOriginalGroupId = false;
+
+		mbThreadModelImpl._originalCompanyId = mbThreadModelImpl._companyId;
+
+		mbThreadModelImpl._setOriginalCompanyId = false;
 
 		mbThreadModelImpl._originalCategoryId = mbThreadModelImpl._categoryId;
 
@@ -797,11 +938,47 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public CacheModel<MBThread> toCacheModel() {
 		MBThreadCacheModel mbThreadCacheModel = new MBThreadCacheModel();
 
+		mbThreadCacheModel.uuid = getUuid();
+
+		String uuid = mbThreadCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbThreadCacheModel.uuid = null;
+		}
+
 		mbThreadCacheModel.threadId = getThreadId();
 
 		mbThreadCacheModel.groupId = getGroupId();
 
 		mbThreadCacheModel.companyId = getCompanyId();
+
+		mbThreadCacheModel.userId = getUserId();
+
+		mbThreadCacheModel.userName = getUserName();
+
+		String userName = mbThreadCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mbThreadCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbThreadCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			mbThreadCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbThreadCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbThreadCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		mbThreadCacheModel.categoryId = getCategoryId();
 
@@ -854,14 +1031,24 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{threadId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", threadId=");
 		sb.append(getThreadId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", categoryId=");
 		sb.append(getCategoryId());
 		sb.append(", rootMessageId=");
@@ -894,12 +1081,16 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBThread");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>threadId</column-name><column-value><![CDATA[");
 		sb.append(getThreadId());
@@ -911,6 +1102,22 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
@@ -974,11 +1181,20 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBThread.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _threadId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userUuid;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _categoryId;
 	private long _originalCategoryId;
 	private boolean _setOriginalCategoryId;

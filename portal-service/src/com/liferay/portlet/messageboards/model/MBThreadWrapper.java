@@ -45,9 +45,14 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("threadId", getThreadId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("rootMessageId", getRootMessageId());
 		attributes.put("rootMessageUserId", getRootMessageUserId());
@@ -66,6 +71,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long threadId = (Long)attributes.get("threadId");
 
 		if (threadId != null) {
@@ -82,6 +93,30 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long categoryId = (Long)attributes.get("categoryId");
@@ -182,6 +217,24 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
+	* Returns the uuid of this message boards thread.
+	*
+	* @return the uuid of this message boards thread
+	*/
+	public java.lang.String getUuid() {
+		return _mbThread.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this message boards thread.
+	*
+	* @param uuid the uuid of this message boards thread
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_mbThread.setUuid(uuid);
+	}
+
+	/**
 	* Returns the thread ID of this message boards thread.
 	*
 	* @return the thread ID of this message boards thread
@@ -233,6 +286,98 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	public void setCompanyId(long companyId) {
 		_mbThread.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this message boards thread.
+	*
+	* @return the user ID of this message boards thread
+	*/
+	public long getUserId() {
+		return _mbThread.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this message boards thread.
+	*
+	* @param userId the user ID of this message boards thread
+	*/
+	public void setUserId(long userId) {
+		_mbThread.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this message boards thread.
+	*
+	* @return the user uuid of this message boards thread
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this message boards thread.
+	*
+	* @param userUuid the user uuid of this message boards thread
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_mbThread.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this message boards thread.
+	*
+	* @return the user name of this message boards thread
+	*/
+	public java.lang.String getUserName() {
+		return _mbThread.getUserName();
+	}
+
+	/**
+	* Sets the user name of this message boards thread.
+	*
+	* @param userName the user name of this message boards thread
+	*/
+	public void setUserName(java.lang.String userName) {
+		_mbThread.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this message boards thread.
+	*
+	* @return the create date of this message boards thread
+	*/
+	public java.util.Date getCreateDate() {
+		return _mbThread.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this message boards thread.
+	*
+	* @param createDate the create date of this message boards thread
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_mbThread.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this message boards thread.
+	*
+	* @return the modified date of this message boards thread
+	*/
+	public java.util.Date getModifiedDate() {
+		return _mbThread.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this message boards thread.
+	*
+	* @param modifiedDate the modified date of this message boards thread
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_mbThread.setModifiedDate(modifiedDate);
 	}
 
 	/**

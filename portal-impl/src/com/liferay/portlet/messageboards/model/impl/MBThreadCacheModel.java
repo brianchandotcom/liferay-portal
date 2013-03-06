@@ -37,14 +37,24 @@ import java.util.Date;
 public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{threadId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", threadId=");
 		sb.append(threadId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", categoryId=");
 		sb.append(categoryId);
 		sb.append(", rootMessageId=");
@@ -79,9 +89,39 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	public MBThread toEntityModel() {
 		MBThreadImpl mbThreadImpl = new MBThreadImpl();
 
+		if (uuid == null) {
+			mbThreadImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			mbThreadImpl.setUuid(uuid);
+		}
+
 		mbThreadImpl.setThreadId(threadId);
 		mbThreadImpl.setGroupId(groupId);
 		mbThreadImpl.setCompanyId(companyId);
+		mbThreadImpl.setUserId(userId);
+
+		if (userName == null) {
+			mbThreadImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			mbThreadImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			mbThreadImpl.setCreateDate(null);
+		}
+		else {
+			mbThreadImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			mbThreadImpl.setModifiedDate(null);
+		}
+		else {
+			mbThreadImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		mbThreadImpl.setCategoryId(categoryId);
 		mbThreadImpl.setRootMessageId(rootMessageId);
 		mbThreadImpl.setRootMessageUserId(rootMessageUserId);
@@ -121,9 +161,14 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		threadId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		categoryId = objectInput.readLong();
 		rootMessageId = objectInput.readLong();
 		rootMessageUserId = objectInput.readLong();
@@ -141,9 +186,27 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(threadId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(categoryId);
 		objectOutput.writeLong(rootMessageId);
 		objectOutput.writeLong(rootMessageUserId);
@@ -166,9 +229,14 @@ public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable 
 		objectOutput.writeLong(statusDate);
 	}
 
+	public String uuid;
 	public long threadId;
 	public long groupId;
 	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public long categoryId;
 	public long rootMessageId;
 	public long rootMessageUserId;

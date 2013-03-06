@@ -405,7 +405,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
-	<entity name="MBThread" human-name="message boards thread" local-service="true" remote-service="true">
+	<entity name="MBThread" human-name="message boards thread" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -418,6 +418,10 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

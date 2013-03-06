@@ -255,6 +255,20 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the message boards thread with the UUID in the group.
+	 *
+	 * @param uuid the UUID of message boards thread
+	 * @param groupId the group id of the message boards thread
+	 * @return the message boards thread
+	 * @throws PortalException if a message boards thread with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread getMBThreadByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return mbThreadPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the message boards threads.
 	 *
 	 * <p>

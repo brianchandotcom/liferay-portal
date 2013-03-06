@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -40,7 +42,8 @@ import java.util.Date;
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl
  * @generated
  */
-public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
+public interface MBThreadModel extends BaseModel<MBThread>, GroupedModel,
+	StagedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +63,21 @@ public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
 	 * @param primaryKey the primary key of this message boards thread
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this message boards thread.
+	 *
+	 * @return the uuid of this message boards thread
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this message boards thread.
+	 *
+	 * @param uuid the uuid of this message boards thread
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the thread ID of this message boards thread.
@@ -102,6 +120,78 @@ public interface MBThreadModel extends BaseModel<MBThread>, WorkflowedModel {
 	 * @param companyId the company ID of this message boards thread
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this message boards thread.
+	 *
+	 * @return the user ID of this message boards thread
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this message boards thread.
+	 *
+	 * @param userId the user ID of this message boards thread
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this message boards thread.
+	 *
+	 * @return the user uuid of this message boards thread
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this message boards thread.
+	 *
+	 * @param userUuid the user uuid of this message boards thread
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this message boards thread.
+	 *
+	 * @return the user name of this message boards thread
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this message boards thread.
+	 *
+	 * @param userName the user name of this message boards thread
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this message boards thread.
+	 *
+	 * @return the create date of this message boards thread
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this message boards thread.
+	 *
+	 * @param createDate the create date of this message boards thread
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this message boards thread.
+	 *
+	 * @return the modified date of this message boards thread
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this message boards thread.
+	 *
+	 * @param modifiedDate the modified date of this message boards thread
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the category ID of this message boards thread.

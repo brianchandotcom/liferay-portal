@@ -850,7 +850,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(MDRActionPersistence persistence) {
 	}

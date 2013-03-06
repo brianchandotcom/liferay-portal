@@ -1694,7 +1694,7 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(AssetEntryPersistence persistence) {
 	}

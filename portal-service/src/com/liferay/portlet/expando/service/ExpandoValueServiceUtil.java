@@ -125,7 +125,7 @@ public class ExpandoValueServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(ExpandoValueService service) {
 	}

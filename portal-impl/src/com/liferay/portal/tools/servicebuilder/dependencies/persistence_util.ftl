@@ -151,7 +151,7 @@ public class ${entity.name}Util {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(${entity.name}Persistence persistence) {
 	}

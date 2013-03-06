@@ -314,7 +314,7 @@ public class ImageLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(ImageLocalService service) {
 	}

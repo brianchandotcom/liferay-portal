@@ -1588,7 +1588,7 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(AnnouncementsEntryPersistence persistence) {
 	}

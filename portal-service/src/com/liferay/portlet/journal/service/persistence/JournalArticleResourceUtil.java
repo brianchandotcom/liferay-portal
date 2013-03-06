@@ -741,7 +741,7 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(JournalArticleResourcePersistence persistence) {
 	}

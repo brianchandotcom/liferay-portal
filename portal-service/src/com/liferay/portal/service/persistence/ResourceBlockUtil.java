@@ -733,7 +733,7 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(ResourceBlockPersistence persistence) {
 	}

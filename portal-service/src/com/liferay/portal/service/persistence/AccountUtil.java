@@ -267,7 +267,7 @@ public class AccountUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(AccountPersistence persistence) {
 	}

@@ -1577,6 +1577,13 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			if (trimmedLine.startsWith("* @deprecated") &&
+				!trimmedLine.startsWith("* @deprecated As of")) {
+
+				line = StringUtil.replace(
+					line, "* @deprecated", "* @deprecated As of 6.2.0");
+			}
+
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
 				_processErrorMessage(
 					fileName, "equal: " + fileName + " " + lineCount);
@@ -1632,7 +1639,9 @@ public class SourceFormatter {
 						javaTermEndPosition = lastCommentOrAnnotationPos;
 					}
 
-					if (javaTermStartPosition != -1) {
+					if ((javaTermStartPosition != -1) &&
+						(javaTermEndPosition < content.length())) {
+
 						String javaTermContent = content.substring(
 							javaTermStartPosition, javaTermEndPosition);
 

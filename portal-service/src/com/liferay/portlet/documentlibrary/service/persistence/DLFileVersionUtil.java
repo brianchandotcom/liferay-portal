@@ -1658,7 +1658,7 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(DLFileVersionPersistence persistence) {
 	}

@@ -98,7 +98,7 @@ public class DLSyncServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(DLSyncService service) {
 	}

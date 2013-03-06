@@ -843,7 +843,7 @@ public class LockUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(LockPersistence persistence) {
 	}

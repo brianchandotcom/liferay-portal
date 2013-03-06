@@ -92,7 +92,7 @@ public class ListTypeServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(ListTypeService service) {
 	}

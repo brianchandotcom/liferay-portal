@@ -195,7 +195,7 @@ public class MBThreadServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(MBThreadService service) {
 	}

@@ -682,7 +682,7 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(DDLRecordVersionPersistence persistence) {
 	}

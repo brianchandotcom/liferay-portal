@@ -9,6 +9,9 @@
 .sass-cache/
 .sass_cache_*.css
 _sass_cache_*.css
+cobertura.ser
+
+**/.sonar
 
 /*.ant-*
 /*.ipr
@@ -18,6 +21,7 @@ _sass_cache_*.css
 /.checkstyle
 /.idea
 /.settings
+/.sonar
 /.xmlcatalog
 /ActiveMQ
 /ant.install.log
@@ -196,6 +200,7 @@ _sass_cache_*.css
 /support-tomcat/classes
 /support-tomcat/support-tomcat*.jar
 
+/test-coverage
 /test-results
 
 /tools/cobertura-agent/classes
@@ -229,6 +234,7 @@ _sass_cache_*.css
 /util-java/*.iws
 /util-java/classes
 /util-java/test-classes
+/util-java/test-coverage
 /util-java/test-results
 /util-java/util-java*.asc
 /util-java/util-java*.jar

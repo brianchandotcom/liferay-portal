@@ -547,27 +547,34 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<equals arg1="${junit.code.coverage}" arg2="true" />
 			<then>
-				<cobertura-report
-					datafile="test-coverage/cobertura.ser"
-					destdir="test-coverage"
-					format="${junit.cobertura.report.format}"
-				>
-					<fileset dir="${project.dir}/portal-impl/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/portal-impl/test/unit">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/portal-service/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-java/src">
-						<include name="**/*.java" />
-					</fileset>
-					<fileset dir="${project.dir}/util-taglib/src">
-						<include name="**/*.java" />
-					</fileset>
-				</cobertura-report>
+				<mkdir dir="test-coverage/${test.type}" />
+
+				<if>
+					<available file="test-coverage/${test.type}/cobertura.ser" type="file" />
+					<then>
+						<cobertura-report
+							datafile="test-coverage/${test.type}/cobertura.ser"
+							destdir="test-coverage/${test.type}"
+							format="${junit.cobertura.report.format}"
+						>
+							<fileset dir="${project.dir}/portal-impl/src">
+								<include name="**/*.java" />
+							</fileset>
+							<fileset dir="${project.dir}/portal-impl/test/unit">
+								<include name="**/*.java" />
+							</fileset>
+							<fileset dir="${project.dir}/portal-service/src">
+								<include name="**/*.java" />
+							</fileset>
+							<fileset dir="${project.dir}/util-java/src">
+								<include name="**/*.java" />
+							</fileset>
+							<fileset dir="${project.dir}/util-taglib/src">
+								<include name="**/*.java" />
+							</fileset>
+						</cobertura-report>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>
@@ -771,7 +778,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<property name="test.type" value="${test.type}" />
 		</ant>
 
-		<antcall target="report-test-coverage" />
+		<antcall target="report-test-coverage">
+			<param name="" value="${test.type}" />
+		</antcall>
 	</target>
 
 	<target name="test-cmd">
@@ -783,7 +792,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 					<sysproperty key="junit.debug" value="${junit.debug}" />
-					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/${test.type}/cobertura.ser" />
 					<jvmarg line="${junit.cobertura.agent}" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx${junit.java.mx}" />
@@ -826,7 +835,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<property name="test.type" value="integration" />
 		</ant>
 
-		<antcall target="report-test-coverage" />
+		<antcall target="report-test-coverage">
+			<param name="test.type" value="integration" />
+		</antcall>
 	</target>
 
 	<target name="test-method" depends="compile,compile-test">
@@ -857,6 +868,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<property name="test.type" value="unit" />
 		</ant>
 
-		<antcall target="report-test-coverage" />
+		<antcall target="report-test-coverage" >
+			<param name="test.type" value="unit" />
+		</antcall>
 	</target>
 </project>

@@ -24,4 +24,4 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 String summary = StringUtil.shorten(message.getBody(), abstractLength);
 %>
 
-<%= summary %>
+<%= HtmlUtil.escape(summary) %>

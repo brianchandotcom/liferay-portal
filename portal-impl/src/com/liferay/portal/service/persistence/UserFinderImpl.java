@@ -81,6 +81,9 @@ public class UserFinderImpl
 	public static final String JOIN_BY_USER_GROUP_ROLE =
 		UserFinder.class.getName() + ".joinByUserGroupRole";
 
+	public static final String JOIN_BY_USER_GROUP_ROLE_BY_ROLE_ID =
+		UserFinder.class.getName() + ".joinByUserGroupRoleByRoleId";
+
 	public static final String JOIN_BY_USERS_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersGroups";
 
@@ -736,6 +739,9 @@ public class UserFinderImpl
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
 		}
+		else if (key.equals("userGroupRoleByRoleId")) {
+			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE_BY_ROLE_ID);
+		}
 		else if (key.equals("usersGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_GROUPS);
 		}
@@ -825,6 +831,9 @@ public class UserFinderImpl
 		}
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
+		}
+		else if (key.equals("userGroupRoleByRoleId")) {
+			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE_BY_ROLE_ID);
 		}
 		else if (key.equals("usersGroups")) {
 			if (value instanceof Long) {

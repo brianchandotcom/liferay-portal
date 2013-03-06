@@ -35,27 +35,17 @@ String panelSelectedPortlets = typeSettingsProperties.getProperty("panelSelected
 String panelTreeKey = "panelSelectedPortletsPanelTree";
 %>
 
-<div class="lfr-tree-loading" id="<portlet:namespace />panelSelectPortletsTree">
+<div class="lfr-tree-loading" id="<portlet:namespace />selectPortletsTreeLoading">
 	<span class="aui-icon aui-icon-loading lfr-tree-loading-icon"></span>
 </div>
 
-<div id="<portlet:namespace />panelSelectPortletsOutput" style="margin: 4px;"></div>
+<div id="<portlet:namespace />selectPortletsTree" style="margin: 4px;"></div>
 
 <aui:script use="aui-io-request,aui-tree-view,dataschema-xml,datatype-xml,json-parse">
 	var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
 	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
 	var TreeUtil = {
-		afterRenderTree: function(event) {
-			var rootNode = event.target.item(0);
-
-			var loadingEl = A.one('#<portlet:namespace />panelSelectPortletsTree');
-
-			loadingEl.hide();
-
-			rootNode.expand();
-		},
-
 		formatJSONResults: function(json) {
 			var output = [];
 
@@ -65,10 +55,7 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 					var childPortlets = [];
 					var total = 0;
 
-					var name = item.name;
 					var nodeChildren = item.children;
-					var id = item.id;
-					var leaf = item.leaf;
 					var plid = item.objId;
 
 					var checked = plid && (plid in selectedPortlets);
@@ -82,7 +69,7 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 						after: {
 							checkedChange: function(event) {
 								if (plid) {
-									if (event.newVal && checked) {
+									if (event.newVal) {
 										selectedPortlets[plid] = true;
 
 										panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
@@ -101,9 +88,9 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 						checked: checked,
 						draggable: false,
 						expanded: false,
-						id: id,
-						label: name,
-						leaf: leaf,
+						id: item.id,
+						label: item.name,
+						leaf: item.leaf,
 						type: 'task'
 					}
 
@@ -124,6 +111,7 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		<%
 		PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
 
+		portletLister.setHierarchicalTree(true);
 		portletLister.setIncludeInstanceablePortlets(false);
 		portletLister.setIteratePortlets(true);
 		portletLister.setLayoutTypePortlet(layoutTypePortlet);
@@ -131,21 +119,19 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		portletLister.setServletContext(application);
 		portletLister.setThemeDisplay(themeDisplay);
 		portletLister.setUser(user);
-		portletLister.setHierarchicalTree(true);
 
 		JSONObject portletsJSON = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView()));
 		%>
 
-		var tree = <%= portletsJSON %>;
-
-		var portletList = tree.serializable.list.list[0];
+		var portletList = <%= portletsJSON %>.serializable.list.list[0];
 
 		var rootNode = new A.TreeNodeTask(
 			{
 				alwaysShowHitArea: true,
 				children: TreeUtil.formatJSONResults(portletList),
 				draggable: false,
-				id: '<portlet:namespace />panelSelectPortlets',
+				expanded: true,
+				id: '<portlet:namespace />selectPortletsRootNode',
 				label: portletList.name,
 				leaf: false
 			}
@@ -154,9 +140,11 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		var treeview = new A.TreeView(
 			{
 				after: {
-					render: TreeUtil.afterRenderTree
+					render: function() {
+						A.one('#<portlet:namespace />selectPortletsTreeLoading').hide();
+					}
 				},
-				boundingBox: '#<portlet:namespace />panelSelectPortletsOutput',
+				boundingBox: '#<portlet:namespace />selectPortletsTree',
 				children: [rootNode],
 				type: 'file'
 			}

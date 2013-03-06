@@ -102,6 +102,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
+			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="you-are-trying-to-import-a-recordset-that-already-exists" />
+			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="you-are-trying-to-import-a-structure-that-already-exists" />
 
 			<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 

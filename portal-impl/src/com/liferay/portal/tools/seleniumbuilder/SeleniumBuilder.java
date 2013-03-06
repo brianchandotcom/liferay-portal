@@ -66,6 +66,17 @@ public class SeleniumBuilder {
 				functionConverter.convert(functionName);
 			}
 		}
+
+		if (types.contains("macro")) {
+			MacroConverter macroConverter = new MacroConverter(
+				seleniumBuilderContext);
+
+			Set<String> macroNames = seleniumBuilderContext.getMacroNames();
+
+			for (String macroName : macroNames) {
+				macroConverter.convert(macroName);
+			}
+		}
 	}
 
 }

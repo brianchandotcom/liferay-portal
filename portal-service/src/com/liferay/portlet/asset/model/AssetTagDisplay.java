@@ -40,7 +40,7 @@ public class AssetTagDisplay implements Serializable {
 	}
 
 	public int getPage() {
-		if ((_end > 0) && (_start > 0)) {
+		if ((_end > 0) && (_start >= 0)) {
 			return _end / (_end - _start);
 		}
 

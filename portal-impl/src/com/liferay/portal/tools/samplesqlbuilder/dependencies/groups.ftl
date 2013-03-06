@@ -1,11 +1,21 @@
 <#setting number_format = "0">
 
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")])}
+<#assign layout = dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")>
+
+${sampleSQLBuilder.insertLayout(layout)}
+
+${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
 <#list dataFactory.groups as group>
 	<#assign groupId = group.groupId>
 
 	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
+
+	<#assign publicPageCount = publicLayouts?size>
+
+	<#list publicLayouts as publicLayout >
+		${sampleSQLBuilder.insertLayout(publicLayout)}
+	</#list>
 
 	<#include "users.ftl">
 
@@ -21,5 +31,5 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, [dataFactory.newLayout(da
 
 	<#include "wiki.ftl">
 
-	${sampleSQLBuilder.insertGroup(group, publicLayouts)}
+	${sampleSQLBuilder.insertGroup(group, publicPageCount)}
 </#list>

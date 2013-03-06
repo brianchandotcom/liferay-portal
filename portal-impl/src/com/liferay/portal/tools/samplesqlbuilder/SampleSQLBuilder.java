@@ -261,15 +261,21 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFolders, context);
 	}
 
-	public void insertGroup(Group group, List<Layout> publicLayouts)
-		throws Exception {
-
+	public void insertGroup(Group group, int publicPageCount) throws Exception {
 		Map<String, Object> context = getContext();
 
 		put(context, "group", group);
-		put(context, "publicLayouts", publicLayouts);
+		put(context, "publicPageCount", publicPageCount);
 
 		processTemplate(_tplGroup, context);
+	}
+
+	public void insertLayout(Layout layout) throws Exception {
+		Map<String, Object> context = getContext();
+
+		put(context, "layout", layout);
+
+		processTemplate(_tplLayout, context);
 	}
 
 	public void insertMBCategory(MBCategory mbCategory) throws Exception {
@@ -669,6 +675,7 @@ public class SampleSQLBuilder {
 	private String _tplDLFolder = _TPL_ROOT + "dl_folder.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
+	private String _tplLayout = _TPL_ROOT + "layout.ftl";
 	private String _tplMBCategory = _TPL_ROOT + "mb_category.ftl";
 	private String _tplMBDiscussion = _TPL_ROOT + "mb_discussion.ftl";
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;

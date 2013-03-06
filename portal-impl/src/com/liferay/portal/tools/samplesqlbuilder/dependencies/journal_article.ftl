@@ -25,7 +25,9 @@ ${sampleSQLBuilder.insertMBDiscussion(groupId, sampleUserId, dataFactory.journal
 
 	${writerLayoutCSV.write(layout.friendlyURL + "\n")}
 
-	<#assign publicLayouts = publicLayouts + [layout]>
+	${sampleSQLBuilder.insertLayout(layout)}
+
+	<#assign publicPageCount = publicPageCount + 1>
 
 	<#assign preferences = "<portlet-preferences><preference><name>articleId</name><value>" + journalArticleResource.articleId + "</value></preference><preference><name>enableCommentRatings</name><value>false</value></preference><preference><name>enableComments</name><value>false</value></preference><preference><name>enablePrint</name><value>false</value></preference><preference><name>enableRatings</name><value>false</value></preference><preference><name>enableRelatedAssets</name><value>true</value></preference><preference><name>enableViewCountIncrement</name><value>false</value></preference><preference><name>extensions</name><value>NULL_VALUE</value></preference><preference><name>groupId</name><value>" + groupId + "</value></preference><preference><name>showAvailableLocales</name><value>false</value></preference><preference><name>templateId</name><value></value></preference></portlet-preferences>">
 

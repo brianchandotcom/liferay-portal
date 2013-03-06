@@ -13,7 +13,9 @@
 
 		<#assign ddlDisplayLayout = dataFactory.newLayout(groupId, ddlLayoutName, "", ddlPortletId)>
 
-		<#assign publicLayouts = publicLayouts + [ddlDisplayLayout]>
+		${sampleSQLBuilder.insertLayout(ddlDisplayLayout)}
+
+		<#assign publicPageCount = publicPageCount + 1>
 
 		<#assign ddlRecordSet = dataFactory.newDDLRecordSet(ddmStructure.groupId, ddmStructure.companyId, ddmStructure.userId, ddmStructure.structureId)>
 

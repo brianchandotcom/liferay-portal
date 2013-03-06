@@ -622,6 +622,9 @@ create unique index IX_F3C9F36 on PollsQuestion (uuid_, groupId);
 create index IX_D5DF7B54 on PollsVote (choiceId);
 create index IX_12112599 on PollsVote (questionId);
 create unique index IX_1BBFD4D3 on PollsVote (questionId, userId);
+create index IX_FD32EB70 on PollsVote (uuid_);
+create index IX_7D8E92B8 on PollsVote (uuid_, companyId);
+create unique index IX_A88C673A on PollsVote (uuid_, groupId);
 
 create index IX_D1F795F1 on PortalPreferences (ownerId, ownerType);
 

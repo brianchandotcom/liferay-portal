@@ -87,6 +87,8 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
 			vote = pollsVotePersistence.create(voteId);
 
+			vote.setUuid(serviceContext.getUuid());
+			vote.setGroupId(question.getGroupId());
 			vote.setCompanyId(serviceContext.getCompanyId());
 			vote.setUserId(userId);
 			vote.setUserName(userName);

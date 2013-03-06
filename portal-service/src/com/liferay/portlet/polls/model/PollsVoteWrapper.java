@@ -45,7 +45,9 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("voteId", getVoteId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -59,10 +61,22 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long voteId = (Long)attributes.get("voteId");
 
 		if (voteId != null) {
 			setVoteId(voteId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -133,6 +147,24 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	/**
+	* Returns the uuid of this polls vote.
+	*
+	* @return the uuid of this polls vote
+	*/
+	public java.lang.String getUuid() {
+		return _pollsVote.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this polls vote.
+	*
+	* @param uuid the uuid of this polls vote
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_pollsVote.setUuid(uuid);
+	}
+
+	/**
 	* Returns the vote ID of this polls vote.
 	*
 	* @return the vote ID of this polls vote
@@ -148,6 +180,24 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	public void setVoteId(long voteId) {
 		_pollsVote.setVoteId(voteId);
+	}
+
+	/**
+	* Returns the group ID of this polls vote.
+	*
+	* @return the group ID of this polls vote
+	*/
+	public long getGroupId() {
+		return _pollsVote.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this polls vote.
+	*
+	* @param groupId the group ID of this polls vote
+	*/
+	public void setGroupId(long groupId) {
+		_pollsVote.setGroupId(groupId);
 	}
 
 	/**

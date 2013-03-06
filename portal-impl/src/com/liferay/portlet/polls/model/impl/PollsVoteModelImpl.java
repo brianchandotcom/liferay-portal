@@ -65,7 +65,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	 */
 	public static final String TABLE_NAME = "PollsVote";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "voteId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -75,7 +77,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 			{ "choiceId", Types.BIGINT },
 			{ "voteDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PollsVote (voteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,voteDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,voteDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsVote";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsVote.voteId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsVote.voteId ASC";
@@ -92,9 +94,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsVote"),
 			true);
 	public static long CHOICEID_COLUMN_BITMASK = 1L;
-	public static long QUESTIONID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
-	public static long VOTEID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long QUESTIONID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long VOTEID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -109,7 +114,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 		PollsVote model = new PollsVoteImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setVoteId(soapModel.getVoteId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
@@ -176,7 +183,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("voteId", getVoteId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -191,10 +200,22 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long voteId = (Long)attributes.get("voteId");
 
 		if (voteId != null) {
 			setVoteId(voteId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -247,6 +268,28 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
 	public long getVoteId() {
 		return _voteId;
 	}
@@ -256,12 +299,45 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	@JSON
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -407,7 +483,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public Object clone() {
 		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
 
+		pollsVoteImpl.setUuid(getUuid());
 		pollsVoteImpl.setVoteId(getVoteId());
+		pollsVoteImpl.setGroupId(getGroupId());
 		pollsVoteImpl.setCompanyId(getCompanyId());
 		pollsVoteImpl.setUserId(getUserId());
 		pollsVoteImpl.setUserName(getUserName());
@@ -470,6 +548,16 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public void resetOriginalValues() {
 		PollsVoteModelImpl pollsVoteModelImpl = this;
 
+		pollsVoteModelImpl._originalUuid = pollsVoteModelImpl._uuid;
+
+		pollsVoteModelImpl._originalGroupId = pollsVoteModelImpl._groupId;
+
+		pollsVoteModelImpl._setOriginalGroupId = false;
+
+		pollsVoteModelImpl._originalCompanyId = pollsVoteModelImpl._companyId;
+
+		pollsVoteModelImpl._setOriginalCompanyId = false;
+
 		pollsVoteModelImpl._originalUserId = pollsVoteModelImpl._userId;
 
 		pollsVoteModelImpl._setOriginalUserId = false;
@@ -489,7 +577,17 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public CacheModel<PollsVote> toCacheModel() {
 		PollsVoteCacheModel pollsVoteCacheModel = new PollsVoteCacheModel();
 
+		pollsVoteCacheModel.uuid = getUuid();
+
+		String uuid = pollsVoteCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			pollsVoteCacheModel.uuid = null;
+		}
+
 		pollsVoteCacheModel.voteId = getVoteId();
+
+		pollsVoteCacheModel.groupId = getGroupId();
 
 		pollsVoteCacheModel.companyId = getCompanyId();
 
@@ -539,10 +637,14 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{voteId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", voteId=");
 		sb.append(getVoteId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -565,15 +667,23 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.polls.model.PollsVote");
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>voteId</column-name><column-value><![CDATA[");
 		sb.append(getVoteId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -617,8 +727,15 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			PollsVote.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _voteId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

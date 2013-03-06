@@ -1461,7 +1461,9 @@ create table PollsQuestion (
 );
 
 create table PollsVote (
+	uuid_ VARCHAR(75) null,
 	voteId LONG not null primary key,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

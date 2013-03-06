@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -109,6 +110,10 @@ public class PollsVotePersistenceTest {
 
 		PollsVote newPollsVote = _persistence.create(pk);
 
+		newPollsVote.setUuid(ServiceTestUtil.randomString());
+
+		newPollsVote.setGroupId(ServiceTestUtil.nextLong());
+
 		newPollsVote.setCompanyId(ServiceTestUtil.nextLong());
 
 		newPollsVote.setUserId(ServiceTestUtil.nextLong());
@@ -129,8 +134,11 @@ public class PollsVotePersistenceTest {
 
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
+		Assert.assertEquals(existingPollsVote.getUuid(), newPollsVote.getUuid());
 		Assert.assertEquals(existingPollsVote.getVoteId(),
 			newPollsVote.getVoteId());
+		Assert.assertEquals(existingPollsVote.getGroupId(),
+			newPollsVote.getGroupId());
 		Assert.assertEquals(existingPollsVote.getCompanyId(),
 			newPollsVote.getCompanyId());
 		Assert.assertEquals(existingPollsVote.getUserId(),
@@ -276,6 +284,12 @@ public class PollsVotePersistenceTest {
 
 		PollsVoteModelImpl existingPollsVoteModelImpl = (PollsVoteModelImpl)_persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(
+				existingPollsVoteModelImpl.getUuid(),
+				existingPollsVoteModelImpl.getOriginalUuid()));
+		Assert.assertEquals(existingPollsVoteModelImpl.getGroupId(),
+			existingPollsVoteModelImpl.getOriginalGroupId());
+
 		Assert.assertEquals(existingPollsVoteModelImpl.getQuestionId(),
 			existingPollsVoteModelImpl.getOriginalQuestionId());
 		Assert.assertEquals(existingPollsVoteModelImpl.getUserId(),
@@ -286,6 +300,10 @@ public class PollsVotePersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		PollsVote pollsVote = _persistence.create(pk);
+
+		pollsVote.setUuid(ServiceTestUtil.randomString());
+
+		pollsVote.setGroupId(ServiceTestUtil.nextLong());
 
 		pollsVote.setCompanyId(ServiceTestUtil.nextLong());
 

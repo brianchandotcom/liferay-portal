@@ -31,7 +31,9 @@ public class PollsVoteSoap implements Serializable {
 	public static PollsVoteSoap toSoapModel(PollsVote model) {
 		PollsVoteSoap soapModel = new PollsVoteSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setVoteId(model.getVoteId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -92,12 +94,28 @@ public class PollsVoteSoap implements Serializable {
 		setVoteId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getVoteId() {
 		return _voteId;
 	}
 
 	public void setVoteId(long voteId) {
 		_voteId = voteId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public long getCompanyId() {
@@ -164,7 +182,9 @@ public class PollsVoteSoap implements Serializable {
 		_voteDate = voteDate;
 	}
 
+	private String _uuid;
 	private long _voteId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

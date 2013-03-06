@@ -26,6 +26,7 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeJournal;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoardsAttachments;
+import com.liferay.portal.upgrade.v6_2_0.UpgradePolls;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
@@ -57,6 +58,7 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeMessageBoardsAttachments.class);
+		upgrade(UpgradePolls.class);
 		upgrade(UpgradePortletPreferences.class);
 		upgrade(UpgradeRepositoryEntry.class);
 		upgrade(UpgradeSocial.class);

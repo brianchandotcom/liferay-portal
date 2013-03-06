@@ -69,11 +69,15 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity name="PollsVote" local-service="true" remote-service="true">
+	<entity name="PollsVote" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
 		<column name="voteId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 

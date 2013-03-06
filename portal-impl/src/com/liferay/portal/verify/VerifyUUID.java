@@ -104,6 +104,9 @@ public class VerifyUUID extends VerifyProcess {
 			"MBThreadFlag", "threadFlagId"
 		},
 		new String[] {
+			"PollsVote", "voteId"
+		},
+		new String[] {
 			"WikiPageResource", "resourcePrimKey"
 		}
 	};

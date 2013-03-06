@@ -3058,6 +3058,10 @@
 	<mapped-superclass class="com.liferay.portlet.polls.model.impl.PollsVoteModelImpl">
 		<attributes>
 			<id name="voteId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />

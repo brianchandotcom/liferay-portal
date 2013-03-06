@@ -75,17 +75,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[4]</td>
+	<td>URL and type are required fields.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[4]</td>
+	<td>URL and type are required fields.</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//div[@role='alert'])</td>
+	<td>Please enter a valid URL.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[1]</td>
-	<td>Your request failed to complete.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-error'])[2]</td>
+	<td>xPath=(//div[@role='alert'])</td>
 	<td>Please enter a valid URL.</td>
 </tr>
 </tbody></table>

@@ -121,8 +121,8 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 				"Mail Host Names"));
 		assertTrue(selenium.isPartialText(
 				"//a[@id='_130_emailNotificationsLink']", "Email Notifications"));
-		assertTrue(selenium.isPartialText("//a[@id='_130_recycleBinLink']",
-				"Recycle Bin"));
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_130_contentSharingLink']", "Content Sharing"));
 		assertEquals(RuntimeVariables.replace("Identification"),
 			selenium.getText(
 				"//div[@class='menu-group']/h3[contains(.,'Identification')]"));

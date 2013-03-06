@@ -31,6 +31,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.util.PortalUtil;
@@ -390,7 +391,12 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				toName = role.getName();
 
-				params.put("usersRoles", classPK);
+				if (role.getType() == RoleConstants.TYPE_REGULAR) {
+					params.put("usersRoles", classPK);
+				}
+				else {
+					params.put("userGroupRoleByRoleId", classPK);
+				}
 			}
 			else if (className.equals(UserGroup.class.getName())) {
 				UserGroup userGroup = userGroupPersistence.findByPrimaryKey(

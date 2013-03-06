@@ -146,6 +146,10 @@ public class DLAppHelperLocalServiceImpl
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
+		}
+
 		updateAsset(
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
@@ -312,6 +316,10 @@ public class DLAppHelperLocalServiceImpl
 
 	public void deleteFolder(Folder folder)
 		throws PortalException, SystemException {
+
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
+		}
 
 		// Sync
 

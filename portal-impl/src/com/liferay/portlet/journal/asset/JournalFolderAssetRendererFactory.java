@@ -62,6 +62,11 @@ public class JournalFolderAssetRendererFactory
 	}
 
 	@Override
+	public boolean isCategorizable() {
+		return _CATEGORIZABLE;
+	}
+
+	@Override
 	public boolean isLinkable() {
 		return _LINKABLE;
 	}
@@ -70,6 +75,8 @@ public class JournalFolderAssetRendererFactory
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
+
+	private static final boolean _CATEGORIZABLE = false;
 
 	private static final boolean _LINKABLE = true;
 

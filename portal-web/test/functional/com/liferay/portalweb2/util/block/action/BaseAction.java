@@ -14,8 +14,23 @@
 
 package com.liferay.portalweb2.util.block.action;
 
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
 public class BaseAction {
+
+	public BaseAction(LiferaySelenium liferaySelenium) {
+		this.liferaySelenium = liferaySelenium;
+
+		paths = new HashMap<String, String>();
+	}
+
+	protected LiferaySelenium liferaySelenium;
+	protected Map<String, String> paths;
+
 }

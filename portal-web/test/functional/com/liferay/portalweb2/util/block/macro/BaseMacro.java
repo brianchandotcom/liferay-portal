@@ -14,8 +14,17 @@
 
 package com.liferay.portalweb2.util.block.macro;
 
+import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+
 /**
  * @author Michael Hashimoto
  */
 public class BaseMacro {
+
+	public BaseMacro(LiferaySelenium liferaySelenium) {
+		selenium = liferaySelenium;
+	}
+
+	protected LiferaySelenium selenium;
+
 }

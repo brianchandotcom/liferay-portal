@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.webdav;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.BaseResourceImpl;
@@ -32,6 +34,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +49,52 @@ public class DDMWebDavUtil {
 	public static final String TYPE_STRUCTURES = "Structures";
 
 	public static final String TYPE_TEMPLATES = "Templates";
+
+	public static int addResource(WebDAVRequest webDavRequest, long classNameId)
+		throws Exception {
+
+		String[] pathArray = webDavRequest.getPathArray();
+
+		if (pathArray.length != 4) {
+			return HttpServletResponse.SC_FORBIDDEN;
+		}
+
+		String type = pathArray[2];
+		String journalTypeId = pathArray[3];
+
+		if (type.equals(TYPE_STRUCTURES)) {
+			HttpServletRequest request = webDavRequest.getHttpServletRequest();
+
+			String xsd = StringUtil.read(request.getInputStream());
+
+			String defaultLocale = LocalizationUtil.getDefaultLocale(xsd);
+
+			Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+			nameMap.put(
+				LocaleUtil.fromLanguageId(defaultLocale), journalTypeId);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			DDMStructureLocalServiceUtil.addStructure(
+				webDavRequest.getUserId(), webDavRequest.getGroupId(),
+				classNameId, nameMap, null, xsd, serviceContext);
+
+			return HttpServletResponse.SC_CREATED;
+		}
+		else if (type.equals(TYPE_TEMPLATES)) {
+
+			// DDM Templates can not be added via WebDav because there is no
+			// way to know the associated className or classPK
+
+			return HttpServletResponse.SC_FORBIDDEN;
+		}
+
+		return HttpServletResponse.SC_FORBIDDEN;
+	}
 
 	public static int deleteResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
@@ -171,7 +223,7 @@ public class DDMWebDavUtil {
 				webDAVRequest, rootPath, token, classNameId);
 
 			if (resource == null) {
-				return HttpServletResponse.SC_NOT_FOUND;
+				return addResource(webDAVRequest, classNameId);
 			}
 
 			Object model = resource.getModel();

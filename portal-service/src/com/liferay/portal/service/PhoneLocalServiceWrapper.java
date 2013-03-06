@@ -275,14 +275,14 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public PhoneLocalService getWrappedPhoneLocalService() {
 		return _phoneLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedPhoneLocalService(PhoneLocalService phoneLocalService) {
 		_phoneLocalService = phoneLocalService;

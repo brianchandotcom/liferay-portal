@@ -670,7 +670,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ExpandoValue getWrappedExpandoValue() {
 		return _expandoValue;

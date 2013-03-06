@@ -93,14 +93,14 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public SCProductEntryService getWrappedSCProductEntryService() {
 		return _scProductEntryService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedSCProductEntryService(
 		SCProductEntryService scProductEntryService) {

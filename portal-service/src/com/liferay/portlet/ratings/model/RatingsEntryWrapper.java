@@ -417,7 +417,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public RatingsEntry getWrappedRatingsEntry() {
 		return _ratingsEntry;

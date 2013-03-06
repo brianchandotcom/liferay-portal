@@ -58,14 +58,14 @@ public class PluginSettingServiceWrapper implements PluginSettingService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public PluginSettingService getWrappedPluginSettingService() {
 		return _pluginSettingService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedPluginSettingService(
 		PluginSettingService pluginSettingService) {

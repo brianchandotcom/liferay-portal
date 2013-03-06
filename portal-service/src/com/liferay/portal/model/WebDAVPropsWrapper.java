@@ -374,7 +374,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public WebDAVProps getWrappedWebDAVProps() {
 		return _webDAVProps;

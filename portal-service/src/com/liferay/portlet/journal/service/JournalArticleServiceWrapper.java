@@ -600,14 +600,14 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public JournalArticleService getWrappedJournalArticleService() {
 		return _journalArticleService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedJournalArticleService(
 		JournalArticleService journalArticleService) {

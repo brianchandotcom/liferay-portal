@@ -89,14 +89,14 @@ public class AddressServiceWrapper implements AddressService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AddressService getWrappedAddressService() {
 		return _addressService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAddressService(AddressService addressService) {
 		_addressService = addressService;

@@ -63,14 +63,14 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public RatingsEntryService getWrappedRatingsEntryService() {
 		return _ratingsEntryService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedRatingsEntryService(
 		RatingsEntryService ratingsEntryService) {

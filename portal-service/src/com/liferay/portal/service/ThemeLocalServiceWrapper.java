@@ -111,14 +111,14 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ThemeLocalService getWrappedThemeLocalService() {
 		return _themeLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedThemeLocalService(ThemeLocalService themeLocalService) {
 		_themeLocalService = themeLocalService;

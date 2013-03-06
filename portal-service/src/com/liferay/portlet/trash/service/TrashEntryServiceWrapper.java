@@ -101,14 +101,14 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public TrashEntryService getWrappedTrashEntryService() {
 		return _trashEntryService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;

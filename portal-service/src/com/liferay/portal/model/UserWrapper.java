@@ -1558,7 +1558,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public User getWrappedUser() {
 		return _user;

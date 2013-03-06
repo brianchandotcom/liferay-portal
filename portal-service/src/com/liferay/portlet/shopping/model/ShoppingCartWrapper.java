@@ -482,7 +482,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ShoppingCart getWrappedShoppingCart() {
 		return _shoppingCart;

@@ -48,14 +48,14 @@ public class AccountServiceWrapper implements AccountService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public AccountService getWrappedAccountService() {
 		return _accountService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedAccountService(AccountService accountService) {
 		_accountService = accountService;

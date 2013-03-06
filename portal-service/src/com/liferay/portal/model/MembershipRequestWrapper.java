@@ -447,7 +447,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public MembershipRequest getWrappedMembershipRequest() {
 		return _membershipRequest;

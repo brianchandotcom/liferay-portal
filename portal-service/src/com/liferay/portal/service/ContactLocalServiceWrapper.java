@@ -293,14 +293,14 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ContactLocalService getWrappedContactLocalService() {
 		return _contactLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedContactLocalService(
 		ContactLocalService contactLocalService) {

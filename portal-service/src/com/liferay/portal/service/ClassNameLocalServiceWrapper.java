@@ -289,14 +289,14 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ClassNameLocalService getWrappedClassNameLocalService() {
 		return _classNameLocalService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {

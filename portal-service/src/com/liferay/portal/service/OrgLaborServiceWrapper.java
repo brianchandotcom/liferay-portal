@@ -89,14 +89,14 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public OrgLaborService getWrappedOrgLaborService() {
 		return _orgLaborService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedOrgLaborService(OrgLaborService orgLaborService) {
 		_orgLaborService = orgLaborService;

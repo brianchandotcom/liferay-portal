@@ -57,14 +57,14 @@ public class ThemeServiceWrapper implements ThemeService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ThemeService getWrappedThemeService() {
 		return _themeService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedThemeService(ThemeService themeService) {
 		_themeService = themeService;

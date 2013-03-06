@@ -291,7 +291,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ShoppingItemField getWrappedShoppingItemField() {
 		return _shoppingItemField;

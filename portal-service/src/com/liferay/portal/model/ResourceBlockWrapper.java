@@ -305,7 +305,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ResourceBlock getWrappedResourceBlock() {
 		return _resourceBlock;

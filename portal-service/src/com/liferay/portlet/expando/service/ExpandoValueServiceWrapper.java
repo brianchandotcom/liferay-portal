@@ -104,14 +104,14 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ExpandoValueService getWrappedExpandoValueService() {
 		return _expandoValueService;
 	}
 
 	/**
-	 * @deprecated Renamed to {@link #setWrappedService}
+	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
 	public void setWrappedExpandoValueService(
 		ExpandoValueService expandoValueService) {

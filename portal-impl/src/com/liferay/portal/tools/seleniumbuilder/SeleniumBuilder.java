@@ -88,6 +88,18 @@ public class SeleniumBuilder {
 				pathConverter.convert(pathName);
 			}
 		}
+
+		if (types.contains("testcase")) {
+			TestCaseConverter testCaseConverter = new TestCaseConverter(
+				seleniumBuilderContext);
+
+			Set<String> testCaseNames =
+				seleniumBuilderContext.getTestCaseNames();
+
+			for (String testCaseName : testCaseNames) {
+				testCaseConverter.convert(testCaseName);
+			}
+		}
 	}
 
 }

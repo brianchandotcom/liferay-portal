@@ -372,12 +372,6 @@ public class RoleLocalServiceUtil {
 		getService().addUserRoles(userId, roleIds);
 	}
 
-	public static void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkMembershipPolicy(user);
-	}
-
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
 	* in each company.
@@ -622,6 +616,46 @@ public class RoleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTeamRole(companyId, teamId);
+	}
+
+	/**
+	* Returns a range of all the roles of the type.
+	*
+	* @param type the role's type (optionally <code>0</code>)
+	* @return the range of the roles of the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Role> getTypeRoles(
+		int type) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTypeRoles(type);
+	}
+
+	/**
+	* Returns a range of all the roles of the type.
+	*
+	* @param type the role's type (optionally <code>0</code>)
+	* @param start the lower bound of the range of roles to return
+	* @param end the upper bound of the range of roles to return (not
+	inclusive)
+	* @return the range of the roles of the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Role> getTypeRoles(
+		int type, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTypeRoles(type, start, end);
+	}
+
+	/**
+	* Returns the number of roles of the type.
+	*
+	* @param type the role's type (optionally <code>0</code>)
+	* @return the number of roles of the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getTypeRolesCount(int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTypeRolesCount(type);
 	}
 
 	/**

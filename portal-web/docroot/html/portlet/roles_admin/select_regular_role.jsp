@@ -81,7 +81,7 @@ if (selUser != null) {
 			<%
 			String rowHREF = null;
 
-			if (MembershipPolicyUtil.isMembershipAllowed(role, selUser)) {
+			if (RoleMembershipPolicyUtil.isRoleAllowed(selUser.getUserId(), role.getRoleId())) {
 				StringBundler sb = new StringBundler(8);
 
 				sb.append("javascript:opener.");

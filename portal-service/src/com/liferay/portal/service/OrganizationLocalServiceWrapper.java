@@ -337,12 +337,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			organizationIds);
 	}
 
-	public void checkMembershipPolicy(com.liferay.portal.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_organizationLocalService.checkMembershipPolicy(user);
-	}
-
 	/**
 	* Deletes the logo of the organization.
 	*

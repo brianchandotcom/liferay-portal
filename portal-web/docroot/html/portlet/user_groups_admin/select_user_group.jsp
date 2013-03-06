@@ -80,7 +80,7 @@ if (selUser != null) {
 			<%
 			String rowHREF = null;
 
-			if (MembershipPolicyUtil.isMembershipAllowed(userGroup, selUser)) {
+			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), userGroup.getUserGroupId())) {
 				StringBundler sb = new StringBundler(10);
 
 				sb.append("javascript:opener.");

@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-
-import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -56,16 +54,20 @@ public class UserRoleChecker extends RowChecker {
 	public boolean isDisabled(Object obj) {
 		User user = (User)obj;
 
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(user);
+		try {
+			if ((!isChecked(user) &&
+				!RoleMembershipPolicyUtil.isRoleAllowed(
+					user.getUserId(), _role.getRoleId())) ||
+				(isChecked(user) &&
+				RoleMembershipPolicyUtil.isRoleRequired(
+					user.getUserId(), _role.getRoleId()))) {
 
-		if ((isChecked(user) && mandatoryRoles.contains(_role)) ||
-			(!isChecked(user) &&
-			 !MembershipPolicyUtil.isMembershipAllowed(_role, user))) {
-
-			return true;
+				return true;
+			}
 		}
-
-		return super.isDisabled(obj);
+		finally {
+			return super.isDisabled(obj);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserRoleChecker.class);

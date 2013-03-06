@@ -28,6 +28,7 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -37,11 +38,17 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+
+import java.io.Serializable;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the organization remote service.
@@ -204,9 +211,13 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 					"an organization with parent " + parentOrganizationId);
 		}
 
-		return organizationLocalService.addOrganization(
+		Organization organization = organizationLocalService.addOrganization(
 			getUserId(), parentOrganizationId, name, type, recursable, regionId,
 			countryId, statusId, comments, site, serviceContext);
+
+		OrganizationMembershipPolicyUtil.verifyPolicy(organization);
+
+		return organization;
 	}
 
 	/**
@@ -550,8 +561,11 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			List<Website> websites, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
 		OrganizationPermissionUtil.check(
-			getPermissionChecker(), organizationId, ActionKeys.UPDATE);
+			getPermissionChecker(), organization, ActionKeys.UPDATE);
 
 		if (addresses != null) {
 			UsersAdminUtil.updateAddresses(
@@ -579,10 +593,30 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		User user = getUser();
 
-		return organizationLocalService.updateOrganization(
+		Organization oldOrganization = organization;
+
+		List<AssetCategory> oldAssetCategories =
+			assetCategoryLocalService.getCategories(
+				Organization.class.getName(), organizationId);
+
+		List<AssetTag> oldAssetTags = assetTagLocalService.getTags(
+			Organization.class.getName(), organizationId);
+
+		ExpandoBridge oldExpandoBridge = oldOrganization.getExpandoBridge();
+
+		Map<String, Serializable> oldExpandoAttributes =
+			oldExpandoBridge.getAttributes();
+
+		organization = organizationLocalService.updateOrganization(
 			user.getCompanyId(), organizationId, parentOrganizationId, name,
 			type, recursable, regionId, countryId, statusId, comments, site,
 			serviceContext);
+
+		OrganizationMembershipPolicyUtil.verifyPolicy(
+			organization, oldOrganization, oldAssetCategories, oldAssetTags,
+			oldExpandoAttributes);
+
+		return organization;
 	}
 
 	/**

@@ -158,6 +158,73 @@ public class SourceFormatter {
 		}
 	}
 
+	public static String stripJavaImports(
+			String content, String packageDir, String className)
+		throws IOException {
+
+		Matcher matcher = _javaImportPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String imports = matcher.group();
+
+		Set<String> classes = ClassUtil.getClasses(
+			new UnsyncStringReader(content), className);
+
+		StringBundler sb = new StringBundler();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("import ")) {
+				int importX = line.indexOf(" ");
+				int importY = line.lastIndexOf(".");
+
+				String importPackage = line.substring(importX + 1, importY);
+				String importClass = line.substring(
+					importY + 1, line.length() - 1);
+
+				if (!packageDir.equals(importPackage)) {
+					if (!importClass.equals("*")) {
+						if (classes.contains(importClass)) {
+							sb.append(line);
+							sb.append("\n");
+						}
+					}
+					else {
+						sb.append(line);
+						sb.append("\n");
+					}
+				}
+			}
+		}
+
+		imports = _formatImports(sb.toString(), 7);
+
+		content =
+			content.substring(0, matcher.start()) + imports +
+				content.substring(matcher.end());
+
+		// Ensure a blank line exists between the package and the first import
+
+		content = content.replaceFirst(
+			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
+
+		// Ensure a blank line exists between the last import (or package if
+		// there are no imports) and the class comment
+
+		content = content.replaceFirst(
+			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
+			"$1\n\n/**");
+
+		return content;
+	}
+
 	public SourceFormatter(boolean useProperties, boolean throwException)
 		throws Exception {
 
@@ -228,73 +295,6 @@ public class SourceFormatter {
 		if (_throwException && !_errorMessages.isEmpty()) {
 			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 		}
-	}
-
-	public static String stripJavaImports(
-			String content, String packageDir, String className)
-		throws IOException {
-
-		Matcher matcher = _javaImportPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String imports = matcher.group();
-
-		Set<String> classes = ClassUtil.getClasses(
-			new UnsyncStringReader(content), className);
-
-		StringBundler sb = new StringBundler();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains("import ")) {
-				int importX = line.indexOf(" ");
-				int importY = line.lastIndexOf(".");
-
-				String importPackage = line.substring(importX + 1, importY);
-				String importClass = line.substring(
-					importY + 1, line.length() - 1);
-
-				if (!packageDir.equals(importPackage)) {
-					if (!importClass.equals("*")) {
-						if (classes.contains(importClass)) {
-							sb.append(line);
-							sb.append("\n");
-						}
-					}
-					else {
-						sb.append(line);
-						sb.append("\n");
-					}
-				}
-			}
-		}
-
-		imports = _formatImports(sb.toString(), 7);
-
-		content =
-			content.substring(0, matcher.start()) + imports +
-				content.substring(matcher.end());
-
-		// Ensure a blank line exists between the package and the first import
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		// Ensure a blank line exists between the last import (or package if
-		// there are no imports) and the class comment
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
-
-		return content;
 	}
 
 	private static void _addJSPIncludeFileNames(

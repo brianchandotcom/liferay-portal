@@ -153,6 +153,8 @@ public class SimpleCaptchaImpl implements Captcha {
 		portletSession.setAttribute(
 			WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
 
+		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
+
 		CaptchaServletUtil.writeImage(
 			resourceResponse.getPortletOutputStream(),
 			simpleCaptcha.getImage());

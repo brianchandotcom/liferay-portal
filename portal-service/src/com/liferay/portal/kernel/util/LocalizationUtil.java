@@ -27,6 +27,8 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Alexander Chow
  * @author Jorge Ferrer
@@ -74,6 +76,13 @@ public class LocalizationUtil {
 
 		return getLocalization().getLocalization(
 			xml, requestedLanguageId, useDefault);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
+		HttpServletRequest httpServletRequest, String parameter) {
+
+		return getLocalization().getLocalizationMap(
+			httpServletRequest, parameter);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

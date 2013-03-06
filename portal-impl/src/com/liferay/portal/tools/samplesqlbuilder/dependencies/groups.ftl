@@ -11,8 +11,6 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
 	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
 
-	<#assign publicPageCount = publicLayouts?size>
-
 	<#list publicLayouts as publicLayout >
 		${sampleSQLBuilder.insertLayout(publicLayout)}
 	</#list>
@@ -30,6 +28,8 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 	<#include "mb.ftl">
 
 	<#include "wiki.ftl">
+
+	<#assign publicPageCount = publicLayouts?size + maxDDLRecordSetCount + maxJournalArticleCount>
 
 	${sampleSQLBuilder.insertGroup(group, publicPageCount)}
 </#list>

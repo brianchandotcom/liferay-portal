@@ -77,11 +77,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 		</liferay-ui:search-container-column-text>
 
-		<%
-		Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(selUser);
-		%>
-
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !mandatoryGroups.contains(group) && !MembershipPolicyUtil.isMembershipProtected(permissionChecker, group, selUser) %>">
+		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 			</liferay-ui:search-container-column-text>

@@ -419,7 +419,9 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetVocabulary" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsStatsUser" />
@@ -1041,7 +1043,9 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="OrgGroupRole" local-service="false" remote-service="false">
@@ -1767,6 +1771,9 @@
 		</finder>
 		<finder name="Name" return-type="Collection">
 			<finder-column name="name" />
+		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
 		</finder>
 		<finder name="Subtype" return-type="Collection">
 			<finder-column name="subtype" />

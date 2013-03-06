@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.membershippolicy;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
-public interface MembershipPolicyFactory {
+public interface SiteMembershipPolicyFactory {
 
-	public MembershipPolicy getMembershipPolicy();
+	public SiteMembershipPolicy getSiteMembershipPolicy();
 
 }

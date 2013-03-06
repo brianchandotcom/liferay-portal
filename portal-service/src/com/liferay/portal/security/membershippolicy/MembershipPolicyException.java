@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
@@ -29,25 +29,21 @@ import java.util.List;
  */
 public class MembershipPolicyException extends PortalException {
 
-	public static final int GROUP_MEMBERSHIP_NOT_ALLOWED = 1;
+	public static final int ORGANIZATION_MEMBERSHIP_NOT_ALLOWED = 1;
 
-	public static final int GROUP_MEMBERSHIP_REQUIRED = 2;
+	public static final int ORGANIZATION_MEMBERSHIP_REQUIRED = 2;
 
-	public static final int ORGANIZATION_MEMBERSHIP_NOT_ALLOWED = 3;
+	public static final int ROLE_MEMBERSHIP_NOT_ALLOWED = 3;
 
-	public static final int ORGANIZATION_MEMBERSHIP_REQUIRED = 4;
+	public static final int ROLE_MEMBERSHIP_REQUIRED = 4;
 
-	public static final int ROLE_MEMBERSHIP_NOT_ALLOWED = 5;
+	public static final int SITE_MEMBERSHIP_NOT_ALLOWED = 5;
 
-	public static final int ROLE_MEMBERSHIP_REQUIRED = 6;
+	public static final int SITE_MEMBERSHIP_REQUIRED = 6;
 
 	public static final int USER_GROUP_MEMBERSHIP_NOT_ALLOWED = 7;
 
 	public static final int USER_GROUP_MEMBERSHIP_REQUIRED = 8;
-
-	public static final int USER_MEMBERSHIP_NOT_ALLOWED = 9;
-
-	public static final int USER_MEMBERSHIP_REQUIRED = 10;
 
 	public MembershipPolicyException(int type) {
 		_type = type;

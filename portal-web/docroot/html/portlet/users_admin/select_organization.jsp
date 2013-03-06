@@ -128,7 +128,7 @@ if (selUser != null) {
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= MembershipPolicyUtil.isMembershipAllowed(organization, selUser) %>">
+				<c:if test="<%= OrganizationMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), organization.getOrganizationId()) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

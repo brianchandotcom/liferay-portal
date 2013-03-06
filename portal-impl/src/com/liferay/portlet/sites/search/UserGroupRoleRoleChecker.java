@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-
-import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -60,18 +60,29 @@ public class UserGroupRoleRoleChecker extends RowChecker {
 	public boolean isDisabled(Object obj) {
 		Role role = (Role)obj;
 
-		Set<Role> mandatoryRoles = MembershipPolicyUtil.getMandatoryRoles(
-			_group, _user);
+		try {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-		if ((isChecked(role) && mandatoryRoles.contains(role)) ||
-			(!isChecked(role) &&
-			 !MembershipPolicyUtil.isMembershipAllowed(
-				_group, role, _user))) {
+			if ((!isChecked(role) &&
+				!SiteMembershipPolicyUtil.isRoleAllowed(
+					_user.getUserId(), _group.getGroupId(),
+					role.getRoleId())) ||
+				(isChecked(role) &&
+				SiteMembershipPolicyUtil.isRoleProtected(
+					permissionChecker, _user.getUserId(), _group.getGroupId(),
+					role.getRoleId())) ||
+				(isChecked(role) &&
+				SiteMembershipPolicyUtil.isRoleRequired(
+					_user.getUserId(), _group.getGroupId(),
+					role.getRoleId()))) {
 
-			return true;
+				return true;
+			}
 		}
-
-		return super.isDisabled(obj);
+		finally {
+			return super.isDisabled(obj);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

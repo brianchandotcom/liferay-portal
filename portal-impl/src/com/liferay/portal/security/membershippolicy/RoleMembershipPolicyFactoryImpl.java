@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,44 +24,48 @@ import com.liferay.portal.util.PropsValues;
 /**
  * @author Sergio González
  * @author Shuyang Zhou
+ * @author Roberto Díaz
  */
-public class MembershipPolicyFactoryImpl implements MembershipPolicyFactory {
+public class RoleMembershipPolicyFactoryImpl
+	implements RoleMembershipPolicyFactory {
 
 	public void afterPropertiesSet() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.USERS_MEMBERSHIP_POLICY);
+			_log.debug("Instantiate " + PropsValues.MEMBERSHIP_POLICY_ROLES);
 		}
 
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		_originalMembershipPolicy =
-			(MembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.USERS_MEMBERSHIP_POLICY);
+			(RoleMembershipPolicy)InstanceFactory.newInstance(
+				classLoader, PropsValues.MEMBERSHIP_POLICY_ROLES);
 
 		_membershipPolicy = _originalMembershipPolicy;
 	}
 
-	public MembershipPolicy getMembershipPolicy() {
+	public RoleMembershipPolicy getRoleMembershipPolicy() {
 		return _membershipPolicy;
 	}
 
-	public void setMembershipPolicy(MembershipPolicy membershipPolicy) {
+	public void setMembershipPolicy(
+		RoleMembershipPolicy RolesMembershipPolicy) {
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(membershipPolicy));
+			_log.debug("Set " + ClassUtil.getClassName(RolesMembershipPolicy));
 		}
 
-		if (membershipPolicy == null) {
+		if (RolesMembershipPolicy == null) {
 			_membershipPolicy = _originalMembershipPolicy;
 		}
 		else {
-			_membershipPolicy = membershipPolicy;
+			_membershipPolicy = RolesMembershipPolicy;
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		MembershipPolicyFactory.class);
+		RoleMembershipPolicyFactory.class);
 
-	private static volatile MembershipPolicy _membershipPolicy;
-	private static MembershipPolicy _originalMembershipPolicy;
+	private static volatile RoleMembershipPolicy _membershipPolicy;
+	private static RoleMembershipPolicy _originalMembershipPolicy;
 
 }

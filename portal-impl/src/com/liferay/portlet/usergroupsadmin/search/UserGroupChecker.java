@@ -19,12 +19,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
-
-import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -68,32 +66,30 @@ public class UserGroupChecker extends RowChecker {
 	public boolean isDisabled(Object obj) {
 		User user = (User)obj;
 
-		Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(
-			user);
+		try {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-		if ((isChecked(user) && mandatoryGroups.contains(_group)) ||
-			(!isChecked(user) &&
-			 !MembershipPolicyUtil.isMembershipAllowed(_group, user))) {
+			if ((!isChecked(user) &&
+				!SiteMembershipPolicyUtil.isMembershipAllowed(
+					user.getUserId(), _group.getGroupId())) ||
+				(isChecked(user) &&
+				SiteMembershipPolicyUtil.isMembershipProtected(
+					permissionChecker, user.getUserId(),
+					_group.getGroupId())) ||
+				(isChecked(user) &&
+					SiteMembershipPolicyUtil.isMembershipRequired(
+						user.getUserId(), _group.getGroupId()))) {
 
-			return true;
-		}
-		else {
-			try {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
-				if (MembershipPolicyUtil.isMembershipProtected(
-						permissionChecker, _group, user)) {
-
-					return true;
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+				return true;
 			}
 		}
-
-		return super.isDisabled(obj);
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			return super.isDisabled(obj);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserGroupChecker.class);

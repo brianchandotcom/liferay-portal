@@ -69,7 +69,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.security.auth.MembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -96,7 +95,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The group local service is responsible for accessing, creating, modifying and
@@ -467,36 +465,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				Company.class.getName(), companyId,
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, GroupConstants.GLOBAL,
 				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, false, true, null);
-		}
-	}
-
-	public void checkMembershipPolicy(User user) throws SystemException {
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("inherit", Boolean.FALSE);
-		groupParams.put("site", Boolean.TRUE);
-		groupParams.put("usersGroups", user.getUserId());
-
-		List<Group> groups = search(
-			user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		for (Group group : groups) {
-			if (!MembershipPolicyUtil.isMembershipAllowed(group, user)) {
-				unsetUserGroups(
-					user.getUserId(), new long[] {group.getGroupId()});
-			}
-		}
-
-		Set<Group> mandatoryGroups = MembershipPolicyUtil.getMandatoryGroups(
-			user);
-
-		for (Group group : mandatoryGroups) {
-			if (!hasUserGroup(user.getUserId(), group.getGroupId(), false)) {
-				addUserGroups(
-					user.getUserId(), new long[] {group.getGroupId()});
-			}
 		}
 	}
 

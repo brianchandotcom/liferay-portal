@@ -128,7 +128,7 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 	</#list>
 
 	/**
-	 * @deprecated Renamed to {@link #getWrappedModel}
+	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
 	public ${entity.name} getWrapped${entity.name}() {
 		return _${entity.varName};

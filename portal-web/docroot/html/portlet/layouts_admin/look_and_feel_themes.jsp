@@ -31,7 +31,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 %>
 
 <div class="lfr-theme-list">
-	<div class="float-container lfr-current-theme" id="<%= device %>LookAndFeel">
+	<div class="float-container lfr-current-theme" id="<%= editable ? device : StringPool.BLANK %>LookAndFeel">
 		<h3><liferay-ui:message key="current-theme" /></h3>
 
 		<div>

@@ -270,7 +270,7 @@ public class ShoppingOrderItemLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(ShoppingOrderItemLocalService service) {
 	}

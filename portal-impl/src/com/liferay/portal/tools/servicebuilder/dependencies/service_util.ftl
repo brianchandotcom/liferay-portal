@@ -122,7 +122,7 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(${entity.name}${sessionTypeName}Service service) {
 	}

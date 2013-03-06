@@ -719,7 +719,7 @@ public class SocialActivityLimitUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(SocialActivityLimitPersistence persistence) {
 	}

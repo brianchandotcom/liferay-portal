@@ -818,7 +818,7 @@ public class ShoppingItemUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(ShoppingItemPersistence persistence) {
 	}

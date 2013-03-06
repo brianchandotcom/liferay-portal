@@ -393,7 +393,7 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(MDRRuleLocalService service) {
 	}

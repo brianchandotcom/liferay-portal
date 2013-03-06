@@ -2898,7 +2898,7 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(DLFolderPersistence persistence) {
 	}

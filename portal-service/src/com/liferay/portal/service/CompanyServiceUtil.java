@@ -433,7 +433,7 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(CompanyService service) {
 	}

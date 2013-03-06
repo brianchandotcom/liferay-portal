@@ -174,7 +174,7 @@ public class AssetEntryServiceUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setService(AssetEntryService service) {
 	}

@@ -518,7 +518,7 @@ public class PluginSettingUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(PluginSettingPersistence persistence) {
 	}

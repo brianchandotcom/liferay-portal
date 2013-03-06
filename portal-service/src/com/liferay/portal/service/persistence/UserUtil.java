@@ -3349,7 +3349,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 6.2.0
 	 */
 	public void setPersistence(UserPersistence persistence) {
 	}

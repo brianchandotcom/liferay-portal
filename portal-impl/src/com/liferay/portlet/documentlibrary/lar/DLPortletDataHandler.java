@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -959,7 +960,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		for (int i = 0; i < dlFileEntryTypes.size(); i++) {
 			DLFileEntryType dlFileEntryType = dlFileEntryTypes.get(i);
 
-			if (dlFileEntryType.getFileEntryTypeId() == 0) {
+			if (dlFileEntryType.getFileEntryTypeId() ==
+					DLFileEntryTypeConstants.
+						FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
 				fileEntryTypeUuids[i] = "@basic_document@";
 			}
 			else {
@@ -972,7 +976,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				defaultFileEntryTypeUuid = dlFileEntryType.getUuid();
 			}
 
-			if (isFileEntryTypeExportable(dlFileEntryType)) {
+			if (dlFileEntryType.isExportable()) {
 				exportFileEntryType(
 					portletDataContext, fileEntryTypesElement, dlFileEntryType);
 			}
@@ -1010,7 +1014,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		fileEntryElement.addAttribute(
 			"fileEntryTypeUuid", dlFileEntryType.getUuid());
 
-		if (!isFileEntryTypeExportable(dlFileEntryType)) {
+		if (!dlFileEntryType.isExportable()) {
 			return;
 		}
 
@@ -1786,16 +1790,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
-	protected static boolean isFileEntryTypeExportable(
-		DLFileEntryType dlFileEntryType) {
-
-		if (dlFileEntryType.getFileEntryTypeId() == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	protected static boolean isFileEntryTypeGlobal(
 			long companyId, DLFileEntryType dlFileEntryType)
 		throws PortalException, SystemException {
@@ -1870,7 +1864,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				});
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			if (!isFileEntryTypeExportable(dlFileEntryType)) {
+			if (!dlFileEntryType.isExportable()) {
 				continue;
 			}
 

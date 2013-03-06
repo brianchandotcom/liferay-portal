@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 /**
  * @author Alexander Chow
+ * @author Mate Thurzo
  */
 public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 
@@ -31,6 +33,16 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	public List<DDMStructure> getDDMStructures() throws SystemException {
 		return DDMStructureLocalServiceUtil.getDLFileEntryTypeStructures(
 			getFileEntryTypeId());
+	}
+
+	public boolean isExportable() {
+		if (getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

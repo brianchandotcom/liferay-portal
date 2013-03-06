@@ -433,6 +433,10 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		return _dlFileEntryType.getDDMStructures();
 	}
 
+	public boolean isExportable() {
+		return _dlFileEntryType.isExportable();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

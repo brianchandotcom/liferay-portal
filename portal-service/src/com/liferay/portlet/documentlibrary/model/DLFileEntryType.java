@@ -33,4 +33,6 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 	 */
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public boolean isExportable();
 }

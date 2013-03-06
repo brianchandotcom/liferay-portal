@@ -41,6 +41,8 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -288,6 +290,27 @@ public class LocalizationImpl implements Localization {
 		_setCachedValue(xml, requestedLanguageId, useDefault, value);
 
 		return value;
+	}
+
+	public Map<Locale, String> getLocalizationMap(
+		HttpServletRequest httpServletRequest, String parameter) {
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		Map<Locale, String> map = new HashMap<Locale, String>();
+
+		for (Locale locale : locales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String localeParameter = parameter.concat(
+				StringPool.UNDERLINE).concat(languageId);
+
+			map.put(
+				locale,
+				ParamUtil.getString(httpServletRequest, localeParameter));
+		}
+
+		return map;
 	}
 
 	public Map<Locale, String> getLocalizationMap(

@@ -9,6 +9,7 @@ AUI.add(
 		var Util = Liferay.Util;
 
 		var owns = AObject.owns;
+		var toInt = Lang.toInt;
 
 		var ACTION_ADD = 0;
 
@@ -73,6 +74,10 @@ AUI.add(
 		var MESSAGE_TYPE_SUCCESS = 'success';
 
 		var MODE_RENDER_FLAT = 0;
+
+		var REGEX_TREE_NODE_ID = /(\d+)$/;
+
+		var REGEX_TREE_NODE_TYPE = /^(vocabulary|category)/;
 
 		var SELECTOR_BUTTON_CANCEL = '.aui-button-input-cancel';
 
@@ -378,9 +383,7 @@ AUI.add(
 							instance._categoriesTreeView = null;
 						}
 
-						var categoriesContainer = instance._categoriesContainer;
-
-						categoriesContainer.empty();
+						instance._categoriesContainer.empty();
 					},
 
 					_createCategoryFlatView: function(categories) {
@@ -389,12 +392,10 @@ AUI.add(
 						instance._clearCategoriesContainer();
 
 						if (categories.length) {
-							var buffer = [];
-
-							A.each(
+							var buffer = AArray.map(
 								categories,
 								function(item, index, collection) {
-									buffer.push(Lang.sub(TPL_CATEGORY_ITEM, item));
+									return Lang.sub(TPL_CATEGORY_ITEM, item);
 								}
 							);
 
@@ -428,7 +429,9 @@ AUI.add(
 						};
 
 						paginatorConfig.limit = 10;
+
 						paginatorConfig.moreResultsLabel = Liferay.Language.get('load-more-results');
+
 						paginatorConfig.total = instance._getVocabularyCategoriesCount(instance._vocabularies, instance._selectedVocabularyId);
 
 						instance._categoriesTreeView = new CategoriesTree(
@@ -1025,9 +1028,9 @@ AUI.add(
 							p_auth: Liferay.authToken
 						};
 
-						var assetId = instance._getTreeNodeAssetId(treeNode);
+						var assetId = instance._getTreeNodeId(treeNode, REGEX_TREE_NODE_ID);
 
-						var assetType = instance._getTreeNodeAssetType(treeNode);
+						var assetType = instance._getTreeNodeId(treeNode, REGEX_TREE_NODE_TYPE);
 
 						if (Lang.isValue(assetId)) {
 							if (assetType == 'category') {
@@ -1044,51 +1047,31 @@ AUI.add(
 					_formatJSONResult: function(json) {
 						var instance = this;
 
-						var result = [];
-
-						A.each(
+						return AArray.map(
 							json,
 							function(item, index, collection) {
 								var checked = false;
 
-								result.push(
-									{
-										id: STR_CATEGORY_NODE + item.categoryId,
-										label: Liferay.Util.escapeHTML(item.titleCurrentValue),
-										leaf: !item.hasChildren,
-										type: 'check',
-										on: {
-											checkedChange: function(event) {
-												if (event.newVal) {
-													instance._toggleAllVocabularies(false);
-												}
-											},
-											select: function(event) {
-												var categoryId = instance._getCategoryId(event.target);
-
-												instance._showCategoryViewContainer(categoryId);
+								return {
+									id: STR_CATEGORY_NODE + item.categoryId,
+									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
+									leaf: !item.hasChildren,
+									type: 'check',
+									on: {
+										checkedChange: function(event) {
+											if (event.newVal) {
+												instance._toggleAllVocabularies(false);
 											}
+										},
+										select: function(event) {
+											var categoryId = instance._getCategoryId(event.target);
+
+											instance._showCategoryViewContainer(categoryId);
 										}
 									}
-								);
+								};
 							}
 						);
-
-						return result;
-					},
-
-					_getTreeNodeAssetId: function(treeNode) {
-						var treeId = treeNode.get(ID);
-						var match = treeId.match(/(\d+)$/);
-
-						return (match ? match[1] : null);
-					},
-
-					_getTreeNodeAssetType: function(treeNode) {
-						var treeId = treeNode.get(ID);
-						var match = treeId.match(/^(vocabulary|category)/);
-
-						return (match ? match[1] : null);
 					},
 
 					_getCategory: function(categoryId) {
@@ -1284,12 +1267,22 @@ AUI.add(
 						return selectedCategoriesIds;
 					},
 
+					_getTreeNodeId: function(treeNode, regex) {
+						var instance = this;
+
+						var treeId = treeNode.get(ID);
+
+						var match = treeId.match(regex);
+
+						return match && match[1];
+					},
+
 					_getVocabularyCategoriesCount: function(vocabularies, vocabularyId) {
 						var instance = this;
 
 						var categoriesCount;
 
-						vocabularyId = Lang.toInt(vocabularyId);
+						vocabularyId = toInt(vocabularyId);
 
 						A.some(
 							vocabularies,
@@ -1397,14 +1390,14 @@ AUI.add(
 
 						Liferay.Service(
 							{
-								'$display = /assetvocabulary/get-group-vocabularies-display' : {
-									'groupId' : parentGroupId,
-									'name' : '',
-									'start' : start,
-									'end' : end,
-									'obc' : null,
-									'vocabularies.$categoriesCount = /assetcategory/get-vocabulary-root-categories-count' : {
-										'groupId' : parentGroupId,
+								'$display = /assetvocabulary/get-group-vocabularies-display': {
+									groupId: parentGroupId,
+									name: '',
+									start: start,
+									end: end,
+									obc: null,
+									'vocabularies.$categoriesCount = /assetcategory/get-vocabulary-root-categories-count': {
+										groupId: parentGroupId,
 										'@vocabularyId': '$display.vocabularies.vocabularyId'
 									}
 								}
@@ -1701,7 +1694,7 @@ AUI.add(
 						panelPermissionsChange._syncUIPosAlign();
 
 						if (instance._panelEdit) {
-							var zIndex = Lang.toInt(instance._panelEdit.get(STR_ZINDEX)) + 2;
+							var zIndex = toInt(instance._panelEdit.get(STR_ZINDEX)) + 2;
 
 							panelPermissionsChange.set(STR_ZINDEX, zIndex);
 						}
@@ -1714,7 +1707,7 @@ AUI.add(
 							var selectNode = instance._categoryFormAdd.one(SELECTOR_VOCABULARY_SELECT_LIST);
 
 							if (selectNode) {
-								selectedVocabularyId = Lang.toInt(selectedVocabularyId);
+								selectedVocabularyId = toInt(selectedVocabularyId);
 
 								selectNode.empty();
 
@@ -1781,7 +1774,7 @@ AUI.add(
 								errorKey = Liferay.Language.get('please-enter-a-valid-category-name');
 							}
 							else if ((exception.indexOf('CategoryPropertyKeyException') > -1) ||
-									 (exception.indexOf('CategoryPropertyValueException') > -1)) {
+									(exception.indexOf('CategoryPropertyValueException') > -1)) {
 
 								errorKey = Liferay.Language.get('one-of-your-property-fields-contains-invalid-characters');
 							}

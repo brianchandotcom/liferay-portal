@@ -56,6 +56,18 @@ public class SeleniumBuilderFileUtil {
 		return StringUtil.upperCaseFirstLetter(fileName.substring(x + 1));
 	}
 
+	public String getJavaFileName(String fileName) {
+		String classSuffix = getClassSuffix(fileName);
+
+		return getJavaFileName(fileName, classSuffix);
+	}
+
+	public String getJavaFileName(String fileName, String classSuffix) {
+		return
+			getPackagePath(fileName) + "/" +
+				getSimpleClassName(fileName, classSuffix) + ".java";
+	}
+
 	public String getName(String fileName) {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);

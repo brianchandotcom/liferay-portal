@@ -245,7 +245,7 @@ public class JournalArticleFinderTest {
 			2,
 			JournalArticleFinderUtil.countByG_U_F_C(
 				_group.getGroupId(), TestPropsValues.getUserId(),
-				Collections.EMPTY_LIST,
+				Collections.<Long>emptyList(),
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
@@ -253,7 +253,7 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(
 			1,
 			JournalArticleFinderUtil.countByG_U_F_C(
-				_group.getGroupId(), _USER_ID, Collections.EMPTY_LIST,
+				_group.getGroupId(), _USER_ID, Collections.<Long>emptyList(),
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -261,7 +261,7 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(
 			0,
 			JournalArticleFinderUtil.countByG_U_F_C(
-				_group.getGroupId(), _USER_ID, Collections.EMPTY_LIST,
+				_group.getGroupId(), _USER_ID, Collections.<Long>emptyList(),
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition));
 	}
 

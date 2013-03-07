@@ -309,7 +309,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		params.put("$new1 = /foo/bar", innerParam);
 
-		innerParam.put("$new2 = /foo/hello", Collections.EMPTY_MAP);
+		innerParam.put("$new2 = /foo/hello", Collections.emptyMap());
 
 		String json = toJSON(map);
 

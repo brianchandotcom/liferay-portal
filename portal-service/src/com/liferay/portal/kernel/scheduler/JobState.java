@@ -119,7 +119,7 @@ public class JobState implements Cloneable, Serializable {
 
 	public Map<String, Date> getTriggerDates() {
 		if (_triggerDates == null) {
-			return Collections.EMPTY_MAP;
+			return Collections.emptyMap();
 		}
 
 		return _triggerDates;

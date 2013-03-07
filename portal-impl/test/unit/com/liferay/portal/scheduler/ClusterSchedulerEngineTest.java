@@ -990,7 +990,7 @@ public class ClusterSchedulerEngineTest {
 					field.get(clusterSchedulerEngine);
 
 		if (memoryJobs.isEmpty()) {
-			return Collections.EMPTY_MAP;
+			return Collections.emptyMap();
 		}
 
 		Map<String, SchedulerResponse> schedulerResponses =
@@ -1275,7 +1275,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		public List<ClusterNode> getClusterNodes() {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 
 		public ClusterNode getLocalClusterNode() {

@@ -47,7 +47,6 @@ public class ListUtilTest extends TestCase {
 		Assert.assertEquals(expectedList, ListUtil.remove(list, removeList));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testRemoveFromEmptyList() {
 		List<String> removeList = new ArrayList<String>();
@@ -57,7 +56,7 @@ public class ListUtilTest extends TestCase {
 
 		Assert.assertEquals(
 			Collections.emptyList(),
-			ListUtil.remove(Collections.emptyList(), removeList));
+			ListUtil.remove(Collections.<String>emptyList(), removeList));
 	}
 
 	@Test
@@ -92,7 +91,8 @@ public class ListUtilTest extends TestCase {
 		expectedList.add("bbb");
 		expectedList.add("ccc");
 
-		Assert.assertEquals(expectedList, ListUtil.remove(list, null));
+		Assert.assertEquals(
+			expectedList, ListUtil.remove(list, (List<String>)null));
 	}
 
 	@Test

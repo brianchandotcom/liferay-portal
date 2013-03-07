@@ -48,7 +48,7 @@ class TransactionCommitCallbackUtil {
 
 			List<Callable<?>> callableList = callbackListList.get(index);
 
-			if (callableList == Collections.EMPTY_LIST) {
+			if (callableList == Collections.<Callable<?>>emptyList()) {
 				callableList = new ArrayList<Callable<?>>();
 
 				callbackListList.set(index, callableList);
@@ -69,7 +69,7 @@ class TransactionCommitCallbackUtil {
 		List<List<Callable<?>>> callbackListList =
 			_callbackListListThreadLocal.get();
 
-		callbackListList.add(Collections.EMPTY_LIST);
+		callbackListList.add(Collections.<Callable<?>>emptyList());
 	}
 
 	private static ThreadLocal<List<List<Callable<?>>>>

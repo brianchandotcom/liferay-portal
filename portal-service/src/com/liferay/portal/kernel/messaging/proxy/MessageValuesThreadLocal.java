@@ -39,7 +39,7 @@ public class MessageValuesThreadLocal {
 		Map<String, Object> messageValues = _messageValuesThreadLocal.get();
 
 		if (messageValues == null) {
-			return Collections.EMPTY_MAP;
+			return Collections.emptyMap();
 		}
 
 		return messageValues;

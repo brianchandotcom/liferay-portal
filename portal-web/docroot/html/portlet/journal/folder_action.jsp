@@ -122,7 +122,7 @@ else {
 					/>
 				</c:if>
 
-				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
+				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (JournalUtil.getEmailArticleAddedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalDeniedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalGrantedEnabled(portletPreferences) || JournalUtil.getEmailArticleApprovalRequestedEnabled(portletPreferences) || JournalUtil.getEmailArticleReviewEnabled(portletPreferences) || JournalUtil.getEmailArticleUpdatedEnabled(portletPreferences)) %>">
 					<c:choose>
 						<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
 							<portlet:actionURL var="unsubscribeURL">

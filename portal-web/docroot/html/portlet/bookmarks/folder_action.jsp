@@ -91,7 +91,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) %>">
+	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && (BookmarksUtil.getEmailEntryAddedEnabled(preferences) || BookmarksUtil.getEmailEntryUpdatedEnabled(preferences)) %>">
 		<c:choose>
 			<c:when test="<%= (folder == null) ? SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), scopeGroupId) : SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

@@ -98,7 +98,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 </c:if>
 
 <div class="subscribe-action">
-	<c:if test="<%= !portletName.equals(PortletKeys.RECENT_CONTENT) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) %>">
+	<c:if test="<%= !portletName.equals(PortletKeys.RECENT_CONTENT) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) && AssetPublisherUtil.getEmailAssetEntryAddedEnabled(preferences) %>">
 		<c:choose>
 			<c:when test="<%= AssetPublisherUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

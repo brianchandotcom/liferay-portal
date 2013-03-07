@@ -204,7 +204,7 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
 <div class="subscribe-action">
-	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) %>">
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && (DLUtil.getEmailFileEntryAddedEnabled(preferences) || DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) %>">
 
 		<%
 		boolean subscribed = false;

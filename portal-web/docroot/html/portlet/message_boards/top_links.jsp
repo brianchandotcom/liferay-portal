@@ -75,21 +75,23 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 						message="my-posts"
 						url='<%= topLink.equals("my-posts") ? StringPool.BLANK : portletURL.toString() %>'
 					/>
-				 </li>
+				</li>
 
-				 <li class="top-link">
+				<c:if test="<%= MBUtil.getEmailMessageAddedEnabled(preferences) || MBUtil.getEmailMessageUpdatedEnabled(preferences) %>">
+					<li class="top-link">
 
-					 <%
-					portletURL.setParameter("topLink", "my-subscriptions");
-					%>
+						 <%
+						portletURL.setParameter("topLink", "my-subscriptions");
+						%>
 
-					<liferay-ui:icon
-						image="../aui/signal-diag"
-						label="<%= true %>"
-						message="my-subscriptions"
-						url='<%= topLink.equals("my-subscriptions") ? StringPool.BLANK : portletURL.toString() %>'
-					/>
-				 </li>
+						<liferay-ui:icon
+							image="../aui/signal-diag"
+							label="<%= true %>"
+							message="my-subscriptions"
+							url='<%= topLink.equals("my-subscriptions") ? StringPool.BLANK : portletURL.toString() %>'
+						/>
+					 </li>
+				</c:if>
 			</c:if>
 
 			<li class="top-link <%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) ? StringPool.BLANK : "last" %>">

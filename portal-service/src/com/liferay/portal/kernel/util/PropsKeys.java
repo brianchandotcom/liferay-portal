@@ -1485,6 +1485,8 @@ public interface PropsKeys {
 
 	public static final String MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL = "mail.session.mail.transport.protocol";
 
+	public static final String MEMBERSHIP_POLICY_AUTO_VERIFY = "membership.policy.auto.verify";
+
 	public static final String MEMBERSHIP_POLICY_ORGANIZATIONS = "membership.policy.organizations";
 
 	public static final String MEMBERSHIP_POLICY_ROLES = "membership.policy.roles";

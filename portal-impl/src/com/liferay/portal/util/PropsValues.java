@@ -1052,6 +1052,8 @@ public class PropsValues {
 
 	public static final String MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL = PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL);
 
+	public static final boolean MEMBERSHIP_POLICY_AUTO_VERIFY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_AUTO_VERIFY));
+
 	public static final String MEMBERSHIP_POLICY_ORGANIZATIONS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_ORGANIZATIONS);
 
 	public static final String MEMBERSHIP_POLICY_SITES = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_SITES);

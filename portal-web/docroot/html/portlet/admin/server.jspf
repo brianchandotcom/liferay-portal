@@ -891,6 +891,14 @@ serverURL.setParameter("tabs3", tabs3);
 						</tr>
 						<tr>
 							<td>
+								<liferay-ui:message key="verify-membership-policies" />
+							</td>
+							<td>
+								<input onClick="<portlet:namespace />saveServer('verifyMembershipPolicies');" type="button" value="<liferay-ui:message key="execute" />" />
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" />
 							</td>
 							<td>

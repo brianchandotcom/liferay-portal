@@ -1905,7 +1905,9 @@ public class HookHotDeployListener
 			organizationMembershipPolicyFactoryImpl.
 				setOrganizationMembershipPolicy(organizationMembershipPolicy);
 
-			organizationMembershipPolicy.verifyPolicy();
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				organizationMembershipPolicy.verifyPolicy();
+			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {
@@ -1925,7 +1927,9 @@ public class HookHotDeployListener
 			roleMembershipPolicyFactoryImpl.setRoleMembershipPolicy(
 				roleMembershipPolicy);
 
-			roleMembershipPolicy.verifyPolicy();
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				roleMembershipPolicy.verifyPolicy();
+			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_SITES)) {
@@ -1945,7 +1949,9 @@ public class HookHotDeployListener
 			siteMembershipPolicyFactoryImpl.setSiteMembershipPolicy(
 				siteMembershipPolicy);
 
-			siteMembershipPolicy.verifyPolicy();
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				siteMembershipPolicy.verifyPolicy();
+			}
 		}
 
 		if (portalProperties.containsKey(
@@ -1969,7 +1975,9 @@ public class HookHotDeployListener
 			userGroupMembershipPolicyFactoryImpl.setUserGroupMembershipPolicy(
 				userGroupMembershipPolicy);
 
-			userGroupMembershipPolicy.verifyPolicy();
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				userGroupMembershipPolicy.verifyPolicy();
+			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {

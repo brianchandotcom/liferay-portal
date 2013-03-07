@@ -2660,16 +2660,11 @@ public class SourceFormatter {
 			directoryScanner.setExcludes(
 				new String[] {"**\\classes\\**", "**\\bin\\**"});
 			directoryScanner.setIncludes(
-				new String[] {
-					"**\\portal-ext.properties",
-					"**\\portal-legacy-*.properties",
-				});
+				new String[] {"**\\portal-legacy-*.properties"});
 		}
 		else {
 			directoryScanner.setIncludes(
-				new String[] {
-					"**\\portal.properties", "**\\portal-ext.properties"
-				});
+				new String[] {"**\\portal.properties"});
 		}
 
 		List<String> fileNames = _sourceFormatterHelper.scanForFiles(

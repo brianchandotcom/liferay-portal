@@ -46,20 +46,21 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a/strong", RuntimeVariables.replace("Pending"));
+		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),

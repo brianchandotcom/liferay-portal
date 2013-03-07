@@ -39,14 +39,15 @@ public class ApproveWebContentActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -55,17 +56,16 @@ public class ApproveWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]",
 			RuntimeVariables.replace("Approve"));
-		selenium.waitForVisible("//div[3]/span/span/button");
+		selenium.waitForVisible("//button[.='OK']");
 		assertEquals(RuntimeVariables.replace("OK"),
-			selenium.getText("//div[3]/span/span/button"));
-		selenium.clickAt("//div[3]/span/span/button",
-			RuntimeVariables.replace("OK"));
+			selenium.getText("//button[.='OK']"));
+		selenium.clickAt("//button[.='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
@@ -75,17 +75,18 @@ public class ApproveWebContentActionsTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[3]"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 	}
 }

@@ -31,6 +31,6 @@ public class Guest_ViewWebContentVersion2AssignedToMyRolesTest
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//div[@class='journal-content-article']/p"));
+			selenium.getText("//div[@class='journal-content-article']"));
 	}
 }

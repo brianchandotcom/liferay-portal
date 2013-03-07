@@ -64,7 +64,11 @@ public class CodeCoverageAssertor implements TestRule {
 					className = className.substring(0, className.length() - 4);
 				}
 
-				String[] includes = _generateIncludes(className);
+				String[] includes = _includes;
+
+				if (includes == null) {
+					_generateIncludes(className);
+				}
 
 				_dynamicallyInstrumentMethod.invoke(null, includes, _excludes);
 

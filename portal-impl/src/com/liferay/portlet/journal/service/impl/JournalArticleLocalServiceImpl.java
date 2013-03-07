@@ -611,6 +611,9 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
 		newArticle.setTitle(oldArticle.getTitle());
+		newArticle.setUrlTitle(
+			getUniqueUrlTitle(
+				id, groupId, newArticleId, oldArticle.getTitleCurrentValue()));
 		newArticle.setDescription(oldArticle.getDescription());
 
 		try {

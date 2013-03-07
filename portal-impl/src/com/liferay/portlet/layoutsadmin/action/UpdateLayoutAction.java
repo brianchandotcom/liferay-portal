@@ -33,6 +33,7 @@ import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -71,7 +72,8 @@ public class UpdateLayoutAction extends JSONAction {
 
 			jsonObj.put("deletable", Boolean.valueOf(array[2]));
 			jsonObj.put("layoutId", array[0]);
-			jsonObj.put("updateable", Boolean.valueOf(array[3]));
+			jsonObj.put("sortable", Boolean.valueOf(array[3]));
+			jsonObj.put("updateable", Boolean.valueOf(array[4]));
 			jsonObj.put("url", array[1]);
 		}
 		else if (cmd.equals("delete")) {
@@ -157,15 +159,18 @@ public class UpdateLayoutAction extends JSONAction {
 				themeDisplay.getDoAsUserLanguageId());
 		}
 
-		boolean updateable = SitesUtil.isLayoutUpdateable(layout);
-		boolean deleteable =
-			updateable &&
-			LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout, ActionKeys.DELETE);
+		boolean deleteable = LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.DELETE);
+		boolean sortable = GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout.getGroupId(),
+			ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(layout);
+		boolean updateable = LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 		return new String[] {
 			String.valueOf(layout.getLayoutId()), layoutURL,
-			String.valueOf(deleteable), String.valueOf(updateable)
+			String.valueOf(deleteable), String.valueOf(sortable),
+			String.valueOf(updateable)
 		};
 	}
 

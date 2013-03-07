@@ -852,6 +852,10 @@ public class SitesImpl implements Sites {
 		return true;
 	}
 
+	public boolean isLayoutSortable(Layout layout) {
+		return isLayoutDeleteable(layout);
+	}
+
 	public boolean isLayoutUpdateable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {

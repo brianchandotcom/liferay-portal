@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portal/layout/view/portlet_js.jspf" %>
 
-<%@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
-
 <aui:script position="inline">
 	Liferay.Util.addInputFocus();
 
@@ -122,15 +120,13 @@ if (layout != null) {
 							<%
 							for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
 								Layout curLayout = (Layout)layouts.get(i);
-
-								boolean updateable = SitesUtil.isLayoutUpdateable(curLayout);
-								boolean deleteable = updateable && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE);
 							%>
 
 								{
-									deletable: <%= deleteable %>,
+									deletable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE) %>,
 									id: <%= curLayout.getLayoutId() %>,
-									updateable: <%= updateable %>
+									sortable: <%= GroupPermissionUtil.contains(themeDisplay.getPermissionChecker(), scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
+									updateable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.UPDATE) %>
 								},
 
 							<%

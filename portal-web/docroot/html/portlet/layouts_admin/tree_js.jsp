@@ -200,7 +200,7 @@ if (!selectableTree) {
 							checked: true,
 						</c:if>
 
-						draggable: node.updateable,
+						draggable: node.sortable,
 						expanded: expanded,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
 						paginator: {
@@ -236,7 +236,7 @@ if (!selectableTree) {
 						}
 					}
 
-					if (!node.updateable) {
+					if (!node.sortable) {
 						newNode.cssClass = 'lfr-page-locked';
 					}
 
@@ -608,6 +608,15 @@ if (!selectableTree) {
 						TreeUtil.extractPlid(tree.dropNode),
 						index
 					);
+				},
+				'drop:hit': function(event) {
+					var dropNode = event.drop.get('node').get('parentNode');
+
+					var dropTreeNode = dropNode.getData('tree-node');
+
+					if (!dropTreeNode.get('draggable')) {
+						event.halt();
+					}
 				},
 				dropInsert: function(event) {
 					var tree = event.tree;

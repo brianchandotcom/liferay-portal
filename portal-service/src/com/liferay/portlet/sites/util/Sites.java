@@ -148,6 +148,8 @@ public interface Sites {
 
 	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet);
 
+	public boolean isLayoutSortable(Layout layout);
+
 	public boolean isLayoutUpdateable(Layout layout);
 
 	public boolean isOrganizationUser(

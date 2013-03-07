@@ -108,6 +108,10 @@ AUI.add(
 											cssClassBuffer.push('lfr-nav-deletable');
 										}
 
+										if (layoutConfig.sortable) {
+											cssClassBuffer.push('lfr-nav-sortable');
+										}
+
 										if (layoutConfig.updateable) {
 											cssClassBuffer.push('lfr-nav-updateable');
 										}
@@ -543,7 +547,7 @@ AUI.add(
 						{
 							container: navBlock,
 							moveType: 'move',
-							nodes: '.lfr-nav-updateable',
+							nodes: '.lfr-nav-sortable',
 							opacity: '.5',
 							opacityNode: 'currentNode'
 						}
@@ -727,8 +731,12 @@ AUI.add(
 
 							comboBox.destroy();
 
+							if (data.sortable) {
+								listItem.addClass('sortable-item lfr-nav-sortable');
+							}
+
 							if (data.updateable) {
-								listItem.addClass('sortable-item lfr-nav-updateable');
+								listItem.addClass('lfr-nav-updateable');
 							}
 
 							if (data.deletable) {

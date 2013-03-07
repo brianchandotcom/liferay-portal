@@ -59,8 +59,6 @@ public class SeleniumBuilderContext {
 						"Duplicate name " + actionName + " at " + fileName);
 				}
 
-				_actionNames.add(actionName);
-
 				_actionRootElements.put(actionName, _getRootElement(fileName));
 			}
 			else if (fileName.endsWith(".function")) {
@@ -119,6 +117,8 @@ public class SeleniumBuilderContext {
 
 				_actionClassNames.put(
 					pathName, _getClassName(fileName, "Action"));
+
+				_actionNames.add(pathName);
 
 				_actionPackageNames.put(pathName, _getPackageName(fileName));
 

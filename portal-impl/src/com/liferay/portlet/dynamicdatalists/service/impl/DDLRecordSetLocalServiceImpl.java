@@ -320,7 +320,10 @@ public class DDLRecordSetLocalServiceImpl
 				groupId, recordSetKey);
 
 			if (recordSet != null) {
-				throw new RecordSetDuplicateRecordSetKeyException();
+				RecordSetDuplicateRecordSetKeyException rsdrske = new RecordSetDuplicateRecordSetKeyException();
+				rsdrske.setName("DDLRecordSet");
+				rsdrske.setPrimaryKey(recordSet.getPrimaryKey());
+				throw rsdrske;
 			}
 		}
 

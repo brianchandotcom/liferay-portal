@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -60,7 +60,8 @@ public abstract class BaseServiceTrackerCustomizer<S, T>
 	protected T doAction(
 		ServiceReference<S> serviceReference, T service, int action) {
 
-		Map<String, String> initParameters = new HashMap<String, String>();
+		Dictionary<String, String> initParameters =
+			new Hashtable<String, String>();
 
 		if (action != ACTION_REMOVED) {
 			for (String key : serviceReference.getPropertyKeys()) {
@@ -114,7 +115,7 @@ public abstract class BaseServiceTrackerCustomizer<S, T>
 	protected abstract void registerService(
 			BundleServletContext bundleServletContext,
 			ServiceReference<S> serviceReference, T service,
-			Map<String, String> initParameters, HttpContext httpContext)
+			Dictionary<String, String> initParameters, HttpContext httpContext)
 		throws Exception;
 
 	protected abstract void unregisterService(

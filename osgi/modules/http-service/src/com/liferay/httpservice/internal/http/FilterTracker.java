@@ -17,7 +17,7 @@ package com.liferay.httpservice.internal.http;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Map;
+import java.util.Dictionary;
 
 import javax.servlet.Filter;
 
@@ -39,7 +39,7 @@ public class FilterTracker extends
 	protected void registerService(
 			BundleServletContext bundleServletContext,
 			ServiceReference<Filter> serviceReference, Filter filter,
-			Map<String, String> initParameters, HttpContext httpContext)
+			Dictionary<String, String> initParameters, HttpContext httpContext)
 		throws Exception {
 
 		String pattern = GetterUtil.getString(

@@ -17,7 +17,7 @@ package com.liferay.httpservice.internal.http;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Map;
+import java.util.Dictionary;
 
 import javax.servlet.Servlet;
 
@@ -39,7 +39,7 @@ public class ServletTracker
 	protected void registerService(
 			BundleServletContext bundleServletContext,
 			ServiceReference<Servlet> serviceReference, Servlet servlet,
-			Map<String, String> initParameters, HttpContext httpContext)
+			Dictionary<String, String> initParameters, HttpContext httpContext)
 		throws Exception {
 
 		String alias = GetterUtil.getString(

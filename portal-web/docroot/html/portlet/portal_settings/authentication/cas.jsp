@@ -84,7 +84,7 @@ String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(
 					align: Liferay.Util.Window.ALIGN_CENTER,
 					destroyOnClose: true,
 					modal: true,
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "CAS") %>',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "cas") %>',
 					width: 600
 				}
 			).render();

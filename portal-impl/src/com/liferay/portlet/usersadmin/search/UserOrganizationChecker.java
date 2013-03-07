@@ -93,9 +93,9 @@ public class UserOrganizationChecker extends RowChecker {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			return super.isDisabled(obj);
 		}
+
+		return super.isDisabled(obj);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

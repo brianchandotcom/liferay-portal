@@ -820,8 +820,7 @@ public class LayoutLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @param layoutIds the primary keys of the layouts
-	* @return the matching layouts, or <code>null</code> if no matches were
-	found
+	* @return the matching layouts, or an empty list if no matches were found
 	* @throws PortalException if a group or layout with the primary key could
 	not be found
 	* @throws SystemException if a system exception occurred

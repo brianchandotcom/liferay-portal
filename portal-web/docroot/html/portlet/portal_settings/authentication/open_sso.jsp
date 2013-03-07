@@ -81,7 +81,7 @@ String openSsoLastNameAttr = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 					align: Liferay.Util.Window.ALIGN_CENTER,
 					destroyOnClose: true,
 					modal: true,
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "OpenSSO") %>',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "open-sso") %>',
 					width: 600
 				}
 			).render();

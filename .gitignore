@@ -93,7 +93,6 @@ _sass_cache_*.css
 /portal-service/classes
 /portal-service/portal-service*.asc
 /portal-service/portal-service*.jar
-/portal-service/test/functional-generated
 /portal-service/test-classes
 /portal-service/test-coverage
 /portal-service/test-results
@@ -107,6 +106,7 @@ _sass_cache_*.css
 /portal-web/portal-web.war
 /portal-web/portal-web.war.asc
 /portal-web/ROOT.war
+/portal-web/test/functional-generated
 /portal-web/test-ant-scripts
 /portal-web/test-classes
 /portal-web/test-output

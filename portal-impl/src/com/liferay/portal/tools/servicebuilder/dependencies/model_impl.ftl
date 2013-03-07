@@ -941,13 +941,15 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	@Override
 	public void resetOriginalValues() {
 		<#list entity.regularColList as column>
-			<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
+			<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name)) || ((column.type == "Blob") && column.lazy)>
 				<#if !cloneCastModelImpl??>
 					<#assign cloneCastModelImpl = true>
 
 					${entity.name}ModelImpl ${entity.varName}ModelImpl = this;
 				</#if>
+			</#if>
 
+			<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
 				${entity.varName}ModelImpl._original${column.methodName} = ${entity.varName}ModelImpl._${column.name};
 
 				<#if column.isPrimitiveType()>

@@ -80,7 +80,7 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 			if (portletSession != null) {
 				return getSharedSessionWrapper(_portalSession, portletSession);
 			}
-			
+
 			return null;
 		}
 	}

@@ -79,10 +79,16 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	}
 	%>
 
-	<liferay-ui:search-container-results
-		results="<%= UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		total="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams) %>"
-	/>
+	<liferay-ui:search-container-results>
+		<c:choose>
+			<c:when test="<%= PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
+				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_index.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
+			</c:otherwise>
+		</c:choose>
+	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.UserGroup"

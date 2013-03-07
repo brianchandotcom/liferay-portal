@@ -939,9 +939,14 @@ public class DataFactory {
 
 		MBThread mbThread = new MBThreadImpl();
 
+		mbThread.setUuid(SequentialUUID.generate());
 		mbThread.setThreadId(threadId);
 		mbThread.setGroupId(groupId);
 		mbThread.setCompanyId(companyId);
+		mbThread.setUserId(_sampleUserId);
+		mbThread.setUserName(_sampleUser.getFullName());
+		mbThread.setCreateDate(new Date());
+		mbThread.setModifiedDate(new Date());
 		mbThread.setCategoryId(categoryId);
 		mbThread.setRootMessageId(rootMessageId);
 		mbThread.setRootMessageUserId(lastPostByUserId);

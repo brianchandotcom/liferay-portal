@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
@@ -21,6 +23,14 @@ public class TestCaseConverter extends BaseConverter {
 
 	public TestCaseConverter(SeleniumBuilderContext seleniumBuilderContext) {
 		super(seleniumBuilderContext);
+	}
+
+	public void convert(String testCaseName) throws Exception {
+		Map<String, Object> context = getContext();
+
+		context.put("testCaseName", testCaseName);
+
+		processTemplate("testcase.ftl", context);
 	}
 
 }

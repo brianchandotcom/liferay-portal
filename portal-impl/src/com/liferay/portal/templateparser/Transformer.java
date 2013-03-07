@@ -142,9 +142,10 @@ public class Transformer {
 			template.put("companyId", companyId);
 			template.put("device", getDevice(themeDisplay));
 			template.put("groupId", groupId);
-			template.put(
-				"journalTemplatesPath",
-				getJournalTemplatesPath(companyId, groupId));
+
+			String templatesPath = getTemplatesPath(companyId, groupId);
+
+			template.put("journalTemplatesPath", templatesPath);
 			template.put(
 				"permissionChecker",
 				PermissionThreadLocal.getPermissionChecker());
@@ -152,6 +153,7 @@ public class Transformer {
 				"randomNamespace",
 				PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
 					StringPool.UNDERLINE);
+			template.put("templatesPath", templatesPath);
 
 			load = mergeTemplate(template, unsyncStringWriter);
 		}
@@ -314,9 +316,10 @@ public class Transformer {
 				template.put("companyId", companyId);
 				template.put("device", getDevice(themeDisplay));
 				template.put("groupId", groupId);
-				template.put(
-					"journalTemplatesPath",
-					getJournalTemplatesPath(companyId, groupId));
+
+				String templatesPath = getTemplatesPath(companyId, groupId);
+
+				template.put("journalTemplatesPath", templatesPath);
 
 				Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -329,6 +332,7 @@ public class Transformer {
 					"randomNamespace",
 					PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
 						StringPool.UNDERLINE);
+				template.put("templatesPath", templatesPath);
 				template.put("viewMode", viewMode);
 
 				load = mergeTemplate(template, unsyncStringWriter);
@@ -415,18 +419,6 @@ public class Transformer {
 		}
 
 		return null;
-	}
-
-	protected String getJournalTemplatesPath(long companyId, long groupId) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(TemplateConstants.JOURNAL_SEPARATOR);
-		sb.append(StringPool.SLASH);
-		sb.append(companyId);
-		sb.append(StringPool.SLASH);
-		sb.append(groupId);
-
-		return sb.toString();
 	}
 
 	protected Template getTemplate(
@@ -572,6 +564,18 @@ public class Transformer {
 		}
 
 		return templateNodes;
+	}
+
+	protected String getTemplatesPath(long companyId, long groupId) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(TemplateConstants.TEMPLATE_SEPARATOR);
+		sb.append(StringPool.SLASH);
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(groupId);
+
+		return sb.toString();
 	}
 
 	protected Map<String, Object> insertRequestVariables(Element element) {

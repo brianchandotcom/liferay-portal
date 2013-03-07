@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.journal.model.JournalTemplate;
-import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -28,29 +28,28 @@ import java.util.Date;
 
 /**
  * @author Tina Tian
+ * @author Juan Fernández
  */
-public class JournalTemplateResource implements TemplateResource {
+public class DDMTemplateResource implements TemplateResource {
 
 	/**
 	 * The empty constructor is required by {@link java.io.Externalizable}. Do
 	 * not use this for any other purpose.
 	 */
-	public JournalTemplateResource() {
+	public DDMTemplateResource() {
 	}
 
-	public JournalTemplateResource(
-		String templateId, JournalTemplate journalTemplate) {
-
-		if (Validator.isNull(templateId)) {
-			throw new IllegalArgumentException("Template ID is null");
+	public DDMTemplateResource(String ddmTemplateKey, DDMTemplate ddmTemplate) {
+		if (Validator.isNull(ddmTemplateKey)) {
+			throw new IllegalArgumentException("DDM Template Key is null");
 		}
 
-		if (journalTemplate == null) {
-			throw new IllegalArgumentException("Journal template is null");
+		if (ddmTemplate == null) {
+			throw new IllegalArgumentException("DDM template is null");
 		}
 
-		_templateId = templateId;
-		_journalTemplate = journalTemplate;
+		_ddmTemplateKey = ddmTemplateKey;
+		_ddmTemplate = ddmTemplate;
 	}
 
 	@Override
@@ -59,15 +58,14 @@ public class JournalTemplateResource implements TemplateResource {
 			return true;
 		}
 
-		if (!(obj instanceof JournalTemplateResource)) {
+		if (!(obj instanceof DDMTemplateResource)) {
 			return false;
 		}
 
-		JournalTemplateResource journalTemplateResource =
-			(JournalTemplateResource)obj;
+		DDMTemplateResource ddmTemplateResource = (DDMTemplateResource)obj;
 
-		if (_templateId.equals(journalTemplateResource._templateId) &&
-			_journalTemplate.equals(journalTemplateResource._journalTemplate)) {
+		if (_ddmTemplateKey.equals(ddmTemplateResource._ddmTemplateKey) &&
+			_ddmTemplate.equals(ddmTemplateResource._ddmTemplate)) {
 
 			return true;
 		}
@@ -76,50 +74,47 @@ public class JournalTemplateResource implements TemplateResource {
 	}
 
 	public long getLastModified() {
-		Date modifiedDate = _journalTemplate.getModifiedDate();
+		Date modifiedDate = _ddmTemplate.getModifiedDate();
 
 		return modifiedDate.getTime();
 	}
 
 	public Reader getReader() {
-		String xsl = _journalTemplate.getXsl();
+		String script = _ddmTemplate.getScript();
 
-		return new UnsyncStringReader(xsl);
+		return new UnsyncStringReader(script);
 	}
 
 	public String getTemplateId() {
-		return _templateId;
+		return _ddmTemplateKey;
 	}
 
 	@Override
 	public int hashCode() {
-		return _templateId.hashCode() * 11 + _journalTemplate.hashCode();
+		return _ddmTemplateKey.hashCode() * 11 + _ddmTemplate.hashCode();
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		long journalTemplateId = objectInput.readLong();
+		long ddmTemplateId = objectInput.readLong();
 
 		try {
-			_journalTemplate =
-				JournalTemplateLocalServiceUtil.getJournalTemplate(
-					journalTemplateId);
+			_ddmTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(
+				ddmTemplateId);
 		}
 		catch (Exception e) {
 			throw new IOException(
-				"Unable to retrieve journal template with ID " +
-					journalTemplateId,
-				e);
+				"Unable to retrieve ddm template with ID " + ddmTemplateId, e);
 		}
 
-		_templateId = objectInput.readUTF();
+		_ddmTemplateKey = objectInput.readUTF();
 	}
 
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(_journalTemplate.getId());
-		objectOutput.writeUTF(_templateId);
+		objectOutput.writeLong(_ddmTemplate.getTemplateId());
+		objectOutput.writeUTF(_ddmTemplateKey);
 	}
 
-	private JournalTemplate _journalTemplate;
-	private String _templateId;
+	private DDMTemplate _ddmTemplate;
+	private String _ddmTemplateKey;
 
 }

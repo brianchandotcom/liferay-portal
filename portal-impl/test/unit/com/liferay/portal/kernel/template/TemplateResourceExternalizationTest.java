@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.ConsoleTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.template.CacheTemplateResource;
-import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -101,9 +101,85 @@ public class TemplateResourceExternalizationTest {
 	@Test
 	public void testConstructors() throws Exception {
 		CacheTemplateResource.class.getConstructor();
-		JournalTemplateResource.class.getConstructor();
+		DDMTemplateResource.class.getConstructor();
 		StringTemplateResource.class.getConstructor();
 		URLTemplateResource.class.getConstructor();
+	}
+
+	@Test
+	public void testDDMTemplateResourceExternalization() throws Exception {
+		String ddmTemplateKey = "testKey";
+		final long templateId = 100;
+
+		DDMTemplate ddmTemplate =
+			(DDMTemplate)ProxyUtil.newProxyInstance(
+				getClass().getClassLoader(), new Class<?>[] {DDMTemplate.class},
+				new InvocationHandler() {
+
+					public Object invoke(
+							Object proxy, Method method, Object[] arguments)
+						throws Throwable {
+
+						String methodName = method.getName();
+
+						if (methodName.equals("getTemplateId")) {
+							return templateId;
+						}
+
+						throw new UnsupportedOperationException();
+					}
+
+				});
+
+		DDMTemplateResource ddmTemplateResource = new DDMTemplateResource(
+			ddmTemplateKey, ddmTemplate);
+
+		// writeExternal
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ObjectOutput objectOutput = new MockObjectOutput(
+			unsyncByteArrayOutputStream);
+
+		ddmTemplateResource.writeExternal(objectOutput);
+
+		objectOutput.close();
+
+		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
+
+		DataInputStream dataInputStream = new DataInputStream(
+			new UnsyncByteArrayInputStream(externalizedData));
+
+		Assert.assertEquals(templateId, dataInputStream.readLong());
+		Assert.assertEquals(ddmTemplateKey, dataInputStream.readUTF());
+
+		// readExternal
+
+		DDMTemplateResource newDDMTemplateResource = new DDMTemplateResource();
+
+		MockObjectInput mockObjectInput = new MockObjectInput(
+			new DataInputStream(
+				new UnsyncByteArrayInputStream(externalizedData)));
+
+		UnsyncByteArrayOutputStream hijackedUnsyncByteArrayOutputStream =
+			ConsoleTestUtil.hijackStdErr();
+
+		try {
+			newDDMTemplateResource.readExternal(mockObjectInput);
+
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			Assert.assertEquals(
+				"Unable to retrieve ddm template with ID " + templateId,
+				ioe.getMessage());
+		}
+		finally {
+			ConsoleTestUtil.restoreStdErr(hijackedUnsyncByteArrayOutputStream);
+		}
+
+		Assert.assertEquals(null, newDDMTemplateResource.getTemplateId());
 	}
 
 	@Test
@@ -114,92 +190,12 @@ public class TemplateResourceExternalizationTest {
 			TemplateResource.class.isAssignableFrom(
 				CacheTemplateResource.class));
 		Assert.assertTrue(
-			TemplateResource.class.isAssignableFrom(
-				JournalTemplateResource.class));
+			TemplateResource.class.isAssignableFrom(DDMTemplateResource.class));
 		Assert.assertTrue(
 			TemplateResource.class.isAssignableFrom(
 				StringTemplateResource.class));
 		Assert.assertTrue(
 			TemplateResource.class.isAssignableFrom(URLTemplateResource.class));
-	}
-
-	@Test
-	public void testJournalTemplateResourceExternalization() throws Exception {
-		String templateId = "testId";
-		final long journalTemplateId = 100;
-
-		JournalTemplate journalTemplate =
-			(JournalTemplate)ProxyUtil.newProxyInstance(
-				getClass().getClassLoader(),
-				new Class<?>[] {JournalTemplate.class},
-				new InvocationHandler() {
-
-					public Object invoke(
-							Object proxy, Method method, Object[] arguments)
-						throws Throwable {
-
-						String methodName = method.getName();
-
-						if (methodName.equals("getId")) {
-							return journalTemplateId;
-						}
-
-						throw new UnsupportedOperationException();
-					}
-
-				});
-
-		JournalTemplateResource journalTemplateResource =
-			new JournalTemplateResource(templateId, journalTemplate);
-
-		// writeExternal
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		ObjectOutput objectOutput = new MockObjectOutput(
-			unsyncByteArrayOutputStream);
-
-		journalTemplateResource.writeExternal(objectOutput);
-
-		objectOutput.close();
-
-		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
-
-		DataInputStream dataInputStream = new DataInputStream(
-			new UnsyncByteArrayInputStream(externalizedData));
-
-		Assert.assertEquals(journalTemplateId, dataInputStream.readLong());
-		Assert.assertEquals(templateId, dataInputStream.readUTF());
-
-		// readExternal
-
-		JournalTemplateResource newJournalTemplateResource =
-			new JournalTemplateResource();
-
-		MockObjectInput mockObjectInput = new MockObjectInput(
-			new DataInputStream(
-				new UnsyncByteArrayInputStream(externalizedData)));
-
-		UnsyncByteArrayOutputStream hijackedUnsyncByteArrayOutputStream =
-			ConsoleTestUtil.hijackStdErr();
-
-		try {
-			newJournalTemplateResource.readExternal(mockObjectInput);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-			Assert.assertEquals(
-				"Unable to retrieve journal template with ID " +
-					journalTemplateId,
-				ioe.getMessage());
-		}
-		finally {
-			ConsoleTestUtil.restoreStdErr(hijackedUnsyncByteArrayOutputStream);
-		}
-
-		Assert.assertEquals(null, newJournalTemplateResource.getTemplateId());
 	}
 
 	@Test

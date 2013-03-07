@@ -25,7 +25,7 @@
 					${sampleSQLBuilder.insertMBMessage(mbMessage)}
 				</#list>
 
-				<#assign mbThread = dataFactory.newMBThread(threadId, mbCategory.groupId, companyId, categoryId, rootMessageId, maxMBCategoryCount, sampleUserId)>
+				<#assign mbThread = dataFactory.newMBThread(threadId, mbCategory.groupId, companyId, categoryId, rootMessageId, maxMBMessageCount, sampleUserId)>
 
 				insert into MBThread values ('${mbThread.uuid}', ${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.userId}, '${mbThread.userName}', '${dataFactory.getDateString(mbThread.createDate)}', '${dataFactory.getDateString(mbThread.modifiedDate)}', ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, 0, ${mbThread.lastPostByUserId}, CURRENT_TIMESTAMP, 0, FALSE, 0, ${mbThread.lastPostByUserId}, '', CURRENT_TIMESTAMP);
 

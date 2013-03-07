@@ -270,6 +270,10 @@ public class DataFactory {
 		return _classNamesMap.get(JournalArticle.class.getName());
 	}
 
+	public long getMBDiscussionClassNameId() {
+		return _classNamesMap.get(MBDiscussion.class.getName());
+	}
+
 	public long getMBMessageClassNameId() {
 		return _classNamesMap.get(MBMessage.class.getName());
 	}

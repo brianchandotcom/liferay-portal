@@ -119,8 +119,8 @@ if (layout.isTypeControlPanel()) {
 			</c:if>
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="you-are-trying-to-import-a-recordset-that-already-exists" />
-		<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="you-are-trying-to-import-a-structure-that-already-exists" />
+		<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-record-set-that-already-exists" />
+		<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-structure-that-already-exists" />
 
 		<portlet:actionURL var="exportImportPagesURL">
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />

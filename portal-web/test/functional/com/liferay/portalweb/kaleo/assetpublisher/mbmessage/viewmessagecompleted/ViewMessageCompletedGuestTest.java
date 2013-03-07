@@ -30,18 +30,22 @@ public class ViewMessageCompletedGuestTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//section"));
 		assertEquals(RuntimeVariables.replace("Asset Publisher"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//h1/span[contains(.,'Asset Publisher')]"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//h3/a"));
+			selenium.getText("//div[@class='asset-abstract ']/h3/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Body"),
 			selenium.getText("//div[@class='asset-summary']"));
-		assertTrue(selenium.isPartialText("//div[2]/a", "Read More"));
+		assertTrue(selenium.isPartialText("//div[contains(.,'Read More')]/a",
+				"Read More"));
 		assertFalse(selenium.isTextPresent("There are no results."));
-		selenium.clickAt("//div[2]/a", RuntimeVariables.replace("Read More"));
+		selenium.clickAt("//div[contains(.,'Read More')]/a",
+			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//div[1]/h1/span"));
-		assertTrue(selenium.isPartialText("//div/div/div/div[2]/div[1]",
+			selenium.getText(
+				"//div[@class='taglib-header ']/h1/span[contains(.,'Message Boards Message Subject')]"));
+		assertTrue(selenium.isPartialText(
+				"//td[@class='lfr-top']/div[contains(.,'Message Boards Message Body')]",
 				"Message Boards Message Body"));
 	}
 }

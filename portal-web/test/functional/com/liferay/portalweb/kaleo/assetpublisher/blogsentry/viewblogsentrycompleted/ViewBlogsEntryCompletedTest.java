@@ -38,10 +38,12 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='asset-content']/p"));
+			selenium.getText(
+				"//div[@class='portlet-body']/div/div[2]/div[contains(.,'Blogs Entry Content')]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -64,17 +66,19 @@ public class ViewBlogsEntryCompletedTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText(
+				"xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Blogs Entry Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Blogs Entry Title')]/td[5]/a"));
 	}
 }

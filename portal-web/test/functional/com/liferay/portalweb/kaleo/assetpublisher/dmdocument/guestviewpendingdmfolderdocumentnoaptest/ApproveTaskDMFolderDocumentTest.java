@@ -41,7 +41,8 @@ public class ApproveTaskDMFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row last']/td[contains(.,'DM Folder Document Title')]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -71,6 +72,7 @@ public class ApproveTaskDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText(
+				"xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div"));
 	}
 }

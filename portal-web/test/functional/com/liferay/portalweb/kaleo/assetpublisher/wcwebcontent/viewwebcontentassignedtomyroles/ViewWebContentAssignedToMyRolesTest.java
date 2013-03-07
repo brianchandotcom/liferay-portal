@@ -53,14 +53,15 @@ public class ViewWebContentAssignedToMyRolesTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Web Content Name')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Web Content Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'Web Content Name')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Web Content Name')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'Web Content Name')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),

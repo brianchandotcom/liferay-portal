@@ -53,33 +53,48 @@ public class ViewMessageResubmittedTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("//tr[3]/td[1]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Update')]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Message Boards Message Subject')]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[3]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[3]/td[4]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[@class='portlet-section-body results-row']/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[3]/td[5]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Never')]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Review')]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//tr[4]/td[2]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Message Boards Message Subject')]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//tr[4]/td[5]/a"));
+			selenium.getText(
+				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Never')]/a"));
 	}
 }

@@ -25,22 +25,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//h1/span[contains(.,'Asset Publisher')]</td>
 	<td>Asset Publisher</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3/a</td>
+	<td>//div[@class='asset-abstract ']/h3/a[contains(.,'Blogs Entry Title')]</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='asset-summary']</td>
+	<td>//div[@class='asset-content']/div[contains(.,'Blogs Entry Content')]</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[@class='asset-more']/a</td>
+	<td>//div[@class='asset-content']/div[contains(.,'Read More')]</td>
 	<td>Read More</td>
 </tr>
 <tr>
@@ -50,17 +50,17 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='asset-more']/a</td>
+	<td>//div[@class='asset-more']/a[contains(.,'Read More')]</td>
 	<td>Read More</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
+	<td>//div[contains(.,'Blogs Entry Title')]/h1/span</td>
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//div[@class='asset-full-content show-asset-title']/div[contains(.,'Blogs Entry Content')]</td>
 	<td>Blogs Entry Content</td>
 </tr>
 </tbody></table>

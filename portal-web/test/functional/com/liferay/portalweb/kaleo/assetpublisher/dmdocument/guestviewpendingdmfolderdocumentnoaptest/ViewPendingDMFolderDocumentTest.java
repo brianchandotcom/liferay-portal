@@ -94,21 +94,25 @@ public class ViewPendingDMFolderDocumentTest extends BaseTestCase {
 				"Automatically Extracted Metadata"),
 			selenium.getText(
 				"//div[@id='documentLibraryAssetMetadataPanel']/div/div"));
-		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Encoding')]"));
-		assertEquals(RuntimeVariables.replace("Content Type text/plain"),
-			selenium.getText(
-				"//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Type')]"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]",
+				"Content Type"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'application/octet-stream')]",
+				"application/octet-stream"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText("xpath=(//div[@class='lfr-panel-title']/span)[3]"));
-		assertTrue(selenium.isVisible("//input[@value='Compare Versions']"));
+		assertTrue(selenium.isVisible("//div[@id='_20_ocerSearchContainer']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[3]"));
+			selenium.getText(
+				"//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'1.0')]"));
+		assertTrue(selenium.isVisible(
+				"//tr[@class='results-row last portlet-section-alternate-hover']/td[2]"));
 		assertEquals(RuntimeVariables.replace("0k"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText(
+				"//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'0k')]"));
 		assertEquals(RuntimeVariables.replace("Pending"),
-			selenium.getText("//tr[3]/td[5]"));
+			selenium.getText(
+				"//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'Pending')]"));
 	}
 }

@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//h1/span[contains(.,'Asset Publisher')]</td>
 	<td>Asset Publisher</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3/a</td>
+	<td>//div[@class='asset-abstract ']/h3/a</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[2]/a</td>
+	<td>//div[contains(.,'Read More')]/a</td>
 	<td>Read More</td>
 </tr>
 <tr>
@@ -50,17 +50,17 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/a</td>
+	<td>//div[contains(.,'Read More')]/a</td>
 	<td>Read More</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
+	<td>//div[@class='taglib-header ']/h1/span[contains(.,'Message Boards Message Subject')]</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div/div/div/div[2]/div[1]</td>
+	<td>//td[@class='lfr-top']/div[contains(.,'Message Boards Message Body')]</td>
 	<td>Message Boards Message Body</td>
 </tr>
 </tbody></table>

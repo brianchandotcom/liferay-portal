@@ -142,8 +142,23 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-portal's-available-languages-x" />
 			</liferay-ui:error>
 
-			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-record-set-that-already-exists" />
-			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-structure-that-already-exists" />
+			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>">
+			
+				<%
+				RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
+				%>
+				
+				<liferay-ui:message arguments="<%= new String[] {rsdrske.getName(), String.valueOf(rsdrske.getPrimaryKey()) } %>" key="the-lar-file-could-not-be-imported-because-it-contains-a-x-record-set-that-already-exists-at-x" />
+			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
+			
+				<%
+				StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
+				%>
+			
+				<liferay-ui:message arguments="<%= new String[] {sdske.getName(), String.valueOf(sdske.getPrimaryKey()) } %>" key="the-lar-file-could-not-be-imported-because-it-contains-a-x-structure-that-already-exists-at-x" />
+			</liferay-ui:error>
 
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">

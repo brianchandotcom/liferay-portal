@@ -38,5 +38,25 @@ public class RecordSetDuplicateRecordSetKeyException extends PortalException {
 	public RecordSetDuplicateRecordSetKeyException(Throwable cause) {
 		super(cause);
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public long getPrimaryKey() {
+		return primaryKey;
+	}
+	
+	public void setPrimaryKey(long primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	private String name;
+	
+	private long primaryKey;
 
 }

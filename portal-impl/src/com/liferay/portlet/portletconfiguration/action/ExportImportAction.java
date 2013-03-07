@@ -312,13 +312,14 @@ public class ExportImportAction extends EditConfigurationAction {
 		catch (Exception e) {
 			if ((e instanceof LARFileException) ||
 				(e instanceof LARTypeException) ||
-				(e instanceof PortletIdException) ||
-				(e instanceof RecordSetDuplicateRecordSetKeyException) ||
-				(e instanceof StructureDuplicateStructureKeyException)) {
+				(e instanceof PortletIdException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
-			else if (e instanceof LocaleException) {
+			else if ((e instanceof LocaleException) ||
+					(e instanceof RecordSetDuplicateRecordSetKeyException) ||
+					(e instanceof StructureDuplicateStructureKeyException)) {
+
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {

@@ -118,7 +118,6 @@ boolean useRichEditor = editorType.equals("rich");
 			richEditor.plug(
 				A.Plugin.AceAutoComplete,
 				{
-					fillMode: 1,
 					processor: new A.AceEditor.AutoCompleteFreemarker(
 						{
 							variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>

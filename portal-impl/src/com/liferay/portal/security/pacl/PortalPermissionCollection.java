@@ -42,7 +42,7 @@ public class PortalPermissionCollection extends PermissionCollection {
 
 	@Override
 	public Enumeration<Permission> elements() {
-		return Collections.enumeration(Collections.EMPTY_LIST);
+		return Collections.enumeration(Collections.<Permission>emptyList());
 	}
 
 	public Policy getJavaSecurityPolicy() {

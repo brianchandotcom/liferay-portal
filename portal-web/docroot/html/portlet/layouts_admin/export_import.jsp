@@ -142,8 +142,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-portal's-available-languages-x" />
 			</liferay-ui:error>
 
-			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="you-are-trying-to-import-a-recordset-that-already-exists" />
-			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="you-are-trying-to-import-a-structure-that-already-exists" />
+			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-record-set-that-already-exists" />
+			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="the-lar-file-could-not-be-imported-because-it-contains-a-structure-that-already-exists" />
 
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">

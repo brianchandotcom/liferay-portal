@@ -221,7 +221,7 @@ public class InstrumentationAgent {
 
 			sb.append("restranforming classes. Instrumentation ");
 
-			if (instrumentation.isRetransformClassesSupported()) {
+			if (instrumentation.isRedefineClassesSupported()) {
 				sb.append("supports ");
 			}
 			else {

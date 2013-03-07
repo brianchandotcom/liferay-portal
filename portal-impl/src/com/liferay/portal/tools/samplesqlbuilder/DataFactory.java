@@ -66,6 +66,7 @@ import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -494,6 +495,15 @@ public class DataFactory {
 			ContentTypes.TEXT_HTML, blogsEntry.getTitle());
 	}
 
+	public AssetEntry newAssetEntry(DLFileEntry dlFileEntry) {
+		return newAssetEntry(
+			dlFileEntry.getGroupId(), dlFileEntry.getCreateDate(),
+			dlFileEntry.getModifiedDate(), getDLFileEntryClassNameId(),
+			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
+			dlFileEntry.getFileEntryTypeId(), true, dlFileEntry.getMimeType(),
+			dlFileEntry.getTitle());
+	}
+
 	public AssetEntry newAssetEntry(
 		long groupId, long userId, long classNameId, long classPK,
 		boolean visible, String mimeType, String title) {
@@ -694,27 +704,30 @@ public class DataFactory {
 		return ddmStructureLink;
 	}
 
-	public DLFileEntry newDlFileEntry(
-		long groupId, long companyId, long userId, long folderId,
-		String extension, String mimeType, String name, String title,
-		String description) {
+	public DLFileEntry newDlFileEntry(DLFolder dlFoler, int currentIndex) {
 
 		DLFileEntry dlFileEntry = new DLFileEntryImpl();
 
+		dlFileEntry.setUuid(SequentialUUID.generate());
 		dlFileEntry.setFileEntryId(_counter.get());
-		dlFileEntry.setGroupId(groupId);
-		dlFileEntry.setCompanyId(companyId);
-		dlFileEntry.setUserId(userId);
+		dlFileEntry.setGroupId(dlFoler.getGroupId());
+		dlFileEntry.setCompanyId(_companyId);
+		dlFileEntry.setUserId(_sampleUserId);
+		dlFileEntry.setUserName(_sampleUser.getFullName());
+		dlFileEntry.setVersionUserId(_sampleUserId);
+		dlFileEntry.setVersionUserName(_sampleUser.getFullName());
 		dlFileEntry.setCreateDate(nextFutureDate());
-		dlFileEntry.setRepositoryId(groupId);
-		dlFileEntry.setFolderId(folderId);
-		dlFileEntry.setName(name);
-		dlFileEntry.setExtension(extension);
-		dlFileEntry.setMimeType(mimeType);
-		dlFileEntry.setTitle(title);
-		dlFileEntry.setDescription(description);
-		dlFileEntry.setSmallImageId(_counter.get());
-		dlFileEntry.setLargeImageId(_counter.get());
+		dlFileEntry.setModifiedDate(nextFutureDate());
+		dlFileEntry.setRepositoryId(dlFoler.getRepositoryId());
+		dlFileEntry.setFolderId(dlFoler.getFolderId());
+		dlFileEntry.setName("TestFile" + currentIndex);
+		dlFileEntry.setExtension("txt");
+		dlFileEntry.setMimeType(ContentTypes.TEXT_PLAIN);
+		dlFileEntry.setTitle("TestFile" + currentIndex + ".txt");
+		dlFileEntry.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
+		dlFileEntry.setSize(_maxDLFileEntrySize);
 
 		return dlFileEntry;
 	}
@@ -753,20 +766,25 @@ public class DataFactory {
 	}
 
 	public DLFolder newDLFolder(
-		long groupId, long companyId, long userId, long parentFolderId,
-		String name, String description) {
+		long groupId, long parentFolderId, int currentIndex) {
 
 		DLFolder dlFolder = new DLFolderImpl();
 
+		dlFolder.setUuid(SequentialUUID.generate());
 		dlFolder.setFolderId(_counter.get());
 		dlFolder.setGroupId(groupId);
-		dlFolder.setCompanyId(companyId);
-		dlFolder.setUserId(userId);
+		dlFolder.setCompanyId(_companyId);
+		dlFolder.setUserId(_sampleUserId);
+		dlFolder.setUserName(_sampleUser.getFullName());
 		dlFolder.setCreateDate(nextFutureDate());
+		dlFolder.setModifiedDate(nextFutureDate());
 		dlFolder.setRepositoryId(groupId);
 		dlFolder.setParentFolderId(parentFolderId);
-		dlFolder.setName(name);
-		dlFolder.setDescription(description);
+		dlFolder.setName("Test Folder " + currentIndex);
+		dlFolder.setLastPostDate(nextFutureDate());
+		dlFolder.setDefaultFileEntryTypeId(
+			_defaultDLFileEntryType.getFileEntryTypeId());
+		dlFolder.setStatusDate(nextFutureDate());
 
 		return dlFolder;
 	}
@@ -1253,6 +1271,7 @@ public class DataFactory {
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
 	private int _maxBlogsEntryCount;
+	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
 	private int _maxMBMessageCount;
 	private int _maxUserToGroupCount;

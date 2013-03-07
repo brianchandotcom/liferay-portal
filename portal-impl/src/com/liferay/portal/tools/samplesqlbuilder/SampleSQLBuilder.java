@@ -249,13 +249,15 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertDLFolders(
-			long parentDLFolderId, int dlFolderDepth, DDMStructure ddmStructure)
+			long groupId, long parentDLFolderId, int dlFolderDepth,
+			DDMStructure ddmStructure)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "ddmStructure", ddmStructure);
 		put(context, "dlFolderDepth", dlFolderDepth);
+		put(context, "groupId", groupId);
 		put(context, "parentDLFolderId", parentDLFolderId);
 
 		processTemplate(_tplDLFolders, context);

@@ -46,22 +46,19 @@ if (selUser != null) {
 
 		<%
 		UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 		%>
 
 		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
 
 			<%
 			if (filterManageableUserGroups) {
-				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
+				results = UsersAdminUtil.filterUserGroups(permissionChecker, results);
 
-				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
-
-				total = userGroups.size();
-				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), null);
+				total = results.size();
+				results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
 			}
 
 			pageContext.setAttribute("results", results);

@@ -32,6 +32,8 @@ public interface PortletLister {
 
 	public TreeView getTreeView() throws PortalException, SystemException;
 
+	public void setHierarchicalTree(boolean hierarchicalTree);
+
 	public void setIncludeInstanceablePortlets(
 		boolean includeInstanceablePortlets);
 

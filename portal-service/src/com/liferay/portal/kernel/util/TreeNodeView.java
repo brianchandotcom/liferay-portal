@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Jorge Ferrer
  * @author Dennis Ju
@@ -23,6 +26,14 @@ public class TreeNodeView {
 
 	public TreeNodeView(int id) {
 		_id = id;
+	}
+
+	public void addChild(TreeNodeView treeNodeView) {
+		_children.add(treeNodeView);
+	}
+
+	public List<TreeNodeView> getChildren() {
+		return _children;
 	}
 
 	public int getDepth() {
@@ -61,6 +72,10 @@ public class TreeNodeView {
 		return _leaf;
 	}
 
+	public void setChildren(List<TreeNodeView> children) {
+		_children = children;
+	}
+
 	public void setDepth(int depth) {
 		_depth = depth;
 	}
@@ -97,6 +112,7 @@ public class TreeNodeView {
 		_parentId = parentId;
 	}
 
+	private List<TreeNodeView> _children = new ArrayList<TreeNodeView>();
 	private int _depth;
 	private String _href = "javascript:;";
 	private long _id;

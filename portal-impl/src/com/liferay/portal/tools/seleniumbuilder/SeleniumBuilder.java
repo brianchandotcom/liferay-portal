@@ -77,6 +77,17 @@ public class SeleniumBuilder {
 				macroConverter.convert(macroName);
 			}
 		}
+
+		if (types.contains("path")) {
+			PathConverter pathConverter = new PathConverter(
+				seleniumBuilderContext);
+
+			Set<String> pathNames = seleniumBuilderContext.getPathNames();
+
+			for (String pathName : pathNames) {
+				pathConverter.convert(pathName);
+			}
+		}
 	}
 
 }

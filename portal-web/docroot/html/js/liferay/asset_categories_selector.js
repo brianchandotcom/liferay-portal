@@ -24,8 +24,7 @@ AUI.add(
 		var TPL_INPUT =
 			'<label title="{name}">' +
 				'<span class="lfr-categories-selector-category-name" title="{name}">' +
-					'{radioImage}' +
-					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" type="checkbox" value="{name}" {id} {class} {checked} />' +
+					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{name}" {checked} />' +
 					'{name}' +
 				'</span>' +
 				'<span class="lfr-categories-selector-search-results-path" title="{path}">{path}</span>' +
@@ -203,6 +202,14 @@ AUI.add(
 
 					_bindTagsSelector: EMPTY_FN,
 
+					_clearEntries: function() {
+						var instance = this;
+
+						var entries = instance.entries;
+
+						entries.each(A.fn('removeAt', entries, 0));
+					},
+
 					_formatJSONResult: function(json) {
 						var instance = this;
 
@@ -360,13 +367,15 @@ AUI.add(
 							var input = popup.searchField.get('node');
 
 							input.on('keyup', searchCategoriesTask);
+
+							if (instance.get('singleSelect')) {
+								var onSelectChange = A.bind('_onSelectChange', instance);
+
+								popup.entriesNode.delegate('change', onSelectChange, 'input[type=radio]');
+							}
 						}
 
 						popup.entriesNode.append(searchResults);
-
-						var onSelectChange = A.bind('_onSelectChange', instance);
-
-						popup.entriesNode.delegate('click', onSelectChange, '.lfr-categories-selector-radio');
 
 						instance._searchBuffer = [];
 					},
@@ -407,6 +416,10 @@ AUI.add(
 						var instance = this;
 
 						if (event.newVal) {
+							if (instance.get('singleSelect')) {
+								instance._clearEntries();
+							}
+
 							instance._onCheckboxCheck(event);
 						}
 						else {
@@ -446,55 +459,9 @@ AUI.add(
 					_onSelectChange: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
-						var parentNode = currentTarget.get('parentNode');
+						instance._clearEntries();
 
-						var categoryId = currentTarget.attr('data-categoryid');
-						var vocabularyId = currentTarget.attr('data-vocabularyid');
-
-						var entries = A.all('#radio-vocabulary' + vocabularyId);
-
-						var buffer = instance._searchBuffer;
-
-						buffer.length = 0;
-
-						A.each(
-							entries,
-							function(item, index, collection) {
-								var removeId = item.attr('data-categoryid');
-
-								if (item.get('checked') && categoryId != removeId) {
-									item.set('checked', false);
-
-									buffer.push(removeId);
-								}
-							}
-						);
-
-						if (buffer.length == 1) {
-							instance.entries.removeKey(buffer[0]);
-						}
-
-						var previousRadio = A.one('div.category' + buffer[0]);
-
-						if (currentTarget.attr('checked')) {
-							instance._onCheckboxUncheck(event);
-
-							currentTarget.set('checked', false);
-
-							parentNode.removeClass('lfr-categories-selector-radio-checked');
-
-							if (previousRadio != null) {
-								previousRadio.get('parentNode').removeClass('lfr-categories-selector-radio-checked');
-							}
-						}
-						else {
-							instance._onCheckboxCheck(event);
-
-							currentTarget.set('checked', true);
-
-							parentNode.addClass('lfr-categories-selector-radio-checked');
-						}
+						instance._onCheckboxCheck(event);
 					},
 
 					_processSearchResults: function(searchResults, results) {
@@ -505,23 +472,23 @@ AUI.add(
 						buffer.length = 0;
 
 						if (results.length > 0) {
+							var inputType = 'checkbox';
+
+							if (instance.get('singleSelect')) {
+								inputType = 'radio';
+							}
+
+							var inputName = A.guid();
+
 							A.each(
 								results,
 								function(item, index, collection) {
-									var singleSelect = instance.get('singleSelect');
-
-									var radioClass = singleSelect ? Lang.sub(TPL_RADIO_CLASS, ['lfr-categories-selector-radio aui-helper-hidden']) : '';
-									var radioId = singleSelect ? Lang.sub(TPL_RADIO_ID, ['radio-vocabulary' + item.vocabularyId]) : '';
-									var radioImage = singleSelect ? Lang.sub(TPL_RADIO_IMAGE, [item.categoryId]) : '';
-
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
-									item.class = radioClass;
-									item.id = radioId;
-									item.radioImage = radioImage;
 
-									var input = Lang.sub(TPL_INPUT, item);
+									item.inputName = inputName;
+									item.type = inputType;
 
-									buffer.push(input);
+									buffer.push(Lang.sub(TPL_INPUT, item));
 								}
 							);
 						}

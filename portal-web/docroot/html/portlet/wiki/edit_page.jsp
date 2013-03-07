@@ -280,9 +280,21 @@ if (Validator.isNull(redirect)) {
 			<c:if test="<%= wikiPage != null %>">
 				<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 					<aui:fieldset>
+
+						<%
+						long wikiPagePK = 0;
+
+						if (templatePage != null) {
+							wikiPagePK = templatePage.getPrimaryKey();
+						}
+						else if (page != null) {
+							wikiPagePK = wikiPage.getPrimaryKey();
+						}
+						%>
+
 						<liferay-ui:custom-attribute-list
 							className="<%= WikiPage.class.getName() %>"
-							classPK="<%= (page != null) ? wikiPage.getPrimaryKey() : 0 %>"
+							classPK="<%= wikiPagePK %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>

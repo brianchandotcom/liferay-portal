@@ -69,7 +69,7 @@ public class HttpServiceTracker
 
 		initListeners((ExtendedHttpService)httpService, httpContext);
 
-		initServlets(httpService, httpContext);
+		initServlets((ExtendedHttpService)httpService, httpContext);
 
 		initFilters((ExtendedHttpService)httpService, httpContext);
 
@@ -177,7 +177,7 @@ public class HttpServiceTracker
 	}
 
 	protected void initServlets(
-		HttpService httpService, HttpContext httpContext) {
+		ExtendedHttpService extendedHttpService, HttpContext httpContext) {
 
 		Map<String, ServletDefinition> servletDefinitions =
 			_webXML.getServletDefinitions();
@@ -187,17 +187,15 @@ public class HttpServiceTracker
 
 			ServletDefinition servletDefinition = entry.getValue();
 
-			List<String> urlPatterns = servletDefinition.getURLPatterns();
-
-			for (String urlPattern : urlPatterns) {
-				try {
-					httpService.registerServlet(
-						urlPattern, servletDefinition.getServlet(),
-						servletDefinition.getInitParameters(), httpContext);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+			try {
+				extendedHttpService.registerServlet(
+					servletDefinition.getName(),
+					servletDefinition.getURLPatterns(),
+					servletDefinition.getServlet(),
+					servletDefinition.getInitParameters(), httpContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 	}

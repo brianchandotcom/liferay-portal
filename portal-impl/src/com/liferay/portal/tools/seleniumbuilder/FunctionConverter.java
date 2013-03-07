@@ -14,6 +14,9 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.xml.Element;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +32,13 @@ public class FunctionConverter extends BaseConverter {
 		Map<String, Object> context = getContext();
 
 		context.put("functionName", functionName);
+
+		Element functionRootElement = getFunctionRootElement(functionName);
+
+		List<Element> functionCommands = functionRootElement.elements(
+			"function-command");
+
+		context.put("functionCommands", functionCommands);
 
 		processTemplate("function.ftl", context);
 	}

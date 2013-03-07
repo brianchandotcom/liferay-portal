@@ -16,6 +16,7 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,10 @@ public class BaseConverter {
 		context.put("seleniumBuilderContext", _seleniumBuilderContext);
 
 		return context;
+	}
+
+	protected Element getFunctionRootElement(String functionName) {
+		return _seleniumBuilderContext.getFunctionRootElement(functionName);
 	}
 
 	protected String processTemplate(String name) throws Exception {

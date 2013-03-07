@@ -155,7 +155,7 @@ public class LDAPUtil {
 		Attribute attribute = attributes.get(id);
 
 		if (attribute == null) {
-			return null;
+			return new String[0];
 		}
 
 		int size = attribute.size();

@@ -36,7 +36,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -56,7 +56,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -73,7 +73,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			String className = e.getClass().getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -109,7 +109,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -130,7 +130,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -152,7 +152,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
@@ -173,7 +173,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 
 			String className = clazz.getName();
 
-			if (className.startsWith("NoSuch")) {
+			if (className.contains(".NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
 			}
 

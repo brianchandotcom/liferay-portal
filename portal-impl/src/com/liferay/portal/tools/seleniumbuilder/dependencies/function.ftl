@@ -12,8 +12,10 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 
 	<#assign functionCommandElements = rootElement.elements("function-command")>
 
+	<#assign functionParameterString = seleniumBuilderContext.getFunctionParameterString(functionName)>
+
 	<#list functionCommandElements as functionCommandElement>
-		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}() {
+		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}(${functionParameterString}) {
 		}
 	</#list>
 

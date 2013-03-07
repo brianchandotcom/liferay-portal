@@ -857,8 +857,6 @@ public class LuceneHelperImplTest {
 
 				String request = reader.readLine();
 
-				socket.shutdownInput();
-
 				if (!request.contains("/lucene/dump")) {
 					return;
 				}
@@ -873,8 +871,6 @@ public class LuceneHelperImplTest {
 
 				outputStream.write(sb.toString().getBytes());
 				outputStream.write(_RESPONSE_MESSAGE);
-
-				socket.shutdownOutput();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);

@@ -14,9 +14,12 @@
 
 package com.liferay.httpservice.internal.http;
 
+import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpContext;
@@ -38,6 +41,12 @@ public interface ExtendedHttpService extends HttpService {
 			Object listener, Map<String, String> initParameters,
 			HttpContext httpContext)
 		throws ServletException;
+
+	public void registerServlet(
+			String servletName, List<String> aliases, Servlet servlet,
+			@SuppressWarnings("rawtypes") Dictionary initParameters,
+			HttpContext context)
+		throws NamespaceException, ServletException;
 
 	public void unregisterFilter(String name);
 

@@ -17,13 +17,16 @@ package com.liferay.httpservice.internal.http;
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 
 /**
  * @author Raymond Augé
@@ -51,6 +54,13 @@ public class NonWABHttpServiceWrapper
 
 	public void registerResources(
 		String alias, String name, HttpContext httpContext) {
+	}
+
+	public void registerServlet(
+			String servletName, List<String> aliases, Servlet servlet,
+			@SuppressWarnings("rawtypes") Dictionary initParameters,
+			HttpContext context)
+		throws NamespaceException, ServletException {
 	}
 
 	public void registerServlet(

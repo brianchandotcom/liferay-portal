@@ -112,6 +112,16 @@ public interface Localization {
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault);
 
+	/**
+	 * Returns a map of locales and localized strings for the parameter in the
+	 * request.
+	 *
+	 * @param  request the request
+	 * @param  parameter the prefix of the parameters containing the localized
+	 *         strings. Each localization will be loaded from a parameter with
+	 *         this prefix, followed by an underscore, and the language ID.
+	 * @return the locales and localized strings
+	 */
 	public Map<Locale, String> getLocalizationMap(
 		HttpServletRequest request, String parameter);
 
@@ -182,7 +192,8 @@ public interface Localization {
 		String parameter);
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap(PortletRequest, String)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getLocalizationMap(PortletRequest, String)}
 	 */
 	public Map<Locale, String> getLocalizedParameter(
 		PortletRequest portletRequest, String parameter);

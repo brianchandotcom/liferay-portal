@@ -41,8 +41,9 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 
 <div id="<portlet:namespace />selectPortletsTree" style="margin: 4px;"></div>
 
-<aui:script use="aui-io-request,aui-tree-view,dataschema-xml,datatype-xml,json-parse">
+<aui:script use="aui-tree-view">
 	var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
+
 	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
 	var TreeUtil = {
@@ -71,16 +72,12 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 								if (plid) {
 									if (event.newVal) {
 										selectedPortlets[plid] = true;
-
-										panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
 									}
-									else {
-										if (selectedPortlets[plid]) {
-											delete selectedPortlets[plid];
-										}
-
-										panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
+									else if (selectedPortlets[plid]) {
+										delete selectedPortlets[plid];
 									}
+
+									panelSelectedPortletsEl.val(A.Object.keys(selectedPortlets));
 								}
 							}
 						},

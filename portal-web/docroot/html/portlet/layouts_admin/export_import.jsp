@@ -102,8 +102,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
-			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="you-are-trying-to-import-a-recordset-that-already-exists" />
-			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="you-are-trying-to-import-a-structure-that-already-exists" />
 
 			<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 
@@ -143,6 +141,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-portal's-available-languages-x" />
 			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>" message="you-are-trying-to-import-a-recordset-that-already-exists" />
+			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>" message="you-are-trying-to-import-a-structure-that-already-exists" />
 
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">

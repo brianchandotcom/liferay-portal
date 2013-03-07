@@ -53,7 +53,6 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 		icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
 		id='<%= taglibId %>'
 		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {(GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale)}) %>'
-		showWhenSingleIcon="<%= true %>"
 	>
 
 		<%
@@ -93,15 +92,33 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 			if (defaultAssetPublisher) {
 				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
 			}
-
-			String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "new-x", message) + "', uri:'" + HtmlUtil.escapeURL(addPortletURLString) + "'});";
 		%>
 
-			<liferay-ui:icon
-				message="<%= HtmlUtil.escape(message) %>"
-				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
-				url="<%= taglibEditURL %>"
-			/>
+			<c:choose>
+				<c:when test="<%= addPortletURLs.size() == 1 %>">
+
+					<%
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "new-x", message) + "', uri:'" + addPortletURLString + "'});";
+					%>
+
+					<aui:button
+						onClick="<%= taglibEditURL %>"
+						value='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>'
+					/>
+				</c:when>
+				<c:otherwise>
+
+					<%
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "new-x", message) + "', uri:'" + HtmlUtil.escapeURL(addPortletURLString) + "'});";
+					%>
+
+					<liferay-ui:icon
+						message="<%= HtmlUtil.escape(message) %>"
+						src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
+						url="<%= taglibEditURL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 		<%
 		}

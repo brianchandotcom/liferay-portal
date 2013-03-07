@@ -313,8 +313,8 @@ public class ExportImportAction extends EditConfigurationAction {
 			if ((e instanceof LARFileException) ||
 				(e instanceof LARTypeException) ||
 				(e instanceof PortletIdException) ||
-				(e instanceof StructureDuplicateStructureKeyException) ||
-				(e instanceof RecordSetDuplicateRecordSetKeyException)) {
+				(e instanceof RecordSetDuplicateRecordSetKeyException) ||
+				(e instanceof StructureDuplicateStructureKeyException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

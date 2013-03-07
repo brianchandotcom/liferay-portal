@@ -95,6 +95,7 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
@@ -377,7 +378,11 @@ public class DataFactory {
 			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
 		}
 
-		_journalArticleContent = new String(chars);
+		_journalArticleContent =
+			"<?xml version=\"1.0\"?><root available-locales=\"en_US\" " +
+				"default-locale=\"en_US\"><static-content language-id=" +
+					"\"en_US\"><![CDATA[<p>" + new String(chars) + "</p>]]>" +
+						"</static-content></root>";
 	}
 
 	public void initRoles() {
@@ -502,6 +507,14 @@ public class DataFactory {
 			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
 			dlFileEntry.getFileEntryTypeId(), true, dlFileEntry.getMimeType(),
 			dlFileEntry.getTitle());
+	}
+
+	public AssetEntry newAssetEntry(JournalArticle journalArticle) {
+		return newAssetEntry(
+			journalArticle.getGroupId(), journalArticle.getCreateDate(),
+			journalArticle.getModifiedDate(), getJournalArticleClassNameId(),
+			journalArticle.getResourcePrimKey(), journalArticle.getUuid(), 0,
+			true, ContentTypes.TEXT_HTML, journalArticle.getTitle());
 	}
 
 	public AssetEntry newAssetEntry(
@@ -823,16 +836,33 @@ public class DataFactory {
 	}
 
 	public JournalArticle newJournalArticle(
-		long resourcePrimKey, long groupId, long companyId, String articleId) {
+		JournalArticleResource journalArticleResource) {
 
 		JournalArticle journalArticle = new JournalArticleImpl();
 
+		journalArticle.setUuid(SequentialUUID.generate());
 		journalArticle.setId(_counter.get());
-		journalArticle.setResourcePrimKey(resourcePrimKey);
-		journalArticle.setGroupId(groupId);
-		journalArticle.setCompanyId(companyId);
-		journalArticle.setArticleId(articleId);
+		journalArticle.setResourcePrimKey(
+			journalArticleResource.getResourcePrimKey());
+		journalArticle.setGroupId(journalArticleResource.getGroupId());
+		journalArticle.setCompanyId(_companyId);
+		journalArticle.setUserId(_sampleUserId);
+		journalArticle.setUserName(_sampleUser.getFullName());
+		journalArticle.setCreateDate(new Date());
+		journalArticle.setModifiedDate(new Date());
+		journalArticle.setClassNameId(
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+		journalArticle.setArticleId(journalArticleResource.getArticleId());
+		journalArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
+		journalArticle.setTitle(_JOURNAL_ARTICLE_TITLE);
+		journalArticle.setUrlTitle("Test Journal Article");
 		journalArticle.setContent(_journalArticleContent);
+		journalArticle.setType("general");
+		journalArticle.setDisplayDate(new Date());
+		journalArticle.setIndexable(true);
+		journalArticle.setExpirationDate(nextFutureDate());
+		journalArticle.setReviewDate(new Date());
+		journalArticle.setStatusDate(new Date());
 
 		return journalArticle;
 	}
@@ -841,6 +871,7 @@ public class DataFactory {
 		JournalArticleResource journalArticleResource =
 			new JournalArticleResourceImpl();
 
+		journalArticleResource.setUuid(SequentialUUID.generate());
 		journalArticleResource.setResourcePrimKey(_counter.get());
 		journalArticleResource.setGroupId(groupId);
 		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
@@ -1249,6 +1280,10 @@ public class DataFactory {
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
 
+	private static final String _JOURNAL_ARTICLE_TITLE =
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales=" +
+			"\"en_US\" default-locale=\"en_US\"><Title language-id=\"en_US\"" +
+				">Test Journal Article</Title></root>";
 	private Account _account;
 	private long _accountId;
 	private Role _administratorRole;

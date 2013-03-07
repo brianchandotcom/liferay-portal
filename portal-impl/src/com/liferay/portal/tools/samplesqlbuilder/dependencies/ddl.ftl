@@ -13,7 +13,7 @@
 
 		<#assign ddlDisplayLayout = dataFactory.newLayout(groupId, ddlLayoutName, "", ddlPortletId)>
 
-		<#assign publicLayouts = publicLayouts + [ddlDisplayLayout]>
+		${sampleSQLBuilder.insertLayout(ddlDisplayLayout)}
 
 		<#assign ddlRecordSet = dataFactory.newDDLRecordSet(ddmStructure.groupId, ddmStructure.companyId, ddmStructure.userId, ddmStructure.structureId)>
 

@@ -24,13 +24,19 @@ AUI.add(
 		var TPL_INPUT =
 			'<label title="{name}">' +
 				'<span class="lfr-categories-selector-category-name" title="{name}">' +
-					'<input data-categoryId="{categoryId}" type="checkbox" value="{name}" {checked} />' +
+					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{name}" {checked} />' +
 					'{name}' +
 				'</span>' +
 				'<span class="lfr-categories-selector-search-results-path" title="{path}">{path}</span>' +
 			'</label>';
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
+
+		var TPL_RADIO_CLASS = ' class="{0}" ';
+
+		var TPL_RADIO_ID = ' id="{0}" ';
+
+		var TPL_RADIO_IMAGE = '<div class="lfr-categories-selector-radio-image category{0}"></div>';
 
 		var TPL_SEARCH_QUERY = '%{0}%';
 
@@ -196,6 +202,14 @@ AUI.add(
 
 					_bindTagsSelector: EMPTY_FN,
 
+					_clearEntries: function() {
+						var instance = this;
+
+						var entries = instance.entries;
+
+						entries.each(A.fn('removeAt', entries, 0));
+					},
+
 					_formatJSONResult: function(json) {
 						var instance = this;
 
@@ -353,6 +367,12 @@ AUI.add(
 							var input = popup.searchField.get('node');
 
 							input.on('keyup', searchCategoriesTask);
+
+							if (instance.get('singleSelect')) {
+								var onSelectChange = A.bind('_onSelectChange', instance);
+
+								popup.entriesNode.delegate('change', onSelectChange, 'input[type=radio]');
+							}
 						}
 
 						popup.entriesNode.append(searchResults);
@@ -393,13 +413,17 @@ AUI.add(
 					},
 
 					_onCheckedChange: function(event) {
-						var intance = this;
+						var instance = this;
 
 						if (event.newVal) {
-							intance._onCheckboxCheck(event);
+							if (instance.get('singleSelect')) {
+								instance._clearEntries();
+							}
+
+							instance._onCheckboxCheck(event);
 						}
 						else {
-							intance._onCheckboxUncheck(event);
+							instance._onCheckboxUncheck(event);
 						}
 					},
 
@@ -432,6 +456,14 @@ AUI.add(
 						instance.entries.removeKey(assetId);
 					},
 
+					_onSelectChange: function(event) {
+						var instance = this;
+
+						instance._clearEntries();
+
+						instance._onCheckboxCheck(event);
+					},
+
 					_processSearchResults: function(searchResults, results) {
 						var instance = this;
 
@@ -440,14 +472,23 @@ AUI.add(
 						buffer.length = 0;
 
 						if (results.length > 0) {
+							var inputType = 'checkbox';
+
+							if (instance.get('singleSelect')) {
+								inputType = 'radio';
+							}
+
+							var inputName = A.guid();
+
 							A.each(
 								results,
 								function(item, index, collection) {
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
-									var input = Lang.sub(TPL_INPUT, item);
+									item.inputName = inputName;
+									item.type = inputType;
 
-									buffer.push(input);
+									buffer.push(Lang.sub(TPL_INPUT, item));
 								}
 							);
 						}

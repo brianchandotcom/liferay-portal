@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.template.PACLTemplateWrapper;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
@@ -102,7 +101,7 @@ public class FreeMarkerManager implements TemplateManager {
 				_configuration, _templateContextHelper);
 		}
 
-		return PACLTemplateWrapper.getTemplate(template);
+		return template;
 	}
 
 	public void init() throws TemplateException {

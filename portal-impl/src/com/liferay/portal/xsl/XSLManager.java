@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.PACLTemplateWrapper;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
@@ -88,7 +87,7 @@ public class XSLManager implements TemplateManager {
 				_templateContextHelper);
 		}
 
-		return PACLTemplateWrapper.getTemplate(template);
+		return template;
 	}
 
 	public void init() {

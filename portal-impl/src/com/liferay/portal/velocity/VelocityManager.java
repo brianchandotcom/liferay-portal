@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.template.PACLTemplateWrapper;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsUtil;
@@ -98,7 +97,7 @@ public class VelocityManager implements TemplateManager {
 				_velocityEngine, _templateContextHelper);
 		}
 
-		return PACLTemplateWrapper.getTemplate(template);
+		return template;
 	}
 
 	public void init() throws TemplateException {

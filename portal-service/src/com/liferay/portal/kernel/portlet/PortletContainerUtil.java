@@ -14,6 +14,16 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import javax.portlet.Event;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
@@ -24,22 +34,13 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
+import com.liferay.portal.model.EventDefinition;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.portlet.Event;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Shuyang Zhou
@@ -253,16 +254,54 @@ public class PortletContainerUtil {
 				for (Event event : events) {
 					javax.xml.namespace.QName qName = event.getQName();
 
+					String namespaceURI = qName.getNamespaceURI();
+					String localPart = qName.getLocalPart();
+					Layout layoutTypePortletLayout = 
+						layoutTypePortlet.getLayout();
+					
 					QName processingQName = portlet.getProcessingEvent(
-						qName.getNamespaceURI(), qName.getLocalPart());
+						namespaceURI, localPart);
 
-					if (processingQName == null) {
-						continue;
+					if (processingQName != null) {
+						processEvent(
+							request, response, portlet, layoutTypePortletLayout, 
+							event);
 					}
+					else {
+						PortletApp portletApp = portlet.getPortletApp();
+						
+						Set<EventDefinition> eventDefinitions = 
+							portletApp.getEventDefinitions();
+						
+						for (EventDefinition eventDefinition :
+								eventDefinitions) {
 
-					processEvent(
-						request, response, portlet,
-						layoutTypePortlet.getLayout(), event);
+							QName aliasQName = eventDefinition.getAliasQName(
+								namespaceURI, localPart);
+							
+							if (aliasQName == null) {
+								continue;
+							}
+							
+							QName eventQName = eventDefinition.getQName();
+							
+							processingQName = portlet.getProcessingEvent(
+								eventQName.getNamespaceURI(), 
+								eventQName.getLocalPart());
+							
+							if (processingQName == null) {
+								continue;
+							}
+							
+							LiferayEvent liferayEvent = (LiferayEvent)event;
+							
+							Event eventAlias = liferayEvent.clone(qName);
+							
+							processEvent(
+								request, response, portlet,
+								layoutTypePortletLayout, eventAlias);
+						}
+					}
 				}
 			}
 		}

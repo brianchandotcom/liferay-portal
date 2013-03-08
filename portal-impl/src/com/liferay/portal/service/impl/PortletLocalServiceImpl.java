@@ -2066,6 +2066,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			EventDefinition eventDefinition = new EventDefinitionImpl(
 				qName, valueType, portletApp);
 
+			List<Element> aliases = eventDefinitionElement.elements("alias");
+
+			for (Element alias : aliases) {
+				qName = PortletQNameUtil.getQName(
+					alias, null, portletApp.getDefaultNamespace());
+				
+				eventDefinition.addAliasQName(qName);
+			}
+			
 			portletApp.addEventDefinition(eventDefinition);
 		}
 

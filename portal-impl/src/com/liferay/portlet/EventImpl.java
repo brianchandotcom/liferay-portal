@@ -16,14 +16,14 @@ package com.liferay.portlet;
 
 import java.io.Serializable;
 
-import javax.portlet.Event;
-
 import javax.xml.namespace.QName;
+
+import com.liferay.portal.kernel.portlet.LiferayEvent;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EventImpl implements Event, Serializable {
+public class EventImpl implements LiferayEvent, Serializable {
 
 	public EventImpl(String name, QName qName, Serializable value) {
 		_name = name;
@@ -31,6 +31,10 @@ public class EventImpl implements Event, Serializable {
 		_value = value;
 	}
 
+	public LiferayEvent clone(QName qName) {
+		return new EventImpl(_name, qName, _value);
+	}
+	
 	public String getName() {
 		return _name;
 	}

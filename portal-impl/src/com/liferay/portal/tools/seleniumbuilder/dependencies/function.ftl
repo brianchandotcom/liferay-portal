@@ -14,10 +14,10 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 
 	<#list functionCommandElements as functionCommandElement>
 		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}(
-		
+
 		<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
 			String target${i}, String value${i}
-			
+
 			<#if i_has_next>
 				,
 			</#if>

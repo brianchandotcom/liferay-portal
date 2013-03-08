@@ -19,6 +19,7 @@
 <%
 String eventName = ParamUtil.getString(request, "eventName", "selectOrganization");
 String target = ParamUtil.getString(request, "target");
+String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -128,7 +129,7 @@ if (selUser != null) {
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= OrganizationMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), organization.getOrganizationId()) %>">
+				<c:if test="<%= (Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isMembershipAllowed(selUser != null ? selUser.getUserId() : 0, organization.getOrganizationId())) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

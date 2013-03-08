@@ -77,7 +77,7 @@ if (selUser != null) {
 			<%
 			String rowHREF = null;
 
-			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), userGroup.getUserGroupId())) {
+			if (UserGroupMembershipPolicyUtil.isMembershipAllowed(selUser != null ? selUser.getUserId() : 0, userGroup.getUserGroupId())) {
 				StringBundler sb = new StringBundler(10);
 
 				sb.append("javascript:opener.");

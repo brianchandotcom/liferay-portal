@@ -21,6 +21,7 @@ boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 String callback = ParamUtil.getString(request, "callback", "selectGroup");
 String target = ParamUtil.getString(request, "target");
+String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -127,7 +128,7 @@ if (selUser != null) {
 			<%
 			String rowHREF = null;
 
-			if (SiteMembershipPolicyUtil.isMembershipAllowed(selUser.getUserId(), group.getGroupId())) {
+			if ((Validator.isNull(p_u_i_d)) || SiteMembershipPolicyUtil.isMembershipAllowed(selUser != null ? selUser.getUserId() : 0, group.getOrganizationId())) {
 				StringBundler sb = new StringBundler(10);
 
 				sb.append("javascript:opener.");

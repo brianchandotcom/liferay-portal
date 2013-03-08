@@ -71,7 +71,9 @@ public abstract class BaseAtomCollectionAdapter<E>
 			return doGetFeedEntries(atomRequestContext);
 		}
 		catch (Exception e) {
-			String className = e.getClass().getSimpleName();
+			Class<?> clazz = e.getClass();
+
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);

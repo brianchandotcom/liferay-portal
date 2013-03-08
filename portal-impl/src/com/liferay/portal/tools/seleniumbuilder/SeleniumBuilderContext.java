@@ -123,7 +123,8 @@ public class SeleniumBuilderContext {
 				_actionClassNames.put(
 					pathName, _getClassName(fileName, "Action"));
 
-				_actionJavaFileNames.put(pathName, _getJavaFileName(fileName));
+				_actionJavaFileNames.put(
+					pathName, _getJavaFileName(fileName, "Action"));
 
 				_actionNames.add(pathName);
 
@@ -401,6 +402,10 @@ public class SeleniumBuilderContext {
 
 	private String _getJavaFileName(String fileName) {
 		return _seleniumBuilderFileUtil.getJavaFileName(fileName);
+	}
+
+	private String _getJavaFileName(String fileName, String classSuffix) {
+		return _seleniumBuilderFileUtil.getJavaFileName(fileName, classSuffix);
 	}
 
 	private String _getName(String fileName) {

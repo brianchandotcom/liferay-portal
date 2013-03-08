@@ -30,7 +30,11 @@ public class ActionConverter extends BaseConverter {
 
 		context.put("actionName", actionName);
 
-		processTemplate("action.ftl", context);
+		String content = processTemplate("action.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getActionJavaFileName(actionName), content,
+			true);
 	}
 
 }

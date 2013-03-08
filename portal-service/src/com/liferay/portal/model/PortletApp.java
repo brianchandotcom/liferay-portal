@@ -51,6 +51,8 @@ public interface PortletApp extends Serializable {
 
 	public String getDefaultNamespace();
 
+	public Set<EventDefinition> getEventDefinitions();
+
 	public PortletFilter getPortletFilter(String filterName);
 
 	public Set<PortletFilter> getPortletFilters();

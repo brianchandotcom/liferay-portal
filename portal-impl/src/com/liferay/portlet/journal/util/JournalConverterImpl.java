@@ -241,6 +241,10 @@ public class JournalConverterImpl implements JournalConverter {
 			int parentOffset)
 		throws Exception {
 
+		if (!ddmFields.contains(fieldName)) {
+			return 0;
+		}
+
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		String[] fieldsDisplayValues = DDMUtil.getFieldsDisplayValues(

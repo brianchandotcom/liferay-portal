@@ -33,9 +33,11 @@ import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Filter;
@@ -218,6 +220,15 @@ public class BundleServletContext extends LiferayServletContext {
 							getContextPath() + urlPattern);
 				}
 			}
+
+			int serviceRanking = GetterUtil.getInteger(
+				initParameters.remove("service.ranking"));
+
+			if ((serviceRanking <= 0) && !_filtersByServiceOrder.isEmpty()) {
+				serviceRanking = _filtersByServiceOrder.lastKey() + 1;
+			}
+
+			_filtersByServiceOrder.put(serviceRanking, filterName);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -299,32 +310,9 @@ public class BundleServletContext extends LiferayServletContext {
 
 		filter.destroy();
 
-		Set<Map.Entry<String, Filter>> set = _filtersByURLPatterns.entrySet();
+		cleanFiltersByServiceId(filterName);
 
-		Iterator<Map.Entry<String, Filter>> iterator = set.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, Filter> entry = iterator.next();
-
-			Filter curFilter = entry.getValue();
-
-			if (curFilter != filter) {
-				continue;
-			}
-
-			iterator.remove();
-
-			if (_log.isInfoEnabled()) {
-				String urlPattern = entry.getKey();
-
-				_log.info(
-					"Unmapped filter " + filterName + " from " + urlPattern);
-			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Unregistered filter " + filterName);
-		}
+		cleanFiltersByURLMapping(filterName, filter);
 	}
 
 	public void unregisterServlet(String servletName) {
@@ -361,6 +349,53 @@ public class BundleServletContext extends LiferayServletContext {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Unregistered servlet " + servletName);
+		}
+	}
+
+	protected void cleanFiltersByServiceId(String filterName) {
+		Set<Entry<Integer, String>> set = _filtersByServiceOrder.entrySet();
+
+		Iterator<Entry<Integer, String>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<Integer, String> entry = iterator.next();
+
+			String curFilterName = entry.getValue();
+
+			if (!curFilterName.equals(filterName)) {
+				continue;
+			}
+
+			iterator.remove();
+		}
+	}
+
+	protected void cleanFiltersByURLMapping(String filterName, Filter filter) {
+		Set<Map.Entry<String, Filter>> set = _filtersByURLPatterns.entrySet();
+
+		Iterator<Map.Entry<String, Filter>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, Filter> entry = iterator.next();
+
+			Filter curFilter = entry.getValue();
+
+			if (curFilter != filter) {
+				continue;
+			}
+
+			iterator.remove();
+
+			if (_log.isInfoEnabled()) {
+				String urlPattern = entry.getKey();
+
+				_log.info(
+					"Unmapped filter " + filterName + " from " + urlPattern);
+			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Unregistered filter " + filterName);
 		}
 	}
 
@@ -431,9 +466,11 @@ public class BundleServletContext extends LiferayServletContext {
 
 	private Bundle _bundle;
 	private Map<String, Object> _contextAttributes =
-		new ConcurrentHashMap<String, Object>();	
+		new ConcurrentHashMap<String, Object>();
 	private Map<String, Filter> _filtersByFilterNames =
 		new ConcurrentHashMap<String, Filter>();
+	private TreeMap<Integer, String> _filtersByServiceOrder =
+		new TreeMap<Integer, String>();
 	private Map<String, Filter> _filtersByURLPatterns =
 		new ConcurrentHashMap<String, Filter>();
 	private String _servletContextName;

@@ -34,7 +34,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -54,7 +54,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -71,7 +71,9 @@ public abstract class BaseAtomCollectionAdapter<E>
 			return doGetFeedEntries(atomRequestContext);
 		}
 		catch (Exception e) {
-			String className = e.getClass().getName();
+			Class<?> clazz = e.getClass();
+
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -107,7 +109,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -128,7 +130,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -150,7 +152,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);
@@ -171,7 +173,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 		catch (Exception e) {
 			Class<?> clazz = e.getClass();
 
-			String className = clazz.getName();
+			String className = clazz.getSimpleName();
 
 			if (className.startsWith("NoSuch")) {
 				throw new AtomException(SC_NOT_FOUND);

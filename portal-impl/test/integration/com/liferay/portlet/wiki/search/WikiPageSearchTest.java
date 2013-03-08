@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.search;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -33,9 +34,12 @@ import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
 
 import java.io.File;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -93,8 +97,34 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), keywords, approved);
+			TestPropsValues.getUserId(),
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), keywords, approved, serviceContext);
+	}
+
+	@Override
+	protected void expireBaseModelVersions(
+			BaseModel<?> baseModel, boolean expireAll,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		WikiPage page = (WikiPage)baseModel;
+
+		if (expireAll) {
+			WikiPageServiceUtil.deletePage(page.getNodeId(), page.getTitle());
+		}
+		else {
+			List<WikiPage> pages = WikiPageServiceUtil.getPages(
+				page.getGroupId(), page.getNodeId(), false,
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			WikiPage previousPage = pages.get(0);
+
+			WikiPageServiceUtil.revertPage(
+				page.getNodeId(), page.getTitle(), previousPage.getVersion(),
+				serviceContext);
+		}
 	}
 
 	@Override
@@ -124,6 +154,23 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected boolean isExpirableAllVersions() {
+		return true;
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		WikiPage page = (WikiPage)baseModel;
+
+		return WikiTestUtil.updatePage(
+			page, TestPropsValues.getUserId(), keywords, serviceContext);
 	}
 
 }

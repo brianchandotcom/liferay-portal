@@ -35,6 +35,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -119,6 +120,23 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void expireBaseModelVersions(
+			BaseModel<?> baseModel, boolean expireAll,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
+
+		if (expireAll) {
+			DLAppServiceUtil.deleteFileEntry(dlFileEntry.getFileEntryId());
+		}
+		else {
+			DLAppServiceUtil.deleteFileVersion(
+				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+		}
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return DLFileEntry.class;
 	}
@@ -144,6 +162,26 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected boolean isExpirableAllVersions() {
+		return true;
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
+
+		FileEntry fileEntry = DLAppTestUtil.updateFileEntry(
+			serviceContext.getScopeGroupId(), dlFileEntry.getFileEntryId(),
+			null, dlFileEntry.getMimeType(), keywords, true, serviceContext);
+
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

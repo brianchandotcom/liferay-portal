@@ -254,12 +254,13 @@ public abstract class DLAppTestUtil {
 
 		return updateFileEntry(
 			groupId, fileEntryId, sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, majorVersion);
+			title, majorVersion, new ServiceContext());
 	}
 
 	public static FileEntry updateFileEntry(
 			long groupId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, boolean majorVersion)
+			String mimeType, String title, boolean majorVersion,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String description = StringPool.BLANK;
@@ -272,8 +273,6 @@ public abstract class DLAppTestUtil {
 
 			bytes = newContent.getBytes();
 		}
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);

@@ -52,6 +52,26 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	public void testSearchExpireAllVersions() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchExpireLatestVersion() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchStatus() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchVersions() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testSearchWithinDDMStructure() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

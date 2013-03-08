@@ -797,8 +797,9 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	@Indexable(type = IndexableType.DELETE)
-	public void deleteFileVersion(long userId, long fileEntryId, String version)
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntry deleteFileVersion(
+			long userId, long fileEntryId, String version)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(version) ||
@@ -810,6 +811,9 @@ public class DLFileEntryLocalServiceImpl
 		if (!hasFileEntryLock(userId, fileEntryId)) {
 			lockFileEntry(userId, fileEntryId);
 		}
+
+		DLFileEntry dlFileEntry = null;
+		boolean isLatestVersion = false;
 
 		try {
 			DLFileVersion dlFileVersion = dlFileVersionPersistence.findByF_V(
@@ -835,10 +839,11 @@ public class DLFileEntryLocalServiceImpl
 				DLFileVersion.class.getName(),
 				dlFileVersion.getFileVersionId());
 
-			DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-				fileEntryId);
+			dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 
-			if (version.equals(dlFileEntry.getVersion())) {
+			isLatestVersion = version.equals(dlFileEntry.getVersion());
+
+			if (isLatestVersion) {
 				try {
 					DLFileVersion dlLatestFileVersion =
 						dlFileVersionLocalService.getLatestFileVersion(
@@ -863,7 +868,7 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
 					dlFileEntry.setSize(dlLatestFileVersion.getSize());
 
-					dlFileEntryPersistence.update(dlFileEntry);
+					dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 				}
 				catch (NoSuchFileVersionException nsfve) {
 				}
@@ -881,6 +886,12 @@ public class DLFileEntryLocalServiceImpl
 		finally {
 			unlockFileEntry(fileEntryId);
 		}
+
+		if (isLatestVersion) {
+			return dlFileEntry;
+		}
+
+		return null;
 	}
 
 	public DLFileEntry fetchFileEntry(long groupId, long folderId, String title)

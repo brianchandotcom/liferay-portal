@@ -429,6 +429,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public void deletePage(long nodeId, String title, double version)
 		throws PortalException, SystemException {
 

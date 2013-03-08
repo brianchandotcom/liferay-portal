@@ -25,6 +25,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -32,6 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Assert;
@@ -84,7 +86,28 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return JournalTestUtil.addArticleWithWorkflow(
-			serviceContext.getScopeGroupId(), keywords, keywords, approved);
+			serviceContext.getScopeGroupId(), keywords, approved);
+	}
+
+	@Override
+	protected void expireBaseModelVersions(
+			BaseModel<?> baseModel, boolean expireAll,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)baseModel;
+
+		if (expireAll) {
+			JournalArticleLocalServiceUtil.expireArticle(
+				article.getUserId(), article.getGroupId(),
+				article.getArticleId(), article.getUrlTitle(), serviceContext);
+		}
+		else {
+			JournalArticleLocalServiceUtil.expireArticle(
+				article.getUserId(), article.getGroupId(),
+				article.getArticleId(), article.getVersion(),
+				article.getUrlTitle(), serviceContext);
+		}
 	}
 
 	@Override
@@ -115,6 +138,23 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected boolean isExpirableAllVersions() {
+		return PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS;
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)baseModel;
+
+		return JournalTestUtil.updateArticle(
+			article, keywords, article.getContent(), serviceContext);
 	}
 
 	private DDMStructure _ddmStructure;

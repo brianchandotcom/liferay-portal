@@ -2347,6 +2347,12 @@
 			<forward name="portlet.wiki.view_node" path="portlet.wiki.view_orphan_pages" />
 		</action>
 
+		<action path="/wiki_admin/view_page_activities" type="com.liferay.portlet.wiki.action.ViewPageAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
+			<forward name="portlet.wiki.view_page" path="portlet.wiki.view_page_activities" />
+		</action>
+
 		<action path="/wiki_admin/view_page_attachments" type="com.liferay.portlet.wiki.action.ViewPageAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.view_page" path="portlet.wiki.view_page_attachments" />
@@ -2465,6 +2471,12 @@
 		<action path="/wiki_display/view_page" type="com.liferay.portlet.wiki.action.ViewPageAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.view_page" path="portlet.wiki_display.view" />
+		</action>
+
+		<action path="/wiki_display/view_page_activities" type="com.liferay.portlet.wiki.action.ViewPageAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
+			<forward name="portlet.wiki.view_page" path="portlet.wiki.view_page_activities" />
 		</action>
 
 		<action path="/wiki_display/view_page_attachments" type="com.liferay.portlet.wiki.action.ViewPageAction">

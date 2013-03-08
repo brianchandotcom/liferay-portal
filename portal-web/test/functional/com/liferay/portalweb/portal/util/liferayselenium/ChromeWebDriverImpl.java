@@ -14,7 +14,13 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.portal.util.TestPropsValues;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,7 +28,21 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 
 	public ChromeWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new ChromeDriver());
+		super(projectDir, browserURL, new ChromeDriver(_capabilities));
+	}
+
+	private static DesiredCapabilities _capabilities;
+
+	static {
+		_capabilities = DesiredCapabilities.chrome();
+
+		Map<String, Object> preferences = new HashMap<String, Object>();
+
+		preferences.put("download.prompt_for_download", false);
+		preferences.put(
+			"download.default_directory", TestPropsValues.OUTPUT_DIR);
+
+		_capabilities.setCapability("chrome.prefs", preferences);
 	}
 
 }

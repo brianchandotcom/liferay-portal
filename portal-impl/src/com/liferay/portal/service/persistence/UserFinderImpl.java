@@ -826,19 +826,13 @@ public class UserFinderImpl
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
 
-			Long groupId = ((Long[])value)[0];
-			Long roleId = ((Long[])value)[1];
+			Long[] valueArray = (Long[])value;
+
+			long groupId = valueArray[0];
 
 			if (Validator.isNull(groupId)) {
 				join = StringUtil.replace(
 					join, _GROUP_ID_SQL, StringPool.BLANK);
-			}
-			else if (Validator.isNull(roleId)) {
-				String removeAnd = StringUtil.replace(
-					_GROUP_ID_SQL, " AND", StringPool.BLANK);
-
-				join = StringUtil.replace(
-					join, _GROUP_ID_SQL + " " + _ROLE_ID_SQL, removeAnd);
 			}
 		}
 		else if (key.equals("usersGroups")) {
@@ -1099,8 +1093,6 @@ public class UserFinderImpl
 
 	private static final String _GROUP_ID_SQL =
 		"(UserGroupRole.groupId = ?) AND";
-
-	private static final String _ROLE_ID_SQL = "(UserGroupRole.roleId = ?)";
 
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";
 

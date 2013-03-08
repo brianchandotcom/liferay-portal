@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
@@ -26,6 +27,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -78,6 +80,10 @@ public class UpgradePortletIdsTest extends UpgradePortletId {
 		layoutTypePortlet.addPortletId(
 			TestPropsValues.getUserId(), _OLD_PORTLET_ID);
 
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
 		addPortletPreferences(layout, _OLD_PORTLET_ID);
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
@@ -98,6 +104,8 @@ public class UpgradePortletIdsTest extends UpgradePortletId {
 		PortletLocalServiceUtil.destroyPortlet(portlet);
 
 		doUpgrade();
+
+		CacheRegistryUtil.clear();
 
 		portlet.setCompanyId(TestPropsValues.getCompanyId());
 		portlet.setPortletId(_NEW_ROOT_PORTLET_ID);
@@ -132,6 +140,8 @@ public class UpgradePortletIdsTest extends UpgradePortletId {
 				role.getRoleId(), ActionKeys.CONFIGURATION);
 
 		Assert.assertTrue(hasConfigurationPermission);
+
+		GroupLocalServiceUtil.deleteGroup(layout.getGroup());
 	}
 
 	protected Layout addLayout() throws Exception {

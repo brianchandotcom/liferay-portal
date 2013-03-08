@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -253,80 +252,10 @@ public class PortalServiceChecker extends BaseChecker {
 					_PORTAL_SERVLET_CONTEXT_NAME)) {
 
 				_portalServices = services;
-
-				touchServices(_portalServices);
 			}
 			else {
 				_pluginServices.put(servicesServletContextName, services);
 			}
-		}
-	}
-
-	protected void touchService(String service) {
-		String className = service;
-
-		if (!className.contains(".service.")) {
-			return;
-		}
-
-		String methodName = null;
-
-		if (className.contains(".service.persistence.") &&
-			(className.endsWith("Persistence") ||
-			 className.contains("Persistence#"))) {
-
-			methodName = "getPersistence";
-		}
-		else if (className.endsWith("Service") ||
-				 className.contains("Service#")) {
-
-			methodName = "getService";
-		}
-		else {
-			_log.error("Invalid service " + service);
-
-			return;
-		}
-
-		int pos = className.indexOf(StringPool.POUND);
-
-		if (pos != -1) {
-			className = className.substring(0, pos);
-		}
-
-		if (className.endsWith("Persistence")) {
-			className = className.substring(0, className.length() - 11);
-		}
-
-		className += "Util";
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking " + className + "#" + methodName);
-		}
-
-		// Invoke method since it will attempt to access declared members
-
-		ClassLoader classLoader = getCommonClassLoader();
-
-		if (ServerDetector.isGeronimo() || ServerDetector.isJBoss()) {
-			classLoader = getPortalClassLoader();
-		}
-
-		try {
-			Class<?> clazz = classLoader.loadClass(className);
-
-			Method method = clazz.getMethod(methodName);
-
-			method.invoke(clazz);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	protected void touchServices(Set<String> services) {
-		for (String service : services) {
-			touchService(service);
 		}
 	}
 

@@ -223,7 +223,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		// Touch dependent classes to prevent NoClassDefError
 
 		CheckerUtil.isAccessControllerDoPrivileged(0);
-		PACLClassUtil.getPACLPolicyByReflection(false, false);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

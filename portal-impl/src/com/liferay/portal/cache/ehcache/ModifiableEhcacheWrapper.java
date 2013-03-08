@@ -90,7 +90,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public long calculateOnDiskSize()
-		throws CacheException, IllegalStateException {
+		throws IllegalStateException, CacheException {
 
 		return _ehcache.calculateOnDiskSize();
 	}
@@ -146,7 +146,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public Map<Object, Element> getAll(Collection<?> keys)
-		throws CacheException, IllegalStateException, NullPointerException {
+		throws IllegalStateException, CacheException, NullPointerException {
 
 		return _ehcache.getAll(keys);
 	}
@@ -429,7 +429,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public void putAll(Collection<Element> elements)
-		throws CacheException, IllegalArgumentException, IllegalStateException {
+		throws IllegalArgumentException, IllegalStateException, CacheException {
 
 		_ehcache.putAll(elements);
 	}
@@ -477,7 +477,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	public void registerDynamicAttributesExtractor(
-		DynamicAttributesExtractor dynamicAttributesExtractor) {
+			DynamicAttributesExtractor dynamicAttributesExtractor) {
 
 		_ehcache.registerDynamicAttributesExtractor(dynamicAttributesExtractor);
 	}

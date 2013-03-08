@@ -6,6 +6,7 @@
             <name>Liferay Portal</name>
         </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
             <name>Liferay Portal</name>
             <properties/>
             <folders>
@@ -389,6 +390,7 @@
                 <classpath mode="compile">lib/portal/eclipse-core-runtime.jar</classpath>
                 <classpath mode="compile">lib/portal/ecs.jar</classpath>
                 <classpath mode="compile">lib/portal/ehcache-core.jar</classpath>
+                <classpath mode="compile">lib/portal/ehcache-jgroupsreplication.jar</classpath>
                 <classpath mode="compile">lib/portal/fastutil.jar</classpath>
                 <classpath mode="compile">lib/portal/felix-fileinstall.jar</classpath>
                 <classpath mode="compile">lib/portal/flexjson.jar</classpath>

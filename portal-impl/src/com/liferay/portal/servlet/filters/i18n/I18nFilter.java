@@ -52,7 +52,7 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	public static void setLanguageIds(Set<String> languageIds) {
-		_languageIds.clear();
+		_languageIds = new HashSet<String>();
 
 		for (String languageId : languageIds) {
 			languageId = languageId.substring(1);
@@ -261,6 +261,6 @@ public class I18nFilter extends BasePortalFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(I18nFilter.class);
 
-	private static Set<String> _languageIds = new HashSet<String>();
+	private static Set<String> _languageIds;
 
 }

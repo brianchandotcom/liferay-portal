@@ -45,6 +45,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -314,7 +316,10 @@ public class ExportImportAction extends EditConfigurationAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
-			else if (e instanceof LocaleException) {
+			else if ((e instanceof LocaleException) ||
+					 (e instanceof RecordSetDuplicateRecordSetKeyException) ||
+					 (e instanceof StructureDuplicateStructureKeyException)) {
+
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {

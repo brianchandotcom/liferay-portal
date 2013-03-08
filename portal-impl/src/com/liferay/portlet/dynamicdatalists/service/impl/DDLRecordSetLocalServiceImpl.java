@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatalists.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,7 +59,8 @@ public class DDLRecordSetLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(groupId, ddmStructureId, recordSetKey, nameMap);
+		validate(
+			groupId, ddmStructureId, recordSetKey, nameMap, serviceContext);
 
 		long recordSetId = counterLocalService.increment();
 
@@ -310,7 +312,7 @@ public class DDLRecordSetLocalServiceImpl
 
 	protected void validate(
 			long groupId, long ddmStructureId, String recordSetKey,
-			Map<Locale, String> nameMap)
+			Map<Locale, String> nameMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validateDDMStructureId(ddmStructureId);
@@ -320,7 +322,12 @@ public class DDLRecordSetLocalServiceImpl
 				groupId, recordSetKey);
 
 			if (recordSet != null) {
-				throw new RecordSetDuplicateRecordSetKeyException();
+				String message = LanguageUtil.format(
+					serviceContext.getLocale(),
+					"dynamic-data-list-record-set-with-id-x-already-exists",
+					recordSet.getPrimaryKey());
+
+				throw new RecordSetDuplicateRecordSetKeyException(message);
 			}
 		}
 

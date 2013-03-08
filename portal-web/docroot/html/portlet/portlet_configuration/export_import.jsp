@@ -119,6 +119,24 @@ if (layout.isTypeControlPanel()) {
 			</c:if>
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>">
+
+			<%
+			RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
+			%>
+
+			<liferay-ui:message key="<%= rsdrske.getMessage() %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
+
+			<%
+			StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
+			%>
+
+			<liferay-ui:message key="<%= sdske.getMessage() %>" />
+		</liferay-ui:error>
+
 		<portlet:actionURL var="exportImportPagesURL">
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 		</portlet:actionURL>

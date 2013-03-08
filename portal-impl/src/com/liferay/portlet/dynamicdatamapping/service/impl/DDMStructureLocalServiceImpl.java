@@ -148,7 +148,8 @@ public class DDMStructureLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(groupId, classNameId, structureKey, nameMap, xsd);
+		validate(
+			groupId, classNameId, structureKey, nameMap, xsd, serviceContext);
 
 		long structureId = counterLocalService.increment();
 
@@ -1371,7 +1372,7 @@ public class DDMStructureLocalServiceImpl
 			throw new StructureXsdException();
 		}
 
-		validate(nameMap, xsd);
+		validate(nameMap, xsd, serviceContext);
 
 		structure.setModifiedDate(serviceContext.getModifiedDate(null));
 		structure.setParentStructureId(parentStructureId);
@@ -1540,7 +1541,8 @@ public class DDMStructureLocalServiceImpl
 
 	protected void validate(
 			long groupId, long classNameId, String structureKey,
-			Map<Locale, String> nameMap, String xsd)
+			Map<Locale, String> nameMap, String xsd,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		structureKey = structureKey.trim().toUpperCase();
@@ -1549,13 +1551,20 @@ public class DDMStructureLocalServiceImpl
 			groupId, classNameId, structureKey);
 
 		if (structure != null) {
-			throw new StructureDuplicateStructureKeyException();
+			String message = LanguageUtil.format(
+				serviceContext.getLocale(),
+				"dynamic-data-mapping-structure-with-id-x-already-exists",
+				structure.getPrimaryKey());
+
+			throw new StructureDuplicateStructureKeyException(message);
 		}
 
-		validate(nameMap, xsd);
+		validate(nameMap, xsd, serviceContext);
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String xsd)
+	protected void validate(
+			Map<Locale, String> nameMap, String xsd,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(xsd)) {

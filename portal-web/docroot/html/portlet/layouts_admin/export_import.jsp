@@ -143,21 +143,21 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>">
-			
+
 				<%
 				RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
 				%>
-				
-				<liferay-ui:message arguments="<%= new String[] {rsdrske.getName(), String.valueOf(rsdrske.getPrimaryKey()) } %>" key="the-lar-file-could-not-be-imported-because-it-contains-a-x-record-set-that-already-exists-at-x" />
+
+				<liferay-ui:message arguments="<%= rsdrske.getRecordSetKey() %>" key="dynamic-data-list-record-set-with-record-set-key-x-already-exists" />
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
-			
+
 				<%
 				StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
 				%>
-			
-				<liferay-ui:message arguments="<%= new String[] {sdske.getName(), String.valueOf(sdske.getPrimaryKey()) } %>" key="the-lar-file-could-not-be-imported-because-it-contains-a-x-structure-that-already-exists-at-x" />
+
+				<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" />
 			</liferay-ui:error>
 
 			<c:choose>

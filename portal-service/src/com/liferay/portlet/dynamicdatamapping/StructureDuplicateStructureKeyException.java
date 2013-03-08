@@ -38,25 +38,15 @@ public class StructureDuplicateStructureKeyException extends PortalException {
 	public StructureDuplicateStructureKeyException(Throwable cause) {
 		super(cause);
 	}
-	
-	public String getName() {
-		return name;
+
+	public String getStructureKey() {
+		return _structureKey;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setStructureKey(String structureKey) {
+		_structureKey = structureKey;
 	}
 
-	public long getPrimaryKey() {
-		return primaryKey;
-	}
-
-	public void setPrimaryKey(long primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-
-	private String name;
-	
-	private long primaryKey;
+	private String _structureKey;
 
 }

@@ -220,8 +220,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);
 
-		beanLocatorImpl.setPACLWrapPersistence(true);
-
 		PortalBeanLocatorUtil.setBeanLocator(beanLocatorImpl);
 
 		ClassLoader classLoader = portalClassLoader;

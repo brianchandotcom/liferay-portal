@@ -355,6 +355,10 @@ public class BundleServletContext extends LiferayServletContext {
 			HttpContext httpContext)
 		throws NamespaceException {
 
+		if (filter == null) {
+			throw new IllegalArgumentException("Filter must not be null");
+		}
+
 		Filter registeredFilter = _filtersByFilterNames.get(filterName);
 
 		if ((registeredFilter != null) && (registeredFilter != filter)) {
@@ -371,6 +375,10 @@ public class BundleServletContext extends LiferayServletContext {
 			String servletName, Servlet servlet, List<String> urlPatterns,
 			HttpContext httpContext)
 		throws NamespaceException {
+
+		if (servlet == null) {
+			throw new IllegalArgumentException("Servlet must not be null");
+		}
 
 		Servlet registeredServlet = _servletsByServletNames.get(servletName);
 

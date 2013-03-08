@@ -528,11 +528,9 @@ public class JavadocFormatter {
 
 		value = _trimMultilineText(value);
 
-		if (Validator.isNotNull(value)) {
-			Element commentElement = paramElement.addElement("comment");
+		Element commentElement = paramElement.addElement("comment");
 
-			commentElement.addCDATA(value);
-		}
+		commentElement.addCDATA(value);
 	}
 
 	private void _addParamElements(
@@ -621,11 +619,9 @@ public class JavadocFormatter {
 
 		value = _trimMultilineText(value);
 
-		if (Validator.isNotNull(value)) {
-			Element commentElement = throwsElement.addElement("comment");
+		Element commentElement = throwsElement.addElement("comment");
 
-			commentElement.addCDATA(_getCDATA(value));
-		}
+		commentElement.addCDATA(_getCDATA(value));
 	}
 
 	private void _addThrowsElements(

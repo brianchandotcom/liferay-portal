@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.servlet.DirectServletRegistryImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -444,27 +443,6 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (ServerDetector.isResin()) {
-			for (int i = 7;; i++) {
-				Class<?> callerClass = Reflection.getCallerClass(i);
-
-				if (callerClass == null) {
-					return false;
-				}
-
-				String callerClassName = callerClass.getName();
-
-				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
-					String actualClassLocation = PACLClassUtil.getClassLocation(
-						callerClass);
-					String expectedClassLocation = PathUtil.toUnixPath(
-						System.getProperty("resin.home") + "/lib/resin.jar!/");
-
-					return actualClassLocation.contains(expectedClassLocation);
-				}
-			}
-		}
-
 		return false;
 	}
 
@@ -483,10 +461,6 @@ public class FileChecker extends BaseChecker {
 			if (readFilePermission.implies(permission)) {
 				return true;
 			}
-		}
-
-		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_READ)) {
-			return true;
 		}
 
 		for (int i = 7;; i++) {
@@ -522,52 +496,12 @@ public class FileChecker extends BaseChecker {
 					}
 				}
 			}
-			else if (ServerDetector.isResin()) {
-				String callerClassName = callerClass.getName();
-
-				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
-					String actualClassLocation = PACLClassUtil.getClassLocation(
-						callerClass);
-					String expectedClassLocation = PathUtil.toUnixPath(
-						System.getProperty("resin.home") + "/lib/resin.jar!/");
-
-					return actualClassLocation.contains(expectedClassLocation);
-				}
-			}
 		}
 	}
 
 	protected boolean hasWrite(Permission permission) {
 		for (Permission writeFilePermission : _writePermissions) {
 			if (writeFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		if (ServerDetector.isResin()) {
-			for (int i = 7;; i++) {
-				Class<?> callerClass = Reflection.getCallerClass(i);
-
-				if (callerClass == null) {
-					return false;
-				}
-
-				String callerClassName = callerClass.getName();
-
-				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
-					String actualClassLocation = PACLClassUtil.getClassLocation(
-						callerClass);
-					String expectedClassLocation = PathUtil.toUnixPath(
-						System.getProperty("resin.home") + "/lib/resin.jar!/");
-
-					return actualClassLocation.contains(expectedClassLocation);
-				}
-			}
-		}
-		else if (ServerDetector.isWebSphere()) {
-			if (isJSPCompiler(
-					permission.getName(), FILE_PERMISSION_ACTION_WRITE)) {
-
 				return true;
 			}
 		}
@@ -585,9 +519,6 @@ public class FileChecker extends BaseChecker {
 		_writePermissions = getPermissions(
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
-
-	private static final String _CLASS_NAME_FILE_PATH =
-		"com.caucho.vfs.FilePath";
 
 	private static final String _CLASS_NAME_METHOD_UTIL =
 		"sun.reflect.misc.MethodUtil";

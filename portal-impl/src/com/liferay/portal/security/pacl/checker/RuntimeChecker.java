@@ -17,13 +17,9 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
-import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLClassUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -35,13 +31,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.xerces.impl.dv.DatatypeException;
-import org.apache.xerces.parsers.AbstractDOMParser;
-
-import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.util.ClassUtils;
 
 import sun.reflect.Reflection;
 
@@ -132,7 +122,6 @@ public class RuntimeChecker extends BaseChecker {
 		}
 		else if (name.equals(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckCreateClassLoader() &&
-				!isJSPCompiler(permission.getName(), permission.getActions()) &&
 				!hasCreateClassLoader()) {
 
 				logSecurityException(
@@ -151,7 +140,6 @@ public class RuntimeChecker extends BaseChecker {
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
-				!isJSPCompiler(permission.getName(), permission.getActions()) &&
 				!hasGetClassLoader(name)) {
 
 				logSecurityException(_log, "Attempted to get class loader");
@@ -311,157 +299,9 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetClassLoader(String name) {
-		int pos = name.indexOf(StringPool.PERIOD);
+		// temporarily return true
 
-		if (pos != -1) {
-			String referenceId = name.substring(pos + 1);
-
-			if (_classLoaderReferenceIds.contains(referenceId)) {
-				return true;
-			}
-
-			if (referenceId.equals("portal")) {
-				Class<?> callerClass7 = Reflection.getCallerClass(7);
-
-				if (isTrustedCallerClass(callerClass7)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		Class<?> callerClass6 = Reflection.getCallerClass(6);
-		Class<?> callerClass7 = Reflection.getCallerClass(7);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				callerClass7.getName() +
-					" is attempting to get the class loader via " +
-						callerClass6.getName());
-		}
-
-		if ((callerClass7 == CachedIntrospectionResults.class) ||
-			(callerClass7 == ClassUtils.class) ||
-			(callerClass7.getEnclosingClass() ==
-				LocalVariableTableParameterNameDiscoverer.class)) {
-
-			logGetClassLoader(callerClass7, 7);
-
-			return true;
-		}
-
-		if (callerClass6 == Class.class) {
-			if (isJBossMessages(callerClass7) ||
-				isJBossServiceControllerImpl(callerClass7) ||
-				isJOnASModuleImpl(callerClass7) ||
-				isTomcatJdbcLeakPrevention(callerClass7)) {
-
-				logGetClassLoader(callerClass7, 7);
-
-				return true;
-			}
-
-			if (isWebSphereProtectionClassLoader(
-					callerClass7.getEnclosingClass()) &&
-				CheckerUtil.isAccessControllerDoPrivileged(8)) {
-
-				logGetClassLoader(callerClass7, 7);
-
-				return true;
-			}
-		}
-		else if (callerClass6 == ClassLoader.class) {
-			Class<?> callerClass8 = Reflection.getCallerClass(8);
-
-			if (isGlassfishAPIClassLoaderServiceImpl(
-					callerClass8.getEnclosingClass()) &&
-				CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
-				logGetClassLoader(callerClass8, 8);
-
-				return true;
-			}
-
-			if (isResinEnvironmentLocal(callerClass7)) {
-				logGetClassLoader(callerClass7, 7);
-
-				return true;
-			}
-
-			if (isWebLogicGenericClassLoader(
-					callerClass7.getEnclosingClass()) &&
-				CheckerUtil.isAccessControllerDoPrivileged(8)) {
-
-				logGetClassLoader(callerClass7, 7);
-
-				return true;
-			}
-
-			if (isXercesSecuritySupport(callerClass7) &&
-				CheckerUtil.isAccessControllerDoPrivileged(8)) {
-
-				logGetClassLoader(callerClass8, 8);
-
-				return true;
-			}
-
-			Thread currentThread = Thread.currentThread();
-
-			StackTraceElement[] stackTraceElements =
-				currentThread.getStackTrace();
-
-			StackTraceElement stackTraceElement = null;
-
-			if (JavaDetector.isIBM()) {
-				stackTraceElement = stackTraceElements[7];
-			}
-			else {
-				stackTraceElement = stackTraceElements[6];
-			}
-
-			String methodName = stackTraceElement.getMethodName();
-
-			if (methodName.equals(_METHOD_NAME_GET_SYSTEM_CLASS_LOADER)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Allowing " + callerClass7.getName() +
-							" to get the system class loader");
-				}
-
-				return true;
-			}
-		}
-		else if (callerClass6 == Thread.class) {
-			boolean allow = false;
-
-			ClassLoader contextClassLoader =
-				ClassLoaderUtil.getContextClassLoader();
-			ClassLoader portalClassLoader = getPortalClassLoader();
-
-			if (contextClassLoader == portalClassLoader) {
-				if (ClassLoaderUtil.getClassLoader(callerClass7) !=
-						getClassLoader()) {
-
-					allow = true;
-				}
-			}
-			else {
-				allow = true;
-			}
-
-			if (allow) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Allowing " + callerClass7.getName() +
-							" to access the context class loader");
-				}
-
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	protected boolean hasGetEnv(String name) {
@@ -496,10 +336,7 @@ public class RuntimeChecker extends BaseChecker {
 		Class<?> callerClass8 = Reflection.getCallerClass(8);
 
 		if (((callerClass8 == AccessController.class) &&
-				CheckerUtil.isAccessControllerDoPrivileged(8)) ||
-			(isDefaultMBeanServerInterceptor(
-				callerClass8.getEnclosingClass()) &&
-			 CheckerUtil.isAccessControllerDoPrivileged(9))) {
+				CheckerUtil.isAccessControllerDoPrivileged(8))) {
 
 			logGetProtectionDomain(callerClass8, 8);
 
@@ -618,203 +455,6 @@ public class RuntimeChecker extends BaseChecker {
 						"the regular expression " + environmentVariable);
 			}
 		}
-	}
-
-	protected boolean isDefaultMBeanServerInterceptor(Class<?> clazz) {
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		if (classLocation.length() > 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean isGlassfishAPIClassLoaderServiceImpl(Class<?> clazz) {
-		if (!ServerDetector.isGlassfish()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		clazz = clazz.getEnclosingClass();
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_API_CLASS_LOADER_SERVICE_IMPL)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.startsWith("bundle://");
-	}
-
-	protected boolean isJBossMessages(Class<?> clazz) {
-		if (!ServerDetector.isJBoss()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_MESSAGES)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.contains(
-			"/modules/org/jboss/logging/main/jboss-logging-");
-	}
-
-	protected boolean isJBossServiceControllerImpl(Class<?> clazz) {
-		if (!ServerDetector.isJBoss()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_SERVICE_CONTROLLER_IMPL)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.contains("/modules/org/jboss/msc/main/jboss-msc-");
-	}
-
-	protected boolean isJOnASModuleImpl(Class<?> clazz) {
-		if (!ServerDetector.isJOnAS()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_MODULE_IMPL)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.contains("/lib/bootstrap/felix-launcher.jar!/");
-	}
-
-	protected boolean isResinEnvironmentLocal(Class<?> clazz) {
-		if (!ServerDetector.isResin()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_ENVIRONMENT_LOCAL)) {
-			return false;
-		}
-
-		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
-		String expectedClassLocation = PathUtil.toUnixPath(
-			System.getProperty("resin.home") + "/lib/resin.jar!/");
-
-		return actualClassLocation.contains(expectedClassLocation);
-	}
-
-	protected boolean isTomcatJdbcLeakPrevention(Class<?> clazz) {
-		if (!ServerDetector.isTomcat()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_JDBC_LEAK_PREVENTION)) {
-			return false;
-		}
-
-		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
-
-		String expectedClassLocation = PathUtil.toUnixPath(
-			System.getProperty("catalina.base") + "/lib/catalina.jar!/");
-
-		expectedClassLocation += StringUtil.replace(
-			className, StringPool.PERIOD, StringPool.SLASH);
-		expectedClassLocation += ".class";
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Actual class location " + actualClassLocation);
-			_log.debug("Expected class location " + expectedClassLocation);
-		}
-
-		return actualClassLocation.endsWith(expectedClassLocation);
-	}
-
-	protected boolean isWebLogicGenericClassLoader(Class<?> clazz) {
-		if (!ServerDetector.isWebLogic()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_GENERIC_CLASS_LOADER)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		if (classLocation.contains(
-				"/modules/com.bea.core.utils.classloaders_") ||
-			classLocation.contains("/patch_jars/BUG")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isWebSphereProtectionClassLoader(Class<?> clazz) {
-		if (!ServerDetector.isWebSphere()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_PROTECTION_CLASS_LOADER)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.startsWith("bundleresource://");
-	}
-
-	protected boolean isXercesSecuritySupport(Class<?> clazz) {
-		String className = clazz.getName();
-
-		if (className.contains(".SecuritySupport$") &&
-			((clazz.getPackage() == AbstractDOMParser.class.getPackage()) ||
-			 (clazz.getPackage() == DatatypeException.class.getPackage()))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void logCreateClassLoader(Class<?> callerClass, int frame) {

@@ -16,12 +16,8 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import java.security.Permission;
-
-import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -65,150 +61,16 @@ public class SecurityChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetPolicy() {
-		Class<?> callerClass8 = Reflection.getCallerClass(8);
+		// temporarily return true
 
-		if (isGlassfishJ2EEInstanceListener(
-				callerClass8.getEnclosingClass()) &&
-			CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
-			logGetPolicy(callerClass8, 8);
-
-			return true;
-		}
-
-		if (isWebSphereWASJSPExtensionServletWrapper(callerClass8)) {
-			logGetPolicy(callerClass8, 8);
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	protected boolean hasSetPolicy() {
-		Class<?> callerClass6 = Reflection.getCallerClass(6);
+		// temporarily return true
 
-		if (isGlassfishPolicyContextHandlerImpl(callerClass6)) {
-			logSetPolicy(callerClass6, 6);
-
-			return true;
-		}
-
-		Class<?> callerClass7 = Reflection.getCallerClass(7);
-
-		if (isGeronimoDispatchListener(callerClass7)) {
-			logSetPolicy(callerClass7, 7);
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
-
-	protected boolean isGeronimoDispatchListener(Class<?> clazz) {
-		if (!ServerDetector.isGeronimo()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_DISPATCH_LISTENER)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.contains(
-			"/repository/org/apache/geronimo/modules/geronimo-tomcat6/");
-	}
-
-	protected boolean isGlassfishJ2EEInstanceListener(Class<?> clazz) {
-		if (!ServerDetector.isGlassfish()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_J2EE_INSTANCE_LISTENER)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.startsWith("bundle://");
-	}
-
-	protected boolean isGlassfishPolicyContextHandlerImpl(Class<?> clazz) {
-		if (!ServerDetector.isGlassfish()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_POLICY_CONTEXT_HANDLER_IMPL)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.startsWith("bundle://");
-	}
-
-	protected boolean isWebSphereWASJSPExtensionServletWrapper(Class<?> clazz) {
-		if (!ServerDetector.isWebSphere()) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_WAS_JSP_EXTENSION_SERVLET_WRAPPER)) {
-			return false;
-		}
-
-		String classLocation = PACLClassUtil.getClassLocation(clazz);
-
-		return classLocation.startsWith("bundleresource://");
-	}
-
-	protected void logGetPolicy(Class<?> callerClass, int frame) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Allowing frame " + frame + " with caller " + callerClass +
-					" to get the policy");
-		}
-	}
-
-	protected void logSetPolicy(Class<?> callerClass, int frame) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Allowing frame " + frame + " with caller " + callerClass +
-					" to set the policy");
-		}
-	}
-
-	private static final String _CLASS_NAME_DISPATCH_LISTENER =
-		"org.apache.geronimo.tomcat.listener.DispatchListener";
-
-	private static final String _CLASS_NAME_J2EE_INSTANCE_LISTENER =
-		"com.sun.web.server.J2EEInstanceListener";
-
-	private static final String _CLASS_NAME_POLICY_CONTEXT_HANDLER_IMPL =
-		"com.sun.enterprise.security.authorize.PolicyContextHandlerImpl";
-
-	private static final String _CLASS_NAME_WAS_JSP_EXTENSION_SERVLET_WRAPPER =
-		"com.ibm.ws.jsp.webcontainerext.ws.WASJSPExtensionServletWrapper";
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityChecker.class);
 

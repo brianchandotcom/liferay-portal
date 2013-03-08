@@ -204,9 +204,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 		}
 
-		Class<?> callerClass10 = Reflection.getCallerClass(10);
-
-		return isTrustedCallerClass(callerClass10);
+		return false;
 	}
 
 	protected boolean hasSetBeanProperty(Class<?> clazz, String property) {

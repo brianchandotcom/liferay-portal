@@ -49,7 +49,7 @@ import sun.reflect.Reflection;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
-public class RuntimeChecker extends BaseReflectChecker {
+public class RuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
 		initClassLoaderReferenceIds();
@@ -125,12 +125,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
-			if (!hasReflect(permission)) {
-				logSecurityException(
-					_log, "Attempted to access declared members");
+			// temporarily return true
 
-				return false;
-			}
+			return true;
 		}
 		else if (name.equals(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckCreateClassLoader() &&

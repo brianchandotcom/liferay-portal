@@ -19,6 +19,7 @@ import java.security.BasicPermission;
 /**
  * @author Raymond Augé
  * @author Zsolt Berentey
+ * @deprecated As of 6.2.0
  */
 public class CheckMemberAccessPermission extends BasicPermission {
 
@@ -27,32 +28,6 @@ public class CheckMemberAccessPermission extends BasicPermission {
 		Class<?> subjectClass, ClassLoader subjectClassLoader) {
 
 		super(name);
-
-		_callerClass = callerClass;
-		_callerClassLoader = callerClassLoader;
-		_subjectClass = subjectClass;
-		_subjectClassLoader = subjectClassLoader;
 	}
-
-	public Class<?> getCallerClass() {
-		return _callerClass;
-	}
-
-	public ClassLoader getCallerClassLoader() {
-		return _callerClassLoader;
-	}
-
-	public Class<?> getSubjectClass() {
-		return _subjectClass;
-	}
-
-	public ClassLoader getSubjectClassLoader() {
-		return _subjectClassLoader;
-	}
-
-	private Class<?> _callerClass;
-	private ClassLoader _callerClassLoader;
-	private Class<?> _subjectClass;
-	private ClassLoader _subjectClassLoader;
 
 }

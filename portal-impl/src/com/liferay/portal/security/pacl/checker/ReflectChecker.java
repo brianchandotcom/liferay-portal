@@ -22,17 +22,13 @@ import java.security.Permission;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ReflectChecker extends BaseReflectChecker {
+public class ReflectChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
 	}
 
 	public boolean implies(Permission permission) {
-		if (!hasReflect(permission)) {
-			logSecurityException(_log, "Attempted to reflect");
-
-			return false;
-		}
+		// temporarily return true
 
 		return true;
 	}

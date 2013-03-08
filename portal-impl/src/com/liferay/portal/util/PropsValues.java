@@ -1630,6 +1630,10 @@ public class PropsValues {
 
 	public static final int[] SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES));
 
+	public static final boolean SOCIAL_ACTIVITY_SETS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_ENABLED));
+
+	public static final String SOCIAL_ACTIVITY_SETS_GROUPING_SELECTOR = GetterUtil.getString(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_GROUPING_SELECTOR));
+
 	public static final String[] SPRING_CONFIGS = PropsUtil.getArray(PropsKeys.SPRING_CONFIGS);
 
 	public static final String[] SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES = PropsUtil.getArray(PropsKeys.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES);

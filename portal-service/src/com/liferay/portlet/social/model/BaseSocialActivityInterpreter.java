@@ -44,6 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseSocialActivityInterpreter
 	implements SocialActivityInterpreter {
 
+	public long getActivitySetId(long activityId) {
+		return 0;
+	}
+
 	public String getSelector() {
 		return StringPool.BLANK;
 	}

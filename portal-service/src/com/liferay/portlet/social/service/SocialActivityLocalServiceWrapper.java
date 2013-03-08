@@ -407,7 +407,8 @@ public class SocialActivityLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteActivities(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivityLocalService.deleteActivities(className, classPK);
 	}
 
@@ -432,7 +433,8 @@ public class SocialActivityLocalServiceWrapper
 	*/
 	public void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivityLocalService.deleteActivity(activity);
 	}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -232,6 +233,15 @@ public class SocialActivityLocalServiceImpl
 
 			socialActivityPersistence.update(activity);
 
+			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+				long activitySetId =
+					socialActivityInterpreterLocalService.getActivitySetId(
+						activity.getActivityId());
+
+				socialActivitySetLocalService.incrementActivityCount(
+					activitySetId, activityId);
+			}
+
 			if (mirrorActivity != null) {
 				long mirrorActivityId = counterLocalService.increment(
 					SocialActivity.class.getName());
@@ -335,6 +345,11 @@ public class SocialActivityLocalServiceImpl
 	public void deleteActivities(AssetEntry assetEntry)
 		throws PortalException, SystemException {
 
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				assetEntry.getClassNameId(), assetEntry.getClassPK());
+		}
+
 		socialActivityPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
 
@@ -350,9 +365,14 @@ public class SocialActivityLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteActivities(String className, long classPK)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
+
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				classNameId, classPK);
+		}
 
 		socialActivityPersistence.removeByC_C(classNameId, classPK);
 	}
@@ -379,10 +399,17 @@ public class SocialActivityLocalServiceImpl
 	 * @param  activity the activity to be removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteActivity(SocialActivity activity) throws SystemException {
+	public void deleteActivity(SocialActivity activity)
+		throws PortalException, SystemException {
+
 		socialActivityPersistence.remove(activity);
 
 		try {
+			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+				socialActivitySetLocalService.decrementActivityCount(
+					activity.getActivitySetId());
+			}
+
 			socialActivityPersistence.removeByMirrorActivityId(
 				activity.getActivityId());
 		}
@@ -411,6 +438,11 @@ public class SocialActivityLocalServiceImpl
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
+			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+				socialActivitySetLocalService.decrementActivityCount(
+					activity.getActivitySetId());
+			}
+
 			socialActivityPersistence.remove(activity);
 		}
 
@@ -418,6 +450,11 @@ public class SocialActivityLocalServiceImpl
 			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
+			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+				socialActivitySetLocalService.decrementActivityCount(
+					activity.getActivitySetId());
+			}
+
 			socialActivityPersistence.remove(activity);
 		}
 

@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -63,7 +66,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 		SocialActivityInterpreter activityInterpreter) {
 
 		List<SocialActivityInterpreter> activityInterpreters =
-			new ArrayList<SocialActivityInterpreter>();
+			_activityInterpreters.get(activityInterpreter.getSelector());
+
+		if (activityInterpreters == null) {
+			activityInterpreters = new ArrayList<SocialActivityInterpreter>();
+		}
 
 		activityInterpreters.add(activityInterpreter);
 
@@ -87,6 +94,51 @@ public class SocialActivityInterpreterLocalServiceImpl
 		}
 
 		activityInterpreters.remove(activityInterpreter);
+	}
+
+	public Map<String, List<SocialActivityInterpreter>>
+		getActivityInterpreters() {
+
+		return _activityInterpreters;
+	}
+
+	public long getActivitySetId(long activityId)
+		throws PortalException, SystemException {
+
+		long activitySetId = 0;
+
+		List<SocialActivityInterpreter> activityInterpreters =
+			_activityInterpreters.get(
+				PropsValues.SOCIAL_ACTIVITY_SETS_GROUPING_SELECTOR);
+
+		if (activityInterpreters != null) {
+			SocialActivity activity =
+				socialActivityPersistence.findByPrimaryKey(activityId);
+
+			String className = PortalUtil.getClassName(
+				activity.getClassNameId());
+
+			for (int i = 0; i < activityInterpreters.size(); i++) {
+				SocialActivityInterpreterImpl activityInterpreter =
+					(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+
+				if (activityInterpreter.hasClassName(className)) {
+					activitySetId = activityInterpreter.getActivitySetId(
+						activityId);
+
+					break;
+				}
+			}
+		}
+
+		if (activitySetId == 0) {
+			SocialActivitySet activitySet =
+				socialActivitySetLocalService.addActivitySet(activityId);
+
+			activitySetId = activitySet.getActivitySetId();
+		}
+
+		return activitySetId;
 	}
 
 	/**

@@ -415,7 +415,8 @@ public class SocialActivityLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteActivities(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteActivities(className, classPK);
 	}
 
@@ -440,7 +441,8 @@ public class SocialActivityLocalServiceUtil {
 	*/
 	public static void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteActivity(activity);
 	}
 

@@ -102,11 +102,14 @@ import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBDiscussionImpl;
+import com.liferay.portlet.messageboards.model.impl.MBMailingListImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
@@ -144,6 +147,9 @@ public class DataFactory {
 		_baseDir = baseDir;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxGroupsCount = maxGroupsCount;
+		_maxMBMessageCountPerThread = maxMBMessageCount;
+		_maxMBThreadCount = maxMBThreadCount;
+		_maxMBMessageCountPerCategory = maxMBThreadCount * maxMBMessageCount;
 		_maxMBMessageCount =
 			maxMBCategoryCount * maxMBThreadCount * maxMBMessageCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
@@ -536,6 +542,25 @@ public class DataFactory {
 		assetEntry.setTitle(title);
 
 		return assetEntry;
+	}
+
+	public AssetEntry newAssetEntry(MBMessage mbMessage) {
+		long classNameId = 0;
+		boolean visible = false;
+
+		if (mbMessage.isDiscussion()) {
+			classNameId = getMBDiscussionClassNameId();
+		}
+		else {
+			classNameId = getMBMessageClassNameId();
+			visible = true;
+		}
+
+		return newAssetEntry(
+			mbMessage.getGroupId(), mbMessage.getCreateDate(),
+			mbMessage.getModifiedDate(), classNameId, mbMessage.getMessageId(),
+			mbMessage.getUuid(), 0, visible, ContentTypes.TEXT_HTML,
+			mbMessage.getSubject());
 	}
 
 	public BlogsEntry newBlogsEntry(long groupId, int currentIndex) {
@@ -934,21 +959,25 @@ public class DataFactory {
 		return layoutSets;
 	}
 
-	public MBCategory newMBCategory(
-		long categoryId, long groupId, long companyId, long userId, String name,
-		String description, int threadCount, int messageCount) {
-
+	public MBCategory newMBCategory(long groupId, int currentIndex) {
 		MBCategory mbCategory = new MBCategoryImpl();
 
-		mbCategory.setCategoryId(categoryId);
+		mbCategory.setUuid(SequentialUUID.generate());
+		mbCategory.setCategoryId(_counter.get());
 		mbCategory.setGroupId(groupId);
-		mbCategory.setCompanyId(companyId);
-		mbCategory.setUserId(userId);
-		mbCategory.setName(name);
-		mbCategory.setDescription(description);
+		mbCategory.setCompanyId(_companyId);
+		mbCategory.setUserId(_sampleUserId);
+		mbCategory.setUserName(_sampleUser.getFullName());
+		mbCategory.setCreateDate(new Date());
+		mbCategory.setModifiedDate(new Date());
+		mbCategory.setParentCategoryId(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+		mbCategory.setName("Test Category " + currentIndex);
 		mbCategory.setDisplayStyle(MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategory.setThreadCount(threadCount);
-		mbCategory.setMessageCount(messageCount);
+		mbCategory.setThreadCount(_maxMBThreadCount);
+		mbCategory.setMessageCount(_maxMBMessageCountPerCategory);
+		mbCategory.setLastPostDate(new Date());
+		mbCategory.setStatusDate(new Date());
 
 		return mbCategory;
 	}
@@ -966,26 +995,78 @@ public class DataFactory {
 		return mbDiscussion;
 	}
 
+	public MBMailingList newMBMailingList(MBCategory mbCategory) {
+		MBMailingList mbMailingList = new MBMailingListImpl();
+
+		mbMailingList.setUuid(SequentialUUID.generate());
+		mbMailingList.setMailingListId(_counter.get());
+		mbMailingList.setGroupId(mbCategory.getGroupId());
+		mbMailingList.setCompanyId(_companyId);
+		mbMailingList.setUserId(_sampleUserId);
+		mbMailingList.setUserName(_sampleUser.getFullName());
+		mbMailingList.setCreateDate(new Date());
+		mbMailingList.setModifiedDate(new Date());
+		mbMailingList.setCategoryId(mbCategory.getCategoryId());
+		mbMailingList.setInProtocol("pop3");
+		mbMailingList.setInServerPort(110);
+		mbMailingList.setInUserName(_sampleUser.getEmailAddress());
+		mbMailingList.setInPassword(_sampleUser.getPassword());
+		mbMailingList.setInReadInterval(5);
+		mbMailingList.setOutServerPort(25);
+
+		return mbMailingList;
+	}
+
+	public MBMessage newMBMessage(MBThread mbThread, int currentIndex) {
+		long messageId = 0;
+		long parentMessageId = 0;
+		long rootMessageId = mbThread.getRootMessageId();
+
+		if (currentIndex == 1) {
+			messageId = rootMessageId;
+			parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+		}
+		else {
+			messageId = _counter.get();
+			parentMessageId = rootMessageId;
+		}
+
+		String subject = "Test Message " + currentIndex;
+		String body =
+			"This is a test message " + currentIndex + StringPool.PERIOD;
+
+		return newMBMessage(
+			mbThread.getGroupId(), 0, 0, mbThread.getCategoryId(),
+			mbThread.getThreadId(), messageId, rootMessageId, parentMessageId,
+			subject, body);
+	}
+
 	public MBMessage newMBMessage(
-		long messageId, long groupId, long userId, long classNameId,
-		long classPK, long categoryId, long threadId, long rootMessageId,
-		long parentMessageId, String subject, String body) {
+		MBThread mbThread, long classNameId, long classPK, int currentIndex) {
 
-		MBMessage mbMessage = new MBMessageImpl();
+		long messageId = 0;
+		long parentMessageId = 0;
+		long rootMessageId = mbThread.getRootMessageId();
+		String subject = null;
+		String body = null;
 
-		mbMessage.setMessageId(messageId);
-		mbMessage.setGroupId(groupId);
-		mbMessage.setUserId(userId);
-		mbMessage.setClassNameId(classNameId);
-		mbMessage.setClassPK(classPK);
-		mbMessage.setCategoryId(categoryId);
-		mbMessage.setThreadId(threadId);
-		mbMessage.setRootMessageId(rootMessageId);
-		mbMessage.setParentMessageId(parentMessageId);
-		mbMessage.setSubject(subject);
-		mbMessage.setBody(body);
+		if (currentIndex == 0) {
+			messageId = rootMessageId;
+			parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+			subject = StringUtil.valueOf(classPK);
+			body = StringUtil.valueOf(classPK);
+		}
+		else {
+			messageId = _counter.get();
+			parentMessageId = rootMessageId;
+			subject = "N/A";
+			body = "This is a test comment " + currentIndex + StringPool.PERIOD;
+		}
 
-		return mbMessage;
+		return newMBMessage(
+			mbThread.getGroupId(), classNameId, classPK,
+			MBCategoryConstants.DISCUSSION_CATEGORY_ID, mbThread.getThreadId(),
+			messageId, rootMessageId, parentMessageId, subject, body);
 	}
 
 	public MBStatsUser newMBStatsUser(long groupId) {
@@ -1001,26 +1082,21 @@ public class DataFactory {
 	}
 
 	public MBThread newMBThread(
-		long threadId, long groupId, long companyId, long categoryId,
-		long rootMessageId, int messageCount, long lastPostByUserId) {
+		long threadId, long groupId, long rootMessageId, int messageCount) {
 
-		MBThread mbThread = new MBThreadImpl();
+		if (messageCount == 0) {
+			messageCount = 1;
+		}
 
-		mbThread.setUuid(SequentialUUID.generate());
-		mbThread.setThreadId(threadId);
-		mbThread.setGroupId(groupId);
-		mbThread.setCompanyId(companyId);
-		mbThread.setUserId(_sampleUserId);
-		mbThread.setUserName(_sampleUser.getFullName());
-		mbThread.setCreateDate(new Date());
-		mbThread.setModifiedDate(new Date());
-		mbThread.setCategoryId(categoryId);
-		mbThread.setRootMessageId(rootMessageId);
-		mbThread.setRootMessageUserId(lastPostByUserId);
-		mbThread.setMessageCount(messageCount);
-		mbThread.setLastPostByUserId(lastPostByUserId);
+		return newMBThread(
+			threadId, groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
+			rootMessageId, messageCount);
+	}
 
-		return mbThread;
+	public MBThread newMBThread(MBCategory mbCategory) {
+		return newMBThread(
+			_counter.get(), mbCategory.getGroupId(), mbCategory.getCategoryId(),
+			_counter.get(), _maxMBMessageCountPerThread);
 	}
 
 	public PortletPreferences newPortletPreferences(
@@ -1226,6 +1302,60 @@ public class DataFactory {
 		return layoutSet;
 	}
 
+	protected MBMessage newMBMessage(
+		long groupId, long classNameId, long classPK, long categoryId,
+		long threadId, long messageId, long rootMessageId, long parentMessageId,
+		String subject, String body) {
+
+		MBMessage mbMessage = new MBMessageImpl();
+
+		mbMessage.setUuid(SequentialUUID.generate());
+		mbMessage.setMessageId(messageId);
+		mbMessage.setGroupId(groupId);
+		mbMessage.setCompanyId(_companyId);
+		mbMessage.setUserId(_sampleUserId);
+		mbMessage.setUserName(_sampleUser.getFullName());
+		mbMessage.setCreateDate(new Date());
+		mbMessage.setModifiedDate(new Date());
+		mbMessage.setClassNameId(classNameId);
+		mbMessage.setClassPK(classPK);
+		mbMessage.setCategoryId(categoryId);
+		mbMessage.setThreadId(threadId);
+		mbMessage.setRootMessageId(rootMessageId);
+		mbMessage.setParentMessageId(parentMessageId);
+		mbMessage.setSubject(subject);
+		mbMessage.setBody(body);
+		mbMessage.setFormat(MBMessageConstants.DEFAULT_FORMAT);
+		mbMessage.setStatusDate(new Date());
+
+		return mbMessage;
+	}
+
+	protected MBThread newMBThread(
+		long threadId, long groupId, long categoryId, long rootMessageId,
+		int messageCount) {
+
+		MBThread mbThread = new MBThreadImpl();
+
+		mbThread.setUuid(SequentialUUID.generate());
+		mbThread.setThreadId(threadId);
+		mbThread.setGroupId(groupId);
+		mbThread.setCompanyId(_companyId);
+		mbThread.setUserId(_sampleUserId);
+		mbThread.setUserName(_sampleUser.getFullName());
+		mbThread.setCreateDate(new Date());
+		mbThread.setModifiedDate(new Date());
+		mbThread.setCategoryId(categoryId);
+		mbThread.setRootMessageId(rootMessageId);
+		mbThread.setRootMessageUserId(_sampleUserId);
+		mbThread.setMessageCount(messageCount);
+		mbThread.setLastPostByUserId(_sampleUserId);
+		mbThread.setLastPostDate(new Date());
+		mbThread.setStatusDate(new Date());
+
+		return mbThread;
+	}
+
 	protected Role newRole(String name, int type) {
 		Role role = new RoleImpl();
 
@@ -1313,6 +1443,9 @@ public class DataFactory {
 	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
 	private int _maxMBMessageCount;
+	private int _maxMBMessageCountPerCategory;
+	private int _maxMBMessageCountPerThread;
+	private int _maxMBThreadCount;
 	private int _maxUserToGroupCount;
 	private Role _ownerRole;
 	private Role _powerUserRole;

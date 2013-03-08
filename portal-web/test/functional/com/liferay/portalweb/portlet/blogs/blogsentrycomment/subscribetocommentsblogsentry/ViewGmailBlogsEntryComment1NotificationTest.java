@@ -25,37 +25,41 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.openWindow("http://www.gmail.com/",
 			RuntimeVariables.replace("gmail"));
 		Thread.sleep(5000);
-		selenium.selectWindow("gmail");
+		selenium.selectWindow("Gmail: Email from Google");
+		Thread.sleep(5000);
+		Thread.sleep(5000);
 		selenium.type("//input[@id='Email']",
-			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
+			RuntimeVariables.replace("liferay.qa3@gmail.com"));
 		selenium.type("//input[@id='Passwd']",
-			RuntimeVariables.replace("loveispatient"));
+			RuntimeVariables.replace("loveispatient1"));
 		selenium.clickAt("//input[@id='signIn']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(10000);
-		assertEquals(RuntimeVariables.replace("me"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tbody/tr[1]/td[5]/div/span"));
 		assertEquals(RuntimeVariables.replace("New Comments by Joe Bloggs"),
 			selenium.getText("//tbody/tr[1]/td[6]/div/div/div/span"));
 		selenium.clickAt("//tbody/tr[1]/td[6]/div/div/div/span",
 			RuntimeVariables.replace("New Comments by Joe Bloggs"));
 		selenium.waitForVisible(
-			"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div");
+			"//table/tr/td/div/div/div/div/div/div/div/div/div/div");
 		assertTrue(selenium.isPartialText(
-				"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div",
+				"//table/tr/td/div/div/div/div/div/div/div/div/div/div",
 				"Dear Joe Bloggs"));
 		assertTrue(selenium.isPartialText(
-				"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div",
+				"//table/tr/td/div/div/div/div/div/div/div/div/div/div",
 				"Joe Bloggs added a new comment."));
 		assertTrue(selenium.isPartialText(
-				"//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div",
+				"//table/tr/td/div/div/div/div/div/div/div/div/div/div",
 				"Blogs Entry Comment Body"));
-		selenium.clickAt("link=liferay.qa.testing.trunk@gmail.com",
-			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
+		selenium.clickAt("link=liferay.qa3@gmail.com",
+			RuntimeVariables.replace("liferay.qa3@gmail.com"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//td[2]/a");
 		assertEquals(RuntimeVariables.replace("Sign out"),

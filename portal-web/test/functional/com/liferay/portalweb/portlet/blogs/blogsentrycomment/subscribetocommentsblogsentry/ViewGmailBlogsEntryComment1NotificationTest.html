@@ -9,6 +9,16 @@
 <tr><td rowspan="1" colspan="3">ViewGmailBlogsEntryComment1NotificationTest</td></tr>
 </thead><tbody>
 <tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
+<tr>
 	<td>openWindow</td>
 	<td>http://www.gmail.com/</td>
 	<td>gmail</td>
@@ -20,18 +30,28 @@
 </tr>
 <tr>
 	<td>selectWindow</td>
-	<td>gmail</td>
+	<td>Gmail: Email from Google</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='Email']</td>
-	<td>liferay.qa.testing.trunk@gmail.com</td>
+	<td>liferay.qa3@gmail.com</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='Passwd']</td>
-	<td>loveispatient</td>
+	<td>loveispatient1</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -46,7 +66,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//tbody/tr[1]/td[5]/div/span</td>
-	<td>me</td>
+	<td>Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -60,28 +80,28 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div</td>
+	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div</td>
 	<td>Email Body</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div</td>
+	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div</td>
 	<td>Dear Joe Bloggs</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div</td>
+	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div</td>
 	<td>Joe Bloggs added a new comment.</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div/div/div/div</td>
+	<td>//table/tr/td/div/div/div/div/div/div/div/div/div/div</td>
 	<td>Blogs Entry Comment Body</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=liferay.qa.testing.trunk@gmail.com</td>
-	<td>liferay.qa.testing.trunk@gmail.com</td>
+	<td>link=liferay.qa3@gmail.com</td>
+	<td>liferay.qa3@gmail.com</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -105,7 +125,7 @@
 </tr>
 <tr>
 	<td>close</td>
-	<td>gmail</td>
+	<td>Gmail: Email from Google</td>
 	<td></td>
 </tr>
 <tr>

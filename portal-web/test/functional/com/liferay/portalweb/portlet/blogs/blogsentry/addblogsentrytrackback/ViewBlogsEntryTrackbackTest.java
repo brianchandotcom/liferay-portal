@@ -34,8 +34,8 @@ public class ViewBlogsEntryTrackbackTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		selenium.clickAt("//tr[3]/td[2]/a",
+			selenium.getText("//span[@class='entry-title']"));
+		selenium.clickAt("//span[@class='entry-title']",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
@@ -48,6 +48,6 @@ public class ViewBlogsEntryTrackbackTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 	}
 }

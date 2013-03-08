@@ -44,7 +44,6 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.io.File;
@@ -249,13 +248,15 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertDLFolders(
-			long parentDLFolderId, int dlFolderDepth, DDMStructure ddmStructure)
+			long groupId, long parentDLFolderId, int dlFolderDepth,
+			DDMStructure ddmStructure)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "ddmStructure", ddmStructure);
 		put(context, "dlFolderDepth", dlFolderDepth);
+		put(context, "groupId", groupId);
 		put(context, "parentDLFolderId", parentDLFolderId);
 
 		processTemplate(_tplDLFolders, context);
@@ -287,14 +288,13 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertMBDiscussion(
-			long groupId, long userId, long classNameId, long classPK,
-			long mbThreadId, long mbRootMessageId, int maxCommentCount)
+			long groupId, long classNameId, long classPK, long mbThreadId,
+			long mbRootMessageId, int maxCommentCount)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "groupId", groupId);
-		put(context, "userId", userId);
 		put(context, "classNameId", classNameId);
 		put(context, "classPK", classPK);
 		put(context, "mbThreadId", mbThreadId);
@@ -335,12 +335,9 @@ public class SampleSQLBuilder {
 		processTemplate(_tplUser, context);
 	}
 
-	public void insertWikiPage(WikiNode wikiNode, WikiPage wikiPage)
-		throws Exception {
-
+	public void insertWikiPage(WikiPage wikiPage) throws Exception {
 		Map<String, Object> context = getContext();
 
-		put(context, "wikiNode", wikiNode);
 		put(context, "wikiPage", wikiPage);
 
 		processTemplate(_tplWikiPage, context);
@@ -493,7 +490,6 @@ public class SampleSQLBuilder {
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
 		put(context, "dateUtil", DateUtil_IW.getInstance());
-		put(context, "defaultUserId", _dataFactory.getDefaultUserId());
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);

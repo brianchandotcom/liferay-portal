@@ -44,7 +44,6 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.io.File;
@@ -337,12 +336,9 @@ public class SampleSQLBuilder {
 		processTemplate(_tplUser, context);
 	}
 
-	public void insertWikiPage(WikiNode wikiNode, WikiPage wikiPage)
-		throws Exception {
-
+	public void insertWikiPage(WikiPage wikiPage) throws Exception {
 		Map<String, Object> context = getContext();
 
-		put(context, "wikiNode", wikiNode);
 		put(context, "wikiPage", wikiPage);
 
 		processTemplate(_tplWikiPage, context);

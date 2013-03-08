@@ -1,11 +1,11 @@
 <#setting number_format = "0">
 
-insert into WikiPage values ('${portalUUIDUtil.generate()}', ${wikiPage.pageId}, ${wikiPage.resourcePrimKey}, ${wikiPage.groupId}, ${companyId}, ${wikiPage.userId}, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${wikiPage.nodeId}, '${wikiPage.title}', ${wikiPage.version}, FALSE, '${wikiPage.content}', '', 'creole', <#if wikiPage.head>TRUE<#else>FALSE</#if>, '', '', ${wikiPage.status}, ${wikiPage.statusByUserId}, '${wikiPage.statusByUserName}', CURRENT_TIMESTAMP);
+insert into WikiPage values ('${wikiPage.uuid}', ${wikiPage.pageId}, ${wikiPage.resourcePrimKey}, ${wikiPage.groupId}, ${wikiPage.companyId}, ${wikiPage.userId}, '${wikiPage.userName}', '${dataFactory.getDateString(wikiPage.createDate)}', '${dataFactory.getDateString(wikiPage.modifiedDate)}', ${wikiPage.nodeId}, '${wikiPage.title}', ${wikiPage.version}, ${wikiPage.minorEdit?string}, '${wikiPage.content}', '${wikiPage.summary}', '${wikiPage.format}', ${wikiPage.head?string}, '${wikiPage.parentTitle}', '${wikiPage.redirectTitle}', ${wikiPage.status}, ${wikiPage.statusByUserId}, '${wikiPage.statusByUserName}', ${wikiPage.statusDate!'null'});
 
-insert into WikiPageResource values ('${portalUUIDUtil.generate()}', ${wikiPage.resourcePrimKey}, ${wikiPage.nodeId}, '${wikiPage.title}');
+<#assign wikiPageResource = dataFactory.newWikiPageResource(wikiPage)>
 
-<#if wikiPage.head>
-	<#assign assetEntry = dataFactory.newAssetEntry(wikiNode.groupId, wikiPage.userId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, true, "text/html", wikiPage.title)>
+insert into WikiPageResource values ('${wikiPageResource.uuid}', ${wikiPageResource.resourcePrimKey}, ${wikiPageResource.nodeId}, '${wikiPageResource.title}');
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, createDate, modifiedDate, classNameId, classPK, visible, mimeType, title) values (${counter.get()}, ${assetEntry.groupId}, ${companyId}, ${assetEntry.userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ${assetEntry.classNameId}, ${assetEntry.classPK}, <#if assetEntry.visible>TRUE<#else>FALSE</#if>, '${assetEntry.mimeType}', '${assetEntry.title}');
-</#if>
+<#assign assetEntry = dataFactory.newAssetEntry(wikiPage)>
+
+insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${assetEntry.companyId}, ${assetEntry.userId}, '${assetEntry.userName}', '${dataFactory.getDateString(assetEntry.createDate)}', '${dataFactory.getDateString(assetEntry.modifiedDate)}', ${assetEntry.classNameId}, ${assetEntry.classPK}, '${assetEntry.classUuid}', ${assetEntry.classTypeId}, ${assetEntry.visible?string}, '${dataFactory.getDateString(assetEntry.startDate)}', '${dataFactory.getDateString(assetEntry.endDate)}', '${dataFactory.getDateString(assetEntry.publishDate)}', '${dataFactory.getDateString(assetEntry.expirationDate)}', '${assetEntry.mimeType}', '${assetEntry.title}', '${assetEntry.description}', '${assetEntry.summary}', '${assetEntry.url}', '${assetEntry.layoutUuid}', ${assetEntry.height}, ${assetEntry.width}, ${assetEntry.priority}, ${assetEntry.viewCount});

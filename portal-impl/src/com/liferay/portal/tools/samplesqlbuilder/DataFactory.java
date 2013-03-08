@@ -117,8 +117,11 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
+import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
@@ -561,6 +564,14 @@ public class DataFactory {
 			mbMessage.getModifiedDate(), classNameId, mbMessage.getMessageId(),
 			mbMessage.getUuid(), 0, visible, ContentTypes.TEXT_HTML,
 			mbMessage.getSubject());
+	}
+
+	public AssetEntry newAssetEntry(WikiPage wikiPage) {
+		return newAssetEntry(
+			wikiPage.getGroupId(), wikiPage.getCreateDate(),
+			wikiPage.getModifiedDate(), getWikiPageClassNameId(),
+			wikiPage.getResourcePrimKey(), wikiPage.getUuid(), 0, true,
+			ContentTypes.TEXT_HTML, wikiPage.getTitle());
 	}
 
 	public BlogsEntry newBlogsEntry(long groupId, int currentIndex) {
@@ -1187,37 +1198,56 @@ public class DataFactory {
 			"test" + _userScreenNameCounter.get(), false);
 	}
 
-	public WikiNode newWikiNode(
-		long groupId, long userId, String name, String description) {
-
+	public WikiNode newWikiNode(long groupId, int currentIndex) {
 		WikiNode wikiNode = new WikiNodeImpl();
 
+		wikiNode.setUuid(SequentialUUID.generate());
 		wikiNode.setNodeId(_counter.get());
 		wikiNode.setGroupId(groupId);
-		wikiNode.setUserId(userId);
-		wikiNode.setName(name);
-		wikiNode.setDescription(description);
+		wikiNode.setCompanyId(_companyId);
+		wikiNode.setUserId(_sampleUserId);
+		wikiNode.setUserName(_sampleUser.getFullName());
+		wikiNode.setCreateDate(new Date());
+		wikiNode.setModifiedDate(new Date());
+		wikiNode.setName("Test Node " + currentIndex);
+		wikiNode.setLastPostDate(new Date());
+		wikiNode.setStatusDate(new Date());
 
 		return wikiNode;
 	}
 
-	public WikiPage newWikiPage(
-		long groupId, long userId, long nodeId, String title, double version,
-		String content, boolean head) {
-
+	public WikiPage newWikiPage(WikiNode wikiNode, int currentIndex) {
 		WikiPage wikiPage = new WikiPageImpl();
 
+		wikiPage.setUuid(SequentialUUID.generate());
 		wikiPage.setPageId(_counter.get());
 		wikiPage.setResourcePrimKey(_counter.get());
-		wikiPage.setGroupId(groupId);
-		wikiPage.setUserId(userId);
-		wikiPage.setNodeId(nodeId);
-		wikiPage.setTitle(title);
-		wikiPage.setVersion(version);
-		wikiPage.setContent(content);
-		wikiPage.setHead(head);
+		wikiPage.setGroupId(wikiNode.getGroupId());
+		wikiPage.setCompanyId(_companyId);
+		wikiPage.setUserId(_sampleUserId);
+		wikiPage.setUserName(_sampleUser.getFullName());
+		wikiPage.setCreateDate(new Date());
+		wikiPage.setModifiedDate(new Date());
+		wikiPage.setNodeId(wikiNode.getNodeId());
+		wikiPage.setTitle("Test Page " + currentIndex);
+		wikiPage.setVersion(WikiPageConstants.VERSION_DEFAULT);
+		wikiPage.setContent(
+			"This is a test page " + currentIndex + StringPool.PERIOD);
+		wikiPage.setFormat(WikiPageConstants.DEFAULT_FORMAT);
+		wikiPage.setHead(true);
 
 		return wikiPage;
+	}
+
+	public WikiPageResource newWikiPageResource(WikiPage wikiPage) {
+		WikiPageResource wikiPageResource = new WikiPageResourceImpl();
+
+		wikiPageResource.setUuid(SequentialUUID.generate());
+		wikiPageResource.setResourcePrimKey(wikiPage.getResourcePrimKey());
+		wikiPageResource.setNodeId(wikiPage.getNodeId());
+		wikiPageResource.setTitle(wikiPage.getTitle());
+
+		return wikiPageResource;
 	}
 
 	public String[] nextUserName(long index) {

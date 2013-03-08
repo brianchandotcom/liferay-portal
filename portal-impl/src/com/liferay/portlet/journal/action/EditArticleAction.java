@@ -252,7 +252,7 @@ public class EditArticleAction extends PortletAction {
 				Layout layout = themeDisplay.getLayout();
 
 				if (!windowState.equals(LiferayWindowState.POP_UP) &&
-						layout.isTypeControlPanel()) {
+					layout.isTypeControlPanel()) {
 
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}

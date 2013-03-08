@@ -26,7 +26,12 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 
 <div class="lfr-message-info taglib-trash-empty">
 	<aui:form action="<%= portletURL %>" name="emptyForm">
-		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE) %>" key="<%= infoMessage %>" />
+
+		<%
+		String trashEntriesMaxAge = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+		%>
+
+		<liferay-ui:message arguments="<%= trashEntriesMaxAge.toLowerCase() %>" key="<%= infoMessage %>" />
 
 		<c:if test="<%= totalEntries > 0 %>">
 			<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>

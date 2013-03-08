@@ -18,6 +18,7 @@ import com.liferay.httpservice.servlet.BundleServletConfig;
 import com.liferay.portal.apache.bridges.struts.LiferayServletContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -47,6 +48,7 @@ import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.NamespaceException;
 
@@ -145,7 +147,19 @@ public class BundleServletContext extends LiferayServletContext {
 	}
 
 	public ClassLoader getClassLoader() {
-		return null;
+		Object value = _contextAttributes.get(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		if (value == null) {
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+			value = bundleWiring.getClassLoader();
+
+			_contextAttributes.put(
+				PluginContextListener.PLUGIN_CLASS_LOADER, value);
+		}
+
+		return (ClassLoader)value;
 	}
 
 	public HttpContext getHttpContext() {
@@ -416,6 +430,8 @@ public class BundleServletContext extends LiferayServletContext {
 	private static Log _log = LogFactoryUtil.getLog(BundleServletContext.class);
 
 	private Bundle _bundle;
+	private Map<String, Object> _contextAttributes =
+		new ConcurrentHashMap<String, Object>();	
 	private Map<String, Filter> _filtersByFilterNames =
 		new ConcurrentHashMap<String, Filter>();
 	private Map<String, Filter> _filtersByURLPatterns =

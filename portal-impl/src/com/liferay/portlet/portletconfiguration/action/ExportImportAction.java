@@ -317,8 +317,8 @@ public class ExportImportAction extends EditConfigurationAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if ((e instanceof LocaleException) ||
-					(e instanceof RecordSetDuplicateRecordSetKeyException) ||
-					(e instanceof StructureDuplicateStructureKeyException)) {
+					 (e instanceof RecordSetDuplicateRecordSetKeyException) ||
+					 (e instanceof StructureDuplicateStructureKeyException)) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}

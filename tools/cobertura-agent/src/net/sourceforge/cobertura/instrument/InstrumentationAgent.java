@@ -69,6 +69,8 @@ public class InstrumentationAgent {
 
 			_instrumentation.removeTransformer(_coberturaClassFileTransformer);
 
+			_coberturaClassFileTransformer = null;
+
 			if (_originalClassDefinitions == null) {
 				return;
 			}

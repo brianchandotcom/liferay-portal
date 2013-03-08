@@ -1086,6 +1086,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="permissions-web-content-display" />
+			<param name="test.ant.script.suite" value="PermissionsWebContentDisplayTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="plugins-analog-clock" />
 			<param name="test.ant.script.plugin.portlets" value="analog-clock-portlet" />
 			<param name="test.ant.script.suite" value="PluginsAnalogClockTestSuite" />

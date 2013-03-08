@@ -182,13 +182,6 @@ public class EditArticleAction extends PortletAction {
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_PUBLISH);
 
-			if ((article != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				redirect = getSaveAndContinueRedirect(
-					portletConfig, actionRequest, article, redirect);
-			}
-
 			if (Validator.isNotNull(oldUrlTitle)) {
 				String portletId = HttpUtil.getParameter(
 					redirect, "p_p_id", false);
@@ -212,12 +205,8 @@ public class EditArticleAction extends PortletAction {
 				}
 			}
 
-			WindowState windowState = actionRequest.getWindowState();
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			Layout layout = themeDisplay.getLayout();
 
 			if (cmd.equals(Constants.DELETE) &&
 				!ActionUtil.hasArticle(actionRequest)) {
@@ -248,16 +237,31 @@ public class EditArticleAction extends PortletAction {
 					actionRequest,
 					"portlet.journal.update_translation_redirect");
 			}
-			else if (!windowState.equals(LiferayWindowState.POP_UP) &&
-					 layout.isTypeControlPanel()) {
+
+			if ((article != null) &&
+				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+				redirect = getSaveAndContinueRedirect(
+					portletConfig, actionRequest, article, redirect);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				redirect = PortalUtil.escapeRedirect(redirect);
+				WindowState windowState = actionRequest.getWindowState();
 
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
+				Layout layout = themeDisplay.getLayout();
+
+				if (!windowState.equals(LiferayWindowState.POP_UP) &&
+					layout.isTypeControlPanel()) {
+
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+				else {
+					redirect = PortalUtil.escapeRedirect(redirect);
+
+					if (Validator.isNotNull(redirect)) {
+						actionResponse.sendRedirect(redirect);
+					}
 				}
 			}
 		}

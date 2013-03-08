@@ -54,14 +54,9 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure Date Name</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -69,7 +64,7 @@
 	<td>WC Structure Date Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
@@ -99,12 +94,7 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>WC Structure Date Name</td>
 </tr>
@@ -112,11 +102,21 @@
 	<td>assertText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>WC Structure Date Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>WC Template Structure Date Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='template-name-label']</td>
 	<td>WC Template Structure Date Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -126,27 +126,22 @@
 <tr>
 	<td>clickAt</td>
 	<td>//div[contains(@class,'aui-datepicker-button')]/button</td>
-	<td>Date</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/liferay/layout_column.js')]</td>
-	<td>Layout Column</td>
+	<td>Datepicker Button</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@class='aui-datepicker-month']</td>
-	<td>January</td>
+	<td>value=0</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@class='aui-datepicker-day']</td>
-	<td>1</td>
+	<td>value=1</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select[@class='aui-datepicker-year']</td>
-	<td>2020</td>
+	<td>value=2020</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

@@ -48,27 +48,32 @@ public class AddWCWebContentStructureFieldFileUploadWCDTest extends BaseTestCase
 		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
-			RuntimeVariables.replace("WC Structure File Name"));
+			RuntimeVariables.replace("WC Structure File Upload Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure File Name')]/td[3]/a");
-		assertEquals(RuntimeVariables.replace("WC Structure File Name"),
+			"//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a");
+		assertEquals(RuntimeVariables.replace("WC Structure File Upload Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure File Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure File Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure File Name"));
+				"//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a",
+			RuntimeVariables.replace("WC Structure File Upload Name"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@id='_15_structureNameLabel']");
-		assertEquals(RuntimeVariables.replace("WC Structure File Name"),
+		selenium.waitForText("//span[@id='_15_structureNameLabel']",
+			"WC Structure File Upload Name");
+		assertEquals(RuntimeVariables.replace("WC Structure File Upload Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
-		assertEquals(RuntimeVariables.replace("WC Template Structure File Name"),
+		selenium.waitForText("//span[@class='template-name-label']",
+			"WC Template Structure File Upload Name");
+		assertEquals(RuntimeVariables.replace(
+				"WC Template Structure File Upload Name"),
 			selenium.getText("//span[@class='template-name-label']"));
+		Thread.sleep(1000);
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC WebContent Structure File Title"));
+			RuntimeVariables.replace(
+				"WC WebContent Structure File Upload Title"));
 		selenium.uploadCommonFile("//input[contains(@id,'_15_file_')]",
 			RuntimeVariables.replace("Document_1.txt"));
 		selenium.clickAt("//input[@value='Publish']",

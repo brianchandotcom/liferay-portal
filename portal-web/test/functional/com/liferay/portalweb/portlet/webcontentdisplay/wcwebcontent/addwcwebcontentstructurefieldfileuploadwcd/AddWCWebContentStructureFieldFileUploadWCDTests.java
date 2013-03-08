@@ -16,9 +16,9 @@ package com.liferay.portalweb.portlet.webcontentdisplay.wcwebcontent.addwcwebcon
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCTemplateStructureTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructurefieldfileupload.AddWCStructureFieldFileUploadTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructurefieldfileupload.AddWCTemplateStructureFieldFileUploadTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplatestructure.addwctemplatestructure.TearDownWCTemplateStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplatestructure.addwctemplatestructurefieldfileupload.AddWCTemplateStructureFieldFileUploadTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentdisplay.portlet.addportletwcd.AddPageWCDTest;

@@ -45,7 +45,6 @@ public class AddWCWebContentStructureFieldHTMLWCDTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[contains(@src,'_15_selectStructure')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
 			RuntimeVariables.replace("WC Structure HTML Name"));
@@ -61,22 +60,27 @@ public class AddWCWebContentStructureFieldHTMLWCDTest extends BaseTestCase {
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@id='_15_structureNameLabel']");
+		selenium.waitForText("//span[@id='_15_structureNameLabel']",
+			"WC Structure HTML Name");
 		assertEquals(RuntimeVariables.replace("WC Structure HTML Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
+		selenium.waitForText("//span[@class='template-name-label']",
+			"WC Template Structure HTML Name");
 		assertEquals(RuntimeVariables.replace("WC Template Structure HTML Name"),
 			selenium.getText("//span[@class='template-name-label']"));
+		Thread.sleep(1000);
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Structure HTML Title"));
-		selenium.waitForVisible("//iframe[contains(@title,'_15_html_')]");
-		selenium.typeFrame("//iframe[contains(@title,'_15_html_')]",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("WC WebContent Structure HTML Body"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"WC WebContent Structure HTML Body"),
-			selenium.getText("//div[@class='journal-content-article']/p[2]"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

@@ -45,12 +45,12 @@ public class AddWCWebContentStructureFieldDateWCDTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[contains(@src,'_15_selectStructure')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
 			RuntimeVariables.replace("WC Structure Date Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Structure Date Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Date Name"),
@@ -61,24 +61,25 @@ public class AddWCWebContentStructureFieldDateWCDTest extends BaseTestCase {
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
-		selenium.waitForVisible("//span[@id='_15_structureNameLabel']");
+		selenium.waitForText("//span[@id='_15_structureNameLabel']",
+			"WC Structure Date Name");
 		assertEquals(RuntimeVariables.replace("WC Structure Date Name"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
+		selenium.waitForText("//span[@class='template-name-label']",
+			"WC Template Structure Date Name");
 		assertEquals(RuntimeVariables.replace("WC Template Structure Date Name"),
 			selenium.getText("//span[@class='template-name-label']"));
+		Thread.sleep(1000);
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Structure Date Title"));
 		selenium.clickAt("//div[contains(@class,'aui-datepicker-button')]/button",
-			RuntimeVariables.replace("Date"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/liferay/layout_column.js')]");
+			RuntimeVariables.replace("Datepicker Button"));
 		selenium.select("//select[@class='aui-datepicker-month']",
-			RuntimeVariables.replace("January"));
+			RuntimeVariables.replace("value=0"));
 		selenium.select("//select[@class='aui-datepicker-day']",
-			RuntimeVariables.replace("1"));
+			RuntimeVariables.replace("value=1"));
 		selenium.select("//select[@class='aui-datepicker-year']",
-			RuntimeVariables.replace("2020"));
+			RuntimeVariables.replace("value=2020"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

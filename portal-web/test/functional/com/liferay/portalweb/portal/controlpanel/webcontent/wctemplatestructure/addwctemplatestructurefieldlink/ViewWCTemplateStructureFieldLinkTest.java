@@ -106,7 +106,8 @@ public class ViewWCTemplateStructureFieldLinkTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'link.getData')]",
-			RuntimeVariables.replace("<p>$link.getData()</p>##"));
+			RuntimeVariables.replace(
+				"<a href=\"$link.getData()\">Test Link</a>##"));
 		selenium.selectFrame("relative=top");
 	}
 }

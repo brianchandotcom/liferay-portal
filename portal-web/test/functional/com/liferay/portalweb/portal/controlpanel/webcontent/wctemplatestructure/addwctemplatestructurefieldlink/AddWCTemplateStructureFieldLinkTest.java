@@ -167,7 +167,8 @@ public class AddWCTemplateStructureFieldLinkTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		selenium.sendKeys("//div[@id=\"_166_richEditor\"]/textarea",
-			RuntimeVariables.replace("<p>$link.getData()</p>"));
+			RuntimeVariables.replace(
+				"<a href=\"$link.getData()\">Test Link</a>"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

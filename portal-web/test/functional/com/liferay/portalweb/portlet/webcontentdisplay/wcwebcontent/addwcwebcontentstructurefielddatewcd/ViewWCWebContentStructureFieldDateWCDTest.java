@@ -29,6 +29,14 @@ public class ViewWCWebContentStructureFieldDateWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-minimize portlet-minimize-icon']/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-maximize portlet-maximize-icon']/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-close portlet-close-icon']/a"));
 		assertEquals(RuntimeVariables.replace("Wed Jan 01 00:00:00 GMT 2020"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),

@@ -61,12 +61,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure File Name</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -75,18 +75,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure File Name')]/td[3]/a</td>
-	<td>WC Structure File Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
@@ -99,29 +99,34 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
-	<td>WC Structure File Name</td>
+	<td>WC Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>WC Template Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='template-name-label']</td>
-	<td>WC Template Structure File Name</td>
+	<td>WC Template Structure File Upload Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WC WebContent Structure File Title</td>
+	<td>WC WebContent Structure File Upload Title</td>
 </tr>
 <tr>
 	<td>uploadCommonFile</td>

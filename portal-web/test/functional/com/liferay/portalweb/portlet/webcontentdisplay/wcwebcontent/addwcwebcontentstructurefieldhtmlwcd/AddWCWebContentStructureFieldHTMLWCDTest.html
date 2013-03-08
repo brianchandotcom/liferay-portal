@@ -54,14 +54,9 @@
 	<td>Navigation Interaction</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
-	<td>WC Structure HTML Name</td>
+	<td>Search Field</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -99,12 +94,7 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>WC Structure HTML Name</td>
 </tr>
@@ -112,11 +102,21 @@
 	<td>assertText</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>WC Structure HTML Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='template-name-label']</td>
+	<td>WC Template Structure HTML Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='template-name-label']</td>
 	<td>WC Template Structure HTML Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -125,12 +125,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[contains(@title,'_15_html_')]</td>
-	<td>HTML CKEditor</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>typeFrame</td>
-	<td>//iframe[contains(@title,'_15_html_')]</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>WC WebContent Structure HTML Body</td>
 </tr>
 <tr>
@@ -140,7 +145,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='journal-content-article']/p[2]</td>
+	<td>//div[@class='journal-content-article']/p</td>
 	<td>WC WebContent Structure HTML Body</td>
 </tr>
 </tbody></table>

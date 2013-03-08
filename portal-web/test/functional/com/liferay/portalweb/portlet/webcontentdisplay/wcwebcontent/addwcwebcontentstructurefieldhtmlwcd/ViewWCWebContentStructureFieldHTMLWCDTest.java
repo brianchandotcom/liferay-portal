@@ -29,9 +29,17 @@ public class ViewWCWebContentStructureFieldHTMLWCDTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-minimize portlet-minimize-icon']/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-maximize portlet-maximize-icon']/a"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='portlet-close portlet-close-icon']/a"));
 		assertEquals(RuntimeVariables.replace(
 				"WC WebContent Structure HTML Body"),
-			selenium.getText("//div[@class='journal-content-article']/p[2]"));
+			selenium.getText("//div[@class='journal-content-article']/p"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//span[@class='icon-action icon-action-edit']/a"));
 		assertEquals(RuntimeVariables.replace("Edit Template"),

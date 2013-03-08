@@ -288,14 +288,13 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertMBDiscussion(
-			long groupId, long userId, long classNameId, long classPK,
-			long mbThreadId, long mbRootMessageId, int maxCommentCount)
+			long groupId, long classNameId, long classPK, long mbThreadId,
+			long mbRootMessageId, int maxCommentCount)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "groupId", groupId);
-		put(context, "userId", userId);
 		put(context, "classNameId", classNameId);
 		put(context, "classPK", classPK);
 		put(context, "mbThreadId", mbThreadId);
@@ -491,7 +490,6 @@ public class SampleSQLBuilder {
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
 		put(context, "dateUtil", DateUtil_IW.getInstance());
-		put(context, "defaultUserId", _dataFactory.getDefaultUserId());
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);

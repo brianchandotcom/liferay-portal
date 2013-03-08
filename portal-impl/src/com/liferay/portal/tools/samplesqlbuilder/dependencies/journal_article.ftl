@@ -14,7 +14,7 @@ insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${a
 
 ${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.JournalArticle", stringUtil.valueOf(journalArticleResource.resourcePrimKey))}
 
-${sampleSQLBuilder.insertMBDiscussion(groupId, sampleUserId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get(), counter.get(), 0)}
+${sampleSQLBuilder.insertMBDiscussion(groupId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get(), counter.get(), 0)}
 
 <#list 1..maxJournalArticleCount as journalArticleCount>
 	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", "56,")>

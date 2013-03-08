@@ -251,10 +251,6 @@ public class DataFactory {
 		return _defaultUser;
 	}
 
-	public long getDefaultUserId() {
-		return _defaultUser.getUserId();
-	}
-
 	public long getDLFileEntryClassNameId() {
 		return _classNamesMap.get(DLFileEntry.class.getName());
 	}
@@ -277,14 +273,6 @@ public class DataFactory {
 
 	public long getJournalArticleClassNameId() {
 		return _classNamesMap.get(JournalArticle.class.getName());
-	}
-
-	public long getMBDiscussionClassNameId() {
-		return _classNamesMap.get(MBDiscussion.class.getName());
-	}
-
-	public long getMBMessageClassNameId() {
-		return _classNamesMap.get(MBMessage.class.getName());
 	}
 
 	public List<Long> getNewUserGroupIds(long groupId) {
@@ -313,10 +301,6 @@ public class DataFactory {
 
 	public User getSampleUser() {
 		return _sampleUser;
-	}
-
-	public long getUserClassNameId() {
-		return _classNamesMap.get(User.class.getName());
 	}
 
 	public Role getUserRole() {
@@ -530,32 +514,15 @@ public class DataFactory {
 			true, ContentTypes.TEXT_HTML, journalArticle.getTitle());
 	}
 
-	public AssetEntry newAssetEntry(
-		long groupId, long userId, long classNameId, long classPK,
-		boolean visible, String mimeType, String title) {
-
-		AssetEntry assetEntry = new AssetEntryImpl();
-
-		assetEntry.setGroupId(groupId);
-		assetEntry.setUserId(userId);
-		assetEntry.setClassNameId(classNameId);
-		assetEntry.setClassPK(classPK);
-		assetEntry.setVisible(visible);
-		assetEntry.setMimeType(mimeType);
-		assetEntry.setTitle(title);
-
-		return assetEntry;
-	}
-
 	public AssetEntry newAssetEntry(MBMessage mbMessage) {
 		long classNameId = 0;
 		boolean visible = false;
 
 		if (mbMessage.isDiscussion()) {
-			classNameId = getMBDiscussionClassNameId();
+			classNameId = _classNamesMap.get(MBDiscussion.class.getName());
 		}
 		else {
-			classNameId = getMBMessageClassNameId();
+			classNameId = _classNamesMap.get(MBMessage.class.getName());
 			visible = true;
 		}
 
@@ -617,7 +584,7 @@ public class DataFactory {
 		contact.setUserName(user.getFullName());
 		contact.setCreateDate(new Date());
 		contact.setModifiedDate(new Date());
-		contact.setClassNameId(getUserClassNameId());
+		contact.setClassNameId(_classNamesMap.get(User.class.getName()));
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(_accountId);
 		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
@@ -867,8 +834,8 @@ public class DataFactory {
 
 	public Group newGroup(User user) throws Exception {
 		return newGroup(
-			_counter.get(), getUserClassNameId(), user.getUserId(),
-			user.getScreenName(), false);
+			_counter.get(), _classNamesMap.get(User.class.getName()),
+			user.getUserId(), user.getScreenName(), false);
 	}
 
 	public IntegerWrapper newInteger() {

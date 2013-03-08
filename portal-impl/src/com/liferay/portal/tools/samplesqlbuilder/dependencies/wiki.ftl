@@ -13,7 +13,7 @@
 				<#assign mbRootMessageId = counter.get()>
 				<#assign mbThreadId = counter.get()>
 
-				${sampleSQLBuilder.insertMBDiscussion(groupId, sampleUserId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbThreadId, mbRootMessageId, maxWikiPageCommentCount)}
+				${sampleSQLBuilder.insertMBDiscussion(groupId, dataFactory.wikiPageClassNameId, wikiPage.resourcePrimKey, mbThreadId, mbRootMessageId, maxWikiPageCommentCount)}
 
 				${writerWikiCSV.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 			</#list>

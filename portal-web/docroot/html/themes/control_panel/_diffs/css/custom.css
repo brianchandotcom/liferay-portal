@@ -42,7 +42,7 @@ body.portal-popup:after, body.portal-popup:before {
 	clear: none;
 }
 
-#skip-to-content, #banner, #minimize-panels span, #heading .site-title, #breadcrumbs h1, #navigation h1, .lfr-ctrl-panel .user-greeting {
+#skip-to-content, #banner, .minimize-panels span, #heading .site-title, #breadcrumbs h1, #navigation h1, .lfr-ctrl-panel .user-greeting {
 	clip: rect(0 0 0 0);
 	position: absolute;
 }
@@ -265,7 +265,7 @@ body.portal-popup:after, body.portal-popup:before {
 	display: block;
 }
 
-#minimize-panels {
+.minimize-panels {
 	background: #333;
 	position: absolute;
 	right: -10px;
@@ -273,18 +273,18 @@ body.portal-popup:after, body.portal-popup:before {
 	z-index: 6;
 }
 
-#minimize-panels, #minimize-panels a {
+.minimize-panels, .minimize-panels a {
 	display: block;
 	height: 33px;
 	width: 10px;
 }
 
-#minimize-panels a {
+.minimize-panels a {
 	background: url(../images/custom/toggle_panels_bg.gif) 1px 0 no-repeat;
 	border-bottom: 1px solid #FFF;
 }
 
-.panels-minimized #minimize-panels a {
+.panels-minimized .minimize-panels a {
 	background-position: 1px -34px;
 }
 
@@ -720,7 +720,7 @@ input[type="text"], input[type="password"], select, textarea, .textarea, #breadc
 	@include box-shadow(0 0 8px #CECECE inset);
 }
 
-#minimize-panels {
+.minimize-panels {
 	@include border-radius(0 2px 2px 0);
 }
 

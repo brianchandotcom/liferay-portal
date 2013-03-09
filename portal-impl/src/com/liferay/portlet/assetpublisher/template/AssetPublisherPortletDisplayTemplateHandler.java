@@ -16,14 +16,19 @@ package com.liferay.portlet.assetpublisher.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherHelper;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -50,6 +55,38 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	@Override
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP;
+	}
+
+	public Map<String, TemplateVariableGroup> getTemplateVariablesMap(
+		long classPK) {
+
+		Map<String, TemplateVariableGroup> templateVariablesMap =
+			super.getTemplateVariablesMap(classPK);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariablesMap.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addCollectionVariable(
+			"asset-entries", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "asset-entry",
+			AssetEntry.class, "curEntry");
+		fieldsTemplateVariableGroup.addVariable(
+			"asset-entry", AssetEntry.class,
+			PortletDisplayTemplateConstants.ENTRY);
+
+		TemplateVariableGroup assetUtilTemplateVariableGroup =
+			new TemplateVariableGroup("asset-publisher-util");
+
+		assetUtilTemplateVariableGroup.addVariable(
+			"asset-publisher-helper", AssetPublisherHelper.class,
+			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER);
+
+		templateVariablesMap.put(
+			"asset-publisher-util", assetUtilTemplateVariableGroup);
+
+		return templateVariablesMap;
 	}
 
 	@Override

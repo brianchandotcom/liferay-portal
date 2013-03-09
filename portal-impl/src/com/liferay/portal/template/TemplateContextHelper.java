@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
 import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -105,6 +108,29 @@ import org.apache.struts.tiles.ComponentContext;
  * @author Tina Tian
  */
 public class TemplateContextHelper {
+
+	public static Map<String, TemplateVariableGroup> getTemplateVariablesMap(
+		long classNameId, long classPK) {
+
+		PortletDisplayTemplateHandler handler =
+			PortletDisplayTemplateHandlerRegistryUtil.
+				getPortletDisplayTemplateHandler(classNameId);
+
+		if (handler == null) {
+			return null;
+		}
+
+		Map<String, TemplateVariableGroup> templateVariablesMap =
+			handler.getTemplateVariablesMap(classPK);
+
+		TemplateVariableGroup utilTemplateVariableGroup =
+			templateVariablesMap.get("util");
+
+		utilTemplateVariableGroup.addVariable(
+			"http-request", HttpServletRequest.class, "request");
+
+		return templateVariablesMap;
+	}
 
 	public Map<String, Object> getHelperUtilities(
 		TemplateContextType templateContextType) {

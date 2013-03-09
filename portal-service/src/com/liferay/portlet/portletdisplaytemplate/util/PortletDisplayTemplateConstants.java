@@ -38,6 +38,8 @@ public class PortletDisplayTemplateConstants {
 
 	public static final String LOCALE = "locale";
 
+	public static final String PORTLET_PREFERENCES = "portletPreferences";
+
 	public static final String RENDER_REQUEST ="renderRequest";
 
 	public static final String RENDER_RESPONSE ="renderResponse";

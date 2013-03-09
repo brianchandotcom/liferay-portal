@@ -14,10 +14,12 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -78,5 +80,8 @@ public interface PortletDisplayTemplateHandler {
 	 *         path to the help template of the portlet display.
 	 */
 	public String getTemplatesHelpPropertyKey();
+
+	public Map<String, TemplateVariableGroup> getTemplateVariablesMap(
+		long templateClassPK);
 
 }

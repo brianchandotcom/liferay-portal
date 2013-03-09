@@ -39,4 +39,14 @@ public class StructureDuplicateStructureKeyException extends PortalException {
 		super(cause);
 	}
 
+	public String getStructureKey() {
+		return _structureKey;
+	}
+
+	public void setStructureKey(String structureKey) {
+		_structureKey = structureKey;
+	}
+
+	private String _structureKey;
+
 }

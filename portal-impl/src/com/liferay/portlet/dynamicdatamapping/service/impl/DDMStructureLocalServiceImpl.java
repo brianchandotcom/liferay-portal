@@ -1549,7 +1549,12 @@ public class DDMStructureLocalServiceImpl
 			groupId, classNameId, structureKey);
 
 		if (structure != null) {
-			throw new StructureDuplicateStructureKeyException();
+			StructureDuplicateStructureKeyException sdske =
+				new StructureDuplicateStructureKeyException();
+
+			sdske.setStructureKey(structure.getStructureKey());
+
+			throw sdske;
 		}
 
 		validate(nameMap, xsd);

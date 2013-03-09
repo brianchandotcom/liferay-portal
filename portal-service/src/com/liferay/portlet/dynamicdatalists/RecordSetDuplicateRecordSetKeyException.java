@@ -39,4 +39,14 @@ public class RecordSetDuplicateRecordSetKeyException extends PortalException {
 		super(cause);
 	}
 
+	public String getRecordSetKey() {
+		return _recordSetKey;
+	}
+
+	public void setRecordSetKey(String recordSetKey) {
+		_recordSetKey = recordSetKey;
+	}
+
+	private String _recordSetKey;
+
 }

@@ -119,6 +119,24 @@ if (layout.isTypeControlPanel()) {
 			</c:if>
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>">
+
+			<%
+			RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= rsdrske.getRecordSetKey() %>" key="dynamic-data-list-record-set-with-record-set-key-x-already-exists" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
+
+			<%
+			StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" />
+		</liferay-ui:error>
+
 		<portlet:actionURL var="exportImportPagesURL">
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 		</portlet:actionURL>

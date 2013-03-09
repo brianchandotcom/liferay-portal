@@ -30,7 +30,11 @@ public class PathConverter extends BaseConverter {
 
 		context.put("pathName", pathName);
 
-		processTemplate("path.ftl", context);
+		String content = processTemplate("path.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getPathJavaFileName(pathName), content,
+			true);
 	}
 
 }

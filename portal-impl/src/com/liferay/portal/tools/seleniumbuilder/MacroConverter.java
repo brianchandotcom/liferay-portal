@@ -30,7 +30,11 @@ public class MacroConverter extends BaseConverter {
 
 		context.put("macroName", macroName);
 
-		processTemplate("macro.ftl", context);
+		String content = processTemplate("macro.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getMacroJavaFileName(macroName), content,
+			true);
 	}
 
 }

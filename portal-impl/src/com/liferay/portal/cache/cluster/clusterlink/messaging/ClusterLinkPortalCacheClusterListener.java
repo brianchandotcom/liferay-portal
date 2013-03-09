@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
+import java.io.Serializable;
+
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -82,8 +84,10 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 					portalCacheClusterEventType.equals(
 						PortalCacheClusterEventType.UPDATE)) {
 
-				Object elementKey = portalCacheClusterEvent.getElementKey();
-				Object elementValue = portalCacheClusterEvent.getElementValue();
+				Serializable elementKey =
+					portalCacheClusterEvent.getElementKey();
+				Serializable elementValue =
+					portalCacheClusterEvent.getElementValue();
 
 				if (elementValue == null) {
 					ehcache.remove(

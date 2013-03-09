@@ -26,20 +26,20 @@ import java.io.Serializable;
 public class PortalCacheClusterEvent implements Serializable {
 
 	public PortalCacheClusterEvent(
-		String cacheName, Object elementKey, Object elementValue,
+		String cacheName, Serializable elementKey,
+		PortalCacheClusterEventType portalCacheClusterEventType) {
+
+		this(cacheName, elementKey, null, portalCacheClusterEventType);
+	}
+
+	public PortalCacheClusterEvent(
+		String cacheName, Serializable elementKey, Serializable elementValue,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
 
 		_cacheName = cacheName;
 		_elementKey = elementKey;
 		_elementValue = elementValue;
 		_portalCacheClusterEventType = portalCacheClusterEventType;
-	}
-
-	public PortalCacheClusterEvent(
-		String cacheName, Object elementKey,
-		PortalCacheClusterEventType portalCacheClusterEventType) {
-
-		this(cacheName, elementKey, null, portalCacheClusterEventType);
 	}
 
 	@Override
@@ -74,11 +74,11 @@ public class PortalCacheClusterEvent implements Serializable {
 		return _cacheName;
 	}
 
-	public Object getElementKey() {
+	public Serializable getElementKey() {
 		return _elementKey;
 	}
 
-	public Object getElementValue() {
+	public Serializable getElementValue() {
 		return _elementValue;
 	}
 
@@ -88,12 +88,10 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	@Override
 	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
+		return toString().hashCode();
 	}
 
-	public void setElementValue(Object elementValue) {
+	public void setElementValue(Serializable elementValue) {
 		_elementValue = elementValue;
 	}
 
@@ -117,8 +115,8 @@ public class PortalCacheClusterEvent implements Serializable {
 	}
 
 	private String _cacheName;
-	private Object _elementKey;
-	private Object _elementValue;
+	private Serializable _elementKey;
+	private Serializable _elementValue;
 	private PortalCacheClusterEventType _portalCacheClusterEventType;
 
 }

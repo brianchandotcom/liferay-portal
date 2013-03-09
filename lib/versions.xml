@@ -1652,7 +1652,18 @@
 	</library>
 	<library>
 		<file-name>lib/portal/ehcache-core.jar</file-name>
-		<version>2.6.5</version>
+		<version>2.4.6</version>
+		<project-name>Ehcache</project-name>
+		<project-url>http://ehcache.sourceforge.net</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/portal/ehcache-jgroupsreplication.jar</file-name>
+		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
 		<licenses>

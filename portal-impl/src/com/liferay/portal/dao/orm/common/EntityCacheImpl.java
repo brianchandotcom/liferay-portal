@@ -371,10 +371,6 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (!(obj instanceof CacheKey)) {
-				return false;
-			}
-
 			CacheKey cacheKey = (CacheKey)obj;
 
 			if (cacheKey._shardName.equals(_shardName) &&

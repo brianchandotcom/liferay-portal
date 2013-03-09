@@ -81,11 +81,11 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getObjectKey(),
+				ehcache.getName(), element.getKey(),
 				PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
-			portalCacheClusterEvent.setElementValue(element.getObjectValue());
+			portalCacheClusterEvent.setElementValue(element.getValue());
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -100,7 +100,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getObjectKey(),
+				ehcache.getName(), element.getKey(),
 				PortalCacheClusterEventType.REMOVE);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -115,11 +115,11 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getObjectKey(),
+				ehcache.getName(), element.getKey(),
 				PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
-			portalCacheClusterEvent.setElementValue(element.getObjectValue());
+			portalCacheClusterEvent.setElementValue(element.getValue());
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

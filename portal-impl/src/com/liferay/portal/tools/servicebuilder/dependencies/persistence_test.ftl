@@ -340,7 +340,7 @@ public class ${entity.name}PersistenceTest {
 		Assert.assertNull(missing${entity.name});
 	}
 
-	<#if entity.hasColumns() && entity.hasLocalService()>
+	<#if entity.hasActionableDynamicQuery() >
 		@Test
 		public void testActionableDynamicQuery() throws Exception {
 			final IntegerWrapper count = new IntegerWrapper();

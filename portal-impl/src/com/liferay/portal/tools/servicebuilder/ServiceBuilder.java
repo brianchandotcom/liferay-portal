@@ -260,6 +260,7 @@ public class ServiceBuilder {
 				"\n" +
 				"You can also customize the generated code by overriding the default templates with these optional system properties:\n" +
 				"\n" +
+				"\t-Dservice.tpl.actionable_dyanmic_query_exclude=" + _TPL_ROOT + "actionable_dynamic_query_exclude.txt\n"+
 				"\t-Dservice.tpl.bad_alias_names=" + _TPL_ROOT + "bad_alias_names.txt\n"+
 				"\t-Dservice.tpl.bad_column_names=" + _TPL_ROOT + "bad_column_names.txt\n"+
 				"\t-Dservice.tpl.bad_json_types=" + _TPL_ROOT + "bad_json_types.txt\n"+
@@ -524,6 +525,9 @@ public class ServiceBuilder {
 		String targetEntityName, String testDir, boolean build,
 		long buildNumber, boolean buildNumberIncrement) {
 
+		_tplActionableDynamicQueryExclude = _getTplProperty(
+			"actionable_dynamic_query_exclude",
+			_tplActionableDynamicQueryExclude);
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
 		_tplBadColumnNames = _getTplProperty(
@@ -589,6 +593,8 @@ public class ServiceBuilder {
 		_tplSpringXml = _getTplProperty("spring_xml", _tplSpringXml);
 
 		try {
+			_actionableDynamicQueryExclude = _readLines(
+				_tplActionableDynamicQueryExclude);
 			_badTableNames = _readLines(_tplBadTableNames);
 			_badAliasNames = _readLines(_tplBadAliasNames);
 			_badColumnNames = _readLines(_tplBadColumnNames);
@@ -722,7 +728,7 @@ public class ServiceBuilder {
 						System.out.println("Building " + entity.getName());
 
 						if (entity.hasColumns()) {
-							if (entity.hasLocalService()) {
+							if (entity.hasActionableDynamicQuery()) {
 								_createActionableDynamicQuery(entity);
 							}
 
@@ -4838,14 +4844,22 @@ public class ServiceBuilder {
 			txRequiredList.add(txRequired);
 		}
 
+		boolean actionableDynamicQuery = false;
+
+		if (!columnList.isEmpty() && localService &&
+			!_actionableDynamicQueryExclude.contains(table)) {
+
+			actionableDynamicQuery = true;
+		}
+
 		_ejbList.add(
 			new Entity(
 				_packagePath, _portletName, _portletShortName, ejbName,
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
-				sessionFactory, txManager, cacheEnabled, jsonEnabled, pkList,
-				regularColList, blobList, collectionList, columnList, order,
-				finderList, referenceList, txRequiredList));
+				sessionFactory, txManager, actionableDynamicQuery, cacheEnabled,
+				jsonEnabled, pkList, regularColList, blobList, collectionList,
+				columnList, order, finderList, referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name) throws Exception {
@@ -4895,6 +4909,7 @@ public class ServiceBuilder {
 	private static Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 
+	private Set<String> _actionableDynamicQueryExclude;
 	private String _apiDir;
 	private String _author;
 	private boolean _autoNamespaceTables;
@@ -4940,6 +4955,8 @@ public class ServiceBuilder {
 	private String _testOutputPath;
 	private String _tplActionableDynamicQuery =
 		_TPL_ROOT + "actionable_dynamic_query.ftl";
+	private String _tplActionableDynamicQueryExclude =
+		_TPL_ROOT + "actionable_dynamic_query_exclude.txt";
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";

@@ -87,8 +87,8 @@ public class Entity {
 	public Entity(String name) {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
-			null, null, null, null, null, true, false, null, null, null, null,
-			null, null, null, null, null);
+			null, null, null, null, null, false, true, false, null, null, null,
+			null, null, null, null, null, null);
 	}
 
 	public Entity(
@@ -96,8 +96,8 @@ public class Entity {
 		String name, String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClass, String dataSource,
-		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean jsonEnabled, List<EntityColumn> pkList,
+		String sessionFactory, String txManager, boolean actionableDynamicQuery,
+		boolean cacheEnabled, boolean jsonEnabled, List<EntityColumn> pkList,
 		List<EntityColumn> regularColList, List<EntityColumn> blobList,
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
@@ -121,6 +121,7 @@ public class Entity {
 		_sessionFactory = GetterUtil.getString(
 			sessionFactory, DEFAULT_SESSION_FACTORY);
 		_txManager = GetterUtil.getString(txManager, DEFAULT_TX_MANAGER);
+		_actionableDynamicQuery = actionableDynamicQuery;
 		_cacheEnabled = cacheEnabled;
 		_jsonEnabled = jsonEnabled;
 		_pkList = pkList;
@@ -408,6 +409,10 @@ public class Entity {
 
 	public String getVarNames() {
 		return TextFormatter.formatPlural(getVarName());
+	}
+
+	public boolean hasActionableDynamicQuery() {
+		return _actionableDynamicQuery;
 	}
 
 	public boolean hasArrayableOperator() {
@@ -740,6 +745,7 @@ public class Entity {
 		return _pkList.get(0);
 	}
 
+	private boolean _actionableDynamicQuery;
 	private String _alias;
 	private List<EntityColumn> _blobList;
 	private boolean _cacheEnabled;

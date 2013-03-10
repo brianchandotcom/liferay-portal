@@ -328,6 +328,6 @@ public class HotDeployImpl implements HotDeploy {
 		private ClassLoader _classLoader;
 		private ServletContext _servletContext;
 
-	};
+	}
 
 }

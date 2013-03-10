@@ -67,7 +67,7 @@ public class HotDeployImpl implements HotDeploy {
 		final HotDeployEvent hotDeployEvent) {
 
 		PortalLifecycleUtil.register(
-			new PACLPortalLifecycle(hotDeployEvent),
+			new HotDeployPortalLifecycle(hotDeployEvent),
 			PortalLifecycle.METHOD_INIT);
 
 		if (_capturePrematureEvents) {
@@ -289,9 +289,9 @@ public class HotDeployImpl implements HotDeploy {
 	private Set<String> _deployedServletContextNames;
 	private List<HotDeployListener> _hotDeployListeners;
 
-	private class PACLPortalLifecycle extends BasePortalLifecycle {
+	private class HotDeployPortalLifecycle extends BasePortalLifecycle {
 
-		public PACLPortalLifecycle(HotDeployEvent hotDeployEvent) {
+		public HotDeployPortalLifecycle(HotDeployEvent hotDeployEvent) {
 			_servletContext = hotDeployEvent.getServletContext();
 			_classLoader = hotDeployEvent.getContextClassLoader();
 

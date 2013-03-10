@@ -24,7 +24,6 @@ import com.germinus.easyconf.JndiURL;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.net.URL;
 
@@ -247,12 +246,7 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		String sourceName, URL url,
 		CompositeConfiguration loadedCompositeConfiguration) {
 
-		boolean checkGetClassLoader =
-			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
-
 		try {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
-
 			Configuration newConfiguration = null;
 
 			if (DatasourceURL.isDatasource(sourceName)) {
@@ -301,10 +295,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 			}
 
 			return null;
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
-				checkGetClassLoader);
 		}
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.io.Serializable;
 
@@ -46,16 +45,7 @@ public class ServiceBeanMethodInvocation
 		_arguments = arguments;
 
 		if (!_method.isAccessible()) {
-			boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-			try {
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-
-				_method.setAccessible(true);
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setEnabled(enabled);
-			}
+			_method.setAccessible(true);
 		}
 	}
 

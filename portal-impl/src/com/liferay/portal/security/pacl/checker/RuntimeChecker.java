@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -121,9 +120,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 		else if (name.equals(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
-			if (PortalSecurityManagerThreadLocal.isCheckCreateClassLoader() &&
-				!hasCreateClassLoader()) {
-
+			if (!hasCreateClassLoader()) {
 				logSecurityException(
 					_log, "Attempted to create a class loader");
 
@@ -139,9 +136,7 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
-				!hasGetClassLoader(name)) {
-
+			if (!hasGetClassLoader(name)) {
 				logSecurityException(_log, "Attempted to get class loader");
 
 				return false;
@@ -175,9 +170,7 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
-			if (PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor() &&
-				!hasReadFileDescriptor()) {
-
+			if (!hasReadFileDescriptor()) {
 				logSecurityException(_log, "Attempted to read file descriptor");
 
 				return false;
@@ -192,9 +185,7 @@ public class RuntimeChecker extends BaseChecker {
 			return false;
 		}
 		else if (name.equals(RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR)) {
-			if (PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor() &&
-				!hasWriteFileDescriptor()) {
-
+			if (!hasWriteFileDescriptor()) {
 				logSecurityException(
 					_log, "Attempted to write file descriptor");
 

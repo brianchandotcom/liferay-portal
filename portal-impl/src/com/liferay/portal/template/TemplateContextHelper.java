@@ -49,9 +49,6 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.service.permission.AccountPermissionUtil;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -118,23 +115,8 @@ public class TemplateContextHelper {
 				contextClassLoader, templateContextType);
 		}
 
-		PACLPolicy threadLocalPACLPolicy =
-			PortalSecurityManagerThreadLocal.getPACLPolicy();
-
-		try {
-			PACLPolicy contextClassLoaderPACLPolicy =
-				PACLPolicyManager.getPACLPolicy(contextClassLoader);
-
-			PortalSecurityManagerThreadLocal.setPACLPolicy(
-				contextClassLoaderPACLPolicy);
-
-			return doGetHelperUtilities(
-				contextClassLoader, templateContextType);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setPACLPolicy(
-				threadLocalPACLPolicy);
-		}
+		return doGetHelperUtilities(
+			contextClassLoader, templateContextType);
 	}
 
 	public Set<String> getRestrictedVariables() {

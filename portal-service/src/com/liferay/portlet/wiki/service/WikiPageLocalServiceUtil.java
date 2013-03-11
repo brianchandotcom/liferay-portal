@@ -427,6 +427,13 @@ public class WikiPageLocalServiceUtil {
 		getService().deleteTrashPageAttachments(nodeId, title);
 	}
 
+	public static void discardDraft(long nodeId, java.lang.String title,
+		double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().discardDraft(nodeId, title, version);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPage fetchPage(
 		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException {

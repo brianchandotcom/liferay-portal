@@ -172,15 +172,13 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0
+	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
+	 	 *             double)}
 	 */
 	public void deletePage(long nodeId, String title, double version)
 		throws PortalException, SystemException {
 
-		WikiPagePermission.check(
-			getPermissionChecker(), nodeId, title, version, ActionKeys.DELETE);
-
-		wikiPageLocalService.deletePage(nodeId, title, version);
+		discardDraft(nodeId, title, version);
 	}
 
 	public void deletePageAttachment(long nodeId, String title, String fileName)
@@ -221,6 +219,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
 		wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
+	}
+
+	public void discardDraft(long nodeId, String title, double version)
+		throws PortalException, SystemException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, version, ActionKeys.DELETE);
+
+		wikiPageLocalService.discardDraft(nodeId, title, version);
 	}
 
 	public List<WikiPage> getChildren(

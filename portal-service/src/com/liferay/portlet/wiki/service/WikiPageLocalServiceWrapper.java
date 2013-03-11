@@ -413,6 +413,12 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deleteTrashPageAttachments(nodeId, title);
 	}
 
+	public void discardDraft(long nodeId, java.lang.String title, double version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.discardDraft(nodeId, title, version);
+	}
+
 	public com.liferay.portlet.wiki.model.WikiPage fetchPage(long nodeId,
 		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException {

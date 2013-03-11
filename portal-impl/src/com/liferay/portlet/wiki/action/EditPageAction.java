@@ -223,7 +223,7 @@ public class EditPageAction extends PortletAction {
 		}
 		else {
 			if (version > 0) {
-				WikiPageServiceUtil.deletePage(nodeId, title, version);
+				WikiPageServiceUtil.discardDraft(nodeId, title, version);
 			}
 			else {
 				WikiPageServiceUtil.deletePage(nodeId, title);

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -73,8 +74,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		try {
-			return doExportData(
-				portletDataContext, portletId, portletPreferences);
+			Element rootElement = portletDataContext.createRootElement(
+				getClass().getSimpleName());
+
+			doExportData(portletDataContext, portletId, portletPreferences);
+
+			if (rootElement.elements().isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			return rootElement.getDocument().formattedString();
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -128,6 +137,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				Document document = SAXReaderUtil.read(data);
 
 				Element rootElement = document.getRootElement();
+
+				portletDataContext.setRootElement(rootElement);
 
 				long portletSourceGroupId = GetterUtil.getLong(
 					rootElement.attributeValue("group-id"));

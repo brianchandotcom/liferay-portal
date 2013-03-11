@@ -319,8 +319,13 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 	var allDayCheckbox = A.one('#<portlet:namespace />allDayCheckbox');
 
 	var durationHour = A.one('#<portlet:namespace />durationHour');
+	var durationMinute = A.one('#<portlet:namespace />durationMinute');
 
 	var timeZoneSensitiveCheckbox = A.one('#<portlet:namespace />timeZoneSensitiveCheckbox');
+
+	var startDateHour = document.<portlet:namespace />fm.<portlet:namespace />startDateHour;
+	var startDateMinute = document.<portlet:namespace />fm.<portlet:namespace />startDateMinute;
+	var startDateAmPm = document.<portlet:namespace />fm.<portlet:namespace />startDateAmPm;
 
 	allDayCheckbox.on(
 		'change',
@@ -332,15 +337,32 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 			}
 
 			if (allDayChecked) {
+				durationHour.val('24');
+				durationMinute.val('0');
+
+				durationHour.attr('disabled', true);
+				durationMinute.attr('disabled', true);
+
 				timeZoneSensitiveCheckbox.attr('checked', false);
 				timeZoneSensitiveCheckbox.attr('disabled', true);
+
+				startDateHour.disabled = true;
+				startDateMinute.disabled = true;
+				startDateAmPm.disabled = true;
 			}
 			else {
+				durationHour.attr('disabled', false);
+				durationMinute.attr('disabled', false);
+
 				timeZoneSensitiveCheckbox.attr('disabled', false);
 
 				if (timeZoneSensitiveCheckbox.previous().val() === 'true') {
 					timeZoneSensitiveCheckbox.attr('checked', true);
 				}
+
+				startDateHour.disabled = false;
+				startDateMinute.disabled = false;
+				startDateAmPm.disabled = false;
 			}
 		}
 	);

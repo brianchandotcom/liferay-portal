@@ -208,23 +208,6 @@ String editorContent = emailBody;
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />openFolderSelector() {
-		var folderWindow = window.open('<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/bookmarks/select_folder" %>' /></liferay-portlet:renderURL>', 'folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=830');
-
-		folderWindow.focus();
-	}
-
-	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
-		var folderData = {
-			idString: 'rootFolderId',
-			idValue: rootFolderId,
-			nameString: 'rootFolderName',
-			nameValue: rootFolderName
-		};
-
-		Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/bookmarks/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveConfiguration',

@@ -162,8 +162,9 @@ public class LayoutsTreeUtil {
 			jsonObject.put("priority", layout.getPriority());
 			jsonObject.put("privateLayout", layout.isPrivateLayout());
 			jsonObject.put(
-				"sortable", hasManageLayoutsPermission &&
-				SitesUtil.isLayoutSortable(layout));
+				"sortable",
+					hasManageLayoutsPermission &&
+					SitesUtil.isLayoutSortable(layout));
 			jsonObject.put("type", layout.getType());
 			jsonObject.put(
 				"updateable",

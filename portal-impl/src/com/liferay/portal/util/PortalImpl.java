@@ -4273,17 +4273,12 @@ public class PortalImpl implements Portal {
 					// called from a hot deployable portlet. See LayoutAction.
 
 					if (ServerDetector.isWebLogic()) {
-						HttpServletRequest nonSerializableObjectRequest =
-							new NonSerializableObjectRequestWrapper(
-								parentRequest);
-
-						uploadServletRequest = new UploadServletRequestImpl(
-							nonSerializableObjectRequest);
-					}
-					else {
-						uploadServletRequest = new UploadServletRequestImpl(
+						parentRequest = new NonSerializableObjectRequestWrapper(
 							parentRequest);
 					}
+
+					uploadServletRequest = new UploadServletRequestImpl(
+						parentRequest);
 
 					break;
 				}

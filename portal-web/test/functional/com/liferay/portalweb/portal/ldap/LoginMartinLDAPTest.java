@@ -57,8 +57,9 @@ public class LoginMartinLDAPTest extends BaseTestCase {
 				"You are signed in as Martin Luther."),
 			selenium.getText("//section/div/div/div"));
 		assertEquals(RuntimeVariables.replace("Martin Luther"),
-			selenium.getText("//a[2]"));
-		selenium.clickAt("//a[2]", RuntimeVariables.replace("Martin Luther"));
+			selenium.getText("//span[@class='user-full-name']"));
+		selenium.clickAt("//span[@class='user-full-name']",
+			RuntimeVariables.replace("Martin Luther"));
 		selenium.waitForVisible("//a[@id='_2_userGroupsLink']");
 		assertTrue(selenium.isPartialText("//a[@id='_2_userGroupsLink']",
 				"User Groups"));

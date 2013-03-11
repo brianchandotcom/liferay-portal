@@ -25,7 +25,14 @@ public class AddLDAPServerTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -50,7 +57,7 @@ public class AddLDAPServerTest extends BaseTestCase {
 				"//input[@name='_130_defaultLdap' and @value='apache']"));
 		selenium.click("//input[@value='Reset Values']");
 		selenium.type("//input[@id='_130_ldap.base.provider.url.0']",
-			RuntimeVariables.replace("ldap://[$VM_HOST$]:10389"));
+			RuntimeVariables.replace("ldap://localhost:10389"));
 		selenium.type("//input[@id='_130_ldap.base.dn.0']",
 			RuntimeVariables.replace("dc=example,dc=com"));
 		selenium.type("//input[@id='_130_ldap.security.principal.0']",

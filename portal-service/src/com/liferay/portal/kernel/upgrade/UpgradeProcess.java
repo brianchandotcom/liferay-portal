@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -200,6 +202,13 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 	}
 
 	protected void doUpgrade() throws Exception {
+	}
+
+	protected int getBatchSize() {
+		String key =
+			"upgrade.processes." + getClass().getName() + ".batch.size";
+
+		return GetterUtil.getInteger(PropsUtil.get(key));
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

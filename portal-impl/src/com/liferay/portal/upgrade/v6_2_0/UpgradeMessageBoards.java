@@ -43,8 +43,14 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
+		long startTime = System.nanoTime();
+
 		updateThreadFlags();
 		updateThreads();
+
+		long endTime = System.nanoTime();
+
+		System.out.println("Estimated time:" + (endTime - startTime));
 	}
 
 	protected Object[] getMessageArray(long messageId) throws Exception {
@@ -155,61 +161,35 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateThread(
-			long threadId, long userId, String userName, Timestamp createDate)
+			PreparedStatement preparedStatement, long threadId, long userId,
+			String userName, Timestamp createDate)
 		throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		preparedStatement.setLong(1, userId);
+		preparedStatement.setString(2, userName);
+		preparedStatement.setTimestamp(3, createDate);
+		preparedStatement.setTimestamp(4, createDate);
+		preparedStatement.setLong(5, threadId);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update MBThread set userId = ?, userName = ?, " +
-					"createDate = ?, modifiedDate = ? where threadId = ?");
-
-			ps.setLong(1, userId);
-			ps.setString(2, userName);
-			ps.setTimestamp(3, createDate);
-			ps.setTimestamp(4, createDate);
-			ps.setLong(5, threadId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		preparedStatement.addBatch();
 	}
 
 	protected void updateThreadFlag(
-			long threadFlagId, long groupId, long companyId, String fullName)
+			PreparedStatement preparedStatement, long threadFlagId,
+			long groupId, long companyId, String fullName)
 		throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		preparedStatement.setLong(1, groupId);
+		preparedStatement.setLong(2, companyId);
+		preparedStatement.setString(3, fullName);
+		preparedStatement.setLong(4, threadFlagId);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update MBThreadFlag set groupId = ?, companyId = ?, " +
-					"userName = ?, createDate = modifiedDate where " +
-						"threadFlagId = ?");
-
-			ps.setLong(1, groupId);
-			ps.setLong(2, companyId);
-			ps.setString(3, fullName);
-			ps.setLong(4, threadFlagId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		preparedStatement.addBatch();
 	}
 
 	protected void updateThreadFlags() throws Exception {
 		Connection con = null;
+		PreparedStatement batchStatement = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -220,6 +200,14 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				"select threadFlagId, userId, threadId from MBThreadFlag");
 
 			rs = ps.executeQuery();
+
+			batchStatement = con.prepareStatement(
+				"update MBThreadFlag set groupId = ?, companyId = ?, " +
+					"userName = ?, createDate = modifiedDate where " +
+						"threadFlagId = ?");
+
+			int batchSize = getBatchSize();
+			int counter = 0;
 
 			while (rs.next()) {
 				long threadFlagId = rs.getLong("threadFlagId");
@@ -235,17 +223,25 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				}
 
 				updateThreadFlag(
-					threadFlagId, (Long)threadArray[0], (Long)threadArray[1],
-					userName);
+					batchStatement, threadFlagId, (Long)threadArray[0],
+					(Long)threadArray[1], userName);
+
+				if ((++counter % batchSize) == 0) {
+					ps.executeBatch();
+
+					counter = 0;
+				}
 			}
 		}
 		finally {
+			DataAccess.cleanUp(batchStatement);
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
 	protected void updateThreads() throws Exception {
 		Connection con = null;
+		PreparedStatement batchStatement = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -256,6 +252,13 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				"select threadId, rootMessageId from MBThread");
 
 			rs = ps.executeQuery();
+
+			int batchSize = getBatchSize();
+			int counter = 0;
+
+			batchStatement = con.prepareStatement(
+				"update MBThread set userId = ?, userName = ?, " +
+					"createDate = ?, modifiedDate = ? where threadId = ?");
 
 			while (rs.next()) {
 				long threadId = rs.getLong("threadId");
@@ -271,10 +274,18 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				String userName = getUserName(userId);
 
 				updateThread(
-					threadId, userId, userName, (Timestamp)messageArray[1]);
+					batchStatement, threadId, userId, userName,
+					(Timestamp)messageArray[1]);
+
+				if ((++counter % batchSize) == 0) {
+					ps.executeBatch();
+
+					counter = 0;
+				}
 			}
 		}
 		finally {
+			DataAccess.cleanUp(batchStatement);
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}

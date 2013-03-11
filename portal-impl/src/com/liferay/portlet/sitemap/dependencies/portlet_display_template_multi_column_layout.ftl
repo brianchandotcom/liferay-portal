@@ -3,7 +3,7 @@
 <#if entries?has_content>
 	<@aui.layout>
 		<#list entries as entry>
-		    <@aui.column columnWith="25">
+		    <@aui.column columnWidth=25>
 				<div class="results-header">
 					<h3>
 						<#assign layoutURL = portalUtil.getLayoutURL(entry, themeDisplay)>

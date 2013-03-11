@@ -355,11 +355,7 @@ public class JavadocFormatter {
 					comment = element.getText();
 				}
 
-				String elementName = null;
-
-				if (commentElement != null) {
-					elementName = element.elementText("name");
-				}
+				String elementName = element.elementText("name");
 
 				if (Validator.isNotNull(comment)) {
 					comment = _assembleTagComment(
@@ -576,11 +572,9 @@ public class JavadocFormatter {
 
 		comment = _trimMultilineText(comment);
 
-		if (Validator.isNotNull(comment)) {
-			Element commentElement = returnElement.addElement("comment");
+		Element commentElement = returnElement.addElement("comment");
 
-			commentElement.addCDATA(comment);
-		}
+		commentElement.addCDATA(comment);
 	}
 
 	private void _addThrowsElement(

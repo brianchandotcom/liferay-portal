@@ -366,9 +366,12 @@ public class WebDriverToSeleniumBridge
 
 		Alert alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
 
-		acceptConfirmation();
-
-		return alert.getText();
+		try {
+			return alert.getText();
+		}
+		finally {
+			alert.accept();
+		}
 	}
 
 	public String getCookie() {

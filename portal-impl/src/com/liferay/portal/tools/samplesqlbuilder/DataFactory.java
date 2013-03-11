@@ -81,6 +81,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
+import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
@@ -1139,20 +1140,11 @@ public class DataFactory {
 		return resourcePermissions;
 	}
 
-	public SocialActivity newSocialActivity(
-		long groupId, long companyId, long userId, long classNameId,
-		long classPK) {
-
-		SocialActivity socialActivity = new SocialActivityImpl();
-
-		socialActivity.setActivityId(_socialActivityCounter.get());
-		socialActivity.setGroupId(groupId);
-		socialActivity.setCompanyId(companyId);
-		socialActivity.setUserId(userId);
-		socialActivity.setClassNameId(classNameId);
-		socialActivity.setClassPK(classPK);
-
-		return socialActivity;
+	public SocialActivity newSocialActivity(DLFileEntry dlFileEntry) {
+		return newSocialActivity(
+			dlFileEntry.getGroupId(), getDLFileEntryClassNameId(),
+			dlFileEntry.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
+			dlFileEntry.getTitle());
 	}
 
 	public User newUser(int index) {
@@ -1361,6 +1353,24 @@ public class DataFactory {
 		role.setType(type);
 
 		return role;
+	}
+
+	protected SocialActivity newSocialActivity(
+		long groupId, long classNameId, long classPK, int type, String title) {
+
+		SocialActivity socialActivity = new SocialActivityImpl();
+
+		socialActivity.setActivityId(_socialActivityCounter.get());
+		socialActivity.setGroupId(groupId);
+		socialActivity.setCompanyId(_companyId);
+		socialActivity.setUserId(_sampleUserId);
+		socialActivity.setCreateDate(System.currentTimeMillis());
+		socialActivity.setClassNameId(classNameId);
+		socialActivity.setClassPK(classPK);
+		socialActivity.setType(type);
+		socialActivity.setExtraData("{\"title\":\""+ title +"\"}");
+
+		return socialActivity;
 	}
 
 	protected User newUser(

@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>WaitForPopup2Test</title>
+<title>WaitForPopup1Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">WaitForPopup2Test</td></tr>
+<tr><td rowspan="1" colspan="3">WaitForPopup1Test</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -54,11 +54,35 @@
 	<td>View Pages</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//button[.='View Pages']</td>
+	<td>View Pages</td>
+</tr>
+<tr>
 	<td>waitForPopUp</td>
-	<td>null</td>
+	<td></td>
 	<td></td>
 </tr>
-</tbody>
-</table>
+<tr>
+	<td>selectPopUp</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>css=img[alt="Liferay"]</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>css=img[alt="Liferay"]</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>close</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
 </body>
 </html>

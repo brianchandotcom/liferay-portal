@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.waitfor.waitforpopup;
+package com.liferay.portalweb.portal.selenium.selection.waitforpopup;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 

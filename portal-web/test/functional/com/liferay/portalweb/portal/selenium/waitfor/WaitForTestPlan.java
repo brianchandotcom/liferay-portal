@@ -15,10 +15,8 @@
 package com.liferay.portalweb.portal.selenium.waitfor;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.selenium.waitfor.waitforconfirmation.WaitForConfirmationTests;
 import com.liferay.portalweb.portal.selenium.waitfor.waitforelementpresent.WaitForElementPresentTests;
 import com.liferay.portalweb.portal.selenium.waitfor.waitforpartialtext.WaitForPartialTextTests;
-import com.liferay.portalweb.portal.selenium.waitfor.waitforpopup.WaitForPopupTests;
 import com.liferay.portalweb.portal.selenium.waitfor.waitforselectedlabel.WaitForSelectedLabelTests;
 import com.liferay.portalweb.portal.selenium.waitfor.waitfortext.WaitForTextTests;
 import com.liferay.portalweb.portal.selenium.waitfor.waitfortextpresent.WaitForTextPresentTests;
@@ -36,10 +34,8 @@ public class WaitForTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WaitForConfirmationTests.suite());
 		testSuite.addTest(WaitForElementPresentTests.suite());
 		testSuite.addTest(WaitForPartialTextTests.suite());
-		testSuite.addTest(WaitForPopupTests.suite());
 		testSuite.addTest(WaitForSelectedLabelTests.suite());
 		testSuite.addTest(WaitForTextTests.suite());
 		testSuite.addTest(WaitForTextPresentTests.suite());

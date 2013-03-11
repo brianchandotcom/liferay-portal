@@ -18,6 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.selenium.selection.selectframe.SelectFrameTests;
 import com.liferay.portalweb.portal.selenium.selection.selectpopup.SelectPopUpTests;
 import com.liferay.portalweb.portal.selenium.selection.selectwindow.SelectWindowTests;
+import com.liferay.portalweb.portal.selenium.selection.waitforpopup.WaitForPopupTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,6 +34,7 @@ public class SelectionTestPlan extends BaseTestSuite {
 		testSuite.addTest(SelectFrameTests.suite());
 		testSuite.addTest(SelectPopUpTests.suite());
 		testSuite.addTest(SelectWindowTests.suite());
+		testSuite.addTest(WaitForPopupTests.suite());
 
 		return testSuite;
 	}

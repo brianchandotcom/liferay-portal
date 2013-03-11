@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
@@ -88,7 +90,11 @@ CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
 
 CKEDITOR.config.newThreadURL = '<%= MBThreadConstants.NEW_THREAD_URL %>';
 
-CKEDITOR.config.resize_enabled = '<%= resizable %>';
+CKEDITOR.config.resize_enabled = <%= resizable %>;
+
+<c:if test="<%= resizable %>">
+	CKEDITOR.config.resize_dir = 'vertical';
+</c:if>
 
 CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonDescriptions(), "','") %>'];
 

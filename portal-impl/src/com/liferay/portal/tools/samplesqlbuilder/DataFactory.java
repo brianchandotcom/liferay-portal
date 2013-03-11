@@ -101,6 +101,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
+import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -1145,6 +1146,20 @@ public class DataFactory {
 			dlFileEntry.getGroupId(), getDLFileEntryClassNameId(),
 			dlFileEntry.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
 			dlFileEntry.getTitle());
+	}
+
+	public SocialActivity newSocialActivity(JournalArticle journalArticle) {
+		int type = JournalActivityKeys.UPDATE_ARTICLE;
+
+		if (journalArticle.getVersion() ==
+			JournalArticleConstants.VERSION_DEFAULT) {
+
+			type = JournalActivityKeys.ADD_ARTICLE;
+		}
+
+		return newSocialActivity(
+			journalArticle.getGroupId(), getJournalArticleClassNameId(),
+			journalArticle.getId(), type, journalArticle.getUrlTitle());
 	}
 
 	public User newUser(int index) {

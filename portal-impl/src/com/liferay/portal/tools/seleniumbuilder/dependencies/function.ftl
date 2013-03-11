@@ -24,6 +24,11 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 		</#list>
 
 		) {
+			<#assign objectNameSet = seleniumBuilderFileUtil.getChildElementNameSet(functionCommandElement)>
+
+			<#list objectNameSet as objectName>
+				${objectName}Function ${stringUtil.lowerCaseFirstLetter(objectName)}Function = new ${objectName}Function(liferaySelenium);
+			</#list>
 		}
 	</#list>
 

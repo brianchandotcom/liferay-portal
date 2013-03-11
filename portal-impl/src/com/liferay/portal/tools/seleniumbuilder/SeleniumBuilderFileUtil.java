@@ -25,6 +25,10 @@ import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.File;
 
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author Michael Hashimoto
  */
@@ -36,6 +40,37 @@ public class SeleniumBuilderFileUtil {
 
 	public String getBaseDir() {
 		return _baseDir;
+	}
+
+	public Set<String> getChildElementNameSet(Element element) {
+		return getChildElementNameSet(new TreeSet<String>(), element);
+	}
+
+	public Set<String> getChildElementNameSet(
+		Set<String> nameSet, Element element) {
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return nameSet;
+		}
+		else {
+			for (Element childElement : childElements) {
+				String childElementName = childElement.attributeValue("name");
+
+				if (!(childElementName == null)) {
+					int x = childElementName.lastIndexOf(StringPool.POUND);
+
+					if (!(x == -1)) {
+						nameSet.add(childElementName.substring(0, x));
+					}
+				}
+
+				getChildElementNameSet(nameSet, childElement);
+			}
+		}
+
+		return nameSet;
 	}
 
 	public String getClassName(String fileName) {

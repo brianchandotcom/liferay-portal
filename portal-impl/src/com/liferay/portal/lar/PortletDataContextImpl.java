@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.AttachedModel;
@@ -646,6 +648,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	public Element createRootElement(String dataHandlerClassName) {
+		Document document = SAXReaderUtil.createDocument();
+
+		_rootElement = document.addElement(dataHandlerClassName);
+
+		return _rootElement;
+	}
+
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace) {
 
@@ -791,6 +801,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries() {
 		return _ratingsEntriesMap;
+	}
+
+	public Element getRootElement() {
+		return _rootElement;
 	}
 
 	public String getRootPath() {
@@ -1304,6 +1318,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_privateLayout = privateLayout;
 	}
 
+	public void setRootElement(Element rootElement) {
+		_rootElement = rootElement;
+	}
+
 	public void setScopeGroupId(long scopeGroupId) {
 		_scopeGroupId = scopeGroupId;
 	}
@@ -1577,6 +1595,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private boolean _privateLayout;
 	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
+	private Element _rootElement;
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;
 	private String _scopeType;

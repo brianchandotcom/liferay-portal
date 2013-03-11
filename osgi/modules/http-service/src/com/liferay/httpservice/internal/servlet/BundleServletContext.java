@@ -169,14 +169,19 @@ public class BundleServletContext extends LiferayServletContext {
 	}
 
 	@Override
-	public String getServletContextName() {
-		return _servletContextName;
+	public Servlet getServlet(String name) {
+		return _servletsByServletNames.get(name);
 	}
 
 	public List<ServletRequestAttributeListener>
 		getServletRequestAttributeListeners() {
 
 		return null;
+	}
+
+	@Override
+	public String getServletContextName() {
+		return _servletContextName;
 	}
 
 	public List<ServletRequestListener> getServletRequestListeners() {

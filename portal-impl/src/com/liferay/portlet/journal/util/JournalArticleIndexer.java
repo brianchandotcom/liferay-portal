@@ -330,6 +330,10 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		addDDMStructureAttributes(document, article);
 
+		addAssetFields(
+			document, JournalArticle.class.getName(),
+			article.getResourcePrimKey());
+
 		if (!article.isInTrash() && article.isInTrashContainer()) {
 			JournalFolder folder = article.getTrashContainer();
 

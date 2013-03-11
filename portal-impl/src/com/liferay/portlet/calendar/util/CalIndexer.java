@@ -75,6 +75,8 @@ public class CalIndexer extends BaseIndexer {
 		document.addText(Field.TITLE, event.getTitle());
 		document.addKeyword(Field.TYPE, event.getType());
 
+		addAssetFields(document, CalEvent.class.getName(), event.getEventId());
+
 		return document;
 	}
 

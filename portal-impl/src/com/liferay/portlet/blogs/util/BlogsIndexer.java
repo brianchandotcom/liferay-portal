@@ -117,6 +117,9 @@ public class BlogsIndexer extends BaseIndexer {
 		document.addDate(Field.MODIFIED_DATE, entry.getDisplayDate());
 		document.addText(Field.TITLE, entry.getTitle());
 
+		addAssetFields(
+			document, BlogsEntry.class.getName(), entry.getEntryId());
+
 		return document;
 	}
 

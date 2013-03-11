@@ -130,6 +130,9 @@ public class DLFolderIndexer extends BaseIndexer {
 			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
 		document.addText(Field.TITLE, dlFolder.getName());
 
+		addAssetFields(
+			document, DLFolder.class.getName(), dlFolder.getFolderId());
+
 		if (!dlFolder.isInTrash() && dlFolder.isInTrashContainer()) {
 			DLFolder trashedFolder = dlFolder.getTrashContainer();
 

@@ -415,7 +415,7 @@
 
 		<!-- PK fields -->
 
-		<column name="threadId" type="long" primary="true" />
+		<column name="threadId" type="long" primary="true" container-model="true" />
 
 		<!-- Group instance -->
 
@@ -431,7 +431,7 @@
 
 		<!-- Other fields -->
 
-		<column name="categoryId" type="long" />
+		<column name="categoryId" type="long" parent-container-model="true" />
 		<column name="rootMessageId" type="long" />
 		<column name="rootMessageUserId" type="long" />
 		<column name="messageCount" type="int" />

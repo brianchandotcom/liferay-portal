@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -143,6 +144,18 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		throws PortalException, SystemException {
 
 		return getThread().getAttachmentsFolderId();
+	}
+
+	public ContainerModel getTrashContainer()
+		throws PortalException, SystemException {
+
+		MBThread thread = getThread();
+
+		if (thread.isInTrash()) {
+			return thread;
+		}
+
+		return thread.getTrashContainer();
 	}
 
 	public String getWorkflowClassName() {

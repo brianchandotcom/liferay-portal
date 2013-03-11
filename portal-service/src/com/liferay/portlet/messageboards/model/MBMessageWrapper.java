@@ -1021,6 +1021,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getThreadAttachmentsFolderId();
 	}
 
+	public com.liferay.portal.model.ContainerModel getTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.getTrashContainer();
+	}
+
 	public java.lang.String getWorkflowClassName() {
 		return _mbMessage.getWorkflowClassName();
 	}

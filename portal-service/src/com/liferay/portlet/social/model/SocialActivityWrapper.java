@@ -515,6 +515,15 @@ public class SocialActivityWrapper implements SocialActivity,
 		return _socialActivity.getAssetEntry();
 	}
 
+	public java.lang.String getExtraDataProperty(java.lang.String property)
+		throws com.liferay.portal.kernel.json.JSONException {
+		return _socialActivity.getExtraDataProperty(property);
+	}
+
+	public boolean isClassName(java.lang.String className) {
+		return _socialActivity.isClassName(className);
+	}
+
 	public void setAssetEntry(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
 		_socialActivity.setAssetEntry(assetEntry);

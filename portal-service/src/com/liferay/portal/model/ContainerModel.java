@@ -23,6 +23,10 @@ public interface ContainerModel {
 
 	public String getContainerModelName();
 
+	public Class<?> getModelClass();
+
+	public String getModelClassName();
+
 	public long getParentContainerModelId();
 
 	public void setContainerModelId(long containerModelId);

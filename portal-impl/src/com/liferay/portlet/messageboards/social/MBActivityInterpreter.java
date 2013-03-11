@@ -17,19 +17,22 @@ package com.liferay.portlet.messageboards.social;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
+ * @author Zsolt Berentey
  */
 public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 
@@ -38,36 +41,39 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected SocialActivityFeedEntry doInterpret(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+		MBMessage message = getMessage(activity);
 
-		if (!MBMessagePermission.contains(
-				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
-
-			return null;
+		if (message.getCategoryId() <= 0) {
+			return StringPool.BLANK;
 		}
 
-		String groupName = StringPool.BLANK;
+		StringBundler sb = new StringBundler(4);
 
-		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
-			groupName = getGroupName(activity.getGroupId(), themeDisplay);
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/message_boards/find_category?mbCategoryId=");
+		sb.append(message.getCategoryId());
+
+		String categoryLink = sb.toString();
+
+		return wrapLink(categoryLink, "go-to-category", themeDisplay);
+	}
+
+	@Override
+	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		MBMessage message = getMessage(activity);
+
+		MBThread thread = message.getThread();
+
+		if (thread.isInTrash()) {
+			return TrashUtil.getViewContentURL(
+				MBThread.class.getName(), thread.getThreadId(), themeDisplay);
 		}
-
-		String creatorUserName = getUserName(
-			activity.getUserId(), themeDisplay);
-		String receiverUserName = getUserName(
-			activity.getReceiverUserId(), themeDisplay);
-
-		int activityType = activity.getType();
-
-		// Link
-
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			activity.getClassPK());
 
 		StringBundler sb = new StringBundler(4);
 
@@ -76,73 +82,103 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		sb.append("/message_boards/find_message?messageId=");
 		sb.append(message.getMessageId());
 
-		String link = sb.toString();
+		return sb.toString();
+	}
 
-		// Title
+	protected MBMessage getMessage(SocialActivity activity) throws Exception {
+		if (activity.isClassName(MBThread.class.getName())) {
+			MBThread thread = MBThreadLocalServiceUtil.getThread(
+				activity.getClassPK());
 
-		String titlePattern = null;
+			return MBMessageLocalServiceUtil.getMessage(
+				thread.getRootMessageId());
+		}
+
+		return MBMessageLocalServiceUtil.getMessage(activity.getClassPK());
+	}
+
+	@Override
+	protected String getTitle(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		MBMessage message = getMessage(activity);
+
+		return message.getSubject();
+	}
+
+	@Override
+	protected String getTitlePattern(String groupName, SocialActivity activity)
+		throws Exception {
+
+		int activityType = activity.getType();
+
+		long receiverUserId = activity.getReceiverUserId();
 
 		if (activityType == MBActivityKeys.ADD_MESSAGE) {
-			if (activity.getReceiverUserId() == 0) {
+			if (receiverUserId == 0) {
 				if (Validator.isNull(groupName)) {
-					titlePattern = "activity-message-boards-add-message";
+					return "activity-message-boards-add-message";
 				}
 				else {
-					titlePattern = "activity-message-boards-add-message-in";
+					return "activity-message-boards-add-message-in";
 				}
 			}
 			else {
 				if (Validator.isNull(groupName)) {
-					titlePattern = "activity-message-boards-reply-message";
+					return "activity-message-boards-reply-message";
 				}
 				else {
-					titlePattern = "activity-message-boards-reply-message-in";
+					return "activity-message-boards-reply-message-in";
 				}
 			}
 		}
 		else if ((activityType == MBActivityKeys.REPLY_MESSAGE) &&
-				 (activity.getReceiverUserId() > 0)) {
+				 (receiverUserId > 0)) {
 
 			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-message-boards-reply-message";
+				return "activity-message-boards-reply-message";
 			}
 			else {
-				titlePattern = "activity-message-boards-reply-message-in";
+				return "activity-message-boards-reply-message-in";
+			}
+		}
+		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
+			if (Validator.isNull(groupName)) {
+				return "activity-message-boards-move-to-trash";
+			}
+			else {
+				return "activity-message-boards-move-to-trash-in";
+			}
+		}
+		else if (activityType ==
+					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+
+			if (Validator.isNull(groupName)) {
+				return "activity-message-boards-restore-from-trash";
+			}
+			else {
+				return "activity-message-boards-restore-from-trash-in";
 			}
 		}
 
-		String messageSubject = getValue(
-			activity.getExtraData(), "title", message.getSubject());
+		return null;
+	}
 
-		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, receiverUserName,
-			wrapLink(link, messageSubject)
-		};
+	@Override
+	protected boolean hasPermissions(
+			PermissionChecker permissionChecker, SocialActivity activity,
+			String actionId, ThemeDisplay themeDisplay)
+		throws Exception {
 
-		String title = themeDisplay.translate(titlePattern, titleArguments);
+		MBMessage message = getMessage(activity);
 
-		// Body
-
-		String body = StringPool.BLANK;
-
-		if (message.getCategoryId() > 0) {
-			sb.setIndex(0);
-
-			sb.append(themeDisplay.getPortalURL());
-			sb.append(themeDisplay.getPathMain());
-			sb.append("/message_boards/find_category?mbCategoryId=");
-			sb.append(message.getCategoryId());
-
-			String categoryLink = sb.toString();
-
-			body = wrapLink(categoryLink, "go-to-category", themeDisplay);
-		}
-
-		return new SocialActivityFeedEntry(link, title, body);
+		return MBMessagePermission.contains(
+			permissionChecker, message.getMessageId(), actionId);
 	}
 
 	private static final String[] _CLASS_NAMES = new String[] {
-		MBMessage.class.getName()
+		MBMessage.class.getName(), MBThread.class.getName()
 	};
 
 }

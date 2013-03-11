@@ -173,6 +173,11 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected boolean isBaseModelContainerModel() {
+		return false;
+	}
+
+	@Override
 	protected BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)

@@ -190,6 +190,16 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	public WikiNode getTrashContainer() {
+		WikiNode node = getNode();
+
+		if (node.isInTrash()) {
+			return node;
+		}
+
+		return null;
+	}
+
 	public List<WikiPage> getViewableChildPages() {
 		try {
 			return WikiPageServiceUtil.getChildren(

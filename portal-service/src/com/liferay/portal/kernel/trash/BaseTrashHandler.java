@@ -155,11 +155,16 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return Collections.emptyList();
 	}
 
+	public ContainerModel getTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
 	public String getTrashContainerModelName() {
 		return StringPool.BLANK;
 	}
 
-	@SuppressWarnings("unused")
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException, SystemException {
 

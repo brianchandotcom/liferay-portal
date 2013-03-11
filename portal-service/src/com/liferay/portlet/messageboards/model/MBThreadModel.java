@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -42,8 +43,8 @@ import java.util.Date;
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl
  * @generated
  */
-public interface MBThreadModel extends BaseModel<MBThread>, GroupedModel,
-	StagedModel, WorkflowedModel {
+public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
+	GroupedModel, StagedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -495,6 +496,41 @@ public interface MBThreadModel extends BaseModel<MBThread>, GroupedModel,
 	 * @return <code>true</code> if this message boards thread is scheduled; <code>false</code> otherwise
 	 */
 	public boolean isScheduled();
+
+	/**
+	 * Returns the container model ID of this message boards thread.
+	 *
+	 * @return the container model ID of this message boards thread
+	 */
+	public long getContainerModelId();
+
+	/**
+	 * Sets the container model ID of this message boards thread.
+	 *
+	 * @param container model ID of this message boards thread
+	 */
+	public void setContainerModelId(long containerModelId);
+
+	/**
+	 * Returns the container name of this message boards thread.
+	 *
+	 * @return the container name of this message boards thread
+	 */
+	public String getContainerModelName();
+
+	/**
+	 * Returns the parent container model ID of this message boards thread.
+	 *
+	 * @return the parent container model ID of this message boards thread
+	 */
+	public long getParentContainerModelId();
+
+	/**
+	 * Sets the parent container model ID of this message boards thread.
+	 *
+	 * @param parent container model ID of this message boards thread
+	 */
+	public void setParentContainerModelId(long parentContainerModelId);
 
 	public boolean isNew();
 

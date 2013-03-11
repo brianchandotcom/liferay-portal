@@ -34,6 +34,11 @@ public interface SocialActivity extends SocialActivityModel, PersistedModel {
 	public com.liferay.portlet.asset.model.AssetEntry getAssetEntry()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getExtraDataProperty(java.lang.String property)
+		throws com.liferay.portal.kernel.json.JSONException;
+
+	public boolean isClassName(java.lang.String className);
+
 	public void setAssetEntry(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry);
 }

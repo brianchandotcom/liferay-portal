@@ -102,6 +102,13 @@ public class TrashUtil {
 		return getTrash().getTrashTitle(trashEntryId);
 	}
 
+	public static String getViewContentURL(
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getTrash().getViewContentURL(className, classPK, themeDisplay);
+	}
+
 	public static boolean isInTrash(String className, long classPK)
 		throws PortalException, SystemException {
 

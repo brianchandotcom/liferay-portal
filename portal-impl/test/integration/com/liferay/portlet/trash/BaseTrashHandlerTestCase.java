@@ -271,6 +271,14 @@ public abstract class BaseTrashHandlerTestCase {
 		return assetEntry.isVisible();
 	}
 
+	protected boolean isBaseModelContainerModel() {
+		if (baseModel instanceof ContainerModel) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isBaseModelMoveableFromTrash() {
 		return true;
 	}
@@ -591,7 +599,7 @@ public abstract class BaseTrashHandlerTestCase {
 			moveBaseModelFromTrash(baseModel, group, serviceContext);
 
 			if (isIndexableBaseModel()) {
-				if (baseModel instanceof ContainerModel) {
+				if (isBaseModelContainerModel()) {
 					Assert.assertEquals(
 						initialBaseModelsSearchCount + 2,
 						searchBaseModelsCount(

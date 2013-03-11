@@ -15,9 +15,9 @@
 package com.liferay.portlet.calendar.social;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -25,7 +25,6 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.calendar.service.permission.CalEventPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,76 +37,66 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected SocialActivityFeedEntry doInterpret(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+		StringBundler sb = new StringBundler(6);
 
-		if (!CalEventPermission.contains(
-				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/calendar/find_event?redirect=");
+		sb.append(HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+		sb.append("&eventId=");
+		sb.append(activity.getClassPK());
 
-			return null;
-		}
+		return sb.toString();
+	}
 
-		String groupName = StringPool.BLANK;
-
-		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
-			groupName = getGroupName(activity.getGroupId(), themeDisplay);
-		}
-
-		String creatorUserName = getUserName(
-			activity.getUserId(), themeDisplay);
-
-		int activityType = activity.getType();
-
-		// Link
+	@Override
+	protected String getTitle(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
 
 		CalEvent event = CalEventLocalServiceUtil.getEvent(
 			activity.getClassPK());
 
-		String link =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/calendar/find_event?redirect=" +
-					HtmlUtil.escapeURL(themeDisplay.getURLCurrent()) +
-						"&eventId=" + activity.getClassPK();
+		return getValue(activity.getExtraData(), "title", event.getTitle());
+	}
 
-		// Title
+	@Override
+	protected String getTitlePattern(String groupName, SocialActivity activity)
+		throws Exception {
 
-		String titlePattern = null;
+		int activityType = activity.getType();
 
 		if (activityType == CalendarActivityKeys.ADD_EVENT) {
 			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-calendar-add-event";
+				return "activity-calendar-add-event";
 			}
 			else {
-				titlePattern = "activity-calendar-add-event-in";
+				return "activity-calendar-add-event-in";
 			}
 		}
 		else if (activityType == CalendarActivityKeys.UPDATE_EVENT) {
 			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-calendar-update-event";
+				return "activity-calendar-update-event";
 			}
 			else {
-				titlePattern = "activity-calendar-update-event-in";
+				return "activity-calendar-update-event-in";
 			}
 		}
 
-		String eventTitle = getValue(
-			activity.getExtraData(), "title", event.getTitle());
+		return StringPool.BLANK;
+	}
 
-		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, wrapLink(link, eventTitle)
-		};
+	@Override
+	protected boolean hasPermissions(
+			PermissionChecker permissionChecker, SocialActivity activity,
+			String actionId, ThemeDisplay themeDisplay)
+		throws Exception {
 
-		String title = themeDisplay.translate(titlePattern, titleArguments);
-
-		// Body
-
-		String body = StringPool.BLANK;
-
-		return new SocialActivityFeedEntry(link, title, body);
+		return CalEventPermission.contains(
+			permissionChecker, activity.getClassPK(), actionId);
 	}
 
 	private static final String[] _CLASS_NAMES = new String[] {

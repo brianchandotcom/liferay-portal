@@ -142,6 +142,20 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		try {
+			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+			return dlFileEntry.getTrashContainer();
+		}
+		catch (InvalidRepositoryException ire) {
+			return null;
+		}
+	}
+
+	@Override
 	public boolean hasTrashPermission(
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)

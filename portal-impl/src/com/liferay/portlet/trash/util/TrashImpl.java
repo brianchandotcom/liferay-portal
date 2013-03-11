@@ -40,8 +40,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -56,7 +58,9 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -257,6 +261,75 @@ public class TrashImpl implements Trash {
 
 	public String getTrashTitle(long trashEntryId) {
 		return getTrashTitle(trashEntryId, StringPool.SLASH);
+	}
+
+	public String getViewContentURL(
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		if (!themeDisplay.isSignedIn() ||
+			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
+			!PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), PortletKeys.TRASH)) {
+
+			return null;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if (trashHandler.isInTrashContainer(classPK)) {
+			ContainerModel containerModel = trashHandler.getTrashContainer(
+				classPK);
+
+			classPK = containerModel.getContainerModelId();
+
+			className = containerModel.getModelClassName();
+
+			trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
+		}
+
+		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
+
+		if (trashRenderer == null) {
+			return null;
+		}
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+			className, classPK);
+
+		String namespace = PortalUtil.getPortletNamespace(PortletKeys.TRASH);
+
+		Map<String, String[]> params = new HashMap<String, String[]>();
+
+		params.put(
+			namespace + "struts_action", new String[]{"/trash/view_content"});
+		params.put(
+			namespace + "redirect", new String[]{themeDisplay.getURLCurrent()});
+
+		if (trashEntry.getRootEntry() != null) {
+			params.put(namespace + "className", new String[]{className});
+			params.put(
+				namespace + "classPK", new String[]{String.valueOf(classPK)});
+		}
+		else {
+			params.put(
+				namespace + "trashEntryId",
+				new String[]{String.valueOf(trashEntry.getEntryId())});
+		}
+
+		params.put(namespace + "type", new String[]{trashRenderer.getType()});
+		params.put(
+			namespace + "showActions", new String[]{Boolean.FALSE.toString()});
+		params.put(
+			namespace + "showAssetMetadata",
+			new String[]{Boolean.TRUE.toString()});
+		params.put(
+			namespace + "showEditURL", new String[]{Boolean.FALSE.toString()});
+
+		return PortalUtil.getControlPanelFullURL(
+			themeDisplay.getScopeGroupId(), PortletKeys.TRASH, params);
 	}
 
 	public boolean isInTrash(String className, long classPK)

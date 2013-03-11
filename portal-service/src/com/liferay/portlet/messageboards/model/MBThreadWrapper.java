@@ -771,6 +771,51 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		return _mbThread.isScheduled();
 	}
 
+	/**
+	* Returns the container model ID of this message boards thread.
+	*
+	* @return the container model ID of this message boards thread
+	*/
+	public long getContainerModelId() {
+		return _mbThread.getContainerModelId();
+	}
+
+	/**
+	* Sets the container model ID of this message boards thread.
+	*
+	* @param container model ID of this message boards thread
+	*/
+	public void setContainerModelId(long containerModelId) {
+		_mbThread.setContainerModelId(containerModelId);
+	}
+
+	/**
+	* Returns the container name of this message boards thread.
+	*
+	* @return the container name of this message boards thread
+	*/
+	public java.lang.String getContainerModelName() {
+		return _mbThread.getContainerModelName();
+	}
+
+	/**
+	* Returns the parent container model ID of this message boards thread.
+	*
+	* @return the parent container model ID of this message boards thread
+	*/
+	public long getParentContainerModelId() {
+		return _mbThread.getParentContainerModelId();
+	}
+
+	/**
+	* Sets the parent container model ID of this message boards thread.
+	*
+	* @param parent container model ID of this message boards thread
+	*/
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_mbThread.setParentContainerModelId(parentContainerModelId);
+	}
+
 	public boolean isNew() {
 		return _mbThread.isNew();
 	}

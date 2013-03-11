@@ -15,6 +15,9 @@
 package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -36,10 +39,35 @@ public class SocialActivityImpl extends SocialActivityBaseImpl {
 		return _assetEntry;
 	}
 
+	public String getExtraDataProperty(String property) throws JSONException {
+		if (_extraDataJSONObject == null) {
+			_extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				getExtraData());
+		}
+
+		return _extraDataJSONObject.getString(property);
+	}
+
+	public boolean isClassName(String className) {
+		if (className == null) {
+			return false;
+		}
+
+		return className.equals(getClassName());
+	}
+
 	public void setAssetEntry(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
 	}
 
+	@Override
+	public void setExtraData(String extraData) {
+		_extraDataJSONObject = null;
+
+		super.setExtraData(extraData);
+	}
+
 	private AssetEntry _assetEntry;
+	private JSONObject _extraDataJSONObject;
 
 }

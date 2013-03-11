@@ -91,6 +91,15 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getTrashContainer(long classPK)
+		throws PortalException, SystemException {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+
+		return entry.getTrashContainer();
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException, SystemException {

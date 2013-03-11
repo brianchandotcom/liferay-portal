@@ -231,6 +231,10 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 	.aui-fieldset {
 		zoom: 1;
 	}
+
+	.lfr-actions.lfr-extended span {
+		cursor: pointer;
+	}
 }
 
 .ie6 {

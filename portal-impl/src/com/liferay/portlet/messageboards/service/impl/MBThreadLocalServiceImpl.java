@@ -46,7 +46,9 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -882,7 +884,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Messages
 
-			updateDependentStatus(threadId, status);
+			updateDependentStatus(thread.getGroupId(), threadId, status);
 
 			if (thread.getCategoryId() !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
@@ -894,11 +896,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				MBUtil.updateCategoryStatistics(category);
 			}
-
-			// Stats
-
-			mbStatsUserLocalService.updateStatsUser(
-				thread.getGroupId(), userId);
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 
@@ -933,7 +930,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 		}
 		else {
-			updateDependentStatus(threadId, status);
+			updateDependentStatus(thread.getGroupId(), threadId, status);
 		}
 
 		return thread;
@@ -980,8 +977,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
-	protected void updateDependentStatus(long threadId, int status)
+	protected void updateDependentStatus(
+			long groupId, long threadId, int status)
 		throws PortalException, SystemException {
+
+		Set<Long> userIds = new HashSet<Long>();
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY);
@@ -990,6 +990,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			if (message.isDiscussion()) {
 				continue;
 			}
+
+			userIds.add(message.getUserId());
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 
@@ -1047,6 +1049,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				indexer.reindex(message);
 			}
+		}
+
+		// Stats
+
+		for (long userId : userIds) {
+			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 

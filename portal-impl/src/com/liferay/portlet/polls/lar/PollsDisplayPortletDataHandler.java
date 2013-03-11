@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -60,7 +58,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 	}
 
 	@Override
-	protected String doExportData(
+	protected void doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -75,7 +73,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 						portletId);
 			}
 
-			return StringPool.BLANK;
+			return;
 		}
 
 		PollsQuestion question = null;
@@ -88,13 +86,13 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 				_log.warn(nsqe, nsqe);
 			}
 
-			return StringPool.BLANK;
+			return;
 		}
 
 		portletDataContext.addPermissions(
 			"com.liferay.portlet.polls", portletDataContext.getScopeGroupId());
 
-		Element rootElement = addExportRootElement();
+		Element rootElement = portletDataContext.getRootElement();
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -106,27 +104,19 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		PollsPortletDataHandler.exportQuestion(
 			portletDataContext, questionsElement, choicesElement, votesElement,
 			question);
-
-		return rootElement.formattedString();
 	}
 
 	@Override
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		portletDataContext.importPermissions(
 			"com.liferay.portlet.polls", portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		if (Validator.isNull(data)) {
-			return null;
-		}
-
-		Document document = SAXReaderUtil.read(data);
-
-		Element rootElement = document.getRootElement();
+		Element rootElement = portletDataContext.getRootElement();
 
 		Element questionsElement = rootElement.element("questions");
 

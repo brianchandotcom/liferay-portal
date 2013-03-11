@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.waitfor.waitforconfirmation;
+package com.liferay.portalweb.portal.selenium.alerts.waitforconfirmation;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -25,7 +25,8 @@ import junit.framework.TestSuite;
 public class WaitForConfirmationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(WaitForConfirmationTest.class);
+		testSuite.addTestSuite(WaitForConfirmation1Test.class);
+		testSuite.addTestSuite(WaitForConfirmation2Test.class);
 
 		return testSuite;
 	}

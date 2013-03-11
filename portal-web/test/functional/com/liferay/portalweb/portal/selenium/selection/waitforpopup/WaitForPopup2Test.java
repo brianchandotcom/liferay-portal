@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.waitfor.waitforpopup;
+package com.liferay.portalweb.portal.selenium.selection.waitforpopup;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WaitForPopup1Test extends BaseTestCase {
-	public void testWaitForPopup1() throws Exception {
+public class WaitForPopup2Test extends BaseTestCase {
+	public void testWaitForPopup2() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -41,8 +41,8 @@ public class WaitForPopup1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("View Pages"),
 			selenium.getText("//button[.='View Pages']"));
-		selenium.clickAt("//button[.='View Pages']",
-			RuntimeVariables.replace("View Pages"));
-		selenium.waitForPopUp("null", RuntimeVariables.replace(""));
+		selenium.waitForPopUp("", RuntimeVariables.replace(""));
+		Thread.sleep(5000);
+		assertTrue(selenium.isElementNotPresent("css=img[alt=\"Liferay\"]"));
 	}
 }

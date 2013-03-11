@@ -27,8 +27,10 @@ public class WaitForElementPresentTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(WaitForElementPresent1Test.class);
 		testSuite.addTestSuite(WaitForElementPresent2Test.class);
+		testSuite.addTestSuite(WaitForElementPresent3Test.class);
 		testSuite.addTestSuite(WaitForElementNotPresent1Test.class);
 		testSuite.addTestSuite(WaitForElementNotPresent2Test.class);
+		testSuite.addTestSuite(WaitForElementNotPresent3Test.class);
 
 		return testSuite;
 	}

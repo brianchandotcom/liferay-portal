@@ -203,18 +203,20 @@ if (Validator.isNotNull(historyKey)) {
 </aui:script>
 
 <aui:script use="aui-base">
-	var portlet = A.one('#<portlet:namespace />sectionsContainer');
+	var sectionsContainer = A.one('#<portlet:namespace />sectionsContainer');
+	var modifyLinks = sectionsContainer.all('.modify-link');
 
-	portlet.delegate(
-		'click',
-		function(event) {
-			A.fire(
-				'formNavigator:trackChanges',
-				event.currentTarget
-			);
-		},
-		'.modify-link'
-	);
+	if (modifyLinks) {
+		modifyLinks.on(
+			'click',
+			function(event) {
+				A.fire(
+					'formNavigator:trackChanges',
+					event.currentTarget
+				);
+			}
+		);
+	}
 </aui:script>
 
 <%!

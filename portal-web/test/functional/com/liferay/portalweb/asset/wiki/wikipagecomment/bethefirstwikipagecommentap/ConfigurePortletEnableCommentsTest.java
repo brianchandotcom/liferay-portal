@@ -51,6 +51,9 @@ public class ConfigurePortletEnableCommentsTest extends BaseTestCase {
 					"//iframe[contains(@id,'configurationIframeDialog')]");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible("link=Display Settings");
+				selenium.clickAt("link=Display Settings",
+					RuntimeVariables.replace("Display Settings"));
 				selenium.waitForVisible(
 					"//input[@id='_86_enableCommentsCheckbox']");
 

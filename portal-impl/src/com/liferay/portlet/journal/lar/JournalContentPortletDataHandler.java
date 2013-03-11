@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -110,7 +108,7 @@ public class JournalContentPortletDataHandler
 	}
 
 	@Override
-	protected String doExportData(
+	protected void doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -128,7 +126,7 @@ public class JournalContentPortletDataHandler
 						portletId);
 			}
 
-			return StringPool.BLANK;
+			return;
 		}
 
 		long articleGroupId = GetterUtil.getLong(
@@ -140,7 +138,7 @@ public class JournalContentPortletDataHandler
 					"No group id found in preferences of portlet " + portletId);
 			}
 
-			return StringPool.BLANK;
+			return;
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -168,12 +166,12 @@ public class JournalContentPortletDataHandler
 			}
 		}
 
-		Element rootElement = addExportRootElement();
+		Element rootElement = portletDataContext.getRootElement();
 
 		if (article == null) {
 			portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-			return rootElement.formattedString();
+			return;
 		}
 
 		String path = JournalPortletDataHandler.getArticlePath(
@@ -223,24 +221,18 @@ public class JournalContentPortletDataHandler
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
-
-		return rootElement.formattedString();
 	}
 
 	@Override
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		portletDataContext.importPermissions(
 			"com.liferay.portlet.journal",
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
-
-		if (Validator.isNull(data)) {
-			return null;
-		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
@@ -251,9 +243,7 @@ public class JournalContentPortletDataHandler
 			portletDataContext.setScopeGroupId(portletDataContext.getGroupId());
 		}
 
-		Document document = SAXReaderUtil.read(data);
-
-		Element rootElement = document.getRootElement();
+		Element rootElement = portletDataContext.getRootElement();
 
 		JournalPortletDataHandler.importReferencedData(
 			portletDataContext, rootElement);

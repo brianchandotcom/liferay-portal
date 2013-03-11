@@ -52,35 +52,40 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 					RuntimeVariables.replace("Pending"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Single Approver"),
-					selenium.getText("//td[1]/a"));
-				assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-					selenium.getText("//td[2]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+				assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//td[3]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Review"),
-					selenium.getText("//td[4]/a"));
-				assertTrue(selenium.isVisible("//td[5]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
+				assertTrue(selenium.isVisible(
+						"//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//td[6]/a"));
-				selenium.clickAt("//td[2]/a",
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[6]/a"));
+				selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[2]/a",
 					RuntimeVariables.replace("WC Web Content Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
-						"Single Approver: WC Web Content Title"),
+						"Single Approver: WC WebContent Title"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("Review"),
-					selenium.getText("//tr[3]/td[1]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("No"),
-					selenium.getText("//tr[3]/td[3]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Assign to Me"),
-					selenium.getText("//tr[3]/td[4]/span/a/span"));
+					selenium.getText(
+						"//tr[contains(.,'Review')]/td[4]/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Withdraw Submission"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a"));
-				assertEquals(RuntimeVariables.replace("No"),
-					selenium.getText("//tr[3]/td[3]"));
+						"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Withdraw Submission')]"));
 
 				boolean activitiesExpanded = selenium.isVisible(
 						"//div[@class='task-activity task-type-1'][2]/div[2]");

@@ -51,62 +51,69 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 					RuntimeVariables.replace("Pending"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Single Approver"),
-					selenium.getText("//td[1]/a"));
-				assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-					selenium.getText("//td[2]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+				assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Web Content"),
-					selenium.getText("//td[3]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 				assertEquals(RuntimeVariables.replace("Update"),
-					selenium.getText("//td[4]/a"));
-				assertTrue(selenium.isVisible("//td[5]/a"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
+				assertTrue(selenium.isVisible(
+						"//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//td[6]/a"));
-				selenium.clickAt("//td[2]/a",
-					RuntimeVariables.replace("WC Web Content Title"));
+					selenium.getText(
+						"//tr[contains(.,'WC WebContent Title')]/td[6]/a"));
+				selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[2]/a",
+					RuntimeVariables.replace("WC WebContent Title"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Review"),
-					selenium.getText("//span[.='Review']"));
+					selenium.getText("//tr[contains(.,'Review')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
-					selenium.getText("//td[contains(.,'Yes')]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Update"),
-					selenium.getText("//span[.='Update']"));
+					selenium.getText("//tr[contains(.,'Update')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[4]/td[2]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("No"),
-					selenium.getText("//td[contains(.,'No')]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Resubmit"),
-					selenium.getText("//td[4]/span/a/span"));
-				selenium.clickAt("//td[4]/span/a/span",
+					selenium.getText(
+						"//tr[contains(.,'Update')]/td[4]/span/a/span"));
+				selenium.clickAt("//tr[contains(.,'Update')]/td[4]/span/a/span",
 					RuntimeVariables.replace("Resubmit"));
-				selenium.waitForVisible("//div[3]/span/span/button");
+				selenium.waitForVisible("//button[.='OK']");
 				assertEquals(RuntimeVariables.replace("OK"),
-					selenium.getText("//div[3]/span/span/button"));
-				selenium.clickAt("//div[3]/span/span/button",
+					selenium.getText("//button[.='OK']"));
+				selenium.clickAt("//button[.='OK']",
 					RuntimeVariables.replace("OK"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("Review"),
-					selenium.getText("xPath=(//span[.='Review'])[1]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[3]/td[2]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
-					selenium.getText("xPath=(//td[contains(.,'Yes')])[1]"));
+					selenium.getText("//tr[contains(.,'Review')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Update"),
-					selenium.getText("xPath=(//span[.='Update'])[1]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[4]/td[2]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
-					selenium.getText("xPath=(//td[contains(.,'Yes')])[2]"));
+					selenium.getText("//tr[contains(.,'Update')]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Review"),
-					selenium.getText("xPath=(//span[.='Review'])[2]"));
+					selenium.getText("//tr[contains(.,'No')]/td[1]/span"));
 				assertEquals(RuntimeVariables.replace("Never"),
-					selenium.getText("//tr[5]/td[2]"));
+					selenium.getText("//tr[contains(.,'No')]/td[2]"));
 				assertEquals(RuntimeVariables.replace("No"),
-					selenium.getText("xPath=(//td[contains(.,'No')])[1]"));
+					selenium.getText("//tr[contains(.,'No')]/td[3]"));
 
 				boolean activitiesExpanded = selenium.isVisible(
 						"//div[@class='task-activity task-type-1'][2]/div[2]");

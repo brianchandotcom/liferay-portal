@@ -40,8 +40,9 @@ public class AddMBMessage12Test extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[2]/a/strong"));
-		selenium.clickAt("//td[2]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'MB Category Name')]/td[2]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'MB Category Name')]/td[2]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -49,27 +50,11 @@ public class AddMBMessage12Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_subject']",
 			RuntimeVariables.replace("MB Category Thread12 Message Subject"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/styles.js')]");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
+			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("MB Category Thread12 Message Body"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_off']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body", "MB Category Thread12 Message Body");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
@@ -90,18 +75,25 @@ public class AddMBMessage12Test extends BaseTestCase {
 		selenium.waitForVisible("link=Pending");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//td[1]/a");
+		selenium.waitForVisible(
+			"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread12 Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread12 Message Subject')]/td[6]/a"));
 	}
 }

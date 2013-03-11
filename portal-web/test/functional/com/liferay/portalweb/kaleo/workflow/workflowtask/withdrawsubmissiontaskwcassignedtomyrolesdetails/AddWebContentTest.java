@@ -52,31 +52,12 @@ public class AddWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Basic Web Content"));
 		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC Web Content Title"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
-		selenium.waitForText("//span[@class='cke_toolbar']/span[2]/a/span",
-			"Normal");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
-			RuntimeVariables.replace("WC Web Content Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_off']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.type("//body",
-			RuntimeVariables.replace("WC Web Content Content"));
-		selenium.selectFrame("relative=top");
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
+			RuntimeVariables.replace("WC WebContent Content"));
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
@@ -84,7 +65,7 @@ public class AddWebContentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible("//div[@class='entry-thumbnail']/img"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title (Pending)"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title (Pending)"),
 			selenium.getText("//div/a/span[@class='entry-title']"));
 	}
 }

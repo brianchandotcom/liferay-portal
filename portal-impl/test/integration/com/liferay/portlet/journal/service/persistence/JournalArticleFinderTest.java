@@ -118,6 +118,76 @@ public class JournalArticleFinderTest {
 	}
 
 	@Test
+	public void testFindByExpirationDate() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		List<JournalArticle> articles =
+			JournalArticleFinderUtil.findByExpirationDate(
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
+				queryDefinition);
+
+		Assert.assertEquals(1, articles.size());
+
+		JournalArticle article = articles.get(0);
+
+		Assert.assertEquals(_USER_ID, article.getUserId());
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+		articles = JournalArticleFinderUtil.findByExpirationDate(
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
+			queryDefinition);
+
+		Assert.assertEquals(1, articles.size());
+
+		article = articles.get(0);
+
+		Assert.assertEquals(_USER_ID, article.getUserId());
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		articles = JournalArticleFinderUtil.findByExpirationDate(
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
+			queryDefinition);
+
+		Assert.assertEquals(0, articles.size());
+	}
+
+	@Test
+	public void testFindByR_D() throws Exception {
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.add(Calendar.DATE, -2);
+
+		JournalArticle article = JournalArticleFinderUtil.findByR_D(
+			_article.getResourcePrimKey(), new Date());
+
+		Assert.assertNotNull(article);
+
+		Assert.assertEquals(_folder.getFolderId(), article.getFolderId());
+	}
+
+	@Test
+	public void testFindByReviewDate() throws Exception {
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.add(Calendar.DATE, -2);
+
+		List<JournalArticle> articles =
+			JournalArticleFinderUtil.findByReviewDate(
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
+				calendar.getTime());
+
+		Assert.assertEquals(1, articles.size());
+
+		JournalArticle article = articles.get(0);
+
+		Assert.assertEquals(_USER_ID, article.getUserId());
+	}
+
+	@Test
 	public void testQueryByC_G_F_C_A_V_T_D_C_T_S_T_D_R() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
@@ -226,76 +296,6 @@ public class JournalArticleFinderTest {
 		doQueryByG_U_C(
 			_group.getGroupId(), _USER_ID, Collections.<Long>emptyList(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition, 0);
-	}
-
-	@Test
-	public void testFindByExpirationDate() throws Exception {
-		QueryDefinition queryDefinition = new QueryDefinition();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-		List<JournalArticle> articles =
-			JournalArticleFinderUtil.findByExpirationDate(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
-				queryDefinition);
-
-		Assert.assertEquals(1, articles.size());
-
-		JournalArticle article = articles.get(0);
-
-		Assert.assertEquals(_USER_ID, article.getUserId());
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-		articles = JournalArticleFinderUtil.findByExpirationDate(
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
-			queryDefinition);
-
-		Assert.assertEquals(1, articles.size());
-
-		article = articles.get(0);
-
-		Assert.assertEquals(_USER_ID, article.getUserId());
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-
-		articles = JournalArticleFinderUtil.findByExpirationDate(
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
-			queryDefinition);
-
-		Assert.assertEquals(0, articles.size());
-	}
-
-	@Test
-	public void testFindByR_D() throws Exception {
-		Calendar calendar = new GregorianCalendar();
-
-		calendar.add(Calendar.DATE, -2);
-
-		JournalArticle article = JournalArticleFinderUtil.findByR_D(
-			_article.getResourcePrimKey(), new Date());
-
-		Assert.assertNotNull(article);
-
-		Assert.assertEquals(_folder.getFolderId(), article.getFolderId());
-	}
-
-	@Test
-	public void testFindByReviewDate() throws Exception {
-		Calendar calendar = new GregorianCalendar();
-
-		calendar.add(Calendar.DATE, -2);
-
-		List<JournalArticle> articles =
-			JournalArticleFinderUtil.findByReviewDate(
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
-				calendar.getTime());
-
-		Assert.assertEquals(1, articles.size());
-
-		JournalArticle article = articles.get(0);
-
-		Assert.assertEquals(_USER_ID, article.getUserId());
 	}
 
 	protected void doQueryByC_G_F_C_A_V_T_D_C_T_S_T_D_R(

@@ -107,6 +107,8 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.count"));
+		_maxJournalArticleVersionCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.journal.article.version.count"));
 		_maxJournalArticleSize = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.size"));
 		_maxMBCategoryCount = GetterUtil.getInteger(
@@ -500,6 +502,9 @@ public class SampleSQLBuilder {
 		put(context, "maxDLFolderDepth", _maxDLFolderDepth);
 		put(context, "maxGroupCount", _maxGroupCount);
 		put(context, "maxJournalArticleCount", _maxJournalArticleCount);
+		put(
+			context, "maxJournalArticleVersionCount",
+			_maxJournalArticleVersionCount);
 		put(context, "maxMBCategoryCount", _maxMBCategoryCount);
 		put(context, "maxMBMessageCount", _maxMBMessageCount);
 		put(context, "maxMBThreadCount", _maxMBThreadCount);
@@ -652,6 +657,7 @@ public class SampleSQLBuilder {
 	private int _maxGroupCount;
 	private int _maxJournalArticleCount;
 	private int _maxJournalArticleSize;
+	private int _maxJournalArticleVersionCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;

@@ -366,7 +366,7 @@ public class DataFactory {
 	}
 
 	public void initJournalArticle(int maxJournalArticleSize) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><static-content language-id=");
@@ -846,9 +846,29 @@ public class DataFactory {
 	}
 
 	public JournalArticle newJournalArticle(
-		JournalArticleResource journalArticleResource) {
+		JournalArticleResource journalArticleResource, int articleIndex,
+		int versionIndex) {
 
 		JournalArticle journalArticle = new JournalArticleImpl();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(versionIndex);
+
+		String urlTitle = sb.toString();
+
+		sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(urlTitle);
+		sb.append("</Title></root>");
+
+		String title = sb.toString();
 
 		journalArticle.setUuid(SequentialUUID.generate());
 		journalArticle.setId(_counter.get());
@@ -863,9 +883,9 @@ public class DataFactory {
 		journalArticle.setClassNameId(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 		journalArticle.setArticleId(journalArticleResource.getArticleId());
-		journalArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
-		journalArticle.setTitle(_JOURNAL_ARTICLE_TITLE);
-		journalArticle.setUrlTitle("Test Journal Article");
+		journalArticle.setVersion(versionIndex);
+		journalArticle.setTitle(title);
+		journalArticle.setUrlTitle(urlTitle);
 		journalArticle.setContent(_journalArticleContent);
 		journalArticle.setType("general");
 		journalArticle.setDisplayDate(new Date());
@@ -1432,11 +1452,6 @@ public class DataFactory {
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
-
-	private static final String _JOURNAL_ARTICLE_TITLE =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales=" +
-			"\"en_US\" default-locale=\"en_US\"><Title language-id=\"en_US\"" +
-				">Test Journal Article</Title></root>";
 
 	private Account _account;
 	private long _accountId;

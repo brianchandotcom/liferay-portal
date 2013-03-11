@@ -1068,7 +1068,23 @@ public class WebDriverToSeleniumBridge
 	public void selectWindow(String windowID) {
 		Set<String> windowHandles = getWindowHandles();
 
-		if (windowID.equals("null")) {
+		if (windowID.equals("name=undefined")) {
+			String currentWindowTitle = getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!currentWindowTitle.equals(getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+		else if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
 			targetLocator.window(_defaultWindowHandle);

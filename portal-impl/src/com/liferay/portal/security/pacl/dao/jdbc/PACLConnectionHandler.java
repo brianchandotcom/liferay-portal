@@ -15,7 +15,6 @@
 package com.liferay.portal.security.pacl.dao.jdbc;
 
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.lang.Object;
@@ -69,18 +68,7 @@ public class PACLConnectionHandler implements InvocationHandler {
 				}
 			}
 
-			boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-			Object returnValue = null;
-
-			try {
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-
-				returnValue = method.invoke(_connection, arguments);
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setEnabled(enabled);
-			}
+			Object returnValue = method.invoke(_connection, arguments);
 
 			if (methodName.equals("createStatement") ||
 				methodName.equals("prepareCall") ||

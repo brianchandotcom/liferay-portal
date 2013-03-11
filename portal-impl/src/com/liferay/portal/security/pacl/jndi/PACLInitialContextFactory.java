@@ -17,7 +17,6 @@ package com.liferay.portal.security.pacl.jndi;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
@@ -119,9 +118,7 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
-		if (!PACLPolicyManager.isActive() ||
-			!PortalSecurityManagerThreadLocal.isEnabled()) {
-
+		if (!PACLPolicyManager.isActive()) {
 			return context;
 		}
 

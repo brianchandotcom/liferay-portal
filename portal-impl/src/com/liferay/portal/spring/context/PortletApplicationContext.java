@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -52,17 +51,8 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	public static ClassLoader getBeanClassLoader() {
 		if (_isUseRestrictedClassLoader()) {
-			boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-			try {
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-
-				return new PreloadClassLoader(
-					PortletClassLoaderUtil.getClassLoader(), _classes);
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setEnabled(enabled);
-			}
+			return new PreloadClassLoader(
+				PortletClassLoaderUtil.getClassLoader(), _classes);
 		}
 
 		ClassLoader beanClassLoader =
@@ -124,12 +114,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		}
 
 		for (String configLocation : configLocations) {
-			boolean checkReadFile =
-				PortalSecurityManagerThreadLocal.isCheckReadFile();
-
 			try {
-				PortalSecurityManagerThreadLocal.setCheckReadFile(false);
-
 				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
 			catch (Exception e) {
@@ -143,10 +128,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 				else {
 					_log.error(e, e);
 				}
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setCheckReadFile(
-					checkReadFile);
 			}
 		}
 	}

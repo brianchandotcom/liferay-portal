@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -117,11 +116,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 			return servlet;
 		}
 
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
 		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
-
 			Method method = ReflectionUtil.getDeclaredMethod(
 				servlet.getClass(), "getDependants");
 
@@ -188,9 +183,6 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
 		}
 
 		return servlet;

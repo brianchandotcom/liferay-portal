@@ -30,6 +30,8 @@ public class LayoutParentLayoutIdException extends PortalException {
 
 	public static final int NOT_PARENTABLE = 1;
 
+	public static final int NOT_SORTABLE = 5;
+
 	public static final int SELF_DESCENDANT = 2;
 
 	public LayoutParentLayoutIdException(int type) {

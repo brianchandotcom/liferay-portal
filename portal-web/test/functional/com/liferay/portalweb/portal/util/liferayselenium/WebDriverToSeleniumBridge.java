@@ -1056,9 +1056,6 @@ public class WebDriverToSeleniumBridge
 					return;
 				}
 			}
-
-			BaseTestCase.fail(
-				"Unable to find the window ID \"" + windowID + "\"");
 		}
 		else {
 			selectWindow(windowID);

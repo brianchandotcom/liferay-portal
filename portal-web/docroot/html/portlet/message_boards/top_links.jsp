@@ -60,7 +60,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 					message="recent-posts"
 					url='<%= topLink.equals("recent-posts") ? StringPool.BLANK : portletURL.toString() %>'
 				/>
-			</li class="top-link">
+			</li>
 
 			<c:if test="<%= themeDisplay.isSignedIn() %>">
 				<li class="top-link">

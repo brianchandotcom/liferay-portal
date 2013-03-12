@@ -23,7 +23,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRenderer;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 
@@ -38,17 +37,10 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 	public static final String CLASS_NAME = BookmarksFolder.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				BookmarksFolderServiceUtil.deleteFolder(classPK, false);
-			}
-			else {
-				BookmarksFolderLocalServiceUtil.deleteFolder(classPK, false);
-			}
-		}
+		BookmarksFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}
 
 	public String getClassName() {
@@ -146,26 +138,27 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		BookmarksFolderServiceUtil.moveFolder(classPK, containerModelId);
+		BookmarksFolderLocalServiceUtil.moveFolder(classPK, containerModelId);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerId, ServiceContext serviceContext)
+			long userId, long classPK, long containerId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		BookmarksFolderServiceUtil.moveFolderFromTrash(classPK, containerId);
+		BookmarksFolderLocalServiceUtil.moveFolderFromTrash(
+			userId, classPK, containerId);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			BookmarksFolderServiceUtil.restoreFolderFromTrash(classPK);
-		}
+		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(userId, classPK);
 	}
 
 	@Override

@@ -33,7 +33,6 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -53,20 +52,12 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = MBCategory.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				MBCategoryServiceUtil.deleteCategory(classPK, false);
-			}
-			else {
-				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-					classPK);
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-				MBCategoryLocalServiceUtil.deleteCategory(category, false);
-			}
-		}
+		MBCategoryLocalServiceUtil.deleteCategory(category, false);
 	}
 
 	public String getClassName() {
@@ -353,26 +344,28 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MBCategoryServiceUtil.moveCategory(classPK, containerModelId, false);
+		MBCategoryLocalServiceUtil.moveCategory(
+			classPK, containerModelId, false);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MBCategoryServiceUtil.moveCategoryFromTrash(classPK, containerModelId);
+		MBCategoryLocalServiceUtil.moveCategoryFromTrash(
+			userId, classPK, containerModelId);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			MBCategoryServiceUtil.restoreCategoryFromTrash(classPK);
-		}
+		MBCategoryLocalServiceUtil.restoreCategoryFromTrash(userId, classPK);
 	}
 
 	@Override

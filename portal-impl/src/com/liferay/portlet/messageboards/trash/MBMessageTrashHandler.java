@@ -31,7 +31,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
  */
 public class MBMessageTrashHandler extends BaseTrashHandler {
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission) {
+	public void deleteTrashEntry(long classPK) {
 	}
 
 	public String getClassName() {
@@ -69,7 +69,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		return message.isInTrashThread();
 	}
 
-	public void restoreTrashEntries(long[] classPKs) {
+	public void restoreTrashEntry(long userId, long classPK) {
 	}
 
 	@Override

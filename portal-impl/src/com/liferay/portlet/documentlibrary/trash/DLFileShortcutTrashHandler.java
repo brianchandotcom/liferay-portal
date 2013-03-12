@@ -27,8 +27,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -45,17 +45,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileShortcut.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				DLAppServiceUtil.deleteFileShortcut(classPK);
-			}
-			else {
-				DLAppLocalServiceUtil.deleteFileShortcut(classPK);
-			}
-		}
+		DLAppLocalServiceUtil.deleteFileShortcut(classPK);
 	}
 
 	public String getClassName() {
@@ -159,31 +152,33 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		DLAppServiceUtil.updateFileShortcut(
-			classPK, containerModelId, dlFileShortcut.getToFileEntryId(),
-			serviceContext);
+		DLAppLocalServiceUtil.updateFileShortcut(
+			userId, classPK, containerModelId,
+			dlFileShortcut.getToFileEntryId(), serviceContext);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLAppServiceUtil.moveFileShortcutFromTrash(
-			classPK, containerModelId, serviceContext);
+		DLAppHelperLocalServiceUtil.moveFileShortcutFromTrash(
+			userId, getDLFileShortcut(classPK), containerModelId,
+			serviceContext);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			DLAppServiceUtil.restoreFileShortcutFromTrash(classPK);
-		}
+		DLAppHelperLocalServiceUtil.restoreFileShortcutFromTrash(
+			userId, getDLFileShortcut(classPK));
 	}
 
 	protected DLFileShortcut getDLFileShortcut(long classPK)

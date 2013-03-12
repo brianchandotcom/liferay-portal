@@ -30,7 +30,6 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
@@ -49,17 +48,10 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				MBThreadServiceUtil.deleteThread(classPK);
-			}
-			else {
-				MBThreadLocalServiceUtil.deleteThread(classPK);
-			}
-		}
+		MBThreadLocalServiceUtil.deleteThread(classPK);
 	}
 
 	public String getClassName() {
@@ -193,26 +185,27 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MBThreadServiceUtil.moveThread(containerModelId, classPK);
+		MBThreadLocalServiceUtil.moveThread(userId, containerModelId, classPK);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		MBThreadServiceUtil.moveThreadFromTrash(containerModelId, classPK);
+		MBThreadLocalServiceUtil.moveThreadFromTrash(
+			userId, containerModelId, classPK);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			MBThreadServiceUtil.restoreThreadFromTrash(classPK);
-		}
+		MBThreadLocalServiceUtil.restoreThreadFromTrash(userId, classPK);
 	}
 
 	@Override

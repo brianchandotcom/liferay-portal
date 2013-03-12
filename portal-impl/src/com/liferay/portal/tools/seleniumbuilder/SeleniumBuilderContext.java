@@ -14,12 +14,15 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -210,6 +213,48 @@ public class SeleniumBuilderContext {
 				throw new IllegalArgumentException("Invalid file " + fileName);
 			}
 		}
+
+		String[] seleniumFiles = {
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"SeleniumWrapper.java",
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"LiferaySelenium.java"
+		};
+
+		for (String seleniumFile : seleniumFiles) {
+			String content = _seleniumBuilderFileUtil.getNormalizedContent(
+				seleniumFile);
+
+			Pattern pattern = Pattern.compile(
+				"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				String methodDeclaraction = matcher.group();
+
+				int x = methodDeclaraction.indexOf(" ", 7);
+				int y = methodDeclaraction.indexOf("(");
+
+				String seleniumCommandName = methodDeclaraction.substring(x, y);
+
+				int z = methodDeclaraction.indexOf(")");
+
+				String seleniumParams = methodDeclaraction.substring(y + 1, z);
+
+				int seleniumParamCount = 0;
+
+				if (!seleniumParams.equals("")) {
+					seleniumParamCount =
+						StringUtil.count(seleniumParams, ",") + 1;
+				}
+
+				_seleniumParamCounts.put(
+					seleniumCommandName, seleniumParamCount);
+			}
+		}
+
+		_seleniumParamCounts.put("open", 1);
 	}
 
 	public String getActionClassName(String actionName) {
@@ -334,6 +379,10 @@ public class SeleniumBuilderContext {
 
 	public String getPathSimpleClassName(String pathName) {
 		return _pathSimpleClassNames.get(pathName);
+	}
+
+	public int getSeleniumParamCount(String seleniumCommandName) {
+		return _seleniumParamCounts.get(seleniumCommandName);
 	}
 
 	public String getTestCaseClassName(String testCaseName) {
@@ -496,6 +545,8 @@ public class SeleniumBuilderContext {
 	private Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
+	private Map<String, Integer> _seleniumParamCounts =
+		new HashMap<String, Integer>();
 	private Map<String, String> _testCaseClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _testCaseFileNames =

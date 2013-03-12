@@ -42,7 +42,7 @@ public class ViewMoveToRecycleBinMBCategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Recycle Bin"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace(
-				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted. Empty the Recycle Bin"),
+				"Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted. Empty the Recycle Bin"),
 			selenium.getText(
 				"//div[@class='lfr-message-info taglib-trash-empty']/form"));
 		assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),

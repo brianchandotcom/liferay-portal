@@ -51,14 +51,14 @@ public class RestoreMBCategoryRecycleBinTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]",
+			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The item has been restored to Home"),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"Entries that have been in Recycle Bin for more than 30 days will be automatically deleted."),
+				"Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted."),
 			selenium.getText(
 				"//div[@class='lfr-message-info taglib-trash-empty']"));
 		assertEquals(RuntimeVariables.replace("The Recycle Bin is empty."),

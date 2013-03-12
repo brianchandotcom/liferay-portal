@@ -55,21 +55,36 @@ public class ViewPortletTestMiscTest extends BaseTestCase {
 			selenium.getText("//h3[5]"));
 		assertEquals(RuntimeVariables.replace("Attribute Sharing"),
 			selenium.getText("//p[5]/a"));
+		assertEquals(RuntimeVariables.replace("Portlet Title (Dynamic)"),
+			selenium.getText("//h3[6]"));
 		assertTrue(selenium.isPartialText("//p[6]",
-				"TestSchedulerMessageListener.isReceived=PASSED"));
-		assertTrue(selenium.isPartialText("//p[6]",
-				"TestSchedulerUtil.isReceivedBeforeSpringInitialzed=PASSED"));
-		assertEquals(RuntimeVariables.replace("Servlet Request"),
+				"portletDisplay.getTitle=PASSED"));
+		assertEquals(RuntimeVariables.replace("Change"),
+			selenium.getText("//p[6]/a[1]"));
+		assertEquals(RuntimeVariables.replace("Restore"),
+			selenium.getText("//p[6]/a[2]"));
+		assertEquals(RuntimeVariables.replace("Portlet Title (Static)"),
 			selenium.getText("//h3[7]"));
-		assertEquals(RuntimeVariables.replace("Remote User"),
-			selenium.getText("//p[7]/a"));
-		assertEquals(RuntimeVariables.replace("Upload"),
+		assertTrue(selenium.isPartialText("//p[7]",
+				"PortalUtil.getPortletTitle=PASSED"));
+		assertTrue(selenium.isPartialText("//p[7]",
+				"PortalUtil.getPortletDescription=PASSED"));
+		assertEquals(RuntimeVariables.replace("Scheduler"),
 			selenium.getText("//h3[8]"));
+		assertTrue(selenium.isPartialText("//p[8]",
+				"TestPortletConfigMessageListener.isReceived=PASSED"));
+		assertTrue(selenium.isPartialText("//p[8]",
+				"TestSpringConfigMessageListener.isReceived=PASSED"));
+		assertEquals(RuntimeVariables.replace("Servlet Request"),
+			selenium.getText("//h3[9]"));
+		assertTrue(selenium.isPartialText("//p[9]/a", "Remote User"));
+		assertEquals(RuntimeVariables.replace("Upload"),
+			selenium.getText("//h3[10]"));
 		assertEquals(RuntimeVariables.replace("Form 1"),
-			selenium.getText("//p[8]/a[1]"));
+			selenium.getText("//p[10]/a[1]"));
 		assertEquals(RuntimeVariables.replace("Form 2"),
-			selenium.getText("//p[8]/a[2]"));
+			selenium.getText("//p[10]/a[2]"));
 		assertEquals(RuntimeVariables.replace("Form 3"),
-			selenium.getText("//a[3]"));
+			selenium.getText("//p[10]/a[3]"));
 	}
 }

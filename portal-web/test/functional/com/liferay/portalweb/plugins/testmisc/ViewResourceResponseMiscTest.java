@@ -38,30 +38,32 @@ public class ViewResourceResponseMiscTest extends BaseTestCase {
 			selenium.getText("//p[4]/a[2]"));
 		selenium.clickAt("//p[4]/a[2]",
 			RuntimeVariables.replace("Download File"));
-		BrowserCommands.downloadTempFile("logo(3).png");
+		BrowserCommands.downloadTempFile("logo(2).png");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadTempFile("//input[@id='_20_file']",
-			RuntimeVariables.replace("logo(3).png"));
+			RuntimeVariables.replace("logo(2).png"));
+		Thread.sleep(5000);
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Portlet Response (ResourceResponse)"));
 		selenium.type("//textarea[@id='_20_description']",
 			RuntimeVariables.replace("Portlet Response (ResourceResponse)"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

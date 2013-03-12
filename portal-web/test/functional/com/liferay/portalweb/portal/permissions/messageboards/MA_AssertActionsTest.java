@@ -31,7 +31,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
 		assertTrue(selenium.isElementPresent("//input[@value='Add Category']"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -51,7 +50,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -90,7 +88,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Category Name')]/td[1]/a",
 			RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",

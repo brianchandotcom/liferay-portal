@@ -40,28 +40,23 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[@class='thread-bottom']/ul/li[2]/span/a</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[@class='thread-bottom']/ul/li[2]/span/a</td>
+	<td>//ul[@class='edit-controls lfr-component']/li[2]/span/a/span[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_19_subject']</td>
+	<td>Thread Subject 2</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_19_subject']</td>
 	<td>Thread Subject 2 Edited</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

@@ -39,14 +39,13 @@ public class Member_EditThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("Thread Subject 2"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
-				"//td[@class='thread-bottom']/ul/li[2]/span/a"));
-		selenium.clickAt("//td[@class='thread-bottom']/ul/li[2]/span/a",
+				"//ul[@class='edit-controls lfr-component']/li[2]/span/a/span[contains(.,'Edit')]"));
+		selenium.clickAt("//ul[@class='edit-controls lfr-component']/li[2]/span/a/span[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
+		selenium.waitForVisible("//input[@id='_19_subject']");
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Thread Subject 2 Edited"));
-		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");

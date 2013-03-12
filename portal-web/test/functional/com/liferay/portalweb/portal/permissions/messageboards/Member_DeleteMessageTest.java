@@ -54,6 +54,5 @@ public class Member_DeleteMessageTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertFalse(selenium.isTextPresent("Thread Subject 2 Edited"));
-		selenium.open("/web/guest/home/");
 	}
 }

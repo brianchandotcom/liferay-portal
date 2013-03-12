@@ -42,12 +42,10 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Subcategory']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
-		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
-		assertTrue(selenium.isElementNotPresent("link=Subscribe"));
-		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Post New Thread']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("link=Subscribe"));
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
 			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
 		selenium.clickAt("//tr[contains(.,'Thread Subject')]/td[1]/a",
@@ -56,8 +54,8 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Thread Body"),
 			selenium.getText("//div[@class='thread-body']"));
 		assertTrue(selenium.isTextPresent("Thread Body Reply"));
-		assertTrue(selenium.isElementNotPresent("link=Edit"));
-		assertTrue(selenium.isElementNotPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
 		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertTrue(selenium.isElementPresent("link=Sign in to vote."));
 		assertTrue(selenium.isElementNotPresent("link=Split Thread"));

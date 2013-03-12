@@ -55,6 +55,5 @@ public class MA_AddThreadTest extends BaseTestCase {
 			selenium.getText("//div[@class='subject']/a/strong"));
 		assertEquals(RuntimeVariables.replace("Thread Body"),
 			selenium.getText("//div[@class='thread-body']"));
-		selenium.open("/web/guest/home/");
 	}
 }

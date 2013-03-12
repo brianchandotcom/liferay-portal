@@ -32,7 +32,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText(
 				"//div[@class='category-subscription-types']/span/a/span[contains(.,'RSS')]"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -61,7 +60,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
 			selenium.getText("//tr[contains(.,'Thread Subject')]/td[1]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",

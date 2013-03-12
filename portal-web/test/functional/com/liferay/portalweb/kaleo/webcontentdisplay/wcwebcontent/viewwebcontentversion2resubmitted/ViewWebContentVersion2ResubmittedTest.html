@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='journal-content-article']/p</td>
+	<td>//div[@class='journal-content-article']</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
+	<td>link=Pending</td>
 	<td>Pending</td>
 </tr>
 <tr>
@@ -75,27 +75,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[2]/a</td>
 	<td>WC WebContent Title Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
@@ -105,77 +105,77 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[.='Review'])[2]</td>
-	<td>Review</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//a[.='WC WebContent Title'])[1]</td>
-	<td>WC WebContent Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[5]/td[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[5]/td[4]/a</td>
-	<td>Last Activity Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[5]/td[5]/a</td>
-	<td>Never</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//a[.='Review'])[1]</td>
-	<td>Review</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//a[.='WC WebContent Title Edit'])[2]</td>
-	<td>WC WebContent Title Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[3]/a</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[4]/td[4]/a</td>
-	<td>Last Activity Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[5]/a</td>
-	<td>Never</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//a[.='Update'])[1]</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[1]/a</td>
 	<td>Update</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//a[.='WC WebContent Title Edit'])[1]</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[2]/a</td>
 	<td>WC WebContent Title Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[3]/a</td>
 	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title Edit')]/td[5]/a</td>
+	<td>Never</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Review')]/td[1]/a</td>
+	<td>Review</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Review')]/td[2]/a</td>
+	<td>WC WebContent Title Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Review')]/td[3]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Review')]/td[4]/a</td>
+	<td>Last Activity Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Review')]/td[5]/a</td>
+	<td>Never</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[1]/a</td>
+	<td>Review</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[2]/a</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[3]/a</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[4]/a</td>
+	<td>Last Activity Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[@class='portlet-section-body results-row last']/td[5]/a</td>
 	<td>Never</td>
 </tr>
 </tbody></table>

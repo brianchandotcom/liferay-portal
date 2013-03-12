@@ -17,7 +17,10 @@ package com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebconten
 import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.AddWCWebContentWCDTest;
 import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.AssignToMeWebContentActionsTest;
 import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentassignedtome.TearDownWorkflowConfigurationTest;
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentversion2assignedtome.ApproveWebContentActionsTest;
 import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentversion2assignedtome.AssignToMeWebContentVersion2ActionsTest;
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentversion2assignedtome.EditWebContentCompletedActionsTest;
+import com.liferay.portalweb.kaleo.webcontentdisplay.wcwebcontent.viewwebcontentversion2rejected.RejectWebContentVersion2ActionsTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;

@@ -14,6 +14,11 @@
 
 package com.liferay.httpservice.internal.servlet;
 
+import com.liferay.httpservice.servlet.ResourceServlet;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+
+import java.text.SimpleDateFormat;
+
 import java.util.Arrays;
 
 import javax.servlet.Filter;
@@ -21,6 +26,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +41,7 @@ import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.NamespaceException;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockServletConfig;
@@ -42,13 +49,27 @@ import org.springframework.mock.web.MockServletConfig;
 /**
  * @author Miguel Pastor
  */
+@PrepareForTest(FastDateFormatFactoryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class BundleServletContextTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		mockStatic(FastDateFormatFactoryUtil.class);
+
+		when(
+			FastDateFormatFactoryUtil.getSimpleDateFormat(Mockito.anyString())
+		).thenReturn(
+			new SimpleDateFormat()
+		);
+
 		_bundleServletContext = new BundleServletContext(
 			_bundle, "test", _servletContext);
+	}
+
+	@After
+	public void tearDown() {
+		verifyStatic();
 	}
 
 	@Test
@@ -102,6 +123,55 @@ public class BundleServletContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testRegisterResource() throws NamespaceException {
+		registerResource("JS Servlet", "/js");
+	}
+
+	@Test
+	public void testRegisterResourceDuplicatedMapping()
+		throws NamespaceException {
+
+		registerResource("CSS Servlet", "/css");
+
+		try {
+			registerResource("New CSS Servlet", "/css");
+		}
+		catch (NamespaceException ne) {
+			return;
+		}
+
+		Assert.fail();
+	}
+
+	@Test
+	public void testRegisterResourceInvalidName() throws NamespaceException {
+		try {
+			registerResource("Bad Name/", "/js");
+		}
+		catch (IllegalArgumentException iae) {
+			return;
+		}
+
+		Assert.fail();
+	}
+
+	@Test
+	public void testRegisterServletMappingTwice()
+		throws NamespaceException, ServletException {
+
+		registerServlet("Original Servlet", "/a");
+
+		try {
+			registerServlet("New Servlet", "/a");
+		}
+		catch (NamespaceException ne) {
+			return;
+		}
+
+		Assert.fail();
+	}
+
+	@Test
 	public void testRegisterServletMultipleMapping()
 		throws NamespaceException, ServletException {
 
@@ -129,6 +199,23 @@ public class BundleServletContextTest extends PowerMockito {
 		).thenReturn(
 			clazz.getClassLoader()
 		);
+	}
+
+	protected void registerResource(String servletName, String alias)
+		throws NamespaceException {
+
+		mockBundleWiring();
+
+		_bundleServletContext.registerResources(
+			alias, servletName, _httpContext);
+
+		Servlet servlet = _bundleServletContext.getServlet(servletName);
+
+		Assert.assertNotNull(servlet);
+
+		Assert.assertTrue(servlet instanceof ResourceServlet);
+
+		verifyBundleWiring();
 	}
 
 	protected void registerServlet(String servletName, String ... urlPatterns)

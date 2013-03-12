@@ -28,6 +28,7 @@
 			<arg value="sample.sql.max.group.count=${sample.sql.max.group.count}" />
 			<arg value="sample.sql.max.journal.article.count=${sample.sql.max.journal.article.count}" />
 			<arg value="sample.sql.max.journal.article.size=${sample.sql.max.journal.article.size}" />
+			<arg value="sample.sql.max.journal.article.version.count=${sample.sql.max.journal.article.version.count}" />
 			<arg value="sample.sql.max.mb.category.count=${sample.sql.max.mb.category.count}" />
 			<arg value="sample.sql.max.mb.message.count=${sample.sql.max.mb.message.count}" />
 			<arg value="sample.sql.max.mb.thread.count=${sample.sql.max.mb.thread.count}" />

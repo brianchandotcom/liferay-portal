@@ -81,6 +81,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
+import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
@@ -100,6 +101,7 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
+import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -364,7 +366,7 @@ public class DataFactory {
 	}
 
 	public void initJournalArticle(int maxJournalArticleSize) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><static-content language-id=");
@@ -844,9 +846,29 @@ public class DataFactory {
 	}
 
 	public JournalArticle newJournalArticle(
-		JournalArticleResource journalArticleResource) {
+		JournalArticleResource journalArticleResource, int articleIndex,
+		int versionIndex) {
 
 		JournalArticle journalArticle = new JournalArticleImpl();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(versionIndex);
+
+		String urlTitle = sb.toString();
+
+		sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(urlTitle);
+		sb.append("</Title></root>");
+
+		String title = sb.toString();
 
 		journalArticle.setUuid(SequentialUUID.generate());
 		journalArticle.setId(_counter.get());
@@ -861,9 +883,9 @@ public class DataFactory {
 		journalArticle.setClassNameId(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 		journalArticle.setArticleId(journalArticleResource.getArticleId());
-		journalArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
-		journalArticle.setTitle(_JOURNAL_ARTICLE_TITLE);
-		journalArticle.setUrlTitle("Test Journal Article");
+		journalArticle.setVersion(versionIndex);
+		journalArticle.setTitle(title);
+		journalArticle.setUrlTitle(urlTitle);
 		journalArticle.setContent(_journalArticleContent);
 		journalArticle.setType("general");
 		journalArticle.setDisplayDate(new Date());
@@ -1139,20 +1161,25 @@ public class DataFactory {
 		return resourcePermissions;
 	}
 
-	public SocialActivity newSocialActivity(
-		long groupId, long companyId, long userId, long classNameId,
-		long classPK) {
+	public SocialActivity newSocialActivity(DLFileEntry dlFileEntry) {
+		return newSocialActivity(
+			dlFileEntry.getGroupId(), getDLFileEntryClassNameId(),
+			dlFileEntry.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
+			dlFileEntry.getTitle());
+	}
 
-		SocialActivity socialActivity = new SocialActivityImpl();
+	public SocialActivity newSocialActivity(JournalArticle journalArticle) {
+		int type = JournalActivityKeys.UPDATE_ARTICLE;
 
-		socialActivity.setActivityId(_socialActivityCounter.get());
-		socialActivity.setGroupId(groupId);
-		socialActivity.setCompanyId(companyId);
-		socialActivity.setUserId(userId);
-		socialActivity.setClassNameId(classNameId);
-		socialActivity.setClassPK(classPK);
+		if (journalArticle.getVersion() ==
+			JournalArticleConstants.VERSION_DEFAULT) {
 
-		return socialActivity;
+			type = JournalActivityKeys.ADD_ARTICLE;
+		}
+
+		return newSocialActivity(
+			journalArticle.getGroupId(), getJournalArticleClassNameId(),
+			journalArticle.getId(), type, journalArticle.getUrlTitle());
 	}
 
 	public User newUser(int index) {
@@ -1363,6 +1390,24 @@ public class DataFactory {
 		return role;
 	}
 
+	protected SocialActivity newSocialActivity(
+		long groupId, long classNameId, long classPK, int type, String title) {
+
+		SocialActivity socialActivity = new SocialActivityImpl();
+
+		socialActivity.setActivityId(_socialActivityCounter.get());
+		socialActivity.setGroupId(groupId);
+		socialActivity.setCompanyId(_companyId);
+		socialActivity.setUserId(_sampleUserId);
+		socialActivity.setCreateDate(System.currentTimeMillis());
+		socialActivity.setClassNameId(classNameId);
+		socialActivity.setClassPK(classPK);
+		socialActivity.setType(type);
+		socialActivity.setExtraData("{\"title\":\""+ title +"\"}");
+
+		return socialActivity;
+	}
+
 	protected User newUser(
 		long userId, String firstName, String lastName, String screenName,
 		boolean defaultUser) {
@@ -1407,11 +1452,6 @@ public class DataFactory {
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
-
-	private static final String _JOURNAL_ARTICLE_TITLE =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-locales=" +
-			"\"en_US\" default-locale=\"en_US\"><Title language-id=\"en_US\"" +
-				">Test Journal Article</Title></root>";
 
 	private Account _account;
 	private long _accountId;

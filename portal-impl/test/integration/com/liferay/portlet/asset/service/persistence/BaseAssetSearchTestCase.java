@@ -514,19 +514,17 @@ public abstract class BaseAssetSearchTestCase {
 	public void testClassTypeIds1() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group.getGroupId(), new String[] {getBaseModelClassName()},
-				getClassTypeIds());
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
 
-		testClassTypeIds(assetEntryQuery, 1);
+		testClassTypeIds(assetEntryQuery, true);
 	}
 
 	public void testClassTypeIds2() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
-				_group.getGroupId(), new String[] {getBaseModelClassName()},
-				new long[0]);
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
 
-		testClassTypeIds(assetEntryQuery, 0);
+		testClassTypeIds(assetEntryQuery, false);
 	}
 
 	@Test
@@ -761,6 +759,7 @@ public abstract class BaseAssetSearchTestCase {
 		testAssetCategorization(assetEntryQuery, 1);
 	}
 
+	@Test
 	public void testOrderByTitleAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -777,6 +776,7 @@ public abstract class BaseAssetSearchTestCase {
 		testOrderByTitle(assetEntryQuery, "asc", titles, orderedTitles);
 	}
 
+	@Test
 	public void testOrderByTitleDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -906,7 +906,7 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void testClassTypeIds(
-			AssetEntryQuery assetEntryQuery, int expectedResults)
+			AssetEntryQuery assetEntryQuery, boolean classType)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -925,11 +925,19 @@ public abstract class BaseAssetSearchTestCase {
 		addBaseModelWithClassType(
 			parentBaseModel, getSearchKeywords(), serviceContext);
 
-		searchContext.setClassTypeIds(getClassTypeIds());
+		if (classType) {
+			assetEntryQuery.setClassTypeIds(getClassTypeIds());
 
-		Assert.assertEquals(
-			initialEntries + expectedResults,
-			searchCount(assetEntryQuery, searchContext));
+			Assert.assertEquals(
+				initialEntries + 1,
+				searchCount(assetEntryQuery, searchContext));
+		}
+		else {
+			assetEntryQuery.setClassTypeIds(new long[] {0});
+
+			Assert.assertEquals(
+				initialEntries, searchCount(assetEntryQuery, searchContext));
+		}
 	}
 
 	protected void testOrderByTitle(

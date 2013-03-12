@@ -370,7 +370,6 @@ else if (classNameId > 0) {
 					),
 					render: true,
 					visible: false,
-					width: 250,
 					zIndex: 10000
 				}
 			);

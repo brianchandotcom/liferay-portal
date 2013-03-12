@@ -108,6 +108,10 @@ public class PortletAppImpl implements PortletApp {
 		return _defaultNamespace;
 	}
 
+	public Set<EventDefinition> getEventDefinitions() {
+		return _eventDefinitions;
+	}
+
 	public PortletFilter getPortletFilter(String filterName) {
 		return _portletFiltersByFilterName.get(filterName);
 	}

@@ -128,6 +128,7 @@ import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.text.Format;
@@ -158,6 +159,17 @@ public class DataFactory {
 		_maxMBMessageCount = maxMBMessageCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
 
+		_ddm_structure_basic_document = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir,
+					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
+
+		_ddm_structure_ddl = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
+
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
@@ -184,6 +196,7 @@ public class DataFactory {
 
 		_accountId = _counter.get();
 		_companyId = _counter.get();
+		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
 		initCompany();
@@ -242,6 +255,10 @@ public class DataFactory {
 
 	public long getDDMContentClassNameId() {
 		return _classNamesMap.get(DDMContent.class.getName());
+	}
+
+	public DDMStructure getDefaultDLDDMStructure() {
+		return _defaultDLDDMStructure;
 	}
 
 	public DLFileEntryType getDefaultDLFileEntryType() {
@@ -345,16 +362,18 @@ public class DataFactory {
 		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+
+		_defaultDLDDMStructure = newDDMStructure(
+			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",
+			_ddm_structure_basic_document);
 	}
 
 	public void initGroups() throws Exception {
 		long groupClassNameId = getGroupClassNameId();
 
-		long guestGroupId = _counter.get();
-
 		_guestGroup = newGroup(
-			guestGroupId, groupClassNameId, guestGroupId, GroupConstants.GUEST,
-			true);
+			_guestGroupId, groupClassNameId, _guestGroupId,
+			GroupConstants.GUEST, true);
 
 		_groups = new ArrayList<Group>(_maxGroupsCount);
 
@@ -469,14 +488,10 @@ public class DataFactory {
 	}
 
 	public void initUserNames() throws IOException {
-		String dependenciesDir =
-			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
-				"dependencies/";
-
 		_firstNames = ListUtil.fromFile(
-			new File(_baseDir, dependenciesDir + "first_names.txt"));
+			new File(_baseDir, _DEPENDENCIES_DIR + "first_names.txt"));
 		_lastNames = ListUtil.fromFile(
-			new File(_baseDir, dependenciesDir + "last_names.txt"));
+			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
 	}
 
 	public void initUsers() {
@@ -485,7 +500,8 @@ public class DataFactory {
 			StringPool.BLANK, true);
 		_guestUser = newUser(_counter.get(), "Test", "Test", "Test", false);
 		_sampleUser = newUser(
-			_sampleUserId, "Sample", "Sample", "Sample", false);
+			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
+			_SAMPLE_USER_NAME, false);
 	}
 
 	public void initVirtualHost() {
@@ -556,7 +572,7 @@ public class DataFactory {
 		blogsEntry.setGroupId(groupId);
 		blogsEntry.setCompanyId(_companyId);
 		blogsEntry.setUserId(_sampleUserId);
-		blogsEntry.setUserName(_sampleUser.getFullName());
+		blogsEntry.setUserName(_SAMPLE_USER_NAME);
 		blogsEntry.setCreateDate(new Date());
 		blogsEntry.setModifiedDate(new Date());
 		blogsEntry.setTitle("Test Blog " + index);
@@ -636,6 +652,12 @@ public class DataFactory {
 		return counters;
 	}
 
+	public DDMStructure newDDLDDMStructure(long groupId) {
+		return newDDMStructure(
+			groupId, _classNamesMap.get(DDLRecordSet.class.getName()),
+			"Test DDM Structure", _ddm_structure_ddl);
+	}
+
 	public DDLRecord newDDLRecord(
 		long groupId, long companyId, long userId, long ddlRecordSetId) {
 
@@ -702,21 +724,6 @@ public class DataFactory {
 		return ddmStorageLink;
 	}
 
-	public DDMStructure newDDMStructure(
-		long groupId, long companyId, long userId, long classNameId) {
-
-		DDMStructure ddmStructure = new DDMStructureImpl();
-
-		ddmStructure.setStructureId(_counter.get());
-		ddmStructure.setGroupId(groupId);
-		ddmStructure.setCompanyId(companyId);
-		ddmStructure.setUserId(userId);
-		ddmStructure.setCreateDate(nextFutureDate());
-		ddmStructure.setClassNameId(classNameId);
-
-		return ddmStructure;
-	}
-
 	public DDMStructureLink newDDMStructureLink(
 		long classPK, long structureId) {
 
@@ -738,9 +745,9 @@ public class DataFactory {
 		dlFileEntry.setGroupId(dlFoler.getGroupId());
 		dlFileEntry.setCompanyId(_companyId);
 		dlFileEntry.setUserId(_sampleUserId);
-		dlFileEntry.setUserName(_sampleUser.getFullName());
+		dlFileEntry.setUserName(_SAMPLE_USER_NAME);
 		dlFileEntry.setVersionUserId(_sampleUserId);
-		dlFileEntry.setVersionUserName(_sampleUser.getFullName());
+		dlFileEntry.setVersionUserName(_SAMPLE_USER_NAME);
 		dlFileEntry.setCreateDate(nextFutureDate());
 		dlFileEntry.setModifiedDate(nextFutureDate());
 		dlFileEntry.setRepositoryId(dlFoler.getRepositoryId());
@@ -798,7 +805,7 @@ public class DataFactory {
 		dlFolder.setGroupId(groupId);
 		dlFolder.setCompanyId(_companyId);
 		dlFolder.setUserId(_sampleUserId);
-		dlFolder.setUserName(_sampleUser.getFullName());
+		dlFolder.setUserName(_SAMPLE_USER_NAME);
 		dlFolder.setCreateDate(nextFutureDate());
 		dlFolder.setModifiedDate(nextFutureDate());
 		dlFolder.setRepositoryId(groupId);
@@ -858,7 +865,7 @@ public class DataFactory {
 		journalArticle.setGroupId(journalArticleResource.getGroupId());
 		journalArticle.setCompanyId(_companyId);
 		journalArticle.setUserId(_sampleUserId);
-		journalArticle.setUserName(_sampleUser.getFullName());
+		journalArticle.setUserName(_SAMPLE_USER_NAME);
 		journalArticle.setCreateDate(new Date());
 		journalArticle.setModifiedDate(new Date());
 		journalArticle.setClassNameId(
@@ -970,7 +977,7 @@ public class DataFactory {
 		mbCategory.setGroupId(groupId);
 		mbCategory.setCompanyId(_companyId);
 		mbCategory.setUserId(_sampleUserId);
-		mbCategory.setUserName(_sampleUser.getFullName());
+		mbCategory.setUserName(_SAMPLE_USER_NAME);
 		mbCategory.setCreateDate(new Date());
 		mbCategory.setModifiedDate(new Date());
 		mbCategory.setParentCategoryId(
@@ -1006,7 +1013,7 @@ public class DataFactory {
 		mbMailingList.setGroupId(mbCategory.getGroupId());
 		mbMailingList.setCompanyId(_companyId);
 		mbMailingList.setUserId(_sampleUserId);
-		mbMailingList.setUserName(_sampleUser.getFullName());
+		mbMailingList.setUserName(_SAMPLE_USER_NAME);
 		mbMailingList.setCreateDate(new Date());
 		mbMailingList.setModifiedDate(new Date());
 		mbMailingList.setCategoryId(mbCategory.getCategoryId());
@@ -1200,7 +1207,7 @@ public class DataFactory {
 		wikiNode.setGroupId(groupId);
 		wikiNode.setCompanyId(_companyId);
 		wikiNode.setUserId(_sampleUserId);
-		wikiNode.setUserName(_sampleUser.getFullName());
+		wikiNode.setUserName(_SAMPLE_USER_NAME);
 		wikiNode.setCreateDate(new Date());
 		wikiNode.setModifiedDate(new Date());
 		wikiNode.setName("Test Node " + index);
@@ -1219,7 +1226,7 @@ public class DataFactory {
 		wikiPage.setGroupId(wikiNode.getGroupId());
 		wikiPage.setCompanyId(_companyId);
 		wikiPage.setUserId(_sampleUserId);
-		wikiPage.setUserName(_sampleUser.getFullName());
+		wikiPage.setUserName(_SAMPLE_USER_NAME);
 		wikiPage.setCreateDate(new Date());
 		wikiPage.setModifiedDate(new Date());
 		wikiPage.setNodeId(wikiNode.getNodeId());
@@ -1264,7 +1271,7 @@ public class DataFactory {
 		assetEntry.setGroupId(groupId);
 		assetEntry.setCompanyId(_companyId);
 		assetEntry.setUserId(_sampleUserId);
-		assetEntry.setUserName(_sampleUser.getFullName());
+		assetEntry.setUserName(_SAMPLE_USER_NAME);
 		assetEntry.setCreateDate(createDate);
 		assetEntry.setModifiedDate(modifiedDate);
 		assetEntry.setClassNameId(classNameId);
@@ -1280,6 +1287,37 @@ public class DataFactory {
 		assetEntry.setTitle(title);
 
 		return assetEntry;
+	}
+
+	protected DDMStructure newDDMStructure(
+		long groupId, long classNameId, String structureKey, String xsd) {
+
+		DDMStructure ddmStructure = new DDMStructureImpl();
+
+		ddmStructure.setUuid(SequentialUUID.generate());
+		ddmStructure.setStructureId(_counter.get());
+		ddmStructure.setGroupId(groupId);
+		ddmStructure.setCompanyId(_companyId);
+		ddmStructure.setUserId(_sampleUserId);
+		ddmStructure.setUserName(_SAMPLE_USER_NAME);
+		ddmStructure.setCreateDate(nextFutureDate());
+		ddmStructure.setModifiedDate(nextFutureDate());
+		ddmStructure.setClassNameId(classNameId);
+		ddmStructure.setStructureKey(structureKey);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Name language-id=\"en_US\">");
+		sb.append(structureKey);
+		sb.append("</Name></root>");
+
+		ddmStructure.setName(sb.toString());
+		ddmStructure.setXsd(xsd);
+		ddmStructure.setStorageType("xml");
+
+		return ddmStructure;
 	}
 
 	protected Group newGroup(
@@ -1337,7 +1375,7 @@ public class DataFactory {
 		mbMessage.setGroupId(groupId);
 		mbMessage.setCompanyId(_companyId);
 		mbMessage.setUserId(_sampleUserId);
-		mbMessage.setUserName(_sampleUser.getFullName());
+		mbMessage.setUserName(_SAMPLE_USER_NAME);
 		mbMessage.setCreateDate(new Date());
 		mbMessage.setModifiedDate(new Date());
 		mbMessage.setClassNameId(classNameId);
@@ -1365,7 +1403,7 @@ public class DataFactory {
 		mbThread.setGroupId(groupId);
 		mbThread.setCompanyId(_companyId);
 		mbThread.setUserId(_sampleUserId);
-		mbThread.setUserName(_sampleUser.getFullName());
+		mbThread.setUserName(_SAMPLE_USER_NAME);
 		mbThread.setCreateDate(new Date());
 		mbThread.setModifiedDate(new Date());
 		mbThread.setCategoryId(categoryId);
@@ -1452,8 +1490,12 @@ public class DataFactory {
 			_FUTURE_TIME + (_futureDateCounter.get() * Time.SECOND));
 	}
 
+	private static final String _DEPENDENCIES_DIR=
+		"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
+			"dependencies/";
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
+	private static final String _SAMPLE_USER_NAME = "Sample";
 
 	private Account _account;
 	private long _accountId;
@@ -1464,12 +1506,16 @@ public class DataFactory {
 	private Company _company;
 	private long _companyId;
 	private SimpleCounter _counter;
+	private String _ddm_structure_basic_document;
+	private String _ddm_structure_ddl;
+	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
 	private List<Group> _groups;
 	private Group _guestGroup;
+	private long _guestGroupId;
 	private Role _guestRole;
 	private User _guestUser;
 	private String _journalArticleContent;

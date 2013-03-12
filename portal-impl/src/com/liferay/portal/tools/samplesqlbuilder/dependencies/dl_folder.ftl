@@ -13,7 +13,7 @@ insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, '${dlFolderCre
 	<#list 1..maxDLFileEntryCount as dlFileEntryCount>
 		<#assign dlFileEntry = dataFactory.newDlFileEntry(dlFolder, dlFileEntryCount)>
 
-		${sampleSQLBuilder.insertDLFileEntry(dlFileEntry, ddmStructure)}
+		${sampleSQLBuilder.insertDLFileEntry(dlFileEntry, ddmStructureId)}
 
 		${writerDocumentLibraryCSV.write(dlFolder.folderId + "," + dlFileEntry.name + "," + dlFileEntry.fileEntryId + "," + dataFactory.getDateLong(dlFileEntry.createDate) + "," + dataFactory.getDateLong(dlFolder.createDate) +"\n")}
 	</#list>

@@ -14,24 +14,33 @@
 
 package com.liferay.httpservice.internal.servlet;
 
+import com.liferay.httpservice.internal.http.DefaultHttpContext;
 import com.liferay.httpservice.servlet.BundleServletConfig;
+import com.liferay.httpservice.servlet.ResourceServlet;
 import com.liferay.portal.apache.bridges.struts.LiferayServletContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.struts.AuthPublicPathRegistry;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+
+import java.io.File;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -139,9 +148,46 @@ public class BundleServletContext extends LiferayServletContext {
 
 		_bundle = bundle;
 		_servletContextName = servletContextName;
+
+		_httpContext = new DefaultHttpContext(_bundle);
 	}
 
 	public void close() {
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public Object getAttribute(String name) {
+		if (name.equals("osgi-bundle")) {
+			return _bundle;
+		}
+		else if (name.equals("osgi-bundlecontext")) {
+
+			// This is required to meet OSGi Comp 4.3, WAS 128.6.1.
+
+			return _bundle.getBundleContext();
+		}
+		else if (name.equals(JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR)) {
+			return getTempDir();
+		}
+
+		Object nameValue = _contextAttributes.get(name);
+
+		if (nameValue == null) {
+			if (name.equals(PluginContextListener.PLUGIN_CLASS_LOADER)) {
+				return getClassLoader();
+			}
+			else if (name.equals("org.apache.catalina.JSP_PROPERTY_GROUPS")) {
+				nameValue = new HashMap();
+
+				_contextAttributes.put(name, nameValue);
+			}
+			else if (name.equals("org.apache.tomcat.InstanceManager")) {
+				return super.getAttribute(name);
+			}
+		}
+
+		return nameValue;
 	}
 
 	public Bundle getBundle() {
@@ -165,7 +211,7 @@ public class BundleServletContext extends LiferayServletContext {
 	}
 
 	public HttpContext getHttpContext() {
-		return null;
+		return _httpContext;
 	}
 
 	@Override
@@ -266,6 +312,37 @@ public class BundleServletContext extends LiferayServletContext {
 			filterName, urlPatterns, filter, initParameters, httpContext);
 	}
 
+	public void registerResources(
+			String alias, String name, HttpContext httpContext)
+		throws NamespaceException {
+
+		if (name == null) {
+			throw new IllegalArgumentException("Name cannot be null");
+		}
+
+		if (name.endsWith(StringPool.SLASH) && !name.equals(StringPool.SLASH)) {
+			throw new IllegalArgumentException("Invalid name " + name);
+		}
+
+		Map<String, String> initParameters = new Hashtable<String, String>();
+
+		initParameters.put("alias", alias);
+		initParameters.put("name", name);
+
+		Servlet resourceServlet = new ResourceServlet();
+
+		try {
+			registerServlet(
+				name, alias, resourceServlet, initParameters, httpContext);
+
+			AuthPublicPathRegistry.register(
+				Portal.PATH_MODULE + _servletContextName + alias);
+		}
+		catch (ServletException se) {
+			throw new IllegalArgumentException(se);
+		}
+	}
+
 	public void registerServlet(
 			String servletName, List<String> urlPatterns, Servlet servlet,
 			Map<String, String> initParameters, HttpContext httpContext)
@@ -356,6 +433,9 @@ public class BundleServletContext extends LiferayServletContext {
 				continue;
 			}
 
+			AuthPublicPathRegistry.unregister(
+				Portal.PATH_MODULE + _servletContextName + entry.getKey());
+
 			iterator.remove();
 
 			if (_log.isInfoEnabled()) {
@@ -369,6 +449,27 @@ public class BundleServletContext extends LiferayServletContext {
 		if (_log.isInfoEnabled()) {
 			_log.info("Unregistered servlet " + servletName);
 		}
+	}
+
+	protected File getTempDir() {
+		if (_tempDir == null) {
+			File parentTempDir = (File)super.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+			String servletContextName = getServletContextName();
+
+			File tempDir = new File(parentTempDir, servletContextName);
+
+			if (!tempDir.exists() && !tempDir.mkdirs()) {
+				throw new IllegalStateException(
+					"Can't create webapp tempDir for " +
+						getServletContextName());
+			}
+
+			_tempDir = tempDir;
+		}
+
+		return _tempDir;
 	}
 
 	protected void unregisterFilterByServiceRanking(String filterName) {
@@ -493,11 +594,13 @@ public class BundleServletContext extends LiferayServletContext {
 		new ConcurrentHashMap<String, Filter>();
 	private List<FilterServiceRanking> _filterServiceRankings =
 		new CopyOnWriteArrayList<FilterServiceRanking>();
+	private HttpContext _httpContext;
 	private String _servletContextName;
 	private Map<String, Servlet> _servletsByServletNames =
 		new ConcurrentHashMap<String, Servlet>();
 	private Map<String, Servlet> _servletsByURLPatterns =
 		new ConcurrentHashMap<String, Servlet>();
+	private File _tempDir;
 
 	private class FilterServiceRanking
 		implements Comparable<FilterServiceRanking> {

@@ -296,6 +296,10 @@ public class DataFactory {
 		return _classNamesMap.get(JournalArticle.class.getName());
 	}
 
+	public long getLayoutClassNameId() {
+		return _classNamesMap.get(Layout.class.getName());
+	}
+
 	public List<Long> getNewUserGroupIds(long groupId) {
 		List<Long> groupIds = new ArrayList<Long>(_maxUserToGroupCount + 1);
 
@@ -471,10 +475,10 @@ public class DataFactory {
 
 		// Site Member
 
-		Role siteMemberRole = newRole(
+		_siteMemberRole = newRole(
 			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
 
-		_roles.add(siteMemberRole);
+		_roles.add(_siteMemberRole);
 
 		// Site Owner
 
@@ -1158,7 +1162,7 @@ public class DataFactory {
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermission.setPrimKey(primKey);
 		resourcePermission.setRoleId(_ownerRole.getRoleId());
-		resourcePermission.setOwnerId(_defaultUser.getUserId());
+		resourcePermission.setOwnerId(0);
 		resourcePermission.setActionIds(1);
 
 		resourcePermissions.add(resourcePermission);
@@ -1172,6 +1176,20 @@ public class DataFactory {
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermission.setPrimKey(primKey);
 		resourcePermission.setRoleId(_guestRole.getRoleId());
+		resourcePermission.setOwnerId(0);
+		resourcePermission.setActionIds(1);
+
+		resourcePermissions.add(resourcePermission);
+
+		resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(_siteMemberRole.getRoleId());
 		resourcePermission.setOwnerId(0);
 		resourcePermission.setActionIds(1);
 
@@ -1550,6 +1568,7 @@ public class DataFactory {
 	private long _sampleUserId;
 	private Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private Role _siteMemberRole;
 	private SimpleCounter _socialActivityCounter;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;

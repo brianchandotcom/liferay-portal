@@ -29,12 +29,29 @@
 			</#list>
 		</#if>
 
-		<#assign preferences = "<portlet-preferences><preference><name>recordSetId</name><value>" + ddlRecordSet.recordSetId +"</value></preference><preference><name>displayDDMTemplateId</name><value></value></preference><preference><name>editable</name><value>true</value></preference></portlet-preferences>">
+		<#assign preferences = "<portlet-preferences />">
+
+		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, "145", preferences)>
+
+		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
+
+		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, "87", preferences)>
+
+		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
+
+		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, "86", preferences)>
+
+		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
+
+		<#assign preferences = "<portlet-preferences><preference><name>recordSetId</name><value>${ddlRecordSet.recordSetId}</value></preference><preference><name>displayDDMTemplateId</name><value></value></preference><preference><name>editable</name><value>true</value></preference><preference><name>spreadsheet</name><value>false</value></preference><preference><name>formDDMTemplateId</name><value></value></preference></portlet-preferences>">
 
 		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, ddlPortletId, preferences)>
 
 		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
 
+		${sampleSQLBuilder.insertResourcePermission("145", ddlDisplayLayout.plid + "_LAYOUT_145")}
+		${sampleSQLBuilder.insertResourcePermission("86", ddlDisplayLayout.plid + "_LAYOUT_86")}
+		${sampleSQLBuilder.insertResourcePermission("87", ddlDisplayLayout.plid + "_LAYOUT_87")}
 		${sampleSQLBuilder.insertResourcePermission("169", ddlDisplayLayout.plid + "_LAYOUT_" + ddlPortletId)}
 	</#list>
 </#if>

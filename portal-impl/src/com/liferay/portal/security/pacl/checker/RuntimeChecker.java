@@ -16,7 +16,6 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -218,59 +217,10 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasCreateClassLoader() {
-		if (JavaDetector.isIBM()) {
-			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-			String callerClassName9 = callerClass9.getName();
+		// temporarily return true
 
-			if (callerClassName9.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
-				logCreateClassLoader(callerClass9, 9);
-
-				return true;
-			}
-
-			Class<?> callerClass10 = Reflection.getCallerClass(10);
-
-			String callerClassName10 = callerClass10.getName();
-
-			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(11)) {
-
-				logCreateClassLoader(callerClass10, 10);
-
-				return true;
-			}
-		}
-		else if (JavaDetector.isJDK7()) {
-			Class<?> callerClass11 = Reflection.getCallerClass(11);
-
-			String callerClassName11 = callerClass11.getName();
-
-			if (callerClassName11.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(12)) {
-
-				logCreateClassLoader(callerClass11, 11);
-
-				return true;
-			}
-		}
-		else {
-			Class<?> callerClass10 = Reflection.getCallerClass(10);
-
-			String callerClassName10 = callerClass10.getName();
-
-			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(11)) {
-
-				logCreateClassLoader(callerClass10, 10);
-
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	protected boolean hasCreateSecurityManager() {
@@ -351,65 +301,17 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasReadFileDescriptor() {
-		if (JavaDetector.isJDK7()) {
-			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-			String callerClassName9 = callerClass9.getName();
+		// temporarily return true
 
-			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
-				logWriteFileDescriptor(callerClass9, 9);
-
-				return true;
-			}
-		}
-		else {
-			Class<?> callerClass8 = Reflection.getCallerClass(8);
-
-			String callerClassName8 = callerClass8.getName();
-
-			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
-				logWriteFileDescriptor(callerClass8, 8);
-
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	protected boolean hasWriteFileDescriptor() {
-		if (JavaDetector.isJDK7()) {
-			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-			String callerClassName9 = callerClass9.getName();
+		// temporarily return true
 
-			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
-				logWriteFileDescriptor(callerClass9, 9);
-
-				return true;
-			}
-		}
-		else {
-			Class<?> callerClass8 = Reflection.getCallerClass(8);
-
-			String callerClassName8 = callerClass8.getName();
-
-			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
-				logWriteFileDescriptor(callerClass8, 8);
-
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	protected void initClassLoaderReferenceIds() {
@@ -504,42 +406,6 @@ public class RuntimeChecker extends BaseChecker {
 					" to write a file descriptor");
 		}
 	}
-
-	private static final String _CLASS_NAME_API_CLASS_LOADER_SERVICE_IMPL =
-		"com.sun.enterprise.v3.server.APIClassLoaderServiceImpl";
-
-	private static final String _CLASS_NAME_CLASS_DEFINER =
-		"sun.reflect.ClassDefiner$";
-
-	private static final String _CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR =
-		"com.sun.jmx.interceptor.DefaultMBeanServerInterceptor";
-
-	private static final String _CLASS_NAME_ENVIRONMENT_LOCAL =
-		"com.caucho.loader.EnvironmentLocal";
-
-	private static final String _CLASS_NAME_GENERIC_CLASS_LOADER =
-		"weblogic.utils.classloaders.GenericClassLoader";
-
-	private static final String _CLASS_NAME_JDBC_LEAK_PREVENTION =
-		"org.apache.catalina.loader.JdbcLeakPrevention";
-
-	private static final String _CLASS_NAME_MESSAGES =
-		"org.jboss.logging.Messages";
-
-	private static final String _CLASS_NAME_MODULE_IMPL =
-		"org.apache.felix.framework.ModuleImpl";
-
-	private static final String _CLASS_NAME_PROCESS_IMPL =
-		"java.lang.ProcessImpl$";
-
-	private static final String _CLASS_NAME_PROTECTION_CLASS_LOADER =
-		"com.ibm.ws.classloader.ProtectionClassLoader";
-
-	private static final String _CLASS_NAME_SERVICE_CONTROLLER_IMPL =
-		"org.jboss.msc.service.ServiceControllerImpl";
-
-	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
-		"getSystemClassLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 

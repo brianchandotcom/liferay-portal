@@ -62,6 +62,11 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	public void testSearchStatus() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testSearchWithinDDMStructure() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

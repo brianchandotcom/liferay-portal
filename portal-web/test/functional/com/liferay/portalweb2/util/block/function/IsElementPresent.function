@@ -1,0 +1,9 @@
+<function-definition name="IsElementPresent">
+	<function-command name="isElementPresent">
+		<selenium command="isElementPresent" />
+	</function-command>
+
+	<function-command name="isVisible">
+		<selenium command="isVisible" />
+	</function-command>
+</function-definition>

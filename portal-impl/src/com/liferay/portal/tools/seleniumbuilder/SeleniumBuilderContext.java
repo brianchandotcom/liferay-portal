@@ -236,7 +236,8 @@ public class SeleniumBuilderContext {
 				int x = methodSignature.indexOf(" ", 7);
 				int y = methodSignature.indexOf("(");
 
-				String seleniumCommandName = methodSignature.substring(x, y);
+				String seleniumCommandName = methodSignature.substring(
+					x + 1, y);
 
 				int count = 0;
 

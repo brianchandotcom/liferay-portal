@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
 <%
+String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step");
 String callback = ParamUtil.getString(request, "callback", "selectRole");
 
@@ -25,11 +26,12 @@ User selUser = PortalUtil.getSelectedUser(request);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/select_organization_role");
-portletURL.setParameter("callback", callback);
 
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
+
+portletURL.setParameter("callback", callback);
 
 long uniqueOrganizationId = 0;
 
@@ -255,8 +257,7 @@ if (step == 1) {
 
 					<%
 					String rowHREF = null;
-
-					if (OrganizationMembershipPolicyUtil.isRoleAllowed(selUser.getUserId(), organization.getOrganizationId(), role.getRoleId())) {
+					if (Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isRoleAllowed(selUser != null ? selUser.getUserId() : 0, organization.getOrganizationId(), role.getRoleId())) {
 						StringBundler sb = new StringBundler(14);
 
 						sb.append("javascript:opener.");

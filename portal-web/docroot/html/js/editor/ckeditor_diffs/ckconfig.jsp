@@ -25,6 +25,7 @@ String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
 String languageId = ParamUtil.getString(request, "languageId");
+boolean resizable = ParamUtil.getBoolean(request, "resizable");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
@@ -74,6 +75,12 @@ CKEDITOR.config.extraPlugins = 'ajaxsave,restore';
 CKEDITOR.config.height = 265;
 
 CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
+
+CKEDITOR.config.resize_enabled = <%= resizable %>;
+
+<c:if test="<%= resizable %>">
+	CKEDITOR.config.resize_dir = 'vertical';
+</c:if>
 
 CKEDITOR.config.stylesCombo_stylesSet = 'liferayStyles';
 

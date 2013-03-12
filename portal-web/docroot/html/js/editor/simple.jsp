@@ -90,7 +90,7 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 			}
 			%>
 
-			style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; width: 100%;"></textarea>
+			style="font-family: monospace; height: 100%; min-height: 8em; min-width: 10em; resize: vertical; width: 100%;"></textarea>
 		</td>
 	</tr>
 	</table>

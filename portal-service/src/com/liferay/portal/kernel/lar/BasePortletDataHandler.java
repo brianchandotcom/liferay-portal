@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -73,8 +74,22 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		try {
-			return doExportData(
-				portletDataContext, portletId, portletPreferences);
+			Element rootElement = portletDataContext.createRootElement(
+				getClass().getSimpleName());
+
+			doExportData(portletDataContext, portletId, portletPreferences);
+
+			if (rootElement.elements().isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			Document document = rootElement.getDocument();
+
+			if (document == null) {
+				return StringPool.BLANK;
+			}
+
+			return document.formattedString();
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -129,6 +144,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 				Element rootElement = document.getRootElement();
 
+				portletDataContext.setRootElement(rootElement);
+
 				long portletSourceGroupId = GetterUtil.getLong(
 					rootElement.attributeValue("group-id"));
 
@@ -138,7 +155,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			}
 
 			return doImportData(
-				portletDataContext, portletId, portletPreferences, data);
+				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -170,14 +187,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _publishToLiveByDefault;
 	}
 
-	protected Element addExportRootElement() {
-		Document document = SAXReaderUtil.createDocument();
-
-		Class<?> clazz = getClass();
-
-		return document.addElement(clazz.getSimpleName());
-	}
-
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -186,17 +195,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return portletPreferences;
 	}
 
-	protected String doExportData(
+	protected void doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		return null;
+		return;
 	}
 
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return null;

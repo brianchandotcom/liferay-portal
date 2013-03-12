@@ -43,7 +43,7 @@ public class SOUs_EditPhoneNumberProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("456"));
 		selenium.select("//select[contains(@id,'phoneType')]",
 			RuntimeVariables.replace("Personal"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@data-title='Phone Numbers']/ul/li/span[2]",

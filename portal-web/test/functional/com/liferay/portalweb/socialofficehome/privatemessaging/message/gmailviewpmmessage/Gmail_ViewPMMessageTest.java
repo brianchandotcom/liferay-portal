@@ -103,7 +103,7 @@ public class Gmail_ViewPMMessageTest extends BaseTestCase {
 				selenium.clickAt("//div/div/span/b",
 					RuntimeVariables.replace(
 						"Joe Bloggs sent you a message on Liferay"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace(
 						"Joe Bloggs sent you a message."),
 					selenium.getText("//div[2]/div[2]/div[3]"));

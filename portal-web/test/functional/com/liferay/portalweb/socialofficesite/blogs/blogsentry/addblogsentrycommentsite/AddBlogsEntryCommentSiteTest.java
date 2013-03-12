@@ -30,7 +30,7 @@ public class AddBlogsEntryCommentSiteTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@class='search-input']"));
 		selenium.type("//input[@class='search-input']",
 			RuntimeVariables.replace("Open"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
@@ -54,7 +54,7 @@ public class AddBlogsEntryCommentSiteTest extends BaseTestCase {
 		selenium.waitForVisible("//textarea[@name='_33_postReplyBody0']");
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
 			RuntimeVariables.replace("Blogs Entry Comment Body"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForText("//div[@class='lfr-message-response portlet-msg-success']",

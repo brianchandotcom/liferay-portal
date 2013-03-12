@@ -46,7 +46,7 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 				assertTrue(selenium.isVisible("//input[@class='search-input']"));
 				selenium.type("//input[@class='search-input']",
 					RuntimeVariables.replace("Name"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertTrue(selenium.isPartialText(
 						"//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 						"Name"));

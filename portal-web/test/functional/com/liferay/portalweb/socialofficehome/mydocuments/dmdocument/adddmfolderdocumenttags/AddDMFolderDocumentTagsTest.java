@@ -45,7 +45,7 @@ public class AddDMFolderDocumentTagsTest extends BaseTestCase {
 					"DM Folder Name");
 				assertEquals(RuntimeVariables.replace("DM Folder Name"),
 					selenium.getText("//li[@class='folder selected']/a"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Add"),
 					selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",

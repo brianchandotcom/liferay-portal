@@ -38,7 +38,7 @@ public class SOUs_ReplyMicroblogsContentProfileTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='action comment']/a",
 			RuntimeVariables.replace("Comment"));
 		selenium.waitForVisible("//div[@class='autocomplete textarea']");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//div[@class='autocomplete textarea']",
 			RuntimeVariables.replace("Leave a comment..."));
 		selenium.waitForVisible("//textarea");

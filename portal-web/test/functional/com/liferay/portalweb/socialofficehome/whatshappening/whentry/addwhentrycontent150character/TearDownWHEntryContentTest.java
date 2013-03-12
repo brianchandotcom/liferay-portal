@@ -35,7 +35,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean whatsHappeningEntry1Present = selenium.isElementPresent(
 						"//span[@class='action delete']/a");
@@ -52,7 +52,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 2:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean whatsHappeningEntry2Present = selenium.isElementPresent(
 						"//span[@class='action delete']/a");
@@ -69,7 +69,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 3:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean whatsHappeningEntry3Present = selenium.isElementPresent(
 						"//span[@class='action delete']/a");
@@ -86,7 +86,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 4:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean whatsHappeningEntry4Present = selenium.isElementPresent(
 						"//span[@class='action delete']/a");
@@ -103,7 +103,7 @@ public class TearDownWHEntryContentTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this post[\\s\\S]$"));
 
 			case 5:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean whatsHappeningEntry5Present = selenium.isElementPresent(
 						"//span[@class='action delete']/a");

@@ -58,7 +58,7 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 				"//select[@id='_5_WAR_soportlet_typeSelect']"));
 		selenium.select("//select[@id='_5_WAR_soportlet_typeSelect']",
 			RuntimeVariables.replace("Open"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Home')]/input"));
 		assertTrue(selenium.isElementNotPresent(
@@ -81,7 +81,7 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertFalse(selenium.isTextPresent("Default Page None Name"));
 	}
 }

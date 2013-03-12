@@ -39,7 +39,7 @@ public class SOUs_AddTagProfileTest extends BaseTestCase {
 		selenium.type("//input[contains(@id,'TagNames')]",
 			RuntimeVariables.replace("tag1"));
 		selenium.clickAt("//button[@id='add']", RuntimeVariables.replace("Add"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//ul[@class='user-tags']/li/a");

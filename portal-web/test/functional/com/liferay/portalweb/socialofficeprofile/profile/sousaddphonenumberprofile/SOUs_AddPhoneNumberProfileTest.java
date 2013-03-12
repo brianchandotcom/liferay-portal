@@ -44,7 +44,7 @@ public class SOUs_AddPhoneNumberProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("Business"));
 		selenium.clickAt("//input[contains(@id,'phonePrimary')]",
 			RuntimeVariables.replace("Primary"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//div[@data-title='Phone Numbers']/h3");

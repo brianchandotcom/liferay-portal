@@ -44,7 +44,7 @@ public class SOUs1_AddPMMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Dropdown"));
 		selenium.sendKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
 			RuntimeVariables.replace("Social02"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForPartialText("//li[contains(@data-text,'Social02 Office02 User02')]",
 			"Social02 Office02 User02");
 		assertTrue(selenium.isPartialText(

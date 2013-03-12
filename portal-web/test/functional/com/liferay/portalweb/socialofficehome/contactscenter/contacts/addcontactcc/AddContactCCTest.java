@@ -42,7 +42,7 @@ public class AddContactCCTest extends BaseTestCase {
 			RuntimeVariables.replace("socialofficecontact01@liferay.com"));
 		selenium.type("//textarea[@id='_1_WAR_contactsportlet_comments']",
 			RuntimeVariables.replace("Social01 Office01 Contact01 Comments"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//span[@class='portlet-msg-success']");

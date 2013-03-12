@@ -38,7 +38,7 @@ public class SOUs_AddSMSProfileTest extends BaseTestCase {
 		selenium.waitForVisible("//input[contains(@id,'smsSn')]");
 		selenium.type("//input[contains(@id,'smsSn')]",
 			RuntimeVariables.replace("socialoffice01@liferay.com"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//div[@data-title='SMS']/h3");

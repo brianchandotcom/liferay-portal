@@ -48,7 +48,7 @@ public class SOUs_EditAdditionalEmailAddressProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("socialoffice02edit@liferay.com"));
 		selenium.clickAt("//input[contains(@id,'emailAddressPrimary')]",
 			RuntimeVariables.replace("Primary"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@data-title='Additional Email Addresses']/ul/li/span[2]/a",

@@ -86,7 +86,7 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 					selenium.getText("//div[6]/span/a/span"));
 				selenium.clickAt("//div[6]/span/a/span",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.selectWindow("title=Users and Organizations");
 				selenium.waitForText("//h1[@class='header-title']/span", "Roles");
 				assertEquals(RuntimeVariables.replace("Roles"),

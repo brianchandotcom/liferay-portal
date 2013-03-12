@@ -761,6 +761,12 @@
 	}
 }
 
+.ie8 {
+	.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+		background: url(../images/arrows/08_down.png) 100% -3px no-repeat;
+	}
+}
+
 .ie6, .ie7 {
 	.aui-toolbar li {
 		display: inline;

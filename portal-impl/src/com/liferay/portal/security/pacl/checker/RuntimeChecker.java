@@ -223,9 +223,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName9 = callerClass9.getName();
 
-			if (callerClassName9.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
+			if (callerClassName9.startsWith(_CLASS_NAME_CLASS_DEFINER)) {
 				logCreateClassLoader(callerClass9, 9);
 
 				return true;
@@ -235,9 +233,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName10 = callerClass10.getName();
 
-			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(11)) {
-
+			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER)) {
 				logCreateClassLoader(callerClass10, 10);
 
 				return true;
@@ -248,9 +244,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName11 = callerClass11.getName();
 
-			if (callerClassName11.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(12)) {
-
+			if (callerClassName11.startsWith(_CLASS_NAME_CLASS_DEFINER)) {
 				logCreateClassLoader(callerClass11, 11);
 
 				return true;
@@ -261,9 +255,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName10 = callerClass10.getName();
 
-			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-				CheckerUtil.isAccessControllerDoPrivileged(11)) {
-
+			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER)) {
 				logCreateClassLoader(callerClass10, 10);
 
 				return true;
@@ -278,9 +270,7 @@ public class RuntimeChecker extends BaseChecker {
 
 		String callerClassName7 = callerClass7.getName();
 
-		if (callerClassName7.startsWith("javax.crypto") &&
-			CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
+		if (callerClassName7.startsWith("javax.crypto")) {
 			logCreateSecurityManager(callerClass7, 7);
 
 			return true;
@@ -327,9 +317,7 @@ public class RuntimeChecker extends BaseChecker {
 	protected boolean hasGetProtectionDomain() {
 		Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-		if ((callerClass8 == AccessController.class) &&
-			CheckerUtil.isAccessControllerDoPrivileged(8)) {
-
+		if (callerClass8 == AccessController.class) {
 			logGetProtectionDomain(callerClass8, 8);
 
 			return true;
@@ -341,9 +329,7 @@ public class RuntimeChecker extends BaseChecker {
 	protected boolean hasLoadLibrary() {
 		Class<?> callerClass10 = Reflection.getCallerClass(10);
 
-		if ((callerClass10 == AccessController.class) &&
-			CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
+		if (callerClass10 == AccessController.class) {
 			return true;
 		}
 
@@ -356,9 +342,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName9 = callerClass9.getName();
 
-			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
+			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL)) {
 				logWriteFileDescriptor(callerClass9, 9);
 
 				return true;
@@ -369,9 +353,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName8 = callerClass8.getName();
 
-			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
+			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL)) {
 				logWriteFileDescriptor(callerClass8, 8);
 
 				return true;
@@ -387,9 +369,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName9 = callerClass9.getName();
 
-			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
-
+			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL)) {
 				logWriteFileDescriptor(callerClass9, 9);
 
 				return true;
@@ -400,9 +380,7 @@ public class RuntimeChecker extends BaseChecker {
 
 			String callerClassName8 = callerClass8.getName();
 
-			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-				CheckerUtil.isAccessControllerDoPrivileged(9)) {
-
+			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL)) {
 				logWriteFileDescriptor(callerClass8, 8);
 
 				return true;

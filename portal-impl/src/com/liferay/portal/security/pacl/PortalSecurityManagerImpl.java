@@ -219,10 +219,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		_log.debug("Loading " + FileAvailabilityUtil.class.getName());
 		_log.debug("Loading " + PortalHookPermission.class.getName());
-
-		// Touch dependent classes to prevent NoClassDefError
-
-		CheckerUtil.isAccessControllerDoPrivileged(0);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

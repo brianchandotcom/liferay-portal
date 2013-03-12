@@ -485,9 +485,8 @@ public class FileChecker extends BaseChecker {
 				Class<?> enclosingClass = callerClass.getEnclosingClass();
 
 				if (enclosingClass != null) {
-					if ((enclosingClass.getEnclosingClass() ==
-							URLClassLoader.class) &&
-						CheckerUtil.isAccessControllerDoPrivileged(i + 1)) {
+					if (enclosingClass.getEnclosingClass() ==
+							URLClassLoader.class) {
 
 						return true;
 					}

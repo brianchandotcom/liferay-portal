@@ -22,7 +22,7 @@ String assetCategoryClassName = GetterUtil.getString(request.getAttribute("lifer
 long assetCategoryClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetCategoryClassPK"));
 String assetTagClassName = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:assetTagClassName"));
 long assetTagClassPK = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:assetTagClassPK"));
-String cssClass = (String)request.getAttribute("liferay-ui:app-view-entry:cssClass");
+String cssClass = (String)request.getAttribute("liferay-ui:app-view-entry:cssClass");	// returns null
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-entry:data");
 String description = (String)request.getAttribute("liferay-ui:app-view-entry:description");
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
@@ -40,6 +40,8 @@ String title = (String)request.getAttribute("liferay-ui:app-view-entry:title");
 String url = (String)request.getAttribute("liferay-ui:app-view-entry:url");
 
 String shortTitle = StringUtil.shorten(title, 60);
+
+System.out.println("cssClass : " + cssClass);
 %>
 
 <c:choose>

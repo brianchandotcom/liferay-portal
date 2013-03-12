@@ -40,6 +40,7 @@ if (fileShortcut != null) {
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+	cssClass=""
 	description="<%= fileEntry.getDescription() %>"
 	displayStyle="icon"
 	locked="<%= fileEntry.isCheckedOut() %>"

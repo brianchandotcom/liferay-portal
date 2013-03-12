@@ -61,4 +61,24 @@
 			</sequential>
 		</for>
 	</target>
+
+	<target name="test-integration">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="test-integration-module" />
+		</antcall>
+	</target>
+
+	<target name="test-integration-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="test-integration" inheritAll="false" />
+	</target>
+
+	<target name="test-unit">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="test-unit-module" />
+		</antcall>
+	</target>
+
+	<target name="test-unit-module">
+		<ant dir="${project.dir}/osgi/modules/${module.name}" target="test-unit" inheritAll="false" />
+	</target>
 </project>

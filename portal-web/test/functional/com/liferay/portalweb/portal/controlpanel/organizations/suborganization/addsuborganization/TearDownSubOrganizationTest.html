@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>TearDownOrganizationTest</title>
+<title>TearDownSubOrganizationTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">TearDownOrganizationTest</td></tr>
+<tr><td rowspan="1" colspan="3">TearDownSubOrganizationTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -51,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Organization*</td>
+	<td>Suborganization*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -61,17 +61,17 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>organization1Present</td>
+	<td>subOrganization1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${organization1Present}</td>
-	<td>Organization1NotPresent</td>
+	<td>!${subOrganization1Present}</td>
+	<td>SubOrganization1NotPresent</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>Organization</td>
+	<td>Suborganization</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -114,6 +114,11 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>Users1NotFound</td>
 	<td></td>
@@ -149,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
@@ -156,7 +166,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Organization*</td>
+	<td>Suborganization*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -166,17 +176,17 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>organization2Present</td>
+	<td>subOrganization2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${organization2Present}</td>
-	<td>Organization2NotPresent</td>
+	<td>!${subOrganization2Present}</td>
+	<td>SubOrganization2NotPresent</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>Organization</td>
+	<td>Suborganization</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -219,6 +229,11 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>Users2NotFound</td>
 	<td></td>
@@ -254,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
@@ -261,7 +281,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Organization*</td>
+	<td>Suborganization*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -271,17 +291,17 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>organization3Present</td>
+	<td>subOrganization3Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${organization3Present}</td>
-	<td>Organization3NotPresent</td>
+	<td>!${subOrganization3Present}</td>
+	<td>SubOrganization3NotPresent</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>Organization</td>
+	<td>Suborganization</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -324,6 +344,11 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>Users3NotFound</td>
 	<td></td>
@@ -359,6 +384,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
@@ -366,7 +396,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Organization*</td>
+	<td>Suborganization*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -376,17 +406,17 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>organization4Present</td>
+	<td>subOrganization4Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${organization4Present}</td>
-	<td>Organization4NotPresent</td>
+	<td>!${subOrganization4Present}</td>
+	<td>SubOrganization4NotPresent</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>Organization</td>
+	<td>Suborganization</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -429,6 +459,11 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>Users4NotFound</td>
 	<td></td>
@@ -464,6 +499,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
 	<td>Users and Organizations</td>
@@ -471,7 +511,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_keywords']</td>
-	<td>Organization*</td>
+	<td>Suborganization*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -481,17 +521,17 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>organization5Present</td>
+	<td>subOrganization5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${organization5Present}</td>
-	<td>Organization5NotPresent</td>
+	<td>!${subOrganization5Present}</td>
+	<td>SubOrganization5NotPresent</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong</td>
-	<td>Organization</td>
+	<td>Suborganization</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -534,6 +574,11 @@
 	<td>Update Associations</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
 	<td>Users5NotFound</td>
 	<td></td>
@@ -569,28 +614,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
 	<td>label</td>
-	<td>Organization5NotPresent</td>
+	<td>SubOrganization5NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization4NotPresent</td>
+	<td>SubOrganization4NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization3NotPresent</td>
+	<td>SubOrganization3NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization2NotPresent</td>
+	<td>SubOrganization2NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Organization1NotPresent</td>
+	<td>SubOrganization1NotPresent</td>
 	<td></td>
 </tr>
 </tbody></table>

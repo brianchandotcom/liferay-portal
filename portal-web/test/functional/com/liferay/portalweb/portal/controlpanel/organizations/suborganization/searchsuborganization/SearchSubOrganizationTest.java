@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization;
+package com.liferay.portalweb.portal.controlpanel.organizations.suborganization.searchsuborganization;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddOrganizationTest extends BaseTestCase {
-	public void testAddOrganization() throws Exception {
+public class SearchSubOrganizationTest extends BaseTestCase {
+	public void testSearchSubOrganization() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -39,29 +39,13 @@ public class AddOrganizationTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]");
-		assertEquals(RuntimeVariables.replace("Regular Organization"),
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Suborganization*"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Suborganization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]",
-			RuntimeVariables.replace("Regular Organization"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Organization Name"));
-		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("Regular Organization"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//h1[@class='header-title']"));
+				"//tr[contains(.,'Suborganization Name')]/td[2]/a/strong"));
 	}
 }

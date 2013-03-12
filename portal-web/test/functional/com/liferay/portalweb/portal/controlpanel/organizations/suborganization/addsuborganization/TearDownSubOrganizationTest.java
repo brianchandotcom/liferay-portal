@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization;
+package com.liferay.portalweb.portal.controlpanel.organizations.suborganization.addsuborganization;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownOrganizationTest extends BaseTestCase {
-	public void testTearDownOrganization() throws Exception {
+public class TearDownSubOrganizationTest extends BaseTestCase {
+	public void testTearDownSubOrganization() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -45,22 +45,22 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Organization*"));
+					RuntimeVariables.replace("Suborganization*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean organization1Present = selenium.isElementPresent(
+				boolean subOrganization1Present = selenium.isElementPresent(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong");
 
-				if (!organization1Present) {
+				if (!subOrganization1Present) {
 					label = 11;
 
 					continue;
 				}
 
 				selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong",
-					RuntimeVariables.replace("Organization"));
+					RuntimeVariables.replace("Suborganization"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]");
@@ -88,6 +88,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -105,26 +108,29 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Organization*"));
+					RuntimeVariables.replace("Suborganization*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean organization2Present = selenium.isElementPresent(
+				boolean subOrganization2Present = selenium.isElementPresent(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong");
 
-				if (!organization2Present) {
+				if (!subOrganization2Present) {
 					label = 10;
 
 					continue;
 				}
 
 				selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong",
-					RuntimeVariables.replace("Organization"));
+					RuntimeVariables.replace("Suborganization"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]");
@@ -152,6 +158,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -169,26 +178,29 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Organization*"));
+					RuntimeVariables.replace("Suborganization*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean organization3Present = selenium.isElementPresent(
+				boolean subOrganization3Present = selenium.isElementPresent(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong");
 
-				if (!organization3Present) {
+				if (!subOrganization3Present) {
 					label = 9;
 
 					continue;
 				}
 
 				selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong",
-					RuntimeVariables.replace("Organization"));
+					RuntimeVariables.replace("Suborganization"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]");
@@ -216,6 +228,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 4:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -233,26 +248,29 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Organization*"));
+					RuntimeVariables.replace("Suborganization*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean organization4Present = selenium.isElementPresent(
+				boolean subOrganization4Present = selenium.isElementPresent(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong");
 
-				if (!organization4Present) {
+				if (!subOrganization4Present) {
 					label = 8;
 
 					continue;
 				}
 
 				selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong",
-					RuntimeVariables.replace("Organization"));
+					RuntimeVariables.replace("Suborganization"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]");
@@ -280,6 +298,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 5:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -297,26 +318,29 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_125_keywords']",
-					RuntimeVariables.replace("Organization*"));
+					RuntimeVariables.replace("Suborganization*"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Search']"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean organization5Present = selenium.isElementPresent(
+				boolean subOrganization5Present = selenium.isElementPresent(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong");
 
-				if (!organization5Present) {
+				if (!subOrganization5Present) {
 					label = 7;
 
 					continue;
 				}
 
 				selenium.clickAt("//td[@id='_125_organizationsSearchContainer_col-name_row-1']/a/strong",
-					RuntimeVariables.replace("Organization"));
+					RuntimeVariables.replace("Suborganization"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]");
@@ -344,6 +368,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 6:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -361,6 +388,9 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 7:
 			case 8:

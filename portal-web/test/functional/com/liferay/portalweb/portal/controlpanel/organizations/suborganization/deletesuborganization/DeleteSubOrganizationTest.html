@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddOrganizationTest</title>
+<title>DeleteSubOrganizationTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddOrganizationTest</td></tr>
+<tr><td rowspan="1" colspan="3">DeleteSubOrganizationTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -49,44 +49,49 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Suborganization*</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
+	<td>//tr[contains(.,'Suborganization Name')]/td[2]/a/strong</td>
+	<td>Suborganization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
-	<td>Regular Organization</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
-	<td>Regular Organization</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
-	<td>Regular Organization</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_125_name']</td>
-	<td>Organization Name</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>//select[@id='_125_type']</td>
-	<td>Regular Organization</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -94,9 +99,9 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//h1[@class='header-title']</td>
-	<td>Organization Name</td>
+	<td>assertTextNotPresent</td>
+	<td>Suborganization Name</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.adduser;
+package com.liferay.portalweb.portal.controlpanel.organizations.suborganization.addsuborganization;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserTest extends BaseTestCase {
-	public void testAddUser() throws Exception {
+public class AddSubOrganizationTest extends BaseTestCase {
+	public void testAddSubOrganization() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -39,38 +39,39 @@ public class AddUserTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
-		assertEquals(RuntimeVariables.replace("User"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]",
-			RuntimeVariables.replace("User"));
+		selenium.type("//input[@name='_125_keywords']",
+			RuntimeVariables.replace("Organization Name"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_125_screenName']",
-			RuntimeVariables.replace("usersn"));
-		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("userea@liferay.com"));
-		selenium.type("//input[@id='_125_firstName']",
-			RuntimeVariables.replace("userfn"));
-		selenium.type("//input[@id='_125_lastName']",
-			RuntimeVariables.replace("userln"));
+		assertEquals(RuntimeVariables.replace("Organization Name"),
+			selenium.getText(
+				"//tr[contains(.,'Organization Name')]/td[2]/a/strong"));
+		assertEquals(RuntimeVariables.replace("Regular Organization"),
+			selenium.getText("//tr[contains(.,'Organization Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]");
+		assertEquals(RuntimeVariables.replace("Add Regular Organization"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]",
+			RuntimeVariables.replace("Add Regular Organization"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@id='_125_name']",
+			RuntimeVariables.replace("Suborganization Name"));
+		selenium.select("//select[@id='_125_type']",
+			RuntimeVariables.replace("Regular Organization"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("usersn",
-			selenium.getValue("//input[@id='_125_screenName']"));
-		assertEquals("userea@liferay.com",
-			selenium.getValue("//input[@id='_125_emailAddress']"));
-		assertEquals("userfn",
-			selenium.getValue("//input[@id='_125_firstName']"));
-		assertEquals("userln", selenium.getValue("//input[@id='_125_lastName']"));
+		assertEquals(RuntimeVariables.replace("Suborganization Name"),
+			selenium.getText("//h1[@class='header-title']"));
 	}
 }

@@ -83,7 +83,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				return StringPool.BLANK;
 			}
 
-			return rootElement.getDocument().formattedString();
+			Document document = rootElement.getDocument();
+
+			if (document == null) {
+				return StringPool.BLANK;
+			}
+
+			return document.formattedString();
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

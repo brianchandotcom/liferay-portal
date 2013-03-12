@@ -257,7 +257,8 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
 
-		trashHandler.restoreTrashEntry(getTrashEntryClassPK(baseModel));
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
 		Assert.assertEquals(
 			1,

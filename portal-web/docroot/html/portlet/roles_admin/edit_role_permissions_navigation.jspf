@@ -272,7 +272,10 @@ private static final String[] _PORTAL_PORTLETS = {
 	PortletKeys.PLUGINS_ADMIN,
 	PortletKeys.ROLES_ADMIN,
 	PortletKeys.PORTAL_SETTINGS,
-	PortletKeys.USERS_ADMIN
+	PortletKeys.USERS_ADMIN,
+	PortletKeys.EXPANDO,
+	PortletKeys.LAYOUT_PROTOTYPE,
+	PortletKeys.LAYOUT_SET_PROTOTYPE
 };
 
 private boolean _isSitePortlet(String portletId) {

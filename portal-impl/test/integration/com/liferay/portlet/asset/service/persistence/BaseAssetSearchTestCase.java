@@ -511,7 +511,6 @@ public abstract class BaseAssetSearchTestCase {
 		testClassNames(assetEntryQuery, 0);
 	}
 
-	@Test
 	public void testClassTypeIds1() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -521,7 +520,6 @@ public abstract class BaseAssetSearchTestCase {
 		testClassTypeIds(assetEntryQuery, 1);
 	}
 
-	@Test
 	public void testClassTypeIds2() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -763,7 +761,6 @@ public abstract class BaseAssetSearchTestCase {
 		testAssetCategorization(assetEntryQuery, 1);
 	}
 
-	@Test
 	public void testOrderByTitleAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -780,7 +777,6 @@ public abstract class BaseAssetSearchTestCase {
 		testOrderByTitle(assetEntryQuery, "asc", titles, orderedTitles);
 	}
 
-	@Test
 	public void testOrderByTitleDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(

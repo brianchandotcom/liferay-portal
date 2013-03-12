@@ -15,7 +15,11 @@
 package com.liferay.portalweb.portal.selenium.mouseactions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.selenium.mouseactions.doubleclick.DoubleClickTests;
+import com.liferay.portalweb.portal.selenium.mouseactions.draganddrop.DragAndDropTests;
+import com.liferay.portalweb.portal.selenium.mouseactions.keydown.KeyDownTests;
 import com.liferay.portalweb.portal.selenium.mouseactions.mousedown.MouseDownTests;
+import com.liferay.portalweb.portal.selenium.mouseactions.mouseover.MouseOverTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,11 +32,11 @@ public class MouseActionsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-//		testSuite.addTest(DoubleClickTests.suite());
-//		testSuite.addTest(DragAndDropTests.suite());
-//		testSuite.addTest(KeyDownTests.suite());
+		testSuite.addTest(DoubleClickTests.suite());
+		testSuite.addTest(DragAndDropTests.suite());
+		testSuite.addTest(KeyDownTests.suite());
 		testSuite.addTest(MouseDownTests.suite());
-//		testSuite.addTest(MouseOverTests.suite());
+		testSuite.addTest(MouseOverTests.suite());
 
 		return testSuite;
 	}

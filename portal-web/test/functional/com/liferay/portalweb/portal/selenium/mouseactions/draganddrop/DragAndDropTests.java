@@ -27,6 +27,7 @@ public class DragAndDropTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(DragAndDrop1Test.class);
 		testSuite.addTestSuite(DragAndDrop2Test.class);
+		testSuite.addTestSuite(DragAndDrop3Test.class);
 
 		return testSuite;
 	}

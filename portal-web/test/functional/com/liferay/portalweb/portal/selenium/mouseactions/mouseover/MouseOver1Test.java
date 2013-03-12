@@ -36,8 +36,5 @@ public class MouseOver1Test extends BaseTestCase {
 		selenium.waitForVisible("//a[@title='Manage Page']");
 		assertEquals(RuntimeVariables.replace("Page"),
 			selenium.getText("//a[@title='Manage Page']"));
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForNotVisible("//a[@title='Manage Page']");
 	}
 }

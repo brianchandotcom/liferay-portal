@@ -184,6 +184,7 @@ public class DataFactory {
 
 		_accountId = _counter.get();
 		_companyId = _counter.get();
+		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
 		initCompany();
@@ -242,6 +243,10 @@ public class DataFactory {
 
 	public long getDDMContentClassNameId() {
 		return _classNamesMap.get(DDMContent.class.getName());
+	}
+
+	public DDMStructure getDefaultDLDDMStructure() {
+		return _defaultDLDDMStructure;
 	}
 
 	public DLFileEntryType getDefaultDLFileEntryType() {
@@ -345,16 +350,18 @@ public class DataFactory {
 		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+
+		_defaultDLDDMStructure = newDDMStructure(
+			_guestGroupId, _companyId, _sampleUserId,
+			getDLFileEntryClassNameId());
 	}
 
 	public void initGroups() throws Exception {
 		long groupClassNameId = getGroupClassNameId();
 
-		long guestGroupId = _counter.get();
-
 		_guestGroup = newGroup(
-			guestGroupId, groupClassNameId, guestGroupId, GroupConstants.GUEST,
-			true);
+			_guestGroupId, groupClassNameId, _guestGroupId,
+			GroupConstants.GUEST, true);
 
 		_groups = new ArrayList<Group>(_maxGroupsCount);
 
@@ -1466,12 +1473,14 @@ public class DataFactory {
 	private Company _company;
 	private long _companyId;
 	private SimpleCounter _counter;
+	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
 	private List<Group> _groups;
 	private Group _guestGroup;
+	private long _guestGroupId;
 	private Role _guestRole;
 	private User _guestUser;
 	private String _journalArticleContent;

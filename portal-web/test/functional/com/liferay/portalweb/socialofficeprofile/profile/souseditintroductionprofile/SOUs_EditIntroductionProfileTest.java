@@ -36,7 +36,7 @@ public class SOUs_EditIntroductionProfileTest extends BaseTestCase {
 		selenium.waitForVisible("//textarea[contains(@id,'comments')]");
 		selenium.type("//textarea[contains(@id,'comments')]",
 			RuntimeVariables.replace("Introduction Content Edit"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@data-title='Introduction']/ul/li/span",

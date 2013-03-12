@@ -47,7 +47,7 @@ public class TearDownEventSOTest extends BaseTestCase {
 					continue;
 				}
 
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible("//td[6]/span/ul/li/strong/a");
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));

@@ -34,7 +34,7 @@ public class ViewEditContactCCTest extends BaseTestCase {
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("social"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Social02 Office02 Contact02"),
 			selenium.getText("//div[@class='lfr-contact-name']"));
 		selenium.clickAt("//div[@class='lfr-contact-name']",

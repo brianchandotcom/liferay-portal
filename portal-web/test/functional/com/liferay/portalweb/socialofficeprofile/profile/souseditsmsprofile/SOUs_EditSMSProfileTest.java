@@ -37,7 +37,7 @@ public class SOUs_EditSMSProfileTest extends BaseTestCase {
 		selenium.waitForVisible("//input[contains(@id,'smsSn')]");
 		selenium.type("//input[contains(@id,'smsSn')]",
 			RuntimeVariables.replace("socialoffice01edit@liferay.com"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@data-title='SMS']/ul/li",

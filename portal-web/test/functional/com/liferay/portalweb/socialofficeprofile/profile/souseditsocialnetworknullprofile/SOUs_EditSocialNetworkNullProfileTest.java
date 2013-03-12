@@ -58,7 +58,7 @@ public class SOUs_EditSocialNetworkNullProfileTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.type("//input[contains(@id,'twitterSn')]",
 			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//li[@data-title='Social Network']");

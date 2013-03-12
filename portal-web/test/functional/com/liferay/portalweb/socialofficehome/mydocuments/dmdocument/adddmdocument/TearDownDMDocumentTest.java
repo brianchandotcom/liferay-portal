@@ -36,11 +36,11 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'My Documents')]/a/span",
 					RuntimeVariables.replace("My Documents"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible("//button[@title='Icon View']");
 				selenium.clickAt("//button[@title='Icon View']",
 					RuntimeVariables.replace("Icon View"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible(
 					"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 				assertTrue(selenium.isVisible(

@@ -40,7 +40,7 @@ public class SOUs1_BlockCCSOUser3Test extends BaseTestCase {
 			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice03@liferay.com"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
 			RuntimeVariables.replace("User03, Social03"));
 		selenium.waitForVisible("//div[contains(@class, 'contacts-profile')]");

@@ -48,7 +48,7 @@ public class AddMicroblogsContent151CharacterTest extends BaseTestCase {
 				"//span[@class='microblogs-countdown microblogs-countdown-warned']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.open("/user/joebloggs/so/dashboard");
 		assertTrue(selenium.isElementPresent(
 				"//div[contains(@id,'_2_WAR_microblogsportlet_autocompleteContent')]"));

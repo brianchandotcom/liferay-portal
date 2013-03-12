@@ -47,7 +47,7 @@ public class SOUs_EditExpertiseProfileTest extends BaseTestCase {
 			"//textarea[@id='_2_projectsEntryDescription0']");
 		selenium.type("//textarea[@id='_2_projectsEntryDescription0']",
 			RuntimeVariables.replace("Expertise Description Edit"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@class='project-description property-list']",

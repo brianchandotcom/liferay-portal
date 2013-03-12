@@ -73,7 +73,7 @@ public class AddEventDisplayDays2SOTest extends BaseTestCase {
 			case 3:
 				selenium.type("//input[@id='_8_title']",
 					RuntimeVariables.replace("Calendar Event Title"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Source"),
 					selenium.getText(
 						"//span[@id='cke_48_label' and .='Source']"));

@@ -45,7 +45,7 @@ public class AddWHEntryContent151CharacterTest extends BaseTestCase {
 				"//span[@class='microblogs-countdown microblogs-countdown-warned']"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.open("/user/joebloggs/so/dashboard");
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));

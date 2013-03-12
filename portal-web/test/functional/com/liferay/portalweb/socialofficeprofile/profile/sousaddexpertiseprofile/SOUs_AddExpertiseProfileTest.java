@@ -68,7 +68,7 @@ public class SOUs_AddExpertiseProfileTest extends BaseTestCase {
 					"//textarea[@id='_2_projectsEntryDescription0']");
 				selenium.type("//textarea[@id='_2_projectsEntryDescription0']",
 					RuntimeVariables.replace("Expertise Description"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForVisible("//div[@data-title='Projects']/div/h3");

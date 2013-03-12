@@ -81,7 +81,7 @@ public class SOUs_EditInstantMessengerProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("socialofficesnedit"));
 		selenium.type("//input[contains(@id,'ymSn')]",
 			RuntimeVariables.replace("socialofficesnedit"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForText("//div[@data-title='Instant Messenger']/ul/li[contains(.,'AIM')]/span[2]",

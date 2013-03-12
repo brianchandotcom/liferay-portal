@@ -39,7 +39,7 @@ public class SOUs_EditWebsiteNullProfileTest extends BaseTestCase {
 		selenium.waitForVisible("//input[contains(@id,'websiteUrl')]");
 		selenium.type("//input[contains(@id,'websiteUrl')]",
 			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//li[@data-title='Websites']");

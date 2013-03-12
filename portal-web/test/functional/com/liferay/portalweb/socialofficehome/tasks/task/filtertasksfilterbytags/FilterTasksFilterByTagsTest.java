@@ -47,7 +47,7 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 		selenium.waitForVisible("//h3[contains(.,'Filter by Tags')]");
 		assertEquals(RuntimeVariables.replace("Filter by Tags"),
 			selenium.getText("//h3[contains(.,'Filter by Tags')]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("portaltag1"),
 			selenium.getText("//span/a[contains(.,'portaltag1')]"));
 		selenium.clickAt("//span/a[contains(.,'portaltag1')]",
@@ -62,7 +62,7 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 			selenium.getText("//span/a[contains(.,'portaltag1')]"));
 		selenium.clickAt("//span/a[contains(.,'portaltag1')]",
 			RuntimeVariables.replace("portaltag1"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Portal Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",

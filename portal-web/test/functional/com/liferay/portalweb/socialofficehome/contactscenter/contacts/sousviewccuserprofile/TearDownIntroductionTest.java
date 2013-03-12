@@ -44,7 +44,7 @@ public class TearDownIntroductionTest extends BaseTestCase {
 		selenium.waitForVisible("//textarea[@id='_2_comments']");
 		selenium.type("//textarea[@id='_2_comments']",
 			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

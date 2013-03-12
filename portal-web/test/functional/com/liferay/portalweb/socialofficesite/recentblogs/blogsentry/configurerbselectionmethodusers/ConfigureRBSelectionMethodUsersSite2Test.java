@@ -38,7 +38,7 @@ public class ConfigureRBSelectionMethodUsersSite2Test extends BaseTestCase {
 					RuntimeVariables.replace("All Sites"));
 				selenium.type("//input[@class='search-input']",
 					RuntimeVariables.replace("Open Site2"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Open Site2 Name"),
 					selenium.getText(
 						"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
@@ -70,7 +70,7 @@ public class ConfigureRBSelectionMethodUsersSite2Test extends BaseTestCase {
 					"//section[@class='portlet']/header[contains(.,'Recent Blogs')]/menu/span/ul/li/strong/a");
 
 			case 2:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				assertTrue(selenium.isVisible(
 						"//section[@class='portlet']/header[contains(.,'Recent Blogs')]/menu/span/ul/li/strong/a"));
 				selenium.clickAt("//section[@class='portlet']/header[contains(.,'Recent Blogs')]/menu/span/ul/li/strong/a",

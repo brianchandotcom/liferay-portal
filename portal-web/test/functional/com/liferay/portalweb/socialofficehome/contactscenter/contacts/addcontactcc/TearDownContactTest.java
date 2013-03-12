@@ -39,7 +39,7 @@ public class TearDownContactTest extends BaseTestCase {
 						"//input[@id='_1_WAR_contactsportlet_name']"));
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 					RuntimeVariables.replace("social"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean contact1Present = selenium.isElementPresent(
 						"//div[@class='lfr-contact-info']");
@@ -68,7 +68,7 @@ public class TearDownContactTest extends BaseTestCase {
 			case 2:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 					RuntimeVariables.replace("social"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean contact2Present = selenium.isElementPresent(
 						"//div[@class='lfr-contact-info']");
@@ -97,7 +97,7 @@ public class TearDownContactTest extends BaseTestCase {
 			case 3:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 					RuntimeVariables.replace("social"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean contact3Present = selenium.isElementPresent(
 						"//div[@class='lfr-contact-info']");
@@ -126,7 +126,7 @@ public class TearDownContactTest extends BaseTestCase {
 			case 4:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 					RuntimeVariables.replace("social"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean contact4Present = selenium.isElementPresent(
 						"//div[@class='lfr-contact-info']");
@@ -155,7 +155,7 @@ public class TearDownContactTest extends BaseTestCase {
 			case 5:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 					RuntimeVariables.replace("social"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean contact5Present = selenium.isElementPresent(
 						"//div[@class='lfr-contact-info']");

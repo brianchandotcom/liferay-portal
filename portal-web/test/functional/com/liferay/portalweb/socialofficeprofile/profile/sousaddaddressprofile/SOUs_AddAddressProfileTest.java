@@ -36,7 +36,7 @@ public class SOUs_AddAddressProfileTest extends BaseTestCase {
 		selenium.clickAt("//li[@data-title='Addresses']",
 			RuntimeVariables.replace("Addresses"));
 		selenium.waitForVisible("//input[contains(@id,'addressStreet1')]");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.type("//input[contains(@id,'addressStreet1')]",
 			RuntimeVariables.replace("123 Liferay Ln."));
 		selenium.select("//select[contains(@id,'addressCountry')]",

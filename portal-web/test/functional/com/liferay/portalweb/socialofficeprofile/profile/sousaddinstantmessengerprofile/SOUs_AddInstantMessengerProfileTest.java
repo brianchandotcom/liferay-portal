@@ -48,7 +48,7 @@ public class SOUs_AddInstantMessengerProfileTest extends BaseTestCase {
 			RuntimeVariables.replace("socialofficesn"));
 		selenium.type("//input[contains(@id,'ymSn')]",
 			RuntimeVariables.replace("socialofficesn"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//div[@data-title='Instant Messenger']/h3");

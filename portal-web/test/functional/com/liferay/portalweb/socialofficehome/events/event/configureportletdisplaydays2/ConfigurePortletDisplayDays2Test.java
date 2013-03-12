@@ -29,7 +29,7 @@ public class ConfigurePortletDisplayDays2Test extends BaseTestCase {
 			"Events");
 		assertEquals(RuntimeVariables.replace("Events"),
 			selenium.getText("xPath=(//span[@class='portlet-title-text'])[4]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText(
 				"//div[2]/div/div[2]/div/section/header/menu/span/ul/li/strong/a"));

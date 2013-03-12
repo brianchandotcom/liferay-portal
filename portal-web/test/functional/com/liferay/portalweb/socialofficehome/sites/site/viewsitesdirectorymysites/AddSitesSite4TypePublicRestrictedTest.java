@@ -83,7 +83,7 @@ public class AddSitesSite4TypePublicRestrictedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
 			selenium.getText(
 				"xPath=(//li[contains(@class, 'social-office-enabled')]/span[2]/a)[4]"));

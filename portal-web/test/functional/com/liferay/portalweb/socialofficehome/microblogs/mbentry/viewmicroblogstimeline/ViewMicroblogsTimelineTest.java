@@ -34,7 +34,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		selenium.waitForVisible("xPath=(//div[@class='content'])[1]");
 		selenium.waitForVisible("xPath=(//div[@class='content'])[2]");
 		selenium.waitForVisible("xPath=(//div[@class='content'])[3]");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

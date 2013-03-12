@@ -34,7 +34,7 @@ public class EditContactCCTest extends BaseTestCase {
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("social"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Social01 Office01 Contact01"),
 			selenium.getText("//div[@class='lfr-contact-name']"));
 		selenium.clickAt("//div[@class='lfr-contact-name']",
@@ -54,7 +54,7 @@ public class EditContactCCTest extends BaseTestCase {
 			RuntimeVariables.replace("socialofficecontact02@liferay.com"));
 		selenium.type("//textarea[@id='_1_WAR_contactsportlet_comments']",
 			RuntimeVariables.replace("Social02 Office02 Contact02 Comments"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//span[@class='portlet-msg-success']");

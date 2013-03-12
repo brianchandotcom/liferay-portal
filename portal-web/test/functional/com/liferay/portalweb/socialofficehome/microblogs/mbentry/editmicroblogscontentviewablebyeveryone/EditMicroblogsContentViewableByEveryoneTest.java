@@ -49,7 +49,7 @@ public class EditMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		assertEquals("Everyone",
 			selenium.getSelectedLabel(
 				"xPath=(//select[@id='_1_WAR_microblogsportlet_socialRelationType'])[2]"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.clickAt("xPath=(//input[@value='Post'])[2]",
 			RuntimeVariables.replace("Post"));
 		selenium.waitForVisible("//div[@class='content']");

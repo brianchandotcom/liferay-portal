@@ -33,8 +33,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 					RuntimeVariables.replace("gmail"));
 				selenium.waitForPopUp("gmail", RuntimeVariables.replace(""));
 				selenium.selectWindow("gmail");
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(1000);
+				Thread.sleep(1000);
 
 				boolean usernamePresent = selenium.isElementPresent(
 						"//input[@id='Email']");
@@ -58,7 +58,7 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 2:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean signInToGmailPresent = selenium.isTextPresent(
 						"Sign in to Gmail");
@@ -121,11 +121,11 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForVisible("//span[@role='checkbox']/div");
 				selenium.clickAt("//span[@role='checkbox']/div",
 					RuntimeVariables.replace("All"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean deleteVisible = selenium.isVisible(
 						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]");
@@ -157,8 +157,8 @@ public class Gmail_TearDownEmailTest extends BaseTestCase {
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 8:
-				Thread.sleep(5000);
-				Thread.sleep(5000);
+				Thread.sleep(1000);
+				Thread.sleep(1000);
 				selenium.close();
 				selenium.selectWindow("null");
 

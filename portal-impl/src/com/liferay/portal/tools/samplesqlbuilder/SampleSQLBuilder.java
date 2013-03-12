@@ -107,10 +107,10 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.count"));
-		_maxJournalArticleVersionCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.version.count"));
 		_maxJournalArticleSize = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.size"));
+		_maxJournalArticleVersionCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.journal.article.version.count"));
 		_maxMBCategoryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.mb.category.count"));
 		_maxMBMessageCount = GetterUtil.getInteger(

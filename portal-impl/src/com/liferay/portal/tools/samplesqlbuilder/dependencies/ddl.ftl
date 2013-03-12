@@ -1,11 +1,11 @@
 <#setting number_format = "0">
 
 <#if (maxDDLRecordSetCount > 0)>
-	<#assign ddmStructure = dataFactory.newDDMStructure(groupId, companyId, sampleUserId, dataFactory.DDLRecordSetClassNameId)>
+	<#assign ddmStructure = dataFactory.newDDLDDMStructure(groupId)>
 
 	<#assign createDate = dataFactory.getDateString(ddmStructure.createDate)>
 
-	insert into DDMStructure values ('${portalUUIDUtil.generate()}', ${ddmStructure.structureId}, ${ddmStructure.groupId}, ${ddmStructure.companyId}, ${ddmStructure.userId}, '', '${createDate}', '${createDate}', 0, ${ddmStructure.classNameId}, 'Test DDM Structure', '<?xml version="1.0" encoding="UTF-8"?><root available-locales="en_US" default-locale="en_US"><Name language-id="en_US">Test DDM Structure</Name></root>', '', '<?xml version="1.0"?><root available-locales="en_US" default-locale="en_US"><dynamic-element dataType="string" name="text2102" type="text"><meta-data locale="en_US"><entry name="label"><![CDATA[Name]]></entry><entry name="showLabel"><![CDATA[true]]></entry><entry name="required"><![CDATA[false]]></entry><entry name="predefinedValue"><![CDATA[]]></entry><entry name="tip"><![CDATA[]]></entry><entry name="width"><![CDATA[25]]></entry><entry name="fieldCssClass"><![CDATA[aui-w25]]></entry></meta-data></dynamic-element></root>', 'xml', 0);
+	insert into DDMStructure values ('${ddmStructure.uuid}', ${ddmStructure.structureId}, ${ddmStructure.groupId}, ${ddmStructure.companyId}, ${ddmStructure.userId}, '${ddmStructure.userName}', '${dataFactory.getDateString(ddmStructure.createDate)}', '${dataFactory.getDateString(ddmStructure.modifiedDate)}', ${ddmStructure.parentStructureId}, ${ddmStructure.classNameId}, '${ddmStructure.structureKey}', '${ddmStructure.name}', '${ddmStructure.description}', '${ddmStructure.xsd}', '${ddmStructure.storageType}', ${ddmStructure.type});
 
 	<#list 1..maxDDLRecordSetCount as ddlRecordSetCount>
 		<#assign ddlLayoutName = "dynamic_data_list_display_" + ddlRecordSetCount>

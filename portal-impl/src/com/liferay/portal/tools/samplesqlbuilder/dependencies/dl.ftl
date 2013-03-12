@@ -2,4 +2,4 @@
 
 ${writerRepositoryCSV.write(group.groupId + ", " + group.name + "\n")}
 
-${sampleSQLBuilder.insertDLFolders(groupId, 0, 1, dataFactory.defaultDLDDMStructure)}
+${sampleSQLBuilder.insertDLFolders(groupId, 0, 1, dataFactory.defaultDLDDMStructure.structureId)}

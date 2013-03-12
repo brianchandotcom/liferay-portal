@@ -21,9 +21,9 @@ insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${a
 
 insert into DDMContent values ('${portalUUIDUtil.generate()}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '', '${createDate}', '${createDate}',  'com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink', '', '<?xml version="1.0"?>\n\n<root>\n <dynamic-element name="CONTENT_TYPE">\n <dynamic-content><![CDATA[text/plain]]></dynamic-content>\n </dynamic-element>\n <dynamic-element name="CONTENT_ENCODING">\n <dynamic-content><![CDATA[ISO-8859-1]]></dynamic-content>\n </dynamic-element>\n</root>');
 
-<#assign ddmStorageLink = dataFactory.newDDMStorageLink(dataFactory.DDMContentClassNameId, ddmContent.contentId, ddmStructure.structureId)>
+<#assign ddmStorageLink = dataFactory.newDDMStorageLink(dataFactory.DDMContentClassNameId, ddmContent.contentId, ddmStructureId)>
 
-insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageLink.storageLinkId}, ${dataFactory.DDMContentClassNameId}, ${ddmContent.contentId}, ${ddmStructure.structureId});
+insert into DDMStorageLink values ('${portalUUIDUtil.generate()}', ${ddmStorageLink.storageLinkId}, ${dataFactory.DDMContentClassNameId}, ${ddmContent.contentId}, ${ddmStructureId});
 
 ${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, counter.get(), counter.get(), 0)}
 
@@ -31,9 +31,9 @@ ${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEnt
 
 insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
 
-<#assign dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmContent.contentId, ddmStructure.structureId, dlFileEntry.fileEntryId, dlFileVersion.fileVersionId)>
+<#assign dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmContent.contentId, ddmStructureId, dlFileEntry.fileEntryId, dlFileVersion.fileVersionId)>
 
-insert into DLFileEntryMetadata values ('${portalUUIDUtil.generate()}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${ddmContent.contentId}, ${ddmStructure.structureId}, 0, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
+insert into DLFileEntryMetadata values ('${portalUUIDUtil.generate()}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${ddmContent.contentId}, ${ddmStructureId}, 0, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
 
 <#assign ddmStructureLink = dataFactory.newDDMStructureLink(dlFileEntryMetadata.fileEntryMetadataId, ddmContent.contentId)>
 

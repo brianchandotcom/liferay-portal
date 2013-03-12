@@ -114,6 +114,7 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	@Transactional
 	public void testSearchWithinDDMStructure() throws Exception {
 		searchWithinDDMStructure();
 	}

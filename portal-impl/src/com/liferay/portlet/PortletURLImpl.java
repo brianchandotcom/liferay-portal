@@ -1032,7 +1032,7 @@ public class PortletURLImpl
 			name = HttpUtil.encodeURL(prependNamespace(name));
 
 			for (String value : values) {
-				sb.append(HttpUtil.encodeURL(name));
+				sb.append(name);
 				sb.append(StringPool.EQUAL);
 				sb.append(processValue(key, value));
 				sb.append(StringPool.AMPERSAND);

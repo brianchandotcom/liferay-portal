@@ -161,6 +161,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		contextQuery.addRequiredTerm(
 			Field.HIDDEN, searchContext.isIncludeAttachments());
 
+		addSearchClassTypeIds(contextQuery, searchContext);
+
 		String structureField = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
 		String structureValue = (String)searchContext.getAttribute(
@@ -367,6 +369,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				}
 			}
 
+			document.addKeyword(
+				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());

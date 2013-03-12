@@ -707,6 +707,26 @@ public abstract class BaseIndexer implements Indexer {
 		searchContext.addFacet(multiValueFacet);
 	}
 
+	protected void addSearchClassTypeIds(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		long[] classTypeIds = searchContext.getClassTypeIds();
+
+		if ((classTypeIds == null) || (classTypeIds.length <= 0)) {
+			return;
+		}
+
+		BooleanQuery classTypeIdsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+
+		for (long classTypeId : classTypeIds) {
+			classTypeIdsQuery.addTerm(Field.CLASS_TYPE_ID, classTypeId);
+		}
+
+		contextQuery.add(classTypeIdsQuery, BooleanClauseOccur.MUST);
+	}
+
 	protected void addSearchDDMStruture(
 			BooleanQuery searchQuery, SearchContext searchContext,
 			DDMStructure ddmStructure)

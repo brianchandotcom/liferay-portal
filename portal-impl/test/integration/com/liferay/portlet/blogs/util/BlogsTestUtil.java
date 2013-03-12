@@ -42,6 +42,26 @@ public class BlogsTestUtil {
 			long userId, Group group, String title, boolean approved)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		return addEntry(userId, title, approved, serviceContext);
+	}
+
+	public static BlogsEntry addEntry(
+			long userId, long groupId, String title, boolean approved)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		return addEntry(userId, group, title, approved);
+	}
+
+	public static BlogsEntry addEntry(
+			long userId, String title, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
@@ -61,9 +81,6 @@ public class BlogsTestUtil {
 			String smallImageURL = StringPool.BLANK;
 			String smallImageFileName = StringPool.BLANK;
 			InputStream smallImageInputStream = null;
-
-			ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-				group.getGroupId());
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -86,15 +103,6 @@ public class BlogsTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, long groupId, String title, boolean approved)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return addEntry(userId, group, title, approved);
 	}
 
 }

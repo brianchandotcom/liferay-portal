@@ -21,8 +21,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,19 +44,24 @@ import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -246,6 +258,30 @@ public class AssetUtil {
 		return addPortletURL;
 	}
 
+	public static List<AssetEntry> getAssetEntries(Hits hits)
+		throws PortalException, SystemException {
+
+		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+
+		for (Document document : hits.getDocs()) {
+			String className = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+					className, classPK);
+
+				assetEntries.add(assetEntry);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return assetEntries;
+	}
+
 	public static String getAssetKeywords(String className, long classPK)
 		throws SystemException {
 
@@ -303,6 +339,35 @@ public class AssetUtil {
 		}
 
 		return true;
+	}
+
+	public static Hits search(
+			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		return search(searchContext, assetEntryQuery, start, end);
+	}
+
+	public static Hits search(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		Indexer searcher = AssetSearcher.getInstance();
+
+		AssetSearcher assetSearcher = (AssetSearcher)searcher;
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+		searchContext.setStart(start);
+
+		return assetSearcher.search(searchContext);
 	}
 
 	public static String substituteCategoryPropertyVariables(

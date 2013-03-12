@@ -48,14 +48,27 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
 
-			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+			int groupTotal = 0;
 
-			total += groupTotal;
+			if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+				Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
 
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+				groupTotal = hits.getLength();
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+				total += groupTotal;
+
+				results = AssetUtil.getAssetEntries(hits);
+			}
+			else {
+				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+				total += groupTotal;
+
+				assetEntryQuery.setEnd(end);
+				assetEntryQuery.setStart(start);
+
+				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			}
 
 			if (!results.isEmpty()) {
 				searchContainer.setResults(results);
@@ -103,14 +116,23 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	else if (!groupByClass) {
 		assetEntryQuery.setClassNameIds(classNameIds);
 
-		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+			Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
 
-		searchContainer.setTotal(total);
+			total = hits.getLength();
 
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
+			results = AssetUtil.getAssetEntries(hits);
+		}
+		else {
+			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			searchContainer.setTotal(total);
+
+			assetEntryQuery.setEnd(end);
+			assetEntryQuery.setStart(start);
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+		}
 
 		searchContainer.setResults(results);
 
@@ -140,14 +162,27 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			AssetRendererFactory groupAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(groupClassName);
 
-			int groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+			int groupTotal = 0;
 
-			total += groupTotal;
+			if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+				Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
 
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+				groupTotal = hits.getLength();
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+				total += groupTotal;
+
+				results = AssetUtil.getAssetEntries(hits);
+			}
+			else {
+				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+				total += groupTotal;
+
+				assetEntryQuery.setEnd(end);
+				assetEntryQuery.setStart(start);
+
+				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			}
 
 			searchContainer.setResults(results);
 

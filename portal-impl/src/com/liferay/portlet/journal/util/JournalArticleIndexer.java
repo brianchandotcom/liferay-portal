@@ -109,6 +109,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
 		}
 
+		addSearchClassTypeIds(contextQuery, searchContext);
+
 		String structureField = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
 		String structureValue = (String)searchContext.getAttribute(
@@ -222,6 +224,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (ddmStructure == null) {
 			return;
 		}
+
+		document.addKeyword(Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
 
 		Fields fields = null;
 

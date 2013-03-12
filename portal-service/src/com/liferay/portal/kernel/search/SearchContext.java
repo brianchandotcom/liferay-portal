@@ -75,6 +75,10 @@ public class SearchContext implements Serializable {
 		return _categoryIds;
 	}
 
+	public long[] getClassTypeIds() {
+		return _classTypeIds;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -225,6 +229,10 @@ public class SearchContext implements Serializable {
 		_categoryIds = categoryIds;
 	}
 
+	public void setClassTypeIds(long[] classTypeIds) {
+		_classTypeIds = classTypeIds;
+	}
+
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -330,6 +338,7 @@ public class SearchContext implements Serializable {
 	private Map<String, Serializable> _attributes;
 	private BooleanClause[] _booleanClauses;
 	private long[] _categoryIds;
+	private long[] _classTypeIds;
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;

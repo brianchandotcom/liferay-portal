@@ -46,6 +46,8 @@ public class Field implements Serializable {
 
 	public static final String CLASS_PK = "classPK";
 
+	public static final String CLASS_TYPE_ID = "classTypeId";
+
 	public static final String COMMENTS = "comments";
 
 	public static final String COMPANY_ID = "companyId";

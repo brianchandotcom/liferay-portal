@@ -84,7 +84,7 @@ public class XSLTemplate implements Template {
 		_templateContextHelper.prepare(this, request);
 	}
 
-	public boolean processTemplate(Writer writer) throws TemplateException {
+	public void processTemplate(Writer writer) throws TemplateException {
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
@@ -117,7 +117,7 @@ public class XSLTemplate implements Template {
 
 				transformer.transform(xmlSource, new StreamResult(writer));
 
-				return true;
+				return;
 			}
 			catch (Exception e) {
 				throw new TemplateException(
@@ -142,8 +142,6 @@ public class XSLTemplate implements Template {
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
 			sb.writeTo(writer);
-
-			return true;
 		}
 		catch (Exception e1) {
 			Transformer errorTransformer = _getTransformer(
@@ -177,8 +175,6 @@ public class XSLTemplate implements Template {
 						_errorTemplateResource.getTemplateId(),
 					e2);
 			}
-
-			return true;
 		}
 	}
 

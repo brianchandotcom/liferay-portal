@@ -29,7 +29,7 @@ public interface Template {
 
 	public void prepare(HttpServletRequest request);
 
-	public boolean processTemplate(Writer writer) throws TemplateException;
+	public void processTemplate(Writer writer) throws TemplateException;
 
 	public void put(String key, Object value);
 

@@ -70,12 +70,12 @@ public abstract class AbstractTemplate implements Template {
 		_templateContextHelper.prepare(this, request);
 	}
 
-	public boolean processTemplate(Writer writer) throws TemplateException {
+	public void processTemplate(Writer writer) throws TemplateException {
 		if (errorTemplateResource == null) {
 			try {
 				processTemplate(templateResource, writer);
 
-				return true;
+				return;
 			}
 			catch (Exception e) {
 				throw new TemplateException(
@@ -97,15 +97,11 @@ public abstract class AbstractTemplate implements Template {
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
 			sb.writeTo(writer);
-
-			return true;
 		}
 		catch (Exception e) {
 			put(TemplateConstants.WRITER, writer);
 
 			handleException(e, writer);
-
-			return true;
 		}
 		finally {
 			put(TemplateConstants.WRITER, oldWriter);

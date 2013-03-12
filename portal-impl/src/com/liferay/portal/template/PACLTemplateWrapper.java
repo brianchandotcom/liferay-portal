@@ -41,8 +41,7 @@ public class PACLTemplateWrapper implements Template {
 	public void prepare(HttpServletRequest request) {
 	}
 
-	public boolean processTemplate(Writer writer) {
-		return false;
+	public void processTemplate(Writer writer) {
 	}
 
 	public void put(String key, Object value) {

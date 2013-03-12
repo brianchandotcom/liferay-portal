@@ -129,8 +129,6 @@ public class Transformer {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		boolean load = false;
-
 		try {
 			if (contextObjects != null) {
 				for (String key : contextObjects.keySet()) {
@@ -155,15 +153,10 @@ public class Transformer {
 					StringPool.UNDERLINE);
 			template.put("templatesPath", templatesPath);
 
-			load = mergeTemplate(template, unsyncStringWriter);
+			mergeTemplate(template, unsyncStringWriter);
 		}
 		catch (Exception e) {
 			throw new TransformException("Unhandled exception", e);
-		}
-
-		if (!load) {
-			throw new TransformException(
-				"Unable to dynamically load transform script");
 		}
 
 		return unsyncStringWriter.toString();
@@ -287,8 +280,6 @@ public class Transformer {
 
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			boolean load = false;
-
 			try {
 				if (Validator.isNotNull(xml)) {
 					Document document = SAXReaderUtil.read(xml);
@@ -335,7 +326,7 @@ public class Transformer {
 				template.put("templatesPath", templatesPath);
 				template.put("viewMode", viewMode);
 
-				load = mergeTemplate(template, unsyncStringWriter);
+				mergeTemplate(template, unsyncStringWriter);
 			}
 			catch (Exception e) {
 				if (e instanceof DocumentException) {
@@ -351,11 +342,6 @@ public class Transformer {
 				else {
 					throw new TransformException("Unhandled exception", e);
 				}
-			}
-
-			if (!load) {
-				throw new TransformException(
-					"Unable to dynamically load transform script");
 			}
 
 			output = unsyncStringWriter.toString();
@@ -629,7 +615,7 @@ public class Transformer {
 		return map;
 	}
 
-	protected boolean mergeTemplate(
+	protected void mergeTemplate(
 			Template template, UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
 
@@ -640,7 +626,7 @@ public class Transformer {
 			velocityTaglib.setTemplate(template);
 		}
 
-		return template.processTemplate(unsyncStringWriter);
+		template.processTemplate(unsyncStringWriter);
 	}
 
 	protected String stripCDATA(String s) {

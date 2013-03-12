@@ -61,7 +61,10 @@ public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 	}
 
 	public void registerResources(
-		String alias, String name, HttpContext httpContext) {
+			String alias, String name, HttpContext httpContext)
+		throws NamespaceException {
+
+		bundleServletContext.registerResources(alias, name, httpContext);
 	}
 
 	public void registerServlet(

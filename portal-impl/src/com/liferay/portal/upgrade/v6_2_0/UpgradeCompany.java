@@ -49,7 +49,7 @@ public class UpgradeCompany extends UpgradeProcess {
 		}
 	}
 
-	private void upgradeKey(Company company)
+	protected void upgradeKey(Company company)
 		throws EncryptorException, SystemException {
 
 		Key key = company.getKeyObj();

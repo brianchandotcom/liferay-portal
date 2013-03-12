@@ -1148,52 +1148,17 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> newResourcePermission(
-		long companyId, String name, String primKey) {
+		String name, String primKey) {
 
 		List<ResourcePermission> resourcePermissions =
-			new ArrayList<ResourcePermission>(2);
+			new ArrayList<ResourcePermission>(3);
 
-		ResourcePermission resourcePermission = new ResourcePermissionImpl();
-
-		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
-		resourcePermission.setCompanyId(companyId);
-		resourcePermission.setName(name);
-		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setRoleId(_ownerRole.getRoleId());
-		resourcePermission.setOwnerId(0);
-		resourcePermission.setActionIds(1);
-
-		resourcePermissions.add(resourcePermission);
-
-		resourcePermission = new ResourcePermissionImpl();
-
-		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
-		resourcePermission.setCompanyId(companyId);
-		resourcePermission.setName(name);
-		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setRoleId(_guestRole.getRoleId());
-		resourcePermission.setOwnerId(0);
-		resourcePermission.setActionIds(1);
-
-		resourcePermissions.add(resourcePermission);
-
-		resourcePermission = new ResourcePermissionImpl();
-
-		resourcePermission.setResourcePermissionId(
-			_resourcePermissionCounter.get());
-		resourcePermission.setCompanyId(companyId);
-		resourcePermission.setName(name);
-		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
-		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setRoleId(_siteMemberRole.getRoleId());
-		resourcePermission.setOwnerId(0);
-		resourcePermission.setActionIds(1);
-
-		resourcePermissions.add(resourcePermission);
+		resourcePermissions.add(
+			newResourcePermission(name, primKey, _ownerRole.getRoleId()));
+		resourcePermissions.add(
+			newResourcePermission(name, primKey, _guestRole.getRoleId()));
+		resourcePermissions.add(
+			newResourcePermission(name, primKey, _siteMemberRole.getRoleId()));
 
 		return resourcePermissions;
 	}
@@ -1444,6 +1409,24 @@ public class DataFactory {
 		mbThread.setStatusDate(new Date());
 
 		return mbThread;
+	}
+
+	protected ResourcePermission newResourcePermission(
+		String name, String primKey, long roleId) {
+
+		ResourcePermission resourcePermission = new ResourcePermissionImpl();
+
+		resourcePermission.setResourcePermissionId(
+			_resourcePermissionCounter.get());
+		resourcePermission.setCompanyId(_companyId);
+		resourcePermission.setName(name);
+		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+		resourcePermission.setPrimKey(primKey);
+		resourcePermission.setRoleId(roleId);
+		resourcePermission.setOwnerId(0);
+		resourcePermission.setActionIds(1);
+
+		return resourcePermission;
 	}
 
 	protected Role newRole(String name, int type) {

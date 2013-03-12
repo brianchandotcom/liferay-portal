@@ -62,7 +62,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -309,6 +308,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setBody(body);
 		message.setFormat(format);
 		message.setAnonymous(anonymous);
+		message.setExpandoBridgeAttributes(serviceContext);
 
 		if (message.isDiscussion()) {
 			long classNameId = PortalUtil.getClassNameId(
@@ -357,12 +357,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.isAssetEntryVisible());
-
-		// Expando
-
-		ExpandoBridge expandoBridge = message.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Workflow
 
@@ -1379,6 +1373,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setSubject(subject);
 		message.setBody(body);
 		message.setAllowPingbacks(allowPingbacks);
+		message.setExpandoBridgeAttributes(serviceContext);
 
 		if (priority != MBThreadConstants.PRIORITY_NOT_GIVEN) {
 			message.setPriority(priority);
@@ -1475,12 +1470,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userId, message, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		// Expando
-
-		ExpandoBridge expandoBridge = message.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Workflow
 

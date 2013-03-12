@@ -83,8 +83,7 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			keywords, approved);
+			TestPropsValues.getUserId(), keywords, approved, serviceContext);
 	}
 
 	@Override

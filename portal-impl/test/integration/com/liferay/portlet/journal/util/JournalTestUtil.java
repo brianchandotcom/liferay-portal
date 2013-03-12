@@ -93,6 +93,8 @@ public class JournalTestUtil {
 		}
 
 		if (workflowEnabled) {
+			serviceContext = (ServiceContext)serviceContext.clone();
+
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 

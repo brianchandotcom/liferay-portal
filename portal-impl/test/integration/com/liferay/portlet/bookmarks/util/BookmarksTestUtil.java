@@ -34,21 +34,22 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 public class BookmarksTestUtil {
 
 	public static BookmarksEntry addEntry(boolean approved) throws Exception {
-		return addEntry(
-			TestPropsValues.getGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved);
+		return addEntry(TestPropsValues.getGroupId(), approved);
 	}
 
 	public static BookmarksEntry addEntry(long groupId, boolean approved)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
 		return addEntry(
-			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			approved);
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved,
+			serviceContext);
 	}
 
 	public static BookmarksEntry addEntry(
-			long groupId, long folderId, boolean approved)
+			long folderId, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -60,25 +61,25 @@ public class BookmarksTestUtil {
 			String url = "http://www.liferay.com";
 			String description = "This is a test entry.";
 
-			ServiceContext serviceContext = new ServiceContext();
+			serviceContext = (ServiceContext)serviceContext.clone();
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
-			serviceContext.setScopeGroupId(groupId);
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
-				groupId, folderId, name, url, description, serviceContext);
+				serviceContext.getScopeGroupId(), folderId, name, url,
+				description, serviceContext);
 
 			if (approved) {
 				entry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 				entry = BookmarksEntryServiceUtil.updateEntry(
-					entry.getEntryId(), groupId, entry.getFolderId(),
-					entry.getName(), entry.getUrl(), entry.getUrl(),
-					serviceContext);
+					entry.getEntryId(), serviceContext.getScopeGroupId(),
+					entry.getFolderId(), entry.getName(), entry.getUrl(),
+					entry.getUrl(), serviceContext);
 			}
 
 			return entry;

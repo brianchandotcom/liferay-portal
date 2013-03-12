@@ -82,6 +82,8 @@ public class BlogsTestUtil {
 			String smallImageFileName = StringPool.BLANK;
 			InputStream smallImageInputStream = null;
 
+			serviceContext = (ServiceContext)serviceContext.clone();
+
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 

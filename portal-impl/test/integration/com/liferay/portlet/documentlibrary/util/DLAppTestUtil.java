@@ -107,6 +107,8 @@ public abstract class DLAppTestUtil {
 			bytes = _CONTENT.getBytes();
 		}
 
+		serviceContext = (ServiceContext)serviceContext.clone();
+
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);

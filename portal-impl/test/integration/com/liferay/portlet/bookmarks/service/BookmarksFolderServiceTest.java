@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -97,11 +98,14 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearch() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), folder.getFolderId(), true);
+			folder.getFolderId(), true, serviceContext);
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
 			entry.getCompanyId(), entry.getGroupId(), entry.getFolderId(),
@@ -116,11 +120,14 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearchAndDeleteFolderAndSearch() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), folder.getFolderId(), true);
+			folder.getFolderId(), true, serviceContext);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();
@@ -147,11 +154,14 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearchAndVerifyDocs() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), folder.getFolderId(), true);
+			folder.getFolderId(), true, serviceContext);
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
 			entry.getCompanyId(), entry.getGroupId(), entry.getFolderId(),

@@ -84,6 +84,20 @@ public class DocumentImpl implements Document {
 		addKeyword(name, _dateFormat.format(value));
 	}
 
+	public void addDate(String name, Date[] values) {
+		if (values == null) {
+			return;
+		}
+
+		String[] dates = new String[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			dates[i] =_dateFormat.format(values[i]);
+		}
+
+		addKeyword(name, dates);
+	}
+
 	public void addFile(String name, byte[] bytes, String fileExt) {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 

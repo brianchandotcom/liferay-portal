@@ -35,6 +35,8 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addDate(String name, Date value);
 
+	public void addDate(String name, Date[] values);
+
 	public void addFile(String name, byte[] bytes, String fileExt)
 		throws IOException;
 

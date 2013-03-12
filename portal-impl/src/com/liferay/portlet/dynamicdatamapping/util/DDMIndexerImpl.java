@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,19 +57,43 @@ public class DDMIndexerImpl implements DDMIndexer {
 					String name = encodeName(
 						ddmStructure.getStructureId(), field.getName(), locale);
 
-					Serializable value = field.getValue(locale, 0);
+					Serializable value = field.getValue(locale);
 
 					if (value instanceof Boolean) {
 						document.addKeyword(name, (Boolean)value);
 					}
+
+					if (value instanceof Boolean[]) {
+						document.addKeyword(name, (Boolean[])value);
+					}
 					else if (value instanceof Date) {
 						document.addDate(name, (Date)value);
+					}
+					else if (value instanceof Date[]) {
+						document.addDate(name, (Date[])value);
 					}
 					else if (value instanceof Double) {
 						document.addKeyword(name, (Double)value);
 					}
+					else if (value instanceof Double[]) {
+						document.addKeyword(name, (Double[])value);
+					}
 					else if (value instanceof Integer) {
 						document.addKeyword(name, (Integer)value);
+					}
+					else if (value instanceof Integer[]) {
+						document.addKeyword(name, (Integer[])value);
+					}
+					else if (value instanceof Object[]) {
+						String[] valuesString = ArrayUtil.toStringArray(
+							(Object[])value);
+
+						if (indexType.equals("keyword")) {
+							document.addKeyword(name, valuesString);
+						}
+						else {
+							document.addText(name, valuesString);
+						}
 					}
 					else {
 						String valueString = String.valueOf(value);

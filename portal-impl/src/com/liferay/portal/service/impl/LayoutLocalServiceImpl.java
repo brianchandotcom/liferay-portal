@@ -74,7 +74,6 @@ import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
@@ -231,6 +230,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setHidden(hidden);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
+		layout.setExpandoBridgeAttributes(serviceContext);
 
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
@@ -325,12 +325,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout);
 
 		layout.setLayoutSet(layoutSet);
-
-		// Expando
-
-		ExpandoBridge expandoBridge = layout.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Message boards
 
@@ -1808,6 +1802,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setType(type);
 		layout.setHidden(hidden);
 		layout.setFriendlyURL(friendlyURL);
+		layout.setExpandoBridgeAttributes(serviceContext);
 
 		if (iconImage != null) {
 			layout.setIconImage(iconImage.booleanValue());
@@ -1864,12 +1859,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			updateScopedPortletNames(
 				groupId, privateLayout, layoutId, nameMap, modifiedLocales);
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = layout.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return layout;
 	}

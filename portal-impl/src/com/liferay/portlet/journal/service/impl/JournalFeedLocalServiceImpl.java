@@ -31,7 +31,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.journal.DuplicateFeedIdException;
 import com.liferay.portlet.journal.FeedContentFieldException;
 import com.liferay.portlet.journal.FeedIdException;
@@ -100,6 +99,7 @@ public class JournalFeedLocalServiceImpl
 		feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		feed.setTargetPortletId(targetPortletId);
 		feed.setContentField(contentField);
+		feed.setExpandoBridgeAttributes(serviceContext);
 
 		if (Validator.isNull(feedFormat)) {
 			feed.setFeedFormat(RSSUtil.FORMAT_DEFAULT);
@@ -126,12 +126,6 @@ public class JournalFeedLocalServiceImpl
 				feed, serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = feed.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return feed;
 	}
@@ -307,6 +301,7 @@ public class JournalFeedLocalServiceImpl
 		feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		feed.setTargetPortletId(targetPortletId);
 		feed.setContentField(contentField);
+		feed.setExpandoBridgeAttributes(serviceContext);
 
 		if (Validator.isNull(feedFormat)) {
 			feed.setFeedFormat(RSSUtil.FORMAT_DEFAULT);
@@ -318,12 +313,6 @@ public class JournalFeedLocalServiceImpl
 		}
 
 		journalFeedPersistence.update(feed);
-
-		// Expando
-
-		ExpandoBridge expandoBridge = feed.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return feed;
 	}

@@ -54,7 +54,6 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -154,6 +153,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setHead(head);
 		page.setParentTitle(parentTitle);
 		page.setRedirectTitle(redirectTitle);
+		page.setExpandoBridgeAttributes(serviceContext);
 
 		wikiPagePersistence.update(page);
 
@@ -184,12 +184,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		// Expando
-
-		ExpandoBridge expandoBridge = page.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Message boards
 
@@ -1495,6 +1489,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setVersion(newVersion);
 		page.setMinorEdit(minorEdit);
 		page.setContent(content);
+		page.setExpandoBridgeAttributes(serviceContext);
 
 		if (oldPage.isPending()) {
 			page.setStatus(oldPage.getStatus());
@@ -1515,12 +1510,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		wikiPagePersistence.update(page);
-
-		// Expando
-
-		ExpandoBridge expandoBridge = page.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		// Node
 

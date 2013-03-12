@@ -32,7 +32,7 @@ public class DeleteSubOrganizationTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddSubOrganizationTest.class);
 		testSuite.addTestSuite(DeleteSubOrganizationTest.class);
-		testSuite.addTestSuite(ViewDeleteSubOrganization.class);
+		testSuite.addTestSuite(ViewDeleteSubOrganizationTest.class);
 		testSuite.addTestSuite(TearDownSubOrganizationTest.class);
 		testSuite.addTestSuite(TearDownOrganizationTest.class);
 

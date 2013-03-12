@@ -212,11 +212,13 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		if (trashHandler.isInTrash(classPK)) {
 			trashHandler.moveTrashEntry(
-				classPK, destinationContainerModelId, serviceContext);
+				getUserId(), classPK, destinationContainerModelId,
+				serviceContext);
 		}
 		else {
 			trashHandler.moveEntry(
-				classPK, destinationContainerModelId, serviceContext);
+				getUserId(), classPK, destinationContainerModelId,
+				serviceContext);
 		}
 	}
 

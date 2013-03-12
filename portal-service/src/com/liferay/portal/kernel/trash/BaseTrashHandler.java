@@ -48,24 +48,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 	}
 
-	public void deleteTrashEntries(long[] classPKs)
-		throws PortalException, SystemException {
-
-		deleteTrashEntries(classPKs, true);
-	}
-
-	public void deleteTrashEntry(long classPK)
-		throws PortalException, SystemException {
-
-		deleteTrashEntries(new long[] {classPK});
-	}
-
-	public void deleteTrashEntry(long classPK, boolean checkPermission)
-		throws PortalException, SystemException {
-
-		deleteTrashEntries(new long[] {classPK}, checkPermission);
-	}
-
 	@SuppressWarnings("unused")
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException, SystemException {
@@ -252,16 +234,18 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@SuppressWarnings("unused")
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 	}
 
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (isRestorable(classPK)) {
-			restoreTrashEntry(classPK);
+			restoreTrashEntry(userId, classPK);
 		}
 
 		_log.error(
@@ -273,12 +257,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@SuppressWarnings("unused")
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException, SystemException {
-	}
-
-	public void restoreTrashEntry(long classPK)
-		throws PortalException, SystemException {
-
-		restoreTrashEntries(new long[] {classPK});
 	}
 
 	@SuppressWarnings("unused")

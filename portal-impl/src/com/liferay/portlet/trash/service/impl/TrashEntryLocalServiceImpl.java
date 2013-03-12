@@ -134,7 +134,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 						TrashHandlerRegistryUtil.getTrashHandler(
 							entry.getClassName());
 
-					trashHandler.deleteTrashEntry(entry.getClassPK(), false);
+					trashHandler.deleteTrashEntry(entry.getClassPK());
 				}
 			}
 

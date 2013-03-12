@@ -22,9 +22,11 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 
 /**
  * @author Raymond Augé
@@ -33,15 +35,24 @@ import org.osgi.service.http.HttpService;
 public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 
 	public HttpServiceWrapper(BundleServletContext bundleServletContext) {
+		_bundleServletContext = bundleServletContext;
 	}
 
 	public HttpContext createDefaultHttpContext() {
-		return null;
+		return _bundleServletContext.getHttpContext();
 	}
 
 	public void registerFilter(
-		String filterName, List<String> urlPatterns, Filter filter,
-		Map<String, String> initParameters, HttpContext httpContext) {
+			String filterName, List<String> urlPatterns, Filter filter,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		if (httpContext == null) {
+			httpContext = createDefaultHttpContext();
+		}
+
+		_bundleServletContext.registerFilter(
+			filterName, urlPatterns, filter, initParameters, httpContext);
 	}
 
 	public void registerListener(
@@ -54,8 +65,16 @@ public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 	}
 
 	public void registerServlet(
-		String servletName, List<String> urlPatterns, Servlet servlet,
-		Map<String, String> initParameters, HttpContext httpContext) {
+			String servletName, List<String> urlPatterns, Servlet servlet,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		if (httpContext == null) {
+			httpContext = createDefaultHttpContext();
+		}
+
+		_bundleServletContext.registerServlet(
+			servletName, urlPatterns, servlet, initParameters, httpContext);
 	}
 
 	/**
@@ -74,12 +93,16 @@ public class HttpServiceWrapper implements ExtendedHttpService, HttpService {
 	}
 
 	public void unregisterFilter(String filterName) {
+		_bundleServletContext.unregisterFilter(filterName);
 	}
 
 	public void unregisterListener(Object listener) {
 	}
 
 	public void unregisterServlet(String servletName) {
+		_bundleServletContext.unregisterServlet(servletName);
 	}
+
+	protected BundleServletContext _bundleServletContext;
 
 }

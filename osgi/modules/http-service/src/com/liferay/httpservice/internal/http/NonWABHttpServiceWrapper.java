@@ -15,34 +15,39 @@
 package com.liferay.httpservice.internal.http;
 
 import com.liferay.httpservice.internal.servlet.BundleServletContext;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpContext;
-import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-public class NonWABHttpServiceWrapper
-	implements ExtendedHttpService, HttpService {
+public class NonWABHttpServiceWrapper extends HttpServiceWrapper {
 
 	public NonWABHttpServiceWrapper(BundleServletContext bundleServletContext) {
-	}
-
-	public HttpContext createDefaultHttpContext() {
-		return null;
+		super(bundleServletContext);
 	}
 
 	public void registerFilter(
-		String filterName, List<String> urlPatterns, Filter filter,
-		Map<String, String> initParameters, HttpContext httpContext) {
+			String filterName, List<String> urlPatterns, Filter filter,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		super.registerFilter(
+			filterName, urlPatterns, filter, initParameters, httpContext);
+
+		_registrations.add(filterName);
 	}
 
 	public void registerListener(
@@ -55,8 +60,14 @@ public class NonWABHttpServiceWrapper
 	}
 
 	public void registerServlet(
-		String servletName, List<String> urlPatterns, Servlet servlet,
-		Map<String, String> initParameters, HttpContext httpContext) {
+			String servletName, List<String> urlPatterns, Servlet servlet,
+			Map<String, String> initParameters, HttpContext httpContext)
+		throws NamespaceException, ServletException {
+
+		super.registerServlet(
+			servletName, urlPatterns, servlet, initParameters, httpContext);
+
+		_registrations.add(servletName);
 	}
 
 	/**
@@ -75,12 +86,33 @@ public class NonWABHttpServiceWrapper
 	}
 
 	public void unregisterFilter(String filterName) {
+		super.unregisterFilter(filterName);
+
+		removeRegistryEntry(filterName);
 	}
 
 	public void unregisterListener(Object listener) {
 	}
 
 	public void unregisterServlet(String servletName) {
+		super.unregisterServlet(servletName);
+
+		removeRegistryEntry(servletName);
 	}
+
+	protected void removeRegistryEntry(Object object) {
+		_registrations.remove(object);
+
+		if (!_registrations.isEmpty()) {
+			return;
+		}
+
+		ServletContextPool.remove(
+			_bundleServletContext.getServletContextName());
+
+		_bundleServletContext = null;
+	}
+
+	private List<Object> _registrations = new ArrayList<Object>();
 
 }

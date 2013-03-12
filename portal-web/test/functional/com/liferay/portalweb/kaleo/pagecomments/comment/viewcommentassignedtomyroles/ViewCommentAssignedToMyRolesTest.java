@@ -47,20 +47,20 @@ public class ViewCommentAssignedToMyRolesTest extends BaseTestCase {
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("link=Pending");
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
-		assertTrue(selenium.isPartialText("//td[2]/a", "PC Comment"));
+			selenium.getText("//tr[contains(.,'PC Comment')]/td[1]/a"));
+		assertTrue(selenium.isPartialText(
+				"//tr[contains(.,'PC Comment')]/td[2]/a", "PC Comment"));
 		assertEquals(RuntimeVariables.replace("Comments"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'PC Comment')]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[contains(.,'PC Comment')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'PC Comment')]/td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),

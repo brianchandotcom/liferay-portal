@@ -98,14 +98,14 @@ public class QueryDefinition {
 	}
 
 	public void setAttribute(String name, Serializable value) {
-		_attributes.put(name, value);
-	}
-
-	public void setAttributes(Map<String, Serializable> attributes) {
 		if (_attributes == null) {
 			_attributes = new HashMap<String, Serializable>();
 		}
 
+		_attributes.put(name, value);
+	}
+
+	public void setAttributes(Map<String, Serializable> attributes) {
 		_attributes = attributes;
 	}
 

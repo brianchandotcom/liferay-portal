@@ -249,9 +249,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchAttachments() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -282,9 +281,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -329,9 +327,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchByDDMStructureField() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -357,9 +354,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchByKeywords() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -382,9 +378,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchComments() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -417,9 +412,8 @@ public abstract class BaseSearchTestCase {
 	protected void searchExpireVersions(boolean expireAllVersions)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -464,9 +458,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchStatus() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -526,9 +519,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchVersions() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
@@ -567,9 +559,8 @@ public abstract class BaseSearchTestCase {
 	}
 
 	protected void searchWithinDDMStructure() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());

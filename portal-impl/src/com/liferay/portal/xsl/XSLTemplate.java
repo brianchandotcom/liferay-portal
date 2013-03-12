@@ -108,11 +108,13 @@ public class XSLTemplate implements Template {
 		StreamSource xmlSource = new StreamSource(
 			_xslTemplateResource.getXMLReader());
 
-		Transformer transformer = _getTransformer(
-			transformerFactory, _xslTemplateResource);
+		Transformer transformer = null;
 
 		if (_errorTemplateResource == null) {
 			try {
+				transformer = _getTransformer(
+					transformerFactory, _xslTemplateResource);
+
 				transformer.transform(xmlSource, new StreamResult(writer));
 
 				return true;
@@ -127,6 +129,9 @@ public class XSLTemplate implements Template {
 
 		try {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+			transformer = _getTransformer(
+				transformerFactory, _xslTemplateResource);
 
 			transformer.setParameter(
 				TemplateConstants.WRITER, unsyncStringWriter);
@@ -173,7 +178,7 @@ public class XSLTemplate implements Template {
 					e2);
 			}
 
-			return false;
+			return true;
 		}
 	}
 

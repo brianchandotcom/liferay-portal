@@ -105,7 +105,7 @@ public abstract class AbstractTemplate implements Template {
 
 			handleException(e, writer);
 
-			return false;
+			return true;
 		}
 		finally {
 			put(TemplateConstants.WRITER, oldWriter);

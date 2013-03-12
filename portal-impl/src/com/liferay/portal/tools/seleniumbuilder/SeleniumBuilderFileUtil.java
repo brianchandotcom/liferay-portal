@@ -53,7 +53,7 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		for (Element childElement : childElements) {
-			String childElementName = childElement.attributeValue("name");
+			String childElementName = childElement.attributeValue("function");
 
 			if (childElementName != null) {
 				int x = childElementName.lastIndexOf(StringPool.POUND);
@@ -238,13 +238,6 @@ public class SeleniumBuilderFileUtil {
 
 			if ((tdText == null) || !shortFileName.equals(tdText)) {
 				System.out.println(fileName + " has an invalid <td>");
-			}
-		}
-		else {
-			String name = rootElement.attributeValue("name");
-
-			if ((name == null) || !name.equals(shortFileName)) {
-				System.out.println(fileName + " has an invalid name=\"\"");
 			}
 		}
 	}

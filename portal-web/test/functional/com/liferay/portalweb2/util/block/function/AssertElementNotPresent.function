@@ -1,0 +1,14 @@
+<function-definition>
+	<function-command name="assertElementNotPresent">
+		<if>
+			<condition selenium="isElementPresent" />
+			<then>
+				<execute selenium="waitForNotVisible" />
+				<execute selenium="assertNotVisible" />
+			</then>
+			<else>
+				<execute selenium="assertElementNotPresent" />
+			</else>
+		</if>
+	</function-command>
+</function-definition>

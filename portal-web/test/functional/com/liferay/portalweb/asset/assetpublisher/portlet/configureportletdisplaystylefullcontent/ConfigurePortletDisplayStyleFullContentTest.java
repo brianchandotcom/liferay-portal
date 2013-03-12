@@ -50,8 +50,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 		selenium.waitForVisible("link=Display Settings");
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
-		Thread.sleep(1000);
-		assertTrue(selenium.isVisible("//select[@id='_86_displayStyle']"));
+		selenium.waitForVisible("//select[@id='_86_displayStyle']");
 		selenium.select("//select[@id='_86_displayStyle']",
 			RuntimeVariables.replace("Full Content"));
 		Thread.sleep(1000);

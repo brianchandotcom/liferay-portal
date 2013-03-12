@@ -29,9 +29,18 @@ public class ViewConfigurePortletCurrentWikiPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/span",
+				"Edit"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='asset-summary']"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
+				"Read More"));
 	}
 }

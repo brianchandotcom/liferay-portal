@@ -115,12 +115,10 @@ if (!inlineEdit) {
 		destroy: function() {
 			CKEDITOR.instances['<%= name %>'].destroy();
 
-			try
-			{
+			try {
 				delete window['<%= name %>'];
 			}
-			catch(e)
-			{
+			catch(e) {
 				window['<%= name %>'] = undefined;
 			}
 		},

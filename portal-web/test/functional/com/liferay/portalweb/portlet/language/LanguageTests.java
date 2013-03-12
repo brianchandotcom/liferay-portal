@@ -28,7 +28,7 @@ public class LanguageTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageLanguageTest.class);
 		testSuite.addTestSuite(AddPortletLanguageTest.class);
-		testSuite.addTestSuite(LanguageTest.class);
+		testSuite.addTestSuite(ViewLanguageTest.class);
 		testSuite.addTestSuite(InternationalizationJapaneseTest.class);
 		testSuite.addTestSuite(InternationalizationSpanishTest.class);
 		testSuite.addTestSuite(InternationalizationVerifyTest.class);

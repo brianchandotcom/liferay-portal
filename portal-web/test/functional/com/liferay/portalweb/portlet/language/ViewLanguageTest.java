@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LanguageTest extends BaseTestCase {
-	public void testLanguage() throws Exception {
+public class ViewLanguageTest extends BaseTestCase {
+	public void testViewLanguage() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -133,8 +133,8 @@ public class LanguageTest extends BaseTestCase {
 			RuntimeVariables.replace("Lietuvi\u0173 (Lietuva) [Beta]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Add"));
-		selenium.clickAt("//img[@alt='Norwegian Bokm\u00e5l (Norway) [Beta]']",
-			RuntimeVariables.replace("Norwegian Bokm\u00e5l (Norway) [Beta]"));
+		selenium.clickAt("//img[@alt='Norwegian Bokm\u00e5l (Norge) [Beta]']",
+			RuntimeVariables.replace("Norwegian Bokm\u00e5l (Norge) [Beta]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Legg til"));
 		selenium.clickAt("//img[@alt='Persian (Iran) [Beta]']",

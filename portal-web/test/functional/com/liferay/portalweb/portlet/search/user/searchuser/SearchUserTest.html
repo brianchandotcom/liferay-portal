@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Search Test Page</td>
-	<td>Search Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Search Test Page</td>
 	<td>Search Test Page</td>
@@ -31,7 +26,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_3_keywords']</td>
-	<td>selenium*</td>
+	<td>users*</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -41,9 +36,43 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='asset-entry-title']/a</td>
-	<td>selen01 lenn nium01</td>
+	<td>userfn userln</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='asset-entry-type']</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 - 1.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_3_keywords']</td>
+	<td>userf*</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@type='image']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='asset-entry-title']/a</td>
+	<td>userfn userln</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='asset-entry-type']</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 - 1.</td>
+</tr>
 </tbody></table>
 </body>
 </html>

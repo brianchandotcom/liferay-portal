@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portlet.search.user.searchuser;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.search.portlet.addportletsearch.AddPageSearchTest;
 import com.liferay.portalweb.portlet.search.portlet.addportletsearch.AddPortletSearchTest;
@@ -31,8 +34,10 @@ public class SearchUserTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageSearchTest.class);
 		testSuite.addTestSuite(AddPortletSearchTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
+		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(SearchUserTest.class);
 		testSuite.addTestSuite(SearchUserQuotesTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

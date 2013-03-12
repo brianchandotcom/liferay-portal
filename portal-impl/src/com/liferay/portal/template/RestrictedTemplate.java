@@ -47,8 +47,8 @@ public class RestrictedTemplate implements Template {
 		_template.prepare(request);
 	}
 
-	public boolean processTemplate(Writer writer) throws TemplateException {
-		return _template.processTemplate(writer);
+	public void processTemplate(Writer writer) throws TemplateException {
+		_template.processTemplate(writer);
 	}
 
 	public void put(String key, Object value) {

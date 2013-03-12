@@ -1,2 +1,15 @@
-<function-definition name="Click">
+<function-definition>
+	<function-command name="textClickAt">
+		<execute selenium="waitForVisible" />
+		<execute selenium="waitForText" />
+		<execute selenium="assertText" />
+		<execute selenium="clickAt" />
+	</function-command>
+
+	<function-command name="textClickAtClickDockbar">
+		<execute selenium="pause" target="1000" />
+		<execute selenium="clickAt" target="//div[@id='dockbar']" value="" />
+		<execute selenium="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+		<execute function="Click#textClickAt" />
+	</function-command>
 </function-definition>

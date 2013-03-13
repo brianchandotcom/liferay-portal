@@ -140,6 +140,9 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 
 /**
+ * The web content local service is responsible for accessing, creating,
+ * modifying, searching, and deleting web content articles.
+ *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Bruno Farache
@@ -149,6 +152,56 @@ import javax.portlet.PortletPreferences;
 public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
+	/**
+	 * Adds a web content article with additional parameters.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  classPK the primary key of the web content's related entity
+	 * @param  articleId the primary key of the web content
+	 * @param  autoArticleId whether to auto generate the web content ID
+	 * @param  version the web content's version
+	 * @param  titleMap the web content's locales and localized titles
+	 * @param  descriptionMap the web content's locales and localized
+	 *         descriptions
+	 * @param  content the web content's content
+	 * @param  type the web content's type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  layoutUuid the unique string identifying the web content's layout
+	 * @param  displayDateMonth the month the web content is set to display
+	 * @param  displayDateDay the calendar day the web content is set to display
+	 * @param  displayDateYear the year the web content is set to display
+	 * @param  displayDateHour the hour the web content is set to display
+	 * @param  displayDateMinute the minute the web content is set to display
+	 * @param  expirationDateMonth the month the web content is set to expire
+	 * @param  expirationDateDay the calendar day the web content is set to
+	 *         expire
+	 * @param  expirationDateYear the year the web content is set to expire
+	 * @param  expirationDateHour the hour the web content is set to expire
+	 * @param  expirationDateMinute the minute the web content is set to expire
+	 * @param  neverExpire whether the web content is not set to auto expire
+	 * @param  reviewDateMonth the month the web content is set for review
+	 * @param  reviewDateDay the calendar day the web content is set for review
+	 * @param  reviewDateYear the year the web content is set for review
+	 * @param  reviewDateHour the hour the web content is set for review
+	 * @param  reviewDateMinute the minute the web content is set for review
+	 * @param  neverReview whether the web content is not set for review
+	 * @param  indexable whether the web content is searchable
+	 * @param  smallImage whether the web content has a small image
+	 * @param  smallImageURL the web content's small image URL
+	 * @param  smallImageFile the web content's small image file
+	 * @param  images the web content's images
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext the web content's service context. Can set
+	 * @return the web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle addArticle(
 			long userId, long groupId, long folderId, long classNameId,
 			long classPK, String articleId, boolean autoArticleId,
@@ -360,6 +413,24 @@ public class JournalArticleLocalServiceImpl
 		return getArticle(article.getPrimaryKey());
 	}
 
+	/**
+	 * Adds a web content article.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  titleMap the web content's locales and localized titles
+	 * @param  descriptionMap the web content's locales and localized
+	 *         descriptions
+	 * @param  content the web content's content
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  serviceContext
+	 * @return the web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle addArticle(
 			long userId, long groupId, long folderId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -385,6 +456,15 @@ public class JournalArticleLocalServiceImpl
 			null, null, serviceContext);
 	}
 
+	/**
+	 * Adds the resources to the web content.
+	 *
+	 * @param  article the web content to add resources to
+	 * @param  addGroupPermissions whether to add group permissions
+	 * @param  addGuestPermissions whether to add guest permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addArticleResources(
 			JournalArticle article, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -396,6 +476,15 @@ public class JournalArticleLocalServiceImpl
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	 * Adds the model resources with the permissions to the web content.
+	 *
+	 * @param  article the web content to add resources to
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addArticleResources(
 			JournalArticle article, String[] groupPermissions,
 			String[] guestPermissions)
@@ -407,6 +496,16 @@ public class JournalArticleLocalServiceImpl
 			groupPermissions, guestPermissions);
 	}
 
+	/**
+	 * Adds the resources to the most recently created web content.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  addGroupPermissions whether to add group permissions
+	 * @param  addGuestPermissions whether to add guest permissions
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addArticleResources(
 			long groupId, String articleId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -417,6 +516,17 @@ public class JournalArticleLocalServiceImpl
 		addArticleResources(article, addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	 * Adds the resources with the permissions to the most recently created web
+	 * content.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  groupPermissions the group permissions to be added
+	 * @param  guestPermissions the guest permissions to be added
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void addArticleResources(
 			long groupId, String articleId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -427,6 +537,18 @@ public class JournalArticleLocalServiceImpl
 		addArticleResources(article, groupPermissions, guestPermissions);
 	}
 
+	/**
+	 * Returns the web content with the group ID, article ID, and version. This
+	 * method checks for the web content's resource primary key and, if not
+	 * found, the method creates a new one.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @return the matching web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle checkArticleResourcePrimKey(
 			long groupId, String articleId, double version)
 		throws PortalException, SystemException {
@@ -449,6 +571,12 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Checks all web content based on their current workflow.
+	 *
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void checkArticles() throws PortalException, SystemException {
 		Date now = new Date();
 
@@ -535,6 +663,15 @@ public class JournalArticleLocalServiceImpl
 		_previousCheckDate = now;
 	}
 
+	/**
+	 * Checks if the web content contains new line strings.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void checkNewLine(long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
@@ -554,6 +691,15 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Checks if the web content has a structure.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void checkStructure(long groupId, String articleId, double version)
 		throws PortalException, SystemException {
 
@@ -567,6 +713,21 @@ public class JournalArticleLocalServiceImpl
 		checkStructure(article);
 	}
 
+	/**
+	 * Copies the web content matching the group ID, article ID, and version.
+	 * This method creates a new web content article, extracting all the values
+	 * from the old one and updating its article ID.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  oldArticleId the primary key of the old web content
+	 * @param  newArticleId the primary key of the new web content
+	 * @param  autoArticleId whether to auto generate the web content ID
+	 * @param  version the web content's version
+	 * @return the new template
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle copyArticle(
 			long userId, long groupId, String oldArticleId, String newArticleId,
 			boolean autoArticleId, double version)
@@ -676,12 +837,28 @@ public class JournalArticleLocalServiceImpl
 		return newArticle;
 	}
 
+	/**
+	 * Deletes the web content and its resources.
+	 *
+	 * @param  article the web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticle(JournalArticle article)
 		throws PortalException, SystemException {
 
 		deleteArticle(article, StringPool.BLANK, null);
 	}
 
+	/**
+	 * Deletes the matching web content and its resources.
+	 *
+	 * @param  article the web content
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticle(
 			JournalArticle article, String articleURL,
 			ServiceContext serviceContext)
@@ -797,6 +974,17 @@ public class JournalArticleLocalServiceImpl
 		journalArticlePersistence.remove(article);
 	}
 
+	/**
+	 * Deletes the matching web content and its resources.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticle(
 			long groupId, String articleId, double version, String articleURL,
 			ServiceContext serviceContext)
@@ -808,6 +996,15 @@ public class JournalArticleLocalServiceImpl
 		deleteArticle(article, articleURL, serviceContext);
 	}
 
+	/**
+	 * Deletes the matching web content and its resources.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  serviceContext
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticle(
 			long groupId, String articleId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -821,6 +1018,13 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Deletes all the web content of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticles(long groupId)
 		throws PortalException, SystemException {
 
@@ -831,12 +1035,30 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Deletes the matching web content and its resources.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticles(long groupId, long folderId)
 		throws PortalException, SystemException {
 
 		deleteArticles(groupId, folderId, true);
 	}
 
+	/**
+	 * Deletes the matching recycled web content and its resources.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  includeTrashedEntries whether to include recycled web content
+	 *         articles
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteArticles(
 			long groupId, long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -850,6 +1072,13 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Sets the UUID of the matching web content.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  layoutUuid the unique string identifying the web content's layout
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void deleteLayoutArticleReferences(long groupId, String layoutUuid)
 		throws SystemException {
 
@@ -863,6 +1092,19 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Updates the web content's status to <code>Expired</code>.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext
+	 * @return the web content's updated status
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle expireArticle(
 			long userId, long groupId, String articleId, double version,
 			String articleURL, ServiceContext serviceContext)
@@ -874,6 +1116,17 @@ public class JournalArticleLocalServiceImpl
 			new HashMap<String, Serializable>(), serviceContext);
 	}
 
+	/**
+	 * Expires the matching web content and its resources.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void expireArticle(
 			long userId, long groupId, String articleId, String articleURL,
 			ServiceContext serviceContext)
@@ -900,18 +1153,47 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the web content matching the UUID and group.
+	 *
+	 * @param  uuid the unique string identifying the web content
+	 * @param  groupId the primary key of the group
+	 * @return the matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle fetchArticle(String uuid, long groupId)
 		throws SystemException {
 
 		return journalArticlePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	/**
+	 * Returns the web content with the ID.
+	 *
+	 * @param  id the primary key of the web content
+	 * @return the web content with the ID
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getArticle(long id)
 		throws PortalException, SystemException {
 
 		return journalArticlePersistence.findByPrimaryKey(id);
 	}
 
+	/**
+	 * Returns the latest web content that is approved, or the latest unapproved
+	 * web content if none are approved. Both approved and unapproved web
+	 * content must match the group and article ID.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return the matching web content
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getArticle(long groupId, String articleId)
 		throws PortalException, SystemException {
 
@@ -928,6 +1210,17 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the web content matching the group, article ID, and version.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @return the matching web content
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getArticle(
 			long groupId, String articleId, double version)
 		throws PortalException, SystemException {
@@ -936,6 +1229,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 	}
 
+	/**
+	 * Returns the web content matching the group, class name ID, and class PK.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  className the class name for the web content's related model
+	 * @param  classPK the primary key of the web content's related entity
+	 * @return the matching web content
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getArticle(
 			long groupId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -955,6 +1259,17 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 * Returns the latest web content that is approved, or the latest unapproved
+	 * web content if none are approved. Both approved and unapproved web
+	 * content must match the group and URL title.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  urlTitle the web content's accessible URL title
+	 * @return the matching web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
 		throws PortalException, SystemException {
 
@@ -971,6 +1286,19 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns the web content article's content
+	 *
+	 * @param  article the web content
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public String getArticleContent(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
 			String languageId, ThemeDisplay themeDisplay)
@@ -988,6 +1316,20 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public String getArticleContent(
 			long groupId, String articleId, double version, String viewMode,
 			String ddmTemplateKey, String languageId, ThemeDisplay themeDisplay)
@@ -1005,6 +1347,19 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public String getArticleContent(
 			long groupId, String articleId, double version, String viewMode,
 			String languageId, ThemeDisplay themeDisplay)
@@ -1015,6 +1370,19 @@ public class JournalArticleLocalServiceImpl
 			themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public String getArticleContent(
 			long groupId, String articleId, String viewMode,
 			String ddmTemplateKey, String languageId, ThemeDisplay themeDisplay)
@@ -1027,6 +1395,18 @@ public class JournalArticleLocalServiceImpl
 		return articleDisplay.getContent();
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public String getArticleContent(
 			long groupId, String articleId, String viewMode, String languageId,
 			ThemeDisplay themeDisplay)
@@ -1036,6 +1416,21 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, viewMode, null, languageId, themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  article the web content
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  page the web content's page number
+	 * @param  xmlRequest the request that serializes the web content into a
+	 *         hierarchical hash map
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			JournalArticle article, String ddmTemplateKey, String viewMode,
 			String languageId, int page, String xmlRequest,
@@ -1239,6 +1634,24 @@ public class JournalArticleLocalServiceImpl
 			cacheable);
 	}
 
+	/**
+	 * Returns the web content matching the group, article ID, and version.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  page the web content's page number
+	 * @param  xmlRequest the request that serializes the web content into a
+	 *         hierarchical hash map
+	 * @param  themeDisplay the web content's current theme display
+	 * @return the matching web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, double version,
 			String ddmTemplateKey, String viewMode, String languageId, int page,
@@ -1267,6 +1680,20 @@ public class JournalArticleLocalServiceImpl
 			themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, double version,
 			String ddmTemplateKey, String viewMode, String languageId,
@@ -1278,6 +1705,21 @@ public class JournalArticleLocalServiceImpl
 			1, null, themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  page the web content's page number
+	 * @param  xmlRequest the request that serializes the web content into a
+	 *         hierarchical hash map
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String viewMode, String languageId,
 			int page, String xmlRequest, ThemeDisplay themeDisplay)
@@ -1288,6 +1730,22 @@ public class JournalArticleLocalServiceImpl
 			themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  page the web content's page number
+	 * @param  xmlRequest the request that serializes the web content into a
+	 *         hierarchical hash map
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String ddmTemplateKey,
 			String viewMode, String languageId, int page, String xmlRequest,
@@ -1301,6 +1759,19 @@ public class JournalArticleLocalServiceImpl
 			languageId, page, xmlRequest, themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String ddmTemplateKey,
 			String viewMode, String languageId, ThemeDisplay themeDisplay)
@@ -1313,6 +1784,18 @@ public class JournalArticleLocalServiceImpl
 			languageId, themeDisplay);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  viewMode the mode in which the web content is being viewed
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @param  themeDisplay the web content's current theme display
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticleDisplay getArticleDisplay(
 			long groupId, String articleId, String viewMode, String languageId,
 			ThemeDisplay themeDisplay)
@@ -1322,22 +1805,76 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, null, viewMode, languageId, themeDisplay);
 	}
 
+	/**
+	 * Returns all the web content present in the system.
+	 *
+	 * @return the web content present in the system
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles() throws SystemException {
 		return journalArticlePersistence.findAll();
 	}
 
+	/**
+	 * Returns all the web content present in the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the structures present in the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(long groupId)
 		throws SystemException {
 
 		return journalArticlePersistence.findByGroupId(groupId);
 	}
 
+	/**
+	 * Returns a range of all the web content belonging to the group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @return the range of matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(long groupId, int start, int end)
 		throws SystemException {
 
 		return journalArticlePersistence.findByGroupId(groupId, start, end);
 	}
 
+	/**
+	 * Returns an ordered range of all the web content belonging to the group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return the range of matching web content ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -1346,12 +1883,41 @@ public class JournalArticleLocalServiceImpl
 			groupId, start, end, obc);
 	}
 
+	/**
+	 * Returns all the web content matching the group and folder.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @return the matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(long groupId, long folderId)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_F(groupId, folderId);
 	}
 
+	/**
+	 * Returns a range of all the web content matching the group and folder.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @return the range of matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(
 			long groupId, long folderId, int start, int end)
 		throws SystemException {
@@ -1360,6 +1926,29 @@ public class JournalArticleLocalServiceImpl
 			groupId, folderId, start, end);
 	}
 
+	/**
+	 * Returns an ordered range of all the web content matching the group and
+	 * folder.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  orderByComparator the comparator to order the web content
+	 * @return the range of matching web content ordered by the comparator
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator orderByComparator)
@@ -1369,28 +1958,81 @@ public class JournalArticleLocalServiceImpl
 			groupId, folderId, start, end, orderByComparator);
 	}
 
+	/**
+	 * Returns all the web content matching the group and article ID.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return the web content belonging to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticles(long groupId, String articleId)
 		throws SystemException {
 
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
+	/**
+	 * Returns all the web content matching the small image ID.
+	 *
+	 * @param  smallImageId the primary key of the web content's small image
+	 * @return the web content matching the small image ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId)
 		throws SystemException {
 
 		return journalArticlePersistence.findBySmallImageId(smallImageId);
 	}
 
+	/**
+	 * Returns the number of web content belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the number of web content belonging to the group
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getArticlesCount(long groupId) throws SystemException {
 		return journalArticlePersistence.countByGroupId(groupId);
 	}
 
+	/**
+	 * Returns the number of web content matching the group and folder.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @return the number of matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
 		return journalArticlePersistence.countByG_F(groupId, folderId);
 	}
 
+	/**
+	 * Returns an ordered range of all the web content matching the company,
+	 * version, and status.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  version the web content's version
+	 * @param  status the web content's workflow status
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @return the range of matching web content ordered by article ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getCompanyArticles(
 			long companyId, double version, int status, int start, int end)
 		throws SystemException {
@@ -1406,6 +2048,28 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns an ordered range of all the web content matching the company and
+	 * status.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  status the web content's workflow status
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @return the range of matching web content ordered by article ID
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getCompanyArticles(
 			long companyId, int status, int start, int end)
 		throws SystemException {
@@ -1420,6 +2084,29 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns a range of all the web content matching the company, version, and
+	 * status.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  version the web content's version
+	 * @param  status the web content's workflow status
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @return the range of matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getCompanyArticlesCount(
 			long companyId, double version, int status, int start, int end)
 		throws SystemException {
@@ -1433,6 +2120,14 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns a range of all the web content matching the company and status.
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  status the web content's workflow status
+	 * @return the range of matching web content
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getCompanyArticlesCount(long companyId, int status)
 		throws SystemException {
 
@@ -1444,6 +2139,15 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Returns
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getDisplayArticle(long groupId, String articleId)
 		throws PortalException, SystemException {
 
@@ -1474,6 +2178,14 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  urlTitle the web content's accessible URL title
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getDisplayArticleByUrlTitle(
 			long groupId, String urlTitle)
 		throws PortalException, SystemException {
@@ -1507,18 +2219,42 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  resourcePrimKey the primary key of the model instance
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException, SystemException {
 
 		return getLatestArticle(resourcePrimKey, WorkflowConstants.STATUS_ANY);
 	}
 
+	/**
+	 *
+	 * @param  resourcePrimKey the primary key of the model instance
+	 * @param  status the web content's workflow status
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(long resourcePrimKey, int status)
 		throws PortalException, SystemException {
 
 		return getLatestArticle(resourcePrimKey, status, true);
 	}
 
+	/**
+	 *
+	 * @param  resourcePrimKey the primary key of the model instance
+	 * @param  status the web content's workflow status
+	 * @param  preferApproved whether the workflow status is set to <code>Approved</code>
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(
 			long resourcePrimKey, int status, boolean preferApproved)
 		throws PortalException, SystemException {
@@ -1553,6 +2289,14 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(long groupId, String articleId)
 		throws PortalException, SystemException {
 
@@ -1560,6 +2304,15 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, WorkflowConstants.STATUS_ANY);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  status the web content's workflow status
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(
 			long groupId, String articleId, int status)
 		throws PortalException, SystemException {
@@ -1586,6 +2339,16 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  className the primary key of the class name for the web content's
+	 *         related model
+	 * @param  classPK the primary key of the web content's related entity
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticle(
 			long groupId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -1605,6 +2368,15 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  urlTitle the web content's accessible URL title
+	 * @param  status the web content's workflow status
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle getLatestArticleByUrlTitle(
 			long groupId, String urlTitle, int status)
 		throws PortalException, SystemException {
@@ -1631,6 +2403,14 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public double getLatestVersion(long groupId, String articleId)
 		throws PortalException, SystemException {
 
@@ -1639,6 +2419,15 @@ public class JournalArticleLocalServiceImpl
 		return article.getVersion();
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  status the web content's workflow status
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public double getLatestVersion(long groupId, String articleId, int status)
 		throws PortalException, SystemException {
 
@@ -1647,6 +2436,13 @@ public class JournalArticleLocalServiceImpl
 		return article.getVersion();
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getNotInTrashArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
@@ -1661,6 +2457,14 @@ public class JournalArticleLocalServiceImpl
 			groupId, folderIds, queryDefinition);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getStructureArticles(
 			long groupId, String ddmStructureKey)
 		throws SystemException {
@@ -1668,6 +2472,27 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByG_S(groupId, ddmStructureKey);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getStructureArticles(
 			long groupId, String ddmStructureKey, int start, int end,
 			OrderByComparator obc)
@@ -1683,12 +2508,27 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByStructureId(ddmStructureKeys);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey)
 		throws SystemException {
 
 		return journalArticlePersistence.countByG_S(groupId, ddmStructureKey);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getTemplateArticles(
 			long groupId, String ddmTemplateKey)
 		throws SystemException {
@@ -1696,6 +2536,26 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByG_T(groupId, ddmTemplateKey);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> getTemplateArticles(
 			long groupId, String ddmTemplateKey, int start, int end,
 			OrderByComparator obc)
@@ -1705,12 +2565,26 @@ public class JournalArticleLocalServiceImpl
 			groupId, ddmTemplateKey, start, end, obc);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey)
 		throws SystemException {
 
 		return journalArticlePersistence.countByG_T(groupId, ddmTemplateKey);
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean hasArticle(long groupId, String articleId)
 		throws SystemException {
 
@@ -1724,6 +2598,15 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean isLatestVersion(
 			long groupId, String articleId, double version)
 		throws PortalException, SystemException {
@@ -1736,6 +2619,16 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  status the web content's workflow status
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean isLatestVersion(
 			long groupId, String articleId, double version, int status)
 		throws PortalException, SystemException {
@@ -1748,6 +2641,15 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  newFolderId the primary key of the web content's new folder
+	 * @return
+	 * @throws PortalException
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public JournalArticle moveArticle(
 			long groupId, String articleId, long newFolderId)
@@ -1765,6 +2667,17 @@ public class JournalArticleLocalServiceImpl
 		return getArticle(groupId, articleId);
 	}
 
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  article the web content
+	 * @param  newFolderId the primary key of the web content's new folder
+	 * @param  serviceContext
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle moveArticleFromTrash(
 			long userId, long groupId, JournalArticle article, long newFolderId,
 			ServiceContext serviceContext)
@@ -1783,6 +2696,15 @@ public class JournalArticleLocalServiceImpl
 			groupId, article.getArticleId(), newFolderId);
 	}
 
+
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  article the web content
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle moveArticleToTrash(
 			long userId, JournalArticle article)
 		throws PortalException, SystemException {
@@ -1849,6 +2771,15 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle moveArticleToTrash(
 			long userId, long groupId, String articleId)
 		throws PortalException, SystemException {
@@ -1863,6 +2794,17 @@ public class JournalArticleLocalServiceImpl
 		return null;
 	}
 
+	/**
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  languageId the primary key of the web content's default user's
+	 *         language
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle removeArticleLocale(
 			long groupId, String articleId, double version, String languageId)
 		throws PortalException, SystemException {
@@ -1901,6 +2843,13 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  article the web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void restoreArticleFromTrash(long userId, JournalArticle article)
 		throws PortalException, SystemException {
 
@@ -1967,6 +2916,39 @@ public class JournalArticleLocalServiceImpl
 			0);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  keywords the keywords used to search for the web content
+	 * @param  version the web content's version
+	 * @param  type the web content's type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -1981,6 +2963,44 @@ public class JournalArticleLocalServiceImpl
 			status, reviewDate, start, end, obc);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  title the searched web content title
+	 * @param  description the searched web content description
+	 * @param  content the web content's searched content
+	 * @param  type the searched web content type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -2000,6 +3020,44 @@ public class JournalArticleLocalServiceImpl
 			queryDefinition);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  title the searched web content title
+	 * @param  description the searched web content description
+	 * @param  content the web content's searched content
+	 * @param  type the searched web content type
+	 * @param  ddmStructureKeys
+	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
+	 *         templates
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the web content
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<JournalArticle> search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -2019,6 +3077,34 @@ public class JournalArticleLocalServiceImpl
 			andOperator, queryDefinition);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  keywords the keywords used to search for the web content
+	 * @param  params
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  sort
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Hits search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String ddmStructureKey, String ddmTemplateKey,
@@ -2054,6 +3140,40 @@ public class JournalArticleLocalServiceImpl
 			params, andOperator, start, end, sort);
 	}
 
+	/**
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  articleId the primary key of the web content
+	 * @param  title the searched web content title
+	 * @param  description the searched web content description
+	 * @param  content the web content's searched content
+	 * @param  type the searched web content type
+	 * @param  status the web content's workflow status
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  params
+	 * @param  andSearch
+	 * @param  start the lower bound of the range of web content to return
+	 * @param  end the upper bound of the range of web content to return (not
+	 *         inclusive)
+	 * @param  sort
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public Hits search(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, String title,
@@ -2122,6 +3242,26 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	/**
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  keywords the keywords used to search for the web content
+	 * @param  version the web content's version
+	 * @param  type the searched web content type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -2135,6 +3275,31 @@ public class JournalArticleLocalServiceImpl
 			status, reviewDate);
 	}
 
+	/**
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  title the searched web content title
+	 * @param  description the searched web content description
+	 * @param  content the web content's searched content
+	 * @param  type the searched web content type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -2151,6 +3316,32 @@ public class JournalArticleLocalServiceImpl
 			new QueryDefinition(status));
 	}
 
+	/**
+	 *
+	 * @param  companyId the primary key of the web content's company
+	 * @param  groupId the primary key of the group
+	 * @param  folderIds the primary keys of the web content folders
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  title the searched web content title
+	 * @param  description the searched web content description
+	 * @param  content the web content's searched content
+	 * @param  type the searched web content type
+	 * @param  ddmStructureKeys the primary keys of the web content's DDM
+	 *         structures
+	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
+	 *         templates
+	 * @param  displayDateGT
+	 * @param  displayDateLT
+	 * @param  status the web content's workflow status
+	 * @param  reviewDate the web content's scheduled review date
+	 * @param  andOperator whether every field must match its keywords, or just
+	 *         one field
+	 * @return
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int searchCount(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -2167,6 +3358,13 @@ public class JournalArticleLocalServiceImpl
 			andOperator, new QueryDefinition(status));
 	}
 
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void subscribe(long userId, long groupId)
 		throws PortalException, SystemException {
 
@@ -2174,6 +3372,13 @@ public class JournalArticleLocalServiceImpl
 			userId, groupId, JournalArticle.class.getName(), groupId);
 	}
 
+	/**
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void unsubscribe(long userId, long groupId)
 		throws PortalException, SystemException {
 
@@ -2181,6 +3386,24 @@ public class JournalArticleLocalServiceImpl
 			userId, JournalArticle.class.getName(), groupId);
 	}
 
+	/**
+	 * Updates the web content matching the group, article ID, and version.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  titleMap the web content's locales and localized titles
+	 * @param  descriptionMap the web content's locales and localized
+	 *         descriptions
+	 * @param  content the web content's content
+	 * @param  layoutUuid the unique string identifying the web content's layout
+	 * @param  serviceContext
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<Locale, String> titleMap,
@@ -2285,6 +3508,52 @@ public class JournalArticleLocalServiceImpl
 			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
+	/**
+	 * Updates the web content.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  titleMap the web content's locales and localized titles
+	 * @param  descriptionMap the web content's locales and localized
+	 *         descriptions
+	 * @param  content the web content's content
+	 * @param  type the web content's type
+	 * @param  ddmStructureKey the primary key of the web content's DDM
+	 *         structure
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  layoutUuid the unique string identifying the web content's layout
+	 * @param  displayDateMonth the month the web content is set to display
+	 * @param  displayDateDay the calendar day the web content is set to display
+	 * @param  displayDateYear the year the web content is set to display
+	 * @param  displayDateHour the hour the web content is set to display
+	 * @param  displayDateMinute the minute the web content is set to display
+	 * @param  expirationDateMonth the month the web content is set to expire
+	 * @param  expirationDateDay the calendar day the web content is set to
+	 *         expire
+	 * @param  expirationDateYear the year the web content is set to expire
+	 * @param  expirationDateHour the hour the web content is set to expire
+	 * @param  expirationDateMinute the minute the web content is set to expire
+	 * @param  neverExpire whether the web content is not set to auto expire
+	 * @param  reviewDateMonth the month the web content is set for review
+	 * @param  reviewDateDay the calendar day the web content is set for review
+	 * @param  reviewDateYear the year the web content is set for review
+	 * @param  reviewDateHour the hour the web content is set for review
+	 * @param  reviewDateMinute the minute the web content is set for review
+	 * @param  neverReview whether the web content is not set for review
+	 * @param  indexable whether the web content is searchable
+	 * @param  smallImage whether the web content has a small image
+	 * @param  smallImageURL the web content's small image URL
+	 * @param  smallImageFile the web content's small image file
+	 * @param  images the web content's images
+	 * @param  articleURL the web content's accessible URL
+	 * @param  serviceContext
+	 * @return the web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, Map<Locale, String> titleMap,
@@ -2537,6 +3806,21 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Updates the web content matching the group, article ID, and version,
+	 * replacing its user, group, folder, article ID, version, and content.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  folderId the primary key of the web content folder
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  content the web content's content
+	 * @param  serviceContext
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateArticle(
 			long userId, long groupId, long folderId, String articleId,
 			double version, String content, ServiceContext serviceContext)
@@ -2552,6 +3836,18 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 *
+	 * @param      groupId
+	 * @param      articleId
+	 * @param      version
+	 * @param      locale
+	 * @param      title
+	 * @param      description
+	 * @param      content
+	 * @param      images
+	 * @return
+	 * @throws     PortalException
+	 * @throws     SystemException
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #updateArticleTranslation(long, String, double, Locale,
 	 *             String, String, String, Map, ServiceContext)}
@@ -2567,6 +3863,22 @@ public class JournalArticleLocalServiceImpl
 			images, null);
 	}
 
+	/**
+	 * Updates the web content's translation.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  locale
+	 * @param  title
+	 * @param  description
+	 * @param  content the web content's content
+	 * @param  images the web content's images
+	 * @param  serviceContext
+	 * @return
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,
 			String title, String description, String content,
@@ -2671,6 +3983,18 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Updates the web content's asset with the new asset categories, tag names,
+	 * and link entries, removing and adding them as necessary.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  article the web content
+	 * @param  assetCategoryIds
+	 * @param  assetTagNames
+	 * @param  assetLinkEntryIds
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateAsset(
 			long userId, JournalArticle article, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds)
@@ -2731,6 +4055,18 @@ public class JournalArticleLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	/**
+	 * Updates the web content matching the group, article ID, and version,
+	 * replacing the web content's content.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  content the web content's content
+	 * @return the updated web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateContent(
 			long groupId, String articleId, double version, String content)
 		throws PortalException, SystemException {
@@ -2745,6 +4081,19 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Updates the web content's status.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  article the web content
+	 * @param  status the web content's workflow status
+	 * @param  articleURL the web content's accessible URL
+	 * @param  workflowContext the web content's configured workflow
+	 * @param  serviceContext
+	 * @return the updated web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateStatus(
 			long userId, JournalArticle article, int status, String articleURL,
 			Map<String, Serializable> workflowContext,
@@ -3013,6 +4362,18 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	/**
+	 * Updates the web content's status by matching the class PK.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  classPK the primary key of the web content's related entity
+	 * @param  status the web content's workflow status
+	 * @param  workflowContext the web content's configured workflow
+	 * @param  serviceContext
+	 * @return the updated web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateStatus(
 			long userId, long classPK, int status,
 			Map<String, Serializable> workflowContext,
@@ -3025,6 +4386,22 @@ public class JournalArticleLocalServiceImpl
 			userId, article, status, null, workflowContext, serviceContext);
 	}
 
+	/**
+	 * Updates the web content's status by matching the group, article ID, and
+	 * version.
+	 *
+	 * @param  userId the primary key of the web content's creator/owner
+	 * @param  groupId the primary key of the group
+	 * @param  articleId the primary key of the web content
+	 * @param  version the web content's version
+	 * @param  status the web content's workflow status
+	 * @param  articleURL the web content's accessible URL
+	 * @param  workflowContext the web content's configured workflow
+	 * @param  serviceContext
+	 * @return the updated web content
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public JournalArticle updateStatus(
 			long userId, long groupId, String articleId, double version,
 			int status, String articleURL,
@@ -3040,6 +4417,19 @@ public class JournalArticleLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * Updates the web content matching the group, class name ID, and DDM
+	 * template key, replacing the DDM template key with a new one.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the entity's instance the web
+	 *         content is related to
+	 * @param  oldDDMTemplateKey the primary key of the web content's old DDM
+	 *         template
+	 * @param  newDDMTemplateKey the primary key of the web content's new DDM
+	 *         template
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void updateTemplateId(
 			long groupId, long classNameId, String oldDDMTemplateKey,
 			String newDDMTemplateKey)

@@ -40,6 +40,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -59,6 +60,7 @@ import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.VirtualHostImpl;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -314,6 +316,10 @@ public class DataFactory {
 		}
 
 		return groupIds;
+	}
+
+	public String getPermissionPrimaryKey(long plid, String portletId) {
+		return PortletPermissionUtil.getPrimaryKey(plid, portletId);
 	}
 
 	public Role getPowerUserRole() {
@@ -1120,19 +1126,86 @@ public class DataFactory {
 			_counter.get(), _maxMBMessageCount);
 	}
 
-	public PortletPreferences newPortletPreferences(
-		long ownerId, long plid, String portletId, String preferences) {
+	public List<PortletPreferences> newPortletPreferences(
+		long plid, JournalArticleResource journalArticleResource) {
 
-		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+		List<PortletPreferences> portletPreferencesList =
+			new ArrayList<PortletPreferences>(3);
 
-		portletPreferences.setPortletPreferencesId(_counter.get());
-		portletPreferences.setOwnerId(ownerId);
-		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		portletPreferences.setPlid(plid);
-		portletPreferences.setPortletId(portletId);
-		portletPreferences.setPreferences(preferences);
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, "145", PortletConstants.DEFAULT_PREFERENCES));
 
-		return portletPreferences;
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, "86", PortletConstants.DEFAULT_PREFERENCES));
+
+		StringBundler sb = new StringBundler(17);
+
+		sb.append(
+			"<portlet-preferences><preference><name>showAvailableLocales");
+		sb.append("</name><value>false</value></preference><preference><name>");
+		sb.append(
+			"enableViewCountIncrement</name><value>true</value></preference>");
+		sb.append("<preference><name>enableRatings</name><value>false</value>");
+		sb.append("</preference><preference><name>articleId</name><value>");
+		sb.append(journalArticleResource.getArticleId());
+		sb.append(
+			"</value></preference><preference><name>extensions</name><value>");
+		sb.append("NULL_VALUE</value></preference><preference><name>");
+		sb.append("enableRelatedAssets</name><value>true</value></preference>");
+		sb.append("<preference><name>enablePrint</name><value>false</value>");
+		sb.append("</preference><preference><name>enableCommentRatings</name>");
+		sb.append("<value>false</value></preference><preference><name>");
+		sb.append("ddmTemplateKey</name><value></value></preference>");
+		sb.append("<preference><name>groupId</name><value>");
+		sb.append(journalArticleResource.getGroupId());
+		sb.append("</value></preference><preference><name>enableComments");
+		sb.append(
+			"</name><value>false</value></preference></portlet-preferences>");
+
+		portletPreferencesList.add(
+			newPortletPreferences(plid, "56", sb.toString()));
+
+		return portletPreferencesList;
+	}
+
+	public List<PortletPreferences> newPortletPreferences(
+		long plid, String ddlPortletId, DDLRecordSet ddlRecordSet) {
+
+		List<PortletPreferences> portletPreferencesList =
+			new ArrayList<PortletPreferences>(4);
+
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, "145", PortletConstants.DEFAULT_PREFERENCES));
+
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, "86", PortletConstants.DEFAULT_PREFERENCES));
+
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, "87", PortletConstants.DEFAULT_PREFERENCES));
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(
+			"<portlet-preferences><preference><name>recordSetId</name><value>");
+		sb.append(ddlRecordSet.getRecordSetId());
+		sb.append(
+			"</value></preference><preference><name>displayDDMTemplateId");
+		sb.append(
+			"</name><value></value></preference><preference><name>editable");
+		sb.append("</name><value>true</value></preference><preference><name>");
+		sb.append("spreadsheet</name><value>false</value></preference>");
+		sb.append("<preference><name>formDDMTemplateId</name><value></value>");
+		sb.append("</preference></portlet-preferences>");
+
+		portletPreferencesList.add(
+			newPortletPreferences(plid, ddlPortletId, sb.toString()));
+
+		return portletPreferencesList;
 	}
 
 	public List<Layout> newPublicLayouts(long groupId) {
@@ -1409,6 +1482,21 @@ public class DataFactory {
 		mbThread.setStatusDate(new Date());
 
 		return mbThread;
+	}
+
+	protected PortletPreferences newPortletPreferences(
+		long plid, String portletId, String preferences) {
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setPortletPreferencesId(_counter.get());
+		portletPreferences.setOwnerId(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		portletPreferences.setOwnerType(PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		portletPreferences.setPlid(plid);
+		portletPreferences.setPortletId(portletId);
+		portletPreferences.setPreferences(preferences);
+
+		return portletPreferences;
 	}
 
 	protected ResourcePermission newResourcePermission(

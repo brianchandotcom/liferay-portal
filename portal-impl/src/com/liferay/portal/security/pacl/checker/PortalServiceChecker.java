@@ -104,7 +104,7 @@ public class PortalServiceChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
-	public boolean hasService(
+	protected boolean hasService(
 		Object object, Method method, Object[] arguments) {
 
 		Class<?> clazz = getClass(object);
@@ -159,6 +159,14 @@ public class PortalServiceChecker extends BaseChecker {
 					_log,
 					"Attempted to create a dynamic query for " + implClass);
 
+				return false;
+			}
+		}
+		else if (name.equals(PORTAL_SERVICE_PERMISSION_SERVICE)) {
+			Method method = portalServicePermission.getMethod();
+			Object[] arguments = portalServicePermission.getArguments();
+
+			if (!hasService(object, method, arguments)) {
 				return false;
 			}
 		}

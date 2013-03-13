@@ -162,10 +162,14 @@ public class MessageBusUtil {
 	}
 
 	private void _addDestination(Destination destination) {
+		PortalMessageBusPermission.checkPermission(destination.getName());
+
 		_messageBus.addDestination(destination);
 	}
 
 	private boolean _hasMessageListener(String destinationName) {
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		return _messageBus.hasMessageListener(destinationName);
 	}
 
@@ -181,10 +185,14 @@ public class MessageBusUtil {
 	private void _registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		_messageBus.registerMessageListener(destinationName, messageListener);
 	}
 
 	private void _removeDestination(String destinationName) {
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		_messageBus.removeDestination(destinationName);
 	}
 
@@ -206,12 +214,16 @@ public class MessageBusUtil {
 			String destinationName, Message message)
 		throws MessageBusException {
 
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		return _synchronousMessageSender.send(destinationName, message);
 	}
 
 	private Object _sendSynchronousMessage(
 			String destinationName, Message message, long timeout)
 		throws MessageBusException {
+
+		PortalMessageBusPermission.checkPermission(destinationName);
 
 		return _synchronousMessageSender.send(
 			destinationName, message, timeout);
@@ -244,15 +256,21 @@ public class MessageBusUtil {
 	}
 
 	private void _shutdown() {
+		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
+
 		_messageBus.shutdown();
 	}
 
 	private void _shutdown(boolean force) {
+		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
+
 		_messageBus.shutdown(force);
 	}
 
 	private boolean _unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
+
+		PortalMessageBusPermission.checkPermission(destinationName);
 
 		return _messageBus.unregisterMessageListener(
 			destinationName, messageListener);

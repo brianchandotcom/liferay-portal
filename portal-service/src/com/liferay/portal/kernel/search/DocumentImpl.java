@@ -291,8 +291,27 @@ public class DocumentImpl implements Document {
 	}
 
 	public void addLocalizedKeyword(String name, Map<Locale, String> values) {
+		addLocalizedKeyword(name, values, false);
+	}
+
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase) {
+
 		if ((values == null) || values.isEmpty()) {
 			return;
+		}
+
+		if (lowerCase) {
+			Map<Locale, String> lowerCaseValues = new HashMap<Locale, String>(
+				values.size());
+
+			for (Map.Entry<Locale, String> entry : values.entrySet()) {
+				String value = GetterUtil.getString(entry.getValue());
+
+				lowerCaseValues.put(entry.getKey(), value.toLowerCase());
+			}
+
+			values = lowerCaseValues;
 		}
 
 		Field field = new Field(name, values);

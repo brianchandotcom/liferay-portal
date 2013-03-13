@@ -16,13 +16,9 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
-import com.liferay.portal.security.pacl.checker.PortalServiceChecker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
-
-import java.lang.reflect.Method;
 
 import java.security.Permission;
 
@@ -42,7 +38,6 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		try {
 			initJNDIChecker();
-			initPortalServiceChecker();
 			initSQLChecker();
 		}
 		catch (Exception e) {
@@ -54,22 +49,12 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _jndiChecker;
 	}
 
-	public PortalServiceChecker getPortalServiceChecker() {
-		return _portalServiceChecker;
-	}
-
 	public SQLChecker getSqlChecker() {
 		return _sqlChecker;
 	}
 
 	public boolean hasJNDI(String name) {
 		return _jndiChecker.hasJNDI(name);
-	}
-
-	public boolean hasPortalService(
-		Object object, Method method, Object[] arguments) {
-
-		return _portalServiceChecker.hasService(object, method, arguments);
 	}
 
 	public boolean hasSQL(String sql) {
@@ -92,17 +77,6 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initChecker(_jndiChecker);
 	}
 
-	protected void initPortalServiceChecker() {
-		_portalServiceChecker = (PortalServiceChecker)getChecker(
-			PortalServicePermission.class);
-
-		if (_portalServiceChecker == null) {
-			_portalServiceChecker = new PortalServiceChecker();
-
-			initChecker(_portalServiceChecker);
-		}
-	}
-
 	protected void initSQLChecker() {
 		_sqlChecker = new SQLChecker();
 
@@ -112,7 +86,6 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
 	private JNDIChecker _jndiChecker;
-	private PortalServiceChecker _portalServiceChecker;
 	private SQLChecker _sqlChecker;
 
 }

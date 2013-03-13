@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.pacl;
 
-import java.lang.reflect.Method;
-
 import java.security.Permission;
 
 import java.util.Properties;
@@ -41,9 +39,6 @@ public interface PACLPolicy {
 	public String getServletContextName();
 
 	public boolean hasJNDI(String name);
-
-	public boolean hasPortalService(
-		Object object, Method method, Object[] arguments);
 
 	public boolean hasSQL(String sql);
 

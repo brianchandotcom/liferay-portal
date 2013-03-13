@@ -23,13 +23,10 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.checker.AuthorizationProperty;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
-import com.liferay.portal.security.pacl.checker.PortalServiceChecker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-
-import java.lang.reflect.Method;
 
 import java.security.Permission;
 
@@ -59,23 +56,6 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		if (!jndiChecker.hasJNDI(name)) {
 			AuthorizationProperty authorizationProperty =
 				jndiChecker.generateAuthorizationProperty(name);
-
-			mergeAuthorizationProperty(authorizationProperty);
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean hasPortalService(
-		Object object, Method method, Object[] arguments) {
-
-		PortalServiceChecker portalServiceChecker = getPortalServiceChecker();
-
-		if (!portalServiceChecker.hasService(object, method, arguments)) {
-			AuthorizationProperty authorizationProperty =
-				portalServiceChecker.generateAuthorizationProperty(
-					object, method, arguments);
 
 			mergeAuthorizationProperty(authorizationProperty);
 		}

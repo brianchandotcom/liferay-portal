@@ -290,6 +290,7 @@ html > .lfr-dockbar-pinned {
 
 .my-sites-menu {
 	max-width: 350px;
+	right: 0%;
 
 	ul {
 		list-style: none;

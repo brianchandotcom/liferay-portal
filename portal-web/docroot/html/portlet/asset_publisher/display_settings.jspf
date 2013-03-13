@@ -69,8 +69,10 @@
 		<aui:option label="regular" selected='<%= paginationType.equals("regular") %>' />
 	</aui:select>
 
-	<c:if test='<%= selectionStyle.equals("dynamic") %>'>
-		<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= excludeZeroViewCount %>" />
+	<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+		<c:if test='<%= selectionStyle.equals("dynamic") %>'>
+			<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= excludeZeroViewCount %>" />
+		</c:if>
 	</c:if>
 
 	<%

@@ -108,7 +108,9 @@
 
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
-	<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
+	<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
+	</c:if>
 
 	<c:choose>
 		<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">

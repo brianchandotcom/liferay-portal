@@ -200,7 +200,7 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.
 	defaultAssetPublisher = true;
 }
 
-boolean enablePermissions = GetterUtil.getBoolean(preferences.getValue("enablePermissions", null));
+boolean enablePermissions = PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ? true : GetterUtil.getBoolean(preferences.getValue("enablePermissions", null));
 
 assetEntryQuery.setEnablePermissions(enablePermissions);
 

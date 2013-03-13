@@ -19,6 +19,13 @@ SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, n
 
 SearchContext searchContext = SearchContextFactory.getInstance(request);
 
+if (groupId != 0) {
+	searchContext.setGroupIds(new long[] {groupId});
+}
+else {
+	searchContext.setGroupIds(new long[0]);
+}
+
 searchContext.setAttribute("paginationType", "more");
 searchContext.setEnd(mainSearchSearchContainer.getEnd());
 

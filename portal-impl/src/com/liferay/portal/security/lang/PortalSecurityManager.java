@@ -14,8 +14,13 @@
 
 package com.liferay.portal.security.lang;
 
+import java.security.Policy;
+
 /**
  * @author Raymond Augé
  */
 public interface PortalSecurityManager {
+
+	public Policy getPolicy();
+
 }

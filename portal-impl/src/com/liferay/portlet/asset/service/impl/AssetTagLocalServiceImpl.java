@@ -72,6 +72,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		AssetTag tag = assetTagPersistence.create(tagId);
 
+		tag.setUuid(serviceContext.getUuid());
 		tag.setGroupId(groupId);
 		tag.setCompanyId(user.getCompanyId());
 		tag.setUserId(user.getUserId());

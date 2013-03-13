@@ -184,6 +184,22 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* Returns the asset tag with the UUID in the group.
+	*
+	* @param uuid the UUID of asset tag
+	* @param groupId the group id of the asset tag
+	* @return the asset tag
+	* @throws PortalException if a asset tag with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.asset.model.AssetTag getAssetTagByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.getAssetTagByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the asset tags.
 	*
 	* <p>

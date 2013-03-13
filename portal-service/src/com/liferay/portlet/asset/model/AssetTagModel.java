@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @see com.liferay.portlet.asset.model.impl.AssetTagModelImpl
  * @generated
  */
-public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel {
+public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +62,21 @@ public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel {
 	 * @param primaryKey the primary key of this asset tag
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this asset tag.
+	 *
+	 * @return the uuid of this asset tag
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this asset tag.
+	 *
+	 * @param uuid the uuid of this asset tag
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the tag ID of this asset tag.

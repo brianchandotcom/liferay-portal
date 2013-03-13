@@ -239,6 +239,20 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the asset tag with the UUID in the group.
+	 *
+	 * @param uuid the UUID of asset tag
+	 * @param groupId the group id of the asset tag
+	 * @return the asset tag
+	 * @throws PortalException if a asset tag with the UUID in the group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTag getAssetTagByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException, SystemException {
+		return assetTagPersistence.findByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the asset tags.
 	 *
 	 * <p>

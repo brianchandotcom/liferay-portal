@@ -31,6 +31,7 @@ public class AssetTagSoap implements Serializable {
 	public static AssetTagSoap toSoapModel(AssetTag model) {
 		AssetTagSoap soapModel = new AssetTagSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setTagId(model.getTagId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -90,6 +91,14 @@ public class AssetTagSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setTagId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getTagId() {
@@ -164,6 +173,7 @@ public class AssetTagSoap implements Serializable {
 		_assetCount = assetCount;
 	}
 
+	private String _uuid;
 	private long _tagId;
 	private long _groupId;
 	private long _companyId;

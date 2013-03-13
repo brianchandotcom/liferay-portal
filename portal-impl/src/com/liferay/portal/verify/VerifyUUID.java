@@ -77,6 +77,9 @@ public class VerifyUUID extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
+			"AssetTag", "tagId"
+		},
+		new String[] {
 			"DLFileRank", "fileRankId"
 		},
 		new String[] {

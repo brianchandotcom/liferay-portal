@@ -14,41 +14,9 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.util.JavaDetector;
-
-import java.security.AccessController;
-
-import sun.reflect.Reflection;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class CheckerUtil {
-
-	public static boolean isAccessControllerDoPrivileged(int frame) {
-		frame++;
-
-		Class<?> callerClass = Reflection.getCallerClass(frame);
-
-		if (callerClass != AccessController.class) {
-			return false;
-		}
-
-		Thread currentThread = Thread.currentThread();
-
-		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
-
-		if (JavaDetector.isIBM()) {
-			frame++;
-		}
-
-		StackTraceElement stackTraceElement = stackTraceElements[frame];
-
-		String methodName = stackTraceElement.getMethodName();
-
-		return methodName.equals(_METHOD_NAME_DO_PRIVILEGED);
-	}
-
-	private static final String _METHOD_NAME_DO_PRIVILEGED = "doPrivileged";
 
 }

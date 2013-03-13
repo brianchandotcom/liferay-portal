@@ -46,7 +46,6 @@ import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -280,6 +279,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		originalLayout.setLayoutPrototypeLinkEnabled(
 			layoutPrototypeLinkEnabled);
 
+		originalLayout.setExpandoBridgeAttributes(serviceContext);
+
 		LayoutUtil.update(originalLayout);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
@@ -308,12 +309,6 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 					layoutRevision.getIconImageId(), iconBytes);
 			}
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = originalLayout.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return layout;
 	}

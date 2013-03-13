@@ -26,11 +26,15 @@ public class ExpandoBridgeFactoryUtil {
 	public static ExpandoBridge getExpandoBridge(
 		long companyId, String className) {
 
+		PortalRuntimePermission.checkExpandoBridge(className);
+
 		return getExpandoBridgeFactory().getExpandoBridge(companyId, className);
 	}
 
 	public static ExpandoBridge getExpandoBridge(
 		long companyId, String className, long classPK) {
+
+		PortalRuntimePermission.checkExpandoBridge(className);
 
 		return getExpandoBridgeFactory().getExpandoBridge(
 			companyId, className, classPK);

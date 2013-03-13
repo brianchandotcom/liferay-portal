@@ -14,11 +14,18 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.portal.PwdEncryptorException;
+
 /**
- * @author Brian Wing Shun Chan
- * @author Scott Lee
- *
- * @deprecated As of 6.2.0, replaced by {@link PasswordEncryptorUtil}
+ * @author Tomas Polesovsky
  */
-public class PwdEncryptor extends PasswordEncryptorUtil {
+public interface PasswordEncryptor {
+
+	public String encrypt(
+			String algorithm, String clearTextPassword,
+			String currentEncryptedPassword)
+		throws PwdEncryptorException;
+
+	public String[] getSupportedAlgorithmTypes();
+
 }

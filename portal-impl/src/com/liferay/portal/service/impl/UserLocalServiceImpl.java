@@ -117,8 +117,8 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
+import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
-import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.BaseServiceImpl;
@@ -778,7 +778,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setContactId(counterLocalService.increment());
 
 		if (Validator.isNotNull(password1)) {
-			user.setPassword(PwdEncryptor.encrypt(password1));
+			user.setPassword(PasswordEncryptorUtil.encrypt(password1));
 			user.setPasswordUnencrypted(password1);
 		}
 
@@ -1161,10 +1161,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String userPassword = user.getPassword();
 
 			if (!user.isPasswordEncrypted()) {
-				userPassword = PwdEncryptor.encrypt(userPassword);
+				userPassword = PasswordEncryptorUtil.encrypt(userPassword);
 			}
 
-			String encPassword = PwdEncryptor.encrypt(password);
+			String encPassword = PasswordEncryptorUtil.encrypt(password);
 
 			if (userPassword.equals(password) ||
 				userPassword.equals(encPassword)) {
@@ -1322,7 +1322,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 
 				if (!PropsValues.PORTAL_JAAS_STRICT_PASSWORD) {
-					encPassword = PwdEncryptor.encrypt(encPassword, password);
+					encPassword = PasswordEncryptorUtil.encrypt(
+						encPassword, password);
 
 					if (password.equals(encPassword)) {
 						return true;
@@ -1336,7 +1337,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					}
 				}
 
-				password = PwdEncryptor.encrypt(password);
+				password = PasswordEncryptorUtil.encrypt(password);
 
 				if (password.equals(encPassword)) {
 					return true;
@@ -1610,7 +1611,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				password = PwdToolkitUtil.generate(passwordPolicy);
 			}
 
-			user.setPassword(PwdEncryptor.encrypt(password));
+			user.setPassword(PasswordEncryptorUtil.encrypt(password));
 			user.setPasswordEncrypted(true);
 			user.setPasswordUnencrypted(password);
 
@@ -1682,7 +1683,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new SystemException(ee);
 		}
 
-		String encPassword = PwdEncryptor.encrypt(password);
+		String encPassword = PasswordEncryptorUtil.encrypt(password);
 
 		if (user.getPassword().equals(encPassword)) {
 			if (isPasswordExpired(user)) {
@@ -3266,8 +3267,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 							"&ticketKey=" + ticket.getKey();
 		}
 		else {
-			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
-					PwdEncryptor.TYPE_NONE)) {
+			if (!PasswordEncryptorUtil.PASSWORDS_ENCRYPTION_ALGORITHM.equals(
+					PasswordEncryptorUtil.TYPE_NONE)) {
 
 				if (LDAPSettingsUtil.isPasswordPolicyEnabled(
 						user.getCompanyId())) {
@@ -3300,7 +3301,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					passwordReset = true;
 				}
 
-				user.setPassword(PwdEncryptor.encrypt(newPassword));
+				user.setPassword(PasswordEncryptorUtil.encrypt(newPassword));
 				user.setPasswordUnencrypted(newPassword);
 				user.setPasswordEncrypted(true);
 				user.setPasswordReset(passwordReset);
@@ -3953,7 +3954,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				locale, "welcome-x", " " + fullName, false);
 
 			if (Validator.isNotNull(password1)) {
-				user.setPassword(PwdEncryptor.encrypt(password1));
+				user.setPassword(PasswordEncryptorUtil.encrypt(password1));
 				user.setPasswordUnencrypted(password1);
 			}
 
@@ -4302,10 +4303,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String oldEncPwd = user.getPassword();
 
 		if (!user.isPasswordEncrypted()) {
-			oldEncPwd = PwdEncryptor.encrypt(user.getPassword());
+			oldEncPwd = PasswordEncryptorUtil.encrypt(user.getPassword());
 		}
 
-		String newEncPwd = PwdEncryptor.encrypt(password1);
+		String newEncPwd = PasswordEncryptorUtil.encrypt(password1);
 
 		if (user.hasCompanyMx()) {
 			mailService.updatePassword(user.getCompanyId(), userId, password1);
@@ -5136,7 +5137,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (!user.isPasswordEncrypted()) {
-			user.setPassword(PwdEncryptor.encrypt(user.getPassword()));
+			user.setPassword(PasswordEncryptorUtil.encrypt(user.getPassword()));
 			user.setPasswordEncrypted(true);
 
 			userPersistence.update(user);

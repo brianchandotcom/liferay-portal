@@ -14,11 +14,27 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.util.DigesterUtil;
+
 /**
- * @author Brian Wing Shun Chan
- * @author Scott Lee
- *
- * @deprecated As of 6.2.0, replaced by {@link PasswordEncryptorUtil}
+ * @author Michael C. Han
+ * @author Tomas Polesovsky
  */
-public class PwdEncryptor extends PasswordEncryptorUtil {
+public class DefaultPasswordEncryptor
+	extends BasePasswordEncryptor implements PasswordEncryptor {
+
+	public String[] getSupportedAlgorithmTypes() {
+		return new String[0];
+	}
+
+	@Override
+	protected String doEncrypt(
+			String algorithm, String clearTextPassword,
+			String currentEncryptedPassword)
+		throws PwdEncryptorException {
+
+		return DigesterUtil.digest(algorithm, clearTextPassword);
+	}
+
 }

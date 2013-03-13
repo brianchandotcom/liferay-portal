@@ -29,7 +29,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
 import com.liferay.portal.security.ldap.PortalLDAPUtil;
-import com.liferay.portal.security.pwd.PwdEncryptor;
+import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -193,7 +193,7 @@ public class LDAPAuth implements Authenticator {
 					sb.append(algorithm);
 					sb.append(StringPool.CLOSE_CURLY_BRACE);
 					sb.append(
-						PwdEncryptor.encrypt(
+						PasswordEncryptorUtil.encrypt(
 							algorithm, password, ldapPassword));
 
 					encryptedPassword = sb.toString();

@@ -123,21 +123,9 @@ public abstract class BaseSocialActivityInterpreter
 			return null;
 		}
 
-		String groupName = StringPool.BLANK;
-
-		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
-			groupName = getGroupName(activity.getGroupId(), themeDisplay);
-		}
-
 		String link = getLink(activity, themeDisplay);
 
-		Object[] titleArguments = getTitleArguments(
-			groupName, activity, link, getTitle(activity, themeDisplay),
-			themeDisplay);
-
-		String titlePattern = getTitlePattern(groupName, activity);
-
-		String title = themeDisplay.translate(titlePattern, titleArguments);
+		String title = getTitle(activity, themeDisplay);
 
 		String body = getBody(activity, themeDisplay);
 
@@ -156,6 +144,13 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected long getClassPK(SocialActivity activity) {
 		return activity.getClassPK();
+	}
+
+	protected String getEntryTitle(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {
@@ -205,8 +200,8 @@ public abstract class BaseSocialActivityInterpreter
 
 		long classPK = getClassPK(activity);
 
-		if (trashHandler.isInTrash(classPK) ||
-			trashHandler.isInTrashContainer(classPK)) {
+		if ((trashHandler != null) && (trashHandler.isInTrash(classPK) ||
+			trashHandler.isInTrashContainer(classPK))) {
 
 			return TrashUtil.getViewContentURL(
 				getClassName(activity), classPK, themeDisplay);
@@ -230,7 +225,22 @@ public abstract class BaseSocialActivityInterpreter
 			SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return StringPool.BLANK;
+		String groupName = StringPool.BLANK;
+
+		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
+			groupName = getGroupName(activity.getGroupId(), themeDisplay);
+		}
+
+		String link = getLink(activity, themeDisplay);
+
+		String entryTitle = getEntryTitle(activity, themeDisplay);
+
+		Object[] titleArguments = getTitleArguments(
+			groupName, activity, link, entryTitle, themeDisplay);
+
+		String titlePattern = getTitlePattern(groupName, activity);
+
+		return themeDisplay.translate(titlePattern, titleArguments);
 	}
 
 	protected Object[] getTitleArguments(

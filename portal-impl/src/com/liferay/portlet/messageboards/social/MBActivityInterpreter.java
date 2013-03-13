@@ -63,6 +63,16 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
+	protected String getEntryTitle(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		MBMessage message = getMessage(activity);
+
+		return message.getSubject();
+	}
+
+	@Override
 	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -95,16 +105,6 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return MBMessageLocalServiceUtil.getMessage(activity.getClassPK());
-	}
-
-	@Override
-	protected String getTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		MBMessage message = getMessage(activity);
-
-		return message.getSubject();
 	}
 
 	@Override

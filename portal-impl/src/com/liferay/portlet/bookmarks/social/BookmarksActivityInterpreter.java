@@ -40,19 +40,7 @@ public class BookmarksActivityInterpreter
 	}
 
 	@Override
-	protected String getPath(SocialActivity activity) throws Exception {
-		if (activity.isClassName(BookmarksEntry.class.getName())) {
-			return "/bookmarks/find_entry?entryId=";
-		}
-		else if (activity.isClassName(BookmarksFolder.class.getName())) {
-			return "/bookmarks/find_folder?folderId=";
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
-	protected String getTitle(
+	protected String getEntryTitle(
 			SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -67,6 +55,18 @@ public class BookmarksActivityInterpreter
 				activity.getClassPK());
 
 			return folder.getName();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	protected String getPath(SocialActivity activity) throws Exception {
+		if (activity.isClassName(BookmarksEntry.class.getName())) {
+			return "/bookmarks/find_entry?entryId=";
+		}
+		else if (activity.isClassName(BookmarksFolder.class.getName())) {
+			return "/bookmarks/find_folder?folderId=";
 		}
 
 		return StringPool.BLANK;

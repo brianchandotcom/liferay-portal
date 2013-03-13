@@ -40,6 +40,17 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
+	protected String getEntryTitle(
+			SocialActivity activity, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			activity.getClassPK());
+
+		return article.getTitle(themeDisplay.getLocale());
+	}
+
+	@Override
 	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -70,17 +81,6 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return null;
-	}
-
-	@Override
-	protected String getTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			activity.getClassPK());
-
-		return article.getTitle(themeDisplay.getLocale());
 	}
 
 	@Override

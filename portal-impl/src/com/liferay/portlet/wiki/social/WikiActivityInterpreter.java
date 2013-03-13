@@ -105,12 +105,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getPath(SocialActivity activity) throws Exception {
-		return "/wiki/find_page?pageResourcePrimKey=";
-	}
-
-	@Override
-	protected String getTitle(
+	protected String getEntryTitle(
 			SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -126,6 +121,11 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		return page.getTitle();
+	}
+
+	@Override
+	protected String getPath(SocialActivity activity) throws Exception {
+		return "/wiki/find_page?pageResourcePrimKey=";
 	}
 
 	@Override

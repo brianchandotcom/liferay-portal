@@ -48,13 +48,13 @@ public class N1_AddMessageBoardsContentTest extends BaseTestCase {
 			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("m"));
+			RuntimeVariables.replace("mes"));
 		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
+			RuntimeVariables.replace(" "));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("\\13"));
-		selenium.waitForVisible("//div[@title='Message Boards']/p/a");
-		selenium.clickAt("//div[@title='Message Boards']/p/a",
+			RuntimeVariables.replace(" "));
+		selenium.waitForVisible("//li[@title='Message Boards']/p/a");
+		selenium.clickAt("//li[@title='Message Boards']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

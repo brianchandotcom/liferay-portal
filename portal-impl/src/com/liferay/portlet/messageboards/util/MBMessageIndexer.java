@@ -282,6 +282,9 @@ public class MBMessageIndexer extends BaseIndexer {
 			}
 		}
 
+		addAssetFields(
+			document, message.getWorkflowClassName(), message.getMessageId());
+
 		if (!message.isInTrash() && message.isInTrashThread()) {
 			addTrashFields(
 				document, MBThread.class.getName(), message.getThreadId(), null,

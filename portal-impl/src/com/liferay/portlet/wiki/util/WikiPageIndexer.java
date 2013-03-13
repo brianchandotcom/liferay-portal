@@ -227,6 +227,9 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addKeyword(Field.NODE_ID, page.getNodeId());
 		document.addText(Field.TITLE, page.getTitle());
 
+		addAssetFields(
+			document, WikiPage.class.getName(), page.getResourcePrimKey());
+
 		if (!page.isInTrash() && page.isInTrashContainer()) {
 			addTrashFields(
 				document, WikiNode.class.getName(), page.getNodeId(), null,

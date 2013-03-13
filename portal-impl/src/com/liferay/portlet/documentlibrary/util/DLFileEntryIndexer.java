@@ -414,6 +414,10 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				}
 			}
 
+			addAssetFields(
+				document, DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId());
+
 			if (!dlFileVersion.isInTrash() &&
 				dlFileVersion.isInTrashContainer()) {
 

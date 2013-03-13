@@ -65,8 +65,10 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -76,6 +78,8 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -476,6 +480,35 @@ public abstract class BaseIndexer implements Indexer {
 
 		_indexerPostProcessors = indexerPostProcessorsList.toArray(
 			new IndexerPostProcessor[indexerPostProcessorsList.size()]);
+	}
+
+	protected void addAssetFields(
+			Document document, String className, long classPK)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		document.addDate("asset_createDate", assetEntry.getCreateDate());
+		document.addDate(
+			"asset_expirationDate", assetEntry.getExpirationDate());
+		document.addDate("asset_modifiedDate", assetEntry.getModifiedDate());
+		document.addNumber("asset_priority", assetEntry.getPriority());
+		document.addDate("asset_publishDate", assetEntry.getPublishDate());
+
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+			className, classPK);
+
+		document.addNumber("asset_ratings", ratingsStats.getAverageScore());
+
+		document.addKeyword("asset_title", assetEntry.getTitle(defaultLocale));
+		document.addNumber("asset_viewCount", assetEntry.getViewCount());
 	}
 
 	/**

@@ -53,6 +53,12 @@ public class LogFactoryUtil {
 		return logWrapper;
 	}
 
+	public static LogFactory getLogFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(LogFactoryUtil.class);
+
+		return _logFactory;
+	}
+
 	public static void setLogFactory(LogFactory logFactory) {
 		PortalRuntimePermission.checkSetBeanProperty(LogFactoryUtil.class);
 

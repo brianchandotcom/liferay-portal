@@ -128,6 +128,7 @@ import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.text.Format;
@@ -157,6 +158,17 @@ public class DataFactory {
 		_maxMBThreadCount = maxMBThreadCount;
 		_maxMBMessageCount = maxMBMessageCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
+
+		_dlDDMStructureContent = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir,
+					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
+
+		_ddlDDMStructureContent = StringUtil.read(
+			new FileInputStream(
+				new File(
+					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
 
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
 		_futureDateCounter = new SimpleCounter();
@@ -352,8 +364,8 @@ public class DataFactory {
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
 
 		_defaultDLDDMStructure = newDDMStructure(
-			_guestGroupId, _companyId, _sampleUserId,
-			getDLFileEntryClassNameId());
+			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",
+			_dlDDMStructureContent);
 	}
 
 	public void initGroups() throws Exception {
@@ -476,14 +488,10 @@ public class DataFactory {
 	}
 
 	public void initUserNames() throws IOException {
-		String dependenciesDir =
-			"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
-				"dependencies/";
-
 		_firstNames = ListUtil.fromFile(
-			new File(_baseDir, dependenciesDir + "first_names.txt"));
+			new File(_baseDir, _DEPENDENCIES_DIR + "first_names.txt"));
 		_lastNames = ListUtil.fromFile(
-			new File(_baseDir, dependenciesDir + "last_names.txt"));
+			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
 	}
 
 	public void initUsers() {
@@ -644,6 +652,12 @@ public class DataFactory {
 		return counters;
 	}
 
+	public DDMStructure newDDLDDMStructure(long groupId) {
+		return newDDMStructure(
+			groupId, _classNamesMap.get(DDLRecordSet.class.getName()),
+			"Test DDM Structure", _ddlDDMStructureContent);
+	}
+
 	public DDLRecord newDDLRecord(
 		long groupId, long companyId, long userId, long ddlRecordSetId) {
 
@@ -708,21 +722,6 @@ public class DataFactory {
 		ddmStorageLink.setStructureId(structureId);
 
 		return ddmStorageLink;
-	}
-
-	public DDMStructure newDDMStructure(
-		long groupId, long companyId, long userId, long classNameId) {
-
-		DDMStructure ddmStructure = new DDMStructureImpl();
-
-		ddmStructure.setStructureId(_counter.get());
-		ddmStructure.setGroupId(groupId);
-		ddmStructure.setCompanyId(companyId);
-		ddmStructure.setUserId(userId);
-		ddmStructure.setCreateDate(nextFutureDate());
-		ddmStructure.setClassNameId(classNameId);
-
-		return ddmStructure;
 	}
 
 	public DDMStructureLink newDDMStructureLink(
@@ -1290,6 +1289,37 @@ public class DataFactory {
 		return assetEntry;
 	}
 
+	protected DDMStructure newDDMStructure(
+		long groupId, long classNameId, String structureKey, String xsd) {
+
+		DDMStructure ddmStructure = new DDMStructureImpl();
+
+		ddmStructure.setUuid(SequentialUUID.generate());
+		ddmStructure.setStructureId(_counter.get());
+		ddmStructure.setGroupId(groupId);
+		ddmStructure.setCompanyId(_companyId);
+		ddmStructure.setUserId(_sampleUserId);
+		ddmStructure.setUserName(_SAMPLE_USER_NAME);
+		ddmStructure.setCreateDate(nextFutureDate());
+		ddmStructure.setModifiedDate(nextFutureDate());
+		ddmStructure.setClassNameId(classNameId);
+		ddmStructure.setStructureKey(structureKey);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Name language-id=\"en_US\">");
+		sb.append(structureKey);
+		sb.append("</Name></root>");
+
+		ddmStructure.setName(sb.toString());
+		ddmStructure.setXsd(xsd);
+		ddmStructure.setStorageType("xml");
+
+		return ddmStructure;
+	}
+
 	protected Group newGroup(
 			long groupId, long classNameId, long classPK, String name,
 			boolean site)
@@ -1460,6 +1490,9 @@ public class DataFactory {
 			_FUTURE_TIME + (_futureDateCounter.get() * Time.SECOND));
 	}
 
+	private static final String _DEPENDENCIES_DIR=
+		"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
+			"dependencies/";
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
 	private static final String _SAMPLE_USER_NAME = "Sample";
@@ -1473,9 +1506,11 @@ public class DataFactory {
 	private Company _company;
 	private long _companyId;
 	private SimpleCounter _counter;
+	private String _ddlDDMStructureContent;
 	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
+	private String _dlDDMStructureContent;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
 	private List<Group> _groups;

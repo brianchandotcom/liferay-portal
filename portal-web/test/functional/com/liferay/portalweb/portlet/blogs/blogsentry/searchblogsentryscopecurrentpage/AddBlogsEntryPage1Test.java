@@ -47,6 +47,6 @@ public class AddBlogsEntryPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 	}
 }

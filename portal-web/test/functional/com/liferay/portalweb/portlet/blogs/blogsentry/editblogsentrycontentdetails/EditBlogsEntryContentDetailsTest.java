@@ -31,14 +31,14 @@ public class EditBlogsEntryContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//td[1]/span/a/span"));
 		selenium.click(RuntimeVariables.replace("//td[1]/span/a/span"));
@@ -58,8 +58,8 @@ public class EditBlogsEntryContentDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content Edit"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 		assertNotEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/div/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 	}
 }

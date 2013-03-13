@@ -46,6 +46,6 @@ public class SearchBlogsEntry1ScopeCurrentPage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Content"),
-			selenium.getText("//div[@class='entry-body']"));
+			selenium.getText("//div[@class='entry-body']/div"));
 	}
 }

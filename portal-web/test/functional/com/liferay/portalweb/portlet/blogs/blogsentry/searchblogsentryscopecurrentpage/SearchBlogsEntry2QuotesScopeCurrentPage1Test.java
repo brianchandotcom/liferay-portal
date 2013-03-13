@@ -35,7 +35,8 @@ public class SearchBlogsEntry2QuotesScopeCurrentPage1Test extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Blogs Entry1 Title"));
-		assertEquals(RuntimeVariables.replace("Showing 0 - 0."),
-			selenium.getText("//div[@class='search-results']"));
+		assertEquals(RuntimeVariables.replace(
+				"No entries were found that matched the keywords: \"Blogs Entry2 Title\"."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

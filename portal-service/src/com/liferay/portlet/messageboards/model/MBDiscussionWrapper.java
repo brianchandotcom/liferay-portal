@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,14 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("discussionId", getDiscussionId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("threadId", getThreadId());
@@ -54,10 +62,52 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long discussionId = (Long)attributes.get("discussionId");
 
 		if (discussionId != null) {
 			setDiscussionId(discussionId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -98,6 +148,24 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	/**
+	* Returns the uuid of this message boards discussion.
+	*
+	* @return the uuid of this message boards discussion
+	*/
+	public java.lang.String getUuid() {
+		return _mbDiscussion.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this message boards discussion.
+	*
+	* @param uuid the uuid of this message boards discussion
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_mbDiscussion.setUuid(uuid);
+	}
+
+	/**
 	* Returns the discussion ID of this message boards discussion.
 	*
 	* @return the discussion ID of this message boards discussion
@@ -113,6 +181,134 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	*/
 	public void setDiscussionId(long discussionId) {
 		_mbDiscussion.setDiscussionId(discussionId);
+	}
+
+	/**
+	* Returns the group ID of this message boards discussion.
+	*
+	* @return the group ID of this message boards discussion
+	*/
+	public long getGroupId() {
+		return _mbDiscussion.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this message boards discussion.
+	*
+	* @param groupId the group ID of this message boards discussion
+	*/
+	public void setGroupId(long groupId) {
+		_mbDiscussion.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this message boards discussion.
+	*
+	* @return the company ID of this message boards discussion
+	*/
+	public long getCompanyId() {
+		return _mbDiscussion.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this message boards discussion.
+	*
+	* @param companyId the company ID of this message boards discussion
+	*/
+	public void setCompanyId(long companyId) {
+		_mbDiscussion.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this message boards discussion.
+	*
+	* @return the user ID of this message boards discussion
+	*/
+	public long getUserId() {
+		return _mbDiscussion.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this message boards discussion.
+	*
+	* @param userId the user ID of this message boards discussion
+	*/
+	public void setUserId(long userId) {
+		_mbDiscussion.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this message boards discussion.
+	*
+	* @return the user uuid of this message boards discussion
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbDiscussion.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this message boards discussion.
+	*
+	* @param userUuid the user uuid of this message boards discussion
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_mbDiscussion.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this message boards discussion.
+	*
+	* @return the user name of this message boards discussion
+	*/
+	public java.lang.String getUserName() {
+		return _mbDiscussion.getUserName();
+	}
+
+	/**
+	* Sets the user name of this message boards discussion.
+	*
+	* @param userName the user name of this message boards discussion
+	*/
+	public void setUserName(java.lang.String userName) {
+		_mbDiscussion.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this message boards discussion.
+	*
+	* @return the create date of this message boards discussion
+	*/
+	public java.util.Date getCreateDate() {
+		return _mbDiscussion.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this message boards discussion.
+	*
+	* @param createDate the create date of this message boards discussion
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_mbDiscussion.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this message boards discussion.
+	*
+	* @return the modified date of this message boards discussion
+	*/
+	public java.util.Date getModifiedDate() {
+		return _mbDiscussion.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this message boards discussion.
+	*
+	* @param modifiedDate the modified date of this message boards discussion
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_mbDiscussion.setModifiedDate(modifiedDate);
 	}
 
 	/**

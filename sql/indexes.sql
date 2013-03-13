@@ -504,6 +504,9 @@ create unique index IX_F7D28C2F on MBCategory (uuid_, groupId);
 create index IX_79D0120B on MBDiscussion (classNameId);
 create unique index IX_33A4DE38 on MBDiscussion (classNameId, classPK);
 create unique index IX_B5CA2DC on MBDiscussion (threadId);
+create index IX_5477D431 on MBDiscussion (uuid_);
+create index IX_7E965757 on MBDiscussion (uuid_, companyId);
+create unique index IX_F7AAC799 on MBDiscussion (uuid_, groupId);
 
 create index IX_BFEB984F on MBMailingList (active_);
 create unique index IX_76CE9CDD on MBMailingList (groupId, categoryId);

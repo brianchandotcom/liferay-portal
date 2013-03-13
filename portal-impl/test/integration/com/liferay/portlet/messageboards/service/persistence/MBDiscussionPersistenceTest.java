@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -110,6 +112,20 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion newMBDiscussion = _persistence.create(pk);
 
+		newMBDiscussion.setUuid(ServiceTestUtil.randomString());
+
+		newMBDiscussion.setGroupId(ServiceTestUtil.nextLong());
+
+		newMBDiscussion.setCompanyId(ServiceTestUtil.nextLong());
+
+		newMBDiscussion.setUserId(ServiceTestUtil.nextLong());
+
+		newMBDiscussion.setUserName(ServiceTestUtil.randomString());
+
+		newMBDiscussion.setCreateDate(ServiceTestUtil.nextDate());
+
+		newMBDiscussion.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newMBDiscussion.setClassNameId(ServiceTestUtil.nextLong());
 
 		newMBDiscussion.setClassPK(ServiceTestUtil.nextLong());
@@ -120,8 +136,24 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
+		Assert.assertEquals(existingMBDiscussion.getUuid(),
+			newMBDiscussion.getUuid());
 		Assert.assertEquals(existingMBDiscussion.getDiscussionId(),
 			newMBDiscussion.getDiscussionId());
+		Assert.assertEquals(existingMBDiscussion.getGroupId(),
+			newMBDiscussion.getGroupId());
+		Assert.assertEquals(existingMBDiscussion.getCompanyId(),
+			newMBDiscussion.getCompanyId());
+		Assert.assertEquals(existingMBDiscussion.getUserId(),
+			newMBDiscussion.getUserId());
+		Assert.assertEquals(existingMBDiscussion.getUserName(),
+			newMBDiscussion.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBDiscussion.getCreateDate()),
+			Time.getShortTimestamp(newMBDiscussion.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBDiscussion.getModifiedDate()),
+			Time.getShortTimestamp(newMBDiscussion.getModifiedDate()));
 		Assert.assertEquals(existingMBDiscussion.getClassNameId(),
 			newMBDiscussion.getClassNameId());
 		Assert.assertEquals(existingMBDiscussion.getClassPK(),
@@ -277,6 +309,12 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussionModelImpl existingMBDiscussionModelImpl = (MBDiscussionModelImpl)_persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(
+				existingMBDiscussionModelImpl.getUuid(),
+				existingMBDiscussionModelImpl.getOriginalUuid()));
+		Assert.assertEquals(existingMBDiscussionModelImpl.getGroupId(),
+			existingMBDiscussionModelImpl.getOriginalGroupId());
+
 		Assert.assertEquals(existingMBDiscussionModelImpl.getThreadId(),
 			existingMBDiscussionModelImpl.getOriginalThreadId());
 
@@ -290,6 +328,20 @@ public class MBDiscussionPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
+
+		mbDiscussion.setUuid(ServiceTestUtil.randomString());
+
+		mbDiscussion.setGroupId(ServiceTestUtil.nextLong());
+
+		mbDiscussion.setCompanyId(ServiceTestUtil.nextLong());
+
+		mbDiscussion.setUserId(ServiceTestUtil.nextLong());
+
+		mbDiscussion.setUserName(ServiceTestUtil.randomString());
+
+		mbDiscussion.setCreateDate(ServiceTestUtil.nextDate());
+
+		mbDiscussion.setModifiedDate(ServiceTestUtil.nextDate());
 
 		mbDiscussion.setClassNameId(ServiceTestUtil.nextLong());
 

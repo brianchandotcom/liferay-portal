@@ -2721,6 +2721,19 @@
 	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl">
 		<attributes>
 			<id name="discussionId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="threadId" />
@@ -2728,6 +2741,7 @@
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl">

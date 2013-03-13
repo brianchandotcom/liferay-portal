@@ -370,6 +370,14 @@ alter table MBCategory add statusByUserId LONG;
 alter table MBCategory add statusByUserName VARCHAR(75) null;
 alter table MBCategory add statusDate DATE null;
 
+alter table MBDiscussion add uuid_ VARCHAR(75) null;
+alter table MBDiscussion add groupId LONG;
+alter table MBDiscussion add companyId LONG;
+alter table MBDiscussion add userId LONG;
+alter table MBDiscussion add userName VARCHAR(75) null;
+alter table MBDiscussion add createDate DATE null;
+alter table MBDiscussion add modifiedDate DATE null;
+
 COMMIT_TRANSACTION;
 
 update MBCategory set status = 0;

@@ -14,14 +14,20 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the MBDiscussion service. Represents a row in the &quot;MBDiscussion&quot; database table, with each column mapped to a property of this class.
@@ -36,7 +42,8 @@ import java.io.Serializable;
  * @see com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl
  * @generated
  */
-public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion> {
+public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion>,
+	GroupedModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +65,21 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this message boards discussion.
+	 *
+	 * @return the uuid of this message boards discussion
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this message boards discussion.
+	 *
+	 * @param uuid the uuid of this message boards discussion
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the discussion ID of this message boards discussion.
 	 *
 	 * @return the discussion ID of this message boards discussion
@@ -70,6 +92,106 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	 * @param discussionId the discussion ID of this message boards discussion
 	 */
 	public void setDiscussionId(long discussionId);
+
+	/**
+	 * Returns the group ID of this message boards discussion.
+	 *
+	 * @return the group ID of this message boards discussion
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this message boards discussion.
+	 *
+	 * @param groupId the group ID of this message boards discussion
+	 */
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this message boards discussion.
+	 *
+	 * @return the company ID of this message boards discussion
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards discussion.
+	 *
+	 * @param companyId the company ID of this message boards discussion
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this message boards discussion.
+	 *
+	 * @return the user ID of this message boards discussion
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this message boards discussion.
+	 *
+	 * @param userId the user ID of this message boards discussion
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this message boards discussion.
+	 *
+	 * @return the user uuid of this message boards discussion
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this message boards discussion.
+	 *
+	 * @param userUuid the user uuid of this message boards discussion
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this message boards discussion.
+	 *
+	 * @return the user name of this message boards discussion
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this message boards discussion.
+	 *
+	 * @param userName the user name of this message boards discussion
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this message boards discussion.
+	 *
+	 * @return the create date of this message boards discussion
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this message boards discussion.
+	 *
+	 * @param createDate the create date of this message boards discussion
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this message boards discussion.
+	 *
+	 * @return the modified date of this message boards discussion
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this message boards discussion.
+	 *
+	 * @param modifiedDate the modified date of this message boards discussion
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the fully qualified class name of this message boards discussion.

@@ -188,6 +188,23 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	/**
+	* Returns the message boards discussion with the UUID in the group.
+	*
+	* @param uuid the UUID of message boards discussion
+	* @param groupId the group id of the message boards discussion
+	* @return the message boards discussion
+	* @throws PortalException if a message boards discussion with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.messageboards.model.MBDiscussion getMBDiscussionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbDiscussionLocalService.getMBDiscussionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the message boards discussions.
 	*
 	* <p>
@@ -248,10 +265,12 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	public com.liferay.portlet.messageboards.model.MBDiscussion addDiscussion(
-		long classNameId, long classPK, long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _mbDiscussionLocalService.addDiscussion(classNameId, classPK,
-			threadId);
+		long userId, long classNameId, long classPK, long threadId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbDiscussionLocalService.addDiscussion(userId, classNameId,
+			classPK, threadId, serviceContext);
 	}
 
 	public com.liferay.portlet.messageboards.model.MBDiscussion getDiscussion(

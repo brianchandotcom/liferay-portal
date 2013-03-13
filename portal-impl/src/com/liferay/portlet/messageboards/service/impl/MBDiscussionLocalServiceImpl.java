@@ -16,9 +16,13 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.service.base.MBDiscussionLocalServiceBaseImpl;
+
+import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,13 +31,25 @@ public class MBDiscussionLocalServiceImpl
 	extends MBDiscussionLocalServiceBaseImpl {
 
 	public MBDiscussion addDiscussion(
-			long classNameId, long classPK, long threadId)
-		throws SystemException {
+			long userId, long classNameId, long classPK, long threadId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		long groupId = serviceContext.getScopeGroupId();
+		Date now = new Date();
 
 		long discussionId = counterLocalService.increment();
 
 		MBDiscussion discussion = mbDiscussionPersistence.create(discussionId);
 
+		discussion.setUuid(serviceContext.getUuid());
+		discussion.setGroupId(groupId);
+		discussion.setCompanyId(serviceContext.getCompanyId());
+		discussion.setUserId(userId);
+		discussion.setUserName(user.getFullName());
+		discussion.setCreateDate(serviceContext.getCreateDate(now));
+		discussion.setModifiedDate(serviceContext.getModifiedDate(now));
 		discussion.setClassNameId(classNameId);
 		discussion.setClassPK(classPK);
 		discussion.setThreadId(threadId);

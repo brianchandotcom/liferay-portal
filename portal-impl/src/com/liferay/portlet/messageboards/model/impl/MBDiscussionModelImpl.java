@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -34,6 +35,7 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,12 +61,19 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	 */
 	public static final String TABLE_NAME = "MBDiscussion";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "discussionId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "threadId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (discussionId LONG not null primary key,classNameId LONG,classPK LONG,threadId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbDiscussion.discussionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBDiscussion.discussionId ASC";
@@ -82,8 +91,11 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long THREADID_COLUMN_BITMASK = 4L;
-	public static long DISCUSSIONID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long THREADID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long DISCUSSIONID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBDiscussion"));
 
@@ -118,7 +130,14 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("discussionId", getDiscussionId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("threadId", getThreadId());
@@ -128,10 +147,52 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long discussionId = (Long)attributes.get("discussionId");
 
 		if (discussionId != null) {
 			setDiscussionId(discussionId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -153,12 +214,118 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		}
 	}
 
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
 	public long getDiscussionId() {
 		return _discussionId;
 	}
 
 	public void setDiscussionId(long discussionId) {
 		_discussionId = discussionId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public String getClassName() {
@@ -245,7 +412,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBDiscussion.class.getName(), getPrimaryKey());
 	}
 
@@ -270,7 +437,14 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public Object clone() {
 		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
 
+		mbDiscussionImpl.setUuid(getUuid());
 		mbDiscussionImpl.setDiscussionId(getDiscussionId());
+		mbDiscussionImpl.setGroupId(getGroupId());
+		mbDiscussionImpl.setCompanyId(getCompanyId());
+		mbDiscussionImpl.setUserId(getUserId());
+		mbDiscussionImpl.setUserName(getUserName());
+		mbDiscussionImpl.setCreateDate(getCreateDate());
+		mbDiscussionImpl.setModifiedDate(getModifiedDate());
 		mbDiscussionImpl.setClassNameId(getClassNameId());
 		mbDiscussionImpl.setClassPK(getClassPK());
 		mbDiscussionImpl.setThreadId(getThreadId());
@@ -328,6 +502,16 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public void resetOriginalValues() {
 		MBDiscussionModelImpl mbDiscussionModelImpl = this;
 
+		mbDiscussionModelImpl._originalUuid = mbDiscussionModelImpl._uuid;
+
+		mbDiscussionModelImpl._originalGroupId = mbDiscussionModelImpl._groupId;
+
+		mbDiscussionModelImpl._setOriginalGroupId = false;
+
+		mbDiscussionModelImpl._originalCompanyId = mbDiscussionModelImpl._companyId;
+
+		mbDiscussionModelImpl._setOriginalCompanyId = false;
+
 		mbDiscussionModelImpl._originalClassNameId = mbDiscussionModelImpl._classNameId;
 
 		mbDiscussionModelImpl._setOriginalClassNameId = false;
@@ -347,7 +531,47 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	public CacheModel<MBDiscussion> toCacheModel() {
 		MBDiscussionCacheModel mbDiscussionCacheModel = new MBDiscussionCacheModel();
 
+		mbDiscussionCacheModel.uuid = getUuid();
+
+		String uuid = mbDiscussionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			mbDiscussionCacheModel.uuid = null;
+		}
+
 		mbDiscussionCacheModel.discussionId = getDiscussionId();
+
+		mbDiscussionCacheModel.groupId = getGroupId();
+
+		mbDiscussionCacheModel.companyId = getCompanyId();
+
+		mbDiscussionCacheModel.userId = getUserId();
+
+		mbDiscussionCacheModel.userName = getUserName();
+
+		String userName = mbDiscussionCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			mbDiscussionCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			mbDiscussionCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			mbDiscussionCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			mbDiscussionCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			mbDiscussionCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		mbDiscussionCacheModel.classNameId = getClassNameId();
 
@@ -360,10 +584,24 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{discussionId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", discussionId=");
 		sb.append(getDiscussionId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -376,15 +614,43 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBDiscussion");
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>discussionId</column-name><column-value><![CDATA[");
 		sb.append(getDiscussionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -408,7 +674,20 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBDiscussion.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _discussionId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userUuid;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

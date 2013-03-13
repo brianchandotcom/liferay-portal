@@ -506,7 +506,9 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		document.addDate(Field.CREATE_DATE, assetEntry.getCreateDate());
+		if (!document.hasField(Field.CREATE_DATE)) {
+			document.addDate(Field.CREATE_DATE, assetEntry.getCreateDate());
+		}
 
 		if (assetEntry.getExpirationDate() != null) {
 			document.addDate(
@@ -521,7 +523,9 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addLocalizedKeyword("localized_title", titleMap, true);
 
-		document.addDate(Field.MODIFIED_DATE, assetEntry.getModifiedDate());
+		if (!document.hasField(Field.MODIFIED_DATE)) {
+			document.addDate(Field.MODIFIED_DATE, assetEntry.getModifiedDate());
+		}
 
 		document.addNumber(Field.PRIORITY, assetEntry.getPriority());
 

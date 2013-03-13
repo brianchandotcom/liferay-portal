@@ -645,6 +645,14 @@ public class DocumentImpl implements Document {
 		return field.getValues();
 	}
 
+	public boolean hasField(String field) {
+		if (_fields.containsKey(field)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDocumentSortableTextField(String name) {
 		return _sortableTextFields.contains(name);
 	}

@@ -204,6 +204,7 @@ if (Validator.isNotNull(historyKey)) {
 
 <aui:script use="aui-base">
 	var sectionsContainer = A.one('#<portlet:namespace />sectionsContainer');
+
 	var modifyLinks = sectionsContainer.all('.modify-link');
 
 	if (modifyLinks) {

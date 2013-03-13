@@ -59,23 +59,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Message Boards Administrator')]/td[1]/a</td>
-	<td>Message Boards Administrator</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Message Boards Administrator')]/td[2]/a</td>
-	<td>Regular</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Message Boards Administrator')]/td[3]/a</td>
-	<td>This is the Message Boards Administrator Role.</td>
-</tr>
-<tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>role1Present</td>
 </tr>
 <tr>
@@ -85,12 +70,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -134,23 +119,8 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Member')]/td[1]/a</td>
-	<td>Member</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Member')]/td[2]/a</td>
-	<td>Regular</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[contains(.,'Member')]/td[3]/a</td>
-	<td>This is the Member Role.</td>
-</tr>
-<tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>role2Present</td>
 </tr>
 <tr>
@@ -160,12 +130,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

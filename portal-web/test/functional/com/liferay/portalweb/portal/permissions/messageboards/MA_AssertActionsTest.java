@@ -25,8 +25,8 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
-		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace("Message Boards Permissions Page"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));
@@ -46,8 +46,8 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@id='_19_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_19_description']"));
 		selenium.open("/web/site-name/");
-		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace("Message Boards Permissions Page"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -66,8 +66,8 @@ public class MA_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		selenium.open("/web/site-name/");
-		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace("Message Boards Permissions Page"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText(
@@ -100,9 +100,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
-		assertEquals(RuntimeVariables.replace("Subscribe"),
+		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
 		assertEquals(RuntimeVariables.replace("Lock Thread"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Lock Thread')]"));

@@ -44,15 +44,17 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//input[@id='_125_keywords']");
-				selenium.type("//input[@id='_125_keywords']",
+				selenium.waitForVisible("//a[@id='_125_allUsersLink']");
+				assertEquals(RuntimeVariables.replace("Search All Users"),
+					selenium.getText("//a[@id='_125_allUsersLink']"));
+				selenium.clickAt("//a[@id='_125_allUsersLink']",
+					RuntimeVariables.replace("Search All Users"));
+				selenium.waitForPageToLoad("30000");
+				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Liferay"));
-				assertTrue(selenium.isVisible("//input[@value='Search']"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isElementPresent(
-						"//input[@name='_125_allRowIds']"));
 
 				boolean usersPresent = selenium.isElementPresent(
 						"//input[@name='_125_allRowIds']");

@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.security.Permission;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -174,7 +178,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
 			String threadPoolExecutorName = (String)subject;
 
-			if (!_threadPoolExecutorNames.contains(threadPoolExecutorName)) {
+			if (!hasThreadPoolExecutorNames(threadPoolExecutorName)) {
 				logSecurityException(
 					_log,
 					"Attempted to modify thread pool executor " +
@@ -216,6 +220,23 @@ public class PortalRuntimeChecker extends BaseChecker {
 			if (_setBeanPropertyClassNames.contains(
 					className.concat(StringPool.POUND).concat(property))) {
 
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean hasThreadPoolExecutorNames(
+		String threadPoolExecutorName) {
+
+		for (Pattern threadPoolExecutorNamePattern :
+				_threadPoolExecutorNamePatterns) {
+
+			Matcher matcher = threadPoolExecutorNamePattern.matcher(
+				threadPoolExecutorName);
+
+			if (matcher.matches()) {
 				return true;
 			}
 		}
@@ -278,16 +299,22 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected void initThreadPoolExecutorNames() {
-		_threadPoolExecutorNames = getPropertySet(
+		Set<String> threadPoolExecutorNames = getPropertySet(
 			"security-manager-thread-pool-executor-names");
 
-		if (_log.isDebugEnabled()) {
-			Set<String> threadPoolExecutorNames = new TreeSet<String>(
-				_threadPoolExecutorNames);
+		_threadPoolExecutorNamePatterns = new ArrayList<Pattern>(
+			threadPoolExecutorNames.size());
 
-			for (String threadPoolExecutorName : threadPoolExecutorNames) {
+		for (String threadPoolExecutorName : threadPoolExecutorNames) {
+			Pattern threadPoolExecutorNamePattern = Pattern.compile(
+				threadPoolExecutorName);
+
+			_threadPoolExecutorNamePatterns.add(threadPoolExecutorNamePattern);
+
+			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Allowing thread pool executor " + threadPoolExecutorName);
+					"Allowing thread pool executors that match the regular " +
+						"expression " + threadPoolExecutorName);
 			}
 		}
 	}
@@ -298,6 +325,6 @@ public class PortalRuntimeChecker extends BaseChecker {
 	private Set<String> _getBeanPropertyClassNames;
 	private Set<String> _searchEngineIds;
 	private Set<String> _setBeanPropertyClassNames;
-	private Set<String> _threadPoolExecutorNames;
+	private List<Pattern>  _threadPoolExecutorNamePatterns;
 
 }

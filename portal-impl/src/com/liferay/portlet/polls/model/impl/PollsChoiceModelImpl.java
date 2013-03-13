@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.model.impl;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -39,6 +41,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -69,11 +72,17 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "choiceId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
+			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "questionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,questionId LONG,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsChoice";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsChoice.questionId ASC, pollsChoice.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsChoice.questionId ASC, PollsChoice.name ASC";
@@ -89,9 +98,11 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsChoice"),
 			true);
-	public static long NAME_COLUMN_BITMASK = 1L;
-	public static long QUESTIONID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long QUESTIONID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -108,6 +119,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		model.setUuid(soapModel.getUuid());
 		model.setChoiceId(soapModel.getChoiceId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setQuestionId(soapModel.getQuestionId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
@@ -171,6 +188,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("choiceId", getChoiceId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("questionId", getQuestionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -190,6 +213,42 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		if (choiceId != null) {
 			setChoiceId(choiceId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long questionId = (Long)attributes.get("questionId");
@@ -240,6 +299,97 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	public void setChoiceId(long choiceId) {
 		_choiceId = choiceId;
+	}
+
+	@JSON
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@JSON
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@JSON
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	@JSON
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@JSON
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	@JSON
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -382,7 +532,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PollsChoice.class.getName(), getPrimaryKey());
 	}
 
@@ -416,6 +566,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		pollsChoiceImpl.setUuid(getUuid());
 		pollsChoiceImpl.setChoiceId(getChoiceId());
+		pollsChoiceImpl.setGroupId(getGroupId());
+		pollsChoiceImpl.setCompanyId(getCompanyId());
+		pollsChoiceImpl.setUserId(getUserId());
+		pollsChoiceImpl.setUserName(getUserName());
+		pollsChoiceImpl.setCreateDate(getCreateDate());
+		pollsChoiceImpl.setModifiedDate(getModifiedDate());
 		pollsChoiceImpl.setQuestionId(getQuestionId());
 		pollsChoiceImpl.setName(getName());
 		pollsChoiceImpl.setDescription(getDescription());
@@ -487,6 +643,14 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		pollsChoiceModelImpl._originalUuid = pollsChoiceModelImpl._uuid;
 
+		pollsChoiceModelImpl._originalGroupId = pollsChoiceModelImpl._groupId;
+
+		pollsChoiceModelImpl._setOriginalGroupId = false;
+
+		pollsChoiceModelImpl._originalCompanyId = pollsChoiceModelImpl._companyId;
+
+		pollsChoiceModelImpl._setOriginalCompanyId = false;
+
 		pollsChoiceModelImpl._originalQuestionId = pollsChoiceModelImpl._questionId;
 
 		pollsChoiceModelImpl._setOriginalQuestionId = false;
@@ -509,6 +673,38 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		}
 
 		pollsChoiceCacheModel.choiceId = getChoiceId();
+
+		pollsChoiceCacheModel.groupId = getGroupId();
+
+		pollsChoiceCacheModel.companyId = getCompanyId();
+
+		pollsChoiceCacheModel.userId = getUserId();
+
+		pollsChoiceCacheModel.userName = getUserName();
+
+		String userName = pollsChoiceCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			pollsChoiceCacheModel.userName = null;
+		}
+
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			pollsChoiceCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			pollsChoiceCacheModel.createDate = Long.MIN_VALUE;
+		}
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			pollsChoiceCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			pollsChoiceCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		pollsChoiceCacheModel.questionId = getQuestionId();
 
@@ -533,12 +729,24 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", choiceId=");
 		sb.append(getChoiceId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", questionId=");
 		sb.append(getQuestionId());
 		sb.append(", name=");
@@ -551,7 +759,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.polls.model.PollsChoice");
@@ -564,6 +772,30 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		sb.append(
 			"<column><column-name>choiceId</column-name><column-value><![CDATA[");
 		sb.append(getChoiceId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>questionId</column-name><column-value><![CDATA[");
@@ -590,6 +822,17 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	private String _uuid;
 	private String _originalUuid;
 	private long _choiceId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userUuid;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _questionId;
 	private long _originalQuestionId;
 	private boolean _setOriginalQuestionId;

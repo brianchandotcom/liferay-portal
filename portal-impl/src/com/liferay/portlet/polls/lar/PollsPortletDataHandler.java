@@ -176,6 +176,8 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, PollsChoice choice)
 		throws Exception {
 
+		long userId = portletDataContext.getUserId(choice.getUserUuid());
+
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);
@@ -195,18 +197,18 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				serviceContext.setUuid(choice.getUuid());
 
 				importedChoice = PollsChoiceLocalServiceUtil.addChoice(
-					questionId, choice.getName(), choice.getDescription(),
-					serviceContext);
+					userId, questionId, choice.getName(),
+					choice.getDescription(), serviceContext);
 			}
 			else {
 				importedChoice = PollsChoiceLocalServiceUtil.updateChoice(
 					existingChoice.getChoiceId(), questionId, choice.getName(),
-					choice.getDescription());
+					choice.getDescription(), new ServiceContext());
 			}
 		}
 		else {
 			importedChoice = PollsChoiceLocalServiceUtil.addChoice(
-				questionId, choice.getName(), choice.getDescription(),
+				userId, questionId, choice.getName(), choice.getDescription(),
 				new ServiceContext());
 		}
 

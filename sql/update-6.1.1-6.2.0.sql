@@ -400,6 +400,13 @@ drop index IX_ED7CF243 on PasswordPolicyRel;
 
 drop table Permission_;
 
+alter table PollsChoice add groupId LONG;
+alter table PollsChoice add companyId LONG;
+alter table PollsChoice add userId LONG;
+alter table PollsChoice add userName VARCHAR(75) null;
+alter table PollsChoice add createDate DATE null;
+alter table PollsChoice add modifiedDate DATE null;
+
 alter table PollsVote add uuid_ VARCHAR(75) null;
 alter table PollsVote add groupId LONG;
 

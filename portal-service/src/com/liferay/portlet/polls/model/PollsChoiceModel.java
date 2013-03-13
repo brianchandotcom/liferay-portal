@@ -16,14 +16,18 @@ package com.liferay.portlet.polls.model;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,7 +44,8 @@ import java.util.Map;
  * @see com.liferay.portlet.polls.model.impl.PollsChoiceModelImpl
  * @generated
  */
-public interface PollsChoiceModel extends BaseModel<PollsChoice> {
+public interface PollsChoiceModel extends BaseModel<PollsChoice>, GroupedModel,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,6 +94,106 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 	 * @param choiceId the choice ID of this polls choice
 	 */
 	public void setChoiceId(long choiceId);
+
+	/**
+	 * Returns the group ID of this polls choice.
+	 *
+	 * @return the group ID of this polls choice
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this polls choice.
+	 *
+	 * @param groupId the group ID of this polls choice
+	 */
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this polls choice.
+	 *
+	 * @return the company ID of this polls choice
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this polls choice.
+	 *
+	 * @param companyId the company ID of this polls choice
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this polls choice.
+	 *
+	 * @return the user ID of this polls choice
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this polls choice.
+	 *
+	 * @param userId the user ID of this polls choice
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this polls choice.
+	 *
+	 * @return the user uuid of this polls choice
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this polls choice.
+	 *
+	 * @param userUuid the user uuid of this polls choice
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this polls choice.
+	 *
+	 * @return the user name of this polls choice
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this polls choice.
+	 *
+	 * @param userName the user name of this polls choice
+	 */
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this polls choice.
+	 *
+	 * @return the create date of this polls choice
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this polls choice.
+	 *
+	 * @param createDate the create date of this polls choice
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this polls choice.
+	 *
+	 * @return the modified date of this polls choice
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this polls choice.
+	 *
+	 * @param modifiedDate the modified date of this polls choice
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the question ID of this polls choice.

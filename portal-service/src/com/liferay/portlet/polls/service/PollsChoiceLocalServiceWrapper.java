@@ -188,6 +188,23 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	/**
+	* Returns the polls choice with the UUID in the group.
+	*
+	* @param uuid the UUID of polls choice
+	* @param groupId the group id of the polls choice
+	* @return the polls choice
+	* @throws PortalException if a polls choice with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _pollsChoiceLocalService.getPollsChoiceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the polls choices.
 	*
 	* <p>
@@ -247,12 +264,12 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 		_pollsChoiceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	public com.liferay.portlet.polls.model.PollsChoice addChoice(
+	public com.liferay.portlet.polls.model.PollsChoice addChoice(long userId,
 		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _pollsChoiceLocalService.addChoice(questionId, name,
+		return _pollsChoiceLocalService.addChoice(userId, questionId, name,
 			description, serviceContext);
 	}
 
@@ -275,11 +292,12 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 
 	public com.liferay.portlet.polls.model.PollsChoice updateChoice(
 		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,
-			name, description);
+			name, description, serviceContext);
 	}
 
 	/**

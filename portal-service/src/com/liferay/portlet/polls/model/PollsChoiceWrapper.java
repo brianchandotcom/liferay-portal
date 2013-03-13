@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +48,12 @@ public class PollsChoiceWrapper implements PollsChoice,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("choiceId", getChoiceId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("questionId", getQuestionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -65,6 +72,42 @@ public class PollsChoiceWrapper implements PollsChoice,
 
 		if (choiceId != null) {
 			setChoiceId(choiceId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long questionId = (Long)attributes.get("questionId");
@@ -138,6 +181,134 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	public void setChoiceId(long choiceId) {
 		_pollsChoice.setChoiceId(choiceId);
+	}
+
+	/**
+	* Returns the group ID of this polls choice.
+	*
+	* @return the group ID of this polls choice
+	*/
+	public long getGroupId() {
+		return _pollsChoice.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this polls choice.
+	*
+	* @param groupId the group ID of this polls choice
+	*/
+	public void setGroupId(long groupId) {
+		_pollsChoice.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this polls choice.
+	*
+	* @return the company ID of this polls choice
+	*/
+	public long getCompanyId() {
+		return _pollsChoice.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this polls choice.
+	*
+	* @param companyId the company ID of this polls choice
+	*/
+	public void setCompanyId(long companyId) {
+		_pollsChoice.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this polls choice.
+	*
+	* @return the user ID of this polls choice
+	*/
+	public long getUserId() {
+		return _pollsChoice.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this polls choice.
+	*
+	* @param userId the user ID of this polls choice
+	*/
+	public void setUserId(long userId) {
+		_pollsChoice.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this polls choice.
+	*
+	* @return the user uuid of this polls choice
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _pollsChoice.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this polls choice.
+	*
+	* @param userUuid the user uuid of this polls choice
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_pollsChoice.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this polls choice.
+	*
+	* @return the user name of this polls choice
+	*/
+	public java.lang.String getUserName() {
+		return _pollsChoice.getUserName();
+	}
+
+	/**
+	* Sets the user name of this polls choice.
+	*
+	* @param userName the user name of this polls choice
+	*/
+	public void setUserName(java.lang.String userName) {
+		_pollsChoice.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this polls choice.
+	*
+	* @return the create date of this polls choice
+	*/
+	public java.util.Date getCreateDate() {
+		return _pollsChoice.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this polls choice.
+	*
+	* @param createDate the create date of this polls choice
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_pollsChoice.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this polls choice.
+	*
+	* @return the modified date of this polls choice
+	*/
+	public java.util.Date getModifiedDate() {
+		return _pollsChoice.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this polls choice.
+	*
+	* @param modifiedDate the modified date of this polls choice
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_pollsChoice.setModifiedDate(modifiedDate);
 	}
 
 	/**

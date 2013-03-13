@@ -193,6 +193,22 @@ public class PollsChoiceLocalServiceUtil {
 	}
 
 	/**
+	* Returns the polls choice with the UUID in the group.
+	*
+	* @param uuid the UUID of polls choice
+	* @param groupId the group id of the polls choice
+	* @return the polls choice
+	* @throws PortalException if a polls choice with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPollsChoiceByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the polls choices.
 	*
 	* <p>
@@ -253,12 +269,14 @@ public class PollsChoiceLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.polls.model.PollsChoice addChoice(
-		long questionId, java.lang.String name, java.lang.String description,
+		long userId, long questionId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addChoice(questionId, name, description, serviceContext);
+				   .addChoice(userId, questionId, name, description,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.polls.model.PollsChoice getChoice(
@@ -281,10 +299,13 @@ public class PollsChoiceLocalServiceUtil {
 
 	public static com.liferay.portlet.polls.model.PollsChoice updateChoice(
 		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateChoice(choiceId, questionId, name, description);
+		return getService()
+				   .updateChoice(choiceId, questionId, name, description,
+			serviceContext);
 	}
 
 	public static PollsChoiceLocalService getService() {

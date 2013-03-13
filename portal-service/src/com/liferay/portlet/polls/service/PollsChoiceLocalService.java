@@ -179,6 +179,21 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the polls choice with the UUID in the group.
+	*
+	* @param uuid the UUID of polls choice
+	* @param groupId the group id of the polls choice
+	* @return the polls choice
+	* @throws PortalException if a polls choice with the UUID in the group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns a range of all the polls choices.
 	*
 	* <p>
@@ -230,7 +245,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.polls.model.PollsChoice addChoice(
+	public com.liferay.portlet.polls.model.PollsChoice addChoice(long userId,
 		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -252,7 +267,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.polls.model.PollsChoice updateChoice(
 		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description)
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

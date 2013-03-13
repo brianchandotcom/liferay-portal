@@ -17,11 +17,14 @@ package com.liferay.portlet.polls.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.QuestionChoiceException;
 import com.liferay.portlet.polls.model.PollsChoice;
+import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,19 +34,28 @@ public class PollsChoiceLocalServiceImpl
 	extends PollsChoiceLocalServiceBaseImpl {
 
 	public PollsChoice addChoice(
-			long questionId, String name, String description,
+			long userId, long questionId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(name, description);
 
-		pollsQuestionPersistence.findByPrimaryKey(questionId);
+		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
+			questionId);
+		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
 
 		long choiceId = counterLocalService.increment();
 
 		PollsChoice choice = pollsChoicePersistence.create(choiceId);
 
 		choice.setUuid(serviceContext.getUuid());
+		choice.setGroupId(question.getGroupId());
+		choice.setCompanyId(user.getCompanyId());
+		choice.setUserId(user.getUserId());
+		choice.setUserName(user.getFullName());
+		choice.setCreateDate(serviceContext.getCreateDate(now));
+		choice.setModifiedDate(serviceContext.getModifiedDate(now));
 		choice.setQuestionId(questionId);
 		choice.setName(name);
 		choice.setDescription(description);
@@ -70,7 +82,8 @@ public class PollsChoiceLocalServiceImpl
 	}
 
 	public PollsChoice updateChoice(
-			long choiceId, long questionId, String name, String description)
+			long choiceId, long questionId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(name, description);
@@ -79,6 +92,7 @@ public class PollsChoiceLocalServiceImpl
 
 		PollsChoice choice = pollsChoicePersistence.findByPrimaryKey(choiceId);
 
+		choice.setModifiedDate(serviceContext.getModifiedDate(null));
 		choice.setQuestionId(questionId);
 		choice.setName(name);
 		choice.setDescription(description);

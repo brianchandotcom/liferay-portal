@@ -617,6 +617,8 @@ create unique index IX_7171B2E8 on PluginSetting (companyId, pluginId, pluginTyp
 create index IX_EC370F10 on PollsChoice (questionId);
 create unique index IX_D76DD2CF on PollsChoice (questionId, name);
 create index IX_6660B399 on PollsChoice (uuid_);
+create index IX_8AE746EF on PollsChoice (uuid_, companyId);
+create unique index IX_C222BD31 on PollsChoice (uuid_, groupId);
 
 create index IX_9FF342EA on PollsQuestion (groupId);
 create index IX_51F087F4 on PollsQuestion (uuid_);

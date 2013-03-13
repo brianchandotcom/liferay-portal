@@ -106,8 +106,8 @@ public class PollsQuestionLocalServiceImpl
 		if (choices != null) {
 			for (PollsChoice choice : choices) {
 				pollsChoiceLocalService.addChoice(
-					questionId, choice.getName(), choice.getDescription(),
-					new ServiceContext());
+					questionId, userId, choice.getName(),
+					choice.getDescription(), new ServiceContext());
 			}
 		}
 
@@ -276,13 +276,13 @@ public class PollsQuestionLocalServiceImpl
 
 				if (choice == null) {
 					pollsChoiceLocalService.addChoice(
-						questionId, choiceName, choiceDescription,
+						userId, questionId, choiceName, choiceDescription,
 						new ServiceContext());
 				}
 				else {
 					pollsChoiceLocalService.updateChoice(
 						choice.getChoiceId(), questionId, choiceName,
-						choiceDescription);
+						choiceDescription, new ServiceContext());
 				}
 			}
 		}

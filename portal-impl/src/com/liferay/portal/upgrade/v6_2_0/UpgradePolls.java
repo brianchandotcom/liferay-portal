@@ -30,6 +30,7 @@ public class UpgradePolls extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateChoices();
 		updateVotes();
 	}
 
@@ -57,6 +58,37 @@ public class UpgradePolls extends UpgradeProcess {
 			}
 
 			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateChoices() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select choiceId, questionId from PollsChoice");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long choiceId = rs.getLong("choiceId");
+				long questionId = rs.getLong("questionId");
+
+				long groupId = getGroupId(questionId);
+
+				if (groupId > 0) {
+					runSQL(
+						"update PollsChoice set groupId = " + groupId +
+							" where choiceId = " + choiceId);
+				}
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

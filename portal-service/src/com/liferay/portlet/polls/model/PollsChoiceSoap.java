@@ -17,6 +17,7 @@ package com.liferay.portlet.polls.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,12 @@ public class PollsChoiceSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setChoiceId(model.getChoiceId());
+		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setQuestionId(model.getQuestionId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
@@ -103,6 +110,54 @@ public class PollsChoiceSoap implements Serializable {
 		_choiceId = choiceId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public long getQuestionId() {
 		return _questionId;
 	}
@@ -129,6 +184,12 @@ public class PollsChoiceSoap implements Serializable {
 
 	private String _uuid;
 	private long _choiceId;
+	private long _groupId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _questionId;
 	private String _name;
 	private String _description;

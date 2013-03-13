@@ -104,46 +104,6 @@ public class PortalServiceChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
-	protected boolean hasService(
-		Object object, Method method, Object[] arguments) {
-
-		Class<?> clazz = getClass(object);
-
-		if (clazz == null) {
-			return false;
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		if (paclPolicy == getPACLPolicy()) {
-			return true;
-		}
-
-		Set<String> services = getServices(paclPolicy);
-
-		String className = getInterfaceName(clazz.getName());
-
-		if (services.contains(className)) {
-			return true;
-		}
-
-		String methodName = method.getName();
-
-		if (methodName.equals("invokeMethod")) {
-			methodName = (String)arguments[0];
-		}
-
-		if (services.contains(
-				className.concat(StringPool.POUND).concat(methodName))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean implies(Permission permission) {
 		PortalServicePermission portalServicePermission =
 			(PortalServicePermission)permission;
@@ -234,6 +194,46 @@ public class PortalServiceChecker extends BaseChecker {
 		if (services.contains(className)) {
 			return true;
 		}*/
+
+		return false;
+	}
+
+	protected boolean hasService(
+		Object object, Method method, Object[] arguments) {
+
+		Class<?> clazz = getClass(object);
+
+		if (clazz == null) {
+			return false;
+		}
+
+		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+
+		if (paclPolicy == getPACLPolicy()) {
+			return true;
+		}
+
+		Set<String> services = getServices(paclPolicy);
+
+		String className = getInterfaceName(clazz.getName());
+
+		if (services.contains(className)) {
+			return true;
+		}
+
+		String methodName = method.getName();
+
+		if (methodName.equals("invokeMethod")) {
+			methodName = (String)arguments[0];
+		}
+
+		if (services.contains(
+				className.concat(StringPool.POUND).concat(methodName))) {
+
+			return true;
+		}
 
 		return false;
 	}

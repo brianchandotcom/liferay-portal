@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -64,12 +65,13 @@ public class RuntimeChecker extends BaseChecker {
 		if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			key = "security-manager-class-loader-reference-ids";
 
-			if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+			String classLoaderReferenceId = permission.getActions();
+
+			if (Validator.isNull(classLoaderReferenceId)) {
 				value = "portal";
 			}
 			else {
-				value = name.substring(
-					RUNTIME_PERMISSION_GET_CLASSLOADER.length() + 1);
+				value = classLoaderReferenceId;
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
@@ -135,7 +137,9 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			if (!hasGetClassLoader(name)) {
+			String classLoaderReferenceId = permission.getActions();
+
+			if (!hasGetClassLoader(classLoaderReferenceId)) {
 				logSecurityException(_log, "Attempted to get class loader");
 
 				return false;
@@ -237,7 +241,7 @@ public class RuntimeChecker extends BaseChecker {
 		return false;
 	}
 
-	protected boolean hasGetClassLoader(String name) {
+	protected boolean hasGetClassLoader(String classLoaderReferenceId) {
 
 		// Temporarily return true
 

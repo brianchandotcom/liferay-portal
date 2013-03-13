@@ -14,12 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.security.Permission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,15 +34,7 @@ public class PortletClassLoaderUtil {
 	}
 
 	public static ClassLoader getClassLoader(String portletId) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager != null) {
-			Permission permission = new RuntimePermission(
-				PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER.concat(
-					StringPool.PERIOD).concat(portletId));
-
-			securityManager.checkPermission(permission);
-		}
+		PortalRuntimePermission.checkGetClassLoader(portletId);
 
 		PortletBag portletBag = PortletBagPool.get(portletId);
 

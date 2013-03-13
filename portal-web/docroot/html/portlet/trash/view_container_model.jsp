@@ -109,12 +109,11 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 			/>
 
 			<%
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(9);
 
 			sb.append(renderResponse.getNamespace());
 			sb.append("selectContainer('");
-			sb.append(redirect);
-			sb.append("', '");
+			sb.append("'', '");
 			sb.append(className);
 			sb.append("', ");
 			sb.append(classPK);
@@ -133,7 +132,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 		<aui:button-row>
 
 			<%
-			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('" + redirect + "', '" + className + "', " + classPK + ", " + containerModelId + ");";
+			String taglibSelectOnClick = renderResponse.getNamespace() + "selectContainer('', '" + className + "', " + classPK + ", " + containerModelId + ");";
 			%>
 
 			<aui:button

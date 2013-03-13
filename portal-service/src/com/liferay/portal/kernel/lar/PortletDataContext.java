@@ -116,6 +116,8 @@ public interface PortletDataContext extends Serializable {
 	public void addZipEntry(String name, StringBuilder sb)
 		throws SystemException;
 
+	public Element createRootElement(String dataHandlerClassName);
+
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace);
 
@@ -177,6 +179,8 @@ public interface PortletDataContext extends Serializable {
 	public Set<String> getPrimaryKeys();
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
+
+	public Element getRootElement();
 
 	public String getRootPath();
 
@@ -277,6 +281,8 @@ public interface PortletDataContext extends Serializable {
 		PortletDataContextListener portletDataContextListener);
 
 	public void setPrivateLayout(boolean privateLayout);
+
+	public void setRootElement(Element rootElement);
 
 	public void setScopeGroupId(long scopeGroupId);
 

@@ -31,7 +31,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.journal.DuplicateFeedIdException;
 import com.liferay.portlet.journal.FeedContentFieldException;
 import com.liferay.portlet.journal.FeedIdException;
@@ -110,6 +109,8 @@ public class JournalFeedLocalServiceImpl
 			feed.setFeedVersion(feedVersion);
 		}
 
+		feed.setExpandoBridgeAttributes(serviceContext);
+
 		journalFeedPersistence.update(feed);
 
 		// Resources
@@ -126,12 +127,6 @@ public class JournalFeedLocalServiceImpl
 				feed, serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = feed.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return feed;
 	}
@@ -317,13 +312,9 @@ public class JournalFeedLocalServiceImpl
 			feed.setFeedVersion(feedVersion);
 		}
 
+		feed.setExpandoBridgeAttributes(serviceContext);
+
 		journalFeedPersistence.update(feed);
-
-		// Expando
-
-		ExpandoBridge expandoBridge = feed.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return feed;
 	}

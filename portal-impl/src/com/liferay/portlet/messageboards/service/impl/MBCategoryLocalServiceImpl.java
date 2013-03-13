@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.messageboards.CategoryNameException;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -94,6 +93,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setName(name);
 		category.setDescription(description);
 		category.setDisplayStyle(displayStyle);
+		category.setExpandoBridgeAttributes(serviceContext);
 
 		mbCategoryPersistence.update(category);
 
@@ -120,12 +120,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			inReadInterval, outEmailAddress, outCustom, outServerName,
 			outServerPort, outUseSSL, outUserName, outPassword, allowAnonymous,
 			mailingListActive, serviceContext);
-
-		// Expando
-
-		ExpandoBridge expandoBridge = category.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return category;
 	}
@@ -616,6 +610,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			updateChildCategoriesDisplayStyle(category, displayStyle);
 		}
 
+		category.setExpandoBridgeAttributes(serviceContext);
+
 		mbCategoryPersistence.update(category);
 
 		// Mailing list
@@ -640,12 +636,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				outServerPort, outUseSSL, outUserName, outPassword,
 				allowAnonymous, mailingListActive, serviceContext);
 		}
-
-		// Expando
-
-		ExpandoBridge expandoBridge = category.getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 
 		return category;
 	}

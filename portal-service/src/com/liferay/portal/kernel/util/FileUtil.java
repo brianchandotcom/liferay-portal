@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.File;
@@ -34,6 +35,9 @@ public class FileUtil {
 	public static void copyDirectory(File source, File destination)
 		throws IOException {
 
+		PortalFilePermission.checkCopy(
+			source.getPath(), destination.getPath());
+
 		getFile().copyDirectory(source, destination);
 	}
 
@@ -41,11 +45,16 @@ public class FileUtil {
 			String sourceDirName, String destinationDirName)
 		throws IOException {
 
+		PortalFilePermission.checkCopy(
+			sourceDirName, destinationDirName);
+
 		getFile().copyDirectory(sourceDirName, destinationDirName);
 	}
 
 	public static void copyFile(File source, File destination)
 		throws IOException {
+
+		PortalFilePermission.checkCopy(source.getPath(), destination.getPath());
 
 		getFile().copyFile(source, destination);
 	}
@@ -53,11 +62,15 @@ public class FileUtil {
 	public static void copyFile(File source, File destination, boolean lazy)
 		throws IOException {
 
+		PortalFilePermission.checkCopy(source.getPath(), destination.getPath());
+
 		getFile().copyFile(source, destination, lazy);
 	}
 
 	public static void copyFile(String source, String destination)
 		throws IOException {
+
+		PortalFilePermission.checkCopy(source, destination);
 
 		getFile().copyFile(source, destination);
 	}
@@ -65,34 +78,57 @@ public class FileUtil {
 	public static void copyFile(String source, String destination, boolean lazy)
 		throws IOException {
 
+		PortalFilePermission.checkCopy(source, destination);
+
 		getFile().copyFile(source, destination, lazy);
 	}
 
 	public static File createTempFile() {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFile();
 	}
 
 	public static File createTempFile(byte[] bytes) throws IOException {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFile(bytes);
 	}
 
 	public static File createTempFile(InputStream is) throws IOException {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFile(is);
 	}
 
 	public static File createTempFile(String extension) {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFile(extension);
 	}
 
 	public static String createTempFileName() {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFileName();
 	}
 
 	public static String createTempFileName(String extension) {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFileName(extension);
 	}
 
 	public static File createTempFolder() {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
 		return getFile().createTempFolder();
 	}
 
@@ -101,18 +137,26 @@ public class FileUtil {
 	}
 
 	public static boolean delete(File file) {
+		PortalFilePermission.checkDelete(file.getPath());
+
 		return getFile().delete(file);
 	}
 
 	public static boolean delete(String file) {
+		PortalFilePermission.checkDelete(file);
+
 		return getFile().delete(file);
 	}
 
 	public static void deltree(File directory) {
+		PortalFilePermission.checkDelete(directory.getPath());
+
 		getFile().deltree(directory);
 	}
 
 	public static void deltree(String directory) {
+		PortalFilePermission.checkDelete(directory);
+
 		getFile().deltree(directory);
 	}
 
@@ -121,10 +165,14 @@ public class FileUtil {
 	}
 
 	public static boolean exists(File file) {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().exists(file);
 	}
 
 	public static boolean exists(String fileName) {
+		PortalFilePermission.checkRead(fileName);
+
 		return getFile().exists(fileName);
 	}
 
@@ -144,6 +192,8 @@ public class FileUtil {
 	public static String[] find(
 		String directory, String includes, String excludes) {
 
+		PortalFilePermission.checkRead(directory);
+
 		return getFile().find(directory, includes, excludes);
 	}
 
@@ -152,6 +202,8 @@ public class FileUtil {
 	}
 
 	public static byte[] getBytes(File file) throws IOException {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().getBytes(file);
 	}
 
@@ -191,56 +243,85 @@ public class FileUtil {
 	}
 
 	public static boolean isAscii(File file) throws IOException {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().isAscii(file);
 	}
 
 	public static boolean isSameContent(File file, byte[] bytes, int length) {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().isSameContent(file, bytes, length);
 	}
 
 	public static boolean isSameContent(File file, String s) {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().isSameContent(file, s);
 	}
 
 	public static String[] listDirs(File file) {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().listDirs(file);
 	}
 
 	public static String[] listDirs(String fileName) {
+		PortalFilePermission.checkRead(fileName);
+
 		return getFile().listDirs(fileName);
 	}
 
 	public static String[] listFiles(File file) {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().listFiles(file);
 	}
 
 	public static String[] listFiles(String fileName) {
+		PortalFilePermission.checkRead(fileName);
+
 		return getFile().listFiles(fileName);
 	}
 
 	public static void mkdirs(String pathName) {
+
+		// copy checks read/write, same as mkdirs except on the same path
+
+		PortalFilePermission.checkCopy(pathName, pathName);
+
 		getFile().mkdirs(pathName);
 	}
 
 	public static boolean move(File source, File destination) {
+		PortalFilePermission.checkMove(source.getPath(), destination.getPath());
+
 		return getFile().move(source, destination);
 	}
 
 	public static boolean move(
 		String sourceFileName, String destinationFileName) {
 
+		PortalFilePermission.checkMove(sourceFileName, destinationFileName);
+
 		return getFile().move(sourceFileName, destinationFileName);
 	}
 
 	public static String read(File file) throws IOException {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().read(file);
 	}
 
 	public static String read(File file, boolean raw) throws IOException {
+		PortalFilePermission.checkRead(file.getPath());
+
 		return getFile().read(file, raw);
 	}
 
 	public static String read(String fileName) throws IOException {
+		PortalFilePermission.checkRead(fileName);
+
 		return getFile().read(fileName);
 	}
 
@@ -269,41 +350,59 @@ public class FileUtil {
 	}
 
 	public static Properties toProperties(String fileName) {
+		PortalFilePermission.checkRead(fileName);
+
 		return getFile().toProperties(fileName);
 	}
 
 	public static void touch(File file) throws IOException {
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().touch(file);
 	}
 
 	public static void touch(String fileName) throws IOException {
+		PortalFilePermission.checkWrite(fileName);
+
 		getFile().touch(fileName);
 	}
 
 	public static void unzip(File source, File destination) {
+		PortalFilePermission.checkCopy(source.getPath(), destination.getPath());
+
 		getFile().unzip(source, destination);
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().write(file, bytes);
 	}
 
 	public static void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().write(file, bytes, offset, length);
 	}
 
 	public static void write(File file, InputStream is) throws IOException {
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().write(file, is);
 	}
 
 	public static void write(File file, String s) throws IOException {
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().write(file, s);
 	}
 
 	public static void write(File file, String s, boolean lazy)
 		throws IOException {
+
+		PortalFilePermission.checkWrite(file.getPath());
 
 		getFile().write(file, s, lazy);
 	}
@@ -311,25 +410,35 @@ public class FileUtil {
 	public static void write(File file, String s, boolean lazy, boolean append)
 		throws IOException {
 
+		PortalFilePermission.checkWrite(file.getPath());
+
 		getFile().write(file, s, lazy, append);
 	}
 
 	public static void write(String fileName, byte[] bytes) throws IOException {
+		PortalFilePermission.checkWrite(fileName);
+
 		getFile().write(fileName, bytes);
 	}
 
 	public static void write(String fileName, InputStream is)
 		throws IOException {
 
+		PortalFilePermission.checkWrite(fileName);
+
 		getFile().write(fileName, is);
 	}
 
 	public static void write(String fileName, String s) throws IOException {
+		PortalFilePermission.checkWrite(fileName);
+
 		getFile().write(fileName, s);
 	}
 
 	public static void write(String fileName, String s, boolean lazy)
 		throws IOException {
+
+		PortalFilePermission.checkWrite(fileName);
 
 		getFile().write(fileName, s, lazy);
 	}
@@ -338,11 +447,15 @@ public class FileUtil {
 			String fileName, String s, boolean lazy, boolean append)
 		throws IOException {
 
+		PortalFilePermission.checkWrite(fileName);
+
 		getFile().write(fileName, s, lazy, append);
 	}
 
 	public static void write(String pathName, String fileName, String s)
 		throws IOException {
+
+		PortalFilePermission.checkWrite(pathName);
 
 		getFile().write(pathName, fileName, s);
 	}
@@ -351,6 +464,8 @@ public class FileUtil {
 			String pathName, String fileName, String s, boolean lazy)
 		throws IOException {
 
+		PortalFilePermission.checkWrite(pathName);
+
 		getFile().write(pathName, fileName, s, lazy);
 	}
 
@@ -358,6 +473,8 @@ public class FileUtil {
 			String pathName, String fileName, String s, boolean lazy,
 			boolean append)
 		throws IOException {
+
+		PortalFilePermission.checkWrite(pathName);
 
 		getFile().write(pathName, fileName, s, lazy, append);
 	}

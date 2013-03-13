@@ -40,6 +40,11 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +52,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -241,6 +247,57 @@ public class BundleServletContext extends LiferayServletContext {
 	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_initParameters.keySet());
+	}
+
+	@Override
+	public String getRealPath(String path) {
+		URL resourceURL = _httpContext.getResource(path);
+
+		if (resourceURL != null) {
+			return resourceURL.toExternalForm();
+		}
+
+		return path;
+	}
+
+	@Override
+	public URL getResource(String path) throws MalformedURLException {
+		return _httpContext.getResource(path);
+	}
+
+	@Override
+	public InputStream getResourceAsStream(String path) {
+		try {
+			URL resourceURL = getResource(path);
+
+			if (resourceURL != null) {
+				return resourceURL.openStream();
+			}
+		}
+		catch (IOException e) {
+			_log.error(e, e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Set<String> getResourcePaths(String path) {
+		Set<String> resourcePaths = new HashSet<String>();
+
+		Enumeration<String> entryPaths= _bundle.getEntryPaths(path);
+
+		if (entryPaths == null) {
+			return Collections.EMPTY_SET;
+		}
+
+		while (entryPaths.hasMoreElements()) {
+			String resourcePath = entryPaths.nextElement();
+
+			resourcePaths.add(StringPool.SLASH.concat(resourcePath));
+		}
+
+		return resourcePaths;
 	}
 
 	@Override

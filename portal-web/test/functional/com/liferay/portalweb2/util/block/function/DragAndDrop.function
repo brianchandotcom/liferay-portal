@@ -1,0 +1,8 @@
+<function-definition>
+	<function-command name="dragAndDrop">
+		<execute selenium="waitForVisible" target="${target1}" />
+		<execute selenium="waitForText" target="${target1}" value="${value1}" />
+		<execute selenium="waitForVisible" target="${target2}" />
+		<execute selenium="dragAndDropToObject" target="${target1}" value="${target2}" />
+	</function-command>
+</function-definition>

@@ -589,8 +589,6 @@ AUI.add(
 						}
 					}
 
-					console.log('uploadResultClass: ', uploadResultClass);
-
 					resultsNode.addClass(uploadResultClass);
 				}
 			},
@@ -668,9 +666,9 @@ AUI.add(
 
 				if (!emptyMessage) {
 					emptyMessage = instance._entriesContainer.one(SELECTOR_ENTRIES_EMPTY);
-				}
 
-				instance._emptyMessage = emptyMessage;
+					instance._emptyMessage = emptyMessage;
+				}
 
 				return emptyMessage;
 			},
@@ -1058,11 +1056,7 @@ AUI.add(
 					instance._displayResult(fileNode, displayStyle, hasErrors);
 				}
 
-				// Testing Section
-				window.file = file;
-				window.overlay = file.overlay;
-				// window.progressBar =
-				// file.overlay.hide();
+				file.overlay.hide();
 			},
 
 			_showFileUploadProgress: function(event) {

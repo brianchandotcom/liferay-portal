@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
+import java.security.AccessController;
+import java.security.PrivilegedExceptionAction;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,7 +49,8 @@ public class FileAvailabilityUtil {
 			URL url = null;
 
 			try {
-				url = servletContext.getResource(path);
+				url = AccessController.doPrivileged(
+					new ResourceAction(servletContext, path));
 			}
 			catch (Exception e) {
 			}
@@ -70,5 +74,22 @@ public class FileAvailabilityUtil {
 
 	private static Map<String, Boolean> _availabilities =
 		new ConcurrentHashMap<String, Boolean>();
+
+	public static class ResourceAction
+		implements PrivilegedExceptionAction<URL> {
+
+		public ResourceAction(ServletContext servletContext, String path) {
+			_servletContext = servletContext;
+			_path = path;
+		}
+
+		public URL run() throws Exception {
+			return _servletContext.getResource(_path);
+		}
+
+		private String _path;
+		private ServletContext _servletContext;
+
+	}
 
 }

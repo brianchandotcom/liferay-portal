@@ -184,6 +184,10 @@ input, textarea {
 			@include button-hover;
 		}
 	}
+
+	span {
+		cursor: pointer;
+	}
 }
 
 .lfr-actions.disabled .taglib-text {
@@ -230,10 +234,6 @@ input.aui-form-validator-error, select.aui-form-validator-error, textarea.aui-fo
 .ie7 {
 	.aui-fieldset {
 		zoom: 1;
-	}
-
-	.lfr-actions.lfr-extended span {
-		cursor: pointer;
 	}
 }
 

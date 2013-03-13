@@ -62,6 +62,8 @@ public class Field implements Serializable {
 
 	public static final String ENTRY_CLASS_PK = "entryClassPK";
 
+	public static final String EXPIRATION_DATE = "expirationDate";
+
 	public static final String FOLDER_ID = "folderId";
 
 	public static final String GROUP_ID = "groupId";
@@ -93,7 +95,13 @@ public class Field implements Serializable {
 
 	public static final String PORTLET_ID = "portletId";
 
+	public static final String PRIORITY = "priority";
+
 	public static final String PROPERTIES = "properties";
+
+	public static final String PUBLISH_DATE = "publishDate";
+
+	public static final String RATINGS = "ratings";
 
 	public static final String RELATED_ENTRY = "relatedEntry";
 
@@ -137,6 +145,8 @@ public class Field implements Serializable {
 	public static final String USER_NAME = "userName";
 
 	public static final String VERSION = "version";
+
+	public static final String VIEW_COUNT = "viewCount";
 
 	public Field(String name, Map<Locale, String> localizedValues) {
 		_name = name;

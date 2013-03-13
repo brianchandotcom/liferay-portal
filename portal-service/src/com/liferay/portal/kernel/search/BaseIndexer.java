@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -64,9 +65,13 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -76,6 +81,8 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
@@ -476,6 +483,61 @@ public abstract class BaseIndexer implements Indexer {
 
 		_indexerPostProcessors = indexerPostProcessorsList.toArray(
 			new IndexerPostProcessor[indexerPostProcessorsList.size()]);
+	}
+
+	protected void addAssetFields(
+			Document document, String className, long classPK)
+		throws SystemException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSelectable()) {
+
+			return;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		document.addDate(Field.CREATE_DATE, assetEntry.getCreateDate());
+
+		if (assetEntry.getExpirationDate() != null) {
+			document.addDate(
+				Field.EXPIRATION_DATE, assetEntry.getExpirationDate());
+		}
+		else {
+			document.addDate(Field.EXPIRATION_DATE, new Date(Long.MAX_VALUE));
+		}
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			assetEntry.getTitle(), true);
+
+		document.addLocalizedKeyword("localized_title", titleMap, true);
+
+		document.addDate(Field.MODIFIED_DATE, assetEntry.getModifiedDate());
+
+		document.addNumber(Field.PRIORITY, assetEntry.getPriority());
+
+		if (assetEntry.getPublishDate() != null) {
+			document.addDate(Field.PUBLISH_DATE, assetEntry.getPublishDate());
+		}
+		else {
+			document.addDate(Field.PUBLISH_DATE, new Date(0));
+		}
+
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+			className, classPK);
+
+		document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
+
+		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 	}
 
 	/**
@@ -1337,6 +1399,8 @@ public abstract class BaseIndexer implements Indexer {
 				addTrashFields(document, className, classPK, null, null, null);
 			}
 		}
+
+		addAssetFields(document, className, classPK);
 
 		ExpandoBridgeIndexerUtil.addAttributes(
 			document, baseModel.getExpandoBridge());

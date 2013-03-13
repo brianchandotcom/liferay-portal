@@ -138,7 +138,7 @@ public class EditFileShortcutAction extends PortletAction {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(
-				"restoreddFileShortcutIds",
+				"restoreFileShortcutIds",
 				new String[] {String.valueOf(fileShortcutId)});
 
 			SessionMessages.add(

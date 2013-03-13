@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.mail.Session;
@@ -25,7 +24,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
-public class InfrastructureUtil implements PACLConstants {
+public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {
 		PortalRuntimePermission.checkGetBeanProperty(

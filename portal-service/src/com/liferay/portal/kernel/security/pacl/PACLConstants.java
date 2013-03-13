@@ -76,6 +76,10 @@ public interface PACLConstants {
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
 
+	public static final String
+		PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS =
+			"<<ALL EXECUTORS>>";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR =
 		"threadPoolExecutor";
 

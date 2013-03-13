@@ -101,6 +101,12 @@ public class LocalizationUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
+		String xml, boolean useDefault) {
+
+		return getLocalization().getLocalizationMap(xml, useDefault);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
 		String bundleName, ClassLoader classLoader, String key,
 		boolean includeBetaLocales) {
 

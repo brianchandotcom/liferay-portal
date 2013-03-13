@@ -161,6 +161,9 @@ public interface Localization {
 	public Map<Locale, String> getLocalizationMap(String xml);
 
 	public Map<Locale, String> getLocalizationMap(
+		String xml, boolean useDefault);
+
+	public Map<Locale, String> getLocalizationMap(
 		String bundleName, ClassLoader classLoader, String key,
 		boolean includeBetaLocales);
 

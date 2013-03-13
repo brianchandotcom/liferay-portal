@@ -16,14 +16,17 @@ package com.liferay.portlet.wiki.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -50,6 +53,25 @@ public class WikiPortletDisplayTemplateHandler
 	@Override
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.WIKI_DISPLAY_TEMPLATES_HELP;
+	}
+
+	public Map<String, TemplateVariableGroup> getTemplateVariablesMap(
+		long classPK) {
+
+		Map<String, TemplateVariableGroup> templateVariablesMap =
+			super.getTemplateVariablesMap(classPK);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariablesMap.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addVariable(
+			"wiki-page", WikiPage.class, PortletDisplayTemplateConstants.ENTRY);
+		fieldsTemplateVariableGroup.addVariable(
+			"wiki-page-content", String.class, "formattedContent");
+
+		return templateVariablesMap;
 	}
 
 	@Override

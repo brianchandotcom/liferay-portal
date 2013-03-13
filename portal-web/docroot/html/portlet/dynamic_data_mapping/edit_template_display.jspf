@@ -31,11 +31,22 @@ else {
 }
 
 boolean useRichEditor = editorType.equals("rich");
+
+Map<String, TemplateVariableGroup> templateVariablesMap = null;
+
+if (template != null) {
+	templateVariablesMap = TemplateContextHelper.getTemplateVariablesMap(template.getClassNameId(), classPK);
+}
+else if (classNameId > 0) {
+	templateVariablesMap = TemplateContextHelper.getTemplateVariablesMap(classNameId, classPK);
+}
+
+boolean displayPalette = ((templateVariablesMap != null) && !templateVariablesMap.isEmpty());
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
-<liferay-ui:panel-container extended="<%= false %>" id="templateScriptPanelContainer" persistState="<%= true %>">
+<liferay-ui:panel-container extended="<%= false %>" id="templateScriptContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
 		<div class="editor-toolbar">
 			<aui:select cssClass="language-type" inlineField="<%= true %>" label="" name="language" title="language-type">
@@ -66,26 +77,265 @@ boolean useRichEditor = editorType.equals("rich");
 			</aui:select>
 		</div>
 
-		<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
-			<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
-		</div>
+		<div class="lfr-template-editor-container">
 
-		<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
+			<%
+			String cssClassPalette = "lfr-template-palette-container";
+
+			if (!language.equalsIgnoreCase("ftl")) {
+				cssClassPalette += " aui-helper-hidden";
+			}
+			%>
+
+			<c:if test="<%= displayPalette %>">
+				<div class="<%= cssClassPalette %>" id="<portlet:namespace />templatePaletteContainer">
+					<div class="minimize-panels" id="<portlet:namespace />paletteToggler">
+						<a href="javascript:;">
+							<span><liferay-ui:message key="minimize-panels" /></span>
+						</a>
+					</div>
+
+					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
+						<div id="<portlet:namespace />paletteData">
+
+							<%
+							for (TemplateVariableGroup templateVariableGroup : templateVariablesMap.values()) {
+							%>
+
+							<div class="palette-section">
+								<div class="palette-item-header aui-toggler-header-expanded">
+									<span class="palette-item-header-icon"></span>
+									<span><liferay-ui:message key="<%= templateVariableGroup.getLabelKey() %>" /></span>
+								</div>
+								<ul class="palette-item-content">
+
+									<%
+									for (TemplateVariableDefinition variableDefinition : templateVariableGroup.getVariableDefinitions()) {
+
+										String dataContent1 = "${" + variableDefinition.getName() + "}";
+										String dataContent2 = StringPool.BLANK;
+
+										if (variableDefinition.isCollection()) {
+											TemplateVariableDefinition itemVariableDefinition = variableDefinition.getCollectionItem();
+
+											dataContent1 = "<#list " + itemVariableDefinition.getName() + " as " +variableDefinition.getName() + ">";
+											dataContent2 = "</#list>";
+									%>
+
+
+									<%
+										}
+									%>
+
+										<li class="palette-item-container">
+											<span class="palette-item"
+												  data-content1="<%= dataContent1 %>"
+												  <%= Validator.isNotNull(dataContent2) ? "data-content2=\"" + dataContent2 + "\"" : StringPool.BLANK %>
+												  title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, variableDefinition)) %>">
+												<liferay-ui:message key="<%= variableDefinition.getLabelKey() %>" />
+											</span>
+										</li>
+
+									<%
+									}
+									%>
+
+								</ul>
+							</div>
+
+							<%
+							}
+							%>
+
+						</div>
+					</div>
+				</div>
+			</c:if>
+
+			<%
+			String editorContainerClass = "lfr-editor-container";
+
+			if (!language.equalsIgnoreCase("ftl")) {
+				editorContainerClass += " lfr-editor-container-full";
+			}
+			%>
+
+			<div class="<%= editorContainerClass %>" id="<portlet:namespace />editorContainer">
+				<div class="lfr-plain-editor <%= useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />plainEditor">
+					<aui:input cssClass="lfr-template-editor" inputCssClass="lfr-editor-textarea" label="" name="plainEditorField" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="" wrap="off" />
+				</div>
+
+				<div class="lfr-rich-editor <%= !useRichEditor ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />richEditor"></div>
+			</div>
+		</div>
 
 		<aui:input label="script-file" name="script" type="file" />
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-toggler,aui-tooltip,event-mouseenter,transition">
+	var AObject = A.Object;
+	var Util = Liferay.Util;
+
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
-	var plainEditorField = A.one('#<portlet:namespace />plainEditorField');
+	var panelScriptContainer = A.one('#templateScriptContainer');
 
-	var richEditor;
+	var editorContainer = panelScriptContainer.one('#<portlet:namespace />editorContainer');
+	var plainEditorField = panelScriptContainer.one('#<portlet:namespace />plainEditorField');
+	var selectLanguageNode = panelScriptContainer.one('#<portlet:namespace />language');
 
 	var prevEditorContent;
+	var richEditor;
 
-	var selectLanguageNode = A.one('#<portlet:namespace />language');
+	<c:if test="<%= displayPalette %>">
+		var CSS_EDITOR_CONTAINER_FULL = 'lfr-editor-container-full';
+
+		var CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED = 'lfr-editor-container-palette-minimized';
+
+		var CSS_PALETTE_CONTAINER_MINIMIZED = 'lfr-template-palette-container-minimized';
+
+		var MAP_OPACITY = {
+			mouseenter: 1,
+			mouseleave: 0
+		};
+
+		var paletteToggler = panelScriptContainer.one('#<portlet:namespace />paletteToggler');
+
+		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
+		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
+		var paletteDataNode = panelScriptContainer.one('#<portlet:namespace />paletteData');
+		var paletteTogglerLink = paletteToggler.one('a');
+
+		var paletteHandle;
+
+		function attachPaletteInteraction() {
+			paletteHandle = paletteContainer.on(['mouseenter', 'mouseleave'], togglePaletteAction);
+		}
+
+		function detachPaletteInteraction() {
+			if (paletteHandle) {
+				paletteHandle.detach();
+			}
+		}
+
+		function hidePalette() {
+			paletteContainer.hide();
+
+			editorContainer.addClass(CSS_EDITOR_CONTAINER_FULL);
+		}
+
+		function maximizePalette() {
+			editorContainer.removeClass(CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED);
+
+			paletteContainer.transition(
+				{
+					duration: 0.5,
+					width: '200px'
+				},
+				function() {
+					paletteContainer.removeClass(CSS_PALETTE_CONTAINER_MINIMIZED);
+
+					paletteDataContainer.appendChild(paletteDataNode);
+
+					attachPaletteInteraction();
+				}
+			);
+		}
+
+		function minimizePalette() {
+			paletteDataNode.remove();
+
+			detachPaletteInteraction();
+
+			paletteContainer.transition(
+				{
+					duration: 0.5,
+					width: '13px'
+				},
+				function() {
+					paletteContainer.addClass(CSS_PALETTE_CONTAINER_MINIMIZED);
+					editorContainer.addClass(CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED);
+
+					paletteToggler.setStyle('opacity', '1');
+				}
+			);
+		}
+
+		function onPaletteItemChosen(event) {
+			var editor = richEditor.getEditor();
+
+			var item = event.currentTarget;
+
+			var contentAttrs = Util.getAttributes(item, 'data-content');
+
+			var cursorPos;
+			var processed;
+
+			AObject.each(
+				contentAttrs,
+				function(item, index) {
+					if (processed) {
+						editor.insert('\n');
+
+						cursorPos = editor.getCursorPosition();
+
+						editor.insert('\n');
+					}
+
+					processed = true;
+
+					editor.insert(item);
+				}
+			);
+
+			if (cursorPos) {
+				editor.moveCursorToPosition(cursorPos);
+			}
+
+			editor.focus();
+		}
+
+		function showPalette() {
+			editorContainer.removeClass(CSS_EDITOR_CONTAINER_FULL);
+
+			paletteContainer.show();
+		}
+
+		function togglePaletteCollapse() {
+			if (paletteContainer.hasClass(CSS_PALETTE_CONTAINER_MINIMIZED)) {
+				maximizePalette();
+			}
+			else {
+				minimizePalette();
+			}
+		}
+
+		function togglePaletteAction(event) {
+			if (!paletteContainer.hasClass(CSS_PALETTE_CONTAINER_MINIMIZED)) {
+				var opacity = 0;
+
+				if (event) {
+					opacity = MAP_OPACITY[event.type];
+				}
+
+				paletteToggler.transition(
+					{
+						opacity: opacity
+					}
+				);
+			}
+		}
+
+		function updatePalette() {
+			if (getSelectedLanguage() === 'ftl') {
+				showPalette();
+			}
+			else {
+				hidePalette();
+			}
+		}
+	</c:if>
 
 	function getEditorContent(type) {
 		var content = '';
@@ -100,6 +350,18 @@ boolean useRichEditor = editorType.equals("rich");
 		return content;
 	}
 
+	function getSelectedLanguage() {
+		return selectLanguageNode.val();
+	}
+
+	function onTemplateLanguageChange(event) {
+		<c:if test="<%= displayPalette %>">
+			updatePalette(event);
+		</c:if>
+
+		updateEditorPlugins(event);
+	}
+
 	function setEditorContent(type, content) {
 		if (type == 'plain') {
 			plainEditorField.val(content);
@@ -112,7 +374,7 @@ boolean useRichEditor = editorType.equals("rich");
 	}
 
 	function updateEditorPlugins(event) {
-		var selectedOptionValue = selectLanguageNode.one('option:selected').val();
+		var selectedOptionValue = getSelectedLanguage();
 
 		if (selectedOptionValue === 'ftl') {
 			richEditor.plug(
@@ -138,7 +400,7 @@ boolean useRichEditor = editorType.equals("rich");
 	function updateEditorType(event) {
 		var oldEditorType = editorType;
 
-		var newEditorType = A.one('#<portlet:namespace />editorType').val();
+		var newEditorType = panelScriptContainer.one('#<portlet:namespace />editorType').val();
 
 		var oldEditorContent = getEditorContent(oldEditorType);
 
@@ -146,12 +408,21 @@ boolean useRichEditor = editorType.equals("rich");
 
 		var richEditorType = (newEditorType != 'plain');
 
-		A.one('#<portlet:namespace />plainEditor').toggle(!richEditorType);
-		A.one('#<portlet:namespace />richEditor').toggle(richEditorType);
+		panelScriptContainer.one('#<portlet:namespace />plainEditor').toggle(!richEditorType);
+		panelScriptContainer.one('#<portlet:namespace />richEditor').toggle(richEditorType);
 
 		if (richEditorType) {
+			<c:if test="<%= displayPalette %>">
+				hidePalette();
+			</c:if>
+
 			richEditor.editor.resize();
 		}
+		<c:if test="<%= displayPalette %>">
+			else {
+				showPalette();
+			}
+		</c:if>
 
 		A.io.request('<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template_display" /></portlet:renderURL>&editorType=' + newEditorType);
 
@@ -168,9 +439,9 @@ boolean useRichEditor = editorType.equals("rich");
 			richEditor = new A.AceEditor(
 				{
 					boundingBox: '#<portlet:namespace />richEditor',
-					width: '100%',
-					height: '400',
-					mode: '<%= EditorUtil.getEditorMode(langType) %>'
+					height: 400,
+					mode: '<%= EditorUtil.getEditorMode(langType) %>',
+					width: '100%'
 				}
 			).render();
 
@@ -180,7 +451,7 @@ boolean useRichEditor = editorType.equals("rich");
 				setEditorContent(editorType, editorContentElement.val());
 			}
 
-			A.one('#<portlet:namespace />editorType').on('change', updateEditorType);
+			panelScriptContainer.one('#<portlet:namespace />editorType').on('change', updateEditorType);
 
 			Liferay.on(
 				'<portlet:namespace />saveTemplate',
@@ -189,10 +460,100 @@ boolean useRichEditor = editorType.equals("rich");
 				}
 			);
 
-			selectLanguageNode.on('change', updateEditorPlugins);
+			selectLanguageNode.on('change', onTemplateLanguageChange);
 
 			updateEditorPlugins();
+
+			<c:if test="<%= displayPalette %>">
+				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
+
+				attachPaletteInteraction();
+
+				paletteToggler.on('click', togglePaletteCollapse);
+
+				var togglerDelegate = new A.TogglerDelegate(
+					{
+						animated: true,
+						container: paletteDataContainer,
+						content: '.palette-item-content',
+						header: '.palette-item-header'
+					}
+				);
+
+				var t1 = new A.Tooltip(
+					{
+						align: {
+							points: ['bl', 'tr']
+						},
+						title: true,
+						trigger: '.palette-item'
+					}
+				).render(paletteContainer);
+			</c:if>
 		},
 		'#<portlet:namespace />richEditor'
 	);
 </aui:script>
+
+<%!
+private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDefinition variableDefinition) {
+	StringBundler sb = new StringBundler();
+
+	sb.append("<p>");
+	sb.append(LanguageUtil.get(pageContext, variableDefinition.getLabelKey() + "-help"));
+	sb.append("</p>");
+	sb.append(LanguageUtil.get(pageContext, "variable"));
+	sb.append(StringPool.COLON);
+	sb.append("&nbsp;");
+	sb.append(variableDefinition.getName());
+
+	Class clazz = variableDefinition.getClazz();
+
+	sb.append(_getPaletteItemTitleClass(pageContext, "class", clazz));
+
+	if (variableDefinition.isCollection()) {
+		TemplateVariableDefinition itemVariableDefinition = variableDefinition.getCollectionItem();
+
+		clazz = itemVariableDefinition.getClazz();
+
+		sb.append(_getPaletteItemTitleClass(pageContext, "items-class", clazz));
+	}
+
+	return sb.toString();
+}
+
+private String _getPaletteItemTitleClass(PageContext pageContext, String label, Class clazz) {
+	StringBundler sb = new StringBundler();
+
+	if (clazz == null) {
+		return StringPool.BLANK;
+	}
+
+	String className = clazz.getName();
+
+	sb.append("<br />");
+	sb.append(LanguageUtil.get(pageContext, label));
+	sb.append(StringPool.COLON);
+	sb.append("&nbsp;");
+
+	String javadocURL = null;
+
+	if (className.startsWith("com.liferay")) {
+		javadocURL = "http://docs.liferay.com/portal/6.1/javadocs/";
+	}
+	if (Validator.isNotNull(javadocURL)) {
+		sb.append("<a href=\"");
+		sb.append(javadocURL);
+		sb.append(StringUtil.replace(className, StringPool.PERIOD, StringPool.SLASH));
+		sb.append(".html\" target=\"_blank\">");
+	}
+
+	sb.append(clazz.getSimpleName());
+
+	if (Validator.isNull(javadocURL)) {
+		sb.append("</a>");
+	}
+
+	return sb.toString();
+}
+%>

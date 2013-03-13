@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,15 +23,21 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
 public abstract class BasePortletDisplayTemplateHandler
 	implements PortletDisplayTemplateHandler {
+
+	public long getClassPK() {
+		return 0;
+	}
 
 	public List<Element> getDefaultTemplateElements() throws Exception {
 		String templatesConfigPath = getTemplatesConfigPath();
@@ -58,6 +65,12 @@ public abstract class BasePortletDisplayTemplateHandler
 
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
+	}
+
+	public Map<String, TemplateVariableGroup> getTemplateVariablesMap(
+		long classPK) {
+
+		return PortletDisplayTemplateUtil.getTemplateVariablesMap();
 	}
 
 	protected String getTemplatesConfigPath() {

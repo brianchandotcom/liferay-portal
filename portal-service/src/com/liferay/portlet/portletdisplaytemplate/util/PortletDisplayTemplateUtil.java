@@ -15,6 +15,7 @@
 package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
@@ -52,6 +53,10 @@ public class PortletDisplayTemplateUtil {
 		return
 			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplateId(
 				themeDisplay, displayStyle);
+	}
+
+	public static Map<String, TemplateVariableGroup> getTemplateVariablesMap() {
+		return getPortletDisplayTemplate().getTemplateVariablesMap();
 	}
 
 	public static String renderDDMTemplate(

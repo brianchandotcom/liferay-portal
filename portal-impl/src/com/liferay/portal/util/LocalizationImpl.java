@@ -353,6 +353,12 @@ public class LocalizationImpl implements Localization {
 	}
 
 	public Map<Locale, String> getLocalizationMap(String xml) {
+		return getLocalizationMap(xml, false);
+	}
+
+	public Map<Locale, String> getLocalizationMap(
+		String xml, boolean useDefault) {
+
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
 		Map<Locale, String> map = new HashMap<Locale, String>();
@@ -360,7 +366,7 @@ public class LocalizationImpl implements Localization {
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			map.put(locale, getLocalization(xml, languageId, false));
+			map.put(locale, getLocalization(xml, languageId, useDefault));
 		}
 
 		return map;

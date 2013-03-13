@@ -27,10 +27,12 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,6 +68,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -363,6 +366,8 @@ public class AssetUtil {
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+		searchContext.setSorts(
+			getSorts(assetEntryQuery, searchContext.getLocale()));
 		searchContext.setStart(start);
 
 		return assetSearcher.search(searchContext);
@@ -452,6 +457,58 @@ public class AssetUtil {
 
 			return new String(textCharArray);
 		}
+	}
+
+	protected static Sort getSort(
+		String orderByType, String sortField, Locale locale) {
+
+		if (Validator.isNull(orderByType)) {
+			orderByType = "asc";
+		}
+
+		int sortType = Sort.STRING_TYPE;
+
+		if (sortField.equals(Field.CREATE_DATE) ||
+			sortField.equals(Field.EXPIRATION_DATE) ||
+			sortField.equals("modifiedDate") ||
+			sortField.equals(Field.PUBLISH_DATE)) {
+
+			sortType = Sort.LONG_TYPE;
+		}
+		else if (sortField.equals(Field.PRIORITY) ||
+				 sortField.equals(Field.RATINGS)) {
+
+			sortType = Sort.DOUBLE_TYPE;
+		}
+		else if (sortField.equals(Field.VIEW_COUNT)) {
+			sortType = Sort.INT_TYPE;
+		}
+
+		if (sortField.equals("modifiedDate")) {
+			sortField = Field.MODIFIED_DATE;
+		}
+		else if (sortField.equals("title")) {
+			sortField = "localized_title_".concat(
+				LocaleUtil.toLanguageId(locale));
+		}
+
+		return new Sort(
+			sortField, sortType, !orderByType.equalsIgnoreCase("asc"));
+	}
+
+	protected static Sort[] getSorts(
+			AssetEntryQuery assetEntryQuery, Locale locale)
+		throws Exception {
+
+		Sort sort1 = getSort(
+			assetEntryQuery.getOrderByType1(), assetEntryQuery.getOrderByCol1(),
+			locale);
+
+		Sort sort2 = getSort(
+			assetEntryQuery.getOrderByType2(), assetEntryQuery.getOrderByCol2(),
+			locale);
+
+		return new Sort[] {sort1, sort2};
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AssetUtil.class);

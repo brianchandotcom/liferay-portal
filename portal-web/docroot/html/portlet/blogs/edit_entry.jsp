@@ -437,7 +437,7 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 			function() {
 				<portlet:namespace />clearSaveDraftIntervalId();
 
-				location.href = '<%= UnicodeFormatter.toString(redirect) %>';
+				location.href = '<%= HtmlUtil.escapeJS(PortalUtil.escapeRedirect(redirect)) %>';
 			}
 		);
 	}

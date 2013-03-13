@@ -27,7 +27,7 @@
 
 			${stringUtil.shorten(htmlUtil.stripHtml(summary), 100)}
 
-			<a href="${viewURL}"><@liferay.language key="read-more" /> <span class="aui-helper-hidden-accessible"><@liferay.language key="about"/> ${entry.getTitle()}</span> &raquo;</a>
+			<a href="${viewURL}"><@liferay.language key="read-more" /> <span class="aui-helper-hidden-accessible"><@liferay.language key="about"/>${htmlUtil.escape(entry.getTitle())}</span> &raquo;</a>
 		</div>
 
 		<div class="entry-footer">

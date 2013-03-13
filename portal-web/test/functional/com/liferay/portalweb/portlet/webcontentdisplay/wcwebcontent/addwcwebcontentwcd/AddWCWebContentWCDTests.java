@@ -32,6 +32,7 @@ public class AddWCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
+		testSuite.addTestSuite(ViewWCWebContentWCDTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

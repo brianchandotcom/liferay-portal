@@ -79,7 +79,7 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					"//div[@class='portlet-msg-success taglib-trash-undo']/form");
 				assertTrue(selenium.isPartialText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']/form",
-						"The selected item was moved to the Recycle Bin."));
+						"moved to the Recycle Bin."));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

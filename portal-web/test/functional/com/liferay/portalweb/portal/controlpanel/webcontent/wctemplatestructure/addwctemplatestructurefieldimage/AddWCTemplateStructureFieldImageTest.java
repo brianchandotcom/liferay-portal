@@ -168,7 +168,7 @@ public class AddWCTemplateStructureFieldImageTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		selenium.sendKeys("//div[@id=\"_166_richEditor\"]/textarea",
-			RuntimeVariables.replace("<p>$image.getData()</p>"));
+			RuntimeVariables.replace("<img src=\"$image.getData()\"></img>"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

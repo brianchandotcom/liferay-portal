@@ -162,7 +162,7 @@ public class AddWCTemplateStructureFieldDMTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		selenium.sendKeys("//div[@id=\"_166_richEditor\"]/textarea",
-			RuntimeVariables.replace("<p>$dm.getData()</p>"));
+			RuntimeVariables.replace("<img src=\"$dm.getData()\"></img>"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

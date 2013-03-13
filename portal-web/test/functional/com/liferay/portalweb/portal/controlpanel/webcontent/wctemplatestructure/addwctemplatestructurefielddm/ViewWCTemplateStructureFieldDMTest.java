@@ -103,7 +103,8 @@ public class ViewWCTemplateStructureFieldDMTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		assertEquals(RuntimeVariables.replace("<p>$dm.getData()</p>##"),
+		assertEquals(RuntimeVariables.replace(
+				"<img src=\"$dm.getData()\"></img>##"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'dm.getData')]"));
 		selenium.selectFrame("relative=top");

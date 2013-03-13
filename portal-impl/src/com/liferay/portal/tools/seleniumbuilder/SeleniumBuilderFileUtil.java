@@ -178,7 +178,12 @@ public class SeleniumBuilderFileUtil {
 				continue;
 			}
 
-			return i;
+			if (i == 1) {
+				return 1;
+			}
+			else {
+				return i - 1;
+			}
 		}
 	}
 

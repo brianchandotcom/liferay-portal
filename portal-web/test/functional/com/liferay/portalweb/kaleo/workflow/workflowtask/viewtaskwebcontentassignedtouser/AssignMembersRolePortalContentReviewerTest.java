@@ -73,6 +73,6 @@ public class AssignMembersRolePortalContentReviewerTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("link=Current", RuntimeVariables.replace("Current"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[contains(.,'userfn userln')]/td[2]"));
 	}
 }

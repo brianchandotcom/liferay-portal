@@ -47,14 +47,15 @@ public class AssertNoWorkflowAddTaskCommentAssignToMyRolesTest
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
 		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
@@ -75,16 +76,17 @@ public class AssertNoWorkflowAddTaskCommentAssignToMyRolesTest
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
 		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
@@ -107,16 +109,17 @@ public class AssertNoWorkflowAddTaskCommentAssignToMyRolesTest
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
 		assertTrue(selenium.isElementNotPresent("link=Comments"));
 	}

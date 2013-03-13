@@ -45,18 +45,19 @@ public class AddWebContentTaskCommentAssignedToMyRolesTest extends BaseTestCase 
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Single Approver"),
-			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Web Content"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[6]/a"));
-		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("WC Web Content Title"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[6]/a"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[2]/a",
+			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText("//fieldset/div/a"));

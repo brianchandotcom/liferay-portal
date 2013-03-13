@@ -48,7 +48,7 @@ public class ViewWithdrawSubmissionTaskWCAssignedToMyRolesTest
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[3]"));
 		selenium.click(RuntimeVariables.replace("link=Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
@@ -93,7 +93,7 @@ public class ViewWithdrawSubmissionTaskWCAssignedToMyRolesTest
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC Web Content Title (Draft)"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title (Draft)"),
 			selenium.getText("//div/a/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",

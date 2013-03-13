@@ -41,6 +41,13 @@ AUI.add(
 							function(event) {
 								var showMenu = event.type == 'showNavigationMenu';
 
+								if (showMenu) {
+									instance._lastShownMenu = event.menu;
+								}
+								else {
+									instance._lastShownMenu = null;
+								}
+
 								event.menu.toggleClass('hover', showMenu);
 							}
 						);
@@ -179,13 +186,15 @@ AUI.add(
 						var activeDescendant = focusManager.get(ACTIVE_DESCENDANT);
 						var descendants = focusManager.get('descendants');
 
-						if (MAP_HOVER.menu) {
-							Liferay.fire('hideNavigationMenu', MAP_HOVER);
+						if (!(instance._lastShownMenu && event.type.indexOf('focusedChange') !== -1)) {
+							if (MAP_HOVER.menu) {
+								Liferay.fire('hideNavigationMenu', MAP_HOVER);
+							}
+
+							MAP_HOVER.menu = descendants.item(activeDescendant).ancestors(instance._directLiChild);
+
+							Liferay.fire('showNavigationMenu', MAP_HOVER);
 						}
-
-						MAP_HOVER.menu = descendants.item(activeDescendant).ancestors(instance._directLiChild);
-
-						Liferay.fire('showNavigationMenu', MAP_HOVER);
 					}
 				}
 			}

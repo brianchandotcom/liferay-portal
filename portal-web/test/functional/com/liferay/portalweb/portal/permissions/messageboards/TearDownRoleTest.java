@@ -48,20 +48,9 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"Message Boards Administrator"),
-					selenium.getText(
-						"//tr[contains(.,'Message Boards Administrator')]/td[1]/a"));
-				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText(
-						"//tr[contains(.,'Message Boards Administrator')]/td[2]/a"));
-				assertEquals(RuntimeVariables.replace(
-						"This is the Message Boards Administrator Role."),
-					selenium.getText(
-						"//tr[contains(.,'Message Boards Administrator')]/td[3]/a"));
 
 				boolean role1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!role1Present) {
 					label = 2;
@@ -71,8 +60,8 @@ public class TearDownRoleTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//tr[contains(.,'Message Boards Administrator')]/td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
@@ -94,16 +83,9 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Member"),
-					selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
-				assertEquals(RuntimeVariables.replace("Regular"),
-					selenium.getText("//tr[contains(.,'Member')]/td[2]/a"));
-				assertEquals(RuntimeVariables.replace(
-						"This is the Member Role."),
-					selenium.getText("//tr[contains(.,'Member')]/td[3]/a"));
 
 				boolean role2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!role2Present) {
 					label = 3;
@@ -113,8 +95,8 @@ public class TearDownRoleTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//tr[contains(.,'Member') and contains(.,'Regular')]/td[4]/span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");

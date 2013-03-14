@@ -29,8 +29,8 @@ public class Guest_ViewTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 		assertTrue(selenium.isVisible("//a[@id='sign-in']"));
 		selenium.open("/web/site-name/");
-		selenium.clickAt("link=Message Boards Permissions Page",
-			RuntimeVariables.replace("Message Boards Permissions Page"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//tr[contains(.,'Category Name')]/td[1]/a"));

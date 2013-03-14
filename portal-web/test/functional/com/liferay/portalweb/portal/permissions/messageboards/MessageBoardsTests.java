@@ -15,10 +15,12 @@
 package com.liferay.portalweb.portal.permissions.messageboards;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
-import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPortletMBSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,10 +38,10 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(SA_AddMemberRoleTest.class);
 		testSuite.addTestSuite(SA_DefineMemberRoleTest.class);
 		testSuite.addTestSuite(SA_AssignUserRolesTest.class);
-		testSuite.addTestSuite(SA_AddSiteTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(SA_AddSiteMembersTest.class);
-		testSuite.addTestSuite(SA_AddPageTest.class);
-		testSuite.addTestSuite(SA_AddPortletTest.class);
+		testSuite.addTestSuite(AddPageMBSiteTest.class);
+		testSuite.addTestSuite(AddPortletMBSiteTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(LoginUsersTest.class);
 		testSuite.addTestSuite(MA_LoginTest.class);
@@ -66,7 +68,6 @@ public class MessageBoardsTests extends BaseTestSuite {
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
-		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

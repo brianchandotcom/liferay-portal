@@ -32,8 +32,10 @@ public class TearDownSiteTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
+				Thread.sleep(1000);
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");

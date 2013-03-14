@@ -32,8 +32,10 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
+				Thread.sleep(1000);
 				selenium.waitForVisible(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span");
+				Thread.sleep(1000);
 
 				boolean page1Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");

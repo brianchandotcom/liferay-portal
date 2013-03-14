@@ -49,8 +49,33 @@
 	<td>Users and Organizations</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_125_allUsersLink']</td>
+	<td>Search All Users</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
 	<td>storeElementPresent</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>usersPresent</td>
 </tr>
 <tr>
@@ -60,17 +85,17 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>xPath=(//input[@name='_125_allRowIds'])[2]</td>
+	<td>//input[@name='_125_allRowIds']</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -81,6 +106,11 @@
 <tr>
 	<td>waitForConfirmation</td>
 	<td>Are you sure you want to deactivate the selected users?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -224,7 +254,7 @@
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to permanently delete the selected users?</td>
 	<td></td>
 </tr>

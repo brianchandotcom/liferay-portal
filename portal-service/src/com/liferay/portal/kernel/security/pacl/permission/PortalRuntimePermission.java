@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.security.pacl.permission;
 
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.security.BasicPermission;
 import java.security.Permission;
@@ -190,6 +191,10 @@ public class PortalRuntimePermission extends BasicPermission {
 	}
 
 	public String getServletContextName() {
+		if (Validator.isNull(_servletContextName)) {
+			return "portal";
+		}
+
 		return _servletContextName;
 	}
 

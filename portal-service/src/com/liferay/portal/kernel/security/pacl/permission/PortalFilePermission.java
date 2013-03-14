@@ -14,12 +14,18 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * @author Raymond Augé
  */
 public class PortalFilePermission {
 
 	public static void checkCopy(String sourcePath, String destinationPath) {
+		if (Validator.isNull(sourcePath) || Validator.isNull(destinationPath)) {
+			return;
+		}
+
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -31,6 +37,10 @@ public class PortalFilePermission {
 	}
 
 	public static void checkDelete(String path) {
+		if (Validator.isNull(path)) {
+			return;
+		}
+
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -41,6 +51,10 @@ public class PortalFilePermission {
 	}
 
 	public static void checkMove(String sourcePath, String destinationPath) {
+		if (Validator.isNull(sourcePath) || Validator.isNull(destinationPath)) {
+			return;
+		}
+
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -54,6 +68,10 @@ public class PortalFilePermission {
 	}
 
 	public static void checkRead(String path) {
+		if (Validator.isNull(path)) {
+			return;
+		}
+
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -64,6 +82,10 @@ public class PortalFilePermission {
 	}
 
 	public static void checkWrite(String path) {
+		if (Validator.isNull(path)) {
+			return;
+		}
+
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {

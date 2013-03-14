@@ -25,7 +25,7 @@ public class SOUs_ViewMBCategoryThreadMessageSiteTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/user/joebloggs/so/dashboard");
+		selenium.open("/user/socialoffice01/so/dashboard");
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
 		assertTrue(selenium.isVisible("//input[@class='search-input']"));

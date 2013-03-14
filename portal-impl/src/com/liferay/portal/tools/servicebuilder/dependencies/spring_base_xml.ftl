@@ -17,6 +17,9 @@
 		</constructor-arg>
 	</bean>
 	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
+		<constructor-arg value="com.liferay.portal.security.lang.DoPrivilegedFactory" />
+	</bean>
+	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
 		<constructor-arg value="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">

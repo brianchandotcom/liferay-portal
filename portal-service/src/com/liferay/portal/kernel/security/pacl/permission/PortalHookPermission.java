@@ -21,6 +21,13 @@ import java.security.BasicPermission;
  */
 public class PortalHookPermission extends BasicPermission {
 
+	public static void checkPermission(
+		String name, ClassLoader portletClassLoader, Object subject) {
+
+		// Temporarily do nothing
+
+	}
+
 	public PortalHookPermission(
 		String name, ClassLoader classLoader, Object subject) {
 
@@ -38,7 +45,7 @@ public class PortalHookPermission extends BasicPermission {
 		return _subject;
 	}
 
-	private ClassLoader _classLoader;
-	private Object _subject;
+	private transient ClassLoader _classLoader;
+	private transient Object _subject;
 
 }

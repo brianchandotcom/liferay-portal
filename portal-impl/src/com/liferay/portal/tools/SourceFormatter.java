@@ -786,6 +786,57 @@ public class SourceFormatter {
 		return content;
 	}
 
+	private static String _fixCopyright(
+			String content, String copyright, String oldCopyright, File file,
+			String fileName)
+		throws IOException {
+
+		if (fileName.endsWith(".vm")) {
+			return content;
+		}
+
+		if ((oldCopyright != null) && content.contains(oldCopyright)) {
+			content = StringUtil.replace(content, oldCopyright, copyright);
+
+			_processErrorMessage(fileName, "old (c): " + fileName);
+		}
+
+		if (!content.contains(copyright)) {
+			String customCopyright = _getCustomCopyright(file);
+
+			if (Validator.isNotNull(customCopyright)) {
+				copyright = customCopyright;
+			}
+
+			if (!content.contains(copyright)) {
+				_processErrorMessage(fileName, "(c): " + fileName);
+			}
+		}
+
+		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
+			content = StringUtil.replace(
+				content, "<%\n" + copyright + "\n%>",
+				"<%--\n" + copyright + "\n--%>");
+		}
+
+		int x = content.indexOf("* Copyright (c) 2000-20");
+
+		if (x == -1) {
+			return content;
+		}
+
+		int y = copyright.indexOf("* Copyright (c) 2000-20");
+
+		if (y == -1) {
+			return content;
+		}
+
+		String contentCopyrightYear = content.substring(x, x + 25);
+		String copyrightYear = copyright.substring(y, y + 25);
+
+		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
+	}
+
 	private static String _fixDataAccessConnection(
 		String className, String content) {
 
@@ -1363,22 +1414,8 @@ public class SourceFormatter {
 					newContent, "$\n */", "$\n *\n */");
 			}
 
-			if ((oldCopyright != null) && newContent.contains(oldCopyright)) {
-				newContent = StringUtil.replace(
-					newContent, oldCopyright, copyright);
-
-				_processErrorMessage(fileName, "old (c): " + fileName);
-			}
-
-			if (!newContent.contains(copyright)) {
-				String customCopyright = _getCustomCopyright(file);
-
-				if (Validator.isNull(customCopyright) ||
-					!newContent.contains(customCopyright)) {
-
-					_processErrorMessage(fileName, "(c): " + fileName);
-				}
-			}
+			newContent = _fixCopyright(
+				newContent, copyright, oldCopyright, file, fileName);
 
 			if (newContent.contains(className + ".java.html")) {
 				_processErrorMessage(fileName, "Java2HTML: " + fileName);
@@ -1552,15 +1589,6 @@ public class SourceFormatter {
 			lineCount++;
 
 			line = _trimLine(line);
-
-			line = StringUtil.replace(
-				line,
-				new String[] {
-					"* Copyright (c) 2000-2012 Liferay, Inc."
-				},
-				new String[] {
-					"* Copyright (c) 2000-2013 Liferay, Inc."
-				});
 
 			if (line.startsWith("package ")) {
 				packageName = line.substring(8, line.length() - 1);
@@ -2282,45 +2310,8 @@ public class SourceFormatter {
 				}
 			}
 
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					"* Copyright (c) 2000-2012 Liferay, Inc."
-				},
-				new String[] {
-					"* Copyright (c) 2000-2013 Liferay, Inc."
-				});
-
-			if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
-				if ((oldCopyright != null) &&
-					newContent.contains(oldCopyright)) {
-
-					newContent = StringUtil.replace(
-						newContent, oldCopyright, copyright);
-
-					_processErrorMessage(fileName, "old (c): " + fileName);
-				}
-
-				if (!newContent.contains(copyright)) {
-					String customCopyright = _getCustomCopyright(file);
-
-					if (Validator.isNull(customCopyright) ||
-						!newContent.contains(customCopyright)) {
-
-						_processErrorMessage(fileName, "(c): " + fileName);
-					}
-					else {
-						newContent = StringUtil.replace(
-							newContent, "<%\n" + customCopyright + "\n%>",
-							"<%--\n" + customCopyright + "\n--%>");
-					}
-				}
-				else {
-					newContent = StringUtil.replace(
-						newContent, "<%\n" + copyright + "\n%>",
-						"<%--\n" + copyright + "\n--%>");
-				}
-			}
+			newContent = _fixCopyright(
+				newContent, copyright, oldCopyright, file, fileName);
 
 			newContent = StringUtil.replace(
 				newContent,

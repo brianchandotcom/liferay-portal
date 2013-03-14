@@ -38,7 +38,6 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.model.WikiPage;
 
@@ -262,14 +261,6 @@ public class SampleSQLBuilder {
 		put(context, "layout", layout);
 
 		processTemplate(_tplLayout, context);
-	}
-
-	public void insertMBCategory(MBCategory mbCategory) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbCategory", mbCategory);
-
-		processTemplate(_tplMBCategory, context);
 	}
 
 	public void insertMBDiscussion(
@@ -657,7 +648,6 @@ public class SampleSQLBuilder {
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
 	private String _tplLayout = _TPL_ROOT + "layout.ftl";
-	private String _tplMBCategory = _TPL_ROOT + "mb_category.ftl";
 	private String _tplMBDiscussion = _TPL_ROOT + "mb_discussion.ftl";
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =

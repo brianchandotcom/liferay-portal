@@ -131,8 +131,6 @@ import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryU
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.Toolkit;
 import com.liferay.portal.security.pwd.ToolkitWrapper;
@@ -168,8 +166,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.net.URL;
-
-import java.security.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -313,25 +309,19 @@ public class HookHotDeployListener
 		String name, ClassLoader portletClassLoader, Object subject,
 		String message) {
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			portletClassLoader);
+		try {
+			PortalHookPermission.checkPermission(
+				name, portletClassLoader, subject);
+		}
+		catch (SecurityException se) {
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 
-		if (paclPolicy == null) {
-			return true;
+			return false;
 		}
 
-		Permission permission = new PortalHookPermission(
-			name, portletClassLoader, subject);
-
-		if (paclPolicy.implies(permission)) {
-			return true;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(message);
-		}
-
-		return false;
+		return true;
 	}
 
 	protected boolean containsKey(Properties portalProperties, String key) {

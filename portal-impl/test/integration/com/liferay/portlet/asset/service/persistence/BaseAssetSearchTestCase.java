@@ -760,6 +760,7 @@ public abstract class BaseAssetSearchTestCase {
 		testAssetCategorization(assetEntryQuery, 1);
 	}
 
+	@Test
 	public void testOrderByTitleAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -776,6 +777,7 @@ public abstract class BaseAssetSearchTestCase {
 		testOrderByTitle(assetEntryQuery, "asc", titles, orderedTitles);
 	}
 
+	@Test
 	public void testOrderByTitleDesc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -959,9 +961,7 @@ public abstract class BaseAssetSearchTestCase {
 			addBaseModel(parentBaseModel, title, serviceContext);
 		}
 
-		assetEntryQuery.setOrderByCol1(
-			"localized_title_".concat(
-				LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
+		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
 		Document[] documents = search(assetEntryQuery, searchContext);

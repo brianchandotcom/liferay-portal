@@ -188,12 +188,12 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	/**
-	* Returns the m d r rule group with the UUID in the group.
+	* Returns the m d r rule group matching the UUID and group.
 	*
-	* @param uuid the UUID of m d r rule group
-	* @param groupId the group id of the m d r rule group
-	* @return the m d r rule group
-	* @throws PortalException if a m d r rule group with the UUID in the group could not be found
+	* @param uuid the m d r rule group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule group
+	* @throws PortalException if a matching m d r rule group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(

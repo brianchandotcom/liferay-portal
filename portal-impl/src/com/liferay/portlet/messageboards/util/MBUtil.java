@@ -934,12 +934,20 @@ public class MBUtil {
 			});
 	}
 
-	public static void updateCategoryMessageCount(final MBCategory category) {
-		Callable<Void> callable = new PortalCallable<Void>(
-			category.getCompanyId()) {
+	public static void updateCategoryMessageCount(
+		final long categoryId, long companyId) {
+
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
+				MBCategory category =
+					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
+
+				if (category == null) {
+					return null;
+				}
+
 				int messageCount =
 					MBMessageLocalServiceUtil.getCategoryMessagesCount(
 						category.getGroupId(), category.getCategoryId(),
@@ -956,12 +964,20 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryStatistics(final MBCategory category) {
-		Callable<Void> callable = new PortalCallable<Void>(
-			category.getCompanyId()) {
+	public static void updateCategoryStatistics(
+		final long categoryId, long companyId) {
+
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
+				MBCategory category =
+					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
+
+				if (category == null) {
+					return null;
+				}
+
 				int messageCount =
 					MBMessageLocalServiceUtil.getCategoryMessagesCount(
 						category.getGroupId(), category.getCategoryId(),
@@ -984,12 +1000,20 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryThreadCount(final MBCategory category) {
-		Callable<Void> callable = new PortalCallable<Void>(
-			category.getCompanyId()) {
+	public static void updateCategoryThreadCount(
+		final long categoryId, long companyId) {
+
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
+				MBCategory category =
+					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
+
+				if (category == null) {
+					return null;
+				}
+
 				int threadCount =
 					MBThreadLocalServiceUtil.getCategoryThreadsCount(
 						category.getGroupId(), category.getCategoryId(),
@@ -1006,16 +1030,23 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateThreadMessageCount(final MBThread thread) {
-		Callable<Void> callable = new PortalCallable<Void>(
-			thread.getCompanyId()) {
+	public static void updateThreadMessageCount(
+		final long threadId, long companyId) {
+
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
+				MBThread thread = MBThreadLocalServiceUtil.fetchThread(
+					threadId);
+
+				if (thread == null) {
+					return null;
+				}
+
 				int messageCount =
 					MBMessageLocalServiceUtil.getThreadMessagesCount(
-						thread.getThreadId(),
-						WorkflowConstants.STATUS_APPROVED);
+						threadId, WorkflowConstants.STATUS_APPROVED);
 
 				thread.setMessageCount(messageCount);
 

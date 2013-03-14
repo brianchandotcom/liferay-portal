@@ -207,7 +207,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
-				MBUtil.updateCategoryStatistics(category);
+				MBUtil.updateCategoryStatistics(
+					category.getCategoryId(), category.getCompanyId());
 			}
 			catch (NoSuchCategoryException nsce) {
 				if (!thread.isInTrash()) {
@@ -644,11 +645,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Category
 
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(oldCategory);
+			MBUtil.updateCategoryStatistics(
+				oldCategory.getCategoryId(), oldCategory.getCompanyId());
 		}
 
 		if ((category != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(category);
+			MBUtil.updateCategoryStatistics(
+				category.getCategoryId(), category.getCompanyId());
 		}
 
 		return thread;
@@ -809,11 +812,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update new thread
 
-		MBUtil.updateThreadMessageCount(thread);
+		MBUtil.updateThreadMessageCount(
+			thread.getThreadId(), thread.getCompanyId());
 
 		// Update old thread
 
-		MBUtil.updateThreadMessageCount(oldThread);
+		MBUtil.updateThreadMessageCount(
+			oldThread.getThreadId(), oldThread.getCompanyId());
 
 		// Category
 
@@ -822,7 +827,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBUtil.updateCategoryThreadCount(category);
+			MBUtil.updateCategoryThreadCount(
+				category.getCategoryId(), category.getCompanyId());
 		}
 
 		return thread;
@@ -894,7 +900,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
-				MBUtil.updateCategoryStatistics(category);
+				MBUtil.updateCategoryStatistics(
+					category.getCategoryId(), category.getCompanyId());
 			}
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {

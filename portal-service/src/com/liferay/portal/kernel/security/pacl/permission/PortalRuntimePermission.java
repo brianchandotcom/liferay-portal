@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.security.pacl.permission;
 
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.security.BasicPermission;
 import java.security.Permission;
@@ -63,17 +62,9 @@ public class PortalRuntimePermission extends BasicPermission {
 			return;
 		}
 
-		Permission permission = null;
-
-		if (Validator.isNotNull(classLoaderReferenceId)) {
-			permission = new RuntimePermission(
-				PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER,
-				classLoaderReferenceId);
-		}
-		else {
-			permission = new RuntimePermission(
-				PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER);
-		}
+		Permission permission = new PortalRuntimePermission(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER,
+			classLoaderReferenceId);
 
 		securityManager.checkPermission(permission);
 	}

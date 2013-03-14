@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 public class PortalRuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		initClassLoaderReferenceIds();
 		initExpandoBridgeClassNames();
 		initGetBeanPropertyClassNames();
 		initSearchEngineIds();
@@ -63,7 +64,11 @@ public class PortalRuntimeChecker extends BaseChecker {
 		String key = null;
 		String value = null;
 
-		if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
+		if (name.startsWith(PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+			key = "security-manager-class-loader-reference-ids";
+			value = (String)subject;
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
 			key = "security-manager-expando-bridge";
 			value = (String)subject;
 		}
@@ -147,6 +152,17 @@ public class PortalRuntimeChecker extends BaseChecker {
 				return false;
 			}
 		}
+		else if (name.startsWith(PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+			String classLoaderReferenceId = (String)subject;
+
+			if (!hasGetClassLoader(classLoaderReferenceId)) {
+				logSecurityException(
+					_log, "Attempted to get class loader " +
+						classLoaderReferenceId);
+
+				return false;
+			}
+		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
 			String searchEngineId = (String)subject;
 
@@ -209,6 +225,13 @@ public class PortalRuntimeChecker extends BaseChecker {
 		return false;
 	}
 
+	protected boolean hasGetClassLoader(String classLoaderReferenceId) {
+
+		// Temporarily return true
+
+		return true;
+	}
+
 	protected boolean hasSetBeanProperty(Class<?> clazz, String property) {
 		String className = clazz.getName();
 
@@ -242,6 +265,22 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	protected void initClassLoaderReferenceIds() {
+		_classLoaderReferenceIds = getPropertySet(
+			"security-manager-class-loader-reference-ids");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> referenceIds = new TreeSet<String>(
+				_classLoaderReferenceIds);
+
+			for (String referenceId : referenceIds) {
+				_log.debug(
+					"Allowing access to class loader for reference " +
+						referenceId);
+			}
+		}
 	}
 
 	protected void initExpandoBridgeClassNames() {
@@ -321,6 +360,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
+	private Set<String> _classLoaderReferenceIds;
 	private Set<String> _expandoBridgeClassNames;
 	private Set<String> _getBeanPropertyClassNames;
 	private Set<String> _searchEngineIds;

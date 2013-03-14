@@ -1,0 +1,170 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.polls.lar;
+
+import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.polls.model.PollsChoice;
+import com.liferay.portlet.polls.model.PollsQuestion;
+import com.liferay.portlet.polls.model.PollsVote;
+import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
+import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
+import com.liferay.portlet.polls.service.persistence.PollsQuestionUtil;
+import com.liferay.portlet.polls.service.persistence.PollsVoteUtil;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author Shinn Lok
+ */
+public class PollsQuestionStagedModelDataHandler
+	extends BaseStagedModelDataHandler<PollsQuestion> {
+
+	@Override
+	public String getClassName() {
+		return PollsQuestion.class.getName();
+	}
+
+	protected static String getQuestionPath(
+		PortletDataContext portletDataContext, PollsQuestion question) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(portletDataContext.getPortletPath(PortletKeys.POLLS));
+		sb.append("/questions/");
+		sb.append(question.getQuestionId());
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	@Override
+	protected void doExportStagedModel(
+			PortletDataContext portletDataContext, Element[] elements,
+			PollsQuestion question)
+		throws Exception {
+
+		if (!portletDataContext.isWithinDateRange(question.getModifiedDate())) {
+			return;
+		}
+
+		String path = getQuestionPath(portletDataContext, question);
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		Element questionElement = questionsElement.addElement("question");
+
+		List<PollsChoice> choices = PollsChoiceUtil.findByQuestionId(
+			question.getQuestionId());
+
+		for (PollsChoice choice : choices) {
+			exportChoice(portletDataContext, choicesElement, choice);
+		}
+
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "votes")) {
+			List<PollsVote> votes = PollsVoteUtil.findByQuestionId(
+				question.getQuestionId());
+
+			for (PollsVote vote : votes) {
+				exportVote(portletDataContext, votesElement, vote);
+			}
+		}
+
+		portletDataContext.addClassedModel(
+			questionElement, path, question, NAMESPACE);
+	}
+
+	@Override
+	protected void doImportStagedModel(
+			PortletDataContext portletDataContext, Element element, String path,
+			PollsQuestion question)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(question.getUserUuid());
+
+		Date expirationDate = question.getExpirationDate();
+
+		int expirationMonth = 0;
+		int expirationDay = 0;
+		int expirationYear = 0;
+		int expirationHour = 0;
+		int expirationMinute = 0;
+		boolean neverExpire = true;
+
+		if (expirationDate != null) {
+			Calendar expirationCal = CalendarFactoryUtil.getCalendar();
+
+			expirationCal.setTime(expirationDate);
+
+			expirationMonth = expirationCal.get(Calendar.MONTH);
+			expirationDay = expirationCal.get(Calendar.DATE);
+			expirationYear = expirationCal.get(Calendar.YEAR);
+			expirationHour = expirationCal.get(Calendar.HOUR);
+			expirationMinute = expirationCal.get(Calendar.MINUTE);
+			neverExpire = false;
+
+			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+				expirationHour += 12;
+			}
+		}
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			questionElement, question, NAMESPACE);
+
+		PollsQuestion importedQuestion = null;
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			PollsQuestion existingQuestion = PollsQuestionUtil.fetchByUUID_G(
+				question.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (existingQuestion == null) {
+				serviceContext.setUuid(question.getUuid());
+
+				importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
+					userId, question.getTitleMap(),
+					question.getDescriptionMap(), expirationMonth,
+					expirationDay, expirationYear, expirationHour,
+					expirationMinute, neverExpire, null, serviceContext);
+			}
+			else {
+				importedQuestion = PollsQuestionLocalServiceUtil.updateQuestion(
+					userId, existingQuestion.getQuestionId(),
+					question.getTitleMap(), question.getDescriptionMap(),
+					expirationMonth, expirationDay, expirationYear,
+					expirationHour, expirationMinute, neverExpire, null,
+					serviceContext);
+			}
+		}
+		else {
+			importedQuestion = PollsQuestionLocalServiceUtil.addQuestion(
+				userId, question.getTitleMap(), question.getDescriptionMap(),
+				expirationMonth, expirationDay, expirationYear, expirationHour,
+				expirationMinute, neverExpire, null, serviceContext);
+		}
+
+		portletDataContext.importClassedModel(
+			question, importedQuestion, NAMESPACE);
+	}
+
+}

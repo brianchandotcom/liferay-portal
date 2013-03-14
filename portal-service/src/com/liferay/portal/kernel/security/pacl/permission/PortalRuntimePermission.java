@@ -69,6 +69,20 @@ public class PortalRuntimePermission extends BasicPermission {
 		securityManager.checkPermission(permission);
 	}
 
+	public static void checkPortletBagPool(String portletId) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalRuntimePermission(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL,
+			null, portletId);
+
+		securityManager.checkPermission(permission);
+	}
+
 	public static void checkSearchEngine(String searchEngineId) {
 		SecurityManager securityManager = System.getSecurityManager();
 

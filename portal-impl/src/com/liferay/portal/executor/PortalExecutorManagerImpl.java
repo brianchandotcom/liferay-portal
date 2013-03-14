@@ -20,10 +20,6 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
-import java.security.Permission;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -70,16 +66,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 	public ThreadPoolExecutor getPortalExecutor(
 		String name, boolean createIfAbsent) {
 
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager != null) {
-			Permission permission = new PortalRuntimePermission(
-				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
-				name);
-
-			securityManager.checkPermission(permission);
-		}
-
 		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutors.get(name);
 
 		if ((threadPoolExecutor == null) && createIfAbsent) {
@@ -100,16 +86,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	public ThreadPoolExecutor registerPortalExecutor(
 		String name, ThreadPoolExecutor threadPoolExecutor) {
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager != null) {
-			Permission permission = new PortalRuntimePermission(
-				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
-				name);
-
-			securityManager.checkPermission(permission);
-		}
 
 		ThreadPoolExecutor oldThreadPoolExecutor = _threadPoolExecutors.get(
 			name);
@@ -152,26 +128,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		for (Map.Entry<String, ThreadPoolExecutor> entry :
 				_threadPoolExecutors.entrySet()) {
 
-			try {
-				SecurityManager securityManager = System.getSecurityManager();
-
-				if (securityManager != null) {
-					String name = entry.getKey();
-
-					Permission permission = new PortalRuntimePermission(
-						PACLConstants.
-							PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
-						name);
-
-					securityManager.checkPermission(permission);
-				}
-			}
-			catch (SecurityException se) {
-				_log.error(se, se);
-
-				continue;
-			}
-
 			ThreadPoolExecutor threadPoolExecutor = entry.getValue();
 
 			if (interrupt) {
@@ -190,16 +146,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 	}
 
 	public void shutdown(String name, boolean interrupt) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager != null) {
-			Permission permission = new PortalRuntimePermission(
-				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
-				name);
-
-			securityManager.checkPermission(permission);
-		}
-
 		ThreadPoolExecutor threadPoolExecutor = _threadPoolExecutors.remove(
 			name);
 

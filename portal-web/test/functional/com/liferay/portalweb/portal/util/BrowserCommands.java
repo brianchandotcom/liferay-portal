@@ -20,24 +20,18 @@ package com.liferay.portalweb.portal.util;
 public class BrowserCommands {
 
 	public static void downloadTempFile(String value) {
-		if (!_BROWSER_TYPE.equals("*chrome") &&
-			!_BROWSER_TYPE.equals("*firefox") &&
-			!_BROWSER_TYPE.equals("*iehta") &&
+		if (!_BROWSER_TYPE.equals("*iehta") &&
 			!_BROWSER_TYPE.equals("*iexplore")) {
 
 			return;
 		}
 
 		try {
-			Thread.sleep(5000);
-
 			Runtime runtime = Runtime.getRuntime();
 
 			String command = _BROWSER_COMMANDS_DIR + "download_file.exe";
 
 			runtime.exec(command);
-
-			Thread.sleep(30000);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -45,8 +39,8 @@ public class BrowserCommands {
 	}
 
 	public static void setBrowserOption() {
-		if (!_BROWSER_TYPE.equals("*chrome") &&
-			!_BROWSER_TYPE.equals("*firefox")) {
+		if (!_BROWSER_TYPE.equals("*iehta") &&
+			!_BROWSER_TYPE.equals("*iexplore")) {
 
 			return;
 		}

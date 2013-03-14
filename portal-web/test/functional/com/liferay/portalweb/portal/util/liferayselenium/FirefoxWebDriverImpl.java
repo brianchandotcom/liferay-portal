@@ -14,7 +14,10 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.portal.util.TestPropsValues;
+
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,7 +25,22 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 
 	public FirefoxWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new FirefoxDriver());
+		super(projectDir, browserURL, new FirefoxDriver(_profile));
+	}
+
+	private static FirefoxProfile _profile = new FirefoxProfile();
+
+	static {
+		String downloadDir = TestPropsValues.OUTPUT_DIR;
+
+		_profile.setPreference("browser.download.dir", downloadDir);
+		_profile.setPreference(
+			"browser.download.manager.showWhenStarting", false);
+		_profile.setPreference("browser.download.useDownloadDir", true);
+		_profile.setPreference("browser.download.folderList", 2);
+		_profile.setPreference(
+			"browser.helperApps.neverAsk.saveToDisk", "application/zip");
+		_profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 	}
 
 }

@@ -39,12 +39,7 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 				editorEl.parentNode.removeChild(editorEl);
 			}
 
-			try {
-				delete window['<%= name %>'];
-			}
-			catch (e) {
-				window['<%= name %>'] = undefined;
-			}
+			window['<%= name %>'] = null;
 		},
 
 		focus: function() {

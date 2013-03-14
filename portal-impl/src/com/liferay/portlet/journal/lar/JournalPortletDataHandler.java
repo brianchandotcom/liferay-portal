@@ -778,15 +778,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			articleIds.put(
 				article.getArticleId(), importedArticle.getArticleId());
 		}
-
-		if (!articleId.equals(importedArticle.getArticleId())) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"An article with the ID " + articleId + " already " +
-						"exists. The new generated ID is " +
-							importedArticle.getArticleId());
-			}
-		}
 	}
 
 	public static void importFeed(

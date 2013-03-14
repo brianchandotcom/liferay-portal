@@ -27,7 +27,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.security.AccessController;
 import java.security.Permission;
+import java.security.PrivilegedAction;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -104,49 +106,8 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			return;
 		}
 
-		String key = authorizationProperty.getKey();
-
-		Set<String> values = _properties.get(key);
-
-		boolean modified = false;
-
-		if (values == null) {
-			values = getPropertySet(key);
-
-			modified = true;
-		}
-
-		for (String value : authorizationProperty.getValues()) {
-			if (!values.contains(value)) {
-				values.add(value);
-
-				modified = true;
-			}
-		}
-
-		if (!modified) {
-			return;
-		}
-
-		_reentrantLock.lock();
-
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					getServletContextName() +
-						" generated authorization property " +
-							authorizationProperty);
-			}
-
-			_properties.put(key, values);
-
-			mergeExistingProperties();
-
-			writePACLPolicyFile();
-		}
-		finally {
-			_reentrantLock.unlock();
-		}
+		AccessController.doPrivileged(
+			new AuthorizationPropertyAction(authorizationProperty));
 	}
 
 	protected void mergeExistingProperties() {
@@ -219,4 +180,63 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		new ConcurrentSkipListMap<String, Set<String>>();
 	private ReentrantLock _reentrantLock = new ReentrantLock();
 
+	private class AuthorizationPropertyAction
+		implements PrivilegedAction<Void> {
+
+		public AuthorizationPropertyAction(
+			AuthorizationProperty authorizationProperty) {
+
+			_authorizationProperty = authorizationProperty;
+		}
+
+		public Void run() {
+			String key = _authorizationProperty.getKey();
+
+			Set<String> values = _properties.get(key);
+
+			boolean modified = false;
+
+			if (values == null) {
+				values = getPropertySet(key);
+
+				modified = true;
+			}
+
+			for (String value : _authorizationProperty.getValues()) {
+				if (!values.contains(value)) {
+					values.add(value);
+
+					modified = true;
+				}
+			}
+
+			if (!modified) {
+				return null;
+			}
+
+			_reentrantLock.lock();
+
+			try {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						getServletContextName() +
+							" generated authorization property " +
+								_authorizationProperty);
+				}
+
+				_properties.put(key, values);
+
+				mergeExistingProperties();
+
+				writePACLPolicyFile();
+			}
+			finally {
+				_reentrantLock.unlock();
+			}
+
+			return null;
+		}
+
+		private AuthorizationProperty _authorizationProperty;
+	}
 }

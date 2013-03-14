@@ -23,6 +23,9 @@ import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -64,7 +67,7 @@ public class PACLPolicyManager {
 	}
 
 	public static PACLPolicy getPACLPolicy(ClassLoader classLoader) {
-		return _paclPolicies.get(classLoader);
+		return AccessController.doPrivileged(new PACLPolicyAction(classLoader));
 	}
 
 	public static boolean isActive() {
@@ -193,4 +196,26 @@ public class PACLPolicyManager {
 	private static Map<ClassLoader, PACLPolicy> _paclPolicies =
 		new HashMap<ClassLoader, PACLPolicy>();
 
+	private static class PACLPolicyAction
+		implements PrivilegedAction<PACLPolicy> {
+
+		public PACLPolicyAction(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
+		public PACLPolicy run() {
+			PACLPolicy paclPolicy = _paclPolicies.get(_classLoader);
+
+			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
+				_classLoader = _classLoader.getParent();
+
+				paclPolicy = _paclPolicies.get(_classLoader);
+			}
+
+			return paclPolicy;
+		}
+
+		private ClassLoader _classLoader;
+
+	}
 }

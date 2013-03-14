@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
@@ -212,12 +213,19 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		return _policy;
 	}
 
+	protected void initClass(Class<?> clazz) {
+		_log.debug(
+			"Loading " + clazz.getName() + " and " +
+				clazz.getDeclaredClasses().length + " inner classes");
+	}
+
 	protected void initClasses() {
 
 		// Load dependent classes to prevent ClassCircularityError
 
-		_log.debug("Loading " + FileAvailabilityUtil.class.getName());
-		_log.debug("Loading " + PortalHookPermission.class.getName());
+		initClass(CentralizedThreadLocal.class);
+		initClass(FileAvailabilityUtil.class);
+		initClass(PortalHookPermission.class);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

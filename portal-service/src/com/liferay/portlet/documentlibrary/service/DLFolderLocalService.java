@@ -179,12 +179,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the document library folder with the UUID in the group.
+	* Returns the document library folder matching the UUID and group.
 	*
-	* @param uuid the UUID of document library folder
-	* @param groupId the group id of the document library folder
-	* @return the document library folder
-	* @throws PortalException if a document library folder with the UUID in the group could not be found
+	* @param uuid the document library folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library folder
+	* @throws PortalException if a matching document library folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

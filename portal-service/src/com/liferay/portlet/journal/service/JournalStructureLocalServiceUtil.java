@@ -192,12 +192,12 @@ public class JournalStructureLocalServiceUtil {
 	}
 
 	/**
-	* Returns the journal structure with the UUID in the group.
+	* Returns the journal structure matching the UUID and group.
 	*
-	* @param uuid the UUID of journal structure
-	* @param groupId the group id of the journal structure
-	* @return the journal structure
-	* @throws PortalException if a journal structure with the UUID in the group could not be found
+	* @param uuid the journal structure's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal structure
+	* @throws PortalException if a matching journal structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalStructure getJournalStructureByUuidAndGroupId(

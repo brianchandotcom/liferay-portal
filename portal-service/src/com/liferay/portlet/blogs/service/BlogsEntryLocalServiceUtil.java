@@ -193,12 +193,12 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the blogs entry with the UUID in the group.
+	* Returns the blogs entry matching the UUID and group.
 	*
-	* @param uuid the UUID of blogs entry
-	* @param groupId the group id of the blogs entry
-	* @return the blogs entry
-	* @throws PortalException if a blogs entry with the UUID in the group could not be found
+	* @param uuid the blogs entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching blogs entry
+	* @throws PortalException if a matching blogs entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsEntry getBlogsEntryByUuidAndGroupId(

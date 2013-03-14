@@ -243,12 +243,12 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal article resource with the UUID in the group.
+	 * Returns the journal article resource matching the UUID and group.
 	 *
-	 * @param uuid the UUID of journal article resource
-	 * @param groupId the group id of the journal article resource
-	 * @return the journal article resource
-	 * @throws PortalException if a journal article resource with the UUID in the group could not be found
+	 * @param uuid the journal article resource's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching journal article resource
+	 * @throws PortalException if a matching journal article resource could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(

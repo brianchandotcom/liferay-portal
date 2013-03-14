@@ -193,12 +193,12 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d m template with the UUID in the group.
+	* Returns the d d m template matching the UUID and group.
 	*
-	* @param uuid the UUID of d d m template
-	* @param groupId the group id of the d d m template
-	* @return the d d m template
-	* @throws PortalException if a d d m template with the UUID in the group could not be found
+	* @param uuid the d d m template's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m template
+	* @throws PortalException if a matching d d m template could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplateByUuidAndGroupId(

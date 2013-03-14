@@ -192,12 +192,12 @@ public class JournalTemplateLocalServiceUtil {
 	}
 
 	/**
-	* Returns the journal template with the UUID in the group.
+	* Returns the journal template matching the UUID and group.
 	*
-	* @param uuid the UUID of journal template
-	* @param groupId the group id of the journal template
-	* @return the journal template
-	* @throws PortalException if a journal template with the UUID in the group could not be found
+	* @param uuid the journal template's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal template
+	* @throws PortalException if a matching journal template could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalTemplate getJournalTemplateByUuidAndGroupId(

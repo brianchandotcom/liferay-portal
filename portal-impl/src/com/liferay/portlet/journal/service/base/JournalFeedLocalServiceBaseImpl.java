@@ -246,12 +246,12 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal feed with the UUID in the group.
+	 * Returns the journal feed matching the UUID and group.
 	 *
-	 * @param uuid the UUID of journal feed
-	 * @param groupId the group id of the journal feed
-	 * @return the journal feed
-	 * @throws PortalException if a journal feed with the UUID in the group could not be found
+	 * @param uuid the journal feed's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching journal feed
+	 * @throws PortalException if a matching journal feed could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalFeed getJournalFeedByUuidAndGroupId(String uuid, long groupId)

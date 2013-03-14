@@ -193,12 +193,12 @@ public class DLFileVersionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library file version with the UUID in the group.
+	* Returns the document library file version matching the UUID and group.
 	*
-	* @param uuid the UUID of document library file version
-	* @param groupId the group id of the document library file version
-	* @return the document library file version
-	* @throws PortalException if a document library file version with the UUID in the group could not be found
+	* @param uuid the document library file version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file version
+	* @throws PortalException if a matching document library file version could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndGroupId(

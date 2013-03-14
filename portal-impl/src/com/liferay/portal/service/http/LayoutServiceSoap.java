@@ -328,6 +328,8 @@ public class LayoutServiceSoap {
 	}
 
 	/**
+	* Returns the layout matching the UUID, group, and privacy.
+	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group

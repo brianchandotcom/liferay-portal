@@ -188,12 +188,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	/**
-	* Returns the d d l record with the UUID in the group.
+	* Returns the d d l record matching the UUID and group.
 	*
-	* @param uuid the UUID of d d l record
-	* @param groupId the group id of the d d l record
-	* @return the d d l record
-	* @throws PortalException if a d d l record with the UUID in the group could not be found
+	* @param uuid the d d l record's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d l record
+	* @throws PortalException if a matching d d l record could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getDDLRecordByUuidAndGroupId(

@@ -193,12 +193,12 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the message boards thread flag with the UUID in the group.
+	* Returns the message boards thread flag matching the UUID and group.
 	*
-	* @param uuid the UUID of message boards thread flag
-	* @param groupId the group id of the message boards thread flag
-	* @return the message boards thread flag
-	* @throws PortalException if a message boards thread flag with the UUID in the group could not be found
+	* @param uuid the message boards thread flag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread flag
+	* @throws PortalException if a matching message boards thread flag could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(

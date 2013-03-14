@@ -73,6 +73,9 @@ public interface PACLConstants {
 	public static final String PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER =
 		"getClassLoader";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL =
+		"portletBagPool";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE =
 		"searchEngine";
 

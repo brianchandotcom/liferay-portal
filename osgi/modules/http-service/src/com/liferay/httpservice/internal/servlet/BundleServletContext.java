@@ -48,6 +48,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -60,10 +61,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -260,6 +262,96 @@ public class BundleServletContext extends LiferayServletContext {
 	}
 
 	@Override
+	public RequestDispatcher getRequestDispatcher(String path) {
+		String pathContext = PortalUtil.getPathContext();
+
+		String contextPath = getContextPath();
+
+		if (Validator.isNotNull(pathContext) &&
+			contextPath.startsWith(pathContext)) {
+
+			contextPath = contextPath.substring(pathContext.length());
+		}
+
+		if (path.startsWith(Portal.PATH_MODULE) &&
+			path.startsWith(contextPath)) {
+
+			path = path.substring(contextPath.length());
+		}
+
+		if (Validator.isNull(path)) {
+			path = StringPool.SLASH;
+		}
+
+		if (!isValidPath(path)) {
+			return null;
+		}
+
+		BundleFilterChain bundleFilterChain = getFilterChain(path);
+
+		if (_servletsByURLPatterns.containsKey(path)) {
+			bundleFilterChain.setServlet(_servletsByURLPatterns.get(path));
+
+			return new BundleRequestDispatcher(
+				path, false, path, this, bundleFilterChain);
+		}
+
+		String extensionMapping = FileUtil.getExtension(path).toLowerCase();
+
+		boolean isExtensionMapping = false;
+
+		if (Validator.isNotNull(extensionMapping)) {
+			extensionMapping = "*.".concat(extensionMapping);
+			isExtensionMapping = true;
+		}
+
+		path = path.substring(0, path.lastIndexOf(StringPool.SLASH));
+
+		while (path.length() != 0) {
+			if (_servletsByURLPatterns.containsKey(path)) {
+				bundleFilterChain.setServlet(_servletsByURLPatterns.get(path));
+
+				return new BundleRequestDispatcher(
+					path, false, path, this, bundleFilterChain);
+			}
+			else if (_servletsByURLPatterns.containsKey(
+					path.concat(extensionMapping))) {
+
+				bundleFilterChain.setServlet(
+					_servletsByURLPatterns.get(path.concat(extensionMapping)));
+
+				return new BundleRequestDispatcher(
+					path.concat(extensionMapping), true, path, this,
+					bundleFilterChain);
+			}
+
+			path = path.substring(0, path.lastIndexOf(StringPool.SLASH));
+		}
+
+		if (_servletsByURLPatterns.containsKey(
+				StringPool.SLASH.concat(extensionMapping))) {
+
+			bundleFilterChain.setServlet(
+				_servletsByURLPatterns.get(
+					StringPool.SLASH.concat(extensionMapping)));
+
+			return new BundleRequestDispatcher(
+				StringPool.SLASH.concat(extensionMapping), isExtensionMapping,
+				path, this, bundleFilterChain);
+		}
+
+		if (_servletsByURLPatterns.containsKey(StringPool.SLASH)) {
+			bundleFilterChain.setServlet(
+				_servletsByURLPatterns.get(StringPool.SLASH));
+
+			return new BundleRequestDispatcher(
+				StringPool.SLASH, false, path, this, bundleFilterChain);
+		}
+
+		return null;
+	}
+
+	@Override
 	public URL getResource(String path) {
 		return _httpContext.getResource(path);
 	}
@@ -379,13 +471,16 @@ public class BundleServletContext extends LiferayServletContext {
 
 			filterServiceRanking.setFilterName(filterName);
 
-			int serviceRanking = GetterUtil.getInteger(
-				initParameters.remove("service.ranking"),
-				_FILTER_SERVICE_RANKING_DEFAULT);
+			int serviceRanking = _FILTER_SERVICE_RANKING_DEFAULT;
+
+			if (initParameters != null) {
+				serviceRanking = GetterUtil.getInteger(
+					initParameters.remove("service.ranking"),
+					_FILTER_SERVICE_RANKING_DEFAULT);
+			}
 
 			filterServiceRanking.setServiceRanking(serviceRanking);
-
-			_filterServiceRankings.add(filterServiceRanking);
+			filterServiceRanking.setUrlPattterns(urlPatterns);
 
 			// Filters are sorted based on their service ranking value where
 			// the default service ranking is 10 for those filters that do not
@@ -396,7 +491,7 @@ public class BundleServletContext extends LiferayServletContext {
 			// list, and then based on when the filter was registered where
 			// those that are registered earlier appear earlier in the list.
 
-			Collections.sort(_filterServiceRankings);
+			_filterServiceRankings.add(filterServiceRanking);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -722,6 +817,39 @@ public class BundleServletContext extends LiferayServletContext {
 		}
 	}
 
+	protected BundleFilterChain getFilterChain(String path) {
+		BundleFilterChain bundleFilterChain = new BundleFilterChain();
+
+		for (FilterServiceRanking filterServiceRanking :
+				_filterServiceRankings) {
+
+			String filterName = filterServiceRanking.getFilterName();
+
+			Filter filter = _filtersByFilterNames.get(filterName);
+
+			List<String> urlPatterns = filterServiceRanking.getUrlPatterns();
+
+			for (String urlPattern : urlPatterns) {
+				if (urlPattern.equals(path)) {
+					bundleFilterChain.addFilter(filter);
+
+					break;
+				}
+
+				if (urlPattern.contains(StringPool.STAR)) {
+					urlPattern = urlPattern.replaceAll(
+						"\\".concat(StringPool.STAR), ".*");
+				}
+
+				if (path.matches(urlPattern)) {
+					bundleFilterChain.addFilter(filter);
+				}
+			}
+		}
+
+		return bundleFilterChain;
+	}
+
 	protected File getTempDir() {
 		if (_tempDir != null) {
 			return _tempDir;
@@ -740,6 +868,20 @@ public class BundleServletContext extends LiferayServletContext {
 		_tempDir = tempDir;
 
 		return _tempDir;
+	}
+
+	protected boolean isValidPath(String path) {
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH.concat(path);
+		}
+
+		for (String illegalPath : _ILLEGAL_PATHS) {
+			if (path.startsWith(illegalPath)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected void unregisterFilterByServiceRanking(String filterName) {
@@ -853,6 +995,10 @@ public class BundleServletContext extends LiferayServletContext {
 
 	private static final int _FILTER_SERVICE_RANKING_DEFAULT = 10;
 
+	private static final String[] _ILLEGAL_PATHS = new String[] {
+		"/OSGI-INF/", "/META-INF/", "/OSGI-OPT/", "/WEB-INF/"
+	};
+
 	private static Log _log = LogFactoryUtil.getLog(BundleServletContext.class);
 
 	private Bundle _bundle;
@@ -862,8 +1008,9 @@ public class BundleServletContext extends LiferayServletContext {
 		new ConcurrentHashMap<String, Filter>();
 	private Map<String, Filter> _filtersByURLPatterns =
 		new ConcurrentHashMap<String, Filter>();
-	private List<FilterServiceRanking> _filterServiceRankings =
-		new CopyOnWriteArrayList<FilterServiceRanking>();
+	private Set<FilterServiceRanking> _filterServiceRankings =
+		new ConcurrentSkipListSet<FilterServiceRanking>(
+			new FilterServiceComparator());
 	private HttpContext _httpContext;
 	private HttpServiceTracker _httpServiceTracker;
 	private Map<String, String> _initParameters = new HashMap<String, String>();
@@ -885,44 +1032,32 @@ public class BundleServletContext extends LiferayServletContext {
 		new ConcurrentHashMap<String, Servlet>();
 	private File _tempDir;
 
-	private class FilterServiceRanking
-		implements Comparable<FilterServiceRanking> {
+	private class FilterServiceComparator
+		implements Comparator<FilterServiceRanking> {
 
-		public String getFilterName() {
-			return _filterName;
-		}
+		public int compare(
+			FilterServiceRanking fsr1, FilterServiceRanking fsr2) {
 
-		public int getServiceRanking() {
-			return _serviceRanking;
-		}
-
-		public long getTimestamp() {
-			return _timestamp;
-		}
-
-		public int compareTo(FilterServiceRanking filterServiceRanking) {
-			if (_serviceRanking <
-					filterServiceRanking.getServiceRanking()) {
-
+			if (fsr1.getServiceRanking() < fsr2.getServiceRanking()) {
 				return -1;
 			}
-			else if (_serviceRanking >
-						filterServiceRanking.getServiceRanking()) {
-
+			else if (fsr1.getServiceRanking() > fsr2.getServiceRanking()) {
 				return 1;
 			}
 
-			if (_timestamp < filterServiceRanking.getTimestamp()) {
+			if (fsr1.getTimestamp() < fsr2.getTimestamp()) {
 				return -1;
 			}
-			else if (_timestamp > filterServiceRanking.getTimestamp()) {
+			else if (fsr1.getTimestamp() > fsr2.getTimestamp()) {
 				return 1;
 			}
 
 			return 0;
 		}
+	}
 
-		@Override
+	private class FilterServiceRanking {
+
 		public boolean equals(Object object) {
 			if (this == object) {
 				return true;
@@ -946,6 +1081,22 @@ public class BundleServletContext extends LiferayServletContext {
 			return false;
 		}
 
+		public String getFilterName() {
+			return _filterName;
+		}
+
+		public int getServiceRanking() {
+			return _serviceRanking;
+		}
+
+		public long getTimestamp() {
+			return _timestamp;
+		}
+
+		public List<String> getUrlPatterns() {
+			return _urlPatterns;
+		}
+
 		public void setFilterName(String filterName) {
 			_filterName = filterName;
 		}
@@ -954,9 +1105,14 @@ public class BundleServletContext extends LiferayServletContext {
 			_serviceRanking = serviceRanking;
 		}
 
+		public void setUrlPattterns(List<String> urlMappings) {
+			_urlPatterns = urlMappings;
+		}
+
 		private String _filterName;
 		private int _serviceRanking;
 		private long _timestamp = System.currentTimeMillis();
+		private List<String> _urlPatterns;
 
 	}
 

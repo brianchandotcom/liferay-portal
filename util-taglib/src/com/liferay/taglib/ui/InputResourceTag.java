@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class InputResourceTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_id = null;
 		_title = null;
 		_url = null;
@@ -63,7 +64,7 @@ public class InputResourceTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_resource/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _id;
 	private String _title;
 	private String _url;

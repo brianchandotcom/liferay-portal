@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -90,7 +91,7 @@ public class InputFieldTag extends IncludeTag {
 	protected void cleanUp() {
 		_autoSize = false;
 		_bean = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_defaultLanguageId = null;
 		_defaultValue = null;
 		_disabled = false;
@@ -152,7 +153,7 @@ public class InputFieldTag extends IncludeTag {
 
 	private boolean _autoSize;
 	private Object _bean;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _defaultLanguageId;
 	private Object _defaultValue;
 	private boolean _disabled;

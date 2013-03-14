@@ -112,7 +112,7 @@ public class IconTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_alt = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_data = null;
 		_id = null;
 		_image = null;
@@ -208,7 +208,7 @@ public class IconTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/icon/page.jsp";
 
 	private String _alt;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private Map<String, Object> _data;
 	private String _id;
 	private String _image;

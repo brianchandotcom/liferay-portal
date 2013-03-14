@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -62,7 +63,7 @@ public class InputTimeZoneTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_daylight = false;
 		_disabled = false;
 		_displayStyle = TimeZone.LONG;
@@ -98,7 +99,7 @@ public class InputTimeZoneTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_time_zone/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _daylight;
 	private boolean _disabled;
 	private int _displayStyle = TimeZone.LONG;

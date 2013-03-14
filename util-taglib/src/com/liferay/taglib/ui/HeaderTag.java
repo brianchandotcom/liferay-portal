@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -57,7 +58,7 @@ public class HeaderTag extends IncludeTag {
 	protected void cleanUp() {
 		_backLabel = null;
 		_backURL = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_escapeXml = true;
 		_localizeTitle = true;
 		_showBackURL = true;
@@ -103,7 +104,7 @@ public class HeaderTag extends IncludeTag {
 
 	private String _backLabel;
 	private String _backURL;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _escapeXml = true;
 	private boolean _localizeTitle = true;
 	private boolean _showBackURL = true;

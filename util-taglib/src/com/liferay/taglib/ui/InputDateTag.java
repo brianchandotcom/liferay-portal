@@ -109,7 +109,7 @@ public class InputDateTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_dayNullable = false;
 		_dayParam = null;
 		_dayValue = 0;
@@ -191,7 +191,7 @@ public class InputDateTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/input_date/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _dayNullable;
 	private String _dayParam;
 	private int _dayValue;

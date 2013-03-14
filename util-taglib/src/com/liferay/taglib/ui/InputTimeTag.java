@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,7 +77,7 @@ public class InputTimeTag extends IncludeTag {
 		_amPmNullable = false;
 		_amPmParam = null;
 		_amPmValue = 0;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_disabled = false;
 		_hourNullable = false;
 		_hourParam = null;
@@ -125,7 +126,7 @@ public class InputTimeTag extends IncludeTag {
 	private boolean _amPmNullable;
 	private String _amPmParam;
 	private int _amPmValue;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _disabled;
 	private boolean _hourNullable;
 	private String _hourParam;

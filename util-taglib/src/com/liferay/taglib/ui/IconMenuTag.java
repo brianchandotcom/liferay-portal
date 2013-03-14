@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -86,7 +87,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_align = "right";
-				_cssClass = null;
+				_cssClass = StringPool.BLANK;
 				_direction = null;
 				_endPage = null;
 				_extended = true;
@@ -384,7 +385,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		"/html/taglib/ui/icon_menu/start.jsp";
 
 	private String _align = "right";
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _direction;
 	private boolean _disabled;
 	private String _endPage;

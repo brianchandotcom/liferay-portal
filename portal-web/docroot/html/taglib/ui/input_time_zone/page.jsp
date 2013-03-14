@@ -30,7 +30,7 @@ NumberFormat numberFormat = NumberFormat.getInstance(locale);
 numberFormat.setMinimumIntegerDigits(2);
 %>
 
-<select <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + "\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= name %>">
+<select class="cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= name %>">
 	<c:if test="<%= nullable %>">
 		<option value=""></option>
 	</c:if>

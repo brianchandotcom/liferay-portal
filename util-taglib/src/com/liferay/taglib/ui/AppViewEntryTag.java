@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -122,7 +123,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_assetCategoryClassPK = 0;
 		_assetTagClassName = null;
 		_assetTagClassPK = 0;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_data = null;
 		_description = null;
 		_displayStyle = null;
@@ -199,7 +200,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private long _assetCategoryClassPK;
 	private String _assetTagClassName;
 	private long _assetTagClassPK;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private Map<String, Object> _data;
 	private String _description;
 	private String _displayStyle;

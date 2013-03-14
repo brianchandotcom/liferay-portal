@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,7 @@ public class StagingTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_extended = true;
 		_groupId = 0;
 		_icon = "/dockbar/staging.png";
@@ -100,7 +101,7 @@ public class StagingTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/staging/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _extended = true;
 	private long _groupId;
 	private String _icon = "/dockbar/staging.png";

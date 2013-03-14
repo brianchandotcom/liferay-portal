@@ -17,11 +17,7 @@
 <%@ include file="/html/taglib/ui/icon/init.jsp" %>
 
 <%
-String cssClassHtml = StringPool.BLANK;
-
-if (Validator.isNotNull(cssClass)) {
-	cssClassHtml = "class=\"".concat(cssClass).concat("\"");
-}
+String cssClassHtml = "class=\"".concat(cssClass).concat("\"");
 
 if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
 	SpriteImage spriteImage = null;

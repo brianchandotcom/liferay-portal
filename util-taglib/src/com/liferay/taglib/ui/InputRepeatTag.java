@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -35,7 +36,7 @@ public class InputRepeatTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_event = null;
 	}
 
@@ -52,7 +53,7 @@ public class InputRepeatTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/input_repeat/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private CalEvent _event;
 
 }

@@ -528,8 +528,7 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the text \"" + value + "\"");
+				liferaySelenium.assertTextNotPresent(value);
 			}
 
 			try {
@@ -552,8 +551,7 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the text \"" + value + "\"");
+				liferaySelenium.assertTextPresent(value);
 			}
 
 			try {

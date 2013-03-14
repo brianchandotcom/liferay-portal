@@ -42,11 +42,11 @@
 
 	&.direction-down .lfr-trigger strong a {
 		padding: 2px 20px 2px 5px;
-		vertical-align: middle;
+		vertical-align: baseline;
 	}
 
 	&.show-arrow.direction-right .lfr-trigger strong a {
-		padding-right:20px;
+		padding-right: 20px;
 	}
 
 	&.direction-right .lfr-trigger strong a {

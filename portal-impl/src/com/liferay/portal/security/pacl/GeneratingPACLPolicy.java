@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.checker.AuthorizationProperty;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
@@ -175,11 +174,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 	}
 
 	protected void writePACLPolicyFile() {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
 		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
-
 			StringBundler sb = new StringBundler();
 
 			for (Map.Entry<String, Set<String>> entry :
@@ -215,9 +210,6 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
 		}
 	}
 

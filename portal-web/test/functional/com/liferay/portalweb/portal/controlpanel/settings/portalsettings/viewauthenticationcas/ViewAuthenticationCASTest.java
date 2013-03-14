@@ -64,11 +64,11 @@ public class ViewAuthenticationCASTest extends BaseTestCase {
 			selenium.getText("link=Open SSO"));
 		assertEquals(RuntimeVariables.replace("SiteMinder"),
 			selenium.getText("link=SiteMinder"));
-		assertTrue(selenium.isVisible(
+		assertFalse(selenium.isChecked(
 				"//input[@id='_130_cas.auth.enabledCheckbox']"));
 		assertEquals(RuntimeVariables.replace("Enabled"),
 			selenium.getText("//label[@for='_130_cas.auth.enabledCheckbox']"));
-		assertTrue(selenium.isVisible(
+		assertFalse(selenium.isChecked(
 				"//input[@id='_130_cas.import.from.ldapCheckbox']"));
 		assertTrue(selenium.isPartialText(
 				"//label[@for='_130_cas.import.from.ldapCheckbox']",

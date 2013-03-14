@@ -193,8 +193,7 @@ public class EditStructureAction extends PortletAction {
 
 		String availableFields = ParamUtil.getString(
 			actionRequest, "availableFields");
-		String saveCallback = ParamUtil.getString(
-			actionRequest, "saveCallback");
+		String eventName = ParamUtil.getString(actionRequest, "eventName");
 
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
@@ -217,7 +216,7 @@ public class EditStructureAction extends PortletAction {
 		portletURL.setParameter(
 			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter("availableFields", availableFields, false);
-		portletURL.setParameter("saveCallback", saveCallback, false);
+		portletURL.setParameter("eventName", eventName, false);
 
 		return portletURL.toString();
 	}

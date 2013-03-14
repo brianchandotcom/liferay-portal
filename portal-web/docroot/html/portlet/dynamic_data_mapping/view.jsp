@@ -90,31 +90,14 @@ portletURL.setParameter("tabs1", tabs1);
 		>
 
 			<%
-			String rowHREF = null;
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-			if (Validator.isNotNull(chooseCallback)) {
-				StringBundler sb = new StringBundler(7);
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_structure");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+			rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 
-				sb.append("javascript:Liferay.Util.getOpener()['");
-				sb.append(HtmlUtil.escapeJS(chooseCallback));
-				sb.append("']('");
-				sb.append(structure.getStructureId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escape(structure.getName(locale)));
-				sb.append("', Liferay.Util.getWindow());");
-
-				rowHREF = sb.toString();
-			}
-			else {
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_structure");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
-
-				rowHREF = rowURL.toString();
-			}
+			String rowHREF = rowURL.toString();
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -162,7 +145,9 @@ portletURL.setParameter("tabs1", tabs1);
 			>
 
 				<%
-				buffer.append(dateFormatDateTime.format(structure.getModifiedDate()));
+				Date modifiedDate = structure.getModifiedDate();
+
+				buffer.append(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)));
 				%>
 
 			</liferay-ui:search-container-column-text>

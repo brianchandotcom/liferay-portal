@@ -996,11 +996,18 @@ public class DataFactory {
 	}
 
 	public MBDiscussion newMBDiscussion(
-		long classNameId, long classPK, long threadId) {
+		long groupId, long classNameId, long classPK, long threadId) {
 
 		MBDiscussion mbDiscussion = new MBDiscussionImpl();
 
+		mbDiscussion.setUuid(SequentialUUID.generate());
 		mbDiscussion.setDiscussionId(_counter.get());
+		mbDiscussion.setGroupId(groupId);
+		mbDiscussion.setCompanyId(_companyId);
+		mbDiscussion.setUserId(_sampleUserId);
+		mbDiscussion.setUserName(_SAMPLE_USER_NAME);
+		mbDiscussion.setCreateDate(new Date());
+		mbDiscussion.setModifiedDate(new Date());
 		mbDiscussion.setClassNameId(classNameId);
 		mbDiscussion.setClassPK(classPK);
 		mbDiscussion.setThreadId(threadId);

@@ -16,6 +16,6 @@ ${sampleSQLBuilder.insertMBMessage(mbRootMessage)}
 	</#list>
 </#if>
 
-<#assign mbDiscussion = dataFactory.newMBDiscussion(classNameId, classPK, mbThreadId)>
+<#assign mbDiscussion = dataFactory.newMBDiscussion(groupId, classNameId, classPK, mbThreadId)>
 
-insert into MBDiscussion values (${mbDiscussion.discussionId}, ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
+insert into MBDiscussion values ('${mbDiscussion.uuid}', ${mbDiscussion.discussionId}, ${mbDiscussion.groupId}, ${mbDiscussion.companyId}, ${mbDiscussion.userId}, '${mbDiscussion.userName}', '${dataFactory.getDateString(mbDiscussion.createDate)}', '${dataFactory.getDateString(mbDiscussion.modifiedDate)}', ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});

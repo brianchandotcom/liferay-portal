@@ -34,7 +34,6 @@ import com.liferay.portlet.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.permission.WikiNodePermission;
 
@@ -81,17 +80,10 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				WikiNodeServiceUtil.deleteNode(classPK);
-			}
-			else {
-				WikiNodeLocalServiceUtil.deleteNode(classPK);
-			}
-		}
+		WikiNodeLocalServiceUtil.deleteNode(classPK);
 	}
 
 	public String getClassName() {
@@ -189,12 +181,12 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return node.isInTrash();
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			WikiNodeServiceUtil.restoreNodeFromTrash(classPK);
-		}
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		WikiNodeLocalServiceUtil.restoreNodeFromTrash(userId, node);
 	}
 
 	@Override

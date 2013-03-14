@@ -26,7 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRenderer;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
@@ -72,17 +71,10 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		}
 	}
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				JournalFolderServiceUtil.deleteFolder(classPK, false);
-			}
-			else {
-				JournalFolderLocalServiceUtil.deleteFolder(classPK, false);
-			}
-		}
+		JournalFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}
 
 	public String getClassName() {
@@ -195,28 +187,28 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		JournalFolderServiceUtil.moveFolder(
+		JournalFolderLocalServiceUtil.moveFolder(
 			classPK, containerModelId, serviceContext);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		JournalFolderServiceUtil.moveFolderFromTrash(
-			classPK, containerModelId, serviceContext);
+		JournalFolderLocalServiceUtil.moveFolderFromTrash(
+			userId, classPK, containerModelId, serviceContext);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			JournalFolderServiceUtil.restoreFolderFromTrash(classPK);
-		}
+		JournalFolderLocalServiceUtil.restoreFolderFromTrash(userId, classPK);
 	}
 
 	@Override

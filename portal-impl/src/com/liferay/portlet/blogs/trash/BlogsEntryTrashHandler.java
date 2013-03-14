@@ -26,7 +26,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import javax.portlet.PortletRequest;
@@ -41,17 +40,10 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = BlogsEntry.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				BlogsEntryServiceUtil.deleteEntry(classPK);
-			}
-			else {
-				BlogsEntryLocalServiceUtil.deleteEntry(classPK);
-			}
-		}
+		BlogsEntryLocalServiceUtil.deleteEntry(classPK);
 	}
 
 	public String getClassName() {
@@ -94,17 +86,15 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
-		BlogsEntry entry = BlogsEntryServiceUtil.getEntry(classPK);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
 		return entry.isInTrash();
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			BlogsEntryServiceUtil.restoreEntryFromTrash(classPK);
-		}
+		BlogsEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
 	}
 
 	@Override

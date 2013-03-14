@@ -16,13 +16,13 @@ package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 
@@ -38,17 +38,10 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 	public static final String CLASS_NAME = BookmarksEntry.class.getName();
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				BookmarksEntryServiceUtil.deleteEntry(classPK);
-			}
-			else {
-				BookmarksEntryLocalServiceUtil.deleteEntry(classPK);
-			}
-		}
+		BookmarksEntryLocalServiceUtil.deleteEntry(classPK);
 	}
 
 	public String getClassName() {
@@ -100,14 +93,17 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long classPK, String actionId)
+	public boolean hasTrashPermission(
+			PermissionChecker permissionChecker, long groupId, long classPK,
+			String trashActionId)
 		throws PortalException, SystemException {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return true;
+		}
 
-		return BookmarksEntryPermission.contains(
-			permissionChecker, entry, actionId);
+		return super.hasTrashPermission(
+			permissionChecker, groupId, classPK, trashActionId);
 	}
 
 	public boolean isInTrash(long classPK)
@@ -138,26 +134,27 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		BookmarksEntryServiceUtil.moveEntry(classPK, containerModelId);
+		BookmarksEntryLocalServiceUtil.moveEntry(classPK, containerModelId);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerId, ServiceContext serviceContext)
+			long userId, long classPK, long containerId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		BookmarksEntryServiceUtil.moveEntryFromTrash(classPK, containerId);
+		BookmarksEntryLocalServiceUtil.moveEntryFromTrash(
+			userId, classPK, containerId);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			BookmarksEntryServiceUtil.restoreEntryFromTrash(classPK);
-		}
+		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
 	}
 
 	@Override
@@ -167,6 +164,17 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
 		return entry.getFolder();
+	}
+
+	@Override
+	protected boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException, SystemException {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
+
+		return BookmarksEntryPermission.contains(
+			permissionChecker, entry, actionId);
 	}
 
 }

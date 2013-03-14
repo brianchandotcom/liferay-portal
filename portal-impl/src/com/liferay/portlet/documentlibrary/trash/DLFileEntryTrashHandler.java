@@ -32,8 +32,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -88,17 +88,10 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		}
 	}
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			if (checkPermission) {
-				DLAppServiceUtil.deleteFileEntry(classPK);
-			}
-			else {
-				DLAppLocalServiceUtil.deleteFileEntry(classPK);
-			}
-		}
+		DLAppLocalServiceUtil.deleteFileEntry(classPK);
 	}
 
 	public String getClassName() {
@@ -215,42 +208,45 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void moveEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLAppServiceUtil.moveFileEntry(
-			classPK, containerModelId, serviceContext);
+		DLAppLocalServiceUtil.moveFileEntry(
+			userId, classPK, containerModelId, serviceContext);
 	}
 
 	@Override
 	public void moveTrashEntry(
-			long classPK, long containerModelId, ServiceContext serviceContext)
+			long userId, long classPK, long containerModelId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		DLAppServiceUtil.moveFileEntryFromTrash(
-			classPK, containerModelId, serviceContext);
+		Repository repository = getRepository(classPK);
+
+		DLAppHelperLocalServiceUtil.moveFileEntryFromTrash(
+			userId, repository.getFileEntry(classPK), containerModelId,
+			serviceContext);
 	}
 
-	public void restoreTrashEntries(long[] classPKs)
+	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 
-		for (long classPK : classPKs) {
-			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			if ((dlFileEntry.getClassNameId() > 0) &&
-				(dlFileEntry.getClassPK() > 0)) {
+		if ((dlFileEntry.getClassNameId() > 0) &&
+			(dlFileEntry.getClassPK() > 0)) {
 
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						dlFileEntry.getClassName());
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					dlFileEntry.getClassName());
 
-				trashHandler.restoreRelatedTrashEntry(getClassName(), classPK);
+			trashHandler.restoreRelatedTrashEntry(getClassName(), classPK);
 
-				continue;
-			}
-
-			DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
+			return;
 		}
+
+		DLAppLocalServiceUtil.restoreFileEntryFromTrash(userId, classPK);
 	}
 
 	@Override

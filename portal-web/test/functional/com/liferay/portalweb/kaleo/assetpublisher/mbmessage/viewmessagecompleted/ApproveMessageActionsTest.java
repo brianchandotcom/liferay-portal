@@ -52,22 +52,21 @@ public class ApproveMessageActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText(
 				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"There are no pending tasks assigned to your roles."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a");
-		selenium.waitForVisible("//div[3]/span/span/button");
-		selenium.clickAt("//div[3]/span/span/button",
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
+		selenium.waitForVisible(
+			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
+		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

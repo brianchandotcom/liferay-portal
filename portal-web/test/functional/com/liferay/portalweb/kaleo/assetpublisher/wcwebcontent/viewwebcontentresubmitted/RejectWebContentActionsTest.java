@@ -52,18 +52,20 @@ public class RejectWebContentActionsTest extends BaseTestCase {
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Web Content Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Web Content Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Reject')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]");
 		assertEquals(RuntimeVariables.replace("Reject"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Reject')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Reject')]/a");
-		selenium.waitForVisible("//div[3]/span/span/button");
-		selenium.clickAt("//div[3]/span/span/button",
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]");
+		selenium.waitForVisible(
+			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
+		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div[@class='portlet-msg-success']",

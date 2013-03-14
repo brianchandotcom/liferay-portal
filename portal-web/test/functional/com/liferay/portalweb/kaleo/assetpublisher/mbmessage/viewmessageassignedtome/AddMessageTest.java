@@ -45,11 +45,13 @@ public class AddMessageTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Message Subject"));
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
-		selenium.typeFrame("//div[@id='cke_1_contents']/iframe",
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Message Boards Message Body"));
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -59,9 +59,8 @@ public class AddAPBlogsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.waitForVisible("//div[@id='column-1']/div/div/section");
+		selenium.waitForVisible("//section");
 		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText(
-				"//div[@class='portlet-body']/div[contains(.,'There are no results.')]"));
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

@@ -30,24 +30,20 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//section"));
 		assertEquals(RuntimeVariables.replace("Asset Publisher"),
-			selenium.getText("//h1/span[contains(.,'Asset Publisher')]"));
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText(
-				"//div[@class='asset-abstract ']/h3/a[contains(.,'Blogs Entry Title')]"));
+			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText(
-				"//div[@class='asset-content']/div[contains(.,'Blogs Entry Content')]"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='asset-content']/div[contains(.,'Read More')]",
+			selenium.getText("//div[@class='asset-summary']"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
 				"Read More"));
 		assertFalse(selenium.isTextPresent("There are no results."));
-		selenium.clickAt("//div[@class='asset-more']/a[contains(.,'Read More')]",
+		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//div[contains(.,'Blogs Entry Title')]/h1/span"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText(
-				"//div[@class='asset-full-content show-asset-title']/div[contains(.,'Blogs Entry Content')]"));
+			selenium.getText("//div[@class='asset-content']"));
 	}
 }

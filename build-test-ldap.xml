@@ -43,7 +43,7 @@ test.properties to point to an ApacheDS installation file.
 	</target>
 
 	<target name="run-ldap-tomcat">
-		<!--<antcall target="prepare-vm-server">
+		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="vm.vmdk.suffix" value="alpha-2010-02-02" />
 		 </antcall>
@@ -138,16 +138,16 @@ businessCategory: cn=janesmith,ou=users,dc=example,dc=com</echo>
 					java -jar apacheds-tools.jar import -e -f C:/${tstamp.value}
 				</echo>
 
-				<antcall target="execute-remote-command" />-->
+				<antcall target="execute-remote-command" />
 
 				<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 					<property name="test.class" value="${test.name}" />
 				</ant>
-			<!--</sequential>
+			</sequential>
 		</parallel>
 
 		<exec dir="${vm.drive}/${vm.host}" executable="${vmware-cmd.executable}">
 			<arg line="${vm.drive}\${vm.host}\${vm.host}.vmx stop hard" />
-		</exec>-->
+		</exec>
 	</target>
 </project>

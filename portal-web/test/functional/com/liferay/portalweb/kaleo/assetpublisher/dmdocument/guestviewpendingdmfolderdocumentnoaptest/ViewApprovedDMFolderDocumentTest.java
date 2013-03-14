@@ -96,9 +96,6 @@ public class ViewApprovedDMFolderDocumentTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]",
 				"Content Type"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='lfr-panel-content']/div/div[contains(.,'application/octet-stream')]",
-				"application/octet-stream"));
 		assertEquals(RuntimeVariables.replace("Version History"),
 			selenium.getText("xpath=(//div[@class='lfr-panel-title']/span)[3]"));
 		assertTrue(selenium.isVisible("//div[@id='_20_ocerSearchContainer']"));

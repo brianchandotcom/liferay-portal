@@ -65,6 +65,6 @@ public class AddDMFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"DM Folder Document Title (Pending)"),
 			selenium.getText(
-				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));
+				"//div[@data-title='DM Folder Document Title']/a/span[@class='entry-title']"));
 	}
 }

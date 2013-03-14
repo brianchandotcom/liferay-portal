@@ -69,32 +69,22 @@ public class ViewMessageResubmittedTest extends BaseTestCase {
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Update')]/a"));
+			selenium.getText("//tr/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Message Boards Message Subject')]/a"));
+			selenium.getText("//tr/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[3]/a"));
-		assertTrue(selenium.isVisible(
-				"//tr[@class='portlet-section-body results-row']/td[4]/a"));
+			selenium.getText("//tr/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row']/td[contains(.,'Never')]/a"));
+			selenium.getText("//tr/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText(
-				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Review')]/a"));
+			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText(
-				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Message Boards Message Subject')]/a"));
+			selenium.getText("//tr[4]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText(
-				"//tr[@class='portlet-section-alternate results-row alt last']/td[3]/a"));
-		assertTrue(selenium.isVisible(
-				"//tr[@class='portlet-section-alternate results-row alt last']/td[4]/a"));
+			selenium.getText("//tr[4]/td[3]/a"));
+		assertTrue(selenium.isVisible("//tr[4]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText(
-				"//tr[@class='portlet-section-alternate results-row alt last']/td[contains(.,'Never')]/a"));
+			selenium.getText("//tr[4]/td[5]/a"));
 	}
 }

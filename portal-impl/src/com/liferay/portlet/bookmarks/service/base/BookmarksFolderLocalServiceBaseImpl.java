@@ -247,12 +247,12 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the bookmarks folder with the UUID in the group.
+	 * Returns the bookmarks folder matching the UUID and group.
 	 *
-	 * @param uuid the UUID of bookmarks folder
-	 * @param groupId the group id of the bookmarks folder
-	 * @return the bookmarks folder
-	 * @throws PortalException if a bookmarks folder with the UUID in the group could not be found
+	 * @param uuid the bookmarks folder's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching bookmarks folder
+	 * @throws PortalException if a matching bookmarks folder could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(String uuid,

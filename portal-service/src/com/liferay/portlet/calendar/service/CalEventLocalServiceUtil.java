@@ -193,12 +193,12 @@ public class CalEventLocalServiceUtil {
 	}
 
 	/**
-	* Returns the cal event with the UUID in the group.
+	* Returns the cal event matching the UUID and group.
 	*
-	* @param uuid the UUID of cal event
-	* @param groupId the group id of the cal event
-	* @return the cal event
-	* @throws PortalException if a cal event with the UUID in the group could not be found
+	* @param uuid the cal event's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cal event
+	* @throws PortalException if a matching cal event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent getCalEventByUuidAndGroupId(

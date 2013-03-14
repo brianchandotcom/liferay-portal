@@ -179,12 +179,12 @@ public interface DDMStructureLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the d d m structure with the UUID in the group.
+	* Returns the d d m structure matching the UUID and group.
 	*
-	* @param uuid the UUID of d d m structure
-	* @param groupId the group id of the d d m structure
-	* @return the d d m structure
-	* @throws PortalException if a d d m structure with the UUID in the group could not be found
+	* @param uuid the d d m structure's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m structure
+	* @throws PortalException if a matching d d m structure could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

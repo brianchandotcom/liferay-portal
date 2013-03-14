@@ -193,12 +193,12 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the asset vocabulary with the UUID in the group.
+	* Returns the asset vocabulary matching the UUID and group.
 	*
-	* @param uuid the UUID of asset vocabulary
-	* @param groupId the group id of the asset vocabulary
-	* @return the asset vocabulary
-	* @throws PortalException if a asset vocabulary with the UUID in the group could not be found
+	* @param uuid the asset vocabulary's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset vocabulary
+	* @throws PortalException if a matching asset vocabulary could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.asset.model.AssetVocabulary getAssetVocabularyByUuidAndGroupId(

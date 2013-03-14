@@ -188,12 +188,12 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* Returns the message-boards message with the UUID in the group.
+	* Returns the message-boards message matching the UUID and group.
 	*
-	* @param uuid the UUID of message-boards message
-	* @param groupId the group id of the message-boards message
-	* @return the message-boards message
-	* @throws PortalException if a message-boards message with the UUID in the group could not be found
+	* @param uuid the message-boards message's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message-boards message
+	* @throws PortalException if a matching message-boards message could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.messageboards.model.MBMessage getMBMessageByUuidAndGroupId(

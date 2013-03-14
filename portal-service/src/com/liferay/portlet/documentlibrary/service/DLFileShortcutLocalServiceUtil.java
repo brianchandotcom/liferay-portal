@@ -193,12 +193,12 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library file shortcut with the UUID in the group.
+	* Returns the document library file shortcut matching the UUID and group.
 	*
-	* @param uuid the UUID of document library file shortcut
-	* @param groupId the group id of the document library file shortcut
-	* @return the document library file shortcut
-	* @throws PortalException if a document library file shortcut with the UUID in the group could not be found
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut
+	* @throws PortalException if a matching document library file shortcut could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut getDLFileShortcutByUuidAndGroupId(

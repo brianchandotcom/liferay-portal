@@ -179,12 +179,12 @@ public interface DLFileRankLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the document library file rank with the UUID in the group.
+	* Returns the document library file rank matching the UUID and group.
 	*
-	* @param uuid the UUID of document library file rank
-	* @param groupId the group id of the document library file rank
-	* @return the document library file rank
-	* @throws PortalException if a document library file rank with the UUID in the group could not be found
+	* @param uuid the document library file rank's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file rank
+	* @throws PortalException if a matching document library file rank could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -193,12 +193,12 @@ public class PollsChoiceLocalServiceUtil {
 	}
 
 	/**
-	* Returns the polls choice with the UUID in the group.
+	* Returns the polls choice matching the UUID and group.
 	*
-	* @param uuid the UUID of polls choice
-	* @param groupId the group id of the polls choice
-	* @return the polls choice
-	* @throws PortalException if a polls choice with the UUID in the group could not be found
+	* @param uuid the polls choice's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls choice
+	* @throws PortalException if a matching polls choice could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(

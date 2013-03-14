@@ -179,12 +179,12 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the asset category with the UUID in the group.
+	* Returns the asset category matching the UUID and group.
 	*
-	* @param uuid the UUID of asset category
-	* @param groupId the group id of the asset category
-	* @return the asset category
-	* @throws PortalException if a asset category with the UUID in the group could not be found
+	* @param uuid the asset category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset category
+	* @throws PortalException if a matching asset category could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

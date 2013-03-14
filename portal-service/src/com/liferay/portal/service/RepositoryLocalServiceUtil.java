@@ -193,12 +193,12 @@ public class RepositoryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the repository with the UUID in the group.
+	* Returns the repository matching the UUID and group.
 	*
-	* @param uuid the UUID of repository
-	* @param groupId the group id of the repository
-	* @return the repository
-	* @throws PortalException if a repository with the UUID in the group could not be found
+	* @param uuid the repository's UUID
+	* @param groupId the primary key of the group
+	* @return the matching repository
+	* @throws PortalException if a matching repository could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Repository getRepositoryByUuidAndGroupId(

@@ -264,12 +264,12 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the wiki page with the UUID in the group.
+	 * Returns the wiki page matching the UUID and group.
 	 *
-	 * @param uuid the UUID of wiki page
-	 * @param groupId the group id of the wiki page
-	 * @return the wiki page
-	 * @throws PortalException if a wiki page with the UUID in the group could not be found
+	 * @param uuid the wiki page's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching wiki page
+	 * @throws PortalException if a matching wiki page could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public WikiPage getWikiPageByUuidAndGroupId(String uuid, long groupId)

@@ -236,12 +236,12 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the social request with the UUID in the group.
+	 * Returns the social request matching the UUID and group.
 	 *
-	 * @param uuid the UUID of social request
-	 * @param groupId the group id of the social request
-	 * @return the social request
-	 * @throws PortalException if a social request with the UUID in the group could not be found
+	 * @param uuid the social request's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching social request
+	 * @throws PortalException if a matching social request could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public SocialRequest getSocialRequestByUuidAndGroupId(String uuid,

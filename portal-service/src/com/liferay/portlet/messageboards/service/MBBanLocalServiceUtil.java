@@ -192,12 +192,12 @@ public class MBBanLocalServiceUtil {
 	}
 
 	/**
-	* Returns the message boards ban with the UUID in the group.
+	* Returns the message boards ban matching the UUID and group.
 	*
-	* @param uuid the UUID of message boards ban
-	* @param groupId the group id of the message boards ban
-	* @return the message boards ban
-	* @throws PortalException if a message boards ban with the UUID in the group could not be found
+	* @param uuid the message boards ban's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards ban
+	* @throws PortalException if a matching message boards ban could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBBan getMBBanByUuidAndGroupId(

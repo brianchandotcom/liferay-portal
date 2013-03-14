@@ -192,12 +192,12 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the wiki node with the UUID in the group.
+	* Returns the wiki node matching the UUID and group.
 	*
-	* @param uuid the UUID of wiki node
-	* @param groupId the group id of the wiki node
-	* @return the wiki node
-	* @throws PortalException if a wiki node with the UUID in the group could not be found
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node
+	* @throws PortalException if a matching wiki node could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(

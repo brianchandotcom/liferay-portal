@@ -179,12 +179,12 @@ public interface JournalFolderLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the journal folder with the UUID in the group.
+	* Returns the journal folder matching the UUID and group.
 	*
-	* @param uuid the UUID of journal folder
-	* @param groupId the group id of the journal folder
-	* @return the journal folder
-	* @throws PortalException if a journal folder with the UUID in the group could not be found
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder
+	* @throws PortalException if a matching journal folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

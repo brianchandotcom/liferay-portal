@@ -192,12 +192,12 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the asset tag with the UUID in the group.
+	* Returns the asset tag matching the UUID and group.
 	*
-	* @param uuid the UUID of asset tag
-	* @param groupId the group id of the asset tag
-	* @return the asset tag
-	* @throws PortalException if a asset tag with the UUID in the group could not be found
+	* @param uuid the asset tag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset tag
+	* @throws PortalException if a matching asset tag could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.asset.model.AssetTag getAssetTagByUuidAndGroupId(

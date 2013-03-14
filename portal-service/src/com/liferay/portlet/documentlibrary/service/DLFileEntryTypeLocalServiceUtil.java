@@ -193,12 +193,12 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library file entry type with the UUID in the group.
+	* Returns the document library file entry type matching the UUID and group.
 	*
-	* @param uuid the UUID of document library file entry type
-	* @param groupId the group id of the document library file entry type
-	* @return the document library file entry type
-	* @throws PortalException if a document library file entry type with the UUID in the group could not be found
+	* @param uuid the document library file entry type's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file entry type
+	* @throws PortalException if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(

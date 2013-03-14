@@ -229,12 +229,12 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d d l record set with the UUID in the group.
+	 * Returns the d d l record set matching the UUID and group.
 	 *
-	 * @param uuid the UUID of d d l record set
-	 * @param groupId the group id of the d d l record set
-	 * @return the d d l record set
-	 * @throws PortalException if a d d l record set with the UUID in the group could not be found
+	 * @param uuid the d d l record set's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d l record set
+	 * @throws PortalException if a matching d d l record set could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DDLRecordSet getDDLRecordSetByUuidAndGroupId(String uuid,

@@ -179,12 +179,12 @@ public interface MBCategoryLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the message boards category with the UUID in the group.
+	* Returns the message boards category matching the UUID and group.
 	*
-	* @param uuid the UUID of message boards category
-	* @param groupId the group id of the message boards category
-	* @return the message boards category
-	* @throws PortalException if a message boards category with the UUID in the group could not be found
+	* @param uuid the message boards category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards category
+	* @throws PortalException if a matching message boards category could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

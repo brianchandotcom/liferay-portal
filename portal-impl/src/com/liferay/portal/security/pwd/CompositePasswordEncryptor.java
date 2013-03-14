@@ -56,8 +56,19 @@ public class CompositePasswordEncryptor
 			String currentEncryptedPassword)
 		throws PwdEncryptorException {
 
-		PasswordEncryptor passwordEncryptor = _passwordEncryptors.get(
-			algorithm);
+		PasswordEncryptor passwordEncryptor = null;
+
+		if (algorithm.startsWith(PasswordEncryptorUtil.TYPE_BCRYPT)) {
+			passwordEncryptor = _passwordEncryptors.get(
+				PasswordEncryptorUtil.TYPE_BCRYPT);
+		}
+		else if (algorithm.startsWith(PasswordEncryptorUtil.TYPE_PBKDF2)) {
+			passwordEncryptor = _passwordEncryptors.get(
+				PasswordEncryptorUtil.TYPE_PBKDF2);
+		}
+		else {
+			passwordEncryptor = _passwordEncryptors.get(algorithm);
+		}
 
 		if (passwordEncryptor == null) {
 			passwordEncryptor = _defaultPasswordEncryptor;

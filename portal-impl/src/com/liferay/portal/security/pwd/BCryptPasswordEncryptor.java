@@ -15,10 +15,11 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jodd.util.BCrypt;
 
@@ -39,29 +40,30 @@ public class BCryptPasswordEncryptor
 			String currentEncryptedPassword)
 		throws PwdEncryptorException {
 
-		try {
-			byte[] saltBytes = null;
+		String salt = null;
 
-			if (Validator.isNull(currentEncryptedPassword)) {
-				String salt = BCrypt.gensalt();
+		if (Validator.isNull(currentEncryptedPassword)) {
+			int rounds = _DEFAULT_BCRYPT_ROUNDS;
 
-				saltBytes = salt.getBytes(StringPool.UTF8);
-			}
-			else {
-				String salt = currentEncryptedPassword.substring(0, 29);
+			Matcher algorithmRoundsMatcher = _BCRYPT_PATTERN.matcher(algorithm);
 
-				saltBytes = salt.getBytes(StringPool.UTF8);
+			if (algorithmRoundsMatcher.matches()) {
+				rounds = GetterUtil.getInteger(
+					algorithmRoundsMatcher.group(1), rounds);
 			}
 
-			String salt = new String(saltBytes);
+			salt = BCrypt.gensalt(rounds);
+		}
+		else {
+			salt = currentEncryptedPassword.substring(0, 29);
+		}
 
-			return BCrypt.hashpw(clearTextPassword, salt);
-		}
-		catch (UnsupportedEncodingException uee) {
-			throw new PwdEncryptorException(
-				"Unable to extract salt from encrypted password: " +
-					uee.getMessage());
-		}
+		return BCrypt.hashpw(clearTextPassword, salt);
 	}
+
+	private static final Pattern _BCRYPT_PATTERN = Pattern.compile(
+		"^BCrypt/([0-9]+)$", Pattern.CASE_INSENSITIVE);
+
+	private static final int _DEFAULT_BCRYPT_ROUNDS = 10;
 
 }

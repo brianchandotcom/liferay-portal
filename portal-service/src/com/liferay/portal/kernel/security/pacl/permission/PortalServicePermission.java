@@ -14,14 +14,31 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
+
 import java.lang.reflect.Method;
 
 import java.security.BasicPermission;
+import java.security.Permission;
 
 /**
  * @author Raymond Augé
  */
 public class PortalServicePermission extends BasicPermission {
+
+	public static void checkDynamicQuery(Class<?> implClass) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalServicePermission(
+			PACLConstants.PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY,
+			implClass, null);
+
+		securityManager.checkPermission(permission);
+	}
 
 	public PortalServicePermission(String name, Object object, Method method) {
 		super(name);

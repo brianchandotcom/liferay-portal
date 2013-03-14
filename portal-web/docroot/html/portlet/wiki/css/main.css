@@ -1,9 +1,15 @@
 .portlet-wiki {
-	.wiki-body pre {
-		background : #fff;
-		border: 1px dashed #2f6fab;
-		margin: 5px 0;
-		padding: 0.5em;
+	.wiki-body {
+		ol ol {
+			list-style: decimal outside;
+		}
+
+		pre {
+			background : #fff;
+			border: 1px dashed #2f6fab;
+			margin: 5px 0;
+			padding: 0.5em;
+		}
 	}
 
 	a.createpage {

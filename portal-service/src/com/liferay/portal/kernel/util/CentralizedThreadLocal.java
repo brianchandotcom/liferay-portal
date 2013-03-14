@@ -173,15 +173,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		_immutableTypes.add(Float.class);
 		_immutableTypes.add(Double.class);
 		_immutableTypes.add(String.class);
-
-		// Prevent circularity error
-
-		long sum = Entry.class.hashCode() + ThreadLocalMap.class.hashCode() +
-			ThreadLocalMapThreadLocal.class.hashCode();
-
-		if (sum > Long.MAX_VALUE) {
-			System.out.print(sum);
-		}
 	}
 
 	private static final AtomicInteger _longLivedNextHasCode =

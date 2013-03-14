@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * @author Daniel Kocsis
@@ -34,7 +35,7 @@ public class UpgradePolls extends UpgradeProcess {
 		updateVotes();
 	}
 
-	protected long getGroupId(long questionId) throws Exception {
+	protected Object[] getQuestionArray(long questionId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -43,24 +44,65 @@ public class UpgradePolls extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select groupId from PollsQuestion where questionId = ?");
+				"select groupId, companyId, userId, userName, createDate, " +
+					"modifiedDate from PollsQuestion where questionId = ?");
 
 			ps.setLong(1, questionId);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				return rs.getLong("groupId");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("companyId");
+				long userName = rs.getLong("userName");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+
+				return new Object[] {
+					groupId, companyId, userId, userName, createDate,
+						modifiedDate};
 			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to find question " + questionId);
 			}
 
-			return 0;
+			return null;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateChoice(
+			long choiceId, long groupId, long companyId, long userId,
+			String userName, Timestamp createDate, Timestamp modifiedDate)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update PollsChoice set groupId = ?, companyId = ?, userId " +
+					"= ?, userName = ?, createDate = ?, modifiedDate = ? " +
+						"where choiceId = ?");
+
+			ps.setLong(1, groupId);
+			ps.setLong(2, companyId);
+			ps.setLong(3, userId);
+			ps.setString(4, userName);
+			ps.setTimestamp(5, createDate);
+			ps.setTimestamp(6, modifiedDate);
+			ps.setLong(7, choiceId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -81,13 +123,22 @@ public class UpgradePolls extends UpgradeProcess {
 				long choiceId = rs.getLong("choiceId");
 				long questionId = rs.getLong("questionId");
 
-				long groupId = getGroupId(questionId);
+				Object[] questionArray = getQuestionArray(questionId);
 
-				if (groupId > 0) {
-					runSQL(
-						"update PollsChoice set groupId = " + groupId +
-							" where choiceId = " + choiceId);
+				if (questionArray == null) {
+					continue;
 				}
+
+				long groupId = (Long)questionArray[0];
+				long companyId = (Long)questionArray[1];
+				long userId = (Long)questionArray[2];
+				String userName = (String)questionArray[3];
+				Timestamp createDate = (Timestamp)questionArray[4];
+				Timestamp modifiedDate = (Timestamp)questionArray[5];
+
+				updateChoice(
+					choiceId, groupId, companyId, userId, userName, createDate,
+					modifiedDate);
 			}
 		}
 		finally {
@@ -112,13 +163,15 @@ public class UpgradePolls extends UpgradeProcess {
 				long voteId = rs.getLong("voteId");
 				long questionId = rs.getLong("questionId");
 
-				long groupId = getGroupId(questionId);
+				Object[] questionArray = getQuestionArray(questionId);
 
-				if (groupId > 0) {
-					runSQL(
-						"update PollsVote set groupId = " + groupId +
-							" where voteId = " + voteId);
+				if (questionArray == null) {
+					continue;
 				}
+
+				runSQL(
+					"update PollsVote set groupId = " + questionArray[0] +
+						" where voteId = " + voteId);
 			}
 		}
 		finally {

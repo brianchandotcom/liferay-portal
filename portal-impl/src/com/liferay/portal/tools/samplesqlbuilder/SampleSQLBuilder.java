@@ -39,7 +39,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -309,14 +308,6 @@ public class SampleSQLBuilder {
 		put(context, "user", user);
 
 		processTemplate(_tplUser, context);
-	}
-
-	public void insertWikiPage(WikiPage wikiPage) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "wikiPage", wikiPage);
-
-		processTemplate(_tplWikiPage, context);
 	}
 
 	protected void compressInsertSQL(String insertSQL) throws IOException {
@@ -654,7 +645,6 @@ public class SampleSQLBuilder {
 		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
-	private String _tplWikiPage = _TPL_ROOT + "wiki_page.ftl";
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;

@@ -16,6 +16,7 @@ package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.PropsUtil;
@@ -58,8 +59,13 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 			new ArrayList<PasswordEncryptor>();
 
 		passwordEncryptors.add(new BCryptPasswordEncryptor());
+
 		passwordEncryptors.add(new CryptPasswordEncryptor());
+
 		passwordEncryptors.add(new NullPasswordEncryptor());
+
+		passwordEncryptors.add(new PBKDF2PasswordEncryptor());
+
 		passwordEncryptors.add(new SSHAPasswordEncryptor());
 
 		compositePasswordEncryptor.setPasswordEncryptors(passwordEncryptors);
@@ -71,13 +77,21 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 	public void testEdgeCases() throws Exception {
 		testFail(
 			"Some nonexistent algorithm", StringPool.BLANK, StringPool.BLANK);
+
 		testFail(null, null, null);
+
 		testFail(null, null, StringPool.BLANK);
+
 		testFail(null, StringPool.BLANK, null);
+
 		testFail(StringPool.BLANK, null, null);
+
 		testFail(StringPool.BLANK, null, StringPool.BLANK);
+
 		testFail(StringPool.BLANK, StringPool.BLANK, null);
+
 		testFail(null, StringPool.BLANK, StringPool.BLANK);
+
 		testFail(StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
@@ -90,6 +104,28 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 		testAlgorithm(
 			algorithm, "password",
 			"$2a$10$/ST7LsB.7AAHsn/tlK6hr.nudQaBbJhPX9KfRSSzsn.1ij45lVzaK");
+	}
+
+	@Test
+	public void testEncryptBCryptWith10Rounds() throws Exception {
+		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT + "/10";
+
+		testAlgorithm(algorithm);
+
+		testAlgorithm(
+			algorithm, "password",
+			"$2a$10$/ST7LsB.7AAHsn/tlK6hr.nudQaBbJhPX9KfRSSzsn.1ij45lVzaK");
+	}
+
+	@Test
+	public void testEncryptBCryptWith12Rounds() throws Exception {
+		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT + "/12";
+
+		testAlgorithm(algorithm);
+
+		testAlgorithm(
+			algorithm, "password",
+			"$2a$12$2dD/NrqCEBlVgFEkkFCbzOll2a9vrdl8tTTqGosm26wJK1eCtsjnO");
 	}
 
 	@Test
@@ -126,6 +162,41 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 		testAlgorithm(algorithm);
 
 		testAlgorithm(algorithm, "password", "password");
+	}
+
+	@Test
+	public void testEncryptPBKDF2() throws Exception {
+		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1";
+
+		testAlgorithm(algorithm);
+
+		testAlgorithm(
+			algorithm, "password",
+			"AAAAoAAB9ADJZ16OuMAPPHe2CUbP0HPyXvagoKHumh7iHU3c");
+	}
+
+	@Test
+	public void testEncryptPBKDF2With50000Rounds() throws Exception {
+		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 +
+			"WithHmacSHA1/50000";
+
+		testAlgorithm(algorithm);
+
+		testAlgorithm(
+			algorithm, "password",
+			"AAAAoAAAw1B+jxO3UiVsWdBk4B9xGd/Ko3GKHW2afYhuit49");
+	}
+
+	@Test
+	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
+		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 +
+			"WithHmacSHA1/128/50000";
+
+		testAlgorithm(algorithm);
+
+		testAlgorithm(
+			algorithm, "password",
+			"AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva");
 	}
 
 	@Test
@@ -200,8 +271,6 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 	protected String testAlgorithm(
 			String algorithm, String password, String encrypted)
 		throws Exception {
-
-		System.out.println("Starting test: " + algorithm);
 
 		long startTime = System.currentTimeMillis();
 

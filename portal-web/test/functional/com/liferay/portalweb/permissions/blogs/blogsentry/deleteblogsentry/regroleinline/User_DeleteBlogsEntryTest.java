@@ -39,7 +39,5 @@ public class User_DeleteBlogsEntryTest extends BaseTestCase {
 			selenium.getText("//form[@id='_33_undoForm']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
 	}
 }

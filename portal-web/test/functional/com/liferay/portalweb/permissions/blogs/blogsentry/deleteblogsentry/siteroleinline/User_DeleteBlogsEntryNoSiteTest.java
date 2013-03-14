@@ -29,6 +29,6 @@ public class User_DeleteBlogsEntryNoSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
-				"//td[contains(.,'Delete')]/span/a/span"));
+				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
 	}
 }

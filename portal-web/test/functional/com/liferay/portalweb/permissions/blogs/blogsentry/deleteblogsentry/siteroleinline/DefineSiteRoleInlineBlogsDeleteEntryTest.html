@@ -29,13 +29,23 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@id='roles-siterole-name_ACTION_DELETE']</td>
+	<td>blogsEntryDeleteChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsEntryDeleteChecked}</td>
+	<td>BlogsEntryDeleteChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@id='roles-siterole-name_ACTION_DELETE']</td>
 	<td>Blogs Entry Delete</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@id='roles-siterole-name_ACTION_DELETE']</td>
+	<td>label</td>
+	<td>BlogsEntryDeleteChecked</td>
 	<td>Blogs Entry Delete</td>
 </tr>
 <tr>

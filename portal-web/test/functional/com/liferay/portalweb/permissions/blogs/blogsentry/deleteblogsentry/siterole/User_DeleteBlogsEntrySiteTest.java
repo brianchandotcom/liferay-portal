@@ -28,17 +28,16 @@ public class User_DeleteBlogsEntrySiteTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//td[contains(.,'Delete')]/span/a/span"));
-		selenium.clickAt("//td[contains(.,'Delete')]/span/a/span",
-			RuntimeVariables.replace("Delete"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+			selenium.getText(
+				"//td/span/a[contains(.,'Move to the Recycle Bin')]/span"));
+		selenium.clickAt("//td/span/a[contains(.,'Move to the Recycle Bin')]/span",
+			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText("//form[@id='_33_undoForm']"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}
 }

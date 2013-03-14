@@ -45,22 +45,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Edit')]/span/a/span</td>
+	<td>//td/span/a[contains(.,'Edit')]/span</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Permissions')]/span/a/span</td>
+	<td>//td/span/a[contains(.,'Permissions')]/span</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Delete')]/span/a/span</td>
-	<td>Delete</td>
+	<td>//td/span/a[contains(.,'Move to the Recycle Bin')]/span</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']/div</td>
 	<td>Blogs Entry Content</td>
 </tr>
 <tr>
@@ -107,11 +107,6 @@
 	<td>assertPartialText</td>
 	<td>//div[@class='subscribe']/span/a[contains(@href,'rss')]</td>
 	<td>RSS</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 1 result.</td>
 </tr>
 </tbody>
 </table>

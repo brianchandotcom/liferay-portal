@@ -51,7 +51,5 @@ public class ViewDeleteBlogsEntrySiteTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='subscribe']/span/a[contains(@href,'subscribe')]",
 				"Subscribe"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
 	}
 }

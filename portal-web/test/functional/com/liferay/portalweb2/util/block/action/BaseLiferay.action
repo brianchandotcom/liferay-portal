@@ -1,2 +1,16 @@
-<action-definition name="BaseLiferay">
+<action-definition>
+	<function-selector name="AssertElementNotPresent">
+	</function-selector>
+
+	<function-selector name="Click">
+		<case contains="/input">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+		<default>
+			<execute function="Click#clickAt" />
+		</default>
+	</function-selector>
+		
+	<function-selector name="IsElementPresent">
+	</function-selector>
 </action-definition>

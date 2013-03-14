@@ -282,13 +282,15 @@ import javax.sql.DataSource;
 		<#if entity.hasUuid() && entity.hasColumn("groupId")>
 			<#if entity.name == "Layout">
 				/**
-				 * @param uuid the UUID of ${entity.humanName}
-				 * @param groupId the group id of the ${entity.humanName}
+				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
+				 *
+				 * @param uuid the ${entity.humanName}'s UUID
+				 * @param groupId the primary key of the group
 				 * @param privateLayout whether the ${entity.humanName} is private to the group
-				 * @return the ${entity.humanName}
+				 * @return the matching ${entity.humanName}
 				<#list serviceBaseExceptions as exception>
 				<#if exception == "PortalException">
-				 * @throws PortalException if a ${entity.humanName} with the UUID in the group and privateLayout could not be found
+				 * @throws PortalException if a matching ${entity.humanName} could not be found
 				<#elseif exception == "SystemException">
 				 * @throws SystemException if a system exception occurred
 				<#else>
@@ -301,14 +303,14 @@ import javax.sql.DataSource;
 				}
 			<#else>
 				/**
-				 * Returns the ${entity.humanName} with the UUID in the group.
+				 * Returns the ${entity.humanName} matching the UUID and group.
 				 *
-				 * @param uuid the UUID of ${entity.humanName}
-				 * @param groupId the group id of the ${entity.humanName}
-				 * @return the ${entity.humanName}
+				 * @param uuid the ${entity.humanName}'s UUID
+				 * @param groupId the primary key of the group
+				 * @return the matching ${entity.humanName}
 				<#list serviceBaseExceptions as exception>
 				<#if exception == "PortalException">
-				 * @throws PortalException if a ${entity.humanName} with the UUID in the group could not be found
+				 * @throws PortalException if a matching ${entity.humanName} could not be found
 				<#elseif exception == "SystemException">
 				 * @throws SystemException if a system exception occurred
 				<#else>

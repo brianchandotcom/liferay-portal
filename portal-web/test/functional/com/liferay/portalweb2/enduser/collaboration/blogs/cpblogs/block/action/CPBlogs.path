@@ -13,6 +13,16 @@
 	<td></td>
 	<td>CPBlogs</td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ENTRY</td>
+	<td>//input[@value='Add Blogs Entry']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

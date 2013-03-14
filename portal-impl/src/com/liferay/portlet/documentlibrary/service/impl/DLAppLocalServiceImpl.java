@@ -687,8 +687,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		LocalRepository fromLocalRepository = getLocalRepositoryByFileEntry(
 			fileEntryId);
-		LocalRepository toLocalRepository = getLocalRepository(
-			newFolderId, serviceContext);
+		LocalRepository toLocalRepository = getLocalRepositoryByFolder(
+			newFolderId, serviceContext.getScopeGroupId());
 
 		if (fromLocalRepository.getRepositoryId() ==
 				toLocalRepository.getRepositoryId()) {
@@ -1277,23 +1277,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
-	protected LocalRepository getLocalRepository(
-			long folderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		LocalRepository localRepository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			localRepository = getLocalRepository(
-				serviceContext.getScopeGroupId());
-		}
-		else {
-			localRepository = getLocalRepositoryByFolder(folderId);
-		}
-
-		return localRepository;
-	}
-
 	protected LocalRepository getLocalRepositoryByFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -1347,6 +1330,22 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			throw new NoSuchFolderException(sb.toString(), irie);
 		}
+	}
+
+	protected LocalRepository getLocalRepositoryByFolder(
+			long folderId, long groupId)
+		throws PortalException, SystemException {
+
+		LocalRepository localRepository = null;
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			localRepository = getLocalRepository(groupId);
+		}
+		else {
+			localRepository = getLocalRepositoryByFolder(folderId);
+		}
+
+		return localRepository;
 	}
 
 	protected FileEntry moveFileEntries(

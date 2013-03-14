@@ -2094,7 +2094,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepositoryByFileEntry(fileEntryId);
-		Repository toRepository = getRepository(newFolderId, serviceContext);
+		Repository toRepository = getRepositoryByFolder(
+			newFolderId, serviceContext.getScopeGroupId());
 
 		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder toFolder = toRepository.getFolder(newFolderId);
@@ -2241,7 +2242,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Repository fromRepository = getRepositoryByFolder(folderId);
-		Repository toRepository = getRepository(parentFolderId, serviceContext);
+		Repository toRepository = getRepositoryByFolder(
+			parentFolderId, serviceContext.getScopeGroupId());
 
 		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder toFolder = toRepository.getFolder(parentFolderId);
@@ -3202,22 +3204,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
-	protected Repository getRepository(
-			long folderId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Repository repository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
-		}
-		else {
-			repository = getRepositoryByFolder(folderId);
-		}
-
-		return repository;
-	}
-
 	protected Repository getRepositoryByFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -3267,6 +3253,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			throw new NoSuchFolderException(sb.toString(), irie);
 		}
+	}
+
+	protected Repository getRepositoryByFolder(long folderId, long groupId)
+		throws PortalException, SystemException {
+
+		Repository repository = null;
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			repository = getRepository(groupId);
+		}
+		else {
+			repository = getRepositoryByFolder(folderId);
+		}
+
+		return repository;
 	}
 
 	protected FileEntry moveFileEntries(

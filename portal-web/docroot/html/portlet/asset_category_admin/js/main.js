@@ -808,7 +808,7 @@ AUI.add(
 								{
 									categoryIds: categoryIds
 								},
-								A.bind('_processCategoryDeletion', instance)
+								A.rbind('_processCategoryDeletion', instance, instance._selectedVocabularyId, categoryIds.length)
 							);
 						}
 					},
@@ -1275,6 +1275,17 @@ AUI.add(
 						var match = treeId.match(regex);
 
 						return match && match[1];
+					},
+
+					_getVocabularyById: function(vocabularyId) {
+						var instance = this;
+
+						return AArray.find(
+							instance._vocabularies,
+							function (vocabulary) {
+								return (vocabularyId == vocabulary.vocabularyId);
+							}
+						);
 					},
 
 					_getVocabularyCategoriesCount: function(vocabularies, vocabularyId) {
@@ -1751,6 +1762,10 @@ AUI.add(
 						var exception = response.exception;
 
 						if (!exception && response.categoryId) {
+							var vocabulary = instance._getVocabularyById(instance._selectedVocabularyId);
+
+							++vocabulary.categoriesCount;
+
 							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 
 							instance._selectVocabulary(instance._selectedVocabularyId);
@@ -1807,7 +1822,7 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-category'))) {
 							instance._deleteCategory(
 								instance._selectedCategoryId,
-								A.bind('_processCategoryDeletion', instance)
+								A.rbind('_processCategoryDeletion', instance, instance._selectedVocabularyId, 1)
 							);
 						}
 					},
@@ -2218,12 +2233,17 @@ AUI.add(
 						);
 					},
 
-					_processCategoryDeletion: function(result) {
+					_processCategoryDeletion: function(result, vocabularyId, categories) {
 						var instance = this;
 
 						var exception = result.exception;
 
+						var vocabulary = instance._getVocabularyById(vocabularyId);
+
 						if (!exception) {
+
+							vocabulary.categoriesCount -= categories;
+
 							instance._closeEditSection();
 							instance._hidePanels();
 							instance._displayVocabularyCategories(instance._selectedVocabularyId);

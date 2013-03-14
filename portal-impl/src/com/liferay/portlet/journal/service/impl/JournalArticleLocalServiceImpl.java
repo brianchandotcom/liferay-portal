@@ -197,7 +197,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  smallImageFile the web content's small image file
 	 * @param  images the web content's images
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext the web content's service context. Can set
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, expando bridge
+	 *         attributes, guest permissions, group permissions, asset category
+	 *         IDs, asset tag names, asset link entry IDs, and workflow actions
+	 *         for the web content. Can also set whether to add the default
+	 *         guest and group permissions.
 	 * @return the web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -426,7 +431,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, expando bridge
+	 *         attributes, guest permissions, group permissions, asset category
+	 *         IDs, asset tag names, asset link entry IDs, and workflow actions
+	 *         for the web content. Can also set whether to add the default
+	 *         guest and group permissions.
 	 * @return the web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -664,7 +674,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Checks if the web content contains new line strings.
+	 * Checks if the web content matching the group, article ID, and version
+	 * contains new line strings.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -692,7 +703,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Checks if the web content has a structure.
+	 * Checks if the web content matching the group, article ID, and version has
+	 * a structure.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -855,7 +867,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  article the web content
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         portlet preferences for the web content.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -981,7 +994,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         portlet preferences for the web content.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1001,7 +1015,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         portlet preferences for the web content.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1100,7 +1115,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences, and can set whether to
+	 *         add the default command update for the web content.
 	 * @return the web content's updated status
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1123,7 +1140,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences, and can set whether to
+	 *         add the default command update for the web content.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1287,7 +1306,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content article's content
+	 * Returns the extracted content used for the web content's display.
 	 *
 	 * @param  article the web content
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
@@ -1295,7 +1314,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the extracted content used for the web content's display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1317,6 +1336,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the extracted content used for the web content's display.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1326,7 +1346,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the extracted content used for the web content's display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1348,6 +1368,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the extracted content from the web content.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1356,7 +1377,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the extracted content from the web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1371,6 +1392,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the extracted content used for the web content's display.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1379,7 +1401,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the extracted content used for the web content's display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1396,6 +1418,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the extracted content from the web content.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1403,7 +1426,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the extracted content from the web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1417,6 +1440,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content display implementation by searching for the DDM
+	 * template matching the group, class name ID, and DDM template key.
 	 *
 	 * @param  article the web content
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
@@ -1427,7 +1452,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  xmlRequest the request that serializes the web content into a
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the web content display implementation
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1555,7 +1580,7 @@ public class JournalArticleLocalServiceImpl
 
 				// Try with specified template first (in the current group and
 				// the global group). If a template is not specified, use the
-				// default one. If the specified template does not exit, use the
+				// default one. If the specified template does not exist, use the
 				// default one. If the default one does not exist, throw an
 				// exception.
 
@@ -1635,7 +1660,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content matching the group, article ID, and version.
+	 * Returns the web content display matching the group, article ID, and
+	 * version. This method checks the expiration date of the web content and if
+	 * expired, the web content is not returned.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1648,7 +1675,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  xmlRequest the request that serializes the web content into a
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
-	 * @return the matching web content
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1681,6 +1708,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content display with the xml request set to
+	 * <code>null</code>.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1690,7 +1719,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1706,6 +1735,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content article display with the version set to
+	 * <code>null</code>.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1716,7 +1747,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  xmlRequest the request that serializes the web content into a
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1731,6 +1762,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content display matching the group and article ID.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1742,7 +1774,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  xmlRequest the request that serializes the web content into a
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1760,6 +1792,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content display matching the group and article ID.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1768,7 +1801,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1785,6 +1818,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content display with the DDM template key set to
+	 * <code>null</code>.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
@@ -1792,7 +1827,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
-	 * @return
+	 * @return the matching web content display
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2026,7 +2061,7 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  companyId the primary key of the web content's company
 	 * @param  version the web content's version
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
@@ -2063,7 +2098,7 @@ public class JournalArticleLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the web content's company
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
@@ -2085,7 +2120,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the web content matching the company, version, and
+	 * Returns the number of web content matching the company, version, and
 	 * status.
 	 *
 	 * <p>
@@ -2100,11 +2135,11 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  companyId the primary key of the web content's company
 	 * @param  version the web content's version
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
-	 * @return the range of matching web content
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getCompanyArticlesCount(
@@ -2121,11 +2156,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the web content matching the company and status.
+	 * Returns the number of web content matching the company and status.
 	 *
 	 * @param  companyId the primary key of the web content's company
-	 * @param  status the web content's workflow status
-	 * @return the range of matching web content
+	 * @param  status the web content's status
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getCompanyArticlesCount(long companyId, int status)
@@ -2140,11 +2175,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns
+	 * Returns the web content matching the group, article ID, and approved
+	 * workflow status. This method checks the expiration date of the web
+	 * content and if expired, the web content is not returned.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @return
+	 * @return the matching web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2179,10 +2216,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group, URL
+	 * title, and approved workflow status. This method checks the expiration
+	 * date of the web content and if expired, the web content is not returned.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  urlTitle the web content's accessible URL title
-	 * @return
+	 * @return the range of matching web content ordered by article ID
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2220,9 +2260,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest web content with a workflow status.
 	 *
 	 * @param  resourcePrimKey the primary key of the model instance
-	 * @return
+	 * @return the latest web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2233,10 +2274,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest web content with a status.
 	 *
 	 * @param  resourcePrimKey the primary key of the model instance
-	 * @param  status the web content's workflow status
-	 * @return
+	 * @param  status the web content's status
+	 * @return the latest web content with a status
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2247,11 +2289,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the latest web content matching the
+	 * resource primary key and status.
 	 *
 	 * @param  resourcePrimKey the primary key of the model instance
-	 * @param  status the web content's workflow status
-	 * @param  preferApproved whether the workflow status is set to <code>Approved</code>
-	 * @return
+	 * @param  status the web content's status
+	 * @param  preferApproved whether the workflow status is set to
+	 *         <code>Approved</code>
+	 * @return the range of matching web content ordered by article ID
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2290,10 +2335,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest web content with the group and article ID.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @return
+	 * @return the latest web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2305,11 +2351,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the latest web content matching the
+	 * group, article ID, and status.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @param  status the web content's workflow status
-	 * @return
+	 * @param  status the web content's status
+	 * @return the range of matching web content ordered by article ID
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2340,12 +2388,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the latest web content matching the
+	 * group, class name ID, and class PK.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  className the primary key of the class name for the web content's
 	 *         related model
 	 * @param  classPK the primary key of the web content's related entity
-	 * @return
+	 * @return the range of matching web content ordered by article ID
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2369,11 +2419,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the latest web content matching the
+	 * group, URL title, and status.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  urlTitle the web content's accessible URL title
-	 * @param  status the web content's workflow status
-	 * @return
+	 * @param  status the web content's status
+	 * @return the range of matching web content ordered by article ID
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2404,10 +2456,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest version of the web content with the group and article
+	 * ID.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @return
+	 * @return the latest web content version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2420,11 +2474,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest version of the web content with the group, article ID,
+	 * and status.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @param  status the web content's workflow status
-	 * @return
+	 * @param  status the web content's status
+	 * @return the latest web content version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2437,10 +2493,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content that are not recycled.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  folderId the primary key of the web content folder
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getNotInTrashArticlesCount(long groupId, long folderId)
@@ -2458,11 +2515,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content matching the group and DDM structure key.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
-	 * @return
+	 * @return the matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> getStructureArticles(
@@ -2473,6 +2531,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group and
+	 * DDM structure key.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -2490,7 +2551,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the web content
-	 * @return
+	 * @return the range of matching web content ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> getStructureArticles(
@@ -2509,11 +2570,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content matching the group and DDM structure
+	 * key.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey)
@@ -2523,10 +2586,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the web content matching the group and DDM template key.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @return
+	 * @return the matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> getTemplateArticles(
@@ -2537,6 +2601,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group and
+	 * DDM template key.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -2553,7 +2620,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the web content
-	 * @return
+	 * @return the range of matching web content ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> getTemplateArticles(
@@ -2566,10 +2633,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content matching the group and DDM template
+	 * key.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey)
@@ -2579,10 +2648,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns <code>true</code> if the specified web content exists.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @return
+	 * @return <code>true</code> if the specified web content
+	 *         exists;<code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasArticle(long groupId, String articleId)
@@ -2599,11 +2670,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns <code>true</code> if the web content, specified by group and
+	 * article ID, is the latest version.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @return
+	 * @return <code>true</code> if the specified web content is the latest
+	 *         version;<code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2620,12 +2694,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns <code>true</code> if the web content, specified by group, article
+	 * ID, and status, is the latest version.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  status the web content's workflow status
-	 * @return
+	 * @param  status the web content's status
+	 * @return <code>true</code> if the specified web content is the latest
+	 *         version;<code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2642,11 +2719,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Moves the web content matching the group and article ID to a new folder.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  newFolderId the primary key of the web content's new folder
-	 * @return
+	 * @return the updated web content, which was moved to a new folder
 	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2668,13 +2746,17 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Moves the web content from the recycle bin to a new folder.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
 	 * @param  article the web content
 	 * @param  newFolderId the primary key of the web content's new folder
-	 * @param  serviceContext
-	 * @return
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences and can set whether to add
+	 *         the default command update for the web content.
+	 * @return the updated web content, which was moved from the recycle bin to
+	 *         a new folder
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2698,10 +2780,12 @@ public class JournalArticleLocalServiceImpl
 
 
 	/**
+	 * Moves the web content matching the group and article ID to the recycle
+	 * bin.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
-	 * @return
+	 * @return the updated article, which was moved to the recycle bin
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2772,11 +2856,13 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Moves the web content matching the group and article ID to the recycle
+	 * bin.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @return
+	 * @return the updated article, which was moved to the recycle bin
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2795,13 +2881,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Removes the web content's locale matching the group, article ID, and
+	 * version.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
-	 * @return
+	 * @return the updated web content with a removed locale
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2844,6 +2932,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Restores the web content from the Recycle Bin.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
@@ -2917,6 +3006,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group,
+	 * folders, class name ID, version, type, DDM structure key, DDM template
+	 * key, display date, status, and review date, and matching the keywords in
+	 * the web content's article ID, title, description, and content.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -2932,21 +3026,25 @@ public class JournalArticleLocalServiceImpl
 	 * @param  folderIds the primary keys of the web content folders
 	 * @param  classNameId the primary key of the entity's instance the web
 	 *         content is related to
-	 * @param  keywords the keywords used to search for the web content
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         web content's article ID, title, description, or content
+	 *         (optionally <code>null</code>)
 	 * @param  version the web content's version
 	 * @param  type the web content's type
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the web content
-	 * @return
+	 * @return the range of matching web content ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> search(
@@ -2964,6 +3062,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group,
+	 * folders, class name ID, article ID, version, title keyword, description
+	 * keyword, content keyword, type, DDM structure key, DDM template key,
+	 * display date, status, and review date.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -2981,16 +3084,18 @@ public class JournalArticleLocalServiceImpl
 	 *         content is related to
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  title the searched web content title
-	 * @param  description the searched web content description
-	 * @param  content the web content's searched content
-	 * @param  type the searched web content type
+	 * @param  title the title keywords
+	 * @param  description the description keywords
+	 * @param  content the content keywords
+	 * @param  type the web content's type
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -2998,7 +3103,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the web content
-	 * @return
+	 * @return the range of matching web content ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> search(
@@ -3021,6 +3126,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group,
+	 * folders, class name ID, article ID, version, title keyword, description
+	 * keyword, content keyword, type, DDM structure keys, DDM template keys,
+	 * display date, status, and review date.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -3038,16 +3148,19 @@ public class JournalArticleLocalServiceImpl
 	 *         content is related to
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  title the searched web content title
-	 * @param  description the searched web content description
-	 * @param  content the web content's searched content
-	 * @param  type the searched web content type
-	 * @param  ddmStructureKeys
+	 * @param  title the title keywords
+	 * @param  description the description keywords
+	 * @param  content the content keywords
+	 * @param  type the web content's type
+	 * @param  ddmStructureKeys the primary keys of the web content's DDM
+	 *         structures
 	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
 	 *         templates
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -3055,7 +3168,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
 	 * @param  obc the comparator to order the web content
-	 * @return
+	 * @return the range of matching web content ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> search(
@@ -3078,6 +3191,11 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group,
+	 * folders, class name ID, DDM structure key, and DDM template key, and
+	 * matching the keywords in the web content's article ID, title,
+	 * description, and content.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -3096,13 +3214,16 @@ public class JournalArticleLocalServiceImpl
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  keywords the keywords used to search for the web content
-	 * @param  params
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         web content's article ID, title, description, or content
+	 *         (optionally <code>null</code>)
+	 * @param  params the finder parameters (optionally <code>null</code>)
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
-	 * @param  sort
-	 * @return
+	 * @param  sort the field and direction by which to sort (optionally
+	 *         <code>null</code>)
+	 * @return the matching web content ordered by <code>sort</code>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Hits search(
@@ -3141,6 +3262,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the web content matching the group,
+	 * folders, class name ID, article ID, title keyword, description keyword,
+	 * content keyword, type, status, DDM structure key, and DDM template key.
+	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
@@ -3157,21 +3282,23 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the entity's instance the web
 	 *         content is related to
 	 * @param  articleId the primary key of the web content
-	 * @param  title the searched web content title
-	 * @param  description the searched web content description
-	 * @param  content the web content's searched content
-	 * @param  type the searched web content type
-	 * @param  status the web content's workflow status
+	 * @param  title the title keywords
+	 * @param  description the description keywords
+	 * @param  content the content keywords
+	 * @param  type the web content's type
+	 * @param  status the web content's status
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  params
-	 * @param  andSearch
+	 * @param  params the finder parameters (optionally <code>null</code>)
+	 * @param  andSearch whether every field must match its keywords, or just
+	 *         one field
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
-	 * @param  sort
-	 * @return
+	 * @param  sort the field and direction by which to sort (optionally
+	 *         <code>null</code>)
+	 * @return the matching web content ordered by <code>sort</code>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Hits search(
@@ -3243,23 +3370,30 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content matching the group, folders, class name
+	 * ID, keywords, version, type, DDM structure key, DDM template key, display
+	 * date, status, and review date.
 	 *
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
 	 * @param  classNameId the primary key of the entity's instance the web
 	 *         content is related to
-	 * @param  keywords the keywords used to search for the web content
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         web content's article ID, title, description, or content
+	 *         (optionally <code>null</code>)
 	 * @param  version the web content's version
-	 * @param  type the searched web content type
+	 * @param  type the web content's type
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int searchCount(
@@ -3276,6 +3410,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content matching the group, folders, class name
+	 * ID, article ID, version, title keyword, description keyword, content
+	 * keyword, type, DDM structure key, DDM template key, display date, status,
+	 * and review date.
 	 *
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
@@ -3284,20 +3422,22 @@ public class JournalArticleLocalServiceImpl
 	 *         content is related to
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  title the searched web content title
-	 * @param  description the searched web content description
-	 * @param  content the web content's searched content
-	 * @param  type the searched web content type
+	 * @param  title the title keywords
+	 * @param  description the description keywords
+	 * @param  content the content keywords
+	 * @param  type the web content's type
 	 * @param  ddmStructureKey the primary key of the web content's DDM
 	 *         structure
 	 * @param  ddmTemplateKey the primary key of the web content's DDM template
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int searchCount(
@@ -3317,6 +3457,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of web content matching the group, folders, class name
+	 * ID, article ID, version, title keyword, description keyword, content
+	 * keyword, type, DDM structure keys, DDM template keys, display date,
+	 * status, and review date.
 	 *
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
@@ -3325,21 +3469,23 @@ public class JournalArticleLocalServiceImpl
 	 *         content is related to
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  title the searched web content title
-	 * @param  description the searched web content description
-	 * @param  content the web content's searched content
-	 * @param  type the searched web content type
+	 * @param  title the title keywords
+	 * @param  description the description keywords
+	 * @param  content the content keywords
+	 * @param  type the web content's type
 	 * @param  ddmStructureKeys the primary keys of the web content's DDM
 	 *         structures
 	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
 	 *         templates
-	 * @param  displayDateGT
-	 * @param  displayDateLT
-	 * @param  status the web content's workflow status
+	 * @param  displayDateGT the latest date in the web content's display date
+	 *         search
+	 * @param  displayDateLT the earliest date in the web content's display date
+	 *         search
+	 * @param  status the web content's status
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
-	 * @return
+	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int searchCount(
@@ -3359,6 +3505,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Subscribes the user or group to the web content.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
@@ -3373,6 +3520,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Unsubscribes the user or group from the web content.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
@@ -3399,8 +3547,12 @@ public class JournalArticleLocalServiceImpl
 	 *         descriptions
 	 * @param  content the web content's content
 	 * @param  layoutUuid the unique string identifying the web content's layout
-	 * @param  serviceContext
-	 * @return
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, expando bridge attributes, asset category IDs,
+	 *         asset tag names, asset link entry IDs, portlet preferences,
+	 *         workflow actions, and can set whether to add the default command
+	 *         update for the web content.
+	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3549,8 +3701,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  smallImageFile the web content's small image file
 	 * @param  images the web content's images
 	 * @param  articleURL the web content's accessible URL
-	 * @param  serviceContext
-	 * @return the web content
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, expando bridge attributes,  asset category
+	 *         IDs, asset tag names, asset link entry IDs, portlet preferences,
+	 *         workflow actions, and can set whether to add the default command
+	 *         update for the web content.
+	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3816,8 +3972,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  content the web content's content
-	 * @param  serviceContext
-	 * @return
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, expando bridge attributes, asset category IDs,
+	 *         asset tag names, asset link entry IDs, portlet preferences,
+	 *         workflow actions, and can set whether to add the default command
+	 *         update for the web content.
+	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3836,18 +3996,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 *
-	 * @param      groupId
-	 * @param      articleId
-	 * @param      version
-	 * @param      locale
-	 * @param      title
-	 * @param      description
-	 * @param      content
-	 * @param      images
-	 * @return
-	 * @throws     PortalException
-	 * @throws     SystemException
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #updateArticleTranslation(long, String, double, Locale,
 	 *             String, String, String, Map, ServiceContext)}
@@ -3864,18 +4012,19 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content's translation.
+	 * Updates the translation of the web content.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  locale
-	 * @param  title
-	 * @param  description
+	 * @param  locale the locale of the web content's display template
+	 * @param  title the translated web content title
+	 * @param  description the translated web content description
 	 * @param  content the web content's content
 	 * @param  images the web content's images
-	 * @param  serviceContext
-	 * @return
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date for the web content.
+	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3989,9 +4138,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
-	 * @param  assetCategoryIds
-	 * @param  assetTagNames
-	 * @param  assetLinkEntryIds
+	 * @param  assetCategoryIds the primary keys of the new asset categories
+	 * @param  assetTagNames the new asset tag names
+	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -4086,10 +4235,12 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  articleURL the web content's accessible URL
 	 * @param  workflowContext the web content's configured workflow
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences, and can set whether to
+	 *         add the default command update for the web content.
 	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -4367,9 +4518,11 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  classPK the primary key of the web content's related entity
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  workflowContext the web content's configured workflow
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences, and can set whether to
+	 *         add the default command update for the web content.
 	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -4394,10 +4547,12 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  status the web content's workflow status
+	 * @param  status the web content's status
 	 * @param  articleURL the web content's accessible URL
 	 * @param  workflowContext the web content's configured workflow
-	 * @param  serviceContext
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         modification date, portlet preferences, and can set whether to
+	 *         add the default command update for the web content.
 	 * @return the updated web content
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred

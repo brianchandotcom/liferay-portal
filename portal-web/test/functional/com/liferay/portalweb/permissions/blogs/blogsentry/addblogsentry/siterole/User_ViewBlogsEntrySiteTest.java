@@ -35,13 +35,14 @@ public class User_ViewBlogsEntrySiteTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertTrue(selenium.isVisible("//div[@class='entry-date']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//td[contains(.,'Edit')]/span/a/span"));
+			selenium.getText("//td/span/a[contains(.,'Edit')]/span"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//td[contains(.,'Permissions')]/span/a/span"));
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//td[contains(.,'Delete')]/span/a/span"));
+			selenium.getText("//td/span/a[contains(.,'Permissions')]/span"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+			selenium.getText(
+				"//td/span/a[contains(.,'Move to the Recycle Bin')]/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/p"));
+			selenium.getText("//div[@class='entry-body']/div"));
 		assertEquals(RuntimeVariables.replace("By userfn userln"),
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("0 Comments"),
@@ -60,7 +61,5 @@ public class User_ViewBlogsEntrySiteTest extends BaseTestCase {
 			selenium.getText("//div[contains(@id,'ratingScore')]/div"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='subscribe']/span/a[contains(@href,'rss')]", "RSS"));
-		assertEquals(RuntimeVariables.replace("Showing 1 result."),
-			selenium.getText("//div[@class='search-results']"));
 	}
 }

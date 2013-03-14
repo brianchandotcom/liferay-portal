@@ -20,28 +20,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[contains(.,'Delete')]/span/a/span</td>
-	<td>Delete</td>
+	<td>//td/span/a[contains(.,'Move to the Recycle Bin')]/span</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[contains(.,'Delete')]/span/a/span</td>
-	<td>Delete</td>
+	<td>//td/span/a[contains(.,'Move to the Recycle Bin')]/span</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td>assertText</td>
+	<td>//form[@id='_33_undoForm']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Blogs Entry Title</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 0 results.</td>
+	<td>assertTextNotPresent</td>
+	<td>Blogs Entry Content</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

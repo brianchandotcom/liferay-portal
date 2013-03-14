@@ -99,13 +99,23 @@
 	<td>label=Blogs</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
+	<td>blogsEntryDeleteChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsEntryDeleteChecked}</td>
+	<td>BlogsEntryDeleteChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
 	<td>Blogs Entry Delete</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
+	<td>label</td>
+	<td>BlogsEntryDeleteChecked</td>
 	<td>Blogs Entry Delete</td>
 </tr>
 <tr>

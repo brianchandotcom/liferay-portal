@@ -76,6 +76,8 @@ public class RemoveRegRoleContentBlogsDeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Blogs')]/td[5]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace("The permission was deleted."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(

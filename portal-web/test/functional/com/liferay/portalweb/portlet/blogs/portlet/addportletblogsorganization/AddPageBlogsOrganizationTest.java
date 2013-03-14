@@ -44,7 +44,7 @@ public class AddPageBlogsOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'Organization Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",

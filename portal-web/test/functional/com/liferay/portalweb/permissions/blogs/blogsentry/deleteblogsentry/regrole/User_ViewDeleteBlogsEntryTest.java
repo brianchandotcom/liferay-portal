@@ -46,7 +46,5 @@ public class User_ViewDeleteBlogsEntryTest extends BaseTestCase {
 				"//div[contains(@id,'ratingScore')]/div"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='subscribe']/span/a[contains(@href,'rss')]", "RSS"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
 	}
 }

@@ -28,6 +28,7 @@ public class User_ViewDeleteBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-body']/p"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-author']"));
@@ -46,7 +47,5 @@ public class User_ViewDeleteBlogsEntryTest extends BaseTestCase {
 				"//div[contains(@id,'ratingScore')]/div"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='subscribe']/span/a[contains(@href,'rss')]", "RSS"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
 	}
 }

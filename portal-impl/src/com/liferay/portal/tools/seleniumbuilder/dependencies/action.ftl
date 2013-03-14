@@ -11,4 +11,27 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 		paths = ${seleniumBuilderContext.getPathSimpleClassName(actionName)}.getPaths();
 	}
 
+	<#if seleniumBuilderContext.getActionRootElement(actionName)??>
+		<#assign rootElement = seleniumBuilderContext.getActionRootElement(actionName)>
+
+		<#assign functionSelectorElements = rootElement.elements("function-selector")>
+
+		<#list functionSelectorElements as functionSelectorElement>
+			<#assign functionName = functionSelectorElement.attributeValue("name")>
+
+			public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${seleniumBuilderFileUtil.getVariableName(functionName)}(
+
+			<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
+				String target${i}, String value${i}
+
+				<#if i_has_next>
+					,
+				</#if>
+			</#list>
+
+			) throws Exception {
+			}
+		</#list>
+	</#if>
+
 }

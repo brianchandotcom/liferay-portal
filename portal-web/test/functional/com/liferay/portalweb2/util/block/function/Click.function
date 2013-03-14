@@ -1,4 +1,16 @@
 <function-definition>
+	<function-command name="clickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="clickAt" />
+	</function-command>
+
+	<function-command name="clickAtAndWait">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="clickAtAndWait" />
+	</function-command>
+
 	<function-command name="textClickAt">
 		<execute selenium="waitForVisible" />
 

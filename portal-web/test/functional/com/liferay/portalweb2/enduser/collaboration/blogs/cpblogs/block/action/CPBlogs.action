@@ -1,2 +1,4 @@
-<action-definition name="CPBlogs">
+<action-definition>
+	<function-selector name="AssertElementNotPresent">
+	</function-selector>
 </action-definition>

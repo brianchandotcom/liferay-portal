@@ -74,8 +74,8 @@ public class RemoveOrgRoleContentBlogsAddEntryTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Blogs')]/td[4]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace("The permission was deleted."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(

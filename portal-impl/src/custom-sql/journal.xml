@@ -43,38 +43,24 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_R">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(companyId = ?) AND
-						(groupId = ?) AND
-						([$FOLDER_ID$]) AND
-						(classNameId = ?) AND
-						([$STATUS$]) AND
-						(
-							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(version = ?) [$AND_OR_CONNECTOR$]
-							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-						)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
 			WHERE
+				(groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(classNameId = ?) AND
+				([$STATUS$]) AND
+				(
+					(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(version = ?) [$AND_OR_CONNECTOR$]
+					(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				) AND
 				(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -125,26 +111,19 @@
 			SELECT
 				JournalArticle.*
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(groupId = ?)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.version < tempJournalArticle.version)
 			WHERE
+				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
-				[$FOLDER_ID$]
+				[$FOLDER_ID$] AND
+				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
-				id_ ASC
+				JournalArticle.id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S">
@@ -152,27 +131,19 @@
 			SELECT
 				JournalArticle.*
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(groupId = ?) AND
-						(classNameId = ?)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
-				(structureId = ?) AND
-				([$STATUS$])
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.classNameId = ?) AND
+				(JournalArticle.structureId = ?) AND
+				([$STATUS$]) AND
+				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
-				id_ ASC
+				JournalArticle.id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_F_C">
@@ -180,28 +151,20 @@
 			SELECT
 				JournalArticle.*
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(groupId = ?) AND
-						(classNameId = ?)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
-				(userId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.classNameId = ?) AND
+				(JournalArticle.userId = ?) AND
 				([$FOLDER_ID$]) AND
-				([$STATUS$])
+				([$STATUS$]) AND
+				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
-				id_ ASC
+				JournalArticle.id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_T_S_T_D_R">
@@ -209,42 +172,33 @@
 			SELECT
 				JournalArticle.*
 			FROM
-				(
-					SELECT
-						groupId AS tempGroupId, articleId AS tempArticleId, MAX(version) AS tempVersion
-					FROM
-						JournalArticle
-					WHERE
-						(companyId = ?) AND
-						(groupId = ?) AND
-						([$FOLDER_ID$]) AND
-						(classNameId = ?) AND
-						([$STATUS$]) AND
-						(
-							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(version = ?) [$AND_OR_CONNECTOR$]
-							(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(reviewDate <= ? [$AND_OR_NULL_CHECK$])
-						)
-					GROUP BY
-						groupId, articleId
-				) TEMP_TABLE
-				INNER JOIN
-					JournalArticle ON
-						(TEMP_TABLE.tempGroupId = JournalArticle.groupId) AND
-						(TEMP_TABLE.tempArticleId = JournalArticle.articleId) AND
-						(TEMP_TABLE.tempVersion = JournalArticle.version)
+				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
-				(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(companyId = ?)
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(JournalArticle.classNameId = ?) AND
+				([$STATUS$]) AND
+				(
+					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
+					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				) AND
+				(JournalArticle.type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(JournalArticle.structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(JournalArticle.templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
-				id_ ASC
+				JournalArticle.id_ ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFeedFinder.countByC_G_F_N_D">

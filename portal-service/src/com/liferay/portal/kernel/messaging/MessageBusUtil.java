@@ -16,11 +16,8 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
-import java.security.Permission;
 
 /**
  * @author Michael C. Han
@@ -165,10 +162,14 @@ public class MessageBusUtil {
 	}
 
 	private void _addDestination(Destination destination) {
+		PortalMessageBusPermission.checkPermission(destination.getName());
+
 		_messageBus.addDestination(destination);
 	}
 
 	private boolean _hasMessageListener(String destinationName) {
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		return _messageBus.hasMessageListener(destinationName);
 	}
 
@@ -184,23 +185,19 @@ public class MessageBusUtil {
 	private void _registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		_messageBus.registerMessageListener(destinationName, messageListener);
 	}
 
 	private void _removeDestination(String destinationName) {
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		_messageBus.removeDestination(destinationName);
 	}
 
 	private void _sendMessage(String destinationName, Message message) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager != null) {
-			Permission permission = new PortalMessageBusPermission(
-				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
-				destinationName);
-
-			securityManager.checkPermission(permission);
-		}
+		PortalMessageBusPermission.checkPermission(destinationName);
 
 		_messageBus.sendMessage(destinationName, message);
 	}
@@ -217,12 +214,16 @@ public class MessageBusUtil {
 			String destinationName, Message message)
 		throws MessageBusException {
 
+		PortalMessageBusPermission.checkPermission(destinationName);
+
 		return _synchronousMessageSender.send(destinationName, message);
 	}
 
 	private Object _sendSynchronousMessage(
 			String destinationName, Message message, long timeout)
 		throws MessageBusException {
+
+		PortalMessageBusPermission.checkPermission(destinationName);
 
 		return _synchronousMessageSender.send(
 			destinationName, message, timeout);
@@ -255,15 +256,21 @@ public class MessageBusUtil {
 	}
 
 	private void _shutdown() {
+		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
+
 		_messageBus.shutdown();
 	}
 
 	private void _shutdown(boolean force) {
+		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
+
 		_messageBus.shutdown(force);
 	}
 
 	private boolean _unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
+
+		PortalMessageBusPermission.checkPermission(destinationName);
 
 		return _messageBus.unregisterMessageListener(
 			destinationName, messageListener);

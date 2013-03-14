@@ -40,6 +40,10 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +51,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -241,6 +246,57 @@ public class BundleServletContext extends LiferayServletContext {
 	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_initParameters.keySet());
+	}
+
+	@Override
+	public String getRealPath(String path) {
+		URL url = _httpContext.getResource(path);
+
+		if (url != null) {
+			return url.toExternalForm();
+		}
+
+		return path;
+	}
+
+	@Override
+	public URL getResource(String path) {
+		return _httpContext.getResource(path);
+	}
+
+	@Override
+	public InputStream getResourceAsStream(String path) {
+		try {
+			URL url = getResource(path);
+
+			if (url != null) {
+				return url.openStream();
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Set<String> getResourcePaths(String path) {
+		Set<String> paths = new HashSet<String>();
+
+		Enumeration<String> enumeration = _bundle.getEntryPaths(path);
+
+		if (enumeration == null) {
+			return Collections.emptySet();
+		}
+
+		while (enumeration.hasMoreElements()) {
+			String entryPath = enumeration.nextElement();
+
+			paths.add(StringPool.SLASH.concat(entryPath));
+		}
+
+		return paths;
 	}
 
 	@Override

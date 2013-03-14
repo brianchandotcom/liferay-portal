@@ -45,6 +45,8 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 		updateThreadFlags();
 		updateThreads();
+
+		updateDiscussions();
 	}
 
 	protected Object[] getMessageArray(long messageId) throws Exception {
@@ -95,7 +97,8 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select groupId, companyId from MBThread where threadId = ?");
+				"select groupId, companyId, userId, createDate, modifiedDate " +
+					"from MBThread where threadId = ?");
 
 			ps.setLong(1, threadId);
 
@@ -104,8 +107,13 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			if (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("companyId");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
-				return new Object[] {groupId, companyId};
+				return new Object[] {
+					groupId, companyId, userId, createDate, modifiedDate
+				};
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -154,6 +162,76 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected void updateDiscussion(
+			long discussionId, long groupId, long companyId, long userId,
+			String userName, Timestamp createDate, Timestamp modifiedDate)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update MBDiscussion set groupId = ?, companyId = ?, userId " +
+					"= ?, userName = ?, createDate = ?, modifiedDate = ? " +
+						"where discussionId = ?");
+
+			ps.setLong(1, groupId);
+			ps.setLong(2, companyId);
+			ps.setLong(3, userId);
+			ps.setString(4, userName);
+			ps.setTimestamp(5, createDate);
+			ps.setTimestamp(6, modifiedDate);
+			ps.setLong(7, discussionId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void updateDiscussions() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select discussionId, threadId from MBDiscussion");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long discussionId = rs.getLong("discussionId");
+				long threadId = rs.getLong("threadId");
+
+				Object[] threadArray = getThreadArray(threadId);
+
+				if (threadArray == null) {
+					continue;
+				}
+
+				long groupId = (Long)threadArray[0];
+				long companyId = (Long)threadArray[1];
+				long userId = (Long)threadArray[2];
+				Timestamp createDate = (Timestamp)threadArray[3];
+				Timestamp modifiedDate = (Timestamp)threadArray[4];
+
+				updateDiscussion(
+					discussionId, groupId, companyId, userId,
+					getUserName(userId), createDate, modifiedDate);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateThread(
 			long threadId, long userId, String userName, Timestamp createDate)
 		throws Exception {
@@ -182,7 +260,7 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updateThreadFlag(
-			long threadFlagId, long groupId, long companyId, String fullName)
+			long threadFlagId, long groupId, long companyId, String userName)
 		throws Exception {
 
 		Connection con = null;
@@ -198,7 +276,7 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 			ps.setLong(1, groupId);
 			ps.setLong(2, companyId);
-			ps.setString(3, fullName);
+			ps.setString(3, userName);
 			ps.setLong(4, threadFlagId);
 
 			ps.executeUpdate();
@@ -226,17 +304,17 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				long userId = rs.getLong("userId");
 				long threadId = rs.getLong("threadId");
 
-				String userName = getUserName(userId);
-
 				Object[] threadArray = getThreadArray(threadId);
 
 				if (threadArray == null) {
 					continue;
 				}
 
+				long groupId = (Long)threadArray[0];
+				long companyId = (Long)threadArray[1];
+
 				updateThreadFlag(
-					threadFlagId, (Long)threadArray[0], (Long)threadArray[1],
-					userName);
+					threadFlagId, groupId, companyId, getUserName(userId));
 			}
 		}
 		finally {
@@ -268,10 +346,9 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 				}
 
 				long userId = (Long)messageArray[0];
-				String userName = getUserName(userId);
+				Timestamp createDate = (Timestamp)messageArray[1];
 
-				updateThread(
-					threadId, userId, userName, (Timestamp)messageArray[1]);
+				updateThread(threadId, userId, getUserName(userId), createDate);
 			}
 		}
 		finally {

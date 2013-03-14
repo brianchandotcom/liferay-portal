@@ -1280,6 +1280,7 @@
 
 			var defaultValues = {
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE',
+				eventName: 'selectStructure',
 				structureName: 'structures'
 			};
 
@@ -1291,11 +1292,11 @@
 
 			ddmURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
 
-			ddmURL.setParameter('chooseCallback', config.chooseCallback);
 			ddmURL.setParameter('classNameId', config.classNameId);
 			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
 			ddmURL.setParameter('ddmResourceActionId', config.ddmResourceActionId);
+			ddmURL.setParameter('eventName', config.eventName);
 			ddmURL.setParameter('groupId', config.groupId);
 
 			if ('refererPortletName' in config) {
@@ -1354,7 +1355,9 @@
 				dialogConfig.align = Util.Window.ALIGN_CENTER;
 			}
 
-			Util.openWindow(config, callback);
+			Util.openWindow(config);
+
+			Liferay.on(config.eventName, callback);
 		},
 		['liferay-portlet-url']
 	);

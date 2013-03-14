@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.executor;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.concurrent.Callable;
@@ -29,6 +30,8 @@ import java.util.concurrent.TimeoutException;
 public class PortalExecutorManagerUtil {
 
 	public static <T> Future<T> execute(String name, Callable<T> callable) {
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		return getPortalExecutorManager().execute(name, callable);
 	}
 
@@ -36,16 +39,22 @@ public class PortalExecutorManagerUtil {
 			String name, Callable<T> callable, long timeout, TimeUnit timeUnit)
 		throws ExecutionException, InterruptedException, TimeoutException {
 
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		return getPortalExecutorManager().execute(
 			name, callable, timeout, timeUnit);
 	}
 
 	public static ThreadPoolExecutor getPortalExecutor(String name) {
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		return getPortalExecutorManager().getPortalExecutor(name);
 	}
 
 	public static ThreadPoolExecutor getPortalExecutor(
 		String name, boolean createIfAbsent) {
+
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
 
 		return getPortalExecutorManager().getPortalExecutor(
 			name, createIfAbsent);
@@ -61,23 +70,35 @@ public class PortalExecutorManagerUtil {
 	public static ThreadPoolExecutor registerPortalExecutor(
 		String name, ThreadPoolExecutor threadPoolExecutor) {
 
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		return getPortalExecutorManager().registerPortalExecutor(
 			name, threadPoolExecutor);
 	}
 
 	public static void shutdown() {
+		PortalRuntimePermission.checkThreadPoolExecutor(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
+
 		getPortalExecutorManager().shutdown();
 	}
 
 	public static void shutdown(boolean interrupt) {
+		PortalRuntimePermission.checkThreadPoolExecutor(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
+
 		getPortalExecutorManager().shutdown(interrupt);
 	}
 
 	public static void shutdown(String name) {
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		getPortalExecutorManager().shutdown(name);
 	}
 
 	public static void shutdown(String name, boolean interrupt) {
+		PortalRuntimePermission.checkThreadPoolExecutor(name);
+
 		getPortalExecutorManager().shutdown(name, interrupt);
 	}
 

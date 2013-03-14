@@ -681,11 +681,41 @@ if (Validator.isNotNull(content)) {
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace />openDDMSelector(chooseCallback, strutsAction, ddmStructureId, title) {
+	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
-				chooseCallback: chooseCallback,
+				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
+				ddmResource: '<%= ddmResource %>',
+				dialog: {
+					modal: true,
+					width: '80%'
+				},
+				eventName: '<portlet:namespace />selectStructure',
+				groupId: <%= groupId %>,
+				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
+				structureName: 'structure',
+				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
+				struts_action: '/dynamic_data_mapping/select_structure',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+			},
+			function(event){
+				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value != event.ddmstructureid)) {
+					document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
+					document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
+
+					submitForm(document.<portlet:namespace />fm1);
+				}
+			}
+		);
+	}
+
+	function <portlet:namespace />openDDMTemplateSelector(ddmStructureId) {
+		Liferay.Util.openDDMPortlet(
+			{
+				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
+				chooseCallback: '<portlet:namespace />selectTemplate',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,
 				ddmResource: '<%= ddmResource %>',
@@ -698,19 +728,11 @@ if (Validator.isNotNull(content)) {
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
-				struts_action: strutsAction,
+				struts_action: '/dynamic_data_mapping/view_template',
 				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
-				title: title
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			}
 		);
-	}
-
-	function <portlet:namespace />openDDMStructureSelector() {
-		<portlet:namespace />openDDMSelector('<portlet:namespace />selectStructure', null, null, '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>');
-	}
-
-	function <portlet:namespace />openDDMTemplateSelector(ddmStructureId) {
-		<portlet:namespace />openDDMSelector('<portlet:namespace />selectTemplate', '/dynamic_data_mapping/view_template', ddmStructureId, '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>');
 	}
 </aui:script>
 

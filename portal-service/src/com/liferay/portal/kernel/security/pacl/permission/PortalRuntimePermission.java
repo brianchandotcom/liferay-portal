@@ -110,6 +110,19 @@ public class PortalRuntimePermission extends BasicPermission {
 		securityManager.checkPermission(permission);
 	}
 
+	public static void checkThreadPoolExecutor(String name) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalRuntimePermission(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR, name);
+
+		securityManager.checkPermission(permission);
+	}
+
 	public PortalRuntimePermission(String name, Object subject) {
 		this(name, subject, null);
 	}

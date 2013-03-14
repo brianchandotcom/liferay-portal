@@ -20,7 +20,6 @@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
@@ -48,7 +47,7 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 long groupId = GetterUtil.getLong(preferences.getValue("groupId", String.valueOf(themeDisplay.getScopeGroupId())));
-long ddmStructureId = GetterUtil.getLong(preferences.getValue("ddmStructureId", StringPool.BLANK));
+String ddmStructureKey = preferences.getValue("ddmStructureKey", StringPool.BLANK);
 String type = preferences.getValue("type", StringPool.BLANK);
 String pageUrl = preferences.getValue("pageUrl", "maximized");
 int pageDelta = GetterUtil.getInteger(preferences.getValue("pageDelta", StringPool.BLANK));
@@ -61,17 +60,8 @@ String ddmResource = portletConfig.getInitParameter("ddm-resource");
 
 DDMStructure ddmStructure = null;
 
-if (Validator.isNotNull(ddmStructureId)) {
-	try {
-		ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
-
-		ddmStructureId = ddmStructure.getStructureId();
-	}
-	catch (NoSuchStructureException nsse) {
-		preferences.setValue("structure-id", StringPool.BLANK);
-
-		preferences.store();
-	}
+if (Validator.isNotNull(ddmStructureKey)) {
+	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(groupId, PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey);
 }
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

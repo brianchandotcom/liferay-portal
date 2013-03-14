@@ -19,6 +19,7 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
+String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 %>
 
 <c:if test="<%= showToolbar %>">
@@ -31,8 +32,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectStructureFm">
 	<c:if test="<%= !showToolbar %>">
 		<liferay-ui:header
 			localizeTitle="<%= false %>"
@@ -59,36 +59,46 @@ long classPK = ParamUtil.getLong(request, "classPK");
 			modelVar="structure"
 		>
 
-			<%
-			String rowHREF = null;
-
-			if (structure.getStructureId() != classPK) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:Liferay.Util.getOpener().");
-				sb.append(saveCallback);
-				sb.append("('");
-				sb.append(structure.getStructureId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(structure.getName(locale)));
-				sb.append("', Liferay.Util.getWindow());");
-
-				rowHREF = sb.toString();
-			}
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="id"
 				value="<%= String.valueOf(structure.getStructureId()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="modified-date"
+			>
+
+				<%
+				Date modifiedDate = structure.getModifiedDate();
+				%>
+
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= structure.getStructureId() != classPK %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("ddmstructureid", structure.getStructureId());
+					data.put("ddmstructurekey", structure.getStructureKey());
+					data.put("name", HtmlUtil.escapeJS(structure.getName(locale)));
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
@@ -96,5 +106,21 @@ long classPK = ParamUtil.getLong(request, "classPK");
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />searchStructureId);
+	Liferay.Util.focusFormField(document.<portlet:namespace />selectStructureFm.<portlet:namespace />toggle_id_ddm_structure_searchkeywords);
+</aui:script>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectStructureFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
 </aui:script>

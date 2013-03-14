@@ -15,12 +15,17 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.RenameUpgradePortletPreferences;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -39,17 +44,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Juan Fernández
  * @author Bruno Basto
  */
-public class UpgradeJournal extends RenameUpgradePortletPreferences {
-
-	public UpgradeJournal() {
-		_preferenceNamesMap.put("templateId", "ddmTemplateKey");
-	}
+public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void addDDMStructure(
 			String uuid_, long ddmStructureId, long groupId, long companyId,
@@ -183,8 +186,6 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
-
 		try {
 			runSQL(
 				"alter_column_name JournalFeed feedType feedFormat " +
@@ -199,16 +200,54 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 		updateStructures();
 		updateTemplates();
+
+		super.doUpgrade();
 	}
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {"56_INSTANCE_%"};
+		return new String[] {
+			"56_INSTANCE_%", "62_INSTANCE_%", "101_INSTANCE_%"
+		};
 	}
 
-	@Override
-	protected Map<String, String> getPreferenceNamesMap() {
-		return _preferenceNamesMap;
+	protected void updatePreferencesClassPKs(
+			PortletPreferences preferences, String key)
+		throws Exception {
+
+		String[] oldValues = preferences.getValues(key, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		for (int i = 0; i < oldValues.length; i++) {
+			String oldValue = oldValues[i];
+
+			String newValue = oldValue;
+
+			String[] oldPrimaryKeys = StringUtil.split(oldValue);
+
+			for (String oldPrimaryKey : oldPrimaryKeys) {
+				if (!Validator.isNumber(oldPrimaryKey)) {
+					break;
+				}
+
+				Long newPrimaryKey = _ddmStructurePKs.get(
+					GetterUtil.getLong(oldPrimaryKey));
+
+				if (Validator.isNotNull(newPrimaryKey)) {
+					newValue = StringUtil.replace(
+						newValue, oldPrimaryKey, String.valueOf(newPrimaryKey));
+				}
+			}
+
+			newValues[i] = newValue;
+		}
+
+		preferences.setValues(key, newValues);
 	}
 
 	protected void updateResourcePermission(
@@ -329,6 +368,7 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 
 				_ddmStructureIds.put(
 					groupId + "#" + structureId, ddmStructureId);
+				_ddmStructurePKs.put(id_, ddmStructureId);
 			}
 		}
 		finally {
@@ -401,8 +441,47 @@ public class UpgradeJournal extends RenameUpgradePortletPreferences {
 		runSQL("drop table JournalTemplate");
 	}
 
+	@Override
+	protected String upgradePreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws Exception {
+
+		PortletPreferences preferences = PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId, xml);
+
+		if (portletId.startsWith(PortletKeys.ASSET_PUBLISHER)) {
+			updatePreferencesClassPKs(
+				preferences, "anyClassTypeJournalArticleAssetRendererFactory");
+			updatePreferencesClassPKs(preferences, "classTypeIds");
+			updatePreferencesClassPKs(
+				preferences, "classTypeIdsJournalArticleAssetRendererFactory");
+		}
+		else if (portletId.startsWith(PortletKeys.JOURNAL_CONTENT)) {
+			String templateId = preferences.getValue(
+				"templateId", StringPool.BLANK);
+
+			if (Validator.isNotNull(templateId)) {
+				preferences.reset("templateId");
+
+				preferences.setValue("ddmTemplateKey", templateId);
+			}
+		}
+		else if (portletId.startsWith(PortletKeys.JOURNAL_CONTENT_LIST)) {
+			String structureId = preferences.getValue(
+				"structureId", StringPool.BLANK);
+
+			if (Validator.isNotNull(structureId)) {
+				preferences.reset("structureId");
+
+				preferences.setValue("ddmStructureKey", structureId);
+			}
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(preferences);
+	}
+
 	private Map<String, Long> _ddmStructureIds = new HashMap<String, Long>();
-	private Map<String, String> _preferenceNamesMap =
-		new HashMap<String, String>();
+	private Map<Long, Long> _ddmStructurePKs = new HashMap<Long, Long>();
 
 }

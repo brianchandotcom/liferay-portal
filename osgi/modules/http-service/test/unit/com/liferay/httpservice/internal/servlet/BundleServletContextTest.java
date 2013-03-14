@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import java.text.SimpleDateFormat;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -99,6 +101,45 @@ public class BundleServletContextTest extends PowerMockito {
 	public void testGetServletContextName() {
 		Assert.assertEquals(
 			"test",_bundleServletContext.getServletContextName());
+	}
+
+	@Test
+	public void testRegisterFilterBadURLMapping()
+		throws NamespaceException, ServletException {
+
+		try {
+			registerFilter("Bad Mapping filter", "/a/");
+		}
+		catch (IllegalArgumentException iae) {
+			return;
+		}
+
+		Assert.fail();
+	}
+
+	@Test
+	public void testRegisterFilterMultipleMapping()
+		throws NamespaceException, ServletException {
+
+		registerFilter("Security filter", "/a", "/b/*");
+	}
+
+	@Test
+	public void testRegisterFilterSingleMapping()
+		throws NamespaceException, ServletException {
+
+		registerFilter("Security filter", "/a");
+	}
+
+	@Test
+	public void testRegisterFilterWithServiceRanking()
+		throws NamespaceException, ServletException {
+
+		Map<String, String> initParameters = new HashMap<String, String>();
+
+		initParameters.put("service.ranking", "1");
+
+		registerFilter("Security filter", initParameters, "/a");
 	}
 
 	@Test
@@ -361,6 +402,26 @@ public class BundleServletContextTest extends PowerMockito {
 		).thenReturn(
 			clazz.getClassLoader()
 		);
+	}
+
+	protected void registerFilter(
+			String filterName, Map<String, String> initProperties,
+			String ... urlPatterns)
+		throws NamespaceException, ServletException {
+
+		mockBundleWiring();
+
+		_bundleServletContext.registerFilter(
+			filterName, Arrays.asList(urlPatterns), _filter, initProperties,
+			_httpContext);
+
+		verifyBundleWiring();
+	}
+
+	protected void registerFilter(String filterName, String ... urlPatterns)
+		throws NamespaceException, ServletException {
+
+		registerFilter(filterName, null, urlPatterns);
 	}
 
 	protected void registerListener(Object listener) {

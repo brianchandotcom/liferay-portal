@@ -5,21 +5,11 @@
 
 	<#if name == "execute">
 		<#if element.attributeValue("function")??>
-			<#assign function = element.attributeValue("function")>
+			<#assign functionElement = element>
 
-			<#assign x = function?last_index_of("#")>
+			<#include "function_element.ftl">
 
-			${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${function?substring(x + 1)}(
-
-			<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
-				target${i}, value${i}
-
-				<#if i_has_next>
-					,
-				</#if>
-			</#list>
-
-			);
+			;
 		<#elseif element.attributeValue("selenium")??>
 			<#assign seleniumElement = element>
 

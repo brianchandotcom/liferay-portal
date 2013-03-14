@@ -393,8 +393,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 				"security-manager-get-bean-property");
 		}
 		else {
-			beanPropertyClassNames.addAll(getPropertySet(
-				"security-manager-get-bean-property"));
+			beanPropertyClassNames.addAll(
+				getPropertySet("security-manager-get-bean-property"));
 		}
 
 		_getBeanPropertyClassNamesMap.put(
@@ -471,8 +471,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 				"security-manager-set-bean-property");
 		}
 		else {
-			beanPropertyClassNames.addAll(getPropertySet(
-				"security-manager-set-bean-property"));
+			beanPropertyClassNames.addAll(
+				getPropertySet("security-manager-set-bean-property"));
 		}
 
 		_setBeanPropertyClassNamesMap.put(

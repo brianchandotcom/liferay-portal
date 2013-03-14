@@ -122,7 +122,7 @@ public class BeanLocatorImpl implements BeanLocator {
 		_paclServletContextName = paclServletContextName;
 	}
 
-	/*
+	/**
 	 * This method ensures the calls stack is the proper length.
 	 */
 	protected <T> Map<String, T> doLocate(Class<T> clazz) throws Exception {

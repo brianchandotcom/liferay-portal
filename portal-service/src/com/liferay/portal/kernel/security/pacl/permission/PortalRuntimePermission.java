@@ -220,7 +220,7 @@ public class PortalRuntimePermission extends BasicPermission {
 		return sb.toString();
 	}
 
-	/*
+	/**
 	 * This method ensures the calls stack is the proper length.
 	 */
 	private static void _checkGetBeanProperty(
@@ -239,7 +239,7 @@ public class PortalRuntimePermission extends BasicPermission {
 		securityManager.checkPermission(permission);
 	}
 
-	/*
+	/**
 	 * This method ensures the calls stack is the proper length.
 	 */
 	private static void _checkGetBeanProperty(

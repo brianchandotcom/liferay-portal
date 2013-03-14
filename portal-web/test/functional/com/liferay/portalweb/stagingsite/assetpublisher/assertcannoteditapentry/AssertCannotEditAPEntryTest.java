@@ -38,9 +38,24 @@ public class AssertCannotEditAPEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Live"),
+			selenium.getText(
+				"//div[@class='staging-bar']/ul/li/span/span[contains(.,'Live')]"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//h1[@class='site-title']/span"));
+		assertTrue(selenium.isElementNotPresent(
+				"//span[@title='Options']/ul/li/strong/a"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Minimize']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Maximize']"));
+		assertTrue(selenium.isElementNotPresent("//img[@title='Remove']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//span[@title='Add New']/ul/li/strong/a/span"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertTrue(selenium.isElementNotPresent("link=Edit Blogs Entry Title"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[contains(.,'Edit')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='asset-summary']"));
 	}

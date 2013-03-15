@@ -195,6 +195,11 @@ public abstract class BaseSeleniumImpl
 		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
 	}
 
+	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
+		return LiferaySeleniumHelper.isNotSelectedLabel(
+			this, selectLocator, pattern);
+	}
+
 	public boolean isNotText(String locator, String value) {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
@@ -212,6 +217,11 @@ public abstract class BaseSeleniumImpl
 
 		return _commandProcessor.getBoolean(
 			"isPartialText", new String[] {locator, value,});
+	}
+
+	public boolean isSelectedLabel(String selectLocator, String pattern) {
+		return
+			LiferaySeleniumHelper.isSelectedLabel(this, selectLocator, pattern);
 	}
 
 	public boolean isText(String locator, String value) {

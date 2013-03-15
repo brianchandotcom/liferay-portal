@@ -110,8 +110,13 @@ public class LiferaySeleniumHelper {
 	public static void assertNotSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
 
-		BaseTestCase.assertNotEquals(
-			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+		if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
+			String text = liferaySelenium.getSelectedLabel(selectLocator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " matches " + text + " at " +
+					selectLocator);
+		}
 	}
 
 	public static void assertNotText(
@@ -166,8 +171,13 @@ public class LiferaySeleniumHelper {
 	public static void assertSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
 
-		BaseTestCase.assertEquals(
-			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+		if (liferaySelenium.isNotSelectedLabel(selectLocator, pattern)) {
+			String text = liferaySelenium.getSelectedLabel(selectLocator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " does not match " + text + " at " +
+					selectLocator);
+		}
 	}
 
 	public static void assertText(
@@ -252,6 +262,12 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
 		return !liferaySelenium.isPartialText(locator, value);
+	}
+
+	public static boolean isNotSelectedLabel(
+		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
+
+		return !liferaySelenium.isSelectedLabel(selectLocator, pattern);
 	}
 
 	public static boolean isNotText(

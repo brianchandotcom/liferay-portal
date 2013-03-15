@@ -108,7 +108,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			throw new NullPointerException("Class cannot be null");
 		}
 
+		ClassLoader clazzClassLoader = clazz.getClassLoader();
+
 		if (accessibility == Member.PUBLIC) {
+			_checkMemberAccessClassLoader.set(clazzClassLoader);
+
 			return;
 		}
 
@@ -122,8 +126,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		// [2] java.lang.Class.someReflectionAPI
 		// [1] java.lang.Class.checkMemberAccess
 		// [0] SecurityManager.checkMemberAccess
-
-		ClassLoader clazzClassLoader = clazz.getClassLoader();
 
 		if ((stack.length < 4) ||
 			(stack[3].getClassLoader() != clazzClassLoader)) {

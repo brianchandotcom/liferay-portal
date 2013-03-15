@@ -110,6 +110,8 @@ public class LiferaySeleniumHelper {
 	public static void assertNotSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
 
+		liferaySelenium.assertElementPresent(selectLocator);
+
 		if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
 			String text = liferaySelenium.getSelectedLabel(selectLocator);
 
@@ -170,6 +172,8 @@ public class LiferaySeleniumHelper {
 
 	public static void assertSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
+
+		liferaySelenium.assertElementPresent(selectLocator);
 
 		if (liferaySelenium.isNotSelectedLabel(selectLocator, pattern)) {
 			String text = liferaySelenium.getSelectedLabel(selectLocator);
@@ -262,12 +266,6 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
 		return !liferaySelenium.isPartialText(locator, value);
-	}
-
-	public static boolean isNotSelectedLabel(
-		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
-
-		return !liferaySelenium.isSelectedLabel(selectLocator, pattern);
 	}
 
 	public static boolean isNotText(
@@ -382,12 +380,12 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertNotSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (!pattern.equals(
-						liferaySelenium.getSelectedLabel(selectLocator))) {
+				if (liferaySelenium.isNotSelectedLabel(
+						selectLocator, pattern)) {
 
 					break;
 				}
@@ -496,13 +494,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (pattern.equals(
-						liferaySelenium.getSelectedLabel(selectLocator))) {
-
+				if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
 					break;
 				}
 			}

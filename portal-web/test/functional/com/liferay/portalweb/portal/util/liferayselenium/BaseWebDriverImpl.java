@@ -232,8 +232,10 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		return LiferaySeleniumHelper.isNotSelectedLabel(
-			this, selectLocator, pattern);
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+		return !pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
 	public boolean isNotText(String locator, String value) {
@@ -257,8 +259,10 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		return
-			LiferaySeleniumHelper.isSelectedLabel(this, selectLocator, pattern);
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+		return pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
 	public boolean isText(String locator, String value) {

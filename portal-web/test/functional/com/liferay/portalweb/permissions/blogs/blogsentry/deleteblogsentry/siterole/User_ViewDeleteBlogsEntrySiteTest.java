@@ -29,7 +29,7 @@ public class User_ViewDeleteBlogsEntrySiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']"));
-		assertTrue(selenium.isElementNotPresent("//div[@class='entry-body']/p"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='entry-body']"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-author']"));
 		assertTrue(selenium.isElementNotPresent("//span[@class='comments']/a"));
 		assertTrue(selenium.isElementNotPresent(

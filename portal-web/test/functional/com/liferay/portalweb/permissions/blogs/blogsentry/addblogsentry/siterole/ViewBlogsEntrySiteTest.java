@@ -28,7 +28,7 @@ public class ViewBlogsEntrySiteTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//input[@id='_33_keywords']"));
+		assertTrue(selenium.isVisible("//input[@title='Search Entries']"));
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
@@ -36,14 +36,14 @@ public class ViewBlogsEntrySiteTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertTrue(selenium.isVisible("//div[@class='entry-date']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//td/span/a[contains(.,'Edit')]/span"));
+			selenium.getText("//td[contains(.,'Edit')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//td/span/a[contains(.,'Permissions')]/span"));
+			selenium.getText("//td[contains(.,'Permissions')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//td/span/a[contains(.,'Move to the Recycle Bin')]/span"));
+				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/div"));
+			selenium.getText("//div[@class='entry-body']"));
 		assertEquals(RuntimeVariables.replace("By userfn userln"),
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("0 Comments"),

@@ -34,7 +34,7 @@ public class User_AddBlogsEntrySiteTest extends BaseTestCase {
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForVisible(
-			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]	");
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Blogs Entry Content"));
@@ -47,6 +47,6 @@ public class User_AddBlogsEntrySiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//div[@class='entry-body']/div"));
+			selenium.getText("//div[@class='entry-body']"));
 	}
 }

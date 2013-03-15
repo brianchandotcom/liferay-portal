@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -46,10 +46,6 @@ public class RemoveRegRoleContentBlogsAddEntryScopeSiteTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
 			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Regular"),
-			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[3]/a"));
 		selenium.clickAt("//tr[contains(.,'Roles Regrole Name')]/td[1]/a",
 			RuntimeVariables.replace("Roles Regrole Name"));
 		selenium.waitForPageToLoad("30000");
@@ -61,8 +57,6 @@ public class RemoveRegRoleContentBlogsAddEntryScopeSiteTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("Summary"),
-			selenium.getText("//section[@id='portlet_128']/div/div/div/h3"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//tr[contains(.,'Blogs')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
@@ -76,8 +70,8 @@ public class RemoveRegRoleContentBlogsAddEntryScopeSiteTest extends BaseTestCase
 		selenium.clickAt("//tr[contains(.,'Blogs')]/td[5]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		assertEquals(RuntimeVariables.replace("The permission was deleted."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(

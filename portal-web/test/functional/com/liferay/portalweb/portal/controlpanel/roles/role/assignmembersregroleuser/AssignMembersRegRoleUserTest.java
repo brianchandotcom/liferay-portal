@@ -45,14 +45,9 @@ public class AssignMembersRegRoleUserTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
 			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Regular"),
-			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace(""),
-			selenium.getText("//tr[contains(.,'Roles Regrole Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText(
-				"//tr[contains(.,'Roles Regrole Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[contains(.,'Roles Regrole Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");

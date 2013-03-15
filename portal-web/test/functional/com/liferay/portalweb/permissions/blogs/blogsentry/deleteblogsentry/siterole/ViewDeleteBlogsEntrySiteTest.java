@@ -31,8 +31,7 @@ public class ViewDeleteBlogsEntrySiteTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']"));
-		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='entry-body']/div"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='entry-body']"));
 		assertTrue(selenium.isElementNotPresent("//div[@class='entry-author']"));
 		assertTrue(selenium.isElementNotPresent("//span[@class='comments']/a"));
 		assertTrue(selenium.isElementNotPresent(

@@ -30,13 +30,14 @@ public class User_DeleteBlogsEntrySiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//td/span/a[contains(.,'Move to the Recycle Bin')]/span"));
-		selenium.clickAt("//td/span/a[contains(.,'Move to the Recycle Bin')]/span",
+				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
+		selenium.clickAt("//td[contains(.,'Move to the Recycle Bin')]/span/a/span",
 			RuntimeVariables.replace("Move to the Recycle Bin"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
-			selenium.getText("//form[@id='_33_undoForm']"));
+			selenium.getText(
+				"//div[@class='portlet-msg-success taglib-trash-undo']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}

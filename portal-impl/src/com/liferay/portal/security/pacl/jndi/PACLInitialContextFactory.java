@@ -17,9 +17,8 @@ package com.liferay.portal.security.pacl.jndi;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.PACLUtil;
 
 import java.util.Hashtable;
 
@@ -118,14 +117,9 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
-		if (!PACLPolicyManager.isActive()) {
-			return context;
-		}
+		PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(
-			false, _log.isDebugEnabled());
-
-		if ((paclPolicy == null) || !paclPolicy.isActive()) {
+		if (paclPolicy == null) {
 			return context;
 		}
 

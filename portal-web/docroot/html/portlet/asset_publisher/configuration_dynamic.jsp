@@ -452,9 +452,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 <aui:script use="aui-base">
 	var assetSelector = A.one('#<portlet:namespace />anyAssetType');
 	var assetMulitpleSelector = A.one('#<portlet:namespace />currentClassNameIds');
-	var sourcePanel = A.one('#assetPublisherSourcePanel');
 	var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 	var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
+
+	var sourcePanel = A.one('#assetPublisherSourcePanel');
+
 	var ddmStructureFieldValue = ddmStructureFieldValueContainer.one('#<portlet:namespace />ddmStructureFieldValue');
 
 	<%
@@ -464,7 +466,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		Liferay.Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>','false','<portlet:namespace /><%= className %>Boxes');
 
-		var <portlet:namespace /><%= className %>Options = A.one('#<portlet:namespace /><%= className %>Options');
+		var <%= className %>Options = A.one('#<portlet:namespace /><%= className %>Options');
 
 		function <portlet:namespace />toggle<%= className %>() {
 			var assetOptions = assetMulitpleSelector.all('option');
@@ -472,10 +474,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			if ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
 				((assetSelector.val() == 'false') && (assetOptions.size() == 1) && (assetOptions.item(0).val() == '<%= curRendererFactory.getClassNameId() %>'))) {
 
-				<portlet:namespace /><%= className %>Options.show();
+				<%= className %>Options.show();
 			}
 			else {
-				<portlet:namespace /><%= className %>Options.hide();
+				<%= className %>Options.hide();
 			}
 		}
 
@@ -485,12 +487,12 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		if ((assetAvailableClassTypes == null) || assetAvailableClassTypes.isEmpty()) {
 			continue;
 		}
-	  	%>
+		%>
 
-		var <portlet:namespace /><%= className %>SubTypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
+		var <%= className %>SubTypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
 
-		function <portlet:namespace /><%= className %>toggleSubclassesFields() {
-			var selectedSubType = <portlet:namespace /><%= className %>SubTypeSelector.val();
+		function <%= className %>toggleSubclassesFields() {
+			var selectedSubType = <%= className %>SubTypeSelector.val();
 
 			var structureOptions = A.one('#<portlet:namespace />' + selectedSubType + '_<%= className %>Options');
 
@@ -499,16 +501,16 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			}
 		}
 
-		<portlet:namespace /><%= className %>toggleSubclassesFields();
+		<%= className %>toggleSubclassesFields();
 
-		<portlet:namespace /><%= className %>SubTypeSelector.on(
+		<%= className %>SubTypeSelector.on(
 			'change',
 			function(event) {
 				sourcePanel.all('.asset-subtypefields').hide();
 
 				ddmStructureFieldValueContainer.hide();
 
-				<portlet:namespace /><%= className %>toggleSubclassesFields();
+				<%= className %>toggleSubclassesFields();
 			}
 		);
 
@@ -520,8 +522,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				ddmStructureFieldValue.val('');
 
 				var fieldName = event.target.val();
-
-				console.log("cambia selector de field", fieldName);
 
 				if (fieldName) {
 					ddmStructureFieldValueContainer.show();

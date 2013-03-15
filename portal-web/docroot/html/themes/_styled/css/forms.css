@@ -184,6 +184,10 @@ input, textarea {
 			@include button-hover;
 		}
 	}
+
+	span {
+		cursor: pointer;
+	}
 }
 
 .lfr-actions.disabled .taglib-text {

@@ -35,8 +35,6 @@ public class PACLDataSource extends DataSourceWrapper {
 		super(dataSource);
 
 		_dataSource = dataSource;
-
-		_log.debug("Loading " + PACLConnectionHandler.class.getName());
 	}
 
 	@Override

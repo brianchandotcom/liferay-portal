@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.wiki;
+package com.liferay.portalweb.socialofficesite.wiki.wikilar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.wiki.wikilar.WikiLARTestPlan;
-import com.liferay.portalweb.socialofficesite.wiki.wikipage.WikiPageTestPlan;
+import com.liferay.portalweb.socialofficesite.wiki.wikilar.importwikisitelar.ImportWikiSiteLARTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,13 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiTestPlan extends BaseTestSuite {
+public class WikiLARTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(WikiLARTestPlan.suite());
-		testSuite.addTest(WikiPageTestPlan.suite());
+		testSuite.addTest(ImportWikiSiteLARTests.suite());
 
 		return testSuite;
 	}

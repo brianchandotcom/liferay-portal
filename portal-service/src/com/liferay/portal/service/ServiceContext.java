@@ -795,6 +795,32 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _deriveDefaultPermissions;
 	}
 
+	/**
+	 * <p>
+	 * Returns the value of the <i>failOnError</i> flag, which is responsible
+	 * for controlling error handling in the following use-case.
+	 * </p>
+	 *
+	 * <p>
+	 * Those Service methods - exposed as a JSON web-service - that perform an
+	 * operation on a bunch of items can be instructed through this flag not to
+	 * fail when processing encounters error on a subset of items.
+	 * </p>
+	 *
+	 * <p>
+	 * If this flag is set (<code>true</code>), processing will be halted and an
+	 * exception returned over the course of the invocation of the remote
+	 * method.
+	 * </p>
+	 *
+	 * <p>
+	 * Otherwise - if this flag is unset (<code>false</code>) - some kind of
+	 * collection should be returned to the caller to indicate which items could
+	 * not have been processed.
+	 * </p>
+	 *
+	 * @return the value of flag <i>failOnError</i>
+	 */
 	public boolean isFailOnPortalException() {
 		return _failOnPortalException;
 	}
@@ -1120,6 +1146,15 @@ public class ServiceContext implements Cloneable, Serializable {
 		_expandoBridgeAttributes = expandoBridgeAttributes;
 	}
 
+	/**
+	 * <p>
+	 * Sets the value of the <i>failOnError</i> flag, which is responsible for
+	 * controlling error handling in the following use-case.
+	 * </p>
+	 *
+	 * @param failOnError value of the <i>failOnError</i> flag.
+	 * @see   ServiceContext#getFailOnError()
+	 */
 	public void setFailOnPortalException(boolean failOnPortalException) {
 		_failOnPortalException = failOnPortalException;
 	}

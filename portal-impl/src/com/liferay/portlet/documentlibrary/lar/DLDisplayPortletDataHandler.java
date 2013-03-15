@@ -128,7 +128,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 				repositoriesElement, repositoryEntriesElement, folder, true);
 		}
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

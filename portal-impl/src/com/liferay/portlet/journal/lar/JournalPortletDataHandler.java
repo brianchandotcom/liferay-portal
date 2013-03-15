@@ -1728,7 +1728,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

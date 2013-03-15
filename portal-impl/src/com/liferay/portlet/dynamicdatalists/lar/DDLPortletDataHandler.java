@@ -98,7 +98,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		actionableDynamicQuery.performActions();
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

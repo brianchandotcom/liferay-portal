@@ -166,7 +166,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

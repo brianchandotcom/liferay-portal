@@ -151,7 +151,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 		entryActionableDynamicQuery.performActions();
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

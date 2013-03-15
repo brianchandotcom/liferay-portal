@@ -54,7 +54,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		exportPortletDisplayTemplates(portletDataContext, rootElement);
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

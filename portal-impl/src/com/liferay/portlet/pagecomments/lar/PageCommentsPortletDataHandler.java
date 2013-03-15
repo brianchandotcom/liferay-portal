@@ -71,7 +71,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 				Layout.class, portletDataContext.getPlid());
 		}
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

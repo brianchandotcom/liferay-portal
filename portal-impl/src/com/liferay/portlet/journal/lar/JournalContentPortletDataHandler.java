@@ -222,7 +222,7 @@ public class JournalContentPortletDataHandler
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

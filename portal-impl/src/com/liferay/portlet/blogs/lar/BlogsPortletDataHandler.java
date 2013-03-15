@@ -131,7 +131,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				dlRepositoriesElement, dlRepositoryEntriesElement, entry);
 		}
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

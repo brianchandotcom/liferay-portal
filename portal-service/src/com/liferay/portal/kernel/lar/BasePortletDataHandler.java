@@ -17,11 +17,14 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.io.IOException;
 
 import javax.portlet.PortletPreferences;
 
@@ -208,6 +211,19 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		return null;
+	}
+
+	protected String getExportDataFormattedDocument(Element rootElement) {
+		if (rootElement == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			return rootElement.getDocument().formattedString();
+		}
+		catch (IOException ioe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	protected void setAlwaysExportable(boolean alwaysExportable) {

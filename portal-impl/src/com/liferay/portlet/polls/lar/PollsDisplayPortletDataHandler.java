@@ -104,7 +104,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 			portletDataContext, questionsElement, choicesElement, votesElement,
 			question);
 
-		return rootElement.formattedString();
+		return getExportDataFormattedDocument(rootElement);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -33,6 +34,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
@@ -113,6 +116,11 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 			return;
 		}
 
+		BeanDefinitionRegistry beanDefinitionRegistry =
+			xmlBeanDefinitionReader.getBeanFactory();
+
+		_injectExplicitBeans(beanDefinitionRegistry);
+
 		for (String configLocation : configLocations) {
 			try {
 				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
@@ -134,6 +142,20 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	private static boolean _isUseRestrictedClassLoader() {
 		return PACLPolicyManager.isActive();
+	}
+
+	private void _injectExplicitBean(
+		Class<DoPrivilegedFactory> clazz,
+		BeanDefinitionRegistry beanDefinitionRegistry) {
+
+		beanDefinitionRegistry.registerBeanDefinition(
+			clazz.getName(), new RootBeanDefinition(clazz));
+	}
+
+	private void _injectExplicitBeans(
+		BeanDefinitionRegistry beanDefinitionRegistry) {
+
+		_injectExplicitBean(DoPrivilegedFactory.class, beanDefinitionRegistry);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

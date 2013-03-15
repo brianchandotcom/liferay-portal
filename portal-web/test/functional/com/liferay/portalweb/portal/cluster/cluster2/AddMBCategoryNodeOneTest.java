@@ -45,6 +45,6 @@ public class AddMBCategoryNodeOneTest extends BaseTestCase {
 		assertTrue(selenium.isTextPresent("MB Category Name Node-1"));
 		assertTrue(selenium.isTextPresent("MB Category Description Node-1"));
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
+			selenium.getText("//div[@id='content']/div[2]"));
 	}
 }

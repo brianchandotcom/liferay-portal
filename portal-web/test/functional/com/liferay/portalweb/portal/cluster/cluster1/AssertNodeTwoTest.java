@@ -33,6 +33,6 @@ public class AssertNodeTwoTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
+			selenium.getText("//div[@id='content']/div[2]"));
 	}
 }

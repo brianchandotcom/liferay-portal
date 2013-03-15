@@ -35,6 +35,6 @@ public class AssertNodeOneTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//li[5]/a/span"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_1$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
+			selenium.getText("//div[@id='content']/div[2]"));
 	}
 }

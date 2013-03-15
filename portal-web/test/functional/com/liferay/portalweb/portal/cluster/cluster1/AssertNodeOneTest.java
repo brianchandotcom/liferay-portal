@@ -26,6 +26,6 @@ public class AssertNodeOneTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
-			selenium.getText("//div[@id='content']/div[3]"));
+			selenium.getText("//div[@id='content']/div[2]"));
 	}
 }

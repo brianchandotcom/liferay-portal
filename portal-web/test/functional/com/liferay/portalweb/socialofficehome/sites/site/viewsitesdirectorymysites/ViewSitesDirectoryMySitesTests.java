@@ -15,6 +15,11 @@
 package com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectorymysites;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
+import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.AddSitesSite1Test;
+import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.AddSitesSite2TypePrivateRestrictedTest;
+import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.AddSitesSite3TypePrivateTest;
+import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.AddSitesSite4TypePublicRestrictedTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

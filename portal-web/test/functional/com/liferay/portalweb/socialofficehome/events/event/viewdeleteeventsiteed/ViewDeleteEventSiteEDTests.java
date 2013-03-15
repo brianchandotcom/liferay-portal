@@ -15,6 +15,8 @@
 package com.liferay.portalweb.socialofficehome.events.event.viewdeleteeventsiteed;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.events.event.vieweventsiteed.AddEventSiteTest;
+import com.liferay.portalweb.socialofficehome.events.event.vieweventsiteed.ViewEventSiteEDTest;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTest;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
 

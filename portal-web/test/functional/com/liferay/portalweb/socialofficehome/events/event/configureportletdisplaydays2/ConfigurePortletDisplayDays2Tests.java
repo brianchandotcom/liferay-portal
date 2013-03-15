@@ -15,6 +15,10 @@
 package com.liferay.portalweb.socialofficehome.events.event.configureportletdisplaydays2;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.AddPageCalendarSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.AddPortletCalendarSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.TearDownEventSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.TearDownPageCalendarSOTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

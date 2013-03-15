@@ -26,6 +26,8 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_FollowCCUserTest;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyfollowers.AddMicroblogsContentViewableByFollowersTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyfollowers.SOUs_ViewFollowingMBContentViewableByFollowersTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyfollowers.SOUs_ViewMicroblogsContentViewableByFollowersTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -23,6 +23,8 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousfollowccuser.SOUs_FollowCCUserTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,7 +43,7 @@ public class AddWHEntryContentViewableByFollowersTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_ViewWHContentViewableByFollowersTest.class);
-		testSuite.addTestSuite(SOUs_AddFollowingCCUserTest.class);
+		testSuite.addTestSuite(SOUs_FollowCCUserTest.class);
 		testSuite.addTestSuite(SOUs_ViewFollowingWHContentViewableByFollowersTest.class);
 		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);

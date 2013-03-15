@@ -89,6 +89,8 @@ public class AssignToMeMessageActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText(
 				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

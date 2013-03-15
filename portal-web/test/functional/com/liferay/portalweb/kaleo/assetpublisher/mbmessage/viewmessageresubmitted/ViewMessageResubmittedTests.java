@@ -17,7 +17,9 @@ package com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessageresubmit
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
 import com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessageassignedtome.AddMessageTest;
+import com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessageassignedtome.AssignToMeMessageActionsTest;
 import com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessageassignedtome.TearDownMessageTest;
+import com.liferay.portalweb.kaleo.assetpublisher.mbmessage.viewmessagerejected.RejectMessageActionsTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configureblogsentrydefaultnoworkflow.TearDownWorkflowConfigurationTest;
 import com.liferay.portalweb.kaleo.workflowconfiguration.resource.configurembmessagesingleapprover.ConfigureMBMessageSingleApproverTest;
 import com.liferay.portalweb.portal.BaseTestSuite;

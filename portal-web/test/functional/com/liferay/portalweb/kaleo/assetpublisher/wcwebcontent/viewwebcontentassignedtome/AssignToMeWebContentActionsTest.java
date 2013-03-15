@@ -81,6 +81,8 @@ public class AssignToMeWebContentActionsTest extends BaseTestCase {
 				"//tr[contains(.,'Web Content Name')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//tr[contains(.,'Web Content Name')]/td[5]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Web Content Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

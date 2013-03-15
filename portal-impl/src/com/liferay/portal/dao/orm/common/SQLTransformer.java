@@ -35,19 +35,27 @@ import java.util.regex.Pattern;
 public class SQLTransformer {
 
 	public static void reloadSQLTransformer() {
-		_instance._reloadSQLTransformer();
+		_getInstance()._reloadSQLTransformer();
 	}
 
 	public static String transform(String sql) {
-		return _instance._transform(sql);
+		return _getInstance()._transform(sql);
 	}
 
 	public static String transformFromHqlToJpql(String sql) {
-		return _instance._transformFromHqlToJpql(sql);
+		return _getInstance()._transformFromHqlToJpql(sql);
 	}
 
 	public static String transformFromJpqlToHql(String sql) {
-		return _instance._transformFromJpqlToHql(sql);
+		return _getInstance()._transformFromJpqlToHql(sql);
+	}
+
+	private static SQLTransformer _getInstance() {
+		if (_instance == null) {
+			_instance = new SQLTransformer();
+		}
+
+		return _instance;
 	}
 
 	private SQLTransformer() {
@@ -416,7 +424,7 @@ public class SQLTransformer {
 
 	private static Log _log = LogFactoryUtil.getLog(SQLTransformer.class);
 
-	private static SQLTransformer _instance = new SQLTransformer();
+	private static SQLTransformer _instance;
 
 	private static Pattern _bitwiseCheckPattern = Pattern.compile(
 		"BITAND\\((.+?),(.+?)\\)");

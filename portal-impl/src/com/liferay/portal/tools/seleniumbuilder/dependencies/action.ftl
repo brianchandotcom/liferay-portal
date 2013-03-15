@@ -59,7 +59,51 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 					${childElementAttributeValue}Function ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Function = new ${childElementAttributeValue}Function(liferaySelenium);
 				</#list>
 
-				<#if actionCommandElement.element("default")??>
+				<#if seleniumBuilderFileUtil.hasChildElement(actionCommandElement, "case")>
+					<#assign caseElements = actionCommandElement.elements("case")>
+
+					<#list caseElements as caseElement>
+						if (false) {
+							<#assign functionElement = caseElement.element("execute")>
+
+							<#assign functionName = actionCommandName>
+
+							<#include "function_element.ftl">
+
+							;
+						}
+
+						<#if caseElement_has_next>
+							else
+						</#if>
+					</#list>
+
+					else {
+						<#if seleniumBuilderFileUtil.hasChildElement(actionCommandElement, "default")>
+							<#assign defaultElement = actionCommandElement.element("default")>
+
+							<#assign functionElement = defaultElement.element("execute")>
+
+							<#assign functionName = actionCommandName>
+
+							<#include "function_element.ftl">
+
+							;
+						<#else>
+							super.${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
+
+							<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
+								target${i}, value${i}
+
+								<#if i_has_next>
+									,
+								</#if>
+							</#list>
+
+							);
+						</#if>
+					}
+				<#elseif seleniumBuilderFileUtil.hasChildElement(actionCommandElement, "default")>
 					<#assign defaultElement = actionCommandElement.element("default")>
 
 					<#assign functionElement = defaultElement.element("execute")>

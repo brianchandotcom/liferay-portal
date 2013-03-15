@@ -30,4 +30,14 @@
 
 		<execute function="Click#textClickAt" />
 	</function-command>
+
+	<function-command name="valueClickAtAndWait">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+
+		<execute selenium="clickAtAndWait" />
+	</function-command>
 </function-definition>

@@ -198,6 +198,10 @@ public class SeleniumBuilderFileUtil {
 		return TextFormatter.format(name, TextFormatter.I);
 	}
 
+	public boolean hasChildElement(Element element, String name) {
+		return (element.element(name) != null);
+	}
+
 	public String normalizeFileName(String fileName) {
 		return StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);

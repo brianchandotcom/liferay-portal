@@ -58,7 +58,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		destroy: function() {
 			tinyMCE.editors['<%= name %>'].destroy();
 
-			delete window['<%= name %>'];
+			window['<%= name %>'] = null;
 		},
 
 		focus: function() {
@@ -76,9 +76,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			if (typeof value == 'string') {
 				value = decodeURIComponent(value);
 			}
-			 else {
-				 value = '';
-			 }
+			else {
+				value = '';
+			}
 
 			window['<%= name %>'].setHTML(value);
 		},

@@ -100,7 +100,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				delete FCKeditorAPI.__Instances['<%= name %>'];
 			}
 
-			delete window['<%= name %>'];
+			window['<%= name %>'] = null;
 		},
 
 		focus: function() {

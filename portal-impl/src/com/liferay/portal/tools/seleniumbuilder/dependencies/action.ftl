@@ -49,6 +49,10 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 			</#list>
 
 			) throws Exception {
+				<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
+					target${i} = getTarget(target${i});
+				</#list>
+
 				<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(actionCommandElement, "function")>
 
 				<#list childElementAttributeValues as childElementAttributeValue>

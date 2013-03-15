@@ -28,6 +28,14 @@ public class BaseAction {
 		this.liferaySelenium = liferaySelenium;
 	}
 
+	protected String getTarget(String target) {
+		if (paths.containsKey(target)) {
+			return paths.get(target);
+		}
+
+		return target;
+	}
+
 	protected LiferaySelenium liferaySelenium;
 	protected Map<String, String> paths = new HashMap<String, String>();
 

@@ -200,6 +200,8 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		window,
 		'<portlet:namespace />search',
 		function() {
+			document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
+
 			var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
 
 			keywords = keywords.replace(/^\s+|\s+$/, '');

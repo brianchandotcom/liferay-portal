@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -28,6 +30,10 @@ import java.io.IOException;
 import java.io.Reader;
 
 import java.lang.reflect.Field;
+
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
@@ -74,6 +80,34 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 	@Override
 	public Resource getResource(
+			final String resourceName, final int resourceType,
+			final String encoding)
+		throws Exception, ParseErrorException, ResourceNotFoundException {
+
+		String[] macroTemplateIds = PropsUtil.getArray(
+			PropsKeys.VELOCITY_ENGINE_VELOCIMACRO_LIBRARY);
+
+		for (String macroTemplateId : macroTemplateIds) {
+			if (resourceName.equals(macroTemplateId)) {
+
+				// this resource is provided by the portal, so invoke it from an
+				// access controller
+
+				try {
+					return AccessController.doPrivileged(
+						new ResourceAction(
+							resourceName, resourceType, encoding));
+				}
+				catch (PrivilegedActionException e) {
+					throw (IOException)e.getException();
+				}
+			}
+		}
+
+		return doGetResource(resourceName, resourceType, encoding);
+	}
+
+	private Resource doGetResource(
 			final String resourceName, final int resourceType,
 			final String encoding)
 		throws Exception, ParseErrorException, ResourceNotFoundException {
@@ -179,6 +213,26 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		}
 
 		private Reader _reader;
+
+	}
+
+	public class ResourceAction implements PrivilegedExceptionAction<Resource> {
+
+		public ResourceAction(
+			String resourceName, int resourceType, String encoding) {
+
+			_resourceName = resourceName;
+			_resourceType = resourceType;
+			_encoding = encoding;
+		}
+
+		public Resource run() throws Exception {
+			return doGetResource(_resourceName, _resourceType, _encoding);
+		}
+
+		private String _encoding;
+		private String _resourceName;
+		private int _resourceType;
 
 	}
 

@@ -25,6 +25,10 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyconnections.AddMicroblogsContentViewableByConnectionsTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyconnections.SOUs_ViewMicroblogsContentViewableByConnectionsTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyconnections.ViewMicroblogsContentViewableByConnectionsTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

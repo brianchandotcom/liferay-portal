@@ -15,6 +15,12 @@
 package com.liferay.portalweb.socialofficehome.events.event.viewdeleteevented;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.AddEventSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.AddPageCalendarSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.AddPortletCalendarSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.TearDownEventSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.TearDownPageCalendarSOTest;
+import com.liferay.portalweb.socialofficehome.events.event.viewevented.ViewEventEDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

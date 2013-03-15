@@ -23,6 +23,7 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

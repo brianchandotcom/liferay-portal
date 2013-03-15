@@ -1,2 +1,10 @@
 <action-definition>
+	<action-command name="Click">
+		<case path="ADD_ENTRY">
+			<execute function="Click#valueClickAtAndWait" value="Add Blogs Entry" />
+		</case>
+		<case path="DELETE_ENTRY">
+			<execute function="Click#valueClickAtAndWait" value="Delete" />
+		</case>
+	</action-command>
 </action-definition>

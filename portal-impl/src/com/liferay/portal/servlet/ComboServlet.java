@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -100,8 +99,6 @@ public class ComboServlet extends HttpServlet {
 
 		modulePaths = modulePathsSet.toArray(new String[modulePathsSet.size()]);
 
-		ArrayUtil.reverse(modulePaths);
-
 		String modulePathsString = null;
 
 		byte[][] bytesArray = null;
@@ -137,11 +134,11 @@ public class ComboServlet extends HttpServlet {
 				minifierType = "js";
 			}
 
-			int length = modulePaths.length;
+			bytesArray = new byte[modulePaths.length][];
 
-			bytesArray = new byte[length][];
+			for (int i = 0; i < modulePaths.length; i++) {
+				String modulePath = modulePaths[i];
 
-			for (String modulePath : modulePaths) {
 				if (!validateModuleExtension(modulePath)) {
 					response.setHeader(
 						HttpHeaders.CACHE_CONTROL,
@@ -173,7 +170,7 @@ public class ComboServlet extends HttpServlet {
 						request, response, url, modulePath, minifierType);
 				}
 
-				bytesArray[--length] = bytes;
+				bytesArray[i] = bytes;
 			}
 
 			if ((modulePathsString != null) &&

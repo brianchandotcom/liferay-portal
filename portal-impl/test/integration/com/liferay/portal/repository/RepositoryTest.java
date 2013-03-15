@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryServiceUtil;
@@ -98,16 +99,17 @@ public class RepositoryTest {
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
-		long dlRepositoryId = RepositoryLocalServiceUtil.addRepository(
+		Repository dlRepository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
-		long[] repositoryIds = {dlRepositoryId};
+		long[] repositoryIds = {dlRepository.getRepositoryId()};
 
 		if (!hidden) {
-			repositoryIds = new long[] {defaultRepositoryId, dlRepositoryId};
+			repositoryIds = new long[] {
+				defaultRepositoryId, dlRepository.getRepositoryId()};
 		}
 
 		long[] fileEntryIds = new long[4];
@@ -208,26 +210,31 @@ public class RepositoryTest {
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		Repository[] repositories = new Repository[2];
 		long[] repositoryIds = new long[2];
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
-		repositoryIds[0] = RepositoryLocalServiceUtil.addRepository(
+		repositories[0] = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
+
+		repositoryIds[0] = repositories[0].getRepositoryId();
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
 			_group.getGroupId(), _group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
 			new ServiceContext());
 
-		repositoryIds[1] = RepositoryLocalServiceUtil.addRepository(
+		repositories[1] = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			dlFolder.getFolderId(), "Test 2", "Test 2",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
+
+		repositoryIds[1] = repositories[1].getRepositoryId();
 
 		if (hidden) {
 			Assert.assertEquals(

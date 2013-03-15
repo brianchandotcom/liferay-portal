@@ -37,7 +37,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
  */
 public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
-	public long addRepository(
+	public Repository addRepository(
 			long groupId, long classNameId, long parentFolderId, String name,
 			String description, String portletId,
 			UnicodeProperties typeSettingsProperties,

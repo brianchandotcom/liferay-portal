@@ -56,7 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
-	public long addRepository(
+	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
 			UnicodeProperties typeSettingsProperties, boolean hidden,
@@ -102,7 +102,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			}
 		}
 
-		return repositoryId;
+		return repository;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	 *             long, long, String, String, String, UnicodeProperties,
 	 *             boolean, ServiceContext)}
 	 */
-	public long addRepository(
+	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
 			UnicodeProperties typeSettingsProperties,

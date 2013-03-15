@@ -47,7 +47,7 @@ public class ViewWCWebContentScopeGlobalWCLTest extends BaseTestCase {
 				"//tr[contains(.,'WC WebContent Global Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
-		assertFalse(selenium.isTextPresent("WC WebContent Liferay Title"));
+		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 		assertFalse(selenium.isTextPresent("WC WebContent MySite Title"));
 	}
 }

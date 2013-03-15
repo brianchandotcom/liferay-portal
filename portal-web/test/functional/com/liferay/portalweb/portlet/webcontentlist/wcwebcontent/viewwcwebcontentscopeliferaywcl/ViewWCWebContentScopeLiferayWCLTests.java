@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl;
+package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeliferaywcl;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
@@ -24,7 +24,7 @@ import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwe
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
-import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletwclfiltersitescopeglobal.ConfigurePortletWCLFilterSiteScopeGlobalTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletwclfiltersitescopeliferay.ConfigurePortletWCLFilterSiteScopeLiferayTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWCWebContentScopeGlobalWCLTests extends BaseTestSuite {
+public class ViewWCWebContentScopeLiferayWCLTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCLTest.class);
@@ -40,8 +40,8 @@ public class ViewWCWebContentScopeGlobalWCLTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCWebContentScopeGlobalTest.class);
 		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(AddWCWebContentScopeMySiteTest.class);
-		testSuite.addTestSuite(ConfigurePortletWCLFilterSiteScopeGlobalTest.class);
-		testSuite.addTestSuite(ViewWCWebContentScopeGlobalWCLTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCLFilterSiteScopeLiferayTest.class);
+		testSuite.addTestSuite(ViewWCWebContentScopeLiferayWCLTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentScopeMySiteTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentScopeGlobalTest.class);

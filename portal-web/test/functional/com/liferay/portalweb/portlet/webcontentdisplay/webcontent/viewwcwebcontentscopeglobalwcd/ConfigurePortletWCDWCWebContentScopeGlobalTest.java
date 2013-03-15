@@ -51,18 +51,19 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForText("//div[@class='portlet-msg-info']/span",
-			"Please select a web content from the list below.");
+			"Please select web content from the list below.");
 		assertEquals(RuntimeVariables.replace(
-				"Please select a web content from the list below."),
+				"Please select web content from the list below."),
 			selenium.getText("//div[@class='portlet-msg-info']/span"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Global Title"),
 			selenium.getText(
 				"//td[@id='_86_ocerSearchContainer_col-title_row-1']/a"));
 		selenium.clickAt("//td[@id='_86_ocerSearchContainer_col-title_row-1']/a",
-			RuntimeVariables.replace("WC WebContent Title"));
+			RuntimeVariables.replace("WC WebContent Global Title"));
 		selenium.waitForText("//div[@class='portlet-msg-info']/span/span",
-			"WC WebContent Title (Modified)");
-		assertEquals(RuntimeVariables.replace("WC WebContent Title (Modified)"),
+			"WC WebContent Global Title (Modified)");
+		assertEquals(RuntimeVariables.replace(
+				"WC WebContent Global Title (Modified)"),
 			selenium.getText("//div[@class='portlet-msg-info']/span/span"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -71,7 +72,7 @@ public class ConfigurePortletWCDWCWebContentScopeGlobalTest extends BaseTestCase
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"Displaying Content: WC WebContent Title"),
+				"Displaying Content: WC WebContent Global Title"),
 			selenium.getText(
 				"//div[@class='portlet-msg-info']/span[@class='displaying-article-id-holder ']"));
 		selenium.selectFrame("relative=top");

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -37,14 +37,12 @@ public class ViewWCWebContentScopeLiferayWCLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Author"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[3]"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Liferay Title"),
-			selenium.getText(
-				"//tr[contains(.,'WC WebContent Liferay Title')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC WebContent Liferay Title')]/td[2]/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText(
-				"//tr[contains(.,'WC WebContent Liferay Title')]/td[3]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 		assertFalse(selenium.isTextPresent("WC WebContent Global Title"));

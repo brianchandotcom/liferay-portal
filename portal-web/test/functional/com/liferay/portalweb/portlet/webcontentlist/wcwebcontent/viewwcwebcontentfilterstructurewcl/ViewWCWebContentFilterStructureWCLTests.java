@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl;
+package com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentfilterstructurewcl;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplatestructure.addwctemplatestructure.AddWCTemplateStructureTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wctemplatestructure.addwctemplatestructure.TearDownWCTemplateStructureTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeglobal.AddWCWebContentScopeGlobalTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeglobal.TearDownWCWebContentScopeGlobalTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopemysite.AddWCWebContentScopeMySiteTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopemysite.TearDownWCWebContentScopeMySiteTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentstructure.AddWCWebContentStructureTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
 import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
-import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletwclfiltersitescopeglobal.ConfigurePortletWCLFilterSiteScopeGlobalTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.configureportletwclfilterstructure.ConfigurePortletWCLFilterStructureTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,19 +33,20 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewWCWebContentScopeGlobalWCLTests extends BaseTestSuite {
+public class ViewWCWebContentFilterStructureWCLTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCLTest.class);
 		testSuite.addTestSuite(AddPortletWCLTest.class);
-		testSuite.addTestSuite(AddWCWebContentScopeGlobalTest.class);
 		testSuite.addTestSuite(AddWCWebContentTest.class);
-		testSuite.addTestSuite(AddWCWebContentScopeMySiteTest.class);
-		testSuite.addTestSuite(ConfigurePortletWCLFilterSiteScopeGlobalTest.class);
-		testSuite.addTestSuite(ViewWCWebContentScopeGlobalWCLTest.class);
-		testSuite.addTestSuite(TearDownWCWebContentScopeMySiteTest.class);
+		testSuite.addTestSuite(AddWCStructureTest.class);
+		testSuite.addTestSuite(AddWCTemplateStructureTest.class);
+		testSuite.addTestSuite(AddWCWebContentStructureTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCLFilterStructureTest.class);
+		testSuite.addTestSuite(ViewWCWebContentFilterStructureWCLTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
-		testSuite.addTestSuite(TearDownWCWebContentScopeGlobalTest.class);
+		testSuite.addTestSuite(TearDownWCTemplateStructureTest.class);
+		testSuite.addTestSuite(TearDownWCStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

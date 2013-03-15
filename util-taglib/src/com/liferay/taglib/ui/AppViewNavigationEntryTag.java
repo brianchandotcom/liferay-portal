@@ -38,7 +38,7 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 		_browseUp = browseUp;
 	}
 
-	public void setCssClass(String cssClassName) {
+	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
 
@@ -111,7 +111,7 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-navigation-entry:browseUp", _browseUp);
 		request.setAttribute(
-			"liferay-ui:app-view-navigation-entry:cssClassName", _cssClassName);
+			"liferay-ui:app-view-navigation-entry:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:app-view-navigation-entry:dataExpand", _dataExpand);
 		request.setAttribute(

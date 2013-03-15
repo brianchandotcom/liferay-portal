@@ -195,7 +195,7 @@ else {
 					%>
 
 					<liferay-ui:app-view-navigation-entry
-						cssClassName="folder structure"
+						cssClass="folder structure"
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
 						iconImage="copy"
@@ -225,7 +225,7 @@ else {
 					%>
 
 					<liferay-ui:app-view-navigation-entry
-						cssClassName="folder structure"
+						cssClass="folder structure"
 						dataView="<%= dataView %>"
 						entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 						iconImage="copy"

@@ -216,7 +216,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						%>
 
 						<liferay-ui:app-view-navigation-entry
-							cssClassName="folder file-entry-type"
+							cssClass="folder file-entry-type"
 							dataView="<%= dataView %>"
 							entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
 							iconImage="copy"
@@ -247,7 +247,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						%>
 
 						<liferay-ui:app-view-navigation-entry
-							cssClassName="folder file-entry-type"
+							cssClass="folder file-entry-type"
 							dataView="<%= dataView %>"
 							entryTitle="<%= HtmlUtil.escape(fileEntryType.getName()) %>"
 							iconImage="copy"

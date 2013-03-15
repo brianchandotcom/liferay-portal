@@ -1307,7 +1307,11 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isXml(String s) {
-		if (s.startsWith(_XML_BEGIN) || s.startsWith(_XML_EMPTY)) {
+		s = s.trim();
+
+		if (s.startsWith(StringPool.LESS_THAN) &&
+			s.endsWith(StringPool.GREATER_THAN)) {
+
 			return true;
 		}
 		else {
@@ -1337,10 +1341,6 @@ public class Validator {
 	private static final String _VARIABLE_TERM_BEGIN = "[$";
 
 	private static final String _VARIABLE_TERM_END = "$]";
-
-	private static final String _XML_BEGIN = "<?xml";
-
-	private static final String _XML_EMPTY = "<root />";
 
 	private static Pattern _emailAddressPattern = Pattern.compile(
 		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +

@@ -54,6 +54,18 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 				<#list childElementAttributeValues as childElementAttributeValue>
 					${childElementAttributeValue}Function ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Function = new ${childElementAttributeValue}Function(liferaySelenium);
 				</#list>
+
+				<#if actionCommandElement.element("default")??>
+					<#assign defaultElement = actionCommandElement.element("default")>
+
+					<#assign functionElement = defaultElement.element("execute")>
+
+					<#assign functionName = actionCommandName>
+
+					<#include "function_element.ftl">
+
+					;
+				</#if>
 			}
 		</#list>
 	</#if>

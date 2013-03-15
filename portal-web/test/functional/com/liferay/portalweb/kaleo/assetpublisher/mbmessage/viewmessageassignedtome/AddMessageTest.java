@@ -43,29 +43,15 @@ public class AddMessageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_162_subject']",
 			RuntimeVariables.replace("Message Boards Message Subject"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_162_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_33_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_33_label' and .='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__162_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Message Boards Message Body"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_33_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_33_label' and .='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_162_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__162_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__162_editor']/iframe");
-		selenium.waitForText("//body", "Message Boards Message Body");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
+		selenium.selectFrame("relative=top");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

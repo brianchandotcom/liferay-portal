@@ -59,74 +59,29 @@
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_162_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@id='cke_33_label' and .='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@id='cke_33_label' and .='Source']</td>
-	<td>Source</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__unlink') and contains(@class,' cke_button_disabled')]</td>
+	<td>Unlink Button Disabled</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__162_editor']/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[@id='cke_contents__162_editor']/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Message Boards Message Body</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@id='cke_33_label' and .='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@id='cke_33_label' and .='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_162_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__162_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__162_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Message Boards Message Body</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Submit for Publication']</td>
 	<td>Submit for Publication</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>assertText</td>

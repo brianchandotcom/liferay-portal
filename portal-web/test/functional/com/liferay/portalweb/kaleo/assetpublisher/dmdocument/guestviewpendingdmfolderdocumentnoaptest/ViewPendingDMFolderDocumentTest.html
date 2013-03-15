@@ -172,14 +172,9 @@
 	<td>Automatically Extracted Metadata</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Encoding')]</td>
-	<td>Content Encoding ISO-8859-1</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div[contains(.,'Content Type')]</td>
-	<td>Content Type text/plain</td>
+	<td>assertPartialText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]</td>
+	<td>Content Type</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -188,27 +183,27 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//input[@value='Compare Versions']</td>
+	<td>//div[@id='_20_ocerSearchContainer']</td>
 	<td>Compare Versions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]</td>
+	<td>//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'1.0')]</td>
 	<td>1.0</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//tr[3]/td[3]</td>
+	<td>assertVisible</td>
+	<td>//tr[@class='results-row last portlet-section-alternate-hover']/td[2]</td>
 	<td>Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]</td>
+	<td>//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'0k')]</td>
 	<td>0k</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[5]</td>
+	<td>//tr[@class='results-row last portlet-section-alternate-hover']/td[contains(.,'Pending')]</td>
 	<td>Pending</td>
 </tr>
 </tbody></table>

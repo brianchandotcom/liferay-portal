@@ -50,67 +50,62 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[2]/a</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[3]/a</td>
 	<td>Message Boards Message</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[4]/a</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no pending tasks assigned to your roles.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]</td>
 	<td>Approve</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[3]/span/span/button</td>
+	<td>//span[@class='aui-toolbar-content']/button[contains(.,'OK')]</td>
 	<td>OK</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[3]/span/span/button</td>
+	<td>//span[@class='aui-toolbar-content']/button[contains(.,'OK')]</td>
 	<td>OK</td>
 </tr>
 <tr>
@@ -125,7 +120,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div</td>
 	<td>There are no pending tasks assigned to your roles.</td>
 </tr>
 <tr>
@@ -135,27 +130,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[1]/a</td>
 	<td>Review</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[2]/a</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[3]/a</td>
 	<td>Message Boards Message</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[4]/a</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[4]/a</td>
 	<td>Last Activity Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'Message Boards Message Subject')]/td[5]/a</td>
 	<td>Never</td>
 </tr>
 </tbody></table>

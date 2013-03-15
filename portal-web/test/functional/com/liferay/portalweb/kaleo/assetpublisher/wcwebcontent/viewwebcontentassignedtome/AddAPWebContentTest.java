@@ -47,29 +47,10 @@ public class AddAPWebContentTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_15_title_en_US']");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
-		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.typeFrame("//div[@id='cke_1_contents']/iframe",
 			RuntimeVariables.replace("Web Content Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", "Web Content Content");
-		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 		selenium.waitForElementPresent(

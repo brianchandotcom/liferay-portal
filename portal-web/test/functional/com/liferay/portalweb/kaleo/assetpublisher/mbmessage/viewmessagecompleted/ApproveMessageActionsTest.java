@@ -39,30 +39,34 @@ public class ApproveMessageActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
-		assertEquals(RuntimeVariables.replace(
-				"There are no pending tasks assigned to your roles."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a");
-		selenium.waitForVisible("//div[3]/span/span/button");
-		selenium.clickAt("//div[3]/span/span/button",
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Approve')]");
+		selenium.waitForVisible(
+			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
+		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -73,17 +77,23 @@ public class ApproveMessageActionsTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText(
+				"xPath=(//div[@id='workflowMyRolesTasksPanel'])/div[2]/div"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
 	}
 }

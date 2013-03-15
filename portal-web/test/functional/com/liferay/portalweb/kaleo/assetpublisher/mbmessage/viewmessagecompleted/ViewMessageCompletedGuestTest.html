@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h1/span[2]</td>
+	<td>//span[@class='portlet-title-text']</td>
 	<td>Asset Publisher</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3/a</td>
+	<td>//h3[@class='asset-title']</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertPartialText</td>
-	<td>//div[2]/a</td>
+	<td>//div[@class='asset-more']/a</td>
 	<td>Read More</td>
 </tr>
 <tr>
@@ -50,18 +50,23 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[2]/a</td>
+	<td>//div[@class='asset-more']/a</td>
 	<td>Read More</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[1]/h1/span</td>
+	<td>//h1[@class='header-title']/span</td>
 	<td>Message Boards Message Subject</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div/div/div/div[2]/div[1]</td>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
 	<td>Message Boards Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='user-name']</td>
+	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>
 </body>

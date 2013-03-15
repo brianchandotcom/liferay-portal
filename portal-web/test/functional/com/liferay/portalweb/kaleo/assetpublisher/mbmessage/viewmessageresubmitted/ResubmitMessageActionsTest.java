@@ -39,30 +39,37 @@ public class ResubmitMessageActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Update"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Message Boards Message Subject')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Resubmit')]/a");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]");
 		assertEquals(RuntimeVariables.replace("Resubmit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Resubmit')]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Resubmit')]/a");
-		selenium.waitForVisible("//div[3]/span/span/button");
-		selenium.clickAt("//div[3]/span/span/button",
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]");
+		selenium.waitForVisible(
+			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
+		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -86,13 +93,18 @@ public class ResubmitMessageActionsTest extends BaseTestCase {
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Review"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message Subject"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Message Boards Message"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
-			selenium.getText("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Message Boards Message Subject')]/td[5]/a"));
 	}
 }

@@ -30,9 +30,9 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("//section"));
 		assertEquals(RuntimeVariables.replace("Asset Publisher"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//h3/a"));
+			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='asset-summary']"));
 		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
@@ -42,8 +42,8 @@ public class ViewBlogsEntryCompletedGuestTest extends BaseTestCase {
 			RuntimeVariables.replace("Read More"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//div[1]/h1/span"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-			selenium.getText("//p"));
+			selenium.getText("//div[@class='asset-content']"));
 	}
 }

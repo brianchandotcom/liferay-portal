@@ -14,8 +14,11 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.service.ServiceContext;
+
+import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -196,6 +199,33 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals(
 			ServiceContext.class.getName(), jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testDontFailOnError() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/dont-fail-on-error/ids/1,2,3");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertArrayEquals(
+			new long[] {1, 2, 3}, (long[])jsonWebServiceAction.invoke());
+	}
+
+	@Test(expected = PortalException.class)
+	public void testFailOnError() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/fail-on-error/ids/1,2,3");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		try {
+			jsonWebServiceAction.invoke();
+		} catch (InvocationTargetException e) {
+			throw e.getTargetException();
+		}
 	}
 
 	@Test

@@ -34,7 +34,5 @@ public class N2_AssertMessageBoardsContentPresentTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent("link=Test Category 1"));
-		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
-			selenium.getText("//div[@id='content']/div[2]"));
 	}
 }

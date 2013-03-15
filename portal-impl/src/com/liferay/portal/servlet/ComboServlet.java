@@ -134,11 +134,11 @@ public class ComboServlet extends HttpServlet {
 				minifierType = "js";
 			}
 
-			int length = modulePaths.length;
+			bytesArray = new byte[modulePaths.length][];
 
-			bytesArray = new byte[length][];
+			for (int i = 0; i < modulePaths.length; i++) {
+				String modulePath = modulePaths[i];
 
-			for (String modulePath : modulePaths) {
 				if (!validateModuleExtension(modulePath)) {
 					response.setHeader(
 						HttpHeaders.CACHE_CONTROL,
@@ -170,7 +170,7 @@ public class ComboServlet extends HttpServlet {
 						request, response, url, modulePath, minifierType);
 				}
 
-				bytesArray[--length] = bytes;
+				bytesArray[i] = bytes;
 			}
 
 			if ((modulePathsString != null) &&

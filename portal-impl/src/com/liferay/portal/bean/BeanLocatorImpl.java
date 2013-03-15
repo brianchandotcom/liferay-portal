@@ -71,9 +71,14 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
-	public <T> Map<String, T> locate(Class<T> clazz) {
+	public <T> Map<String, T> locate(Class<T> clazz)
+		throws BeanLocatorException {
+
 		try {
-			return _applicationContext.getBeansOfType(clazz);
+			return doLocate(clazz);
+		}
+		catch (SecurityException se) {
+			throw se;
 		}
 		catch (Exception e) {
 			throw new BeanLocatorException(e);
@@ -117,6 +122,16 @@ public class BeanLocatorImpl implements BeanLocator {
 		_paclServletContextName = paclServletContextName;
 	}
 
+	/**
+	 * This method ensures the calls stack is the proper length.
+	 */
+	protected <T> Map<String, T> doLocate(Class<T> clazz) throws Exception {
+		PortalRuntimePermission.checkGetBeanProperty(
+			_paclServletContextName, clazz);
+
+		return _applicationContext.getBeansOfType(clazz);
+	}
+
 	protected Object doLocate(String name) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Locating " + name);
@@ -127,6 +142,8 @@ public class BeanLocatorImpl implements BeanLocator {
 				_paclServletContextName);
 		}
 
+		Object bean = null;
+
 		if (name.endsWith(VELOCITY_SUFFIX)) {
 			Object velocityBean = _velocityBeans.get(name);
 
@@ -134,19 +151,29 @@ public class BeanLocatorImpl implements BeanLocator {
 				String originalName = name.substring(
 					0, name.length() - VELOCITY_SUFFIX.length());
 
-				Object bean = _applicationContext.getBean(originalName);
+				Object curBean = _applicationContext.getBean(originalName);
 
 				velocityBean = ProxyUtil.newProxyInstance(
-					_classLoader, getInterfaces(bean),
-					new VelocityBeanHandler(bean, _classLoader));
+					_classLoader, getInterfaces(curBean),
+					new VelocityBeanHandler(curBean, _classLoader));
 
 				_velocityBeans.put(name, velocityBean);
 			}
 
-			return velocityBean;
+			bean = velocityBean;
+		}
+		else {
+			bean = _applicationContext.getBean(name);
 		}
 
-		return _applicationContext.getBean(name);
+		if (bean == null) {
+			return bean;
+		}
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			_paclServletContextName, bean.getClass());
+
+		return bean;
 	}
 
 	protected void getInterfaces(

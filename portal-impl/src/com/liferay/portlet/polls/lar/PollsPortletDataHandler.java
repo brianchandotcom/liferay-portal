@@ -17,10 +17,9 @@ package com.liferay.portlet.polls.lar;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
-import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.portlet.polls.service.persistence.PollsQuestionUtil;
 
@@ -84,9 +83,10 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		for (PollsQuestion question : questions) {
-			exportQuestion(
-				portletDataContext, questionsElement, choicesElement,
-				votesElement, question);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext,
+				new Element[] {questionsElement, choicesElement, votesElement},
+				question);
 		}
 
 		return rootElement.formattedString();
@@ -107,47 +107,23 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		Element questionsElement = rootElement.element("questions");
 
 		for (Element questionElement : questionsElement.elements("question")) {
-			String path = questionElement.attributeValue("path");
-
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			PollsQuestion question =
-				(PollsQuestion)portletDataContext.getZipEntryAsObject(path);
-
-			importQuestion(portletDataContext, questionElement, question);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, questionElement);
 		}
 
 		Element choicesElement = rootElement.element("choices");
 
 		for (Element choiceElement : choicesElement.elements("choice")) {
-			String path = choiceElement.attributeValue("path");
-
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			PollsChoice choice =
-				(PollsChoice)portletDataContext.getZipEntryAsObject(path);
-
-			importChoice(portletDataContext, choice);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, choiceElement);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "votes")) {
 			Element votesElement = rootElement.element("votes");
 
 			for (Element voteElement : votesElement.elements("vote")) {
-				String path = voteElement.attributeValue("path");
-
-				if (!portletDataContext.isPathNotProcessed(path)) {
-					continue;
-				}
-
-				PollsVote vote =
-					(PollsVote)portletDataContext.getZipEntryAsObject(path);
-
-				importVote(portletDataContext, vote);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, voteElement);
 			}
 		}
 

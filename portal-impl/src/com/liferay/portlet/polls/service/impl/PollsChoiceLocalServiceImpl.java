@@ -21,7 +21,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.QuestionChoiceException;
 import com.liferay.portlet.polls.model.PollsChoice;
-import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -41,8 +40,6 @@ public class PollsChoiceLocalServiceImpl
 		validate(name, description);
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
-			questionId);
 		Date now = new Date();
 
 		long choiceId = counterLocalService.increment();
@@ -50,7 +47,7 @@ public class PollsChoiceLocalServiceImpl
 		PollsChoice choice = pollsChoicePersistence.create(choiceId);
 
 		choice.setUuid(serviceContext.getUuid());
-		choice.setGroupId(question.getGroupId());
+		choice.setGroupId(serviceContext.getScopeGroupId());
 		choice.setCompanyId(user.getCompanyId());
 		choice.setUserId(user.getUserId());
 		choice.setUserName(user.getFullName());

@@ -40,7 +40,8 @@ public class WikiPageTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWikiFrontPageChildPageSiteTests.suite());
 		testSuite.addTest(AddWikiFrontPageCommentSiteTests.suite());
 		testSuite.addTest(AddWikiFrontPageSiteTests.suite());
-		testSuite.addTest(EditPermissionsFrontPageChildPageGuestNoViewTests.suite());
+		testSuite.addTest(
+			EditPermissionsFrontPageChildPageGuestNoViewTests.suite());
 		testSuite.addTest(RateWikiFrontPageSiteTests.suite());
 		testSuite.addTest(SaveAsDraftWikiFrontPageSiteTests.suite());
 

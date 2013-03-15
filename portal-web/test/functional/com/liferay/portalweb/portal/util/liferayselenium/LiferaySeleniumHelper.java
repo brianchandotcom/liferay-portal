@@ -532,7 +532,7 @@ public class LiferaySeleniumHelper {
 			}
 
 			try {
-				if (!liferaySelenium.isTextPresent(value)) {
+				if (liferaySelenium.isTextNotPresent(value)) {
 					break;
 				}
 			}

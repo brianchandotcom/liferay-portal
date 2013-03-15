@@ -16,11 +16,11 @@ package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.model.PollsVote;
@@ -44,55 +44,51 @@ public class PollsQuestionStagedModelDataHandler
 		return PollsQuestion.class.getName();
 	}
 
-	protected static String getQuestionPath(
-		PortletDataContext portletDataContext, PollsQuestion question) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(portletDataContext.getPortletPath(PortletKeys.POLLS));
-		sb.append("/questions/");
-		sb.append(question.getQuestionId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Element[] elements,
 			PollsQuestion question)
 		throws Exception {
 
-		if (!portletDataContext.isWithinDateRange(question.getModifiedDate())) {
-			return;
-		}
+		Element choicesElement = null;
 
-		String path = getQuestionPath(portletDataContext, question);
+		if (elements.length > 1) {
+			choicesElement = elements[1];
 
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		Element questionElement = questionsElement.addElement("question");
-
-		List<PollsChoice> choices = PollsChoiceUtil.findByQuestionId(
-			question.getQuestionId());
-
-		for (PollsChoice choice : choices) {
-			exportChoice(portletDataContext, choicesElement, choice);
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "votes")) {
-			List<PollsVote> votes = PollsVoteUtil.findByQuestionId(
+			List<PollsChoice> choices = PollsChoiceUtil.findByQuestionId(
 				question.getQuestionId());
 
-			for (PollsVote vote : votes) {
-				exportVote(portletDataContext, votesElement, vote);
+			for (PollsChoice choice : choices) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, choicesElement, choice);
+			}
+
+			Element votesElement = null;
+
+			if (elements.length > 2) {
+				votesElement = elements[2];
+
+				if (portletDataContext.getBooleanParameter(
+						PollsPortletDataHandler.NAMESPACE, "votes")) {
+
+					List<PollsVote> votes = PollsVoteUtil.findByQuestionId(
+						question.getQuestionId());
+
+					for (PollsVote vote : votes) {
+						StagedModelDataHandlerUtil.exportStagedModel(
+							portletDataContext, votesElement, vote);
+					}
+				}
 			}
 		}
 
+		Element questionsElement = elements[0];
+
+		Element questionElement = questionsElement.addElement("question");
+
 		portletDataContext.addClassedModel(
-			questionElement, path, question, NAMESPACE);
+			questionElement, StagedModelPathUtil.getPath(question), question,
+			PollsPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -130,7 +126,7 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			questionElement, question, NAMESPACE);
+			path, question, PollsPortletDataHandler.NAMESPACE);
 
 		PollsQuestion importedQuestion = null;
 
@@ -164,7 +160,7 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			question, importedQuestion, NAMESPACE);
+			question, importedQuestion, PollsPortletDataHandler.NAMESPACE);
 	}
 
 }

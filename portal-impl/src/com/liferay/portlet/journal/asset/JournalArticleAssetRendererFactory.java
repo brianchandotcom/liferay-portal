@@ -116,6 +116,17 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public Map<String, Map<String, String>> getClassTypeFieldNames(
+			long classTypeId, Locale locale)
+		throws Exception {
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(classTypeId);
+
+		return filterDDMStructureFields(ddmStructure, locale);
+	}
+
+	@Override
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
 		throws Exception {
 

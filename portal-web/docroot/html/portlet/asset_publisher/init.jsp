@@ -86,13 +86,16 @@ boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType"
 
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(preferences, availableClassNameIds);
 
-long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
+long[] classTypeIds = GetterUtil.getLongValues(preferences.getValues("classTypeIds", null));
 
 String customUserAttributes = GetterUtil.getString(preferences.getValue("customUserAttributes", StringPool.BLANK));
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 String[] allAssetTagNames = new String[0];
+
+String ddmStructureFieldName = StringPool.BLANK;
+String ddmStructureFieldValue = StringPool.BLANK;
 
 if (selectionStyle.equals("dynamic")) {
 	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
@@ -105,6 +108,16 @@ if (selectionStyle.equals("dynamic")) {
 	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
 
 	assetEntryQuery.setClassTypeIds(classTypeIds);
+
+	if ((classNameIds.length == 1) && (classTypeIds.length == 1)) {
+		ddmStructureFieldName = GetterUtil.getString(preferences.getValue("ddmStructureFieldName", StringPool.BLANK));
+		ddmStructureFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureFieldValue", StringPool.BLANK));
+
+		if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
+			assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+			assetEntryQuery.setAttribute("ddmStructureFieldName", ddmStructureFieldName);
+		}
+	}
 
 	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }

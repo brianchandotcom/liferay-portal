@@ -171,11 +171,11 @@
 		margin-right: 10px;
 	}
 
-    .subscribe-action {
-        float: right;
-        margin-right: 10px;
-        margin-top: -30px;
-        text-align: right
+	.subscribe-action {
+		float: right;
+		margin-right: 10px;
+		margin-top: -30px;
+		text-align: right
     }
 
 	.taglib-asset-categories-summary {
@@ -277,6 +277,14 @@
 
 	.asset-subtype {
 		margin-left: 2em;
+	}
+
+	.asset-subtypefields {
+		margin-left: 4em;
+	}
+
+	.asset-subtypefield-selected {
+		margin-left: 6em;
 	}
 
 	.select-asset-selector {

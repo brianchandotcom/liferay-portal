@@ -34,10 +34,12 @@ import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +83,26 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public Map<String, Map<String, String>> getClassTypeFieldNames(
+			long classTypeId, Locale locale)
+		throws Exception {
+
+		Map<String, Map<String, String>> filterFields =
+			new HashMap<String, Map<String, String>>();
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(classTypeId);
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			filterFields.putAll(filterDDMStructureFields(ddmStructure, locale));
+		}
+
+		return filterFields;
 	}
 
 	@Override

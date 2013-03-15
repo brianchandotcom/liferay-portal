@@ -18,13 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,6 +74,13 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getClassNameId(_className);
 	}
 
+	public Map<String, Map<String, String>> getClassTypeFieldNames(
+			long classTypeId, Locale locale)
+		throws Exception {
+
+		return null;
+	}
+
 	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
 		throws Exception {
 
@@ -98,6 +111,21 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return null;
 	}
 
+	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
+		throws Exception {
+
+		Map<String, Map<String, String>> classTypeFieldNames =
+			getClassTypeFieldNames(classTypeId, locale);
+
+		if ((classTypeFieldNames == null) ||
+			(classTypeFieldNames.size() <= 0)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
@@ -123,6 +151,35 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+	}
+
+	protected Map<String, Map<String, String>> filterDDMStructureFields(
+			DDMStructure ddmStructure, Locale locale)
+		throws Exception {
+
+		Map<String, Map<String, String>> filterFields =
+			new HashMap<String, Map<String, String>>();
+
+		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
+			LocaleUtil.toLanguageId(locale));
+
+		for (Map<String, String> fieldMap : fieldsMap.values()) {
+			String indexType = fieldMap.get("indexType");
+			boolean isPrivate = GetterUtil.getBoolean(fieldMap.get("private"));
+
+			if (Validator.isNull(indexType) || isPrivate) {
+				continue;
+			}
+
+			String name = fieldMap.get("name");
+
+			String encodeFieldName = DDMIndexerUtil.encodeName(
+				ddmStructure.getStructureId(), name, locale);
+
+			filterFields.put(encodeFieldName, fieldMap);
+		}
+
+		return filterFields;
 	}
 
 	protected long getControlPanelPlid(ThemeDisplay themeDisplay)

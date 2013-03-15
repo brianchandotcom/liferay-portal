@@ -511,6 +511,7 @@ public abstract class BaseAssetSearchTestCase {
 		testClassNames(assetEntryQuery, 0);
 	}
 
+	@Test
 	public void testClassTypeIds1() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -519,6 +520,7 @@ public abstract class BaseAssetSearchTestCase {
 		testClassTypeIds(assetEntryQuery, true);
 	}
 
+	@Test
 	public void testClassTypeIds2() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(

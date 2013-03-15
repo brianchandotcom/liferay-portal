@@ -57,6 +57,10 @@ public interface AssetRendererFactory {
 
 	public long getClassNameId();
 
+	public Map<String, Map<String, String>> getClassTypeFieldNames(
+			long classTypeId, Locale locale)
+		throws Exception;
+
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
 		throws Exception;
 
@@ -72,6 +76,9 @@ public interface AssetRendererFactory {
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException;
+
+	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
+		throws Exception;
 
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long entryClassPK,

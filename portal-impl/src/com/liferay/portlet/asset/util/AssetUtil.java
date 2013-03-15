@@ -363,6 +363,20 @@ public class AssetUtil {
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
+		String ddmStructureFieldValue = (String)assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
+			"ddmStructureFieldName");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+		}
+
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());

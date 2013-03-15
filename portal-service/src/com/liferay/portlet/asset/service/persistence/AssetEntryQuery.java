@@ -33,9 +33,13 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -76,6 +80,7 @@ public class AssetEntryQuery {
 	}
 
 	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
+		setAttributes(assetEntryQuery.getAttributes());
 		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
 		setAllTagIdsArray(assetEntryQuery.getAllTagIdsArray());
 		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
@@ -110,6 +115,8 @@ public class AssetEntryQuery {
 		throws PortalException, SystemException {
 
 		this();
+
+		_attributes = new HashMap<String, Serializable>();
 
 		setClassNameIds(classNameIds);
 		_start = searchContainer.getStart();
@@ -197,6 +204,18 @@ public class AssetEntryQuery {
 
 	public long[] getAnyTagIds() {
 		return _anyTagIds;
+	}
+
+	public Serializable getAttribute(String name) {
+		if (_attributes == null) {
+			return null;
+		}
+
+		return _attributes.get(name);
+	}
+
+	public Map<String, Serializable> getAttributes() {
+		return _attributes;
 	}
 
 	public long[] getClassNameIds() {
@@ -335,6 +354,18 @@ public class AssetEntryQuery {
 		_anyTagIds = anyTagIds;
 
 		_toString = null;
+	}
+
+	public void setAttribute(String name, Serializable value) {
+		if (_attributes == null) {
+			_attributes = new HashMap<String, Serializable>();
+		}
+
+		_attributes.put(name, value);
+	}
+
+	public void setAttributes(Map<String, Serializable> attributes) {
+		_attributes = attributes;
 	}
 
 	public void setClassName(String className) {
@@ -612,6 +643,7 @@ public class AssetEntryQuery {
 	private long[][] _allTagIdsArray = new long[0][];
 	private long[] _anyCategoryIds = new long[0];
 	private long[] _anyTagIds = new long[0];
+	private Map<String, Serializable> _attributes;
 	private long[] _classNameIds = new long[0];
 	private long[] _classTypeIds = new long[0];
 	private String _description;

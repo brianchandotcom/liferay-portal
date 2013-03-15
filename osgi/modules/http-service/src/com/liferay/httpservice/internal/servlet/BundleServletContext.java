@@ -691,6 +691,35 @@ public class BundleServletContext extends LiferayServletContext {
 		}
 	}
 
+	@Override
+	public void setAttribute(String name, Object value) {
+		if (name.equals(JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR) ||
+			name.equals(PluginContextListener.PLUGIN_CLASS_LOADER)) {
+
+			return;
+		}
+
+		Object originalValue = _contextAttributes.get(name);
+
+		_contextAttributes.put(name, value);
+
+		for (ServletContextAttributeListener servletContextAttributeListener :
+				_servletContextAttributeListeners) {
+
+			ServletContextAttributeEvent servletContextAttributeEvent =
+				new ServletContextAttributeEvent(this, name, value);
+
+			if (originalValue != null) {
+				servletContextAttributeListener.attributeReplaced(
+					servletContextAttributeEvent);
+			}
+			else {
+				servletContextAttributeListener.attributeAdded(
+					servletContextAttributeEvent);
+			}
+		}
+	}
+
 	public void setServletContextName(String servletContextName) {
 		_servletContextName = servletContextName;
 	}

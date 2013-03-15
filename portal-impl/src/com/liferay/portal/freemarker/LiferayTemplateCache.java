@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -33,6 +35,10 @@ import freemarker.template.Template;
 import java.io.IOException;
 
 import java.lang.reflect.Method;
+
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 import java.util.Locale;
 
@@ -64,6 +70,39 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	@Override
 	public Template getTemplate(
+			String templateId, Locale locale, String encoding, boolean parse)
+		throws IOException {
+
+		String[] macroTemplateIds = PropsUtil.getArray(
+			PropsKeys.FREEMARKER_ENGINE_MACRO_LIBRARY);
+
+		for (String macroTemplateId : macroTemplateIds) {
+			int pos = macroTemplateId.indexOf(" as ");
+
+			if (pos != -1) {
+				macroTemplateId = macroTemplateId.substring(0, pos);
+			}
+
+			if (templateId.equals(macroTemplateId)) {
+
+				// this template is provided by the portal, so invoke it from an
+				// access controller
+
+				try {
+					return AccessController.doPrivileged(
+						new TemplateAction(
+							macroTemplateId, locale, encoding, parse));
+				}
+				catch (PrivilegedActionException e) {
+					throw (IOException)e.getException();
+				}
+			}
+		}
+
+		return doGetTemplate(templateId, locale, encoding, parse);
+	}
+
+	private Template doGetTemplate(
 			String templateId, Locale locale, String encoding, boolean parse)
 		throws IOException {
 
@@ -131,5 +170,27 @@ public class LiferayTemplateCache extends TemplateCache {
 	private Configuration _configuration;
 	private Method _normalizeNameMethod;
 	private PortalCache<TemplateResource, Object> _portalCache;
+
+	public class TemplateAction implements PrivilegedExceptionAction<Template> {
+
+		public TemplateAction(
+			String templateId, Locale locale, String encoding, boolean parse) {
+
+			_templateId = templateId;
+			_locale = locale;
+			_encoding = encoding;
+			_parse = parse;
+		}
+
+		public Template run() throws Exception {
+			return doGetTemplate(_templateId, _locale, _encoding, _parse);
+		}
+
+		private String _encoding;
+		private Locale _locale;
+		private boolean _parse;
+		private String _templateId;
+
+	}
 
 }

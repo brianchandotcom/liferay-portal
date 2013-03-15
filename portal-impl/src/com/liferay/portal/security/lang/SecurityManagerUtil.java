@@ -15,12 +15,8 @@
 package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.PortalSecurityManagerImpl;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,20 +55,6 @@ public class SecurityManagerUtil {
 
 			System.setSecurityManager(null);
 		}
-	}
-
-	public static void initPolicy(
-		String servletContextName, ClassLoader classLoader,
-		Properties properties) {
-
-		if (isDefault() || isNone()) {
-			return;
-		}
-
-		PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
-			servletContextName, classLoader, properties);
-
-		PACLPolicyManager.register(classLoader, paclPolicy);
 	}
 
 	public static boolean isDefault() {
@@ -129,14 +111,6 @@ public class SecurityManagerUtil {
 		}
 
 		return false;
-	}
-
-	public static void unregister(ClassLoader classLoader) {
-		if (isDefault() || isNone()) {
-			return;
-		}
-
-		PACLPolicyManager.unregister(classLoader);
 	}
 
 	private static PortalSecurityManager _portalSecurityManager;

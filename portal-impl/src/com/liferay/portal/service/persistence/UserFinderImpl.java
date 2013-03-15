@@ -286,9 +286,7 @@ public class UserFinderImpl
 
 				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
 
-				for (int i = 0; i < userGroups.size(); i++) {
-					UserGroup userGroup = userGroups.get(i);
-
+				for (UserGroup userGroup : userGroups) {
 					userGroupIds.add(userGroup.getUserGroupId());
 				}
 			}
@@ -561,9 +559,7 @@ public class UserFinderImpl
 
 				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
 
-				for (int i = 0; i < userGroups.size(); i++) {
-					UserGroup userGroup = userGroups.get(i);
-
+				for (UserGroup userGroup : userGroups) {
 					userGroupIds.add(userGroup.getUserGroupId());
 				}
 			}

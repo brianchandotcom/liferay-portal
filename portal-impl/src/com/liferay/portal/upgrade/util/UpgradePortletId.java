@@ -191,7 +191,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			"update ResourceAction set name = '" + newRootPortletId +
 				"' where name = '" + oldRootPortletId + "'");
 
-		updateResourcePermission(oldRootPortletId, newRootPortletId);
+		updateResourcePermission(oldRootPortletId, newRootPortletId, true);
 
 		updateInstanceablePortletPreferences(
 			oldRootPortletId, newRootPortletId);
@@ -245,7 +245,8 @@ public class UpgradePortletId extends UpgradeProcess {
 	}
 
 	protected void updateResourcePermission(
-			String oldRootPortletId, String newRootPortletId)
+			String oldRootPortletId, String newRootPortletId,
+			boolean updateName)
 		throws Exception {
 
 		Connection con = null;
@@ -267,8 +268,13 @@ public class UpgradePortletId extends UpgradeProcess {
 				String name = rs.getString("name");
 				String primKey = rs.getString("primKey");
 
-				String newName = StringUtil.replace(
-					name, oldRootPortletId, newRootPortletId);
+				String newName = name;
+
+				if (updateName) {
+					newName = StringUtil.replace(
+						name, oldRootPortletId, newRootPortletId);
+				}
+
 				String newPrimKey = StringUtil.replace(
 					primKey, oldRootPortletId, newRootPortletId);
 

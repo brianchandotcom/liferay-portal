@@ -41,11 +41,10 @@ AUI.add(
 							function(event) {
 								var showMenu = event.type == 'showNavigationMenu';
 
+								instance._lastShownMenu = null;
+
 								if (showMenu) {
 									instance._lastShownMenu = event.menu;
-								}
-								else {
-									instance._lastShownMenu = null;
 								}
 
 								event.menu.toggleClass('hover', showMenu);

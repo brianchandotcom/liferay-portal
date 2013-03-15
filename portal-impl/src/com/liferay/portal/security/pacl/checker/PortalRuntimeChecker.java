@@ -39,6 +39,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		initClassLoaderReferenceIds();
 		initExpandoBridgeClassNames();
 		initGetBeanPropertyClassNames();
+		initPortletBagPoolPortletIds();
 		initSearchEngineIds();
 		initSetBeanPropertyClassNames();
 		initThreadPoolExecutorNames();
@@ -82,6 +83,10 @@ public class PortalRuntimeChecker extends BaseChecker {
 			if (Validator.isNotNull(property)) {
 				value = value + StringPool.POUND + property;
 			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL)) {
+			key = "security-manager-portlet-bag-pool-portlet-ids";
+			value = (String)subject;
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
 			key = "security-manager-search-engine-ids";
@@ -159,6 +164,18 @@ public class PortalRuntimeChecker extends BaseChecker {
 				logSecurityException(
 					_log, "Attempted to get class loader " +
 						classLoaderReferenceId);
+
+				return false;
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL)) {
+			String portletId = (String)subject;
+
+			if (!hasPortletBagPoolPortletId(portletId)) {
+				logSecurityException(
+					_log,
+					"Attempted to handle portlet bag pool portlet ID " +
+						portletId);
 
 				return false;
 			}
@@ -250,6 +267,20 @@ public class PortalRuntimeChecker extends BaseChecker {
 		return false;
 	}
 
+	protected boolean hasPortletBagPoolPortletId(String portletId) {
+		for (Pattern portletBagPoolPortletIdPattern :
+				_portletBagPoolPortletIdPatterns) {
+
+			Matcher matcher = portletBagPoolPortletIdPattern.matcher(portletId);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean hasThreadPoolExecutorNames(
 		String threadPoolExecutorName) {
 
@@ -311,6 +342,28 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initPortletBagPoolPortletIds() {
+		Set<String> portletBagPoolPortletIds = getPropertySet(
+			"security-manager-portlet-bag-pool-portlet-ids");
+
+		_portletBagPoolPortletIdPatterns = new ArrayList<Pattern>(
+			portletBagPoolPortletIds.size());
+
+		for (String portletBagPoolPortletId : portletBagPoolPortletIds) {
+			Pattern portletBagPoolPortletIdPattern = Pattern.compile(
+				portletBagPoolPortletId);
+
+			_portletBagPoolPortletIdPatterns.add(
+				portletBagPoolPortletIdPattern);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Allowing portlet bag pool portlet IDs that match the " +
+						"regular expression " + portletBagPoolPortletId);
+			}
+		}
+	}
+
 	protected void initSearchEngineIds() {
 		_searchEngineIds = getPropertySet("security-manager-search-engine-ids");
 
@@ -363,6 +416,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 	private Set<String> _classLoaderReferenceIds;
 	private Set<String> _expandoBridgeClassNames;
 	private Set<String> _getBeanPropertyClassNames;
+	private List<Pattern>  _portletBagPoolPortletIdPatterns;
 	private Set<String> _searchEngineIds;
 	private Set<String> _setBeanPropertyClassNames;
 	private List<Pattern> _threadPoolExecutorNamePatterns;

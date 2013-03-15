@@ -168,9 +168,10 @@ public class PortalPolicy extends Policy {
 	public boolean implies(
 		ProtectionDomain protectionDomain, Permission permission) {
 
-		if ((protectionDomain.getClassLoader() == null) ||
-			!PACLPolicyManager.isActive()||
-			!_paclPolicy.isCheckablePermission(permission)) {
+		if ((!(permission instanceof PACLUtil.Permission)) &&
+			((protectionDomain.getClassLoader() == null) ||
+			 !PACLPolicyManager.isActive() ||
+			 !_paclPolicy.isCheckablePermission(permission))) {
 
 			return _checkWithParentPolicy(protectionDomain, permission);
 		}

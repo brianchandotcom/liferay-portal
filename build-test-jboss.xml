@@ -47,4 +47,112 @@
 
 		<antcall target="stop-selenium" />
 	</target>
+
+	<target name="run-selenium-versioned-jboss">
+
+		<if>
+			<equals arg1="${lp.version}" arg2="6.1.1" />
+			<then>
+				<property name="file.dir" value="6.1.1-ga2" />
+			</then>
+			<else>
+				<property name="file.dir" value="${lp.version}" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
+					targetfile="${app.server.parent.dir}/${file.name}"
+				/>
+			</not>
+			<then>
+				<copy
+					file="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
+					todir="${app.server.parent.dir}"
+				/>
+			</then>
+		</if>
+
+		<unzip src="${app.server.parent.dir}/${file.name}" dest="${app.server.parent.dir}" />
+		
+		<antcall target="revert-test-properties" />
+		
+		<antcall target="prepare-versioned-mysql" inheritAll="false"> 
+			<param name="app.server.jboss.dir" value="${app.server.parent.dir}/${bundled.dir.name}" />
+			<param name="app.server.type" value="jboss" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${lp.version}" />
+		</antcall>
+		
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
+
+<echo file="${app.server.parent.dir}/${bundled.dir.name}/modules/com/liferay/portal/main/module.xml">&lt;?xml version="1.0"?&gt;
+&lt;module name="com.liferay.portal" xmlns="urn:jboss:module:1.0"&gt;
+		&lt;resources&gt;
+			&lt;resource-root path="hsql.jar" /&gt;
+			&lt;resource-root path="jtds.jar" /&gt;
+			&lt;resource-root path="mysql.jar" /&gt;
+			&lt;resource-root path="portal-service.jar" /&gt;
+			&lt;resource-root path="portlet.jar" /&gt;
+			&lt;resource-root path="postgresql.jar" /&gt;
+		&lt;/resources&gt;
+		&lt;dependencies&gt;
+			&lt;module name="javax.api" /&gt;
+			&lt;module name="javax.mail.api" /&gt;
+			&lt;module name="javax.servlet.api" /&gt;
+			&lt;module name="javax.servlet.jsp.api" /&gt;
+			&lt;module name="javax.transaction.api" /&gt;
+		&lt;/dependencies&gt;
+&lt;/module&gt;</echo>
+
+		<delete dir="${user.home}/liferay" />
+		<if>
+			<or>
+				<equals arg1="${lp.version}" arg2="5.2.5" />
+				<equals arg1="${lp.version}" arg2="5.2.7" />
+				<equals arg1="${lp.version}" arg2="5.2.8" />
+			</or>
+			<then>
+				<copy
+					file="${hudson.license.dependencies.dir}/${lp.version}/license"
+					todir="${user.home}/liferay"
+				/>
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="${lp.version}" arg2="5.2.9" />
+					<equals arg1="${lp.version}" arg2="6.0.10" />
+					<equals arg1="${lp.version}" arg2="6.0.11" />
+					<equals arg1="${lp.version}" arg2="6.0.12" />
+					<equals arg1="${lp.version}" arg2="6.1.10" />
+					<equals arg1="${lp.version}" arg2="6.1.20" />
+				</or>
+				<then>
+					<copy
+						todir="${user.home}/liferay/deploy">
+							<fileset
+								dir="${hudson.license.dependencies.dir}/${lp.version}"
+								includes="license-portal-*.xml"
+						/>
+					</copy>
+				</then>
+			</elseif>
+		</if>
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-jboss" inheritAll="false">
+
+			<param name="test.class" value="${test.name}" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${lp.version}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+
+		<delete file="app.server.${user.name}.properties" failonerror="false" />
+	</target>
 </project>

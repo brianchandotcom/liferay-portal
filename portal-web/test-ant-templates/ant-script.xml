@@ -4,7 +4,11 @@
 	<import file="../../build-test.xml" />
 
 	<propertycopy name="db-upgrade.bundled.tomcat.dir.name" from="db-upgrade.$${lp.version}.bundled.tomcat.dir.name" silent="true" />
+	<propertycopy name="db-upgrade.bundled.glassfish.dir.name" from="db-upgrade.$${lp.version}.bundled.glassfish.dir.name" silent="true" />
+	<propertycopy name="db-upgrade.bundled.jboss.dir.name" from="db-upgrade.$${lp.version}.bundled.jboss.dir.name" silent="true" />
 	<propertycopy name="db-upgrade.file.name" from="db-upgrade.$${lp.version}.file.name" silent="true" />
+	<propertycopy name="db-upgrade.glassfish.file.name" from="db-upgrade.$${lp.version}.glassfish.file.name" silent="true" />
+	<propertycopy name="db-upgrade.jboss.file.name" from="db-upgrade.$${lp.version}.jboss.file.name" silent="true" />
 	<propertycopy name="db-upgrade.plugins.dir" from="db-upgrade.$${lp.version}.plugins.dir" silent="true" />
 
 	<if>
@@ -148,6 +152,34 @@
 		</ant>
 	</target>
 
+	<target name="test-${test.ant.script.command}-bundled-glassfish-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-test-glassfish.xml" target="run-selenium-versioned-glassfish">
+			${test.ant.script.file.database.collate}
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			${test.ant.script.file.selenium.implementation}
+			<property name="app.server.type" value="glassfish" />
+			<property name="bundled.dir.name" value="$${db-upgrade.bundled.glassfish.dir.name}" />
+			<property name="file.name" value="$${db-upgrade.glassfish.file.name}" />
+			<property name="legacy.theme.ids" value="classic,controlpanel" />
+			<property name="lp.plugins.dir" value="$${db-upgrade.plugins.dir}" />
+			<property name="lp.version" value="$${lp.version}" />
+			<property name="plugins.deployed" value="true" />
+			<property name="skip.rebuild-database" value="true" />
+			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="test.pacl" value="$${test.pacl}" />
+		</ant>
+	</target>
+
 	<target name="test-${test.ant.script.command}-glassfish-mysql-firefox">
 		<antcall target="print-scm-revision" />
 
@@ -194,6 +226,33 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
+			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="test.pacl" value="$${test.pacl}" />
+		</ant>
+	</target>
+
+	<target name="test-${test.ant.script.command}-bundled-jboss-mysql-firefox">
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-test-jboss.xml" target="run-selenium-versioned-jboss">
+			${test.ant.script.file.database.collate}
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			${test.ant.script.file.selenium.implementation}
+			<property name="bundled.dir.name" value="$${db-upgrade.bundled.jboss.dir.name}" />
+			<property name="file.name" value="$${db-upgrade.jboss.file.name}" />
+			<property name="legacy.theme.ids" value="classic,controlpanel" />
+			<property name="lp.plugins.dir" value="$${db-upgrade.plugins.dir}" />
+			<property name="lp.version" value="$${lp.version}" />
+			<property name="plugins.deployed" value="true" />
+			<property name="skip.rebuild-database" value="true" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>

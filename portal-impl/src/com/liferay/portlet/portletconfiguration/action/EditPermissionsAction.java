@@ -87,7 +87,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = themeDisplay.getScopeGroupId();
+		long groupId = ParamUtil.getLong(
+			renderRequest, "resourceGroupId", themeDisplay.getScopeGroupId());
 
 		String portletResource = ParamUtil.getString(
 			renderRequest, "portletResource");

@@ -17,9 +17,6 @@ package com.liferay.portal.security.pacl.jndi;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
-import java.lang.Object;
-import java.lang.String;
-
 import java.util.Hashtable;
 
 import javax.naming.Binding;

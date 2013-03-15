@@ -16,7 +16,6 @@ package com.liferay.portal.security.pacl.dao.jdbc;
 
 import com.liferay.portal.security.pacl.PACLPolicy;
 
-import java.lang.Object;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

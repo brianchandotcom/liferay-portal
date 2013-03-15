@@ -55,15 +55,17 @@ public class PortalPermissionCollection extends PermissionCollection {
 			return true;
 		}
 
-		if (_permissionCollection.implies(permission)) {
+		if (permission instanceof PACLUtil.Permission) {
+			throw new PACLUtil.Exception(_paclPolicy);
+		}
+
+		if (_permissionCollection.implies(permission) ||
+			_paclPolicy.implies(permission)) {
+
 			return true;
 		}
 
-		if (!_paclPolicy.implies(permission)) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override

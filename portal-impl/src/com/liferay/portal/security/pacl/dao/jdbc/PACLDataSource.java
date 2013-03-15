@@ -18,9 +18,8 @@ import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.PACLUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,22 +35,15 @@ public class PACLDataSource extends DataSourceWrapper {
 		super(dataSource);
 
 		_dataSource = dataSource;
-
-		_log.debug("Loading " + PACLConnectionHandler.class.getName());
 	}
 
 	@Override
 	public Connection getConnection() throws SQLException {
 		Connection connection = _dataSource.getConnection();
 
-		if (!PACLPolicyManager.isActive()) {
-			return connection;
-		}
+		PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(
-			false, _log.isDebugEnabled());
-
-		if ((paclPolicy == null) || !paclPolicy.isActive()) {
+		if (paclPolicy == null) {
 			return connection;
 		}
 

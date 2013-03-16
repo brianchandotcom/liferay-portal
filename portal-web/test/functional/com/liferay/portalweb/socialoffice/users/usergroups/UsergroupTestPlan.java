@@ -16,6 +16,7 @@ package com.liferay.portalweb.socialoffice.users.usergroups;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.usergroups.assignrolesousergroup.AssignRoleSOUserGroupTests;
+import com.liferay.portalweb.socialoffice.users.usergroups.assignsoroleugusergroupsoconfiguration.AssignSORoleUGUserGroupSOConfigurationTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,6 +30,7 @@ public class UsergroupTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AssignRoleSOUserGroupTests.suite());
+		testSuite.addTest(AssignSORoleUGUserGroupSOConfigurationTests.suite());
 
 		return testSuite;
 	}

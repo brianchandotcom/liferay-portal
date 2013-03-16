@@ -49,6 +49,10 @@ public class PortalPermissionCollection extends PermissionCollection {
 		return null;
 	}
 
+	public PACLPolicy getPaclPolicy() {
+		return _paclPolicy;
+	}
+
 	@Override
 	public boolean implies(Permission permission) {
 		if (!_paclPolicy.isActive()) {

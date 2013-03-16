@@ -17,6 +17,9 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLUtil;
+
+import java.security.Permission;
 
 import java.util.Properties;
 import java.util.Set;
@@ -43,6 +46,13 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 
 	public String getServletContextName() {
 		return _paclPolicy.getServletContextName();
+	}
+
+	public boolean isTrustedCaller(
+		Class<?> callerClass, Permission permission) {
+
+		return PACLUtil.isTrustedCaller(
+			callerClass, permission, getPACLPolicy());
 	}
 
 	public void setPACLPolicy(PACLPolicy paclPolicy) {

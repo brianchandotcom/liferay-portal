@@ -14,7 +14,15 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.lang.SecurityManagerUtil;
+
+import java.security.AccessController;
 import java.security.BasicPermission;
+import java.security.PermissionCollection;
+import java.security.Policy;
+import java.security.PrivilegedAction;
+import java.security.ProtectionDomain;
 
 /**
  * @author Raymond Augé
@@ -50,6 +58,16 @@ public class PACLUtil {
 		return null;
 	}
 
+	public static boolean isTrustedCaller(
+		Class<?> callerClass, java.security.Permission permission,
+		PACLPolicy paclPolicy) {
+
+		ProtectionDomain protectionDomain = AccessController.doPrivileged(
+			new ProtectionDomainPrivilegedAction(callerClass));
+
+		return isTrustedCaller(protectionDomain, permission, paclPolicy);
+	}
+
 	public static class Exception extends SecurityException {
 
 		public Exception(PACLPolicy paclPolicy) {
@@ -69,6 +87,71 @@ public class PACLUtil {
 		public Permission() {
 			super("getPACLPolicy");
 		}
+
+	}
+
+	private static boolean hasSameOrigin(
+		ProtectionDomain protectionDomain,
+		PermissionCollection permissionCollection, PACLPolicy paclPolicy) {
+
+		PACLPolicy callerPaclPolicy = null;
+
+		if (permissionCollection instanceof PortalPermissionCollection) {
+			PortalPermissionCollection portalPermissionCollection =
+				(PortalPermissionCollection)permissionCollection;
+
+			callerPaclPolicy = portalPermissionCollection.getPaclPolicy();
+		}
+		else {
+			callerPaclPolicy = PACLPolicyManager.getPACLPolicy(
+				protectionDomain.getClassLoader());
+		}
+
+		if (paclPolicy == callerPaclPolicy) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean isTrustedCaller(
+		ProtectionDomain protectionDomain, java.security.Permission permission,
+		PACLPolicy paclPolicy) {
+
+		if (protectionDomain.getClassLoader() == null) {
+			return true;
+		}
+
+		PortalSecurityManager portalSecurityManager =
+			SecurityManagerUtil.getPortalSecurityManager();
+
+		Policy portalPolicy = portalSecurityManager.getPolicy();
+
+		PermissionCollection permissionCollection = portalPolicy.getPermissions(
+			protectionDomain);
+
+		boolean hasSameOrigin = hasSameOrigin(
+			protectionDomain, permissionCollection, paclPolicy);
+
+		if (!hasSameOrigin && permissionCollection.implies(permission)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static class ProtectionDomainPrivilegedAction
+		implements PrivilegedAction<ProtectionDomain> {
+
+		public ProtectionDomainPrivilegedAction(Class<?> clazz) {
+			_clazz = clazz;
+		}
+
+		public ProtectionDomain run() {
+			return _clazz.getProtectionDomain();
+		}
+
+		private Class<?> _clazz;
 
 	}
 

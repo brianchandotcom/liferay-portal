@@ -17,12 +17,12 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.PACLUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.reflect.Method;
@@ -68,7 +68,7 @@ public class PortalServiceChecker extends BaseChecker {
 			method = (Method)arguments[1];
 		}
 
-		Class<?> clazz = getClass(object);
+		Class<?> clazz = PACLUtil.getClass(object);
 
 		if (clazz == null) {
 			return null;
@@ -134,22 +134,6 @@ public class PortalServiceChecker extends BaseChecker {
 		return true;
 	}
 
-	protected Class<?> getClass(Object object) {
-		Class<?> clazz = object.getClass();
-
-		if (ProxyUtil.isProxyClass(clazz)) {
-			Class<?>[] interfaces = clazz.getInterfaces();
-
-			if (interfaces.length == 0) {
-				return null;
-			}
-
-			clazz = interfaces[0];
-		}
-
-		return clazz;
-	}
-
 	protected String getInterfaceName(String className) {
 		int pos = className.indexOf(".impl.");
 
@@ -201,7 +185,7 @@ public class PortalServiceChecker extends BaseChecker {
 	protected boolean hasService(
 		Object object, Method method, Object[] arguments) {
 
-		Class<?> clazz = getClass(object);
+		Class<?> clazz = PACLUtil.getClass(object);
 
 		if (clazz == null) {
 			return false;

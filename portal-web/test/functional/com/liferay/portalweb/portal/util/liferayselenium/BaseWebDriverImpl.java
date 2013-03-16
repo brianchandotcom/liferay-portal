@@ -255,6 +255,10 @@ public abstract class BaseWebDriverImpl
 		return value.equals(getText(locator, "1"));
 	}
 
+	public boolean isTextNotPresent(String pattern) {
+		return LiferaySeleniumHelper.isTextNotPresent(this, pattern);
+	}
+
 	public boolean isValue(String locator, String value) {
 		return value.equals(getValue(locator, "1"));
 	}

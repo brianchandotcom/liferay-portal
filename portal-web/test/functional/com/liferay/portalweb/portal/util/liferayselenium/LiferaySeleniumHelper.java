@@ -187,13 +187,17 @@ public class LiferaySeleniumHelper {
 	public static void assertTextNotPresent(
 		LiferaySelenium liferaySelenium, String pattern) {
 
-		BaseTestCase.assertFalse(liferaySelenium.isTextPresent(pattern));
+		if (liferaySelenium.isTextPresent(pattern)) {
+			BaseTestCase.fail(pattern + " is present");
+		}
 	}
 
 	public static void assertTextPresent(
 		LiferaySelenium liferaySelenium, String pattern) {
 
-		BaseTestCase.assertTrue(liferaySelenium.isTextPresent(pattern));
+		if (liferaySelenium.isTextNotPresent(pattern)) {
+			BaseTestCase.fail(pattern + " is not present");
+		}
 	}
 
 	public static void assertValue(
@@ -266,6 +270,12 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String locator) {
 
 		return !liferaySelenium.isVisible(locator);
+	}
+
+	public static boolean isTextNotPresent(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		return !liferaySelenium.isTextPresent(pattern);
 	}
 
 	public static void pause(String waitTime) throws Exception {
@@ -518,12 +528,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the text \"" + value + "\"");
+				liferaySelenium.assertTextNotPresent(value);
 			}
 
 			try {
-				if (!liferaySelenium.isTextPresent(value)) {
+				if (liferaySelenium.isTextNotPresent(value)) {
 					break;
 				}
 			}
@@ -542,8 +551,7 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to find the text \"" + value + "\"");
+				liferaySelenium.assertTextPresent(value);
 			}
 
 			try {

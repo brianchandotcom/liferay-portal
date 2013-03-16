@@ -218,6 +218,10 @@ public abstract class BaseSeleniumImpl
 		return value.equals(getText(locator));
 	}
 
+	public boolean isTextNotPresent(String pattern) {
+		return LiferaySeleniumHelper.isTextNotPresent(this, pattern);
+	}
+
 	public boolean isValue(String locator, String value) {
 		return value.equals(getValue(locator));
 	}

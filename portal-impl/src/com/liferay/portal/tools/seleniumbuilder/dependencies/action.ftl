@@ -63,7 +63,39 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 					<#assign caseElements = actionCommandElement.elements("case")>
 
 					<#list caseElements as caseElement>
-						if (false) {
+						if (
+							<#if caseElement.attributes()?has_content>
+								<#assign caseElementAttributes = caseElement.attributes()>
+
+								<#list caseElementAttributes as caseElementAttribute>
+									<#if caseElementAttribute.getQualifiedName() = "key-contains">
+										target1.contains("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "key-ends-with">
+										target1.endsWith("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "key-equals">
+										target1.equals("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "key-starts-with">
+										target1.startsWith("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "locator-contains">
+										locator1.contains("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "locator-ends-with">
+										locator1.endsWith("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "locator-equals">
+										locator1.equals("${caseElementAttribute.getValue()}")
+									<#elseif caseElementAttribute.getQualifiedName() = "locator-starts-with">
+										locator1.startsWith("${caseElementAttribute.getValue()}")
+									<#else>
+										true
+									</#if>
+
+									<#if caseElementAttribute_has_next>
+										&&
+									</#if>
+								</#list>
+							<#else>
+								false
+							</#if>
+						) {
 							<#assign functionElement = caseElement.element("execute")>
 
 							<#assign functionName = actionCommandName>

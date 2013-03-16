@@ -24,13 +24,22 @@ import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolder
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolderimagecomment.AddDMFolderImageCommentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolderimagemultiple.AddDMFolderImageMultipleTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.adddmfolderimagetags.AddDMFolderImageTagsTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.cancelcheckoutdmfolderdocument.CancelCheckoutDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.checkinmajordmfolderdocument.CheckinMajorDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.checkinminordmfolderdocument.CheckinMinorDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.checkoutdmfolderdocument.CheckoutDMFolderDocumentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.deletedmfolderdocument.DeleteDMFolderDocumentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.deletedmfolderimage.DeleteDMFolderImageTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.editdmfolderdocument.EditDMFolderDocumentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.editdmfolderimage.EditDMFolderImageTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.movedmfolder1documentfolder2.MoveDMFolder1DocumentFolder2Tests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.publishdraftdmfolderdocument.PublishDraftDMFolderDocumentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.ratedmfolderdocument.RateDMFolderDocumentTests;
 import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.ratedmfolderimage.RateDMFolderImageTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.saveandcheckinmajordmfolderdocument.SaveAndCheckinMajorDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.saveandcheckinminordmfolderdocument.SaveAndCheckinMinorDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.saveasdraftdmfolderdocument.SaveAsDraftDMFolderDocumentTests;
+import com.liferay.portalweb.socialofficehome.mydocuments.dmdocument.saveasdrafteditdmfolderdocument.SaveAsDraftEditDMFolderDocumentTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -52,13 +61,22 @@ public class DMDocumentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddDMFolderImageCommentTests.suite());
 		testSuite.addTest(AddDMFolderImageMultipleTests.suite());
 		testSuite.addTest(AddDMFolderImageTagsTests.suite());
+		testSuite.addTest(CancelCheckoutDMFolderDocumentTests.suite());
+		testSuite.addTest(CheckinMajorDMFolderDocumentTests.suite());
+		testSuite.addTest(CheckinMinorDMFolderDocumentTests.suite());
+		testSuite.addTest(CheckoutDMFolderDocumentTests.suite());
 		testSuite.addTest(DeleteDMFolderDocumentTests.suite());
 		testSuite.addTest(DeleteDMFolderImageTests.suite());
 		testSuite.addTest(EditDMFolderDocumentTests.suite());
 		testSuite.addTest(EditDMFolderImageTests.suite());
 		testSuite.addTest(MoveDMFolder1DocumentFolder2Tests.suite());
+		testSuite.addTest(PublishDraftDMFolderDocumentTests.suite());
 		testSuite.addTest(RateDMFolderDocumentTests.suite());
 		testSuite.addTest(RateDMFolderImageTests.suite());
+		testSuite.addTest(SaveAndCheckinMajorDMFolderDocumentTests.suite());
+		testSuite.addTest(SaveAndCheckinMinorDMFolderDocumentTests.suite());
+		testSuite.addTest(SaveAsDraftDMFolderDocumentTests.suite());
+		testSuite.addTest(SaveAsDraftEditDMFolderDocumentTests.suite());
 
 		return testSuite;
 	}

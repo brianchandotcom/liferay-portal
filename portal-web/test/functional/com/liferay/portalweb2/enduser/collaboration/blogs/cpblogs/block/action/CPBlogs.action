@@ -1,9 +1,9 @@
 <action-definition>
 	<action-command name="Click">
-		<case path="ADD_ENTRY">
+		<case key-equals="ADD_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value="Add Blogs Entry" />
 		</case>
-		<case path="DELETE_ENTRY">
+		<case key-equals="DELETE_ENTRY" key-contains="EDIT_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value="Delete" />
 		</case>
 	</action-command>

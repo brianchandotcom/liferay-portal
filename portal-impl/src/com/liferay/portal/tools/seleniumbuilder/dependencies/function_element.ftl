@@ -5,7 +5,7 @@
 ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${function?substring(x + 1)}(
 
 <#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
-	target${i}, value${i}
+	locator${i}, value${i}
 
 	<#if i_has_next>
 		,

@@ -24,6 +24,10 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 		</#list>
 
 		) throws Exception {
+			<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
+				String locator${i} = target${i};
+			</#list>
+
 			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(functionCommandElement, "function")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>

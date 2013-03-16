@@ -93,7 +93,7 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 							super.${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
 
 							<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
-								target${i}, value${i}
+								locator${i}, value${i}
 
 								<#if i_has_next>
 									,

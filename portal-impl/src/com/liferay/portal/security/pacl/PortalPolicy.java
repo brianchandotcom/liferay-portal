@@ -14,13 +14,10 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.Portal;
 
 import java.lang.reflect.Field;
-
-import java.net.URL;
 
 import java.security.AccessController;
 import java.security.AllPermission;
@@ -29,14 +26,20 @@ import java.security.Permission;
 import java.security.PermissionCollection;
 import java.security.Permissions;
 import java.security.Policy;
-import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 import java.security.Provider;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.servlet.Servlet;
 
 /**
  * @author Raymond Augé
@@ -46,7 +49,16 @@ public class PortalPolicy extends Policy {
 	public PortalPolicy(Policy policy) {
 		_policy = policy;
 
-		_init();
+		try {
+			_init();
+		}
+		catch (PrivilegedActionException pae) {
+			throw new IllegalStateException(
+				"Liferay needs to be able to change the accessibility of the " +
+					"'key' field in " + ProtectionDomain.class.getName() +
+						" as well as get the protection domains of classes.",
+				pae.getException());
+		}
 	}
 
 	@Override
@@ -68,29 +80,6 @@ public class PortalPolicy extends Policy {
 			permissionCollection = _policy.getPermissions(codeSource);
 		}
 
-		String location = StringPool.BLANK;
-
-		URL url = codeSource.getLocation();
-
-		if ((codeSource != null) && (url != null)) {
-			location = url.toString();
-		}
-
-		if (location.equals(StringPool.BLANK) ||
-			location.contains(PropsValues.LIFERAY_LIB_GLOBAL_DIR) ||
-			location.contains(PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR) ||
-			location.contains(PropsValues.LIFERAY_LIB_PORTAL_DIR) ||
-			location.contains(PropsValues.LIFERAY_WEB_PORTAL_DIR) ||
-			location.contains(PropsValues.MODULE_FRAMEWORK_CORE_DIR) ||
-			location.contains(PropsValues.MODULE_FRAMEWORK_PORTAL_DIR)) {
-
-			if (permissionCollection == null) {
-				permissionCollection = new Permissions();
-			}
-
-			permissionCollection.add(_allPermission);
-		}
-
 		if (permissionCollection == null) {
 			permissionCollection = new Permissions();
 		}
@@ -102,15 +91,14 @@ public class PortalPolicy extends Policy {
 	public PermissionCollection getPermissions(
 		ProtectionDomain protectionDomain) {
 
-		PermissionCollection permissionCollection = null;
-
 		if (protectionDomain == null) {
 			return new Permissions();
 		}
 
 		Object key = _getKey(protectionDomain);
 
-		permissionCollection = _permissionCollections.get(key);
+		PermissionCollection permissionCollection = _getPermissionCollection(
+			key);
 
 		if (permissionCollection != null) {
 			return permissionCollection;
@@ -133,13 +121,14 @@ public class PortalPolicy extends Policy {
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
 			protectionDomain.getClassLoader());
 
-		if (paclPolicy == null) {
-			paclPolicy = _paclPolicy;
-
-			permissionCollection.add(_allPermission);
+		if (paclPolicy != null) {
+			return new PortalPermissionCollection(
+				paclPolicy, permissionCollection);
 		}
 
-		return new PortalPermissionCollection(paclPolicy, permissionCollection);
+		permissionCollection.add(_allPermission);
+
+		return permissionCollection;
 	}
 
 	@Override
@@ -178,7 +167,7 @@ public class PortalPolicy extends Policy {
 
 		Object key = _getKey(protectionDomain);
 
-		PermissionCollection permissionCollection = _permissionCollections.get(
+		PermissionCollection permissionCollection = _getPermissionCollection(
 			key);
 
 		if (permissionCollection != null) {
@@ -216,7 +205,11 @@ public class PortalPolicy extends Policy {
 			_policy.refresh();
 		}
 
-		_permissionCollections.clear();
+		synchronized (_permissionCollections) {
+			_permissionCollections.clear();
+
+			_permissionCollections.putAll(_rootPermissionCollections);
+		}
 	}
 
 	private void _addExtraPermissions(
@@ -279,48 +272,41 @@ public class PortalPolicy extends Policy {
 		}
 	}
 
-	private void _init() {
-		try {
-			_field = AccessController.doPrivileged(
-				new PrivilegedExceptionAction<Field>() {
+	private PermissionCollection _getPermissionCollection(Object key) {
+		PermissionCollection permissionCollection = _permissionCollections.get(
+			key);
 
-					public Field run() throws Exception {
-						Field field = ProtectionDomain.class.getDeclaredField(
-							"key");
+		if (permissionCollection == null) {
+			permissionCollection = _rootPermissionCollections.get(key);
 
-						field.setAccessible(true);
-
-						return field;
-					}
-
-				}
-			);
-		}
-		catch (PrivilegedActionException pae) {
-			throw new IllegalStateException(
-				"Lifray needs to be able to change the accessibility of the " +
-					"key field in ProtectionDomain",
-				pae);
+			_permissionCollections.put(key, permissionCollection);
 		}
 
-		_protectionDomain = AccessController.doPrivileged(
-			new PrivilegedAction<ProtectionDomain>() {
+		return permissionCollection;
+	}
 
-				public ProtectionDomain run() {
-					Class<?> clazz = getClass();
+	private void _init() throws PrivilegedActionException {
+		_field = AccessController.doPrivileged(
+			new KeyFieldPrivilegedExceptionAction());
 
-					return clazz.getProtectionDomain();
-				}
-
-			}
-		);
+		List<ProtectionDomain> protectionDomains =
+			AccessController.doPrivileged(
+				new ProtectionDomainsPrivilegedExceptionAction());
 
 		PermissionCollection permissionCollection = new Permissions();
 
 		permissionCollection.add(_allPermission);
 
-		_permissionCollections.put(
-			_getKey(_protectionDomain), permissionCollection);
+		_rootPermissionCollections =
+			new ConcurrentHashMap<Object, PermissionCollection>();
+
+		for (ProtectionDomain protectionDomain : protectionDomains) {
+			_rootPermissionCollections.put(
+				_getKey(protectionDomain), permissionCollection);
+		}
+
+		_rootPermissionCollections = Collections.unmodifiableMap(
+			_rootPermissionCollections);
 	}
 
 	private static AllPermission _allPermission = new AllPermission();
@@ -330,6 +316,39 @@ public class PortalPolicy extends Policy {
 	private ConcurrentMap<Object, PermissionCollection> _permissionCollections =
 		new WeakValueConcurrentHashMap<Object, PermissionCollection>();
 	private Policy _policy;
-	private ProtectionDomain _protectionDomain;
+
+	private Map<Object, PermissionCollection> _rootPermissionCollections;
+
+	private class KeyFieldPrivilegedExceptionAction
+		implements PrivilegedExceptionAction<Field> {
+
+		public Field run() throws Exception {
+			Field field = ProtectionDomain.class.getDeclaredField("key");
+
+			field.setAccessible(true);
+
+			return field;
+		}
+
+	}
+
+	private class ProtectionDomainsPrivilegedExceptionAction
+		implements PrivilegedExceptionAction<List<ProtectionDomain>> {
+
+		public List<ProtectionDomain> run() throws Exception {
+			List<ProtectionDomain> protectionDomains =
+				new ArrayList<ProtectionDomain>();
+
+			Class<?> clazz = getClass();
+
+			protectionDomains.add(clazz.getProtectionDomain());
+			protectionDomains.add(Object.class.getProtectionDomain());
+			protectionDomains.add(Portal.class.getProtectionDomain());
+			protectionDomains.add(Servlet.class.getProtectionDomain());
+
+			return protectionDomains;
+		}
+
+	}
 
 }

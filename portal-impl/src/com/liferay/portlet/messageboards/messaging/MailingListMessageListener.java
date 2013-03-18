@@ -109,24 +109,10 @@ public class MailingListMessageListener extends BaseMessageListener {
 	}
 
 	protected Folder getFolder(Store store) throws Exception {
-		Folder defaultFolder = store.getDefaultFolder();
+		Folder folder = store.getFolder("INBOX");
 
-		Folder[] folders = defaultFolder.list();
-
-		if ((folders != null) && (folders.length == 0)) {
+		if (!folder.exists()) {
 			throw new MessagingException("Inbox not found");
-		}
-
-		Folder folder = folders[0];
-
-		if (!folder.getName().equalsIgnoreCase("Inbox")) {
-			for (Folder f : folders) {
-				if (f.getName().equalsIgnoreCase("Inbox")) {
-					folder = f;
-
-					break;
-				}
-			}
 		}
 
 		folder.open(Folder.READ_WRITE);

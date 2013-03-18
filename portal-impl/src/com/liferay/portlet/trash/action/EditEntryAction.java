@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.trash.action;
 
+import com.liferay.portal.TrashPermissionException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -103,13 +103,8 @@ public class EditEntryAction extends PortletAction {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (PrincipalException pe) {
-			if (pe.getMessage() != null) {
-				SessionErrors.add(actionRequest, pe.getMessage());
-			}
-			else {
-				SessionErrors.add(actionRequest, pe.getClass());
-			}
+		catch (TrashPermissionException tpe) {
+			SessionErrors.add(actionRequest, tpe.getClass(), tpe);
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass());

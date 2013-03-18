@@ -16,12 +16,12 @@ package com.liferay.portal.xsl;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.template.AbstractProcessingTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import java.io.Writer;
@@ -45,7 +45,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Tina Tian
  */
-public class XSLTemplate implements Template {
+public class XSLTemplate extends AbstractProcessingTemplate {
 
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
@@ -84,11 +84,17 @@ public class XSLTemplate implements Template {
 		return keys.toArray(new String[keys.size()]);
 	}
 
+	@Override
+	public TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
+	}
+
 	public void prepare(HttpServletRequest request) {
 		_templateContextHelper.prepare(this, request);
 	}
 
-	public void processTemplate(Writer writer) throws TemplateException {
+	@Override
+	protected void doProcessTemplate(Writer writer) throws TemplateException {
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 

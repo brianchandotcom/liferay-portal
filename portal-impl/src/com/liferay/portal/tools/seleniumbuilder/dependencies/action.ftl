@@ -63,7 +63,37 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 					<#assign caseElements = actionCommandElement.elements("case")>
 
 					<#list caseElements as caseElement>
-						if (false) {
+						if (
+							<#if caseElement.attributes()?has_content>
+								<#if caseElement.attributeValue("comparator")??>
+									<#if caseElement.attributeValue("comparator") = "contains">
+										<#assign caseComparator = "contains">
+									<#elseif caseElement.attributeValue("comparator") = "endsWith">
+										<#assign caseComparator = "endsWith">
+									<#elseif caseElement.attributeValue("comparator") = "startsWith">
+										<#assign caseComparator = "startsWith">
+									<#else>
+										<#assign caseComparator = "equals">
+									</#if>
+								<#else>
+									<#assign caseComparator = "equals">
+								</#if>
+
+								<#if caseElement.attributeValue("locator")??>
+									<#assign caseLocator = caseElement.attributeValue("locator")>
+
+									locator1.${caseComparator}("${caseLocator}")
+								<#elseif caseElement.attributeValue("locator-key")??>
+									<#assign caseLocatorKey = caseElement.attributeValue("locator-key")>
+
+									locatorKey1.${caseComparator}("${caseLocatorKey}")
+								<#else>
+									false
+								</#if>
+							<#else>
+								false
+							</#if>
+						) {
 							<#assign functionElement = caseElement.element("execute")>
 
 							<#assign functionName = actionCommandName>

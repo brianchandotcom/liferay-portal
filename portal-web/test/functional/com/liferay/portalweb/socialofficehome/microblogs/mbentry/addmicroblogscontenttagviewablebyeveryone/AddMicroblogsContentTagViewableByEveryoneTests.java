@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.activities;
+package com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontenttagviewablebyeveryone;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.activities.activitiesblockedsouser.ActivitiesBlockedSOUserTestPlan;
-import com.liferay.portalweb.socialofficehome.activities.dashboardactivity.DashboardActivityTestPlan;
-import com.liferay.portalweb.socialofficehome.activities.mbentryactivity.MBEntryActivityTestPlan;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +23,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActivitiesTestPlan extends BaseTestSuite {
-
+public class AddMicroblogsContentTagViewableByEveryoneTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(ActivitiesBlockedSOUserTestPlan.suite());
-		testSuite.addTest(DashboardActivityTestPlan.suite());
-		testSuite.addTest(MBEntryActivityTestPlan.suite());
+		testSuite.addTestSuite(AddMicroblogsContentTagViewableByEveryoneTest.class);
+		testSuite.addTestSuite(ViewMicroblogsContentTagViewableByEveryoneTest.class);
+		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 
 		return testSuite;
 	}
-
 }

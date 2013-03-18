@@ -24,7 +24,6 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Roberto Díaz
  * @author Sergio González
- *
  */
 public class DummyRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 

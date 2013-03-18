@@ -111,7 +111,8 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(Group, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(Group,
+	 *             ServiceContext)}
 	 */
 	public static void disableStaging(
 			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
@@ -128,8 +129,8 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #disableStaging(PortletRequest, Group,
-	 *             ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #disableStaging(PortletRequest, Group, ServiceContext)}
 	 */
 	public static void disableStaging(
 			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,

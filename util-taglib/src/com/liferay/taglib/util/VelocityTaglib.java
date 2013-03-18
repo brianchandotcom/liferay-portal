@@ -227,8 +227,8 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String, String, String, long, String,
-	 *             String, int[])}
+	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
+	 *             String, String, long, String, String, int[])}
 	 */
 	public void permissionsURL(
 			String redirect, String modelResource,

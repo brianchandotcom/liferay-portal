@@ -56,7 +56,8 @@ import java.util.Date;
 
 /**
  * @author     Jonathan Lennox
- * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.cal.Recurrence}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.kernel.cal.Recurrence}
  */
 public class Recurrence implements Serializable {
 

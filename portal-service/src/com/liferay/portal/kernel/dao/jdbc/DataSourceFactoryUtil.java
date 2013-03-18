@@ -46,8 +46,8 @@ public class DataSourceFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #initDataSource(String, String, String, String,
-	 *             String)}
+	 * @deprecated As of 6.2.0, replaced by {@link #initDataSource(String,
+	 *             String, String, String, String)}
 	 */
 	public static DataSource initDataSource(
 			String driverClassName, String url, String userName,

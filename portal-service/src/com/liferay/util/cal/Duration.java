@@ -50,7 +50,8 @@ import java.io.Serializable;
 
 /**
  * @author     Jonathan Lennox
- * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.cal.Duration}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.kernel.cal.Duration}
  */
 public class Duration implements Cloneable, Serializable {
 

@@ -248,12 +248,11 @@ public interface PermissionChecker extends Cloneable {
 	public boolean isOrganizationAdmin(long organizationId);
 
 	/**
-	 * Returns <code>true</code> if the user is an owner of the
-	 * organization.
+	 * Returns <code>true</code> if the user is an owner of the organization.
 	 *
 	 * @param  organizationId the primary key of the organization
-	 * @return <code>true</code> if the user is an owner of the
-	 *         organization; <code>false</code> otherwise
+	 * @return <code>true</code> if the user is an owner of the organization;
+	 *         <code>false</code> otherwise
 	 */
 	public boolean isOrganizationOwner(long organizationId);
 

@@ -43,7 +43,8 @@ public class LicenseManagerUtil {
 	public static final int STATE_GOOD = LicenseManager.STATE_GOOD;
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link LicenseManager#STATE_INACTIVE}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             LicenseManager#STATE_INACTIVE}
 	 */
 	public static final int STATE_INACTIVE = LicenseManager.STATE_INACTIVE;
 
@@ -53,7 +54,8 @@ public class LicenseManagerUtil {
 	public static final int STATE_INVALID = LicenseManager.STATE_INVALID;
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link LicenseManager#STATE_OVERLOAD}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             LicenseManager#STATE_OVERLOAD}
 	 */
 	public static final int STATE_OVERLOAD = LicenseManager.STATE_OVERLOAD;
 

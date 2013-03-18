@@ -49,7 +49,8 @@ public interface ResourceActions {
 	public static final String MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationModelResources}
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #getOrganizationModelResources}
 	 */
 	public static final String[] ORGANIZATION_MODEL_RESOURCES = {
 		Organization.class.getName(), PasswordPolicy.class.getName(),

@@ -18,7 +18,8 @@ package com.liferay.util.ldap;
  * @author     Toma Bedolla
  * @author     Michael Young
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, moved to {@link com.liferay.portal.kernel.ldap.LDAPUtil}
+ * @deprecated As of 6.2.0, moved to {@link
+ *             com.liferay.portal.kernel.ldap.LDAPUtil}
  */
 public class LDAPUtil extends com.liferay.portal.kernel.ldap.LDAPUtil {
 }

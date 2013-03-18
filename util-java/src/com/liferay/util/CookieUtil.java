@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Shuyang Zhou
- * @deprecated As of 6.2.0, replaced by {@link com.liferay.portal.kernel.util.CookieKeys}
+ * @deprecated As of 6.2.0, replaced by {@link
+ *             com.liferay.portal.kernel.util.CookieKeys}
  */
 public class CookieUtil {
 

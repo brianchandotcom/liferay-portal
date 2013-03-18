@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.security.Permission;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,10 +30,17 @@ public class ReflectChecker extends BaseChecker {
 	}
 
 	public boolean implies(Permission permission) {
+		int stackIndex = getStackIndex(10, 9);
 
-		// Temporarily return true
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
-		return true;
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		logSecurityException(_log, "Attempted to reflect");
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ReflectChecker.class);

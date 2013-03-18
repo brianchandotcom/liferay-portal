@@ -25,22 +25,22 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 
 	public FirefoxWebDriverImpl(String projectDir, String browserURL) {
-		super(projectDir, browserURL, new FirefoxDriver(_profile));
+		super(projectDir, browserURL, new FirefoxDriver(_firefoxProfile));
 	}
 
-	private static FirefoxProfile _profile = new FirefoxProfile();
+	private static FirefoxProfile _firefoxProfile = new FirefoxProfile();
 
 	static {
-		String downloadDir = TestPropsValues.OUTPUT_DIR;
-
-		_profile.setPreference("browser.download.dir", downloadDir);
-		_profile.setPreference(
+		_firefoxProfile.setPreference(
+			"browser.download.dir", TestPropsValues.OUTPUT_DIR);
+		_firefoxProfile.setPreference("browser.download.folderList", 2);
+		_firefoxProfile.setPreference(
 			"browser.download.manager.showWhenStarting", false);
-		_profile.setPreference("browser.download.useDownloadDir", true);
-		_profile.setPreference("browser.download.folderList", 2);
-		_profile.setPreference(
+		_firefoxProfile.setPreference("browser.download.useDownloadDir", true);
+		_firefoxProfile.setPreference(
+			"browser.helperApps.alwaysAsk.force", false);
+		_firefoxProfile.setPreference(
 			"browser.helperApps.neverAsk.saveToDisk", "application/zip");
-		_profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 	}
 
 }

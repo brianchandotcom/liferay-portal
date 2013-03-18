@@ -14,24 +14,33 @@
 
 package com.liferay.portalweb.portal.util;
 
+import org.openqa.selenium.WebDriver;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class BrowserCommands {
 
 	public static void downloadTempFile(String value) {
-		if (!_BROWSER_TYPE.equals("*iehta") &&
-			!_BROWSER_TYPE.equals("*iexplore")) {
+		if (_SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
+			if (_BROWSER_TYPE.equals("*chrome") ||
+				_BROWSER_TYPE.equals("*firefox") ||
+				_BROWSER_TYPE.equals("*googlechrome")) {
 
-			return;
+				return;
+			}
 		}
 
 		try {
+			Thread.sleep(5000);
+
 			Runtime runtime = Runtime.getRuntime();
 
 			String command = _BROWSER_COMMANDS_DIR + "download_file.exe";
 
 			runtime.exec(command);
+
+			Thread.sleep(30000);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -39,10 +48,13 @@ public class BrowserCommands {
 	}
 
 	public static void setBrowserOption() {
-		if (!_BROWSER_TYPE.equals("*iehta") &&
-			!_BROWSER_TYPE.equals("*iexplore")) {
+		if (_SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
+			if (_BROWSER_TYPE.equals("*chrome") ||
+				_BROWSER_TYPE.equals("*firefox") ||
+				_BROWSER_TYPE.equals("*googlechrome")) {
 
-			return;
+				return;
+			}
 		}
 
 		try {
@@ -67,5 +79,8 @@ public class BrowserCommands {
 	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
 
 	private static final String _OUTPUT_DIR = TestPropsValues.OUTPUT_DIR;
+
+	private static final String _SELENIUM_IMPLEMENTATION =
+		TestPropsValues.SELENIUM_IMPLEMENTATION;
 
 }

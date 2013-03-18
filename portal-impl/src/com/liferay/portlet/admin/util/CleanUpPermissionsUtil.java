@@ -48,11 +48,11 @@ public class CleanUpPermissionsUtil {
 		role = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.POWER_USER);
 
-		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), true);
 
 		role = RoleLocalServiceUtil.getRole(companyId, RoleConstants.USER);
 
-		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), true);
+		_cleanUpAddToPagePermissions(companyId, role.getRoleId(), false);
 	}
 
 	private static void _cleanUpAddToPagePermissions(
@@ -78,9 +78,7 @@ public class CleanUpPermissionsUtil {
 				resourcePermission.getScope(), resourcePermission.getPrimKey(),
 				roleId, ActionKeys.ADD_TO_PAGE);
 
-			if (!limitScope ||
-				groupIdString.equals(resourcePermission.getPrimKey())) {
-
+			if (!limitScope) {
 				continue;
 			}
 

@@ -15,8 +15,8 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 	<#list functionCommandElements as functionCommandElement>
 		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}(
 
-		<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
-			String target${i}, String value${i}
+		<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+			String locator${i}, String value${i}
 
 			<#if i_has_next>
 				,
@@ -24,10 +24,6 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 		</#list>
 
 		) throws Exception {
-			<#list 1..seleniumBuilderContext.getFunctionTargetCount(functionName) as i>
-				String locator${i} = target${i};
-			</#list>
-
 			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(functionCommandElement, "function")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>

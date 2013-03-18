@@ -12,28 +12,28 @@ liferaySelenium.${selenium}(
 		(selenium = "waitForTextPresent")
 	>
 		value1
-	<#elseif seleniumElement.attributeValue("target")??>
-		<#assign target = seleniumElement.attributeValue("target")>
+	<#elseif seleniumElement.attributeValue("argument1")??>
+		<#assign argument1 = seleniumElement.attributeValue("argument1")>
 
-		<#if target?starts_with("${")>
-			${target?substring(2, target?length - 1)}
+		<#if argument1?starts_with("${")>
+			${argument1?substring(2, argument1?length - 1)}
 		<#else>
-			"${target}"
+			"${argument1}"
 		</#if>
 	<#else>
-		target1
+		locator1
 	</#if>
 </#if>
 
 <#if seleniumBuilderContext.getSeleniumParameterCount(selenium) == 2>
 	,
-	<#if seleniumElement.attributeValue("value")??>
-		<#assign value = seleniumElement.attributeValue("value")>
+	<#if seleniumElement.attributeValue("argument2")??>
+		<#assign argument2 = seleniumElement.attributeValue("argument2")>
 
-		<#if value?starts_with("${")>
-			${value?substring(2, value?length - 1)}
+		<#if argument2?starts_with("${")>
+			${argument2?substring(2, argument2?length - 1)}
 		<#else>
-			"${value}"
+			"${argument2}"
 		</#if>
 	<#else>
 		value1

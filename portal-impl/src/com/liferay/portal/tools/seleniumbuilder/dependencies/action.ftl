@@ -40,8 +40,8 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 
 			public ${seleniumBuilderContext.getFunctionReturnType(actionCommandName)} ${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
 
-			<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
-				String target${i}, String value${i}
+			<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+				String locator${i}, String locatorKey${i}, String value${i}
 
 				<#if i_has_next>
 					,
@@ -49,8 +49,8 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 			</#list>
 
 			) throws Exception {
-				<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
-					String locator${i} = getLocator(target${i});
+				<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+					locator${i} = getLocator(locator${i}, locatorKey${i});
 				</#list>
 
 				<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(actionCommandElement, "function")>
@@ -92,8 +92,8 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 						<#else>
 							super.${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
 
-							<#list 1..seleniumBuilderContext.getFunctionTargetCount(actionCommandName) as i>
-								locator${i}, value${i}
+							<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+								locator${i}, locatorKey${i}, value${i}
 
 								<#if i_has_next>
 									,

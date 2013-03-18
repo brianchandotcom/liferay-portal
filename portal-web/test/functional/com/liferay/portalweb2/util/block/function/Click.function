@@ -22,11 +22,11 @@
 	</function-command>
 
 	<function-command name="textClickAtClickDockbar">
-		<execute selenium="pause" target="1000" />
+		<execute selenium="pause" argument1="1000" />
 
-		<execute selenium="clickAt" target="//div[@id='dockbar']" value="" />
+		<execute selenium="clickAt" argument1="//div[@id='dockbar']" argument2="" />
 
-		<execute selenium="waitForElementPresent" target="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
 
 		<execute function="Click#textClickAt" />
 	</function-command>

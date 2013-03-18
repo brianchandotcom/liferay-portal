@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Tina Tian
  */
 @DoPrivileged
-public class XSLManager implements TemplateManager {
+public class XSLManager extends BaseTemplateManager {
 
 	public void destroy() {
 		if (_templateContextHelper == null) {
@@ -49,25 +49,17 @@ public class XSLManager implements TemplateManager {
 		return TemplateConstants.LANG_TYPE_XSL;
 	}
 
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType) {
-
-		return getTemplate(templateResource, null, templateContextType);
-	}
-
-	public Template getTemplate(
+	@Override
+	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateContextType templateContextType,
+		Map<String, Object> helperUtilities) {
 
 		Template template = null;
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;
-
-		Map<String, Object> context = _templateContextHelper.getHelperUtilities(
-			templateContextType);
 
 		if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			template = new XSLTemplate(
@@ -77,13 +69,13 @@ public class XSLManager implements TemplateManager {
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
 			template = new RestrictedTemplate(
 				new XSLTemplate(
-					xslTemplateResource, errorTemplateResource, context,
+					xslTemplateResource, errorTemplateResource, helperUtilities,
 					_templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
 			template = new XSLTemplate(
-				xslTemplateResource, errorTemplateResource, context,
+				xslTemplateResource, errorTemplateResource, helperUtilities,
 				_templateContextHelper);
 		}
 
@@ -97,6 +89,11 @@ public class XSLManager implements TemplateManager {
 		TemplateContextHelper templateContextHelper) {
 
 		_templateContextHelper = templateContextHelper;
+	}
+
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
 	}
 
 	private TemplateContextHelper _templateContextHelper;

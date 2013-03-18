@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
@@ -40,7 +40,7 @@ import java.util.Map;
  * @author Tina Tina
  */
 @DoPrivileged
-public class FreeMarkerManager implements TemplateManager {
+public class FreeMarkerManager extends BaseTemplateManager {
 
 	public void destroy() {
 		if (_configuration == null) {
@@ -66,22 +66,14 @@ public class FreeMarkerManager implements TemplateManager {
 		return TemplateConstants.LANG_TYPE_FTL;
 	}
 
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType) {
-
-		return getTemplate(templateResource, null, templateContextType);
-	}
-
-	public Template getTemplate(
+	@Override
+	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateContextType templateContextType,
+		Map<String, Object> helperUtilities) {
 
 		Template template = null;
-
-		Map<String, Object> context = _templateContextHelper.getHelperUtilities(
-			templateContextType);
 
 		if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			template = new FreeMarkerTemplate(
@@ -91,13 +83,13 @@ public class FreeMarkerManager implements TemplateManager {
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
 			template = new RestrictedTemplate(
 				new FreeMarkerTemplate(
-					templateResource, errorTemplateResource, context,
+					templateResource, errorTemplateResource, helperUtilities,
 					_configuration, _templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
 			template = new FreeMarkerTemplate(
-				templateResource, errorTemplateResource, context,
+				templateResource, errorTemplateResource, helperUtilities,
 				_configuration, _templateContextHelper);
 		}
 
@@ -148,6 +140,11 @@ public class FreeMarkerManager implements TemplateManager {
 		TemplateContextHelper templateContextHelper) {
 
 		_templateContextHelper = templateContextHelper;
+	}
+
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
 	}
 
 	private Configuration _configuration;

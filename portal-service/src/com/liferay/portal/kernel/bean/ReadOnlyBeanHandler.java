@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.bean;
 
-import java.lang.Object;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

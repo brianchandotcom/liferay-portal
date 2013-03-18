@@ -55,8 +55,8 @@ import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
  */
 public class TrashEntryServiceHttp {
 	public static void deleteEntries(HttpPrincipal httpPrincipal, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"deleteEntries", _deleteEntriesParameterTypes0);
@@ -67,12 +67,12 @@ public class TrashEntryServiceHttp {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.security.auth.PrincipalException) {
-					throw (com.liferay.portal.security.auth.PrincipalException)e;
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

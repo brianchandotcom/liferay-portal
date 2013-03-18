@@ -64,8 +64,8 @@ public class TrashEntryServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.security.auth.PrincipalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteEntries(groupId);
 	}
 

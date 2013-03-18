@@ -392,6 +392,7 @@ public class AnnouncementsEntryLocalServiceImpl
 				toName = role.getName();
 
 				if (role.getType() == RoleConstants.TYPE_REGULAR) {
+					params.put("inherit", Boolean.TRUE);
 					params.put("usersRoles", classPK);
 				}
 				else {

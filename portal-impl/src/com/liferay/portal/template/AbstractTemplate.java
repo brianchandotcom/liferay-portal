@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -35,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tina Tian
  */
-public abstract class AbstractTemplate implements Template {
+public abstract class AbstractTemplate extends AbstractProcessingTemplate {
 
 	public AbstractTemplate(
 		TemplateResource templateResource,
@@ -66,11 +65,17 @@ public abstract class AbstractTemplate implements Template {
 		}
 	}
 
+	@Override
+	public TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
+	}
+
 	public void prepare(HttpServletRequest request) {
 		_templateContextHelper.prepare(this, request);
 	}
 
-	public void processTemplate(Writer writer) throws TemplateException {
+	@Override
+	protected void doProcessTemplate(Writer writer) throws TemplateException {
 		if (errorTemplateResource == null) {
 			try {
 				processTemplate(templateResource, writer);

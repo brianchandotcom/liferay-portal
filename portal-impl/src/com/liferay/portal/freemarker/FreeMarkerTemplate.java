@@ -30,6 +30,10 @@ import freemarker.template.Template;
 
 import java.io.Writer;
 
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -130,11 +134,13 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 			TemplateConstants.LANG_TYPE_FTL, templateResource);
 
 		try {
-			Template template = _configuration.getTemplate(
-				getTemplateResourceUUID(templateResource),
-				TemplateConstants.DEFAUT_ENCODING);
+			Template template = AccessController.doPrivileged(
+				new TemplatePrivilegedExceptionAction(templateResource));
 
 			template.process(_context, writer);
+		}
+		catch (PrivilegedActionException pae) {
+			throw pae.getException();
 		}
 		finally {
 			TemplateResourceThreadLocal.setTemplateResource(
@@ -144,5 +150,24 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 
 	private Configuration _configuration;
 	private Map<String, Object> _context;
+
+	private class TemplatePrivilegedExceptionAction
+		implements PrivilegedExceptionAction<Template> {
+
+		public TemplatePrivilegedExceptionAction(
+			TemplateResource templateResource) {
+
+			_templateResource = templateResource;
+		}
+
+		public Template run() throws Exception {
+			return _configuration.getTemplate(
+				getTemplateResourceUUID(_templateResource),
+				TemplateConstants.DEFAUT_ENCODING);
+		}
+
+		private TemplateResource _templateResource;
+
+	}
 
 }

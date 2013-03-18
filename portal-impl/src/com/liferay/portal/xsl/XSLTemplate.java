@@ -26,6 +26,10 @@ import com.liferay.portal.template.TemplateContextHelper;
 
 import java.io.Writer;
 
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -195,14 +199,21 @@ public class XSLTemplate implements Template {
 			StreamSource scriptSource = new StreamSource(
 				templateResource.getReader());
 
-			Transformer transformer = transformerFactory.newTransformer(
-				scriptSource);
+			Transformer transformer = AccessController.doPrivileged(
+				new TransformerPrivilegedExceptionAction(
+					transformerFactory, scriptSource));
 
 			for (Map.Entry<String, Object> entry : _context.entrySet()) {
 				transformer.setParameter(entry.getKey(), entry.getValue());
 			}
 
 			return transformer;
+		}
+		catch (PrivilegedActionException pae) {
+			throw new TemplateException(
+				"Unable to get Transformer for template " +
+					templateResource.getTemplateId(),
+				pae.getException());
 		}
 		catch (Exception e) {
 			throw new TemplateException(
@@ -216,5 +227,24 @@ public class XSLTemplate implements Template {
 	private TemplateResource _errorTemplateResource;
 	private TemplateContextHelper _templateContextHelper;
 	private XSLTemplateResource _xslTemplateResource;
+
+	private class TransformerPrivilegedExceptionAction
+		implements PrivilegedExceptionAction<Transformer> {
+
+		public TransformerPrivilegedExceptionAction(
+			TransformerFactory transformerFactory, StreamSource scriptSource) {
+
+			_transformerFactory = transformerFactory;
+			_scriptSource = scriptSource;
+		}
+
+		public Transformer run() throws Exception {
+			return _transformerFactory.newTransformer(_scriptSource);
+		}
+
+		private StreamSource _scriptSource;
+		private TransformerFactory _transformerFactory;
+
+	}
 
 }

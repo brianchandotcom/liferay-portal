@@ -1,0 +1,14 @@
+.portlet-journal-articles .journal-content-article:after {
+	clear: both;
+	content: "";
+	display: block;
+	height: 0;
+}
+
+.ie6 .portlet-journal-articles .journal-content-article {
+	height: 1%;
+}
+
+.ie7 .portlet-journal-articles .journal-content-article {
+	display: inline-block;
+}

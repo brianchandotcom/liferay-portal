@@ -181,31 +181,26 @@ public class SourceFormatter {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains("import ")) {
-				int importX = line.indexOf(" ");
-				int importY = line.lastIndexOf(".");
+			if (!line.contains("import ")) {
+				continue;
+			}
 
-				String importPackage = line.substring(importX + 1, importY);
+			int importX = line.indexOf(" ");
+			int importY = line.lastIndexOf(".");
 
-				if (importPackage.equals("java.lang")) {
-					continue;
-				}
+			String importPackage = line.substring(importX + 1, importY);
 
-				String importClass = line.substring(
-					importY + 1, line.length() - 1);
+			if (importPackage.equals(packageDir) ||
+				importPackage.equals("java.lang")) {
 
-				if (!packageDir.equals(importPackage)) {
-					if (!importClass.equals("*")) {
-						if (classes.contains(importClass)) {
-							sb.append(line);
-							sb.append("\n");
-						}
-					}
-					else {
-						sb.append(line);
-						sb.append("\n");
-					}
-				}
+				continue;
+			}
+
+			String importClass = line.substring(importY + 1, line.length() - 1);
+
+			if (importClass.equals("*") || classes.contains(importClass)) {
+				sb.append(line);
+				sb.append("\n");
 			}
 		}
 

@@ -186,6 +186,11 @@ public class SourceFormatter {
 				int importY = line.lastIndexOf(".");
 
 				String importPackage = line.substring(importX + 1, importY);
+
+				if (importPackage.equals("java.lang")) {
+					continue;
+				}
+
 				String importClass = line.substring(
 					importY + 1, line.length() - 1);
 

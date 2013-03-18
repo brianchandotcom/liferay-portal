@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.socialoffice.users;
+package com.liferay.portalweb.socialoffice.users.teams;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialoffice.users.organizations.OrganizationsTestPlan;
-import com.liferay.portalweb.socialoffice.users.sites.SitesTestPlan;
-import com.liferay.portalweb.socialoffice.users.teams.TeamsTestPlan;
-import com.liferay.portalweb.socialoffice.users.user.UserTestPlan;
-import com.liferay.portalweb.socialoffice.users.usergroups.UsergroupTestPlan;
+import com.liferay.portalweb.socialoffice.users.teams.addteamsite.AddTeamSiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UsersTestPlan extends BaseTestSuite {
+public class TeamsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(OrganizationsTestPlan.suite());
-		testSuite.addTest(SitesTestPlan.suite());
-		testSuite.addTest(TeamsTestPlan.suite());
-		testSuite.addTest(UserTestPlan.suite());
-		testSuite.addTest(UsergroupTestPlan.suite());
+		testSuite.addTest(AddTeamSiteTests.suite());
 
 		return testSuite;
 	}

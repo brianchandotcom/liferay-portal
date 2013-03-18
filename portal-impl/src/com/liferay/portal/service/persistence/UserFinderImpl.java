@@ -249,7 +249,6 @@ public class UserFinderImpl
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
 		boolean doUnionOnGroup = Validator.isNotNull(groupIds) && inherit;
-
 		boolean doUnionOnRole = Validator.isNotNull(roleIds) && inherit;
 
 		LinkedHashMap<String, Object> params1 = params;
@@ -522,7 +521,6 @@ public class UserFinderImpl
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
 		boolean doUnionOnGroup = Validator.isNotNull(groupIds) && inherit;
-
 		boolean doUnionOnRole = Validator.isNotNull(roleIds) && inherit;
 
 		LinkedHashMap<String, Object> params1 = params;
@@ -626,17 +624,15 @@ public class UserFinderImpl
 			sb.append(replaceJoinAndWhere(sql, params1));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			if (doUnionOnGroup) {
+			if (doUnionOnGroup || doUnionOnRole) {
 				sb.append(" UNION (");
 				sb.append(replaceJoinAndWhere(sql, params2));
-				sb.append(") UNION (");
-				sb.append(replaceJoinAndWhere(sql, params3));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
-			if (doUnionOnRole) {
+			if (doUnionOnGroup) {
 				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params2));
+				sb.append(replaceJoinAndWhere(sql, params3));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
@@ -669,22 +665,8 @@ public class UserFinderImpl
 				qPos.add(status);
 			}
 
-			if (doUnionOnGroup) {
+			if (doUnionOnGroup || doUnionOnRole) {
 				setJoin(qPos, params2);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-
-				setJoin(qPos, params3);
 
 				qPos.add(companyId);
 				qPos.add(false);
@@ -699,8 +681,8 @@ public class UserFinderImpl
 				}
 			}
 
-			if (doUnionOnRole) {
-				setJoin(qPos, params2);
+			if (doUnionOnGroup) {
+				setJoin(qPos, params3);
 
 				qPos.add(companyId);
 				qPos.add(false);

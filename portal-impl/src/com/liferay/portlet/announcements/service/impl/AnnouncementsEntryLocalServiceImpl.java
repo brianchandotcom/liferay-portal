@@ -392,14 +392,13 @@ public class AnnouncementsEntryLocalServiceImpl
 				toName = role.getName();
 
 				if (role.getType() == RoleConstants.TYPE_REGULAR) {
+					params.put("inherit", Boolean.TRUE);
 					params.put("usersRoles", classPK);
 				}
 				else {
 					params.put(
 						"userGroupRole", new Long[] {Long.valueOf(0), classPK});
 				}
-
-				params.put("inherit", Boolean.TRUE);
 			}
 			else if (className.equals(UserGroup.class.getName())) {
 				UserGroup userGroup = userGroupPersistence.findByPrimaryKey(

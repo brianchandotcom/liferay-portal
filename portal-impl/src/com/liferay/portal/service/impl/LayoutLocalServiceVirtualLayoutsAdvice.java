@@ -67,6 +67,12 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
+		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
+			methodName, arguments, parameterTypes)) {
+
+			return methodInvocation.proceed();
+		}
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		if (methodName.equals("getLayout") &&
@@ -86,6 +92,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 			try {
 				MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
 				WorkflowThreadLocal.setEnabled(false);
 
 				SitesUtil.mergeLayoutPrototypeLayout(group, layout);
@@ -100,7 +107,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				}
 			}
 			finally {
-				MergeLayoutPrototypesThreadLocal.setInProgress(false);
+				MergeLayoutPrototypesThreadLocal.setMergeComplete(
+					methodName, arguments, parameterTypes);
+
 				WorkflowThreadLocal.setEnabled(workflowEnabled);
 			}
 		}
@@ -119,7 +128,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					groupId, privateLayout);
 
 				mergeLayoutSetPrototypeLayouts(
-					group, layoutSet, privateLayout, workflowEnabled);
+					group, layoutSet, privateLayout, workflowEnabled,
+					methodName, arguments, parameterTypes);
 
 				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
@@ -221,7 +231,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 	protected void mergeLayoutSetPrototypeLayouts(
 		Group group, LayoutSet layoutSet, boolean privateLayout,
-		boolean workflowEnabled) {
+		boolean workflowEnabled, String methodName, Object[] arguments,
+		Class<?>[] parameterTypes) {
 
 		try {
 			if (!SitesUtil.isLayoutSetMergeable(group, layoutSet)) {
@@ -257,7 +268,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			}
 		}
 		finally {
-			MergeLayoutPrototypesThreadLocal.setInProgress(false);
+			MergeLayoutPrototypesThreadLocal.setMergeComplete(
+				methodName, arguments, parameterTypes);
+
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
 	}

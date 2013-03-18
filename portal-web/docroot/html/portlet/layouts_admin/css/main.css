@@ -438,7 +438,7 @@
 	background-image: url(@theme_image_path@/trees/page_copy.png);
 }
 
-.aui-tree-collapsed .aui-tree-icon {
+.aui-tree-collapsed .aui-tree-icon, .aui-tree-node-leaf .aui-tree-icon {
 	background-image: url(@theme_image_path@/trees/page.png);
 }
 

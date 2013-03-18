@@ -100,6 +100,21 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				_log.warn(e, e);
 			}
 		}
+
+		try {
+			initPACLImpls();
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to initialize portal runtime permissions. Some " +
+						"portal runtime security is not enabled.");
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
 	}
 
 	@Override
@@ -277,6 +292,21 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				"Overriding the initial context factory builder using " +
 					"reflection");
 		}
+	}
+
+	protected void initPACLImpl(Class<?> clazz, Object paclImpl)
+		throws Exception {
+
+		Field paclImplField = clazz.getDeclaredField("_pacl");
+
+		synchronized (paclImplField) {
+			paclImplField.setAccessible(true);
+
+			paclImplField.set(null, paclImpl);
+		}
+	}
+
+	protected void initPACLImpls() throws Exception {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

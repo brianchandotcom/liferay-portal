@@ -114,6 +114,12 @@ portletURL.setParameter("tabs1", tabs1);
 				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="description"
+				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+			/>
+
 			<c:if test="<%= Validator.isNull(storageTypeValue) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"

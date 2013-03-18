@@ -6,7 +6,7 @@
 	</action-command>
 
 	<action-command name="Click">
-		<case contains="/input">
+		<case comparator="contains" locator="/input">
 			<execute function="Click#clickAtAndWait" />
 		</case>
 		<default>

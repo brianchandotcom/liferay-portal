@@ -82,6 +82,10 @@ import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.lang.reflect.Method;
 
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -132,20 +136,35 @@ public class TemplateContextHelper {
 	public Map<String, Object> getHelperUtilities(
 		TemplateContextType templateContextType) {
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		TemplateControlContext templateControlContext =
+			getTemplateControlContext();
 
-		if (contextClassLoader == portalClassLoader) {
-			return doGetHelperUtilities(
-				contextClassLoader, templateContextType);
+		AccessControlContext accessControlContext =
+			templateControlContext.getAccessControlContext();
+		ClassLoader classLoader = templateControlContext.getClassLoader();
+
+		if (accessControlContext == null) {
+			return doGetHelperUtilities(classLoader, templateContextType);
 		}
 
-		return doGetHelperUtilities(contextClassLoader, templateContextType);
+		return AccessController.doPrivileged(
+			new DoGetHelperUtilitiesPrivilegedAction(
+				classLoader, templateContextType),
+			accessControlContext);
 	}
 
 	public Set<String> getRestrictedVariables() {
 		return Collections.emptySet();
+	}
+
+	public TemplateControlContext getTemplateControlContext() {
+
+		// Temporarily return a TemplateControlContext with the default behavior
+
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		return new TemplateControlContext(null, contextClassLoader);
 	}
 
 	public void prepare(Template template, HttpServletRequest request) {
@@ -331,6 +350,29 @@ public class TemplateContextHelper {
 		helperUtilitiesMap.put(templateContextType, helperUtilities);
 
 		return helperUtilities;
+	}
+
+	public class DoGetHelperUtilitiesPrivilegedAction
+		implements PrivilegedAction<Map<String, Object>> {
+
+		public DoGetHelperUtilitiesPrivilegedAction(
+			ClassLoader classLoader, TemplateContextType templateContextType) {
+
+			_classLoader = classLoader;
+			_templateContextType = templateContextType;
+		}
+
+		public Map<String, Object> run() {
+			return doGetHelperUtilities(_classLoader, _templateContextType);
+		}
+
+		public void setClassLoader(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
+		private ClassLoader _classLoader;
+		private TemplateContextType _templateContextType;
+
 	}
 
 	protected void populateCommonHelperUtilities(

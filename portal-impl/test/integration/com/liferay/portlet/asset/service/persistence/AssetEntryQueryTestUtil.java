@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
-import java.lang.String;
-
 /**
  * @author Eudaldo Alonso
  */

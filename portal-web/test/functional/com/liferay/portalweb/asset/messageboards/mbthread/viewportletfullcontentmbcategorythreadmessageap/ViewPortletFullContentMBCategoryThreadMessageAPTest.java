@@ -35,6 +35,12 @@ public class ViewPortletFullContentMBCategoryThreadMessageAPTest
 			selenium.getText("//h1[@class='header-title']"));
 		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
 				"MB Category Thread Message Body"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",

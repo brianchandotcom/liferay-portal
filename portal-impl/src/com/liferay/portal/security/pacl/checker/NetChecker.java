@@ -39,10 +39,11 @@ public class NetChecker extends BaseChecker {
 				return false;
 			}
 		}
-		else if (name.equals(NET_PERMISSION_SPECIFY_STREAM_HANDLER)) {
+		else {
+			logSecurityException(
+				_log, "Attempted " + name + " network operation");
 
-			// TODO
-
+			return false;
 		}
 
 		return true;
@@ -59,17 +60,6 @@ public class NetChecker extends BaseChecker {
 
 		return false;
 	}
-
-	protected void logGetProxySelector(Class<?> callerClass, int frame) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Allowing frame " + frame + " with caller " + callerClass +
-					" to get the proxy selector");
-		}
-	}
-
-	private static final String _CLASS_NAME_SOCKS_SOCKET_IMPL =
-		"java.net.SocksSocketImpl$";
 
 	private static Log _log = LogFactoryUtil.getLog(NetChecker.class);
 

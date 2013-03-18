@@ -119,6 +119,16 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		Folder folder = folders[0];
 
+		if (!folder.getName().equalsIgnoreCase("Inbox")) {
+			for (Folder f : folders) {
+				if (f.getName().equalsIgnoreCase("Inbox")) {
+					folder = f;
+
+					break;
+				}
+			}
+		}
+
 		folder.open(Folder.READ_WRITE);
 
 		return folder;

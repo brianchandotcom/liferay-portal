@@ -32,6 +32,10 @@ public class InputTimeZoneTag extends IncludeTag {
 		_value = timeZone.getID();
 	}
 
+	public void setAutoFocus(boolean autoFocus) {
+		_autoFocus = autoFocus;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -62,6 +66,7 @@ public class InputTimeZoneTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_autoFocus = false;
 		_cssClass = null;
 		_daylight = false;
 		_disabled = false;
@@ -81,6 +86,8 @@ public class InputTimeZoneTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:input-time-zone:autoFocus", String.valueOf(_autoFocus));
 		request.setAttribute("liferay-ui:input-time-zone:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-time-zone:daylight", String.valueOf(_daylight));
@@ -98,6 +105,7 @@ public class InputTimeZoneTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_time_zone/page.jsp";
 
+	private boolean _autoFocus;
 	private String _cssClass;
 	private boolean _daylight;
 	private boolean _disabled;

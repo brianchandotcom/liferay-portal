@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/ui/input_time_zone/init.jsp" %>
 
 <%
+boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:autoFocus"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time-zone:cssClass"));
 boolean daylight = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:daylight"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:disabled"));
@@ -68,3 +69,9 @@ numberFormat.setMinimumIntegerDigits(2);
 	%>
 
 </select>
+
+<c:if test="<%= autoFocus %>">
+	<aui:script>
+		Liferay.Util.focusFormField('#<%= name %>');
+	</aui:script>
+</c:if>

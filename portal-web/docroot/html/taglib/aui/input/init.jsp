@@ -32,6 +32,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 	_options.putAll(dynamicAttributes);
 }
 
+boolean autoFocus = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoFocus")));
 boolean autoSize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoSize")));
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:input:bean");
 boolean changesContext = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:changesContext")));
@@ -71,6 +72,7 @@ java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttrib
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:useNamespace")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value");
 
+_updateOptions(_options, "autoFocus", autoFocus);
 _updateOptions(_options, "autoSize", autoSize);
 _updateOptions(_options, "bean", bean);
 _updateOptions(_options, "changesContext", changesContext);

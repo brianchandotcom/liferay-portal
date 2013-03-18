@@ -406,7 +406,12 @@ public class TemplateContextHelper {
 
 		// Document library util
 
-		variables.put("dlUtil", DLUtil.getDL());
+		try {
+			variables.put("dlUtil", DLUtil.getDL());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Expando column service
 

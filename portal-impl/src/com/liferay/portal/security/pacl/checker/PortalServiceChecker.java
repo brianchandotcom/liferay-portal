@@ -35,6 +35,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -126,7 +128,7 @@ public class PortalServiceChecker extends BaseChecker {
 			Method method = portalServicePermission.getMethod();
 			Object[] arguments = portalServicePermission.getArguments();
 
-			if (!hasService(object, method, arguments)) {
+			if (!hasService(object, method, arguments, permission)) {
 				return false;
 			}
 		}
@@ -157,6 +159,10 @@ public class PortalServiceChecker extends BaseChecker {
 		}
 		else {
 			services = _pluginServices.get(paclPolicy.getServletContextName());
+
+			if (services == null) {
+				return Collections.emptySet();
+			}
 		}
 
 		return services;
@@ -183,7 +189,16 @@ public class PortalServiceChecker extends BaseChecker {
 	}
 
 	protected boolean hasService(
-		Object object, Method method, Object[] arguments) {
+		Object object, Method method, Object[] arguments,
+		Permission permission) {
+
+		int stackIndex = getStackIndex(16, 15);
+
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
 
 		Class<?> clazz = PACLUtil.getClass(object);
 
@@ -205,6 +220,10 @@ public class PortalServiceChecker extends BaseChecker {
 
 		if (services.contains(className)) {
 			return true;
+		}
+
+		if (method == null) {
+			return false;
 		}
 
 		String methodName = method.getName();

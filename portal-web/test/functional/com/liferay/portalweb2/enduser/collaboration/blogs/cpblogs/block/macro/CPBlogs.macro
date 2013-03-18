@@ -1,2 +1,4 @@
-<macro-definition name="CPBlogs">
+<macro-definition>
+	<macro-command name="advancedSearch">
+	</macro-command>
 </macro-definition>

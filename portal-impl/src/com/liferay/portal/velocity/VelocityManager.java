@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsUtil;
@@ -40,7 +40,7 @@ import org.apache.velocity.util.introspection.SecureUberspector;
  * @author Raymond Augé
  */
 @DoPrivileged
-public class VelocityManager implements TemplateManager {
+public class VelocityManager extends BaseTemplateManager {
 
 	public void destroy() {
 		if (_velocityEngine == null) {
@@ -62,22 +62,16 @@ public class VelocityManager implements TemplateManager {
 		return TemplateConstants.LANG_TYPE_VM;
 	}
 
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType) {
-
-		return getTemplate(templateResource, null, templateContextType);
-	}
-
-	public Template getTemplate(
+	@Override
+	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateContextType templateContextType,
+		Map<String, Object> helperUtilities) {
 
 		Template template = null;
 
-		VelocityContext velocityContext = getVelocityContext(
-			templateContextType);
+		VelocityContext velocityContext = getVelocityContext(helperUtilities);
 
 		if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			template = new VelocityTemplate(
@@ -183,13 +177,15 @@ public class VelocityManager implements TemplateManager {
 		_templateContextHelper = templateContextHelper;
 	}
 
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
+	}
+
 	protected VelocityContext getVelocityContext(
-		TemplateContextType templateContextType) {
+		Map<String, Object> helperUtilities) {
 
 		VelocityContext velocityContext = new VelocityContext();
-
-		Map<String, Object> helperUtilities =
-			_templateContextHelper.getHelperUtilities(templateContextType);
 
 		for (Map.Entry<String, Object> entry : helperUtilities.entrySet()) {
 			velocityContext.put(entry.getKey(), entry.getValue());

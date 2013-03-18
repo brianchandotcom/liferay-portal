@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.security.Permission;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -31,14 +33,14 @@ public class SecurityChecker extends BaseChecker {
 		String name = permission.getName();
 
 		if (name.equals(SECURITY_PERMISSION_GET_POLICY)) {
-			if (!hasGetPolicy()) {
+			if (!hasGetPolicy(permission)) {
 				logSecurityException(_log, "Attempted to get the policy");
 
 				return false;
 			}
 		}
 		else if (name.equals(SECURITY_PERMISSION_SET_POLICY)) {
-			if (!hasSetPolicy()) {
+			if (!hasSetPolicy(permission)) {
 				logSecurityException(_log, "Attempted to set the policy");
 
 				return false;
@@ -60,18 +62,32 @@ public class SecurityChecker extends BaseChecker {
 		return true;
 	}
 
-	protected boolean hasGetPolicy() {
+	protected boolean hasGetPolicy(Permission permission) {
+		int stackIndex = getStackIndex(11, 11, 10);
 
-		// Temporarily return true
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
-		return true;
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		logSecurityException(_log, "Attempted to get the policy");
+
+		return false;
 	}
 
-	protected boolean hasSetPolicy() {
+	protected boolean hasSetPolicy(Permission permission) {
+		int stackIndex = getStackIndex(11, 11, 10);
 
-		// Temporarily return true
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
-		return true;
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		logSecurityException(_log, "Attempted to set the policy");
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityChecker.class);

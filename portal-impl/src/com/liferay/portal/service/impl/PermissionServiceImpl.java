@@ -38,6 +38,8 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -250,6 +252,26 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		}
 		else if (!permissionChecker.hasPermission(
 					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
+
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(name);
+
+			if (assetRendererFactory != null) {
+				boolean permission = false;
+
+				try {
+					permission = assetRendererFactory.hasPermission(
+						permissionChecker, GetterUtil.getLong(primKey),
+						ActionKeys.PERMISSIONS);
+				}
+				catch (Exception e) {
+				}
+
+				if (permission) {
+					return;
+				}
+			}
 
 			long ownerId = 0;
 

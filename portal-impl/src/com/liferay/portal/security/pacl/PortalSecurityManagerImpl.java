@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 
@@ -31,6 +33,8 @@ import java.lang.reflect.ReflectPermission;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.Policy;
+import java.security.PrivilegedAction;
+import java.security.PrivilegedExceptionAction;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
@@ -230,6 +234,43 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		return _policy;
 	}
 
+	public static class DoDoPrivilegedPACL implements DoPrivilegedUtil.PACL {
+
+		public <T> T wrap(PrivilegedAction<T> privilegedAction) {
+			if (!PACLPolicyManager.isActive()) {
+				return privilegedAction.run();
+			}
+
+			return DoPrivilegedFactory.wrap(
+				AccessController.doPrivileged(privilegedAction));
+		}
+
+		public <T> T wrap(
+				PrivilegedExceptionAction<T> privilegedExceptionAction)
+			throws Exception {
+
+			if (!PACLPolicyManager.isActive()) {
+				return privilegedExceptionAction.run();
+			}
+
+			return DoPrivilegedFactory.wrap(
+				AccessController.doPrivileged(privilegedExceptionAction));
+		}
+
+		public <T> T wrap(T t) {
+			return DoPrivilegedFactory.wrap(t);
+		}
+
+		public <T> T wrap(T t, boolean checkActive) {
+			if (!PACLPolicyManager.isActive()) {
+				return t;
+			}
+
+			return DoPrivilegedFactory.wrap(t);
+		}
+
+	}
+
 	protected void initClass(Class<?> clazz) {
 		_log.debug(
 			"Loading " + clazz.getName() + " and " +
@@ -307,6 +348,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initPACLImpls() throws Exception {
+		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

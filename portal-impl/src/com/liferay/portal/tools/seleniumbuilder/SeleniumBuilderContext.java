@@ -94,8 +94,8 @@ public class SeleniumBuilderContext {
 				_functionSimpleClassNames.put(
 					functionName, _getSimpleClassName(fileName));
 
-				_functionTargetCounts.put(
-					functionName, _getTargetCount(rootElement));
+				_functionLocatorCounts.put(
+					functionName, _getLocatorCount(rootElement));
 			}
 			else if (fileName.endsWith(".macro")) {
 				String macroName = _getName(fileName);
@@ -300,6 +300,10 @@ public class SeleniumBuilderContext {
 		return _functionJavaFileNames.get(functionName);
 	}
 
+	public int getFunctionLocatorCount(String functionName) {
+		return _functionLocatorCounts.get(functionName);
+	}
+
 	public Set<String> getFunctionNames() {
 		return _functionNames;
 	}
@@ -318,10 +322,6 @@ public class SeleniumBuilderContext {
 
 	public String getFunctionSimpleClassName(String functionName) {
 		return _functionSimpleClassNames.get(functionName);
-	}
-
-	public int getFunctionTargetCount(String functionName) {
-		return _functionTargetCounts.get(functionName);
 	}
 
 	public String getMacroClassName(String macroName) {
@@ -456,6 +456,10 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getJavaFileName(fileName, classSuffix);
 	}
 
+	private int _getLocatorCount(Element rootElement) throws Exception {
+		return _seleniumBuilderFileUtil.getLocatorCount(rootElement);
+	}
+
 	private String _getName(String fileName) {
 		return _seleniumBuilderFileUtil.getName(fileName);
 	}
@@ -479,10 +483,6 @@ public class SeleniumBuilderContext {
 	private String _getSimpleClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
-	}
-
-	private int _getTargetCount(Element rootElement) throws Exception {
-		return _seleniumBuilderFileUtil.getTargetCount(rootElement);
 	}
 
 	private String _normalizeFileName(String fileName) {
@@ -509,6 +509,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, String> _functionJavaFileNames =
 		new HashMap<String, String>();
+	private Map<String, Integer> _functionLocatorCounts =
+		new HashMap<String, Integer>();
 	private Set<String> _functionNames = new HashSet<String>();
 	private Map<String, String> _functionPackageNames =
 		new HashMap<String, String>();
@@ -518,8 +520,6 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _functionSimpleClassNames =
 		new HashMap<String, String>();
-	private Map<String, Integer> _functionTargetCounts =
-		new HashMap<String, Integer>();
 	private Map<String, String> _macroClassNames =
 		new HashMap<String, String>();
 	private Map<String, String> _macroFileNames = new HashMap<String, String>();

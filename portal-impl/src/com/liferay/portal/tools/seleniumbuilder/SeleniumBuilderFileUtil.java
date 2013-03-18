@@ -114,6 +114,22 @@ public class SeleniumBuilderFileUtil {
 				getSimpleClassName(fileName, classSuffix) + ".java";
 	}
 
+	public int getLocatorCount(Element rootElement) {
+		String xml = rootElement.asXML();
+
+		for (int i = 1;; i++) {
+			if (xml.contains("${locator" + i + "}")) {
+				continue;
+			}
+
+			if (i > 1) {
+				i--;
+			}
+
+			return i;
+		}
+	}
+
 	public String getName(String fileName) {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 		int y = fileName.indexOf(CharPool.PERIOD);
@@ -176,22 +192,6 @@ public class SeleniumBuilderFileUtil {
 
 	public String getSimpleClassName(String fileName, String classSuffix) {
 		return getName(fileName) + classSuffix;
-	}
-
-	public int getTargetCount(Element rootElement) {
-		String xml = rootElement.asXML();
-
-		for (int i = 1;; i++) {
-			if (xml.contains("${target" + i + "}")) {
-				continue;
-			}
-
-			if (i > 1) {
-				i--;
-			}
-
-			return i;
-		}
 	}
 
 	public String getVariableName(String name) {

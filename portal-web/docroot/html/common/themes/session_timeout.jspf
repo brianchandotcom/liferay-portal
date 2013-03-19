@@ -55,7 +55,7 @@
 						autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
 						sessionLength: <%= sessionTimeout %>,
 						redirectOnExpire: <%= sessionRedirectOnExpire %>,
-						redirectUrl: '<%= sessionRedirectUrl %>',
+						redirectUrl: '<%= HtmlUtil.escapeJS(sessionRedirectUrl) %>',
 						warningLength: <%= sessionTimeoutWarning %>
 					}
 				);

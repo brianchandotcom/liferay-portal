@@ -206,7 +206,7 @@
 					return "<%= themeDisplay.getURLControlPanel() %>";
 				},
 				getURLHome: function() {
-					return "<%= themeDisplay.getURLHome() %>";
+					return "<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>";
 				},
 				getUserId: function() {
 					return "<%= themeDisplay.getUserId() %>";

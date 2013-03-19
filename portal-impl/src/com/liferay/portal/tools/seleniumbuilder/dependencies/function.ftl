@@ -32,7 +32,7 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 
 			<#assign blockElement = commandElement>
 
-			<#include "block_element.ftl">
+			<#include "function_block_element.ftl">
 		}
 	</#list>
 

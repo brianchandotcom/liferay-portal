@@ -42,103 +42,87 @@ public class SiteMembershipPolicyBaseImplTest
 	}
 
 	@Test
-	public void testIsMembershipAllowedReturnFalseInCheckException()
-		throws Exception {
-
-		addUsers();
-		addForbiddenSites();
-
-		Assert.assertFalse(
-			SiteMembershipPolicyUtil.isMembershipAllowed(
-				getUserIds()[0], getForbiddenSiteIds()[0]));
-	}
-
-	@Test
-	public void testIsMembershipAllowedReturnTrueInCheckPass()
-		throws Exception {
-
-		addUsers();
-		addStandardSites();
+	public void testIsMembershipAllowed() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
 
 		Assert.assertTrue(
 			SiteMembershipPolicyUtil.isMembershipAllowed(
-				getUserIds()[0], getStandardSiteIds()[0]));
+				userIds[0], standardSiteIds[0]));
 	}
 
 	@Test
-	public void testIsMembershipRequiredReturnFalseInCheckPass()
-		throws Exception {
+	public void testIsMembershipNotAllowed() throws Exception {
+		long[] userIds = addUsers();
+		long[] forbiddenSiteIds = addForbiddenSites();
 
-		addUsers();
-		addStandardSites();
+		Assert.assertFalse(
+			SiteMembershipPolicyUtil.isMembershipAllowed(
+				userIds[0], forbiddenSiteIds[0]));
+	}
+
+	@Test
+	public void testIsMembershipNotRequired() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
 
 		Assert.assertFalse(
 			SiteMembershipPolicyUtil.isMembershipRequired(
-				getUserIds()[0], getStandardSiteIds()[0]));
+				userIds[0], standardSiteIds[0]));
 	}
 
 	@Test
-	public void testIsMembershipRequiredReturnTrueInCheckException()
-		throws Exception {
-
-		addUsers();
-		addRequiredSites();
+	public void testIsMembershipRequired() throws Exception {
+		long[] userIds = addUsers();
+		long[] requiredSiteIds = addRequiredSites();
 
 		Assert.assertTrue(
 			SiteMembershipPolicyUtil.isMembershipRequired(
-				getUserIds()[0], getRequiredSiteIds()[0]));
+				userIds[0], requiredSiteIds[0]));
 	}
 
 	@Test
-	public void testIsRoleAllowedReturnFalseInCheckException()
-		throws Exception {
-
-		addUsers();
-		addStandardSites();
-		addForbiddenRoles();
-
-		Assert.assertFalse(
-			SiteMembershipPolicyUtil.isRoleAllowed(
-				getUserIds()[0], getForbiddenSiteIds()[0],
-				getForbiddenRoleIds()[0]));
-	}
-
-	@Test
-	public void testIsRoleAllowedReturnTrueInCheckPass() throws Exception {
-		addUsers();
-		addStandardSites();
-		addStandardRoles();
+	public void testIsRoleAllowed() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] standardRoleIds = addStandardRoles();
 
 		Assert.assertTrue(
 			SiteMembershipPolicyUtil.isRoleAllowed(
-				getUserIds()[0], getStandardSiteIds()[0],
-				getStandardRoleIds()[0]));
+				userIds[0], standardSiteIds[0], standardRoleIds[0]));
 	}
 
 	@Test
-	public void testIsRoleRequiredReturnFalseInCheckPass() throws Exception {
-		addUsers();
-		addStandardSites();
-		addStandardRoles();
+	public void testIsRoleNotAllowed() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] forbiddenRoleIds = addForbiddenRoles();
+
+		Assert.assertFalse(
+			SiteMembershipPolicyUtil.isRoleAllowed(
+				userIds[0], standardSiteIds[0], forbiddenRoleIds[0]));
+	}
+
+	@Test
+	public void testIsRoleNotRequired() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] standardRoleIds = addStandardRoles();
 
 		Assert.assertFalse(
 			SiteMembershipPolicyUtil.isRoleRequired(
-				getUserIds()[0], getStandardSiteIds()[0],
-				getStandardRoleIds()[0]));
+				userIds[0], standardSiteIds[0], standardRoleIds[0]));
 	}
 
 	@Test
-	public void testIsRoleRequiredReturnTrueInCheckException()
-		throws Exception {
-
-		addUsers();
-		addStandardSites();
-		addRequiredRoles();
+	public void testIsRoleRequired() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] requiredRoleIds = addRequiredRoles();
 
 		Assert.assertTrue(
 			SiteMembershipPolicyUtil.isRoleRequired(
-				getUserIds()[0], getRequiredSiteIds()[0],
-				getRequiredRoleIds()[0]));
+				userIds[0], standardSiteIds[0], requiredRoleIds[0]));
 	}
 
 }

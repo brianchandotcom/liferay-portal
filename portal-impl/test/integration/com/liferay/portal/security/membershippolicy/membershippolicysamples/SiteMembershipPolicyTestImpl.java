@@ -42,7 +42,9 @@ public class SiteMembershipPolicyTestImpl extends BaseSiteMembershipPolicy {
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException {
 
-		for (long forbiddenGroupId : getForbiddenGroupIds()) {
+		for (long forbiddenGroupId :
+				BaseSiteMembershipPolicyTestCase.getForbiddenSiteIds()) {
+
 			if (forbiddenGroupId == 0) {
 				continue;
 			}
@@ -53,7 +55,9 @@ public class SiteMembershipPolicyTestImpl extends BaseSiteMembershipPolicy {
 			}
 		}
 
-		for (long requiredGroupId : getRequiredGroupIds()) {
+		for (long requiredGroupId :
+				BaseSiteMembershipPolicyTestCase.getRequiredSiteIds()) {
+
 			if (requiredGroupId == 0) {
 				continue;
 			}
@@ -85,7 +89,9 @@ public class SiteMembershipPolicyTestImpl extends BaseSiteMembershipPolicy {
 			}
 		}
 
-		for (long forbiddenGroupRoleId : getForbiddenGroupRoleIds()) {
+		for (long forbiddenGroupRoleId :
+				BaseSiteMembershipPolicyTestCase.getForbiddenRoleIds()) {
+
 			if (forbiddenGroupRoleId == 0) {
 				continue;
 			}
@@ -96,7 +102,9 @@ public class SiteMembershipPolicyTestImpl extends BaseSiteMembershipPolicy {
 			}
 		}
 
-		for (long requiredGroupRoleId : getRequiredGroupRoleIds()) {
+		for (long requiredGroupRoleId :
+				BaseSiteMembershipPolicyTestCase.getRequiredRoleIds()) {
+
 			if (requiredGroupRoleId == 0) {
 				continue;
 			}
@@ -176,22 +184,6 @@ public class SiteMembershipPolicyTestImpl extends BaseSiteMembershipPolicy {
 		Assert.assertNotNull(oldExpandoAttributes);
 
 		verifyPolicy(role);
-	}
-
-	protected long[] getForbiddenGroupIds() {
-		return BaseSiteMembershipPolicyTestCase.getForbiddenSiteIds();
-	}
-
-	protected long[] getForbiddenGroupRoleIds() {
-		return BaseSiteMembershipPolicyTestCase.getForbiddenRoleIds();
-	}
-
-	protected long[] getRequiredGroupIds() {
-		return BaseSiteMembershipPolicyTestCase.getRequiredSiteIds();
-	}
-
-	protected long[] getRequiredGroupRoleIds() {
-		return BaseSiteMembershipPolicyTestCase.getRequiredRoleIds();
 	}
 
 }

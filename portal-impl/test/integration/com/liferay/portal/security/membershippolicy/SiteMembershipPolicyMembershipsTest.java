@@ -20,12 +20,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
 import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,375 +36,245 @@ import org.junit.Test;
 public class SiteMembershipPolicyMembershipsTest
 	extends BaseSiteMembershipPolicyTestCase {
 
-	@Test
-	public void testCountGroupUsersWhenAddForbiddenSitesToUser()
-		throws Exception {
-
-		addUsers();
-		addForbiddenSites();
-
-		int expectedUsersInFirstForbiddenGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getForbiddenSiteIds()[0]);
-
-		int expectedUsersInSecondForbiddenGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getForbiddenSiteIds()[1]);
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		try {
-			MembershipPolicyTestUtil.updateUser(
-				user, null, null, getForbiddenSiteIds(), null,
-				Collections.<UserGroupRole>emptyList());
-		}
-		catch (Exception e) {
-			if (!(e instanceof MembershipPolicyException)) {
-				Assert.fail("Exception Throwing :" + e.getClass().getName());
-			}
-		}
-
-		int currentUsersInFirstForbiddenGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getForbiddenSiteIds()[0]);
-
-		int currentUsersInSecondForbiddenGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getForbiddenSiteIds()[1]);
-
-		Assert.assertEquals(
-			expectedUsersInFirstForbiddenGroupCount,
-			currentUsersInFirstForbiddenGroupCount);
-
-		Assert.assertEquals(
-			expectedUsersInSecondForbiddenGroupCount,
-			currentUsersInSecondForbiddenGroupCount);
-	}
-
-	@Test
-	public void testCountGroupUsersWhenAddRequiredSitesToUser()
-		throws Exception {
-
-		addUsers();
-		addRequiredSites();
-
-		int expectedUsersInFirstRequiredGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getRequiredSiteIds()[0]) + addedUsers(1);
-
-		int expectedUsersInSecondRequiredGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getRequiredSiteIds()[1]) + addedUsers(1);
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, getRequiredSiteIds(), null,
-			Collections.<UserGroupRole>emptyList());
-
-		int currentUsersInFirstRequiredGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getRequiredSiteIds()[0]);
-
-		int currentUsersInSecondRequiredGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(getRequiredSiteIds()[1]);
-
-		Assert.assertEquals(
-			expectedUsersInFirstRequiredGroupCount,
-			currentUsersInFirstRequiredGroupCount);
-
-		Assert.assertEquals(
-			expectedUsersInSecondRequiredGroupCount,
-			currentUsersInSecondRequiredGroupCount);
-	}
-
-	@Test
-	public void testCountGroupUsersWhenAddUsersToRequiredSite()
-		throws Exception {
-
-		addUsers();
-		addRequiredSites();
-
-		int expectedUserGroupCountInRequiredSite =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getRequiredSiteIds()[0]) + addedUsers(2);
-
-		try {
-			UserServiceUtil.addGroupUsers(
-				getRequiredSiteIds()[0], getUserIds(), _getServiceContext());
-		}
-		catch (Exception e) {
-			if (e instanceof MembershipPolicyException) {
-				Assert.fail("MembershipPolicyException was throw");
-			}
-			else {
-				Assert.fail(
-					"Unexpected Exception throw: " + e.getClass().getName());
-			}
-		}
-
-		int currentUserGroupCountInRequiredSite =
-			UserLocalServiceUtil.getGroupUsersCount(getRequiredSiteIds()[0]);
-
-		Assert.assertEquals(
-			expectedUserGroupCountInRequiredSite,
-			currentUserGroupCountInRequiredSite);
-		Assert.assertTrue(getPropagateMembershipMethodFlag());
-	}
-
-	@Test
-	public void testCountGroupUsersWhenAddUserToRequiredSite()
-		throws Exception {
-
-		addUsers();
-		addRequiredSites();
-
-		int expectedGroupUsersInRequiredSite =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getRequiredSiteIds()[0]) + addedUsers(1);
-
-		UserServiceUtil.addGroupUsers(
-			getRequiredSiteIds()[0], new long[]{getUserIds()[0]},
-			_getServiceContext());
-
-		int currentGroupUsersInRequiredSite =
-			UserLocalServiceUtil.getGroupUsersCount(getRequiredSiteIds()[0]);
-
-		Assert.assertEquals(
-			expectedGroupUsersInRequiredSite, currentGroupUsersInRequiredSite);
-		Assert.assertTrue(getPropagateMembershipMethodFlag());
-	}
-
 	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenAddForbiddenSitesToUser()
-		throws Exception {
-
-		addUsers();
-		addForbiddenSites();
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, getForbiddenSiteIds(), null,
-			Collections.<UserGroupRole>emptyList());
+	public void testAddUserToForbiddenSites() throws Exception {
+		MembershipPolicyTestUtil.addUser(null, null, addForbiddenSites(), null);
 	}
 
-	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenAddForbiddenSiteToUser()
-		throws Exception {
+	public void testAddUserToRequiredSites() throws Exception {
+		long[] requiredSiteIds = addRequiredSites();
 
-		addUsers();
-		addForbiddenSites();
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, getForbiddenSiteIds(), null,
-			Collections.<UserGroupRole>emptyList());
-	}
-
-	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenAddUsersToForbiddenSite()
-		throws Exception {
-
-		addUsers();
-		addForbiddenSites();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		UserServiceUtil.addGroupUsers(
-			getForbiddenSiteIds()[0], getUserIds(), serviceContext);
-	}
-
-	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenAddUserToForbiddenSite()
-		throws Exception {
-
-		addUsers();
-		addForbiddenSites();
-
-		UserServiceUtil.addGroupUsers(
-			getForbiddenSiteIds()[0], new long[]{getUserIds()[0]},
-			_getServiceContext());
-	}
-
-	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenCreatingUserWithForbiddenSites()
-		throws Exception {
-
-		addForbiddenSites();
+		int initialUserGroupCount = UserLocalServiceUtil.getGroupUsersCount(
+			requiredSiteIds[0]);
 
 		MembershipPolicyTestUtil.addUser(
-			null, null, getForbiddenSiteIds(), null);
+			null, null, new long[] {requiredSiteIds[0]}, null);
+
+		Assert.assertEquals(
+			initialUserGroupCount + 1,
+			UserLocalServiceUtil.getGroupUsersCount(requiredSiteIds[0]));
 	}
 
 	@Test(expected = MembershipPolicyException.class)
-	public void testExceptionThrowWhenRemoveUsersFromRequiredSite()
+	public void testAssignUsersToForbiddenSite() throws Exception {
+		long[] forbiddenSiteIds = addForbiddenSites();
+
+		UserServiceUtil.addGroupUsers(
+			forbiddenSiteIds[0], addUsers(),
+			ServiceTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testAssignUsersToRequiredSite() throws Exception {
+		long[] requiredSiteIds = addRequiredSites();
+
+		int initialUserGroupCountInRequiredSite =
+			UserLocalServiceUtil.getGroupUsersCount(requiredSiteIds[0]);
+
+		UserServiceUtil.addGroupUsers(
+			requiredSiteIds[0], addUsers(),
+			ServiceTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			initialUserGroupCountInRequiredSite + 2,
+			UserLocalServiceUtil.getGroupUsersCount(requiredSiteIds[0]));
+		Assert.assertTrue(getPropagateMembershipMethodFlag());
+	}
+
+	@Test(expected = MembershipPolicyException.class)
+	public void testAssignUserToForbiddenSites() throws Exception {
+		long[] userIds = addUsers();
+
+		User user = UserLocalServiceUtil.getUser(userIds[0]);
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, addForbiddenSites(), null,
+			Collections.<UserGroupRole>emptyList());
+	}
+
+	@Test
+	public void testAssignUserToRequiredSites() throws Exception {
+		long[] userIds = addUsers();
+		long[] requiredSiteIds = addRequiredSites();
+
+		int initialUserGroupCount = UserLocalServiceUtil.getGroupUsersCount(
+			requiredSiteIds[0]);
+
+		User user = UserLocalServiceUtil.getUser(userIds[0]);
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, new long[]{requiredSiteIds[0]}, null,
+			Collections.<UserGroupRole>emptyList());
+
+		Assert.assertEquals(
+			initialUserGroupCount + 1,
+			UserLocalServiceUtil.getGroupUsersCount(requiredSiteIds[0]));
+		Assert.assertTrue(getPropagateMembershipMethodFlag());
+	}
+
+	@Test
+	public void testPropagateWhenAddingUserToRequiredSites() throws Exception {
+		MembershipPolicyTestUtil.addUser(null, null, addRequiredSites(), null);
+
+		Assert.assertTrue(getPropagateMembershipMethodFlag());
+	}
+
+	@Test
+	public void testPropagateWhenAssigningUsersToRequiredSite()
 		throws Exception {
 
-		addRequiredSites();
+		long[] requiredSiteIds = addRequiredSites();
+
+		UserServiceUtil.addGroupUsers(
+			requiredSiteIds[0], addUsers(),
+			ServiceTestUtil.getServiceContext());
+
+		Assert.assertTrue(getPropagateMembershipMethodFlag());
+	}
+
+	@Test
+	public void testPropagateWhenAssigningUserToRequiredSites()
+		throws Exception {
+
+		long[] userIds = addUsers();
+
+		User user = UserLocalServiceUtil.getUser(userIds[0]);
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, addRequiredSites(), null,
+			Collections.<UserGroupRole>emptyList());
+
+		Assert.assertTrue(getPropagateMembershipMethodFlag());
+	}
+
+	@Test
+	public void testUnassignUserFromRequiredSites() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] requiredSiteIds = addRequiredSites();
+
+		User user = UserLocalServiceUtil.getUser(userIds[0]);
+
+		// Users always have the personal site
+
+		List<Group> groups =  user.getGroups();
+
+		Assert.assertEquals(1, groups.size());
+
+		long[] userGroupIds = ArrayUtil.append(
+			standardSiteIds, requiredSiteIds, new long[] {user.getGroupId()});
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, userGroupIds, null,
+			Collections.<UserGroupRole>emptyList());
+
+		Assert.assertEquals(userGroupIds.length, user.getGroups().size());
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, requiredSiteIds, null,
+			Collections.<UserGroupRole>emptyList());
+
+		Assert.assertEquals(requiredSiteIds.length, user.getGroups().size());
+	}
+
+	@Test
+	public void testUnassignUserFromSites() throws Exception {
+		long[] userIds = addUsers();
+		long[] standardSiteIds = addStandardSites();
+		long[] requiredSiteIds = addRequiredSites();
+
+		User user = UserLocalServiceUtil.getUser(userIds[0]);
+
+		// Users always have the personal site
+
+		List<Group> groups =  user.getGroups();
+
+		Assert.assertEquals(1, groups.size());
+
+		long[] userGroupIds = ArrayUtil.append(
+			standardSiteIds, requiredSiteIds, new long[] {user.getGroupId()});
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, userGroupIds, null,
+			Collections.<UserGroupRole>emptyList());
+
+		groups =  user.getGroups();
+
+		Assert.assertEquals(userGroupIds.length, groups.size());
+
+		MembershipPolicyTestUtil.updateUser(
+			user, null, null, standardSiteIds, null,
+			Collections.<UserGroupRole>emptyList());
+
+		// We have removed the user from her personal site but the required
+		// sites are kept
+
+		groups =  user.getGroups();
+
+		Assert.assertEquals(userGroupIds.length - 1, groups.size());
+	}
+
+	@Test(expected = MembershipPolicyException.class)
+	public void testUnassignUsersFromRequiredSite() throws Exception {
+		long[] requiredSiteIds = addRequiredSites();
 
 		User user = MembershipPolicyTestUtil.addUser(
-			null, null, getRequiredSiteIds(), null);
+			null, null, requiredSiteIds, null);
 
 		UserServiceUtil.unsetGroupUsers(
-			getRequiredSiteIds()[0], new long[]{user.getUserId()},
-			_getServiceContext());
+			requiredSiteIds[0], new long[]{user.getUserId()},
+			ServiceTestUtil.getServiceContext());
 	}
 
 	@Test
-	public void testLaunchPropagationWhenAddUsersToRequiredSite()
-		throws Exception {
+	public void testUnassignUsersFromSite() throws Exception {
+		long[] standardSiteIds = addStandardSites();
 
-		addUsers();
-		addRequiredSites();
+		User user = MembershipPolicyTestUtil.addUser(
+			null, null, standardSiteIds, null);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		int initialUserGroupCount = UserLocalServiceUtil.getGroupUsersCount(
+			standardSiteIds[0]);
 
-		UserServiceUtil.addGroupUsers(
-			getRequiredSiteIds()[0], getUserIds(), serviceContext);
+		UserServiceUtil.unsetGroupUsers(
+			standardSiteIds[0], new long[]{user.getUserId()},
+			ServiceTestUtil.getServiceContext());
 
+		Assert.assertEquals(
+			initialUserGroupCount - 1,
+			UserLocalServiceUtil.getGroupUsersCount(standardSiteIds[0]));
 		Assert.assertTrue(getPropagateMembershipMethodFlag());
 	}
 
 	@Test
-	public void testLaunchPropagationWhenCreateUserWithRequiredSites()
-		throws Exception {
-
-		addRequiredSites();
-
-		MembershipPolicyTestUtil.addUser(
-			null, null, getRequiredSiteIds(), null);
-
-		Assert.assertTrue(getPropagateMembershipMethodFlag());
-	}
-
-	@Test
-	public void testLaunchVerificationWhenAddGroup() throws Exception {
+	public void testVerifyWhenAddingGroup() throws Exception {
 		MembershipPolicyTestUtil.addGroup();
 
 		Assert.assertTrue(getVerifyMethodFlag());
 	}
 
 	@Test
-	public void testSuccessfulUnsetGroupUsersWhenRemoveUserFromStandardSite()
-		throws Exception {
-
-		addStandardSites();
-
-		User user = MembershipPolicyTestUtil.addUser(
-			null, null, getStandardSiteIds(), null);
-
-		int expectedUserGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getStandardSiteIds()[0]) - 1;
-
-		UserServiceUtil.unsetGroupUsers(
-			getStandardSiteIds()[0], new long[]{user.getUserId()},
-			_getServiceContext());
-
-		int currentUserGroupCount = UserLocalServiceUtil.getGroupUsersCount(
-			getStandardSiteIds()[0]);
-
-		Assert.assertEquals(expectedUserGroupCount, currentUserGroupCount);
-		Assert.assertTrue(getPropagateMembershipMethodFlag());
-	}
-
-	@Test
-	public void testUpdateGroupLaunchVerification() throws Exception {
+	public void testVerifyWhenUpdatingGroup() throws Exception {
 		Group group = MembershipPolicyTestUtil.addGroup();
 
 		GroupServiceUtil.updateGroup(
-			group.getGroupId(), group.getParentGroupId(), "TestSiteNewName",
-			group.getDescription(), group.getType(), group.getFriendlyURL(),
-			group.isActive(), _getServiceContext());
+			group.getGroupId(), group.getParentGroupId(),
+			ServiceTestUtil.randomString(), group.getDescription(),
+			group.getType(), group.getFriendlyURL(), group.isActive(),
+			ServiceTestUtil.getServiceContext());
 
 		Assert.assertTrue(getVerifyMethodFlag());
 	}
 
 	@Test
-	public void testUpdateGroupTypeSettingsLaunchVerification()
-		throws Exception {
-
+	public void testVerifyWhenUpdatingGroupTypeSettings() throws Exception {
 		Group group = MembershipPolicyTestUtil.addGroup();
 
 		String typeSettings = ServiceTestUtil.randomString(50);
+
 		GroupServiceUtil.updateGroup(group.getGroupId(), typeSettings);
 
 		Assert.assertTrue(getVerifyMethodFlag());
-	}
-
-	@Test
-	public void testUserGrouCountWhenUpdateSitesFromUser() throws Exception {
-		addUsers();
-		addStandardSites();
-		addRequiredSites();
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		Assert.assertEquals(currentGroups(1), user.getGroups().size());
-
-		long[] userGroupIds = ArrayUtil.append(
-			getStandardSiteIds(), getRequiredSiteIds(), user.getGroupIds());
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, userGroupIds, null,
-			Collections.<UserGroupRole>emptyList());
-
-		Assert.assertEquals(currentGroups(5), user.getGroups().size());
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, getRequiredSiteIds(), null,
-			Collections.<UserGroupRole>emptyList());
-
-		Assert.assertEquals(currentGroups(2), user.getGroups().size());
-	}
-
-	@Test
-	public void testUserGroupCountWhenAddRequiredSiteOnUserUpdate()
-		throws Exception {
-
-		addUsers();
-		addRequiredSites();
-
-		int expectedUserGroupCount =
-			UserLocalServiceUtil.getGroupUsersCount(
-				getRequiredSiteIds()[0]) + addedUsers(1);
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, new long[] {getRequiredSiteIds()[0]}, null,
-			Collections.<UserGroupRole>emptyList());
-
-		int currentUserGroupCount = UserLocalServiceUtil.getGroupUsersCount(
-			getRequiredSiteIds()[0]);
-
-		Assert.assertEquals(expectedUserGroupCount, currentUserGroupCount);
-		Assert.assertTrue(getPropagateMembershipMethodFlag());
-	}
-
-	@Test
-	public void testUserGroupCountWhenWhenDeleteRequiredSitesInUserUpdate()
-		throws Exception {
-
-		addUsers();
-		addStandardSites();
-		addRequiredSites();
-
-		User user = UserLocalServiceUtil.getUser(getUserIds()[0]);
-
-		Assert.assertEquals(currentGroups(1), user.getGroups().size());
-
-		long[] userGroupIds = ArrayUtil.append(
-			getStandardSiteIds(), getRequiredSiteIds(), user.getGroupIds());
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, userGroupIds, null,
-			Collections.<UserGroupRole>emptyList());
-
-		Assert.assertEquals(currentGroups(5), user.getGroups().size());
-
-		MembershipPolicyTestUtil.updateUser(
-			user, null, null, getStandardSiteIds(), null,
-			Collections.<UserGroupRole>emptyList());
-
-		Assert.assertEquals(currentGroups(4), user.getGroups().size());
 	}
 
 }

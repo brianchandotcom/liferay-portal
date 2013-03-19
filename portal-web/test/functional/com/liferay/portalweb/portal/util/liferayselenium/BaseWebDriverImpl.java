@@ -235,6 +235,7 @@ public abstract class BaseWebDriverImpl
 		if (isElementNotPresent(selectLocator)) {
 			return false;
 		}
+
 		return !pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
@@ -262,6 +263,7 @@ public abstract class BaseWebDriverImpl
 		if (isElementNotPresent(selectLocator)) {
 			return false;
 		}
+
 		return pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 

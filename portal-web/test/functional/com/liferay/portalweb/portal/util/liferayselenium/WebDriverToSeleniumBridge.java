@@ -468,7 +468,6 @@ public class WebDriverToSeleniumBridge
 
 	public String getSelectedLabel(String selectLocator, String timeout) {
 		try {
-
 			WebElement selectLocatorWebElement = getWebElement(
 				selectLocator, timeout);
 

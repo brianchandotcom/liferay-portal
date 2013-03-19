@@ -1282,8 +1282,8 @@ AUI.add(
 
 						return AArray.find(
 							instance._vocabularies,
-							function(vocabulary) {
-								return (vocabularyId == vocabulary.vocabularyId);
+							function(item, index, collection) {
+								return (vocabularyId == item.vocabularyId);
 							}
 						);
 					},
@@ -1764,7 +1764,7 @@ AUI.add(
 						if (!exception && response.categoryId) {
 							var vocabulary = instance._getVocabularyById(instance._selectedVocabularyId);
 
-							++vocabulary.categoriesCount;
+							vocabulary.categoriesCount++;
 
 							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 

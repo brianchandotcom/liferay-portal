@@ -15,6 +15,7 @@
 package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,11 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Raymond Augé
  */
@@ -32,6 +38,34 @@ public class DoPrivilegedHandler
 
 	public DoPrivilegedHandler(Object bean) {
 		_bean = bean;
+
+		_initNotPrivilegedMethods();
+	}
+
+	private void _initNotPrivilegedMethods() {
+		_notPrivilegedMethods = new ArrayList<MethodKey>();
+
+		Class<?> beanClass = _bean.getClass();
+
+		Method[] methods = beanClass.getMethods();
+
+		for (Method curMethod : methods) {
+			NotPrivileged notPrivileged = curMethod.getAnnotation(
+				NotPrivileged.class);
+
+			if (notPrivileged == null) {
+				continue;
+			}
+
+			_notPrivilegedMethods.add(new MethodKey(curMethod));
+		}
+
+		_notPrivilegedMethods = Collections.unmodifiableList(
+			_notPrivilegedMethods);
+
+		if (!_notPrivilegedMethods.isEmpty()) {
+			_hasNotPrivilegedMethods = true;
+		}
 	}
 
 	public Object getActualBean() {
@@ -49,7 +83,7 @@ public class DoPrivilegedHandler
 
 			return getActualBean();
 		}
-		else if (_isNotPrivileged(_bean.getClass(), method)) {
+		else if (_isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);
 		}
 
@@ -70,28 +104,10 @@ public class DoPrivilegedHandler
 		}
 	}
 
-	private boolean _isNotPrivileged(Class<?> clazz, Method method)
-		throws SecurityException {
+	private boolean _isNotPrivileged(Method method) {
+		if (_hasNotPrivilegedMethods &&
+			_notPrivilegedMethods.contains(new MethodKey(method))) {
 
-		NotPrivileged notPrivileged = method.getAnnotation(NotPrivileged.class);
-
-		while ((notPrivileged == null) && (clazz != null)) {
-			try {
-				method = clazz.getMethod(
-					method.getName(), method.getParameterTypes());
-			}
-			catch (NoSuchMethodException nsme) {
-				break;
-			}
-
-			notPrivileged = method.getAnnotation(NotPrivileged.class);
-
-			if (notPrivileged == null) {
-				clazz = clazz.getSuperclass();
-			}
-		}
-
-		if (notPrivileged != null) {
 			return true;
 		}
 
@@ -99,6 +115,8 @@ public class DoPrivilegedHandler
 	}
 
 	private Object _bean;
+	private boolean _hasNotPrivilegedMethods = false;
+	private List<MethodKey> _notPrivilegedMethods;
 
 	private class InvokePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Object> {
@@ -118,6 +136,51 @@ public class DoPrivilegedHandler
 		private Object[] _arguments;
 		private Object _bean;
 		private Method _method;
+
+	}
+
+	/**
+	 * This is not the typical MethodKey. It matches on overload conditions
+	 * rather than on equality. The key in the cache should always be an
+	 * implementation, while the method being checked will be from an interface,
+	 * therefore the 'equals' check is not symmetrical.
+	 */
+	private class MethodKey {
+
+		public MethodKey(Method method) {
+			_declaringClass = method.getDeclaringClass();
+			_methodName = method.getName();
+			_parameterTypes = method.getParameterTypes();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			if (!(obj instanceof MethodKey)) {
+				return false;
+			}
+
+			MethodKey methodKey = (MethodKey)obj;
+
+			// Note again that this check is not symmetrical. 'this' method
+			// key's class must be assignable from the cached method key's class
+
+			if (_declaringClass.isAssignableFrom(methodKey._declaringClass) &&
+				Validator.equals(_methodName, methodKey._methodName) &&
+				Arrays.equals(_parameterTypes, methodKey._parameterTypes)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private Class<?> _declaringClass;
+		private String _methodName;
+		private Class<?>[] _parameterTypes;
 
 	}
 

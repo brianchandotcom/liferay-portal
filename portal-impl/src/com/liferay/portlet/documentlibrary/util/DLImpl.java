@@ -958,18 +958,19 @@ public class DLImpl implements DL {
 		if (folder != null) {
 			Folder curFolder = folder;
 
-			while (true) {
-				if (curFolder.getFolderId() != 0) {
+			if (curFolder.getFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				while (true) {
 					sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
 					sb.insert(0, StringPool.SLASH);
-				}
 
-				if (curFolder.getParentFolderId() ==
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					if (curFolder.getParentFolderId() ==
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-					break;
-				}
-				else {
+						break;
+					}
+
 					curFolder = DLAppLocalServiceUtil.getFolder(
 						curFolder.getParentFolderId());
 				}

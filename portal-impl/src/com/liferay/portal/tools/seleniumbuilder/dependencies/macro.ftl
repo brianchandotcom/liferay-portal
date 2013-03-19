@@ -40,6 +40,10 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(liferaySelenium);
 			</#list>
+
+			<#assign blockElement = commandElement>
+
+			<#include "macro_block_element.ftl">
 		}
 	</#list>
 

@@ -35,7 +35,7 @@
 
 			<#assign blockElement = thenElement>
 
-			<#include "block_element.ftl">
+			<#include "function_block_element.ftl">
 		}
 
 		<#if element.element("else")??>
@@ -44,7 +44,7 @@
 			else {
 				<#assign blockElement = elseElement>
 
-				<#include "block_element.ftl">
+				<#include "function_block_element.ftl">
 			}
 		</#if>
 	</#if>

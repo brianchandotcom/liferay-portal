@@ -16,7 +16,6 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.JavaDetector;
 
 import java.security.Permission;
 
@@ -34,58 +33,33 @@ public class NetChecker extends BaseChecker {
 		String name = permission.getName();
 
 		if (name.equals(NET_PERMISSION_GET_PROXY_SELECTOR)) {
-			if (!hasGetProxySelector()) {
+			if (!hasGetProxySelector(permission)) {
 				logSecurityException(_log, "Attempted to get proxy selector");
 
 				return false;
 			}
 		}
-		else if (name.equals(NET_PERMISSION_SPECIFY_STREAM_HANDLER)) {
+		else {
+			logSecurityException(
+				_log, "Attempted " + name + " network operation");
 
-			// TODO
-
+			return false;
 		}
 
 		return true;
 	}
 
-	protected boolean hasGetProxySelector() {
-		if (JavaDetector.isJDK7()) {
-			Class<?> callerClass8 = Reflection.getCallerClass(8);
+	protected boolean hasGetProxySelector(Permission permission) {
+		int stackIndex = getStackIndex(11, 10);
 
-			String className8 = callerClass8.getName();
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
-			if (className8.startsWith(_CLASS_NAME_SOCKS_SOCKET_IMPL)) {
-				logGetProxySelector(callerClass8, 8);
-
-				return true;
-			}
-		}
-		else {
-			Class<?> callerClass7 = Reflection.getCallerClass(7);
-
-			String className7 = callerClass7.getName();
-
-			if (className7.startsWith(_CLASS_NAME_SOCKS_SOCKET_IMPL)) {
-				logGetProxySelector(callerClass7, 7);
-
-				return true;
-			}
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
 		}
 
 		return false;
 	}
-
-	protected void logGetProxySelector(Class<?> callerClass, int frame) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Allowing frame " + frame + " with caller " + callerClass +
-					" to get the proxy selector");
-		}
-	}
-
-	private static final String _CLASS_NAME_SOCKS_SOCKET_IMPL =
-		"java.net.SocksSocketImpl$";
 
 	private static Log _log = LogFactoryUtil.getLog(NetChecker.class);
 

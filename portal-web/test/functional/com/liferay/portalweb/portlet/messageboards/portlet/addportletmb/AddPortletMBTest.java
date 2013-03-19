@@ -45,7 +45,7 @@ public class AddPortletMBTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='layout_configuration_content']");
 		selenium.sendKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("m"));
-		selenium.waitForVisible("//li[@title='Message Boards']/p/a");
+		selenium.waitForText("//li[@title='Message Boards']/p/a", "Add");
 		selenium.clickAt("//li[@title='Message Boards']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");

@@ -231,6 +231,14 @@ public abstract class BaseWebDriverImpl
 		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
 	}
 
+	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+
+		return !pattern.equals(getSelectedLabel(selectLocator, "1"));
+	}
+
 	public boolean isNotText(String locator, String value) {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
@@ -249,6 +257,14 @@ public abstract class BaseWebDriverImpl
 		String text = webElement.getText();
 
 		return text.contains(value);
+	}
+
+	public boolean isSelectedLabel(String selectLocator, String pattern) {
+		if (isElementNotPresent(selectLocator)) {
+			return false;
+		}
+
+		return pattern.equals(getSelectedLabel(selectLocator, "1"));
 	}
 
 	public boolean isText(String locator, String value) {

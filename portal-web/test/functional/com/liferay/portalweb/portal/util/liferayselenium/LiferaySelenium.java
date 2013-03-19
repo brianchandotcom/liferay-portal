@@ -95,6 +95,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotPartialText(String locator, String value);
 
+	public boolean isNotSelectedLabel(String selectLocator, String pattern);
+
 	public boolean isNotText(String locator, String value);
 
 	public boolean isNotValue(String locator, String value);
@@ -102,6 +104,8 @@ public interface LiferaySelenium extends Selenium {
 	public boolean isNotVisible(String locator);
 
 	public boolean isPartialText(String locator, String value);
+
+	public boolean isSelectedLabel(String selectLocator, String pattern);
 
 	public boolean isText(String locator, String value);
 

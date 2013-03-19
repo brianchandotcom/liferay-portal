@@ -110,8 +110,15 @@ public class LiferaySeleniumHelper {
 	public static void assertNotSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
 
-		BaseTestCase.assertNotEquals(
-			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+		liferaySelenium.assertElementPresent(selectLocator);
+
+		if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
+			String text = liferaySelenium.getSelectedLabel(selectLocator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " matches " + text + " at " +
+					selectLocator);
+		}
 	}
 
 	public static void assertNotText(
@@ -166,8 +173,15 @@ public class LiferaySeleniumHelper {
 	public static void assertSelectedLabel(
 		LiferaySelenium liferaySelenium, String selectLocator, String pattern) {
 
-		BaseTestCase.assertEquals(
-			pattern, liferaySelenium.getSelectedLabel(selectLocator));
+		liferaySelenium.assertElementPresent(selectLocator);
+
+		if (liferaySelenium.isNotSelectedLabel(selectLocator, pattern)) {
+			String text = liferaySelenium.getSelectedLabel(selectLocator);
+
+			BaseTestCase.fail(
+				"Pattern " + pattern + " does not match " + text + " at " +
+					selectLocator);
+		}
 	}
 
 	public static void assertText(
@@ -366,12 +380,12 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertNotSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (!pattern.equals(
-						liferaySelenium.getSelectedLabel(selectLocator))) {
+				if (liferaySelenium.isNotSelectedLabel(
+						selectLocator, pattern)) {
 
 					break;
 				}
@@ -480,13 +494,11 @@ public class LiferaySeleniumHelper {
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				BaseTestCase.fail("Timeout");
+				liferaySelenium.assertSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (pattern.equals(
-						liferaySelenium.getSelectedLabel(selectLocator))) {
-
+				if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
 					break;
 				}
 			}

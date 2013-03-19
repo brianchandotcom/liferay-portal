@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
-import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.servlet.DirectServletRegistryImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -41,19 +39,16 @@ import java.io.IOException;
 
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 
 import java.security.Permission;
+import java.security.Permissions;
 
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
-
-import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -197,39 +192,17 @@ public class FileChecker extends BaseChecker {
 	}
 
 	public boolean implies(Permission permission) {
+		if (_permissions.implies(permission)) {
+			return true;
+		}
+
 		String name = permission.getName();
 		String actions = permission.getActions();
 
-		if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
-			if (!hasDelete(permission)) {
-				logSecurityException(_log, "Attempted to delete file " + name);
+		logSecurityException(
+			_log, "Attempted to " + actions + " on file " + name);
 
-				return false;
-			}
-		}
-		else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
-			if (!hasExecute(permission)) {
-				logSecurityException(_log, "Attempted to execute file " + name);
-
-				return false;
-			}
-		}
-		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
-			if (!hasRead(permission)) {
-				logSecurityException(_log, "Attempted to read file " + name);
-
-				return false;
-			}
-		}
-		else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
-			if (!hasWrite(permission)) {
-				logSecurityException(_log, "Attempted to write file " + name);
-
-				return false;
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	protected void addCanonicalPath(List<String> paths, String path) {
@@ -298,9 +271,7 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
-	protected void addPermission(
-		List<Permission> permissions, String path, String actions) {
-
+	protected void addPermission(String path, String actions) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Allowing " + actions + " on " + path);
 		}
@@ -309,18 +280,16 @@ public class FileChecker extends BaseChecker {
 
 		Permission unixPermission = new FilePermission(unixPath, actions);
 
-		permissions.add(unixPermission);
+		_permissions.add(unixPermission);
 
 		String windowsPath = PathUtil.toWindowsPath(path);
 
 		Permission windowsPermission = new FilePermission(windowsPath, actions);
 
-		permissions.add(windowsPermission);
+		_permissions.add(windowsPermission);
 	}
 
-	protected List<Permission> getPermissions(String key, String actions) {
-		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
-
+	protected void getPermissions(String key, String actions) {
 		String value = getProperty(key);
 
 		if (value != null) {
@@ -337,7 +306,7 @@ public class FileChecker extends BaseChecker {
 			}
 
 			for (String path : paths) {
-				addPermission(permissions, path, actions);
+				addPermission(path, actions);
 			}
 		}
 
@@ -351,8 +320,8 @@ public class FileChecker extends BaseChecker {
 		if (!actions.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
 			(_workDir != null)) {
 
-			addPermission(permissions, _workDir, actions);
-			addPermission(permissions, _workDir + "/-", actions);
+			addPermission(_workDir, actions);
+			addPermission(_workDir + "/-", actions);
 
 			if (servletContext != null) {
 				File tempDir = (File)servletContext.getAttribute(
@@ -365,15 +334,15 @@ public class FileChecker extends BaseChecker {
 				}
 
 				if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
-					addPermission(permissions, tempDirAbsolutePath, actions);
+					addPermission(tempDirAbsolutePath, actions);
 				}
 
-				addPermission(permissions, tempDirAbsolutePath + "/-", actions);
+				addPermission(tempDirAbsolutePath + "/-", actions);
 			}
 		}
 
 		if (!actions.equals(FILE_PERMISSION_ACTION_READ)) {
-			return permissions;
+			return;
 		}
 
 		List<String> paths = new UniqueList<String>();
@@ -438,92 +407,18 @@ public class FileChecker extends BaseChecker {
 		addDefaultReadPaths(paths, ServerDetector.getServerId());
 
 		for (String path : paths) {
-			addPermission(permissions, path, actions);
+			addPermission(path, actions);
 		}
-
-		return permissions;
-	}
-
-	protected boolean hasDelete(Permission permission) {
-		for (Permission deleteFilePermission : _deletePermissions) {
-			if (deleteFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean hasExecute(Permission permission) {
-		for (Permission executeFilePermission : _executePermissions) {
-			if (executeFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean hasRead(Permission permission) {
-		for (Permission readFilePermission : _readPermissions) {
-			if (readFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		for (int i = 7;; i++) {
-			Class<?> callerClass = Reflection.getCallerClass(i);
-
-			if (callerClass == null) {
-				return false;
-			}
-
-			if ((callerClass == DirectServletRegistryImpl.class) ||
-				(callerClass == FileAvailabilityUtil.class)) {
-
-				return true;
-			}
-
-			if (ClassLoader.class.isAssignableFrom(callerClass)) {
-				String callerClassName = callerClass.getName();
-
-				if (!callerClassName.equals(_CLASS_NAME_METHOD_UTIL)) {
-					return true;
-				}
-			}
-
-			if (ServerDetector.isGlassfish()) {
-				Class<?> enclosingClass = callerClass.getEnclosingClass();
-
-				if (enclosingClass != null) {
-					if (enclosingClass.getEnclosingClass() ==
-							URLClassLoader.class) {
-
-						return true;
-					}
-				}
-			}
-		}
-	}
-
-	protected boolean hasWrite(Permission permission) {
-		for (Permission writeFilePermission : _writePermissions) {
-			if (writeFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected void initPermissions() {
-		_deletePermissions = getPermissions(
+		getPermissions(
 			"security-manager-files-delete", FILE_PERMISSION_ACTION_DELETE);
-		_executePermissions = getPermissions(
+		getPermissions(
 			"security-manager-files-execute", FILE_PERMISSION_ACTION_EXECUTE);
-		_readPermissions = getPermissions(
+		getPermissions(
 			"security-manager-files-read", FILE_PERMISSION_ACTION_READ);
-		_writePermissions = getPermissions(
+		getPermissions(
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
 
@@ -534,14 +429,11 @@ public class FileChecker extends BaseChecker {
 
 	private String[] _defaultReadPathsFromArray;
 	private String[] _defaultReadPathsToArray;
-	private List<Permission> _deletePermissions;
-	private List<Permission> _executePermissions;
 	private String _globalSharedLibDir =
 		PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR;
+	private Permissions _permissions = new Permissions();
 	private String _portalDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
-	private List<Permission> _readPermissions;
 	private String _rootDir;
 	private String _workDir;
-	private List<Permission> _writePermissions;
 
 }

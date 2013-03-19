@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -52,6 +52,23 @@ import javax.servlet.http.HttpSession;
 @DoPrivileged
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
+
+	public int countJSONWebServiceActions(String contextPath) {
+		int count = 0;
+
+		for (JSONWebServiceActionConfig
+			jsonWebServiceActionConfig : _jsonWebServiceActionConfigs) {
+
+			String actionContextPath =
+				jsonWebServiceActionConfig.getContextPath();
+
+			if (contextPath.equals(actionContextPath)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
 
 	public Set<String> getContextPaths() {
 		Set<String> contextPaths = new TreeSet<String>();

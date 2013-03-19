@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -28,6 +28,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author Igor Spasic
  */
 public class JSONWebServiceActionsManagerUtil {
+
+	public static int countJSONWebServiceActions(String contextPath) {
+		return getJSONWebServiceActionsManager()
+			.countJSONWebServiceActions(contextPath);
+	}
 
 	public static Set<String> getContextPaths() {
 		return _jsonWebServiceActionsManager. getContextPaths();

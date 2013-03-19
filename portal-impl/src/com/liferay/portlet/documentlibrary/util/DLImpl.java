@@ -955,25 +955,24 @@ public class DLImpl implements DL {
 
 		StringBuilder sb = new StringBuilder();
 
-		if (folder != null) {
+		if ((folder != null) &&
+			(folder.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			Folder curFolder = folder;
 
-			if (curFolder.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			while (true) {
+				sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
+				sb.insert(0, StringPool.SLASH);
 
-				while (true) {
-					sb.insert(0, HttpUtil.encodeURL(curFolder.getName(), true));
-					sb.insert(0, StringPool.SLASH);
+				if (curFolder.getParentFolderId() ==
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-					if (curFolder.getParentFolderId() ==
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-						break;
-					}
-
-					curFolder = DLAppLocalServiceUtil.getFolder(
-						curFolder.getParentFolderId());
+					break;
 				}
+
+				curFolder = DLAppLocalServiceUtil.getFolder(
+					curFolder.getParentFolderId());
 			}
 		}
 

@@ -54,8 +54,8 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",
 			RuntimeVariables.replace("View Count"));
 		selenium.waitForVisible(
-			"xPath=(//button[@title='Move selected items from Available to Current.'])/span");
-		selenium.clickAt("xPath=(//button[@title='Move selected items from Available to Current.'])/span",
+			"//button[@title='Move selected items from Available to Current.']/span");
+		selenium.clickAt("//button[@title='Move selected items from Available to Current.']/span",
 			RuntimeVariables.replace("Left Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_currentMetadataFields']",
 			"View Count");

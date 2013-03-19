@@ -33,11 +33,9 @@ public class ViewConfigurePortletTitleListWikiPageAPTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
-		assertTrue(selenium.isVisible("//ul[@class='title-list']/li/span/a/img"));
+		assertTrue(selenium.isVisible("//img[@title='Edit FrontPage']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//ul[@class='title-list']/li/span/a/span"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='lfr-meta-actions asset-actions']/span/a/img"));
 		selenium.clickAt("//ul[@class='title-list']/li/span/a/span",
 			RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");

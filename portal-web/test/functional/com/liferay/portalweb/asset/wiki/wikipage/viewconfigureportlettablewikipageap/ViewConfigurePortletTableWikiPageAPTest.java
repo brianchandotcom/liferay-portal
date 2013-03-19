@@ -38,7 +38,7 @@ public class ViewConfigurePortletTableWikiPageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(""), selenium.getText("//th[2]"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//tr[2]/td[1]/a"));
-		assertTrue(selenium.isVisible("//tr[2]/td[2]/div/span/a/img"));
+		assertTrue(selenium.isVisible("//img[@title='Edit FrontPage']"));
 		selenium.clickAt("//tr[2]/td[1]/a",
 			RuntimeVariables.replace("FrontPage"));
 		selenium.waitForPageToLoad("30000");

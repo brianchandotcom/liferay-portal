@@ -28,7 +28,23 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 	<#list commandElements as commandElement>
 		<#assign commandName = commandElement.attributeValue("name")>
 
-		public void ${commandName}() throws Exception {
+		public void ${commandName}(
+
+			<#if commandElement.element("params")??>
+				<#assign paramsElement = commandElement.element("params")>
+
+				<#assign paramElements = paramsElement.elements("param")>
+
+				<#list paramElements as paramElement>
+					String ${paramElement.attributeValue("name")}
+
+					<#if paramElement_has_next>
+						,
+					</#if>
+				</#list>
+			</#if>
+
+		) throws Exception {
 			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
@@ -41,7 +57,7 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(liferaySelenium);
 			</#list>
 
-			<#assign blockElement = commandElement>
+			<#assign blockElement = commandElement.element("steps")>
 
 			<#include "macro_block_element.ftl">
 		}

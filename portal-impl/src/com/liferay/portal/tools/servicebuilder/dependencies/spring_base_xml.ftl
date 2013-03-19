@@ -20,6 +20,9 @@
 		<constructor-arg value="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
+		<constructor-arg value="com.liferay.portal.spring.bean.JSONWebServiceDetectorBeanPostProcessor" />
+	</bean>
+	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
 		<constructor-arg value="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 	</bean>
 	<bean id="portletClassLoader" class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" />

@@ -13,6 +13,7 @@
 	</bean>
 	<bean class="com.liferay.portal.security.lang.DoPrivilegedFactory" />
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
+	<bean class="com.liferay.portal.spring.bean.JSONWebServiceDetectorBeanPostProcessor" />
 	<bean id="basePersistence" abstract="true">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />

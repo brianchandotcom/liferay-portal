@@ -27,8 +27,8 @@ public class User_ChangeUserPasswordTest extends BaseTestCase {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
-		Thread.sleep(5000);
-		selenium.waitForVisible("//li[@id='_145_userAvatar']/span/a/span");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'aui/aui-state-interaction/aui-state-interaction-min.js')]");
 		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("//li[@id='_145_userAvatar']/span/a/span"));
 		selenium.clickAt("//li[@id='_145_userAvatar']/span/a/span",

@@ -24,9 +24,99 @@
 	<td>Dashboard</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@id='so-sidebar']/h3</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@class='search-input']</td>
+	<td>Site Search</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@class='sites-tabs']/span/span/span/select</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@class='search-input']</td>
+	<td>Open</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='community-title']</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Home')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Calendar')]/a/span</td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Documents')]/a/span</td>
+	<td>Documents</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Forums')]/a/span</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Blogs')]/a/span</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Wiki')]/a/span</td>
+	<td>Wiki</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Members')]/a/span</td>
+	<td>Members</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/socialoffice01/so/dashboard/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//button[contains(.,'Sites Directory')]/span[2]</td>
-	<td>Sites Directory</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Dashboard</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Dashboard</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='so-sidebar']/h3</td>
+	<td>Sites</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -82,6 +172,36 @@
 	<td>clickAtAndWait</td>
 	<td>//span[@class='name']/a</td>
 	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Home')]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Calendar')]/a/span</td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Documents')]/a/span</td>
+	<td>Documents</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Forums')]/a/span</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Blogs')]/a/span</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[contains(.,'Wiki')]/a/span</td>
+	<td>Wiki</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -22,9 +22,9 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 public class BaseMacro {
 
 	public BaseMacro(LiferaySelenium liferaySelenium) {
-		selenium = liferaySelenium;
+		this.liferaySelenium = liferaySelenium;
 	}
 
-	protected LiferaySelenium selenium;
+	protected LiferaySelenium liferaySelenium;
 
 }

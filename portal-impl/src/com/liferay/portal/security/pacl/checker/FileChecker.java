@@ -90,6 +90,7 @@ public class FileChecker extends BaseChecker {
 		}
 
 		_defaultReadPathsFromArray = new String[] {
+			"${/}",
 			"${auto.deploy.installed.dir}",
 			"${catalina.base}",
 			"${com.sun.aas.instanceRoot}",
@@ -100,6 +101,7 @@ public class FileChecker extends BaseChecker {
 			"${jetty.home}",
 			"${jonas.base}",
 			"${liferay.web.portal.dir}",
+			"${liferay.home}",
 			"${line.separator}",
 			"${org.apache.geronimo.home.dir}",
 			"${path.separator}",
@@ -126,14 +128,16 @@ public class FileChecker extends BaseChecker {
 		}
 
 		_defaultReadPathsToArray = new String[] {
-			installedDir, System.getProperty("catalina.base"),
+			System.getProperty("file.separator"), installedDir,
+			System.getProperty("catalina.base"),
 			System.getProperty("com.sun.aas.instanceRoot"),
 			System.getProperty("com.sun.aas.installRoot"),
 			System.getProperty("file.separator"),
 			System.getProperty("java.io.tmpdir"),
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
-			_portalDir, System.getProperty("line.separator"),
+			_portalDir, PropsValues.LIFERAY_HOME,
+			System.getProperty("line.separator"),
 			System.getProperty("org.apache.geronimo.home.dir"),
 			System.getProperty("path.separator"), getServletContextName(),
 			ReleaseInfo.getVersion(), System.getProperty("resin.home"),

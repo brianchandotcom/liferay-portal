@@ -29,6 +29,12 @@ public class ViewConfigurePortletAvailableWikiPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		assertEquals(RuntimeVariables.replace("There are no results."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertEquals(RuntimeVariables.replace("Subscribe"),
+			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertFalse(selenium.isTextPresent("FrontPage"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage Content"));
 	}

@@ -1,0 +1,13 @@
+<definition>
+	<command name="sendKeys">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="sendKeys" />
+	</command>
+
+	<command name="type">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="type" />
+	</command>
+</definition>

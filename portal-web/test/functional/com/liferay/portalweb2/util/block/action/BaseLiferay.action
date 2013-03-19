@@ -25,4 +25,16 @@
 			<execute function="DragAndDrop#dragAndDrop" />
 		</default>
 	</command>
+
+	<command name="IsElementPresent">
+		<default>
+			<execute function="IsElementPresent#isElementPresent" />
+		</default>
+	</command>
+
+	<command name="Type">
+		<default>
+			<execute function="Type#type" />
+		</default>
+	</command>
 </definition>

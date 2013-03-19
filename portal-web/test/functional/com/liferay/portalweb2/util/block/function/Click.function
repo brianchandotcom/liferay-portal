@@ -21,6 +21,16 @@
 		<execute selenium="clickAt" />
 	</command>
 
+	<command name="textClickAtAndWait">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForText" />
+
+		<execute selenium="assertText" />
+
+		<execute selenium="clickAtAndWait" />
+	</command>
+
 	<command name="textClickAtClickDockbar">
 		<execute selenium="pause" argument1="1000" />
 

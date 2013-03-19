@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>PGLogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGLogin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Portlet Sign In</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS</td>
+	<td>//input[@id='_58_login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD</td>
+	<td>//input[@id='_58_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMEMBER_ME</td>
+	<td>//input[@id='_58_rememberMeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN</td>
+	<td>//input[@value='Sign In']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

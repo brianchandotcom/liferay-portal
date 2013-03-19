@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Dockbar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Dockbar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-full-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SIGN_OUT</td>
+	<td>//span[@class='sign-out']/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

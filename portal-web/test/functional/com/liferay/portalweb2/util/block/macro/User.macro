@@ -1,0 +1,53 @@
+<definition>
+	<command name="pgFirstLogin">
+		<steps>
+			<execute macro="User#pgLogin">
+				<param name="email" value="test@liferay.com" />
+				<param name="password" value="test" />
+			</execute>
+
+			<if>
+				<condition action="PGLoginTermsofservice#IsElementPresent" locator-key1="I_AGREE" />
+				<then>
+					<execute action="PGLoginTermsofservice#Click" locator-key1="I_AGREE" />
+				</then>
+			</if>
+
+			<if>
+				<condition action="PGLoginPasswordreminder#IsElementPresent" locator-key1="ANSWER" />
+				<then>
+					<execute action="PGLoginPasswordreminder#Type" locator-key1="ANSWER" value1="test" />
+
+					<execute action="PGLoginPasswordreminder#Click" locator-key1="SAVE" />
+				</then>
+			</if>
+		</steps>
+	</command>
+
+	<command name="pgLogin">
+		<params>
+			<param name="email" />
+			<param name="password" />
+		</params>
+		<steps>
+			<execute action="PGLogin#Type" locator-key1="EMAIL_ADDRESS" value1="${email}" />
+
+			<execute action="PGLogin#Type" locator-key1="PASSWORD" value1="${password}" />
+
+			<execute action="PGLogin#Click" locator-key1="REMEMBER_ME" />
+
+			<execute action="PGLogin#Click" locator-key1="SIGN_IN" />
+		</steps>
+	</command>
+
+	<command name="pgLogout">
+		<steps>
+			<if>
+				<condition action="Dockbar#IsElementPresent" locator-key1="USER_NAME" />
+				<then>
+					<execute action="Dockbar#Click" locator-key1="USER_SIGN_OUT" />
+				</then>
+			</if>
+		</steps>
+	</command>
+</definition>

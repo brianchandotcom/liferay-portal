@@ -1,4 +1,6 @@
 <definition>
 	<command name="advancedSearch">
+		<steps>
+		</steps>
 	</command>
 </definition>

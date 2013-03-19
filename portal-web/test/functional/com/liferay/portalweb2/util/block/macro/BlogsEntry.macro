@@ -1,11 +1,19 @@
 <definition>
 	<command name="cpAdd">
-		<execute macro="CPBlogs#advancedSearch" />
+		<params>
+			<param name="title" />
+			<param name="content" />
+		</params>
+		<steps>
+			<execute macro="CPBlogs#advancedSearch" />
 
-		<execute action="CPBlogs#Click" locator-key="ADD_ENTRY" />
+			<execute action="CPBlogs#Click" locator-key="ADD_ENTRY" />
+		</steps>
 	</command>
-	
+
 	<command name="cpTearDown">
-		<execute action="CPBlogs#Click" locator-key="DELETE_ENTRY" />
+		<steps>
+			<execute action="CPBlogs#Click" locator-key="DELETE_ENTRY" />
+		</steps>
 	</command>
 </definition>

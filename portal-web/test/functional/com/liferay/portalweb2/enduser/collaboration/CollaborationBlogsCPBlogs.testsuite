@@ -1,2 +1,3 @@
 <test-suite-definition name="CollaborationBlogsCPBlogs">
+	<execute test-case="CPBlogsAcceptance" />
 </test-suite-definition>

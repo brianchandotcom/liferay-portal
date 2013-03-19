@@ -297,6 +297,8 @@ public interface PropsKeys {
 
 	public static final String BOOKMARKS_EMAIL_FROM_NAME = "bookmarks.email.from.name";
 
+	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = "breadcrumb.display.style.default";
+
 	public static final String BREADCRUMB_DISPLAY_STYLE_OPTIONS = "breadcrumb.display.style.options";
 
 	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";

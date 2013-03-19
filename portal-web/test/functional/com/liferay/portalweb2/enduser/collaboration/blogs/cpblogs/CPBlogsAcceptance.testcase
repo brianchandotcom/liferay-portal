@@ -1,4 +1,8 @@
 <test-case-definition name="CPBlogsAcceptance">
+	<test-case-setup>
+		<execute macro="CPBlogs#advancedSearch" />
+	</test-case-setup>
+
 	<test-case-command name="AddBlogsEntry">
 		<execute macro="BlogsEntry#cpAdd" />
 	</test-case-command>
@@ -6,4 +10,8 @@
 	<test-case-command name="DeleteBlogsEntry">
 		<execute macro="BlogsEntry#cpAdd" />
 	</test-case-command>
+
+	<test-case-teardown>
+		<execute macro="BlogsEntry#cpTearDown" />
+	</test-case-teardown>
 </test-case-definition>

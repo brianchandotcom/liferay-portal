@@ -419,6 +419,7 @@ public class FileChecker extends BaseChecker {
 		// Plugin
 
 		if (_rootDir != null) {
+			paths.add(_rootDir);
 			paths.add(_rootDir + "-");
 		}
 

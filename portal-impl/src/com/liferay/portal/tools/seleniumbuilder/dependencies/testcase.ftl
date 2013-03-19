@@ -11,6 +11,17 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 		selenium = SeleniumUtil.getSelenium();
 	}
 
+	<#assign rootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
+
+	<#assign testCaseCommandElements = rootElement.elements("test-case-command")>
+
+	<#list testCaseCommandElements as testCaseCommandElement>
+		<#assign testCaseCommandName = testCaseCommandElement.attributeValue("name")>
+
+		public void test${testCaseCommandName}() throws Exception {
+		}
+	</#list>
+
 	@Override
 	public void tearDown() throws Exception {
 	}

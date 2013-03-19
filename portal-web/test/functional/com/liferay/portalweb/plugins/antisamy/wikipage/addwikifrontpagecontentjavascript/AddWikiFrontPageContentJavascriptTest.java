@@ -42,17 +42,22 @@ public class AddWikiFrontPageContentJavascriptTest extends BaseTestCase {
 		selenium.select("//select[@id='_36_format']",
 			RuntimeVariables.replace("HTML"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^You may lose some formatting when switching from Creole to HTML. Do you want to continue[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label']"));
-		selenium.clickAt("//span[@id='cke_48_label']",
+			selenium.getText("//span[@id='cke_55_label']"));
+		selenium.clickAt("//span[@id='cke_55_label']",
 			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible(
-			"//textarea[@class='cke_source cke_enable_context_menu']");
-		selenium.type("//textarea[@class='cke_source cke_enable_context_menu']",
+		selenium.waitForVisible("//div[@id='cke_1_contents']");
+		Thread.sleep(1000);
+		selenium.type("//div[@id='cke_1_contents']/textarea",
 			RuntimeVariables.replace(
 				"<p id=\"demo\">PASS</p><script type=\"text/javascript\">document.getElementById('demo').innerHTML=\"FAIL\";</script>"));
+		Thread.sleep(1000);
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[@id='cke_55_label']"));
+		selenium.clickAt("//span[@id='cke_55_label']",
+			RuntimeVariables.replace("Source"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

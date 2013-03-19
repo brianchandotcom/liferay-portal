@@ -41,7 +41,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//select[@id='_36_format']</td>
-	<td>IFrame</td>
+	<td>Format</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
@@ -49,29 +49,49 @@
 	<td>HTML</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>You may lose some formatting when switching from Creole to HTML. Do you want to continue?</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_48_label']</td>
+	<td>//span[@id='cke_55_label']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_48_label']</td>
+	<td>//span[@id='cke_55_label']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
+	<td>//div[@id='cke_1_contents']</td>
 	<td>HTML Editor</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//textarea[@class='cke_source cke_enable_context_menu']</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td><p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="FAIL";</script></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='cke_55_label']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@id='cke_55_label']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

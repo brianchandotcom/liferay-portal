@@ -45,12 +45,8 @@ public class DirectRequestDispatcherFactoryImpl
 		RequestDispatcher requestDispatcher = doGetRequestDispatcher(
 			servletContext, path);
 
-		if (PACLPolicyManager.isActive()) {
-			requestDispatcher = new PACLRequestDispatcherWrapper(
-				servletContext, requestDispatcher);
-		}
-
-		return requestDispatcher;
+		return new ClassLoaderRequestDispatcherWrapper(
+			servletContext, requestDispatcher);
 	}
 
 	public RequestDispatcher getRequestDispatcher(
@@ -102,15 +98,16 @@ public class DirectRequestDispatcherFactoryImpl
 
 		Servlet servlet = DirectServletRegistryUtil.getServlet(fullPath);
 
+		RequestDispatcher requestDispatcher = null;
+
 		if (servlet == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No servlet found for " + fullPath);
 			}
 
-			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(path);
+			requestDispatcher = servletContext.getRequestDispatcher(path);
 
-			return new DirectServletPathRegisterDispatcher(
+			requestDispatcher = new DirectServletPathRegisterDispatcher(
 				path, requestDispatcher);
 		}
 		else {
@@ -118,8 +115,16 @@ public class DirectRequestDispatcherFactoryImpl
 				_log.debug("Servlet found for " + fullPath);
 			}
 
-			return new DirectRequestDispatcher(servlet, queryString);
+			requestDispatcher = new DirectRequestDispatcher(
+				servlet, queryString);
 		}
+
+		if (PACLPolicyManager.isActive()) {
+			requestDispatcher = new PACLRequestDispatcherWrapper(
+				servletContext, requestDispatcher);
+		}
+
+		return requestDispatcher;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

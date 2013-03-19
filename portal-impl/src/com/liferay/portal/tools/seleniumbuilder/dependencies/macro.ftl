@@ -9,4 +9,15 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 		super(liferaySelenium);
 	}
 
+	<#assign rootElement = seleniumBuilderContext.getMacroRootElement(macroName)>
+
+	<#assign macroCommandElements = rootElement.elements("macro-command")>
+
+	<#list macroCommandElements as macroCommandElement>
+		<#assign macroCommandName = macroCommandElement.attributeValue("name")>
+
+		public void ${macroCommandName}() throws Exception {
+		}
+	</#list>
+
 }

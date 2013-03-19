@@ -43,15 +43,15 @@ public class ViewBlogsEntryMultipleRBSite1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("xPath=(//span[@class='entry-title'])[1]"));
+			selenium.getText(
+				"//div[contains(.,'Blogs Entry2 Title')]/span[@class='entry-title']"));
 		assertEquals(RuntimeVariables.replace("By Social01 Office01 User01,"),
-			selenium.getText("xPath=(//span[@class='entry-author'])[1]"));
+			selenium.getText(
+				"//div[contains(.,'Blogs Entry2 Title')]/span[@class='entry-author']"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//span[@class='entry-date'])[1]"));
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='comments']/a)[1]", "Read More"));
-		selenium.clickAt("xPath=(//div[@class='comments']/a)[1]",
-			RuntimeVariables.replace("Read More"));
+				"//div[contains(.,'Blogs Entry2 Title')]/span[@class='entry-date']"));
+		selenium.clickAt("//div[contains(.,'Blogs Entry2 Title')]/span[@class='entry-title']/a",
+			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -88,15 +88,15 @@ public class ViewBlogsEntryMultipleRBSite1Test extends BaseTestCase {
 			RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
-			selenium.getText("xPath=(//span[@class='entry-title'])[2]"));
+			selenium.getText(
+				"//div[contains(.,'Blogs Entry1 Title')]/span[@class='entry-title']"));
 		assertEquals(RuntimeVariables.replace("By Joe Bloggs,"),
-			selenium.getText("xPath=(//span[@class='entry-author'])[2]"));
+			selenium.getText(
+				"//div[contains(.,'Blogs Entry1 Title')]/span[@class='entry-author']"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//span[@class='entry-date'])[2]"));
-		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='comments']/a)[2]", "Read More"));
-		selenium.clickAt("xPath=(//div[@class='comments']/a)[2]",
-			RuntimeVariables.replace("Read More"));
+				"//div[contains(.,'Blogs Entry1 Title')]/span[@class='entry-date']"));
+		selenium.clickAt("//div[contains(.,'Blogs Entry1 Title')]/span[@class='entry-title']/a",
+			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));

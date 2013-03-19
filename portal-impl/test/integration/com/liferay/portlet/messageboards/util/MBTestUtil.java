@@ -109,14 +109,23 @@ public class MBTestUtil {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
+		long userId = TestPropsValues.getUserId();
+		String userName = ServiceTestUtil.randomString();
+		long threadId = 0;
+		long parentMessageId = 0;
+		String subject = ServiceTestUtil.randomString();
+		String body = ServiceTestUtil.randomString();
+		String format = MBMessageConstants.DEFAULT_FORMAT;
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
+		boolean anonymous = false;
+		double priority = 0.0;
+		boolean allowPingbacks = false;
 
 		return MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			groupId, categoryId, 0, 0, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
-			inputStreamOVPs, false, 0.0, false, serviceContext);
+			userId, userName, groupId, categoryId, threadId, parentMessageId,
+			subject, body, format, inputStreamOVPs, anonymous, priority,
+			allowPingbacks, serviceContext);
 	}
 
 	public static MBMessage addMessage(
@@ -183,14 +192,23 @@ public class MBTestUtil {
 			}
 		}
 
+		long userId = TestPropsValues.getUserId();
+		String userName = ServiceTestUtil.randomString();
+		long threadId = 0;
+		long parentMessageId = 0;
+		String subject = ServiceTestUtil.randomString();
+		String body = ServiceTestUtil.randomString();
+		String format = MBMessageConstants.DEFAULT_FORMAT;
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
+		boolean anonymous = false;
+		double priority = 0.0;
+		boolean allowPingbacks = false;
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			groupId, categoryId, 0, 0, ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
-			inputStreamOVPs, false, 0.0, false, serviceContext);
+			userId, userName, groupId, categoryId, threadId, parentMessageId,
+			subject, body, format, inputStreamOVPs, anonymous, priority,
+			allowPingbacks, serviceContext);
 
 		return MBMessageLocalServiceUtil.getMessage(message.getMessageId());
 	}

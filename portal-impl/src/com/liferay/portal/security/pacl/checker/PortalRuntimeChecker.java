@@ -14,15 +14,24 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.BaseLocalServiceImpl;
+import com.liferay.portal.service.BaseServiceImpl;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.template.TemplateContextHelper;
+
+import java.lang.reflect.Modifier;
 
 import java.security.Permission;
 
@@ -35,6 +44,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -167,7 +178,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
-			if (!hasGetBeanProperty(servletContextName, clazz, property)) {
+			if (!hasGetBeanProperty(
+					servletContextName, clazz, property, permission)) {
+
 				if (Validator.isNotNull(property)) {
 					logSecurityException(
 						_log,
@@ -186,7 +199,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		else if (name.startsWith(PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			String classLoaderReferenceId = (String)subject;
 
-			if (!hasGetClassLoader(classLoaderReferenceId)) {
+			if (!hasGetClassLoader(classLoaderReferenceId, permission)) {
 				logSecurityException(
 					_log, "Attempted to get class loader " +
 						classLoaderReferenceId);
@@ -252,10 +265,31 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetBeanProperty(
-		String servletContextName, Class<?> clazz, String property) {
+		String servletContextName, Class<?> clazz, String property,
+		Permission permission) {
 
 		if (servletContextName.equals(getServletContextName())) {
 			return true;
+		}
+
+		int stackIndex = getStackIndex(13, 12);
+
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+
+		if (isTrustedCaller(callerClass, permission)) {
+			stackIndex = stackIndex + 1;
+
+			if (callerClass.equals(BeanLocatorImpl.class)) {
+				stackIndex = stackIndex + 2;
+			}
+
+			callerClass = Reflection.getCallerClass(stackIndex);
+
+			if (!callerClass.equals(TemplateContextHelper.class) &&
+				isTrustedCaller(callerClass, permission)) {
+
+				return true;
+			}
 		}
 
 		Set<String> getBeanPropertyClassNames = _getBeanPropertyClassNames.get(
@@ -282,11 +316,42 @@ public class PortalRuntimeChecker extends BaseChecker {
 		return false;
 	}
 
-	protected boolean hasGetClassLoader(String classLoaderReferenceId) {
+	protected boolean hasGetClassLoader(
+		String classLoaderReferenceId, Permission permission) {
 
-		// Temporarily return true
+		int stackIndex = getStackIndex(12, 11);
 
-		return true;
+		if (_classLoaderReferenceIds.contains(classLoaderReferenceId)) {
+			return true;
+		}
+
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+
+		if (callerClass.getName().equals(
+				PortalClassLoaderUtil.class.getName()) ||
+			callerClass.getName().equals(
+				PortletClassLoaderUtil.class.getName())) {
+
+			callerClass = Reflection.getCallerClass(stackIndex + 1);
+		}
+
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		Class<?> superClass = callerClass.getSuperclass();
+
+		// Handle the case for our CLP classes (hopefully this goes away soon)
+
+		if (Modifier.isAbstract(callerClass.getModifiers()) &&
+			(superClass.equals(BaseLocalServiceImpl.class) ||
+			 superClass.equals(BasePersistenceImpl.class) ||
+			 superClass.equals(BaseServiceImpl.class))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean hasPortletBagPoolPortletId(String portletId) {

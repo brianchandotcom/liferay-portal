@@ -264,7 +264,13 @@ public class FileChecker extends BaseChecker {
 		addCanonicalPath(
 			paths, directory.getCanonicalPath() + StringPool.SLASH);
 
-		for (File file : directory.listFiles()) {
+		File[] listFiles = directory.listFiles();
+
+		if ((listFiles == null) || (listFiles.length == 0)) {
+			return;
+		}
+
+		for (File file : listFiles) {
 			if (file.isDirectory()) {
 				addCanonicalPaths(paths, file);
 			}

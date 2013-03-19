@@ -1,2 +1,9 @@
 <test-case-definition name="CPBlogsAcceptance">
+	<test-case-command name="AddBlogsEntry">
+		<execute macro="BlogsEntry#cpAdd" />
+	</test-case-command>
+	
+	<test-case-command name="DeleteBlogsEntry">
+		<execute macro="BlogsEntry#cpAdd" />
+	</test-case-command>
 </test-case-definition>

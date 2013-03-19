@@ -50,6 +50,8 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -193,6 +195,17 @@ public class FileChecker extends BaseChecker {
 
 	public boolean implies(Permission permission) {
 		if (_permissions.implies(permission)) {
+			return true;
+		}
+
+		int stackIndex = getStackIndex(10, 9);
+
+		Class<?> callerClassA = Reflection.getCallerClass(stackIndex);
+		Class<?> callerClassB = Reflection.getCallerClass(stackIndex + 1);
+
+		if (callerClassA.equals(File.class) &&
+			isTrustedCaller(callerClassB, permission)) {
+
 			return true;
 		}
 

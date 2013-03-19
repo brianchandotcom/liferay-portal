@@ -38,8 +38,8 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 		_browseUp = browseUp;
 	}
 
-	public void setCssClassName(String cssClassName) {
-		_cssClassName = cssClassName;
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
 	public void setDataExpand(Map<String, Object> dataExpand) {
@@ -82,7 +82,7 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 	protected void cleanUp() {
 		_actionJsp = null;
 		_browseUp = false;
-		_cssClassName = "folder";
+		_cssClass = "folder";
 		_dataExpand = null;
 		_dataView = null;
 		_entryTitle = null;
@@ -111,7 +111,7 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-navigation-entry:browseUp", _browseUp);
 		request.setAttribute(
-			"liferay-ui:app-view-navigation-entry:cssClassName", _cssClassName);
+			"liferay-ui:app-view-navigation-entry:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:app-view-navigation-entry:dataExpand", _dataExpand);
 		request.setAttribute(
@@ -140,7 +140,7 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 	private String _actionJsp;
 
 	private boolean _browseUp;
-	private String _cssClassName = "folder";
+	private String _cssClass = "folder";
 	private Map<String, Object> _dataExpand;
 	private Map<String, Object> _dataView;
 	private String _entryTitle;

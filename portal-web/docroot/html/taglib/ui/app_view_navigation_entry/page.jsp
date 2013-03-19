@@ -19,7 +19,7 @@
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:actionJsp");
 boolean browseUp = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:browseUp"));
-String cssClassName = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClassName");
+String cssClass = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClass");
 Map<String, Object> dataExpand = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataExpand");
 Map<String, Object> dataView = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataView");
 String entryTitle = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:entryTitle");
@@ -41,7 +41,7 @@ if (browseUp) {
 }
 %>
 
-<li class="app-view-navigation-entry <%= selected ? cssClassName + " selected" : cssClassName %>">
+<li class="app-view-navigation-entry <%= selected ? cssClass + " selected" : cssClass %>">
 
 	<%
 	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -52,12 +52,12 @@ if (browseUp) {
 	</c:if>
 
 	<c:if test="<%= showExpand %>">
-		<a class="<%= "expand-" + cssClassName %>" <%= dataDirection %> <%= dataExpandFolder %> data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
-			<liferay-ui:icon cssClass='<%= "expand-" + cssClassName + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
+		<a class="<%= "expand-" + cssClass %>" <%= dataDirection %> <%= dataExpandFolder %> data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
+			<liferay-ui:icon cssClass='<%= "expand-" + cssClass + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
 		</a>
 	</c:if>
 
-	<a class="<%= "browse-" + cssClassName %>" <%= dataDirection %> <%= dataViewFolders %> <%= AUIUtil.buildData(dataView) %> href="<%= viewURL.toString() %>">
+	<a class="<%= "browse-" + cssClass %>" <%= dataDirection %> <%= dataViewFolders %> <%= AUIUtil.buildData(dataView) %> href="<%= viewURL.toString() %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(iconImage) %>">
 				<liferay-ui:icon image="<%= iconImage %>" />

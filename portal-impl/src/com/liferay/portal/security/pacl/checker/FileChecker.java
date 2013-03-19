@@ -435,9 +435,6 @@ public class FileChecker extends BaseChecker {
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
 
-	private static final String _CLASS_NAME_METHOD_UTIL =
-		"sun.reflect.misc.MethodUtil";
-
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
 	private String[] _defaultReadPathsFromArray;

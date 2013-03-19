@@ -74,7 +74,6 @@ public class ViewCheckoutDMFolderDocumentTest extends BaseTestCase {
 				"DM Folder Document Title (Draft)"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-title_row-1')]"));
-		assertTrue(selenium.isVisible("//img[@title='Lock']"));
 		Thread.sleep(1000);
 		assertTrue(selenium.isVisible("//button[@title='Icon View']"));
 		selenium.clickAt("//button[@title='Icon View']",

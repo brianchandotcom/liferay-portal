@@ -1,5 +1,5 @@
-<function-definition>
-	<function-command name="assertElementNotPresent">
+<definition>
+	<command name="assertElementNotPresent">
 		<if>
 			<condition selenium="isElementPresent" />
 			<then>
@@ -11,5 +11,5 @@
 				<execute selenium="assertElementNotPresent" />
 			</else>
 		</if>
-	</function-command>
-</function-definition>
+	</command>
+</definition>

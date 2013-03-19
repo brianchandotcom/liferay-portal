@@ -10,10 +10,10 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 
 	<#assign rootElement = seleniumBuilderContext.getFunctionRootElement(functionName)>
 
-	<#assign functionCommandElements = rootElement.elements("function-command")>
+	<#assign commandElements = rootElement.elements("command")>
 
-	<#list functionCommandElements as functionCommandElement>
-		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${functionCommandElement.attributeValue("name")}(
+	<#list commandElements as commandElement>
+		public ${seleniumBuilderContext.getFunctionReturnType(functionName)} ${commandElement.attributeValue("name")}(
 
 		<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
 			String locator${i}, String value${i}
@@ -24,13 +24,13 @@ public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} 
 		</#list>
 
 		) throws Exception {
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(functionCommandElement, "function")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "function")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Function ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Function = new ${childElementAttributeValue}Function(liferaySelenium);
 			</#list>
 
-			<#assign blockElement = functionCommandElement>
+			<#assign blockElement = commandElement>
 
 			<#include "block_element.ftl">
 		}

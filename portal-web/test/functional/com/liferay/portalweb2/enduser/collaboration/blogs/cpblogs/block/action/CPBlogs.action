@@ -1,10 +1,10 @@
-<action-definition>
-	<action-command name="Click">
+<definition>
+	<command name="Click">
 		<case locator-key="ADD_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value="Add Blogs Entry" />
 		</case>
 		<case locator-key="DELETE_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value="Delete" />
 		</case>
-	</action-command>
-</action-definition>
+	</command>
+</definition>

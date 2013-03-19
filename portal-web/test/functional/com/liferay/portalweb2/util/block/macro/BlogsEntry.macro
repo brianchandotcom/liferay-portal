@@ -1,11 +1,11 @@
-<macro-definition>
-	<macro-command name="cpAdd">
+<definition>
+	<command name="cpAdd">
 		<execute macro="CPBlogs#advancedSearch" />
 
 		<execute action="CPBlogs#Click" locator-key="ADD_ENTRY" />
-	</macro-command>
+	</command>
 	
-	<macro-command name="cpTearDown">
+	<command name="cpTearDown">
 		<execute action="CPBlogs#Click" locator-key="DELETE_ENTRY" />
-	</macro-command>
-</macro-definition>
+	</command>
+</definition>

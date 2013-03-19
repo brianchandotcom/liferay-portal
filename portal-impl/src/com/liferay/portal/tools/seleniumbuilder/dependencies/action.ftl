@@ -33,14 +33,14 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 	<#if seleniumBuilderContext.getActionRootElement(actionName)??>
 		<#assign rootElement = seleniumBuilderContext.getActionRootElement(actionName)>
 
-		<#assign actionCommandElements = rootElement.elements("action-command")>
+		<#assign commandElements = rootElement.elements("command")>
 
-		<#list actionCommandElements as actionCommandElement>
-			<#assign actionCommandName = actionCommandElement.attributeValue("name")>
+		<#list commandElements as commandElement>
+			<#assign commandName = commandElement.attributeValue("name")>
 
-			public ${seleniumBuilderContext.getFunctionReturnType(actionCommandName)} ${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
+			public ${seleniumBuilderContext.getFunctionReturnType(commandName)} ${seleniumBuilderFileUtil.getVariableName(commandName)}(
 
-			<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+			<#list 1..seleniumBuilderContext.getFunctionLocatorCount(commandName) as i>
 				String locator${i}, String locatorKey${i}, String value${i}
 
 				<#if i_has_next>
@@ -49,18 +49,18 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 			</#list>
 
 			) throws Exception {
-				<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+				<#list 1..seleniumBuilderContext.getFunctionLocatorCount(commandName) as i>
 					locator${i} = getLocator(locator${i}, locatorKey${i});
 				</#list>
 
-				<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(actionCommandElement, "function")>
+				<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "function")>
 
 				<#list childElementAttributeValues as childElementAttributeValue>
 					${childElementAttributeValue}Function ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Function = new ${childElementAttributeValue}Function(liferaySelenium);
 				</#list>
 
-				<#if actionCommandElement.element("case")??>
-					<#assign caseElements = actionCommandElement.elements("case")>
+				<#if commandElement.element("case")??>
+					<#assign caseElements = commandElement.elements("case")>
 
 					<#list caseElements as caseElement>
 						if (
@@ -96,7 +96,7 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 						) {
 							<#assign functionElement = caseElement.element("execute")>
 
-							<#assign functionName = actionCommandName>
+							<#assign functionName = commandName>
 
 							<#include "function_element.ftl">
 
@@ -109,20 +109,20 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 					</#list>
 
 					else {
-						<#if actionCommandElement.element("default")??>
-							<#assign defaultElement = actionCommandElement.element("default")>
+						<#if commandElement.element("default")??>
+							<#assign defaultElement = commandElement.element("default")>
 
 							<#assign functionElement = defaultElement.element("execute")>
 
-							<#assign functionName = actionCommandName>
+							<#assign functionName = commandName>
 
 							<#include "function_element.ftl">
 
 							;
 						<#else>
-							super.${seleniumBuilderFileUtil.getVariableName(actionCommandName)}(
+							super.${seleniumBuilderFileUtil.getVariableName(commandName)}(
 
-							<#list 1..seleniumBuilderContext.getFunctionLocatorCount(actionCommandName) as i>
+							<#list 1..seleniumBuilderContext.getFunctionLocatorCount(commandName) as i>
 								locator${i}, locatorKey${i}, value${i}
 
 								<#if i_has_next>
@@ -133,12 +133,12 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 							);
 						</#if>
 					}
-				<#elseif actionCommandElement.element("default")??>
-					<#assign defaultElement = actionCommandElement.element("default")>
+				<#elseif commandElement.element("default")??>
+					<#assign defaultElement = commandElement.element("default")>
 
 					<#assign functionElement = defaultElement.element("execute")>
 
-					<#assign functionName = actionCommandName>
+					<#assign functionName = commandName>
 
 					<#include "function_element.ftl">
 

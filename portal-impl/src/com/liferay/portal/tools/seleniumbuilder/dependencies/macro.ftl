@@ -23,19 +23,19 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 		super(liferaySelenium);
 	}
 
-	<#assign macroCommandElements = rootElement.elements("macro-command")>
+	<#assign commandElements = rootElement.elements("command")>
 
-	<#list macroCommandElements as macroCommandElement>
-		<#assign macroCommandName = macroCommandElement.attributeValue("name")>
+	<#list commandElements as commandElement>
+		<#assign commandName = commandElement.attributeValue("name")>
 
-		public void ${macroCommandName}() throws Exception {
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(macroCommandElement, "action")>
+		public void ${commandName}() throws Exception {
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(liferaySelenium);
 			</#list>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(macroCommandElement, "macro")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "macro")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(liferaySelenium);

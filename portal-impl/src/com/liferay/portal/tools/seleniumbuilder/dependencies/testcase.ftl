@@ -24,16 +24,16 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
-		<#if rootElement.element("test-case-setup")??>
-			<#assign testCaseSetupElement = rootElement.element("test-case-setup")>
+		<#if rootElement.element("set-up")??>
+			<#assign setUpElement = rootElement.element("set-up")>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseSetupElement, "action")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(setUpElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
 			</#list>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseSetupElement, "macro")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(setUpElement, "macro")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
@@ -41,19 +41,19 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 		</#if>
 	}
 
-	<#assign testCaseCommandElements = rootElement.elements("test-case-command")>
+	<#assign commandElements = rootElement.elements("command")>
 
-	<#list testCaseCommandElements as testCaseCommandElement>
-		<#assign testCaseCommandName = testCaseCommandElement.attributeValue("name")>
+	<#list commandElements as commandElement>
+		<#assign commandName = commandElement.attributeValue("name")>
 
-		public void test${testCaseCommandName}() throws Exception {
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseCommandElement, "action")>
+		public void test${commandName}() throws Exception {
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
 			</#list>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseCommandElement, "macro")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "macro")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
@@ -63,16 +63,16 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 	@Override
 	public void tearDown() throws Exception {
-		<#if rootElement.element("test-case-teardown")??>
-			<#assign testCaseTeardownElement = rootElement.element("test-case-teardown")>
+		<#if rootElement.element("tear-down")??>
+			<#assign tearDownElement = rootElement.element("tear-down")>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseTeardownElement, "action")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(tearDownElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
 			</#list>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(testCaseTeardownElement, "macro")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(tearDownElement, "macro")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);

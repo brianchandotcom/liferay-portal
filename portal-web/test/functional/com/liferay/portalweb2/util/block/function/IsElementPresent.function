@@ -1,9 +1,9 @@
-<function-definition>
-	<function-command name="isElementPresent">
+<definition>
+	<command name="isElementPresent">
 		<execute selenium="isElementPresent" />
-	</function-command>
+	</command>
 
-	<function-command name="isVisible">
+	<command name="isVisible">
 		<execute selenium="isVisible" />
-	</function-command>
-</function-definition>
+	</command>
+</definition>

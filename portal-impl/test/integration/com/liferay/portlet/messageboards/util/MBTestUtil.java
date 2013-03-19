@@ -47,7 +47,7 @@ public class MBTestUtil {
 
 	public static MBBan addBan(long groupId) throws Exception {
 		User user = UserTestUtil.addUser(
-			"BannedUser", TestPropsValues.getGroupId());
+			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
 
 		return addBan(groupId, user.getUserId());
 	}

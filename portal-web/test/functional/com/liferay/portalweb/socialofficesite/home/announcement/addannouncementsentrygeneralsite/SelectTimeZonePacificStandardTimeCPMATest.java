@@ -59,8 +59,9 @@ public class SelectTimeZonePacificStandardTimeCPMATest extends BaseTestCase {
 				selenium.waitForVisible("//a[@id='_2_displaySettingsLink']");
 				selenium.clickAt("//a[@id='_2_displaySettingsLink']",
 					RuntimeVariables.replace("Display Settings"));
+				Thread.sleep(1000);
 				selenium.waitForElementPresent(
-					"//div[@id='_2_displaySettings' and contains(@class,'selected')]");
+					"//li[@class='selected']/a[@id='_2_displaySettingsLink']");
 				selenium.waitForVisible("//select[@name='_2_timeZoneId']");
 				selenium.select("//select[@name='_2_timeZoneId']",
 					RuntimeVariables.replace(

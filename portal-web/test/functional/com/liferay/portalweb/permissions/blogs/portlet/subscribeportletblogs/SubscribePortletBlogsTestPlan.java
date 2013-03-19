@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry;
+package com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs;
 
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.guest.GuestTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.guestinline.GuestInlineTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.ownerinline.OwnerInlineTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrole.RegRoleTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regroleinline.RegRoleInlineTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrolescopesite.RegRoleScopeSiteTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.siterole.SiteRoleTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.siteroleinline.SiteRoleInlineTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.guest.GuestTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.guestinline.GuestInlineTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.regrole.RegRoleTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.regroleinline.RegRoleInlineTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.siterole.SiteRoleTests;
+import com.liferay.portalweb.permissions.blogs.portlet.subscribeportletblogs.siteroleinline.SiteRoleInlineTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -30,17 +28,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteBlogsEntryTestPlan extends BaseTestSuite {
+public class SubscribePortletBlogsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(GuestInlineTests.suite());
 		testSuite.addTest(GuestTests.suite());
-		testSuite.addTest(OwnerInlineTests.suite());
 		testSuite.addTest(RegRoleInlineTests.suite());
 		testSuite.addTest(RegRoleTests.suite());
-		testSuite.addTest(RegRoleScopeSiteTests.suite());
 		testSuite.addTest(SiteRoleInlineTests.suite());
 		testSuite.addTest(SiteRoleTests.suite());
 

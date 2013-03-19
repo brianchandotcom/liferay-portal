@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.blogs;
+package com.liferay.portalweb.permissions.blogs.blogsentry.viewblogsentrypermissions;
 
-import com.liferay.portalweb.permissions.blogs.blogsentry.BlogsEntryTestPlan;
-import com.liferay.portalweb.permissions.blogs.portlet.PortletTestPlan;
+import com.liferay.portalweb.permissions.blogs.blogsentry.viewblogsentrypermissions.ownerinline.OwnerInlineTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -24,13 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsTestPlan extends BaseTestSuite {
+public class ViewBlogsEntryPermissionsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlogsEntryTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTest(OwnerInlineTests.suite());
 
 		return testSuite;
 	}

@@ -1282,7 +1282,7 @@ AUI.add(
 
 						return AArray.find(
 							instance._vocabularies,
-							function (vocabulary) {
+							function(vocabulary) {
 								return (vocabularyId == vocabulary.vocabularyId);
 							}
 						);
@@ -2241,7 +2241,6 @@ AUI.add(
 						var vocabulary = instance._getVocabularyById(vocabularyId);
 
 						if (!exception) {
-
 							vocabulary.categoriesCount -= categories;
 
 							instance._closeEditSection();

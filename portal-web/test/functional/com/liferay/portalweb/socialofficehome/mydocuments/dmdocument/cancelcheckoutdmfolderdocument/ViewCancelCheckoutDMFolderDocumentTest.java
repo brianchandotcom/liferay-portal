@@ -99,12 +99,6 @@ public class ViewCancelCheckoutDMFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
-		assertEquals(RuntimeVariables.replace("Checkin"),
-			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkin')]/span[2]"));
-		assertEquals(RuntimeVariables.replace("Cancel Checkout"),
-			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
 				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));

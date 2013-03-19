@@ -57,6 +57,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(1000);
 				selenium.clickAt("xPath=(//button[contains(@class,'delete')])[2]",
 					RuntimeVariables.replace("Delete"));
 				selenium.clickAt("//input[@value='Save']",
@@ -77,6 +78,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(1000);
 				selenium.clickAt("xPath=(//button[contains(@class,'delete')])[2]",
 					RuntimeVariables.replace("Delete"));
 				selenium.clickAt("//input[@value='Save']",
@@ -97,6 +99,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(1000);
 				selenium.clickAt("xPath=(//button[contains(@class,'delete')])[2]",
 					RuntimeVariables.replace("Delete"));
 				selenium.clickAt("//input[@value='Save']",
@@ -117,6 +120,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(1000);
 				selenium.clickAt("xPath=(//button[contains(@class,'delete')])[2]",
 					RuntimeVariables.replace("Delete"));
 				selenium.clickAt("//input[@value='Save']",
@@ -127,6 +131,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 5:
+				Thread.sleep(1000);
 				selenium.waitForVisible("//button[contains(@class,'delete')]");
 				selenium.clickAt("//button[contains(@class,'delete')]",
 					RuntimeVariables.replace("Delete"));

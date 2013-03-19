@@ -31,7 +31,7 @@ public class SOUs_ViewCheckoutDMFolderDocumentSiteTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@class='search-input']"));
 		selenium.type("//input[@class='search-input']",
 			RuntimeVariables.replace("Open"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
@@ -84,7 +84,6 @@ public class SOUs_ViewCheckoutDMFolderDocumentSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
 				"//td[contains(@id,'SearchContainer_col-title_row-1')]"));
-		assertTrue(selenium.isVisible("//img[@title='Lock']"));
 		Thread.sleep(1000);
 		assertTrue(selenium.isVisible("//button[@title='Icon View']"));
 		selenium.clickAt("//button[@title='Icon View']",
@@ -108,11 +107,7 @@ public class SOUs_ViewCheckoutDMFolderDocumentSiteTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//span[@class='aui-toolbar-content']/button[.='Checkout']/span[2]"));
-		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkin')]/span[2]"));
-		assertTrue(selenium.isElementNotPresent(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertTrue(selenium.isElementNotPresent(

@@ -158,7 +158,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 			userId, groupId, roleId);
 
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.getUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
 
 		userGroupRoles.add(userGroupRole);
 

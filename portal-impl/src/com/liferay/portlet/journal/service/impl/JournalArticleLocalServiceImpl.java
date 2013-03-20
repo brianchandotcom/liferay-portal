@@ -158,20 +158,29 @@ public class JournalArticleLocalServiceImpl
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
 	 * @param  folderId the primary key of the web content folder
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
-	 * @param  classPK the primary key of the web content's related entity
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
+	 * @param  classPK the primary key of the DDM structure, only used if the
+	 *         primary key of the DDMStructure class is given as the
+	 *         <code>classNameId</code> parameter
 	 * @param  articleId the primary key of the web content
 	 * @param  autoArticleId whether to auto generate the web content ID
 	 * @param  version the web content's version
 	 * @param  titleMap the web content's locales and localized titles
 	 * @param  descriptionMap the web content's locales and localized
 	 *         descriptions
-	 * @param  content the web content's content
-	 * @param  type the web content's type
+	 * @param  content the HTML content
+	 * @param  type the structure's type, if the web content is related to a DDM
+	 *         structure. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  layoutUuid the unique string identifying the web content's layout
 	 * @param  displayDateMonth the month the web content is set to display
 	 * @param  displayDateDay the calendar day the web content is set to display
@@ -427,10 +436,13 @@ public class JournalArticleLocalServiceImpl
 	 * @param  titleMap the web content's locales and localized titles
 	 * @param  descriptionMap the web content's locales and localized
 	 *         descriptions
-	 * @param  content the web content's content
+	 * @param  content the HTML content
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         UUID, creation date, modification date, expando bridge
 	 *         attributes, guest permissions, group permissions, asset category
@@ -556,7 +568,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @return the matching web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle checkArticleResourcePrimKey(
@@ -584,7 +597,8 @@ public class JournalArticleLocalServiceImpl
 	/**
 	 * Checks all web content based on their current workflow.
 	 *
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a company or user with the primary key could
+	 *         not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkArticles() throws PortalException, SystemException {
@@ -680,7 +694,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkNewLine(long groupId, String articleId, double version)
@@ -709,7 +724,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkStructure(long groupId, String articleId, double version)
@@ -737,7 +753,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  autoArticleId whether to auto generate the web content ID
 	 * @param  version the web content's version
 	 * @return the new template
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle copyArticle(
@@ -996,7 +1013,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleURL the web content's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences for the web content.
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteArticle(
@@ -1119,7 +1137,8 @@ public class JournalArticleLocalServiceImpl
 	 *         modification date, portlet preferences, and can set whether to
 	 *         add the default command update for the web content.
 	 * @return the web content's updated status
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle expireArticle(
@@ -1143,7 +1162,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, portlet preferences, and can set whether to
 	 *         add the default command update for the web content.
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void expireArticle(
@@ -1252,8 +1272,8 @@ public class JournalArticleLocalServiceImpl
 	 * Returns the web content matching the group, class name ID, and class PK.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  className the class name for the web content's related model
-	 * @param  classPK the primary key of the web content's related entity
+	 * @param  className the class name of the DDM structure class
+	 * @param  classPK the primary key of the DDM structure
 	 * @return the matching web content
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -1309,13 +1329,16 @@ public class JournalArticleLocalServiceImpl
 	 * Returns the extracted content used for the web content's display.
 	 *
 	 * @param  article the web content
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the extracted content used for the web content's display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching DDM template could not be found, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getArticleContent(
@@ -1342,12 +1365,15 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the extracted content used for the web content's display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content or DDM template could
+	 *         not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getArticleContent(
@@ -1378,7 +1404,8 @@ public class JournalArticleLocalServiceImpl
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the extracted content from the web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content or DDM template could
+	 *         not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getArticleContent(
@@ -1397,12 +1424,15 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  viewMode the mode in which the web content is being viewed
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the extracted content used for the web content's display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content or DDM template could
+	 *         not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getArticleContent(
@@ -1427,7 +1457,8 @@ public class JournalArticleLocalServiceImpl
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the extracted content from the web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content or DDM template could
+	 *         not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public String getArticleContent(
@@ -1444,7 +1475,9 @@ public class JournalArticleLocalServiceImpl
 	 * template matching the group, class name ID, and DDM template key.
 	 *
 	 * @param  article the web content
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
@@ -1453,7 +1486,8 @@ public class JournalArticleLocalServiceImpl
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the web content display implementation
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching group or DDM template could not be
+	 *         found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1667,7 +1701,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
@@ -1676,7 +1712,8 @@ public class JournalArticleLocalServiceImpl
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1714,13 +1751,16 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1748,7 +1788,8 @@ public class JournalArticleLocalServiceImpl
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1766,7 +1807,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
@@ -1775,7 +1818,8 @@ public class JournalArticleLocalServiceImpl
 	 *         hierarchical hash map
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1796,13 +1840,16 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -1828,7 +1875,8 @@ public class JournalArticleLocalServiceImpl
 	 *         language
 	 * @param  themeDisplay the web content's current theme display
 	 * @return the matching web content display
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content, group, or DDM template
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticleDisplay getArticleDisplay(
@@ -2182,7 +2230,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @return the matching web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getDisplayArticle(long groupId, String articleId)
@@ -2223,7 +2271,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  urlTitle the web content's accessible URL title
 	 * @return the range of matching web content ordered by article ID
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getDisplayArticleByUrlTitle(
@@ -2264,7 +2312,7 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  resourcePrimKey the primary key of the model instance
 	 * @return the latest web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(long resourcePrimKey)
@@ -2279,7 +2327,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  resourcePrimKey the primary key of the model instance
 	 * @param  status the web content's status
 	 * @return the latest web content with a status
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(long resourcePrimKey, int status)
@@ -2297,7 +2345,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  preferApproved whether the workflow status is set to
 	 *         <code>Approved</code>
 	 * @return the range of matching web content ordered by article ID
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(
@@ -2340,7 +2388,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @return the latest web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(long groupId, String articleId)
@@ -2358,7 +2406,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  status the web content's status
 	 * @return the range of matching web content ordered by article ID
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(
@@ -2392,11 +2440,10 @@ public class JournalArticleLocalServiceImpl
 	 * group, class name ID, and class PK.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  className the primary key of the class name for the web content's
-	 *         related model
-	 * @param  classPK the primary key of the web content's related entity
+	 * @param  className the class name of the DDM structure class
+	 * @param  classPK the primary key of the DDM structure
 	 * @return the range of matching web content ordered by article ID
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(
@@ -2426,7 +2473,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  urlTitle the web content's accessible URL title
 	 * @param  status the web content's status
 	 * @return the range of matching web content ordered by article ID
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticleByUrlTitle(
@@ -2462,7 +2509,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @return the latest web content version
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public double getLatestVersion(long groupId, String articleId)
@@ -2481,7 +2528,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  status the web content's status
 	 * @return the latest web content version
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public double getLatestVersion(long groupId, String articleId, int status)
@@ -2589,7 +2636,9 @@ public class JournalArticleLocalServiceImpl
 	 * Returns the web content matching the group and DDM template key.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @return the matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2615,7 +2664,9 @@ public class JournalArticleLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
 	 *         inclusive)
@@ -2637,7 +2688,9 @@ public class JournalArticleLocalServiceImpl
 	 * key.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2678,7 +2731,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  version the web content's version
 	 * @return <code>true</code> if the specified web content is the latest
 	 *         version;<code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isLatestVersion(
@@ -2703,7 +2756,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  status the web content's status
 	 * @return <code>true</code> if the specified web content is the latest
 	 *         version;<code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isLatestVersion(
@@ -2725,7 +2778,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content
 	 * @param  newFolderId the primary key of the web content's new folder
 	 * @return the updated web content, which was moved to a new folder
-	 * @throws PortalException
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
@@ -2757,7 +2810,8 @@ public class JournalArticleLocalServiceImpl
 	 *         the default command update for the web content.
 	 * @return the updated web content, which was moved from the recycle bin to
 	 *         a new folder
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a trashed web content with the primary key
+	 *         could not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle moveArticleFromTrash(
@@ -2786,7 +2840,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
 	 * @return the updated article, which was moved to the recycle bin
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a trashed web content with the primary key
+	 *         could not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle moveArticleToTrash(
@@ -2863,7 +2918,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @return the updated article, which was moved to the recycle bin
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a trashed web content with the primary key
+	 *         could not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle moveArticleToTrash(
@@ -2890,7 +2946,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  languageId the primary key of the web content's default user's
 	 *         language
 	 * @return the updated web content with a removed locale
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle removeArticleLocale(
@@ -2936,7 +2992,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  article the web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a trashed web content with the primary key
+	 *         could not be found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void restoreArticleFromTrash(long userId, JournalArticle article)
@@ -3024,21 +3081,26 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content's article ID, title, description, or content
 	 *         (optionally <code>null</code>)
 	 * @param  version the web content's version
-	 * @param  type the web content's type
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  start the lower bound of the range of web content to return
 	 * @param  end the upper bound of the range of web content to return (not
@@ -3080,22 +3142,27 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  title the title keywords
 	 * @param  description the description keywords
-	 * @param  content the content keywords
-	 * @param  type the web content's type
+	 * @param  content the HTML content keywords
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -3144,23 +3211,27 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  title the title keywords
 	 * @param  description the description keywords
-	 * @param  content the content keywords
-	 * @param  type the web content's type
+	 * @param  content the HTML content keywords
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKeys the primary keys of the web content's DDM
-	 *         structures
+	 *         structures, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
-	 *         templates
+	 *         templates, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -3209,11 +3280,16 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content's article ID, title, description, or content
 	 *         (optionally <code>null</code>)
@@ -3279,17 +3355,22 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  articleId the primary key of the web content
 	 * @param  title the title keywords
 	 * @param  description the description keywords
-	 * @param  content the content keywords
-	 * @param  type the web content's type
+	 * @param  content the HTML content keywords
+	 * @param  type the web content type to search for
 	 * @param  status the web content's status
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  params the finder parameters (optionally <code>null</code>)
 	 * @param  andSearch whether every field must match its keywords, or just
 	 *         one field
@@ -3377,21 +3458,26 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content's article ID, title, description, or content
 	 *         (optionally <code>null</code>)
 	 * @param  version the web content's version
-	 * @param  type the web content's type
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @return the number of matching web content
 	 * @throws SystemException if a system exception occurred
@@ -3418,22 +3504,27 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  title the title keywords
 	 * @param  description the description keywords
-	 * @param  content the content keywords
-	 * @param  type the web content's type
+	 * @param  content the HTML content keywords
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -3465,23 +3556,27 @@ public class JournalArticleLocalServiceImpl
 	 * @param  companyId the primary key of the web content's company
 	 * @param  groupId the primary key of the group
 	 * @param  folderIds the primary keys of the web content folders
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
 	 * @param  title the title keywords
 	 * @param  description the description keywords
-	 * @param  content the content keywords
-	 * @param  type the web content's type
+	 * @param  content the HTML content keywords
+	 * @param  type the web content type to search for
 	 * @param  ddmStructureKeys the primary keys of the web content's DDM
-	 *         structures
+	 *         structures, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKeys the primary keys of the web content's DDM
-	 *         templates
+	 *         templates, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  displayDateGT the latest date in the web content's display date
 	 *         search
 	 * @param  displayDateLT the earliest date in the web content's display date
 	 *         search
-	 * @param  status the web content's status
+	 * @param  status the web content status to search for
 	 * @param  reviewDate the web content's scheduled review date
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
@@ -3509,7 +3604,7 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void subscribe(long userId, long groupId)
@@ -3524,7 +3619,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
 	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching user or subscription could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void unsubscribe(long userId, long groupId)
@@ -3545,7 +3641,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  titleMap the web content's locales and localized titles
 	 * @param  descriptionMap the web content's locales and localized
 	 *         descriptions
-	 * @param  content the web content's content
+	 * @param  content the HTML content
 	 * @param  layoutUuid the unique string identifying the web content's layout
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
@@ -3553,7 +3649,8 @@ public class JournalArticleLocalServiceImpl
 	 *         workflow actions, and can set whether to add the default command
 	 *         update for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key or a matching web
+	 *         content could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateArticle(
@@ -3671,11 +3768,16 @@ public class JournalArticleLocalServiceImpl
 	 * @param  titleMap the web content's locales and localized titles
 	 * @param  descriptionMap the web content's locales and localized
 	 *         descriptions
-	 * @param  content the web content's content
-	 * @param  type the web content's type
+	 * @param  content the HTML content
+	 * @param  type the structure's type, if the web content is related to a DDM
+	 *         structure. For more information, see {@link
+	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  ddmStructureKey the primary key of the web content's DDM
-	 *         structure
-	 * @param  ddmTemplateKey the primary key of the web content's DDM template
+	 *         structure, if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
+	 * @param  ddmTemplateKey the primary key of the web content's DDM template,
+	 *         if the web content is related to a DDM structure, or
+	 *         <code>null</code> otherwise
 	 * @param  layoutUuid the unique string identifying the web content's layout
 	 * @param  displayDateMonth the month the web content is set to display
 	 * @param  displayDateDay the calendar day the web content is set to display
@@ -3707,7 +3809,8 @@ public class JournalArticleLocalServiceImpl
 	 *         workflow actions, and can set whether to add the default command
 	 *         update for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key or a matching web
+	 *         content could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateArticle(
@@ -3971,14 +4074,15 @@ public class JournalArticleLocalServiceImpl
 	 * @param  folderId the primary key of the web content folder
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  content the web content's content
+	 * @param  content the HTML content
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, portlet preferences,
 	 *         workflow actions, and can set whether to add the default command
 	 *         update for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key or a matching web
+	 *         content could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateArticle(
@@ -4020,12 +4124,13 @@ public class JournalArticleLocalServiceImpl
 	 * @param  locale the locale of the web content's display template
 	 * @param  title the translated web content title
 	 * @param  description the translated web content description
-	 * @param  content the web content's content
+	 * @param  content the HTML content
 	 * @param  images the web content's images
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a user with the primary key or a matching web
+	 *         content could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateArticleTranslation(
@@ -4211,9 +4316,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the group
 	 * @param  articleId the primary key of the web content
 	 * @param  version the web content's version
-	 * @param  content the web content's content
+	 * @param  content the HTML content
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateContent(
@@ -4517,14 +4622,15 @@ public class JournalArticleLocalServiceImpl
 	 * Updates the web content's status by matching the class PK.
 	 *
 	 * @param  userId the primary key of the web content's creator/owner
-	 * @param  classPK the primary key of the web content's related entity
+	 * @param  classPK the primary key of the DDM structure
 	 * @param  status the web content's status
 	 * @param  workflowContext the web content's configured workflow
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, portlet preferences, and can set whether to
 	 *         add the default command update for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateStatus(
@@ -4554,7 +4660,8 @@ public class JournalArticleLocalServiceImpl
 	 *         modification date, portlet preferences, and can set whether to
 	 *         add the default command update for the web content.
 	 * @return the updated web content
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a matching web content could not be found, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateStatus(
@@ -4577,8 +4684,10 @@ public class JournalArticleLocalServiceImpl
 	 * template key, replacing the DDM template key with a new one.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the entity's instance the web
-	 *         content is related to
+	 * @param  classNameId the primary key of the DDMStructure class if the web
+	 *         content is related to a DDM structure, or {@link
+	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         otherwise
 	 * @param  oldDDMTemplateKey the primary key of the web content's old DDM
 	 *         template
 	 * @param  newDDMTemplateKey the primary key of the web content's new DDM

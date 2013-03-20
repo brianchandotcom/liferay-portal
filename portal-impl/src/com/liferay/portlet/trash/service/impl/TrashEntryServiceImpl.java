@@ -66,8 +66,21 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		List<TrashEntry> entries = trashEntryPersistence.findByGroupId(groupId);
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		for (TrashEntry entry : entries) {
 			try {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						entry.getClassName());
+
+				if (!trashHandler.hasTrashPermission(
+						permissionChecker, 0, entry.getClassPK(),
+						ActionKeys.VIEW)) {
+
+					continue;
+				}
+
 				deleteEntry(entry);
 			}
 			catch (TrashPermissionException tpe) {

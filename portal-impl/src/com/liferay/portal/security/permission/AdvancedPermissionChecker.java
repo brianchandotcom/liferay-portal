@@ -880,9 +880,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 
-				// It is not necessary to check guest permissions separately,
-				// as the user's resource block IDs bag will already have the
-				// guest permissions in it if checkGuest is true.
+				// It is not necessary to check guest permissions separately, as
+				// the user's resource block IDs bag will already have the guest
+				// permissions in it if checkGuest is true.
 
 				return hasUserPermission(
 					groupId, name, primKey, actionId, true);
@@ -974,10 +974,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 3);
 
-		// Check if user has access to perform the action on the given
-		// resource scopes. The resources are scoped to check first for an
-		// individual class, then for the group that the class may belong
-		// to, and then for the company that the class belongs to.
+		// Check if user has access to perform the action on the given resource
+		// scopes. The resources are scoped to check first for an individual
+		// class, then for the group that the class may belong to, and then for
+		// the company that the class belongs to.
 
 		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
 

@@ -458,9 +458,9 @@ public class CacheFilter extends BasePortalFilter {
 			}
 
 			// Cache the result if and only if there is a result and the request
-			// is cacheable. We have to test the cacheability of a request
-			// twice because the user could have been authenticated after the
-			// initial test.
+			// is cacheable. We have to test the cacheability of a request twice
+			// because the user could have been authenticated after the initial
+			// test.
 
 			String cacheControl = GetterUtil.getString(
 				bufferCacheServletResponse.getHeader(

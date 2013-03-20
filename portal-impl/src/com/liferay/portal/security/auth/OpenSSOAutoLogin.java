@@ -197,8 +197,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 			if (themeDisplay != null) {
 
-				// ThemeDisplay should never be null, but some users
-				// complain of this error. Cause is unknown.
+				// ThemeDisplay should never be null, but some users complain of
+				// this error. Cause is unknown.
 
 				locale = themeDisplay.getLocale();
 			}

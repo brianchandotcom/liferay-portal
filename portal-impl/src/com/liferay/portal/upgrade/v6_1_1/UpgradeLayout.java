@@ -111,8 +111,8 @@ public class UpgradeLayout extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			// Get pages with a sourcePrototypeLayoutUuid that have a page
-			// template. If the layoutUuid points to a page template, remove
-			// it. Otherwise, it points to a site template page, so leave it.
+			// template. If the layoutUuid points to a page template, remove it.
+			// Otherwise, it points to a site template page, so leave it.
 
 			StringBundler sb = new StringBundler(4);
 

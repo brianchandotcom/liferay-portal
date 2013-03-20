@@ -162,8 +162,7 @@ public class SessionImpl implements Session {
 		try {
 			entityManager.persist(object);
 
-			// Hibernate returns generated idenitfier which is not used
-			// anywhere
+			// Hibernate returns generated idenitfier which is not used anywhere
 
 			return null;
 		}

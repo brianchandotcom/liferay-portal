@@ -606,8 +606,8 @@ public class ResourcePermissionLocalServiceImpl
 
 		// Iterate the list of resources in reverse order to test permissions
 		// from company scope to individual scope because it is more likely that
-		// a permission is assigned at a higher scope. Optimizing this method
-		// to one SQL call may actually slow things down since most of the calls
+		// a permission is assigned at a higher scope. Optimizing this method to
+		// one SQL call may actually slow things down since most of the calls
 		// will pull from the cache after the first request.
 
 		for (int i = resources.size() - 1; i >= 0; i--) {

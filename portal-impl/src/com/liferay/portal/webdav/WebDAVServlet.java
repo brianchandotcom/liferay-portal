@@ -76,8 +76,8 @@ public class WebDAVServlet extends HttpServlet {
 				return;
 			}
 
-			// Set the path only if it has not already been set. This works
-			// if and only if the servlet is not mapped to more than one URL.
+			// Set the path only if it has not already been set. This works if
+			// and only if the servlet is not mapped to more than one URL.
 
 			if (storage.getRootPath() == null) {
 				storage.setRootPath(getRootPath(request));

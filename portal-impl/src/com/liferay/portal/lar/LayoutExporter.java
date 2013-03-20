@@ -1106,8 +1106,8 @@ public class LayoutExporter {
 					String rootPortletId = PortletConstants.getRootPortletId(
 						portletId);
 
-					// PORTLET_DATA and the PORTLET_DATA for this specific
-					// data handler must be true
+					// PORTLET_DATA and the PORTLET_DATA for this specific data
+					// handler must be true
 
 					exportCurPortletData =
 						exportPortletData &&

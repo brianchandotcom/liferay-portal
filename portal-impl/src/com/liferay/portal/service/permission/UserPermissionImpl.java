@@ -142,9 +142,8 @@ public class UserPermissionImpl implements UserPermission {
 
 					Group organizationGroup = organization.getGroup();
 
-					// Organization administrators can only manage normal
-					// users. Owners can only manage normal users and
-					// administrators.
+					// Organization administrators can only manage normal users.
+					// Owners can only manage normal users and administrators.
 
 					if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 							user.getUserId(), organizationGroup.getGroupId(),

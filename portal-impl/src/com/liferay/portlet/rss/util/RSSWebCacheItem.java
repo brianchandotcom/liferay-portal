@@ -51,8 +51,8 @@ public class RSSWebCacheItem implements WebCacheItem {
 			// java.io.Reader.
 
 			// Use http://xml.newsisfree.com/feeds/29/629.xml and
-			// http://test.domosoft.com/up/RSS to test if German umlauts show
-			// up correctly.
+			// http://test.domosoft.com/up/RSS to test if German umlauts show up
+			// correctly.
 
 			/*Reader reader = new StringReader(
 				new String(HttpUtil.URLtoByteArray(_url)));

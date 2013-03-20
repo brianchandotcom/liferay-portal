@@ -48,10 +48,12 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(1000);
-		selenium.selectWindow("title=Bookmarks");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe");
+		selenium.selectFrame("//iframe");
 		selenium.waitForVisible("//input[@value='Choose']");
 		selenium.click("//input[@value='Choose']");
-		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
 		selenium.waitForElementPresent(

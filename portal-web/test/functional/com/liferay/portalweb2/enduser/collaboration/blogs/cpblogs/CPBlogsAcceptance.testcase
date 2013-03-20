@@ -1,12 +1,16 @@
 <definition name="CPBlogsAcceptance">
-	<set-up>
-		<execute macro="CPBlogs#advancedSearch" />
-	</set-up>
+	<var name="title" value="Title" />
+
 	<command name="AddBlogsEntry">
 		<execute macro="BlogsEntry#cpAdd" />
-	</command>
-	<command name="DeleteBlogsEntry">
+
+		<var name="title" value="Blogs Title" />
+
 		<execute macro="BlogsEntry#cpAdd" />
+
+		<execute macro="BlogsEntry#cpAdd">
+			<param name="title" value="Blogs Entry Title" />
+		</execute>
 	</command>
 	<tear-down>
 		<execute macro="BlogsEntry#cpTearDown" />

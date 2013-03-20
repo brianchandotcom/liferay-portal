@@ -14,9 +14,6 @@
 
 package com.liferay.portal.security.pacl.servlet;
 
-import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.util.ClassLoaderUtil;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -56,31 +53,13 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			boolean include)
 		throws IOException, ServletException {
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		// Temporarily do default logic
 
-		ClassLoader pluginClassLoader =
-			(ClassLoader)_servletContext.getAttribute(
-				PluginContextListener.PLUGIN_CLASS_LOADER);
-
-		try {
-			if (pluginClassLoader == null) {
-				ClassLoaderUtil.setContextClassLoader(
-					ClassLoaderUtil.getPortalClassLoader());
-			}
-			else {
-				ClassLoaderUtil.setContextClassLoader(pluginClassLoader);
-			}
-
-			if (include) {
-				_requestDispatcher.include(servletRequest, servletResponse);
-			}
-			else {
-				_requestDispatcher.forward(servletRequest, servletResponse);
-			}
+		if (include) {
+			_requestDispatcher.include(servletRequest, servletResponse);
 		}
-		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		else {
+			_requestDispatcher.forward(servletRequest, servletResponse);
 		}
 	}
 

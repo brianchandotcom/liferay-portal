@@ -46,9 +46,10 @@ public class LiferaySeleniumHelper {
 
 		String confirmation = liferaySelenium.getConfirmation();
 
-		BaseTestCase.assertTrue(
-			confirmation.matches(
-				"^" + StringUtil.replace(pattern, "?", "[\\\\s\\\\S]") + "$"));
+		if (!pattern.equals(confirmation)) {
+			BaseTestCase.fail(
+				"Pattern " + pattern + " does not match " + confirmation);
+		}
 	}
 
 	public static void assertElementNotPresent(

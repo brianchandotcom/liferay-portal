@@ -15,9 +15,12 @@
 package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -62,6 +65,20 @@ public class LoginAction extends Action {
 			response.sendRedirect(
 				themeDisplay.getPathMain() +
 					PropsValues.AUTH_LOGIN_DISABLED_PATH);
+
+			return null;
+		}
+
+		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+				!request.isSecure()) {
+
+			StringBundler redirect = new StringBundler();
+			redirect.append(PortalUtil.getPortalURL(request, true));
+			redirect.append(request.getRequestURI());
+			redirect.append(StringPool.QUESTION);
+			redirect.append(request.getQueryString());
+
+			response.sendRedirect(redirect.toString());
 
 			return null;
 		}

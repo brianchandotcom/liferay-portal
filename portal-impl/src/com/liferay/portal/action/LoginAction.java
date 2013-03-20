@@ -15,7 +15,6 @@
 package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -70,15 +69,16 @@ public class LoginAction extends Action {
 		}
 
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-				!request.isSecure()) {
+			!request.isSecure()) {
 
-			StringBundler redirect = new StringBundler();
-			redirect.append(PortalUtil.getPortalURL(request, true));
-			redirect.append(request.getRequestURI());
-			redirect.append(StringPool.QUESTION);
-			redirect.append(request.getQueryString());
+			StringBundler sb = new StringBundler(4);
 
-			response.sendRedirect(redirect.toString());
+			sb.append(PortalUtil.getPortalURL(request, true));
+			sb.append(request.getRequestURI());
+			sb.append(StringPool.QUESTION);
+			sb.append(request.getQueryString());
+
+			response.sendRedirect(sb.toString());
 
 			return null;
 		}
@@ -102,9 +102,8 @@ public class LoginAction extends Action {
 				return mapping.findForward("/portal/touch_protected.jsp");
 			}
 			else {
-				String redirect =
-					ParamUtil.getString(
-						request, "redirect", themeDisplay.getPathMain());
+				String redirect = ParamUtil.getString(
+					request, "redirect", themeDisplay.getPathMain());
 
 				redirect = PortalUtil.escapeRedirect(redirect);
 

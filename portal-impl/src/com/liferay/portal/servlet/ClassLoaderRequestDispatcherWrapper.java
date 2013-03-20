@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.servlet;
+package com.liferay.portal.servlet;
+
+import com.liferay.portal.kernel.servlet.PluginContextListener;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.IOException;
 
@@ -25,9 +28,9 @@ import javax.servlet.ServletResponse;
 /**
  * @author Raymond Augé
  */
-public class PACLRequestDispatcherWrapper implements RequestDispatcher {
+public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 
-	public PACLRequestDispatcherWrapper(
+	public ClassLoaderRequestDispatcherWrapper(
 		ServletContext servletContext, RequestDispatcher requestDispatcher) {
 
 		_servletContext = servletContext;
@@ -36,7 +39,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
-		throws IOException, ServletException {
+		throws ServletException, IOException {
 
 		doDispatch(servletRequest, servletResponse, false);
 	}
@@ -53,13 +56,31 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			boolean include)
 		throws IOException, ServletException {
 
-		// Temporarily do default logic
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
 
-		if (include) {
-			_requestDispatcher.include(servletRequest, servletResponse);
+		ClassLoader pluginClassLoader =
+			(ClassLoader)_servletContext.getAttribute(
+				PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		try {
+			if (pluginClassLoader == null) {
+				ClassLoaderUtil.setContextClassLoader(
+					ClassLoaderUtil.getPortalClassLoader());
+			}
+			else {
+				ClassLoaderUtil.setContextClassLoader(pluginClassLoader);
+			}
+
+			if (include) {
+				_requestDispatcher.include(servletRequest, servletResponse);
+			}
+			else {
+				_requestDispatcher.forward(servletRequest, servletResponse);
+			}
 		}
-		else {
-			_requestDispatcher.forward(servletRequest, servletResponse);
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 	}
 

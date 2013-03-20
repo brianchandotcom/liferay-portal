@@ -45,8 +45,8 @@ public class PortalPermissionCollection extends PermissionCollection {
 		return Collections.enumeration(Collections.<Permission>emptyList());
 	}
 
-	public Policy getJavaSecurityPolicy() {
-		return null;
+	public Policy getPolicy() {
+		return _paclPolicy.getPolicy();
 	}
 
 	public PACLPolicy getPACLPolicy() {

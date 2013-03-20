@@ -78,7 +78,8 @@ public class ViewWCWebContentRecentTest extends BaseTestCase {
 			selenium.getText("//a[@class='entry-link']/span"));
 		selenium.clickAt("//a[@class='entry-link']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//span[@class='workflow-id']",
+			RuntimeVariables.getValue("webcontentID"));
 		assertEquals(RuntimeVariables.replace("${webcontentID}"),
 			selenium.getText("//span[@class='workflow-id']"));
 	}

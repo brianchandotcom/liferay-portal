@@ -70,6 +70,7 @@ public class ViewEditWCSubstucture3DefaultValueTest extends BaseTestCase {
 				"//tr[contains(.,'WC Substructure3 Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Substructure3 Name')]/td[4]/a"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//tr[contains(.,'WC Substructure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));

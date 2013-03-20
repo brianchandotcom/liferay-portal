@@ -53,6 +53,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Title"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");

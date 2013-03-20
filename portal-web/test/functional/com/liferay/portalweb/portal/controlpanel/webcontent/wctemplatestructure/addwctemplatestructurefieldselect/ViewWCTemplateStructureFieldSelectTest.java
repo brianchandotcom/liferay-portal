@@ -106,8 +106,9 @@ public class ViewWCTemplateStructureFieldSelectTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'select.getData')]",
-			RuntimeVariables.replace("<p>$select.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$select.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'select.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

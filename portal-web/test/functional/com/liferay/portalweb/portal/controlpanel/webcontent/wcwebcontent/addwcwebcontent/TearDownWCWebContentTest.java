@@ -44,9 +44,14 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//button[contains(@title,'Icon View')]");
+				selenium.clickAt("//button[contains(@title,'Icon View')]",
+					RuntimeVariables.replace("Icon View Button"));
+				Thread.sleep(1000);
 
 				boolean webContentPresent = selenium.isElementPresent(
-						"//div[@class='entry-thumbnail']");
+						"//div[@class='entry-thumbnail']/img");
 
 				if (!webContentPresent) {
 					label = 2;
@@ -76,10 +81,10 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
-					"//div[@class='portlet-msg-success taglib-trash-undo']/form");
+					"//div[@class='portlet-msg-success taglib-trash-undo']");
 				assertTrue(selenium.isPartialText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']/form",
-						"moved to the Recycle Bin."));
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"moved to the Recycle Bin. Undo"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

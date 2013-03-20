@@ -59,34 +59,48 @@ public class ViewEditWCWebContentTest extends BaseTestCase {
 		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
 		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content Edit"),
-			selenium.getText("//body"));
+			selenium.getText("//body[contains(.,'WC WebContent Content')]"));
 		selenium.selectFrame("relative=top");
 		assertEquals(RuntimeVariables.replace("View History"),
 			selenium.getText("//button[contains(.,'View History')]"));
 		selenium.clickAt("//button[contains(.,'View History')]",
 			RuntimeVariables.replace("View History"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//tr[3]/td[2]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[contains(.,'WC WebContent Title')]"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[contains(.,'1.0')]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[5]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[6]"));
-		assertTrue(selenium.isVisible("//tr[3]/td[7]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[contains(.,'Approved')]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[6]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[3]/td[8]"));
-		assertTrue(selenium.isVisible("//tr[4]/td[2]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[contains(.,'Joe Bloggs')]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
-			selenium.getText("//tr[4]/td[3]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[contains(.,'WC WebContent Title Edit')]"));
 		assertEquals(RuntimeVariables.replace("1.1"),
-			selenium.getText("//tr[4]/td[4]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[contains(.,'1.1')]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[4]/td[5]"));
-		assertTrue(selenium.isVisible("//tr[4]/td[6]"));
-		assertTrue(selenium.isVisible("//tr[4]/td[7]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[contains(.,'Approved')]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[6]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[7]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[4]/td[8]"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title Edit')]/td[contains(.,'Joe Bloggs')]"));
 	}
 }

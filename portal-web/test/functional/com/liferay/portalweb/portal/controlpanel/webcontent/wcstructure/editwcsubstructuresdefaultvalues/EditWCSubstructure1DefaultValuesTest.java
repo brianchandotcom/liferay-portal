@@ -71,6 +71,7 @@ public class EditWCSubstructure1DefaultValuesTest extends BaseTestCase {
 				"//tr[contains(.,'WC Substructure1 Name')]/td[3]/a"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Substructure1 Name')]/td[4]/a"));
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"//tr[contains(.,'WC Substructure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.deletewcfolder;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteWCFolderTest extends BaseTestCase {
-	public void testDeleteWCFolder() throws Exception {
+public class TearDownWCWebContentTest extends BaseTestCase {
+	public void testTearDownWCWebContent() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -44,32 +44,28 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isVisible(
-						"//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img"));
-				assertEquals(RuntimeVariables.replace("WC Folder Name"),
-					selenium.getText(
-						"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 
-				boolean wcFolderChecked = selenium.isChecked(
-						"//input[@id='_15_rowIdsJournalFolderCheckbox']");
+				boolean webContentPresent = selenium.isElementPresent(
+						"//div[@class='entry-thumbnail']");
 
-				if (wcFolderChecked) {
+				if (!webContentPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@id='_15_rowIdsJournalFolderCheckbox']",
-					RuntimeVariables.replace("WC Folder Name"));
-
-			case 2:
+				assertFalse(selenium.isChecked(
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.clickAt("//input[@id='_15_allRowIdsCheckbox']",
+					RuntimeVariables.replace("Select All"));
 				assertTrue(selenium.isChecked(
-						"//input[@id='_15_rowIdsJournalFolderCheckbox']"));
-				selenium.waitForElementPresent(
-					"//div[contains(@class,'display-icon selectable null hover selected') and @data-title='WC Folder Name']");
+						"//input[@id='_15_allRowIdsCheckbox']"));
+				selenium.waitForVisible(
+					"//span[@title='Actions']/ul/li/strong/a/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
@@ -83,13 +79,12 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"No Web Content was found."),
 					selenium.getText(
 						"//div[@class='entries-empty portlet-msg-info']"));
-				assertTrue(selenium.isElementNotPresent(
-						"//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img"));
-				assertFalse(selenium.isTextPresent("WC Folder Name"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
@@ -105,9 +100,16 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("WC Folder Name"),
-					selenium.getText(
-						"//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span"));
+
+				boolean recycleBinNotEmpty = selenium.isElementPresent(
+						"//a[@class='trash-empty-link']");
+
+				if (!recycleBinNotEmpty) {
+					label = 3;
+
+					continue;
+				}
+
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
 					selenium.getText("//a[@class='trash-empty-link']"));
 				selenium.clickAt("//a[@class='trash-empty-link']",
@@ -118,6 +120,8 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 3:
 				assertEquals(RuntimeVariables.replace(
 						"The Recycle Bin is empty."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

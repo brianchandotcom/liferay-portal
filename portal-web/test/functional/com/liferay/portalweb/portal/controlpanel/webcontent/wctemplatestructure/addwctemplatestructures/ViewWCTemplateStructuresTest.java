@@ -104,19 +104,18 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				">$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				">$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
-		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+		assertEquals(RuntimeVariables.replace(">$textbox.getData()</p>##"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
 		selenium.selectFrame("relative=top");
@@ -200,19 +199,18 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				">$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				">$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
-		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+		assertEquals(RuntimeVariables.replace(">$textbox.getData()</p>##"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
 		selenium.selectFrame("relative=top");
@@ -296,19 +294,18 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				">$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				">$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
-		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+		assertEquals(RuntimeVariables.replace(">$textbox.getData()</p>##"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
 		selenium.selectFrame("relative=top");

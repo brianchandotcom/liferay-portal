@@ -49,7 +49,6 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 						"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 				selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("WC Folder Name"));
-				selenium.waitForPageToLoad("30000");
 				Thread.sleep(1000);
 				assertTrue(selenium.isVisible(
 						"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
@@ -73,7 +72,7 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_15_rowIdsJournalFolderCheckbox']"));
 				selenium.waitForElementPresent(
-					"//div[contains(@class,'display-icon selectable hover selected') and @data-title='WC Subfolder Name']");
+					"//div[contains(@class,'display-icon selectable null hover selected') and @data-title='WC Subfolder Name']");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -114,7 +113,7 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
 					selenium.getText(
-						"//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span"));
+						"//tr[contains(.,'WC Subfolder Name')]/td[1]/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
 					selenium.getText("//a[@class='trash-empty-link']"));
 				selenium.clickAt("//a[@class='trash-empty-link']",

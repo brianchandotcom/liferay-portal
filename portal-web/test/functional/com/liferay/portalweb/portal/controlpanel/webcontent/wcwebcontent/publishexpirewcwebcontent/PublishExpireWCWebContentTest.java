@@ -36,14 +36,15 @@ public class PublishExpireWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[@data-title='WC WebContent Title']/td[contains(.,'WC WebContent Title')]"));
 		assertEquals(RuntimeVariables.replace("Expired"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[3]/a",
+			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
+		selenium.clickAt("//tr[@data-title='WC WebContent Title']/td[contains(.,'WC WebContent Title')]/span/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+			"//iframe[contains(@title,'Rich Text Editor')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Version: 1.0"),
@@ -57,8 +58,9 @@ public class PublishExpireWCWebContentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[@data-title='WC WebContent Title']/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
 	}
 }

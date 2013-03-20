@@ -106,8 +106,9 @@ public class ViewWCTemplateStructureFieldIntegerTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'integer.getData')]",
-			RuntimeVariables.replace("<p>$integer.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$integer.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'integer.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

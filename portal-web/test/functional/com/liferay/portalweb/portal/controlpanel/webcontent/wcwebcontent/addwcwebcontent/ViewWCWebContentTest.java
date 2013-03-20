@@ -78,11 +78,12 @@ public class ViewWCWebContentTest extends BaseTestCase {
 			selenium.getText("//a[@id='_15_changeLanguageId']"));
 		assertEquals("WC WebContent Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
-		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
-		selenium.waitForText("//body", "WC WebContent Content");
+		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
+		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForText("//body[contains(.,'WC WebContent Content')]",
+			"WC WebContent Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//body"));
+			selenium.getText("//body[contains(.,'WC WebContent Content')]"));
 		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isChecked("//input[@id='_15_indexableCheckbox']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

@@ -51,7 +51,6 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 				"//div[@data-title='WC Folder2 Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder1 Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertTrue(selenium.isVisible(
 				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));

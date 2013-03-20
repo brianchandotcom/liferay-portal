@@ -106,8 +106,9 @@ public class ViewWCTemplateStructureFieldFileUploadTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'file.getData')]",
-			RuntimeVariables.replace("<p>$file.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$file.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'file.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

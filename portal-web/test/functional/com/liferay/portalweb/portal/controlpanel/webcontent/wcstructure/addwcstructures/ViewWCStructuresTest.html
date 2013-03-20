@@ -210,68 +210,68 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]</td>
 	<td>Boolean</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
-	<td>Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
-	<td>Decimal Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
-	<td>Decimal</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
-	<td>Documents and Media Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
-	<td>Documents and Media</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
-	<td>HTML Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
-	<td>HTML</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
 	<td>Image Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]</td>
 	<td>Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
+	<td>Date Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
+	<td>Decimal Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
+	<td>Documents and Media Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
+	<td>File Upload Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>HTML Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -280,7 +280,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]</td>
 	<td>Integer</td>
 </tr>
 <tr>
@@ -290,8 +290,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a[contains(.,'Link')]</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -300,7 +305,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]</td>
 	<td>Number</td>
 </tr>
 <tr>
@@ -310,7 +315,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]</td>
 	<td>Radio</td>
 </tr>
 <tr>
@@ -320,7 +325,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -330,7 +335,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]</td>
 	<td>Text</td>
 </tr>
 <tr>
@@ -340,7 +345,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]</td>
 	<td>Text Box</td>
 </tr>
 <tr>
@@ -354,9 +359,24 @@
 	<td>Cancel</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//span[@class='header-back-to']/a</td>
 	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -370,7 +390,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Search']</td>
+	<td>//div[@class='taglib-search-toggle-basic']/span/span[2]/span/input</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -480,68 +500,68 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]</td>
 	<td>Boolean</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
-	<td>Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
-	<td>Decimal Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
-	<td>Decimal</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
-	<td>Documents and Media Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
-	<td>Documents and Media</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
-	<td>HTML Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
-	<td>HTML</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
 	<td>Image Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]</td>
 	<td>Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
+	<td>Date Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
+	<td>Decimal Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
+	<td>Documents and Media Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
+	<td>File Upload Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>HTML Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -550,7 +570,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]</td>
 	<td>Integer</td>
 </tr>
 <tr>
@@ -560,8 +580,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -570,7 +595,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]</td>
 	<td>Number</td>
 </tr>
 <tr>
@@ -580,7 +605,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]</td>
 	<td>Radio</td>
 </tr>
 <tr>
@@ -590,7 +615,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -600,7 +625,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]</td>
 	<td>Text</td>
 </tr>
 <tr>
@@ -610,7 +635,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]</td>
 	<td>Text Box</td>
 </tr>
 <tr>
@@ -750,68 +775,68 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]</td>
 	<td>Boolean</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
-	<td>Date</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
-	<td>Decimal Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
-	<td>Decimal</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
-	<td>Documents and Media Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
-	<td>Documents and Media</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
-	<td>File Upload</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
-	<td>HTML Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
-	<td>HTML</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
 	<td>Image Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]</td>
 	<td>Image</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
+	<td>Date Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
+	<td>Decimal Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
+	<td>Documents and Media Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
+	<td>File Upload Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>HTML Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -820,7 +845,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]</td>
 	<td>Integer</td>
 </tr>
 <tr>
@@ -830,8 +855,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -840,7 +870,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]</td>
 	<td>Number</td>
 </tr>
 <tr>
@@ -850,7 +880,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]</td>
 	<td>Radio</td>
 </tr>
 <tr>
@@ -860,7 +890,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]</td>
 	<td>Select</td>
 </tr>
 <tr>
@@ -870,7 +900,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]</td>
 	<td>Text</td>
 </tr>
 <tr>
@@ -880,7 +910,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]</td>
 	<td>Text Box</td>
 </tr>
 <tr>

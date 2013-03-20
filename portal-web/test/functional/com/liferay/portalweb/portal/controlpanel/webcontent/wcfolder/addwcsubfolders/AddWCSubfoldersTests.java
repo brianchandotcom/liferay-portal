@@ -16,10 +16,10 @@ package com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcsubfo
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.AddWCFolderTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcsubfolder.AddWCSubfolder1Test;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcsubfolder.AddWCSubfolder2Test;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcsubfolder.AddWCSubfolder3Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

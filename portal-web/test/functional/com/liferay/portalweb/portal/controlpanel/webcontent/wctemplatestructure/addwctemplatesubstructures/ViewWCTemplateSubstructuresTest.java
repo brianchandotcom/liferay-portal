@@ -104,8 +104,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text1.getData')]",
-			RuntimeVariables.replace("<p>$text1.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text1.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text1.getData')]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -187,8 +188,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]",
-			RuntimeVariables.replace("<p>$text2.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text2.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -270,8 +272,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text3.getData')]",
-			RuntimeVariables.replace("<p>$text3.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text3.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text3.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

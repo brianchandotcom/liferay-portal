@@ -44,7 +44,6 @@ public class ViewDeleteWCSubfolderTest extends BaseTestCase {
 				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));

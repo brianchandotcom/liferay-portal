@@ -103,8 +103,9 @@ public class ViewWCTemplateSubstructureTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]",
-			RuntimeVariables.replace("<p>$text2.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text2.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

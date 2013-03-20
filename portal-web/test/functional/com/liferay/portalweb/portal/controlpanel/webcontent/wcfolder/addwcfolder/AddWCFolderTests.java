@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

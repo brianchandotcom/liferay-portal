@@ -43,8 +43,6 @@ import javax.portlet.PortletURL;
  */
 public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = BlogsEntry.class.getName();
-
 	public static final String TYPE = "blog";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -65,7 +63,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return BlogsEntry.class.getName();
 	}
 
 	public String getType() {

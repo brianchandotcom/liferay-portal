@@ -46,8 +46,6 @@ import javax.portlet.PortletURL;
  */
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
-	public static final String CLASS_NAME = MBThread.class.getName();
-
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -55,7 +53,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return MBThread.class.getName();
 	}
 
 	@Override

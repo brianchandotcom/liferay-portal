@@ -43,8 +43,6 @@ import javax.portlet.PortletRequest;
  */
 public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
-	public static final String CLASS_NAME = DLFileShortcut.class.getName();
-
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -52,7 +50,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFileShortcut.class.getName();
 	}
 
 	@Override

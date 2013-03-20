@@ -36,8 +36,6 @@ import javax.portlet.PortletRequest;
  */
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
-	public static final String CLASS_NAME = BookmarksEntry.class.getName();
-
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -45,7 +43,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return BookmarksEntry.class.getName();
 	}
 
 	@Override

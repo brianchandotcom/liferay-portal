@@ -44,8 +44,6 @@ import javax.portlet.PortletURL;
 public class BookmarksEntryAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = BookmarksEntry.class.getName();
-
 	public static final String TYPE = "bookmark";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -57,7 +55,7 @@ public class BookmarksEntryAssetRendererFactory
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return BookmarksEntry.class.getName();
 	}
 
 	public String getType() {
@@ -90,7 +88,7 @@ public class BookmarksEntryAssetRendererFactory
 			"folderId",
 			String.valueOf(
 				AssetPublisherUtil.getRecentFolderId(
-					liferayPortletRequest, CLASS_NAME)));
+					liferayPortletRequest, getClassName())));
 
 		return portletURL;
 	}

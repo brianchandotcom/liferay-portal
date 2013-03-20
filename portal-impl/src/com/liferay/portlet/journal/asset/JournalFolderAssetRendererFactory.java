@@ -30,8 +30,6 @@ import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 public class JournalFolderAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = JournalFolder.class.getName();
-
 	public static final String TYPE = "folder";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -43,7 +41,7 @@ public class JournalFolderAssetRendererFactory
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return JournalFolder.class.getName();
 	}
 
 	public String getType() {

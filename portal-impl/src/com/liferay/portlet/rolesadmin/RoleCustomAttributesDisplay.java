@@ -23,10 +23,8 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
  */
 public class RoleCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
-	public static final String CLASS_NAME = Role.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return Role.class.getName();
 	}
 
 	@Override

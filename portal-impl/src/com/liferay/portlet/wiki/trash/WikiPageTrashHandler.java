@@ -58,8 +58,6 @@ import javax.portlet.PortletURL;
  */
 public class WikiPageTrashHandler extends BaseTrashHandler {
 
-	public static final String CLASS_NAME = WikiPage.class.getName();
-
 	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
@@ -105,7 +103,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return WikiPage.class.getName();
 	}
 
 	@Override

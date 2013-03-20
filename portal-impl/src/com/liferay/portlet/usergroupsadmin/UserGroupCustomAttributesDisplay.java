@@ -24,10 +24,8 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 public class UserGroupCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
-	public static final String CLASS_NAME = UserGroup.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return UserGroup.class.getName();
 	}
 
 	@Override

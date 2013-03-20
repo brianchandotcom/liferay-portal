@@ -39,14 +39,12 @@ import java.util.Map;
  */
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler {
 
-	public static final String CLASS_NAME = DDLRecord.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return DDLRecord.class.getName();
 	}
 
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	@Override

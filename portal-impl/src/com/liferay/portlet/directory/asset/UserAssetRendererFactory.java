@@ -35,8 +35,6 @@ import javax.portlet.PortletURL;
  */
 public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = User.class.getName();
-
 	public static final String TYPE = "user";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -60,7 +58,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return User.class.getName();
 	}
 
 	public String getType() {

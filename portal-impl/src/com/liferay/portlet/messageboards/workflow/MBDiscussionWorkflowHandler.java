@@ -26,22 +26,20 @@ import java.util.Locale;
  */
 public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 
-	public static final String CLASS_NAME = MBDiscussion.class.getName();
-
 	@Override
 	public AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(MBDiscussion.class.getName());
+			getAssetRendererFactoryByClassName(getClassName());
 	}
 
 	@Override
 	public String getClassName() {
-		return CLASS_NAME;
+		return MBDiscussion.class.getName();
 	}
 
 	@Override
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 }

@@ -36,8 +36,6 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
  */
 public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = WikiPage.class.getName();
-
 	public static final String TYPE = "wiki";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -65,7 +63,7 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return WikiPage.class.getName();
 	}
 
 	public String getType() {

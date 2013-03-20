@@ -59,8 +59,6 @@ import javax.portlet.PortletURL;
 public class JournalArticleAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = JournalArticle.class.getName();
-
 	public static final String TYPE = "content";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -112,7 +110,7 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return JournalArticle.class.getName();
 	}
 
 	@Override

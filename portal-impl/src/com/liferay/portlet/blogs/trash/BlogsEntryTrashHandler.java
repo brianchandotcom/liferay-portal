@@ -38,8 +38,6 @@ import javax.portlet.PortletURL;
  */
 public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
-	public static final String CLASS_NAME = BlogsEntry.class.getName();
-
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -47,7 +45,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return BlogsEntry.class.getName();
 	}
 
 	@Override

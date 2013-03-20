@@ -49,8 +49,6 @@ import javax.portlet.PortletRequest;
  */
 public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
-	public static final String CLASS_NAME = DLFolder.class.getName();
-
 	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
@@ -89,7 +87,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFolder.class.getName();
 	}
 
 	@Override

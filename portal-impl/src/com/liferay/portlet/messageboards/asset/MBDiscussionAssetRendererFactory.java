@@ -27,8 +27,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 public class MBDiscussionAssetRendererFactory
 	extends MBMessageAssetRendererFactory {
 
-	public static final String CLASS_NAME = MBDiscussion.class.getName();
-
 	public static final String TYPE = "discussion";
 
 	@Override
@@ -42,7 +40,7 @@ public class MBDiscussionAssetRendererFactory
 
 	@Override
 	public String getClassName() {
-		return CLASS_NAME;
+		return MBDiscussion.class.getName();
 	}
 
 	@Override

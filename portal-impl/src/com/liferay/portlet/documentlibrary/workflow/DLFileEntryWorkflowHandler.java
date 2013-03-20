@@ -46,14 +46,12 @@ import java.util.Map;
  */
 public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 
-	public static final String CLASS_NAME = DLFileEntry.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFileEntry.class.getName();
 	}
 
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	@Override

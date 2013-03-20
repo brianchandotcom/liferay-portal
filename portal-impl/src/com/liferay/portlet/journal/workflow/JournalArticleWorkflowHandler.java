@@ -40,14 +40,12 @@ import java.util.Map;
  */
 public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 
-	public static final String CLASS_NAME = JournalArticle.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return JournalArticle.class.getName();
 	}
 
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	public JournalArticle updateStatus(

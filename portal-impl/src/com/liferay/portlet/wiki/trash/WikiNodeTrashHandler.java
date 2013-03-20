@@ -50,8 +50,6 @@ import javax.portlet.PortletURL;
  */
 public class WikiNodeTrashHandler extends BaseTrashHandler {
 
-	public static final String CLASS_NAME = WikiNode.class.getName();
-
 	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
@@ -87,7 +85,7 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return WikiNode.class.getName();
 	}
 
 	@Override

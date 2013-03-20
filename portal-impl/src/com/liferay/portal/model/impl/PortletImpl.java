@@ -1689,18 +1689,18 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns the name of the portlet display style class of the portlet.
+	 * Returns the name of the template handler class of the portlet.
 	 *
-	 * @return the name of the portlet display style class of the portlet
+	 * @return the name of the template handler class of the portlet
 	 */
 	public String getTemplateHandlerClass() {
 		return _templateHandlerClass;
 	}
 
 	/**
-	 * Returns the portlet display style instance of the portlet.
+	 * Returns the template handler instance of the portlet.
 	 *
-	 * @return the portlet display style instance of the portlet
+	 * @return the template handler instance of the portlet
 	 */
 	public TemplateHandler getTemplateHandlerInstance() {
 		if (Validator.isNull(getTemplateHandlerClass())) {
@@ -3263,11 +3263,10 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the name of the portlet display template handler class of the
-	 * portlet.
+	 * Sets the name of the template handler class of the portlet.
 	 *
-	 * @param templateHandlerClass the name of display template
-	 *        handler class of the portlet
+	 * @param templateHandlerClass the name of template handler class of the
+	 * portlet
 	 */
 	public void setTemplateHandlerClass(String templateHandlerClass) {
 		_templateHandlerClass = templateHandlerClass;

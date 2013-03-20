@@ -24,45 +24,39 @@ public interface TemplateHandlerRegistry {
 	public long[] getClassNameIds();
 
 	/**
-	 * Returns the portlet display template handler associated with the class
-	 * name ID.
+	 * Returns the template handler associated with the class name ID.
 	 *
-	 * @param  classNameId the class name ID of the portlet display template
-	 * @return the portlet display template handler associated with the class
-	 *         name ID
+	 * @param  classNameId the class name ID of the template
+	 * @return the template handler associated with the class name ID
 	 */
 	public TemplateHandler getTemplateHandler(long classNameId);
 
 	/**
-	 * Returns the portlet display template handler associated with the class
-	 * name.
+	 * Returns the template handler associated with the class name.
 	 *
-	 * @param  className the class name of the portlet display template
-	 * @return the portlet display template handler associated with the class
-	 *         name
+	 * @param  className the class name of the template
+	 * @return the template handler associated with the class name
 	 */
 	public TemplateHandler getTemplateHandler(String className);
 
 	/**
-	 * Returns all the portlet display template handlers.
+	 * Returns all the template handlers.
 	 *
-	 * @return the portlet display template handlers
+	 * @return the template handlers
 	 */
 	public List<TemplateHandler> getTemplateHandlers();
 
 	/**
-	 * Registers the portlet display template handler.
+	 * Registers the template handler.
 	 *
-	 * @param templateHandler the portlet display template handler
-	 *        to register
+	 * @param templateHandler the template handler to register
 	 */
 	public void register(TemplateHandler templateHandler);
 
 	/**
-	 * Unregisters the portlet display template handler.
+	 * Unregisters the template handler.
 	 *
-	 * @param templateHandler the portlet display template handler
-	 *        to unregister
+	 * @param templateHandler the template handler to unregister
 	 */
 	public void unregister(TemplateHandler templateHandler);
 

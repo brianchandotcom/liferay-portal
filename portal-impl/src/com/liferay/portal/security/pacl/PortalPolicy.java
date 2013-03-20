@@ -282,7 +282,9 @@ public class PortalPolicy extends Policy {
 		if (permissionCollection == null) {
 			permissionCollection = _rootPermissionCollections.get(key);
 
-			_permissionCollections.put(key, permissionCollection);
+			if (permissionCollection != null) {
+				_permissionCollections.putIfAbsent(key, permissionCollection);
+			}
 		}
 
 		return permissionCollection;

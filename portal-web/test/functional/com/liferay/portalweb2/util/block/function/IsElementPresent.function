@@ -5,4 +5,9 @@
 	<command name="isVisible">
 		<execute selenium="isVisible" />
 	</command>
+	<command name="waitForVisible">
+		<execute selenium="waitForVisible" />
+
+		<execute function="IsElementPresent#isVisible" />
+	</command>
 </definition>

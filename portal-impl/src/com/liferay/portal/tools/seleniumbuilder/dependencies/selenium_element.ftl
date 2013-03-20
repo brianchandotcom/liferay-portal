@@ -1,5 +1,9 @@
 <#assign selenium = seleniumElement.attributeValue("selenium")>
 
+<#if seleniumElement.getName() == "execute" && selenium?starts_with("is")>
+	return
+</#if>
+
 liferaySelenium.${selenium}(
 
 <#if seleniumBuilderContext.getSeleniumParameterCount(selenium) gte 1>
@@ -41,3 +45,7 @@ liferaySelenium.${selenium}(
 </#if>
 
 )
+
+<#if seleniumElement.getName() == "execute">
+;
+</#if>

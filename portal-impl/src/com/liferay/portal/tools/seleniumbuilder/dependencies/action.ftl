@@ -99,8 +99,6 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 							<#assign functionName = commandName>
 
 							<#include "function_element.ftl">
-
-							;
 						}
 
 						<#if caseElement_has_next>
@@ -117,8 +115,6 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 							<#assign functionName = commandName>
 
 							<#include "function_element.ftl">
-
-							;
 						<#else>
 							super.${seleniumBuilderFileUtil.getVariableName(commandName)}(
 
@@ -141,8 +137,6 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 					<#assign functionName = commandName>
 
 					<#include "function_element.ftl">
-
-					;
 				</#if>
 			}
 		</#list>

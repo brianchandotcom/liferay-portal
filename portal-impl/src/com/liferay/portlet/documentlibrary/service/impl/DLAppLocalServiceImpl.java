@@ -393,9 +393,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		localRepository.deleteFileEntry(fileEntryId);
-
 		dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+		localRepository.deleteFileEntry(fileEntryId);
 	}
 
 	/**
@@ -447,7 +447,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
 
-		dlFileShortcutLocalService.deleteDLFileShortcut(fileShortcutId);
+		dlFileShortcutLocalService.deleteFileShortcut(fileShortcutId);
 	}
 
 	/**

@@ -97,6 +97,8 @@ public abstract class BaseSiteMembershipPolicyTestCase {
 	@Before
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
+
+		group = GroupTestUtil.addGroup();
 	}
 
 	protected long[] addForbiddenGroups() throws Exception {
@@ -114,8 +116,8 @@ public abstract class BaseSiteMembershipPolicyTestCase {
 	}
 
 	protected long[] addForbiddenRoles() throws Exception {
-		_forbiddenRoleIds[0] = RoleTestUtil.addGroupRole(_group.getGroupId());
-		_forbiddenRoleIds[1] = RoleTestUtil.addGroupRole(_group.getGroupId());
+		_forbiddenRoleIds[0] = RoleTestUtil.addGroupRole(group.getGroupId());
+		_forbiddenRoleIds[1] = RoleTestUtil.addGroupRole(group.getGroupId());
 
 		return _forbiddenRoleIds;
 	}
@@ -135,8 +137,8 @@ public abstract class BaseSiteMembershipPolicyTestCase {
 	}
 
 	protected long[] addRequiredRoles() throws Exception {
-		_requiredRoleIds[0] = RoleTestUtil.addGroupRole(_group.getGroupId());
-		_requiredRoleIds[1] = RoleTestUtil.addGroupRole(_group.getGroupId());
+		_requiredRoleIds[0] = RoleTestUtil.addGroupRole(group.getGroupId());
+		_requiredRoleIds[1] = RoleTestUtil.addGroupRole(group.getGroupId());
 
 		return _requiredRoleIds;
 	}
@@ -156,29 +158,30 @@ public abstract class BaseSiteMembershipPolicyTestCase {
 	}
 
 	protected long[] addStandardRoles() throws Exception {
-		_standardRoleIds[0] = RoleTestUtil.addGroupRole(_group.getGroupId());
-		_standardRoleIds[1] = RoleTestUtil.addGroupRole(_group.getGroupId());
+		_standardRoleIds[0] = RoleTestUtil.addGroupRole(group.getGroupId());
+		_standardRoleIds[1] = RoleTestUtil.addGroupRole(group.getGroupId());
 
 		return _standardRoleIds;
 	}
 
 	protected long[] addUsers() throws Exception {
 		User user1= UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), _group.getGroupId());
+			ServiceTestUtil.randomString(), group.getGroupId());
 
 		_userIds[0] = user1.getUserId();
 
 		User user2 = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), _group.getGroupId());
+			ServiceTestUtil.randomString(), group.getGroupId());
 
 		_userIds[1] = user2.getUserId();
 
 		return _userIds;
 	}
 
+	protected static Group group;
+
 	private static long[] _forbiddenGroupIds = new long[2];
 	private static long[] _forbiddenRoleIds = new long[2];
-	private static Group _group;
 	private static boolean _propagateMembership;
 	private static boolean _propagateRoles;
 	private static long[] _requiredGroupIds = new long[2];

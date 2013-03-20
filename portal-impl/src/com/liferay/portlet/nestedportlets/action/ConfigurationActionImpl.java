@@ -28,6 +28,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -92,7 +93,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		for (String columnId : columnIds) {
 			if (!columnId.contains(portletId)) {
-				columnNames.add(portletId + StringPool.UNDERLINE + columnId);
+				columnNames.add(PortalUtil.getPortletNamespace(portletId) + StringPool.UNDERLINE + columnId);
 			}
 		}
 

@@ -76,7 +76,9 @@ public interface AssetCategoryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteCategories(long[] categoryIds)
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> deleteCategories(
+		long[] categoryIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

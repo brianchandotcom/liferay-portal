@@ -17,10 +17,25 @@ import com.liferay.portalweb2.util.block.macro.BaseMacro;
 	import ${seleniumBuilderContext.getMacroClassName(childElementAttributeValue)};
 </#list>
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extends BaseMacro {
 
 	public ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);
+
+		<#if rootElement.element("var")??>
+			<#assign varElements = rootElement.elements("var")>
+
+			<#list varElements as varElement>
+				<#assign varName = varElement.attributeValue("name")>
+
+				<#assign varValue = varElement.attributeValue("value")>
+
+				globalVariables.put("${varName}", "${varValue}");
+			</#list>
+		</#if>
 	}
 
 	<#assign commandElements = rootElement.elements("command")>
@@ -28,7 +43,13 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 	<#list commandElements as commandElement>
 		<#assign commandName = commandElement.attributeValue("name")>
 
-		public void ${commandName}() throws Exception {
+		public void ${commandName}(Map<String, String> environment) throws Exception {
+			localVariables = new HashMap<String, String>();
+
+			localVariables.putAll(globalVariables);
+
+			localVariables.putAll(environment);
+
 			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>

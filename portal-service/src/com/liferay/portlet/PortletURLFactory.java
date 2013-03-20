@@ -33,4 +33,12 @@ public interface PortletURLFactory {
 		PortletRequest portletRequest, String portletName, long plid,
 		String lifecycle);
 
+	public LiferayPortletURL createControlPanel(
+		HttpServletRequest request, String portletId, long referrerPlid,
+		String lifecycle);
+
+	public LiferayPortletURL createControlPanel(
+		PortletRequest portletRequest, String portletId, long referrerPlid,
+		String lifecycle);
+
 }

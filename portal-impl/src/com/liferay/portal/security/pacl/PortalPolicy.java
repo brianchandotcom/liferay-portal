@@ -174,7 +174,7 @@ public class PortalPolicy extends Policy {
 			if (permissionCollection.implies(permission)) {
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
-			else if (_checkWithJavaSecurityPolicy(
+			else if (_checkWithPACLPolicyPolicy(
 						protectionDomain, permission, permissionCollection)) {
 
 				return _checkWithParentPolicy(protectionDomain, permission);
@@ -190,7 +190,7 @@ public class PortalPolicy extends Policy {
 		if (permissionCollection.implies(permission)) {
 			return _checkWithParentPolicy(protectionDomain, permission);
 		}
-		else if (_checkWithJavaSecurityPolicy(
+		else if (_checkWithPACLPolicyPolicy(
 					protectionDomain, permission, permissionCollection)) {
 
 			return _checkWithParentPolicy(protectionDomain, permission);
@@ -230,7 +230,7 @@ public class PortalPolicy extends Policy {
 		}
 	}
 
-	private boolean _checkWithJavaSecurityPolicy(
+	private boolean _checkWithPACLPolicyPolicy(
 		ProtectionDomain protectionDomain, Permission permission,
 		PermissionCollection permissionCollection) {
 
@@ -241,11 +241,14 @@ public class PortalPolicy extends Policy {
 		PortalPermissionCollection portalPermissionCollection =
 			(PortalPermissionCollection)permissionCollection;
 
-		Policy javaSecurityPolicy =
-			portalPermissionCollection.getJavaSecurityPolicy();
+		Policy policy = portalPermissionCollection.getPolicy();
 
-		if (javaSecurityPolicy != null) {
-			return javaSecurityPolicy.implies(protectionDomain, permission);
+		ClassLoader classLoader = portalPermissionCollection.getClassLoader();
+
+		if ((policy != null) &&
+			(classLoader == protectionDomain.getClassLoader())) {
+
+			return policy.implies(protectionDomain, permission);
 		}
 
 		return false;
@@ -279,7 +282,9 @@ public class PortalPolicy extends Policy {
 		if (permissionCollection == null) {
 			permissionCollection = _rootPermissionCollections.get(key);
 
-			_permissionCollections.put(key, permissionCollection);
+			if (permissionCollection != null) {
+				_permissionCollections.putIfAbsent(key, permissionCollection);
+			}
 		}
 
 		return permissionCollection;

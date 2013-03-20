@@ -86,8 +86,8 @@ public class DDMWebDavUtil {
 		}
 		else if (type.equals(TYPE_TEMPLATES)) {
 
-			// DDM templates can not be added via WebDAV because there is no
-			// way to know the associated class name or class PK
+			// DDM templates can not be added via WebDAV because there is no way
+			// to know the associated class name or class PK
 
 			return HttpServletResponse.SC_FORBIDDEN;
 		}

@@ -613,9 +613,8 @@ public class RuntimePageImpl implements RuntimePage {
 				}
 				catch (InterruptedException ie) {
 
-					// On interruption, stop waiting, force all pending
-					// portlets to fall back to ajax loading or an error
-					// message.
+					// On interruption, stop waiting, force all pending portlets
+					// to fall back to ajax loading or an error message.
 
 					waitTime = -1;
 				}

@@ -141,8 +141,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		Class<?> stack[] = getClassContext();
 
 		// Stack depth of 4 should be the caller of one of the methods in
-		// java.lang.Class that invoked the checkMember access. The stack
-		// should look like:
+		// java.lang.Class that invoked the checkMember access. The stack should
+		// look like:
 
 		// [3] someCaller
 		// [2] java.lang.Class.someReflectionAPI
@@ -188,8 +188,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				// Call getDeclared* and immediately change the accessibility of
 				// it. The getDeclared* results in a call to
 				// SecurityManager#checkMemberAccess(Class, int). In the case
-				// where the target class and the caller class are from the
-				// same class loader, the checking is short circuited with a
+				// where the target class and the caller class are from the same
+				// class loader, the checking is short circuited with a
 				// successful result. If this short circuit happens in our
 				// implementation, we will store the class loader of the target
 				// class, and on the very next permission check, if the check is

@@ -775,8 +775,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
-				// Do not allow WebDAV to check in a file entry if it requires
-				// a manual check in
+				// Do not allow WebDAV to check in a file entry if it requires a
+				// manual check in
 
 				if (fileEntry.isManualCheckInRequired()) {
 					return false;

@@ -439,8 +439,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			(filteredEntryQuery.getAnyTagIds().length == 0)) {
 
 			// No results will be available if the original entry query
-			// specified at least one tag id, but the filtered entry query
-			// shows that the user does not have access to any tag ids
+			// specified at least one tag id, but the filtered entry query shows
+			// that the user does not have access to any tag ids
 
 			return true;
 		}

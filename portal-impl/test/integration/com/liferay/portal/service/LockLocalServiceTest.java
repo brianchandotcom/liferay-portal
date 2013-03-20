@@ -138,8 +138,8 @@ public class LockLocalServiceTest {
 
 					if (lock.isNew()) {
 
-						// The lock creator is responsible for unlocking. Try
-						// to unlock many times because some databases like SQL
+						// The lock creator is responsible for unlocking. Try to
+						// unlock many times because some databases like SQL
 						// Server may randomly choke and rollback an unlock.
 
 						while (true) {

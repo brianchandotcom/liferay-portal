@@ -2285,8 +2285,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		if (userId != CompanyConstants.SYSTEM) {
 
-			// Add back any mandatory roles or roles that the administrator
-			// does not have the rights to remove and check that he has the
+			// Add back any mandatory roles or roles that the administrator does
+			// not have the rights to remove and check that he has the
 			// permission to add a new role
 
 			List<Role> oldRoles = roleLocalService.getUserRoles(userId);
@@ -2310,8 +2310,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		// Check that the administrator has the permission to add a new role
-		// and that the role membership is allowed
+		// Check that the administrator has the permission to add a new role and
+		// that the role membership is allowed
 
 		for (long roleId : roleIds) {
 			if ((oldRoleIds != null) &&

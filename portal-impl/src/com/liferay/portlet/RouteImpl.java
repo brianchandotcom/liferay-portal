@@ -112,8 +112,8 @@ public class RouteImpl implements Route {
 
 		for (String name : _generatedParameters.keySet()) {
 
-			// Virtual parameters will never be placed in the query string,
-			// so parameters is modified directly instead of allParameters
+			// Virtual parameters will never be placed in the query string, so
+			// parameters is modified directly instead of allParameters
 
 			parameters.remove(name);
 		}

@@ -3255,10 +3255,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				new HashSet<String>(), null, null, null);
 
 			// For now, we are going to throw an exception if one portlet data
-			// handler has an exception to ensure that the transaction is
-			// rolled back for data integrity. We may decide that this is not
-			// the best behavior in the future because a bad plugin could
-			// disallow deletion of groups.
+			// handler has an exception to ensure that the transaction is rolled
+			// back for data integrity. We may decide that this is not the best
+			// behavior in the future because a bad plugin could disallow
+			// deletion of groups.
 
 			//try {
 				portletDataHandler.deleteData(

@@ -482,8 +482,8 @@ public class BundleServletContext extends LiferayServletContext {
 			filterServiceRanking.setServiceRanking(serviceRanking);
 			filterServiceRanking.setUrlPattterns(urlPatterns);
 
-			// Filters are sorted based on their service ranking value where
-			// the default service ranking is 10 for those filters that do not
+			// Filters are sorted based on their service ranking value where the
+			// default service ranking is 10 for those filters that do not
 			// specify a specific service ranking.
 
 			// Filters are first sorted based on the service ranking where

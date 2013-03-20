@@ -4355,9 +4355,9 @@ public class PortalImpl implements Portal {
 		if (userId <= 0) {
 
 			// Portlet WARs may have the correct remote user and not have the
-			// correct user id because the user id is saved in the session
-			// and may not be accessible by the portlet WAR's session. This
-			// behavior is inconsistent across different application servers.
+			// correct user id because the user id is saved in the session and
+			// may not be accessible by the portlet WAR's session. This behavior
+			// is inconsistent across different application servers.
 
 			String remoteUser = request.getRemoteUser();
 

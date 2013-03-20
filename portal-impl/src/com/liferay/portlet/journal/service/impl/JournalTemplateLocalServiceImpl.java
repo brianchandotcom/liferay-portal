@@ -575,9 +575,9 @@ public class JournalTemplateLocalServiceImpl
 		if (Validator.isNull(template.getStructureId()) &&
 			Validator.isNotNull(structureId)) {
 
-			// Allow users to set the structure if and only if it currently
-			// does not have one. Otherwise, you can have bad data because there
-			// may be an existing article that has chosen to use a structure and
+			// Allow users to set the structure if and only if it currently does
+			// not have one. Otherwise, you can have bad data because there may
+			// be an existing article that has chosen to use a structure and
 			// template combination that no longer exists.
 
 			template.setStructureId(structureId);

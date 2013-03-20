@@ -167,8 +167,8 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	protected Calendar getInsideDSTCalendar(int month, int date) {
 
 		// Returns a candidate calendar for an event that has a start date
-		// inside DST. Set the hour to 4 because it will be midnight in New
-		// York (EST) but 4 am at Greenwich (UTC).
+		// inside DST. Set the hour to 4 because it will be midnight in New York
+		// (EST) but 4 am at Greenwich (UTC).
 
 		return getCalendar(2011, month, date, 4, 0);
 	}

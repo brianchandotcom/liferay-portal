@@ -710,10 +710,10 @@ public class LayoutImporter {
 
 			portletElement = portletDocument.getRootElement();
 
-			// The order of the import is important. You must always import
-			// the portlet preferences first, then the portlet data, then
-			// the portlet permissions. The import of the portlet data
-			// assumes that portlet preferences already exist.
+			// The order of the import is important. You must always import the
+			// portlet preferences first, then the portlet data, then the
+			// portlet permissions. The import of the portlet data assumes that
+			// portlet preferences already exist.
 
 			_portletImporter.setPortletScope(
 				portletDataContext, portletElement);

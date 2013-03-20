@@ -553,9 +553,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 			if ((includes.size() != 0) && (excludes.size() != 0)) {
 
-				// Since includes and excludes are specified, check to
-				// make sure the current company id is included and also
-				// not excluded
+				// Since includes and excludes are specified, check to make sure
+				// the current company id is included and also not excluded
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Check includes and excludes");
@@ -569,8 +568,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			}
 			else if ((includes.size() == 0) && (excludes.size() != 0)) {
 
-				// Since no includes are specified, check to make sure
-				// the current company id is not excluded
+				// Since no includes are specified, check to make sure the
+				// current company id is not excluded
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Check excludes");
@@ -580,8 +579,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			}
 			else if ((includes.size() != 0) && (excludes.size() == 0)) {
 
-				// Since no excludes are specified, check to make sure
-				// the current company id is included
+				// Since no excludes are specified, check to make sure the
+				// current company id is included
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Check includes");
@@ -591,8 +590,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			}
 			else {
 
-				// Since no includes or excludes are specified, this
-				// theme is available for every company
+				// Since no includes or excludes are specified, this theme is
+				// available for every company
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("No includes or excludes set");

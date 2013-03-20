@@ -180,9 +180,8 @@ public class InstrumentationAgent {
 			"cobertura.parent.dynamically.instrumented");
 		boolean junitCodeCoverage = Boolean.getBoolean("junit.code.coverage");
 
-		// A subprocess is only considered as statically instrumented
-		// when it is configured as such and its parent is not dynamically
-		// instrumented
+		// A subprocess is only considered as statically instrumented when it is
+		// configured as such and its parent is not dynamically instrumented
 
 		_staticallyInstrumented =
 			!coberturaParentDynamicallyInstrumented && junitCodeCoverage;

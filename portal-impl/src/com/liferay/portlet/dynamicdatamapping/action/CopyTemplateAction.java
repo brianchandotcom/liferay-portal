@@ -110,8 +110,8 @@ public class CopyTemplateAction extends PortletAction {
 		}
 		catch (NoSuchTemplateException nste) {
 
-			// Let this slide because the user can manually input a template
-			// key for a new template that does not yet exist
+			// Let this slide because the user can manually input a template key
+			// for a new template that does not yet exist
 
 		}
 		catch (Exception e) {

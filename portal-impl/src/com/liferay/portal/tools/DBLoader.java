@@ -236,8 +236,7 @@ public class DBLoader {
 			}
 		}
 
-		// Hypersonic will encode unicode characters twice, this will undo
-		// it
+		// Hypersonic will encode unicode characters twice, this will undo it
 
 		String content = _fileUtil.read(
 			_sqlDir + "/" + _databaseName + ".script");

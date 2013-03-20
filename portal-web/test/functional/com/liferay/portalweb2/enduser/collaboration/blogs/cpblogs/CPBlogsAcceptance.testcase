@@ -1,14 +1,24 @@
-<definition name="CPBlogsAcceptance">
+<definition>
 	<set-up>
-		<execute macro="CPBlogs#advancedSearch" />
+		<execute macro="User#pgLogin" />
 	</set-up>
 	<command name="AddBlogsEntry">
-		<execute macro="BlogsEntry#cpAdd" />
+		<execute macro="BlogsEntry#cpAdd">
+			<var name="title" value="Blogs Entry Title" />
+			<var name="content" value="Blogs Entry Content" />
+		</execute>
 	</command>
 	<command name="DeleteBlogsEntry">
+		<var name="title" value="Blogs Entry Title" />
+		<var name="content" value="Blogs Entry Content" />
+
 		<execute macro="BlogsEntry#cpAdd" />
+
+		<execute macro="BlogsEntry#cpDelete" />
 	</command>
 	<tear-down>
 		<execute macro="BlogsEntry#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

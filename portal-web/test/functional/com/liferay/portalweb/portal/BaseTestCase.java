@@ -19,6 +19,9 @@ import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -101,5 +104,10 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		}
 
 	}
+
+	protected Map<String, String> commandScopeVariables;
+	protected Map<String, String> definitionScopeVariables =
+		new HashMap<String, String>();
+	protected Map<String, String> executeScopeVariables;
 
 }

@@ -1819,7 +1819,7 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_lists/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
-		<css-class-wrapper>dynamic_data_list_display</css-class-wrapper>
+		<css-class-wrapper>portlet-dynamic-data-list-display</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>170</portlet-name>

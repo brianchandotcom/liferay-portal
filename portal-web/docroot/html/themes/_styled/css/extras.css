@@ -29,8 +29,8 @@
 }
 
 .portlet-document-library, .portlet-dynamic-data-mapping {
-    .lfr-ddm-small-image-preview {
-        @include box-shadow(0 1px 3px #ccc);
+	.lfr-ddm-small-image-preview {
+		@include box-shadow(0 1px 3px #ccc);
     }
 }
 
@@ -191,15 +191,15 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 }
 
 body:first-of-type {
-	.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+	%portlet-action-bar-fx {
 		@include single-transition(opacity, 0.5s, ease, 0.15s);
 	}
 
-	.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content:hover .icon-actions {
+	%portlet-action-bar-fx-hover {
 		@include single-transition(opacity, 0.5s, ease, 0s);
 	}
 
-	.portlet-borderless-bar .portlet-actions, .portlet-journal-content .icon-actions .taglib-text {
+	%portlet-action-bar-fx-text {
 		display: inline-block;
 		max-width: 0;
 		overflow: hidden;
@@ -210,16 +210,50 @@ body:first-of-type {
 		white-space: nowrap;
 	}
 
-	.portlet-borderless-bar .portlet-actions, .portlet-journal-content:hover .icon-actions .taglib-text {
+	%portlet-action-bar-fx-hover-text {
 		@include single-transition(max-width, 0.3s, ease, 0s);
 	}
 
-	.portlet-journal-content:hover .icon-actions .taglib-text {
-		max-width: 200px;
+	.portlet-borderless-bar {
+		@extend %portlet-action-bar-fx;
+
+		.portlet-actions {
+			@extend %portlet-action-bar-fx-text;
+
+			@extend %portlet-action-bar-fx-hover-text;
+		}
 	}
 
-	.portlet-borderless-container:hover .portlet-borderless-bar .portlet-actions {
-		max-width: 500px;
+	.portlet-borderless-container:hover {
+		.portlet-borderless-bar {
+			@extend %portlet-action-bar-fx-hover;
+		}
+
+		.portlet-borderless-bar .portlet-actions {
+			max-width: 500px;
+		}
+	}
+
+	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+		&:hover {
+			.icon-actions {
+				@extend %portlet-action-bar-fx-hover;
+
+				.taglib-text {
+					@extend %portlet-action-bar-fx-hover-text;
+
+					max-width: 200px;
+				}
+			}
+		}
+
+		.icon-actions {
+			@extend %portlet-action-bar-fx;
+
+			.taglib-text {
+				@extend %portlet-action-bar-fx-text;
+			}
+		}
 	}
 }
 

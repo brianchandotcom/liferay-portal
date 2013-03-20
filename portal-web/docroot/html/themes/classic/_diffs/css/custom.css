@@ -425,9 +425,19 @@ hr, .separator {
 	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8), 1px 1px 1px #FFF);
 }
 
-.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+%portlet-action-bar-custom {
 	@include border-radius(20px);
 	@include box-shadow(inset 0 1px 3px #000);
+}
+
+.portlet-borderless-bar {
+	@extend %portlet-action-bar-custom;
+}
+
+.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.icon-actions {
+		@extend %portlet-action-bar-custom;
+	}
 }
 
 .portlet-topper {

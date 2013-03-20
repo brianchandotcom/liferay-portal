@@ -251,6 +251,14 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
+	public static boolean isConfirmation(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		String confirmation = liferaySelenium.getConfirmation();
+
+		return pattern.equals(confirmation);
+	}
+
 	public static boolean isElementNotPresent(
 		LiferaySelenium liferaySelenium, String locator) {
 

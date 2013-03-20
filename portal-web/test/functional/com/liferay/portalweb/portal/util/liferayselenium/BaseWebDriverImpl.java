@@ -219,6 +219,10 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	public boolean isConfirmation(String pattern) {
+		return LiferaySeleniumHelper.isConfirmation(this, pattern);
+	}
+
 	public boolean isElementNotPresent(String locator) {
 		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
 	}
@@ -350,11 +354,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= timeout) {
-				BaseTestCase.fail("Timeout");
+				assertConfirmation(pattern);
 			}
 
 			try {
-				if (pattern.equals(getConfirmation())) {
+				if (isConfirmation(pattern)) {
 					break;
 				}
 			}

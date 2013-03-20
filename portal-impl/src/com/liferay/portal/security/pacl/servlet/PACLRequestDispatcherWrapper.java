@@ -14,7 +14,13 @@
 
 package com.liferay.portal.security.pacl.servlet;
 
+import com.liferay.portal.kernel.servlet.PluginContextListener;
+
 import java.io.IOException;
+
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -30,6 +36,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 	public PACLRequestDispatcherWrapper(
 		ServletContext servletContext, RequestDispatcher requestDispatcher) {
 
+		_servletContext = servletContext;
 		_requestDispatcher = requestDispatcher;
 	}
 
@@ -52,16 +59,66 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			boolean include)
 		throws IOException, ServletException {
 
-		// Temporarily do default logic
+		ClassLoader pluginClassLoader =
+			(ClassLoader)_servletContext.getAttribute(
+				PluginContextListener.PLUGIN_CLASS_LOADER);
 
-		if (include) {
-			_requestDispatcher.include(servletRequest, servletResponse);
+		DispatchPrivilegedExceptionAction dispatchPrivilegedExceptionAction =
+			new DispatchPrivilegedExceptionAction(
+				_requestDispatcher, servletRequest, servletResponse, include);
+
+		try {
+			if (pluginClassLoader == null) {
+				AccessController.doPrivileged(
+					dispatchPrivilegedExceptionAction);
+			}
+			else {
+				dispatchPrivilegedExceptionAction.run();
+			}
 		}
-		else {
-			_requestDispatcher.forward(servletRequest, servletResponse);
+		catch (PrivilegedActionException pae) {
+			Exception e = pae.getException();
+
+			if (e instanceof IOException) {
+				throw (IOException)e;
+			}
+
+			throw (ServletException)pae.getException();
 		}
 	}
 
 	private RequestDispatcher _requestDispatcher;
+	private ServletContext _servletContext;
+
+	private class DispatchPrivilegedExceptionAction
+		implements PrivilegedExceptionAction<Void> {
+
+		public DispatchPrivilegedExceptionAction(
+			RequestDispatcher requestDispatcher, ServletRequest servletRequest,
+			ServletResponse servletResponse, boolean include) {
+
+			_requestDispatcher = requestDispatcher;
+			_servletRequest = servletRequest;
+			_servletResponse = servletResponse;
+			_include = include;
+		}
+
+		public Void run() throws IOException, ServletException {
+			if (_include) {
+				_requestDispatcher.include(_servletRequest, _servletResponse);
+			}
+			else {
+				_requestDispatcher.forward(_servletRequest, _servletResponse);
+			}
+
+			return null;
+		}
+
+		private RequestDispatcher _requestDispatcher;
+		private ServletRequest _servletRequest;
+		private ServletResponse _servletResponse;
+		private boolean _include;
+
+	}
 
 }

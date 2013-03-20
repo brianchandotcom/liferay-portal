@@ -15,11 +15,15 @@
 package com.liferay.portal.security.pacl.dao.jdbc;
 
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -75,10 +79,10 @@ public class PACLConnectionHandler implements InvocationHandler {
 
 				Statement statement = (Statement)returnValue;
 
-				return ProxyUtil.newProxyInstance(
-					_paclPolicy.getClassLoader(),
-					getInterfaces(returnValue.getClass()),
-					new PACLStatementHandler(statement, _paclPolicy));
+				statement = DoPrivilegedFactory.wrap(statement);
+
+				return AccessController.doPrivileged(
+					new StatementPrivilegedAction(statement, returnValue));
 			}
 
 			return returnValue;
@@ -105,5 +109,27 @@ public class PACLConnectionHandler implements InvocationHandler {
 
 	private Connection _connection;
 	private PACLPolicy _paclPolicy;
+
+	private class StatementPrivilegedAction
+		implements PrivilegedAction<Statement> {
+
+		public StatementPrivilegedAction(
+			Statement statement, Object returnValue) {
+
+			_statement = statement;
+			_returnValue = returnValue;
+		}
+
+		public Statement run() {
+			return (Statement)ProxyUtil.newProxyInstance(
+				_paclPolicy.getClassLoader(),
+				getInterfaces(_returnValue.getClass()),
+				new PACLStatementHandler(_statement, _paclPolicy));
+		}
+
+		private Object _returnValue;
+		private Statement _statement;
+
+	}
 
 }

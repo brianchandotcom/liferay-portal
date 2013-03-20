@@ -55,7 +55,7 @@ public class ViewUnblockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Block"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),
@@ -84,7 +84,7 @@ public class ViewUnblockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Block"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),
@@ -114,7 +114,7 @@ public class ViewUnblockCCUserMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Block"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_blockButton']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),

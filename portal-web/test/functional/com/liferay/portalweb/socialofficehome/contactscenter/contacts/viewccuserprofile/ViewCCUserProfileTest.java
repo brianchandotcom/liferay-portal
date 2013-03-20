@@ -54,7 +54,7 @@ public class ViewCCUserProfileTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		selenium.waitForVisible(
 			"//button[@id='_1_WAR_contactsportlet_addConnectionButton']");
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),

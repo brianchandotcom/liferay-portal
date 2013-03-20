@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.bean.BeanLocatorImpl;
+import com.liferay.portal.bean.VelocityBeanHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -27,6 +29,7 @@ import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
 import java.lang.reflect.ReflectPermission;
 
@@ -298,7 +301,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		}
 	}
 
-	protected void initPACLImpl(Class<?> clazz, DoPrivilegedUtil.PACL pacl)
+	protected void initPACLImpl(Class<?> clazz, Object pacl)
 		throws Exception {
 
 		Field field = clazz.getDeclaredField("_pacl");
@@ -311,6 +314,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initPACLImpls() throws Exception {
+		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
 	}
 
@@ -323,6 +327,18 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				"._checkMembersAccessClassLoader");
 
 	private Policy _policy;
+
+	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
+
+		public InvocationHandler getInvocationHandler(
+			Object bean, ClassLoader classLoader) {
+
+			InvocationHandler invocationHandler = new VelocityBeanHandler(
+				bean, classLoader);
+
+			return new PACLInvocationHandler(invocationHandler);
+		}
+	}
 
 	private static class DoDoPrivilegedPACL implements DoPrivilegedUtil.PACL {
 

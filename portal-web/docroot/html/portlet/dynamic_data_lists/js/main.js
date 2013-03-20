@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var DateMath = A.DataType.DateMath;
+
 		var Lang = A.Lang;
 
 		var JSON = A.JSON;
@@ -464,9 +466,11 @@ AUI.add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										value = parseInt(value, 10);
+										var date = new Date(parseInt(value, 10));
 
-										value = A.DataType.Date.format(new Date(value));
+										date = DateMath.add(value, DateMath.MINUTES, value.getTimezoneOffset());
+
+										value = A.DataType.Date.format(date);
 									}
 
 									return value;

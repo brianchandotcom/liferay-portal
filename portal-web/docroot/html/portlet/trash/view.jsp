@@ -39,6 +39,38 @@ portletURL.setParameter("tabs1", tabs1);
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
 
+<liferay-ui:error exception="<%= TrashPermissionException.class %>">
+
+	<%
+	TrashPermissionException tpe = (TrashPermissionException)errorException;
+	%>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_DELETE %>">
+		<liferay-ui:message key="you-do-not-have-permission-to-delete-this-item" />
+	</c:if>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_EMPTY_TRASH %>">
+		<liferay-ui:message key="unable-to-completely-empty-trash-you-do-not-have-permission-to-delete-one-or-more-items" />
+	</c:if>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_MOVE %>">
+		<liferay-ui:message key="you-do-not-have-permission-to-move-this-item-to-the-selected-destination" />
+	</c:if>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_RESTORE %>">
+		<liferay-ui:message key="you-do-not-have-permission-to-restore-this-item" />
+	</c:if>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_RESTORE_OVERWRITE %>">
+		<liferay-ui:message key="you-do-not-have-permission-to-replace-an-existing-item-with-the-selected-one" />
+	</c:if>
+
+	<c:if test="<%= tpe.getType() == TrashPermissionException.ERROR_RESTORE_RENAME %>">
+		<liferay-ui:message key="you-do-not-have-permission-to-rename-this-item" />
+	</c:if>
+
+</liferay-ui:error>
+
 <c:if test="<%= group.isStagingGroup() %>">
 	<liferay-ui:tabs
 		names="staging,live"

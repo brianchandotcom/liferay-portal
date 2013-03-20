@@ -14,11 +14,13 @@
 
 package com.liferay.portlet.trash.service.impl;
 
+import com.liferay.portal.TrashPermissionException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -56,26 +58,63 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @throws PrincipalException if a principal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Transactional(noRollbackFor={TrashPermissionException.class})
 	public void deleteEntries(long groupId)
-		throws PrincipalException, SystemException {
+		throws PortalException, SystemException {
+
+		boolean error = false;
 
 		List<TrashEntry> entries = trashEntryPersistence.findByGroupId(groupId);
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		for (TrashEntry entry : entries) {
 			try {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						entry.getClassName());
+
+				if (!trashHandler.hasTrashPermission(
+						permissionChecker, 0, entry.getClassPK(),
+						ActionKeys.VIEW)) {
+
+					continue;
+				}
+
 				deleteEntry(entry);
+			}
+			catch (TrashPermissionException tpe) {
+				error = true;
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
 		}
+
+		if (error) {
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_EMPTY_TRASH);
+		}
 	}
 
+	@Transactional(noRollbackFor={TrashPermissionException.class})
 	public void deleteEntries(long[] entryIds)
 		throws PortalException, SystemException {
 
+		boolean error = false;
+
 		for (long entryId : entryIds) {
-			deleteEntry(entryId);
+			try {
+				deleteEntry(entryId);
+			}
+			catch (TrashPermissionException tpe) {
+				error = true;
+			}
+		}
+
+		if (error) {
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_EMPTY_TRASH);
 		}
 	}
 
@@ -197,14 +236,16 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				permissionChecker, entry.getGroupId(),
 				destinationContainerModelId, TrashActionKeys.MOVE)) {
 
-			throw new PrincipalException();
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_MOVE);
 		}
 
 		if (trashHandler.isInTrash(classPK) &&
 			!trashHandler.hasTrashPermission(
 				permissionChecker, 0, classPK, TrashActionKeys.RESTORE)) {
 
-			throw new PrincipalException();
+			throw new TrashPermissionException(
+					TrashPermissionException.ERROR_RESTORE);
 		}
 
 		trashHandler.checkDuplicateTrashEntry(
@@ -243,7 +284,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				permissionChecker, 0, entry.getClassPK(),
 				TrashActionKeys.RESTORE)) {
 
-			throw new PrincipalException();
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_RESTORE);
 		}
 
 		if (overrideClassPK > 0) {
@@ -251,7 +293,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 					permissionChecker, 0, overrideClassPK,
 					TrashActionKeys.OVERWRITE)) {
 
-				throw new PrincipalException();
+				throw new TrashPermissionException(
+					TrashPermissionException.ERROR_RESTORE_OVERWRITE);
 			}
 
 			trashHandler.deleteTrashEntry(overrideClassPK);
@@ -261,7 +304,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 					permissionChecker, 0, entry.getClassPK(),
 					TrashActionKeys.RENAME)) {
 
-				throw new PrincipalException();
+				throw new TrashPermissionException(
+					TrashPermissionException.ERROR_RESTORE_RENAME);
 			}
 
 			trashHandler.updateTitle(entry.getClassPK(), name);
@@ -286,7 +330,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		if (!trashHandler.hasTrashPermission(
 				permissionChecker, 0, entry.getClassPK(), ActionKeys.DELETE)) {
 
-			throw new PrincipalException();
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_DELETE);
 		}
 
 		trashHandler.deleteTrashEntry(entry.getClassPK());

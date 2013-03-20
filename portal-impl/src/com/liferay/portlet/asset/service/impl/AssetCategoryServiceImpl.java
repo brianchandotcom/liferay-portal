@@ -80,6 +80,16 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getUserId(), title, vocabularyId, serviceContext);
 	}
 
+	/**
+	 * Deletes the categories identified by categoryIds. If the
+	 * serviceContext is not isFailOnPortalException, then the method will
+	 * return a list with the categories that could not be deleted.
+	 *
+	 * @param  categoryIds the primary key of the categories to be deleted
+	 * @param  serviceContext the service context to be applied.
+	 * @return the list of categories that could not be deleted when
+	 *         serviceContext.isFailOnPortalException is false
+	 */
 	public List<AssetCategory> deleteCategories(
 			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {

@@ -112,8 +112,6 @@ public class AssetTagPersistenceTest {
 
 		AssetTag newAssetTag = _persistence.create(pk);
 
-		newAssetTag.setUuid(ServiceTestUtil.randomString());
-
 		newAssetTag.setGroupId(ServiceTestUtil.nextLong());
 
 		newAssetTag.setCompanyId(ServiceTestUtil.nextLong());
@@ -134,7 +132,6 @@ public class AssetTagPersistenceTest {
 
 		AssetTag existingAssetTag = _persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetTag.getUuid(), newAssetTag.getUuid());
 		Assert.assertEquals(existingAssetTag.getTagId(), newAssetTag.getTagId());
 		Assert.assertEquals(existingAssetTag.getGroupId(),
 			newAssetTag.getGroupId());
@@ -299,12 +296,6 @@ public class AssetTagPersistenceTest {
 
 		AssetTagModelImpl existingAssetTagModelImpl = (AssetTagModelImpl)_persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingAssetTagModelImpl.getUuid(),
-				existingAssetTagModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingAssetTagModelImpl.getGroupId(),
-			existingAssetTagModelImpl.getOriginalGroupId());
-
 		Assert.assertEquals(existingAssetTagModelImpl.getGroupId(),
 			existingAssetTagModelImpl.getOriginalGroupId());
 		Assert.assertTrue(Validator.equals(
@@ -316,8 +307,6 @@ public class AssetTagPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		AssetTag assetTag = _persistence.create(pk);
-
-		assetTag.setUuid(ServiceTestUtil.randomString());
 
 		assetTag.setGroupId(ServiceTestUtil.nextLong());
 

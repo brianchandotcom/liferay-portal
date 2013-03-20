@@ -274,7 +274,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity name="AssetTag" uuid="true" local-service="true" remote-service="true">
+	<entity name="AssetTag" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

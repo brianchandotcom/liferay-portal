@@ -45,7 +45,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("tagId", getTagId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -60,12 +59,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long tagId = (Long)attributes.get("tagId");
 
 		if (tagId != null) {
@@ -137,24 +130,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_assetTag.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this asset tag.
-	*
-	* @return the uuid of this asset tag
-	*/
-	public java.lang.String getUuid() {
-		return _assetTag.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this asset tag.
-	*
-	* @param uuid the uuid of this asset tag
-	*/
-	public void setUuid(java.lang.String uuid) {
-		_assetTag.setUuid(uuid);
 	}
 
 	/**

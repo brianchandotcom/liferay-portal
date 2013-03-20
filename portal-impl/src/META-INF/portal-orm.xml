@@ -1569,9 +1569,6 @@
 	<mapped-superclass class="com.liferay.portlet.asset.model.impl.AssetTagModelImpl">
 		<attributes>
 			<id name="tagId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />

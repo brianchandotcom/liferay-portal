@@ -1,5 +1,3 @@
-alter table AssetTag add uuid_ VARCHAR(75) null;
-
 update BlogsEntry set status = 2 where status = 9;
 
 alter table BookmarksEntry add status INTEGER;

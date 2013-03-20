@@ -31,8 +31,8 @@ public class ViewMBAnonymousPostingNoTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//input[@id='_19_subject']");
-		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.waitForElementPresent(
+			"//iframe[contains(@title,'Rich Text Editor')]");
 		assertFalse(selenium.isTextPresent("Anonymous"));
 		assertFalse(selenium.isTextPresent(
 				"If this is checked, then this message will be posted anonymously."));

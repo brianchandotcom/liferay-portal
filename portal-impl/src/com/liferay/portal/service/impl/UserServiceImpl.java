@@ -525,25 +525,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		if (groupIds != null) {
-			SiteMembershipPolicyUtil.propagateMembership(
-				new long[] {user.getUserId()}, groupIds, null);
-		}
+		checkMembership(
+			new long[] {user.getUserId()}, organizationIds, roleIds, groupIds,
+			userGroupIds);
 
-		if (organizationIds != null) {
-			OrganizationMembershipPolicyUtil.propagateMembership(
-				new long[] {user.getUserId()}, organizationIds, null);
-		}
-
-		if (roleIds != null) {
-			RoleMembershipPolicyUtil.propagateRoles(
-				new long[] {user.getUserId()}, roleIds, null);
-		}
-
-		if (userGroupIds != null) {
-			UserGroupMembershipPolicyUtil.propagateMembership(
-				new long[] {user.getUserId()}, userGroupIds, null);
-		}
+		propagateMembership(
+			new long[]{user.getUserId()}, organizationIds, roleIds, groupIds,
+			userGroupIds);
 
 		return user;
 	}
@@ -2204,6 +2192,30 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return groupIds;
 	}
 
+	protected void checkMembership(
+			long[] userIds, long[] organizationIds, long[] roleIds,
+			long[] groupIds, long[] userGroupIds)
+		throws PortalException, SystemException {
+
+		if (organizationIds != null) {
+			OrganizationMembershipPolicyUtil.checkMembership(
+				userIds, organizationIds, null);
+		}
+
+		if (roleIds != null) {
+			RoleMembershipPolicyUtil.checkRoles(userIds, roleIds, null);
+		}
+
+		if (groupIds != null) {
+			SiteMembershipPolicyUtil.checkMembership(userIds, groupIds, null);
+		}
+
+		if (userGroupIds != null) {
+			UserGroupMembershipPolicyUtil.checkMembership(
+				userIds, userGroupIds, null);
+		}
+	}
+
 	protected long[] checkOrganizations(long userId, long[] organizationIds)
 		throws PortalException, SystemException {
 
@@ -2439,6 +2451,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		return userGroupRoles;
+	}
+
+	protected void propagateMembership(
+			long[] userIds, long[] organizationIds, long[] roleIds,
+			long[] groupIds, long[] userGroupIds)
+		throws PortalException, SystemException {
+
+		if (organizationIds != null) {
+			OrganizationMembershipPolicyUtil.propagateMembership(
+				userIds, organizationIds, null);
+		}
+
+		if (roleIds != null) {
+			RoleMembershipPolicyUtil.propagateRoles(userIds, roleIds, null);
+		}
+
+		if (groupIds != null) {
+			SiteMembershipPolicyUtil.propagateMembership(
+				userIds, groupIds, null);
+		}
+
+		if (userGroupIds != null) {
+
+			UserGroupMembershipPolicyUtil.propagateMembership(
+				userIds, userGroupIds, null);
+		}
 	}
 
 	protected void updateAnnouncementsDeliveries(

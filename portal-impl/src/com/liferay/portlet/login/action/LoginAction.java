@@ -185,8 +185,10 @@ public class LoginAction extends PortletAction {
 
 		String authType = preferences.getValue("authType", null);
 
-		LoginUtil.login(
-			request, response, login, password, rememberMe, authType);
+		if (!themeDisplay.isSignedIn()) {
+			LoginUtil.login(
+				request, response, login, password, rememberMe, authType);
+		}
 
 		if (PropsValues.PORTAL_JAAS_ENABLE) {
 			actionResponse.sendRedirect(

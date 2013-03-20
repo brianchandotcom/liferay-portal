@@ -937,7 +937,7 @@ public class DLImpl implements DL {
 		if (fileEntry != null) {
 			String extension = fileEntry.getExtension();
 
-			fileEntryTitle = fileEntry.getTitle();
+			fileEntryTitle = HtmlUtil.unescape(fileEntry.getTitle());
 
 			if (openDocumentUrl && isOfficeExtension(extension) &&
 				!fileEntryTitle.endsWith(StringPool.PERIOD + extension)) {
@@ -955,7 +955,10 @@ public class DLImpl implements DL {
 
 		StringBuilder sb = new StringBuilder();
 
-		if (folder != null) {
+		if ((folder != null) &&
+			(folder.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
 			Folder curFolder = folder;
 
 			while (true) {
@@ -967,10 +970,9 @@ public class DLImpl implements DL {
 
 					break;
 				}
-				else {
-					curFolder = DLAppLocalServiceUtil.getFolder(
-						curFolder.getParentFolderId());
-				}
+
+				curFolder = DLAppLocalServiceUtil.getFolder(
+					curFolder.getParentFolderId());
 			}
 		}
 

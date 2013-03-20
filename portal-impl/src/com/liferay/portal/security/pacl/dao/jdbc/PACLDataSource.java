@@ -16,8 +16,12 @@ package com.liferay.portal.security.pacl.dao.jdbc;
 
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLUtil;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,11 +49,34 @@ public class PACLDataSource extends DataSourceWrapper {
 			return connection;
 		}
 
-		return (Connection)ProxyUtil.newProxyInstance(
-			paclPolicy.getClassLoader(), new Class<?>[] {Connection.class},
-			new PACLConnectionHandler(connection, paclPolicy));
+		connection = DoPrivilegedFactory.wrap(connection);
+		paclPolicy = DoPrivilegedFactory.wrap(paclPolicy);
+
+		return AccessController.doPrivileged(
+			new ConnectionPrivilegedAction(connection, paclPolicy));
 	}
 
 	private DataSource _dataSource;
+
+	private class ConnectionPrivilegedAction
+		implements PrivilegedAction<Connection> {
+
+		public ConnectionPrivilegedAction(
+			Connection connection, PACLPolicy paclPolicy) {
+
+			_connection = connection;
+			_paclPolicy = paclPolicy;
+		}
+
+		public Connection run() {
+			return (Connection)ProxyUtil.newProxyInstance(
+				_paclPolicy.getClassLoader(), new Class<?>[] {Connection.class},
+				new PACLConnectionHandler(_connection, _paclPolicy));
+		}
+
+		private Connection _connection;
+		private PACLPolicy _paclPolicy;
+
+	}
 
 }

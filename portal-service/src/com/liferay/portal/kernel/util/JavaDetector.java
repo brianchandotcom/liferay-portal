@@ -23,14 +23,6 @@ import com.liferay.portal.kernel.log.LogUtil;
  */
 public class JavaDetector {
 
-	public static final double JAVA_CLASS_VERSION_JDK_4 = 48.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_5 = 49.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_6 = 50.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_7 = 51.0;
-
 	public static String getJavaClassPath() {
 		return _instance._javaClassPath;
 	}

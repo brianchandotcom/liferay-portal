@@ -39,6 +39,14 @@ public class NetChecker extends BaseChecker {
 				return false;
 			}
 		}
+		else if (name.equals(NET_PERMISSION_SPECIFY_STREAM_HANDLER)) {
+			if (!hasSpecifyStreamHandler(permission)) {
+				logSecurityException(
+					_log, "Attempted to specify stream handler");
+
+				return false;
+			}
+		}
 		else {
 			logSecurityException(
 				_log, "Attempted " + name + " network operation");
@@ -50,6 +58,18 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProxySelector(Permission permission) {
+		int stackIndex = getStackIndex(11, 10);
+
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasSpecifyStreamHandler(Permission permission) {
 		int stackIndex = getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);

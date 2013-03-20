@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.JarUtil;
@@ -154,7 +153,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			_log.debug("Created data source " + dataSource.getClass());
 		}
 
-		return new PACLDataSource(dataSource);
+		return _pacl.getDataSource(dataSource);
 	}
 
 	public DataSource initDataSource(
@@ -398,5 +397,21 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryImpl.class);
+
+	private static PACL _pacl = new NoPACL();
+
+	public static interface PACL {
+
+		public DataSource getDataSource(DataSource dataSource);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public DataSource getDataSource(DataSource dataSource) {
+			return dataSource;
+		}
+
+	}
 
 }

@@ -67,6 +67,8 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 					RuntimeVariables.replace("label=Any"));
 				selenium.type("//input[@id='_153_name']",
 					RuntimeVariables.replace(""));
+				assertEquals(RuntimeVariables.replace("Type"),
+					selenium.getText("//label[@for='_153_type']"));
 				selenium.select("//select[@id='_153_type']",
 					RuntimeVariables.replace("label=Web Content"));
 				selenium.clickAt("xPath=(//input[@value='Search'])[2]",
@@ -97,7 +99,7 @@ public class AdvancedSearchWebContentWorkflowTaskTypeTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"There are no pending tasks assigned to your roles with the specified search criteria."),
 					selenium.getText(
-						"xPath=(//div[@class='portlet-msg-info'])[2]"));
+						"xPath=(//div[@class='portlet-msg-info'])[3]"));
 				selenium.clickAt("//a[.='\u00ab Basic']",
 					RuntimeVariables.replace("\u00ab Basic"));
 

@@ -37,8 +37,8 @@ public class TearDownCommunityWorkflowConfigurationTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a/span",
+		Thread.sleep(1000);
+		selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
@@ -48,9 +48,10 @@ public class TearDownCommunityWorkflowConfigurationTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//strong/a/span", "Community Name");
+		selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
+			"Community Name");
 		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//strong/a/span"));
+			selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Default Configuration",

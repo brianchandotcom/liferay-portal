@@ -37,8 +37,8 @@ public class ViewWebContentScopeOrganizationCompletedTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("//strong/a/span",
+		Thread.sleep(1000);
+		selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
@@ -48,9 +48,10 @@ public class ViewWebContentScopeOrganizationCompletedTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//strong/a/span", "Organization Name");
+		selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
+			"Organization Name");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText("//strong/a/span"));
+			selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
@@ -61,7 +62,7 @@ public class ViewWebContentScopeOrganizationCompletedTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[3]"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
@@ -100,11 +101,11 @@ public class ViewWebContentScopeOrganizationCompletedTest extends BaseTestCase {
 				"//a[contains(@title,'Web Content Name')]/div/img"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[@class='entry-title']"));
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
 		assertFalse(selenium.isPartialText(
 				"//a[@class='entry-link']/span[@class='entry-title']",
 				"(Pending)"));
-		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']",
+		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']/span[1]",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Approved"),

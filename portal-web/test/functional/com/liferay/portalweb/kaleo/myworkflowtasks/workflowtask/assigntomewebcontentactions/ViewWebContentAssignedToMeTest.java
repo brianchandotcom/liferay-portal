@@ -84,12 +84,12 @@ public class ViewWebContentAssignedToMeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
 				"//a[contains(@title,'Web Content Name')]/div/img"));
-		assertTrue(selenium.isPartialText(
-				"//a[@class='entry-link']/span[@class='entry-title']",
-				"Web Content Name"));
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
 		assertEquals(RuntimeVariables.replace("(Pending)"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[@class='entry-title']/span"));
+				"//a[@class='entry-link']/span[@class='entry-title']/span[2]"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Submissions",

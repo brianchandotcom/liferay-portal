@@ -53,29 +53,11 @@ public class AddWebContentDraftTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
 		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea");
-		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Web Content Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
-		selenium.waitForVisible(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.selectFrame(
-			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.waitForText("//body", "Web Content Content");
-		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Save as Draft']",
 			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
@@ -103,11 +85,11 @@ public class AddWebContentDraftTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
 				"//a[contains(@title,'Web Content Name')]/div/img"));
-		assertTrue(selenium.isPartialText(
-				"//a[@class='entry-link']/span[@class='entry-title']",
-				"Web Content Name"));
-		assertEquals(RuntimeVariables.replace("(Draft)"),
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[@class='entry-title']/span"));
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
+		assertEquals(RuntimeVariables.replace("(Pending)"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']/span[2]"));
 	}
 }

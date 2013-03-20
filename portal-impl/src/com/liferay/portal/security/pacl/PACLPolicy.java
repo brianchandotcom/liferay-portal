@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl;
 
 import java.security.Permission;
+import java.security.Policy;
 
 import java.util.Properties;
 import java.util.Set;
@@ -25,6 +26,8 @@ import java.util.Set;
 public interface PACLPolicy {
 
 	public ClassLoader getClassLoader();
+
+	public Policy getPolicy();
 
 	public Properties getProperties();
 

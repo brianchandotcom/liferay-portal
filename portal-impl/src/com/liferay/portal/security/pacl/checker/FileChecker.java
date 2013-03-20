@@ -193,6 +193,10 @@ public class FileChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	public String getRootDir() {
+		return _rootDir;
+	}
+
 	public boolean implies(Permission permission) {
 		if (_permissions.implies(permission)) {
 			return true;

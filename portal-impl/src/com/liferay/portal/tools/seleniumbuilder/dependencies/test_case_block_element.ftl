@@ -17,5 +17,11 @@
 
 			;
 		</#if>
+	<#elseif name == "var">
+		<#assign varName = element.attributeValue("name")>
+
+		<#assign varValue = element.attributeValue("value")>
+
+		commandScopeVariables.put("${varName}", "${varValue}");
 	</#if>
 </#list>

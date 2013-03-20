@@ -1,47 +1,41 @@
 <definition>
+	<var name="emailAddress" value="test@liferay.com" />
+	<var name="password" value="test" />
+
 	<command name="pgFirstLogin">
-		<steps>
-			<execute macro="User#pgLogin">
-				<param name="emailAddress" value="test@liferay.com" />
-				<param name="password" value="test" />
-			</execute>
+		<execute macro="User#pgLogin" />
 
-			<if>
-				<condition action="PGLoginTermsofservice#IsElementPresent" locator-key1="I_AGREE" />
-				<then>
-					<execute action="PGLoginTermsofservice#Click" locator-key1="I_AGREE" />
-				</then>
-			</if>
+		<if>
+			<condition action="PGLoginTermsofservice#IsElementPresent" locator-key1="I_AGREE" />
+			<then>
+				<execute action="PGLoginTermsofservice#Click" locator-key1="I_AGREE" />
+			</then>
+		</if>
 
-			<if>
-				<condition action="PGLoginPasswordreminder#IsElementPresent" locator-key1="ANSWER" />
-				<then>
-					<execute action="PGLoginPasswordreminder#Type" locator-key1="ANSWER" value1="test" />
+		<if>
+			<condition action="PGLoginPasswordreminder#IsElementPresent" locator-key1="ANSWER" />
+			<then>
+				<execute action="PGLoginPasswordreminder#Type" locator-key1="ANSWER" value1="test" />
 
-					<execute action="PGLoginPasswordreminder#Click" locator-key1="SAVE" />
-				</then>
-			</if>
-		</steps>
+				<execute action="PGLoginPasswordreminder#Click" locator-key1="SAVE" />
+			</then>
+		</if>
 	</command>
 	<command name="pgLogin">
-		<steps>
-			<execute action="PGLogin#Type" locator-key1="EMAIL_ADDRESS" value1="${emailAddress}" />
+		<execute action="PGLogin#Type" locator-key1="EMAIL_ADDRESS" value1="${emailAddress}" />
 
-			<execute action="PGLogin#Type" locator-key1="PASSWORD" value1="${password}" />
+		<execute action="PGLogin#Type" locator-key1="PASSWORD" value1="${password}" />
 
-			<execute action="PGLogin#Click" locator-key1="REMEMBER_ME" />
+		<execute action="PGLogin#Click" locator-key1="REMEMBER_ME" />
 
-			<execute action="PGLogin#Click" locator-key1="SIGN_IN" />
-		</steps>
+		<execute action="PGLogin#Click" locator-key1="SIGN_IN" />
 	</command>
 	<command name="pgLogout">
-		<steps>
-			<if>
-				<condition action="Dockbar#IsElementPresent" locator-key1="USER_NAME" />
-				<then>
-					<execute action="Dockbar#Click" locator-key1="USER_SIGN_OUT" />
-				</then>
-			</if>
-		</steps>
+		<if>
+			<condition action="Dockbar#IsElementPresent" locator-key1="USER_NAME" />
+			<then>
+				<execute action="Dockbar#Click" locator-key1="USER_SIGN_OUT" />
+			</then>
+		</if>
 	</command>
 </definition>

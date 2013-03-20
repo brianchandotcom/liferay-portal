@@ -18,11 +18,35 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 	import ${seleniumBuilderContext.getMacroClassName(childElementAttributeValue)};
 </#list>
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} extends BaseTestCase {
+
+
+	<#if rootElement.element("var")??>
+		public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
+			super();
+
+			<#assign varElements = rootElement.elements("var")>
+
+			<#list varElements as varElement>
+				<#assign varName = varElement.attributeValue("name")>
+
+				<#assign varValue = varElement.attributeValue("value")>
+
+				definitionScopeVariables.put("${varName}", "${varValue}");
+			</#list>
+		}
+	</#if>
 
 	@Override
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
+
+		commandScopeVariables = new HashMap<String, String>();
+
+		commandScopeVariables.putAll(definitionScopeVariables);
 
 		<#if rootElement.element("set-up")??>
 			<#assign setUpElement = rootElement.element("set-up")>
@@ -51,6 +75,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 		<#assign commandName = commandElement.attributeValue("name")>
 
 		public void test${commandName}() throws Exception {
+			commandScopeVariables = new HashMap<String, String>();
+
+			commandScopeVariables.putAll(definitionScopeVariables);
+
 			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
@@ -71,6 +99,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 	@Override
 	public void tearDown() throws Exception {
+		commandScopeVariables = new HashMap<String, String>();
+
+		commandScopeVariables.putAll(definitionScopeVariables);
+
 		<#if rootElement.element("tear-down")??>
 			<#assign tearDownElement = rootElement.element("tear-down")>
 

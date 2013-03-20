@@ -16,6 +16,9 @@ package com.liferay.portalweb2.util.block.macro;
 
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Michael Hashimoto
  */
@@ -25,6 +28,10 @@ public class BaseMacro {
 		this.liferaySelenium = liferaySelenium;
 	}
 
+	protected Map<String, String> commandScopeVariables;
+	protected Map<String, String> definitionScopeVariables =
+		new HashMap<String, String>();
+	protected Map<String, String> executeScopeVariables;
 	protected LiferaySelenium liferaySelenium;
 
 }

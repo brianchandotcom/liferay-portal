@@ -48,7 +48,7 @@ if (folder != null) {
 	int bookmarksFoldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId);
 	%>
 
-	<c:if test="<%= bookmarksFoldersCount > 0 %>">
+
 		<br />
 
 		<liferay-ui:search-container iteratorURL="<%= portletURL %>">
@@ -132,7 +132,7 @@ if (folder != null) {
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
-	</c:if>
+
 </aui:form>
 
 <aui:script use="aui-base">

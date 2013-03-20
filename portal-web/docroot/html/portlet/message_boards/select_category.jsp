@@ -54,7 +54,7 @@ else {
 	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED);
 	%>
 
-	<c:if test="<%= categoriesCount > 0 %>">
+
 		<br />
 
 		<liferay-ui:search-container iteratorURL="<%= portletURL %>">
@@ -131,7 +131,7 @@ else {
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
-	</c:if>
+
 </aui:form>
 
 <aui:script use="aui-base">

@@ -593,12 +593,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		int newStatus = oldArticle.getStatus();
-
-		if (newStatus == WorkflowConstants.STATUS_PENDING) {
-			newStatus = WorkflowConstants.STATUS_DRAFT;
-		}
-
 		long id = counterLocalService.increment();
 
 		long resourcePrimKey =
@@ -640,7 +634,14 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImage(oldArticle.isSmallImage());
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
-		newArticle.setStatus(newStatus);
+
+		if (oldArticle.isPending()) {
+			newArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+		else {
+			newArticle.setStatus(oldArticle.getStatus());
+		}
+
 		newArticle.setExpandoBridgeAttributes(oldArticle);
 
 		journalArticlePersistence.update(newArticle);

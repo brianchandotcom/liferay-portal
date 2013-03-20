@@ -880,6 +880,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getFieldProperty(fieldName, property, locale);
 	}
 
+	public boolean getFieldRepeatable(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFieldRepeatable(fieldName);
+	}
+
 	public boolean getFieldRequired(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -910,6 +916,20 @@ public class DDMStructureWrapper implements DDMStructure,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructure.getFieldsMap(locale);
+	}
+
+	public java.lang.String getFieldTip(java.lang.String fieldName,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFieldTip(fieldName, locale);
+	}
+
+	public java.lang.String getFieldTip(java.lang.String fieldName,
+		java.lang.String locale)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructure.getFieldTip(fieldName, locale);
 	}
 
 	public java.lang.String getFieldType(java.lang.String fieldName)

@@ -36,7 +36,8 @@ public class MBeanChecker extends BaseChecker {
 
 		if ((permission instanceof MBeanPermission) &&
 			(actions.equals(MBEAN_PERMISSION_IS_INSTANCE_OF) ||
-			 actions.equals(MBEAN_PERMISSION_REGISTER_MBEAN))) {
+			 actions.equals(MBEAN_PERMISSION_REGISTER_MBEAN) ||
+			 actions.equals(MBEAN_PERMISSION_UNREGISTER_MBEAN))) {
 
 			return true;
 		}

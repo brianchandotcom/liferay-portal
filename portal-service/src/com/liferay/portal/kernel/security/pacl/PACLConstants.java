@@ -32,6 +32,9 @@ public interface PACLConstants {
 	public static final String MBEAN_PERMISSION_REGISTER_MBEAN =
 		"registerMBean";
 
+	public static final String MBEAN_PERMISSION_UNREGISTER_MBEAN =
+		"unregisterMBean";
+
 	public static final String MBEAN_TRUST_PERMISSION_REGISTER = "register";
 
 	public static final String NET_PERMISSION_GET_PROXY_SELECTOR =

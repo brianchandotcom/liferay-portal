@@ -623,6 +623,12 @@ public class JournalArticleLocalServiceImpl
 			newArticle.setContent(oldArticle.getContent());
 		}
 
+		int newStatus = oldArticle.getStatus();
+
+		if (newStatus == WorkflowConstants.STATUS_PENDING) {
+			newStatus = WorkflowConstants.STATUS_DRAFT;
+		}
+
 		newArticle.setType(oldArticle.getType());
 		newArticle.setStructureId(oldArticle.getStructureId());
 		newArticle.setTemplateId(oldArticle.getTemplateId());
@@ -634,7 +640,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImage(oldArticle.isSmallImage());
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
-		newArticle.setStatus(oldArticle.getStatus());
+		newArticle.setStatus(newStatus);
 		newArticle.setExpandoBridgeAttributes(oldArticle);
 
 		journalArticlePersistence.update(newArticle);

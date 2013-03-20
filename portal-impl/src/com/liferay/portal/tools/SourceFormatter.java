@@ -1937,16 +1937,16 @@ public class SourceFormatter {
 				else if (fileName.endsWith("Table.java") &&
 						 line.contains(" index IX_")) {
 				}
+				else if (lineLength > 80) {
+					_processErrorMessage(
+						fileName, "> 80: " + fileName + " " + lineCount);
+				}
 				else {
-					if (lineLength > 80) {
-						_processErrorMessage(
-							fileName, "> 80: " + fileName + " " + lineCount);
-					}
-					else if (!trimmedLine.startsWith("//")) {
-						int lineLeadingTabCount = _getLeadingTabCount(line);
-						int previousLineLeadingTabCount = _getLeadingTabCount(
-							previousLine);
+					int lineLeadingTabCount = _getLeadingTabCount(line);
+					int previousLineLeadingTabCount = _getLeadingTabCount(
+						previousLine);
 
+					if (!trimmedLine.startsWith("//")) {
 						if (previousLine.endsWith(StringPool.COMMA) &&
 							previousLine.contains(
 								StringPool.OPEN_PARENTHESIS) &&
@@ -2026,11 +2026,11 @@ public class SourceFormatter {
 								fileName,
 								"new line: " + fileName + " " + lineCount);
 						}
-
-						combinedLines = _getCombinedLines(
-							trimmedLine, previousLine, lineLeadingTabCount,
-							previousLineLeadingTabCount);
 					}
+
+					combinedLines = _getCombinedLines(
+						trimmedLine, previousLine, lineLeadingTabCount,
+						previousLineLeadingTabCount);
 				}
 			}
 
@@ -3357,7 +3357,33 @@ public class SourceFormatter {
 
 		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
+		int previousLineLength = _getLineLength(previousLine);
+
 		if (line.startsWith("// ") || trimmedPreviousLine.startsWith("// ")) {
+			String linePart = line.substring(3);
+
+			if (!linePart.startsWith("PLACEHOLDER") &&
+				!linePart.startsWith(StringPool.OPEN_BRACKET)) {
+
+				int pos = linePart.indexOf(StringPool.SPACE);
+
+				if (pos == -1) {
+					pos = linePart.length();
+				}
+
+				if (previousLineLength + pos < 80) {
+					if (linePart.contains(StringPool.SPACE)) {
+						return new Tuple(
+							previousLine + StringPool.SPACE,
+							linePart.substring(0, pos + 1), true);
+					}
+					else {
+						return new Tuple(
+							previousLine + StringPool.SPACE + linePart);
+					}
+				}
+			}
+
 			return null;
 		}
 
@@ -3374,8 +3400,6 @@ public class SourceFormatter {
 
 			return new Tuple(previousLine + StringPool.SPACE, linePart, true);
 		}
-
-		int previousLineLength = _getLineLength(previousLine);
 
 		if ((line.length() + previousLineLength) < 80) {
 			if (trimmedPreviousLine.startsWith("for ") &&

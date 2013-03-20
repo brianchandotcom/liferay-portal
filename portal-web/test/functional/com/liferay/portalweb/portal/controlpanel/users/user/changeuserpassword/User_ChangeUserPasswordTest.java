@@ -49,6 +49,7 @@ public class User_ChangeUserPasswordTest extends BaseTestCase {
 			RuntimeVariables.replace("test2"));
 		selenium.type("//input[@id='_2_password2']",
 			RuntimeVariables.replace("test2"));
+		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -8,14 +8,10 @@
 			<#assign actionElement = element>
 
 			<#include "action_element.ftl">
-
-			;
 		<#elseif element.attributeValue("macro")??>
 			<#assign macroElement = element>
 
 			<#include "macro_element.ftl">
-
-			;
 		</#if>
 	<#elseif name == "if">
 		<#assign conditionElement = element.element("condition")>

@@ -1,5 +1,9 @@
 <#assign function = functionElement.attributeValue("function")>
 
+<#if functionElement.getName() == "execute" && function?starts_with("Is")>
+	return
+</#if>
+
 <#assign x = function?last_index_of("#")>
 
 ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${function?substring(x + 1)}(
@@ -13,3 +17,7 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 </#list>
 
 )
+
+<#if functionElement.getName() == "execute">
+;
+</#if>

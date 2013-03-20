@@ -243,7 +243,11 @@ public class PortalPolicy extends Policy {
 
 		Policy policy = portalPermissionCollection.getPolicy();
 
-		if (policy != null) {
+		ClassLoader classLoader = portalPermissionCollection.getClassLoader();
+
+		if ((policy != null) &&
+			(classLoader == protectionDomain.getClassLoader())) {
+
 			return policy.implies(protectionDomain, permission);
 		}
 

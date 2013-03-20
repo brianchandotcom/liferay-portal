@@ -69,7 +69,7 @@ body.portlet {
 	left: 0 !important;
 }
 
-.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+%portlet-action-bar {
 	background: #333;
 	color: #FFF;
 	text-shadow: -1px -1px #000;
@@ -79,48 +79,68 @@ body.portlet {
 	}
 }
 
-.portlet-journal-content .icon-actions {
-	float: left;
-	margin: 1px 10px 1px 1px;
+%portlet-action-bar-hover {
+	@include opacity(1);
+}
 
-	@include opacity(0.5);
+%portlet-action-bar-hover-text {
+	display: inline-block;
+}
 
-	padding: 2px 7px;
+.portlet-borderless-bar {
+	@extend %portlet-action-bar;
+}
 
-	.taglib-text {
-		color: #FFF;
-		display: none;
-		font-weight: bold;
-		margin-right: 1em;
-		text-decoration: none;
-		vertical-align: middle;
+.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.icon-actions {
+		@extend %portlet-action-bar;
 	}
+}
 
-	.icon-action a {
-		background: url() no-repeat 0 50%;
-		display: inline-block;
-		margin-left: 5px;
-		vertical-align: top;
+.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.icon-actions {
+		float: left;
+		margin: 1px 10px 1px 1px;
 
-		.icon {
-			visibility: hidden;
+		@include opacity(0.5);
+
+		padding: 2px 7px;
+
+		.taglib-text {
+			color: #FFF;
+			display: none;
+			font-weight: bold;
+			margin-right: 1em;
+			text-decoration: none;
+			vertical-align: middle;
 		}
-	}
 
-	.icon-action-add a {
-		background-image: url(../images/common/add_white.png);
-	}
+		.icon-action a {
+			background: url() no-repeat 0 50%;
+			display: inline-block;
+			margin-left: 5px;
+			vertical-align: top;
 
-	.icon-action-edit a {
-		background-image: url(../images/common/edit_white.png);
-	}
+			.icon {
+				visibility: hidden;
+			}
+		}
 
-	.icon-action-edit-template a {
-		background-image: url(../images/common/edit_template_white.png);
-	}
+		.icon-action-add a {
+			background-image: url(../images/common/add_white.png);
+		}
 
-	.icon-action-configuration a {
-		background-image: url(../images/common/configuration_white.png);
+		.icon-action-edit a {
+			background-image: url(../images/common/edit_white.png);
+		}
+
+		.icon-action-edit-template a {
+			background-image: url(../images/common/edit_template_white.png);
+		}
+
+		.icon-action-configuration a {
+			background-image: url(../images/common/configuration_white.png);
+		}
 	}
 }
 
@@ -188,17 +208,39 @@ body.portlet {
 		@include opacity(0.6);
 	}
 
-	&.portlet-journal-content .icon-actions {
-		@include opacity(1);
+	&.portlet-dynamic-data-list-display, &.portlet-journal-content, &.portlet-polls-display {
+		.icon-actions {
+			@include opacity(1);
+		}
 	}
 }
 
-.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content:hover .icon-actions {
-	@include opacity(1);
+.portlet-borderless-container:hover .portlet-borderless-bar {
+	@extend %portlet-action-bar-hover;
+
+	.portlet-actions {
+		@extend %portlet-action-bar-hover-text;
+	}
 }
 
-.portlet-borderless-container:hover .portlet-borderless-bar .portlet-actions, .portlet-journal-content:hover .icon-actions .taglib-text {
-	display: inline-block;
+.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	&:hover {
+		.icon-actions {
+			@extend %portlet-action-bar-hover;
+		}
+
+		.taglib-text {
+			@extend %portlet-action-bar-hover-text;
+		}
+	}
+
+	.icons-container {
+		clear: both;
+		height: auto;
+		margin-top: 1em;
+		overflow: hidden;
+		width: auto;
+	}
 }
 
 .portlet-title-default {
@@ -785,8 +827,14 @@ body.portlet {
 }
 
 .ie {
-	.portlet-borderless-bar, .portlet-journal-content .icon-actions {
+	.portlet-borderless-bar {
 		@include opacity(0.5);
+	}
+
+	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+		.icon-actions {
+			@include opacity(0.5);
+		}
 	}
 
 	.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content .icon-actions:hover {
@@ -799,7 +847,7 @@ body.portlet {
 }
 
 .ie6, .ie7 {
-	.portlet-journal-content {
+	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
 		.icons-container {
 			overflow: visible;
 		}

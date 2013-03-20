@@ -1,14 +1,6 @@
 @import "compass";
 
 .portlet-journal-content {
-	.icons-container {
-		clear: both;
-		height: auto;
-		margin-top: 1em;
-		overflow: hidden;
-		width: auto;
-	}
-
 	.journal-content-article {
 		clear: right;
 

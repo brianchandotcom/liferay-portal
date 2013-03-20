@@ -22,7 +22,7 @@ import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 /**
  * @author Eduardo Garcia
  */
-public class UpgradePortletIdToInstanceable extends UpgradePortletId {
+public class UpgradeInstanceablePortlet extends UpgradePortletId {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -54,6 +54,6 @@ public class UpgradePortletIdToInstanceable extends UpgradePortletId {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		UpgradePortletIdToInstanceable.class);
+		UpgradeInstanceablePortlet.class);
 
 }

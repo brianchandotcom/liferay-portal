@@ -14,13 +14,13 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.upgrade.util.UpgradePortletIdToInstanceable;
+import com.liferay.portal.upgrade.util.UpgradeInstanceablePortlet;
 import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Eduardo Garcia
  */
-public class UpgradeImageGallery extends UpgradePortletIdToInstanceable {
+public class UpgradeImageGallery extends UpgradeInstanceablePortlet {
 
 	@Override
 	protected String[] getPortletIds() {

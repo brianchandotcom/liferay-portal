@@ -593,6 +593,12 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		int newStatus = oldArticle.getStatus();
+
+		if (newStatus == WorkflowConstants.STATUS_PENDING) {
+			newStatus = WorkflowConstants.STATUS_DRAFT;
+		}
+
 		long id = counterLocalService.increment();
 
 		long resourcePrimKey =
@@ -621,12 +627,6 @@ public class JournalArticleLocalServiceImpl
 		}
 		catch (Exception e) {
 			newArticle.setContent(oldArticle.getContent());
-		}
-
-		int newStatus = oldArticle.getStatus();
-
-		if (newStatus == WorkflowConstants.STATUS_PENDING) {
-			newStatus = WorkflowConstants.STATUS_DRAFT;
 		}
 
 		newArticle.setType(oldArticle.getType());

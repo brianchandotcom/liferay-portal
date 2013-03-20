@@ -336,9 +336,9 @@ public abstract class BaseSocialActivityInterpreter
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<a href=\"");
-		sb.append(link);
+		sb.append(HtmlUtil.escape(link));
 		sb.append("\">");
-		sb.append(text);
+		sb.append(HtmlUtil.escape(text));
 		sb.append("</a>");
 
 		return sb.toString();

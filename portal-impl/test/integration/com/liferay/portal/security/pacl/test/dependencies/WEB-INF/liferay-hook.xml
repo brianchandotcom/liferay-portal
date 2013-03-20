@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
+
+<hook>
+	<portal-properties>portal.properties</portal-properties>
+	<language-properties>content/Language_en.properties</language-properties>
+	<language-properties>content/Language_en_GB.properties</language-properties>
+	<language-properties>content/Language_en_US.properties</language-properties>
+	<language-properties>content/Language_es.properties</language-properties>
+	<language-properties>content/Language_it.properties</language-properties>
+	<language-properties>content/Language_pt_BR.properties</language-properties>
+	<language-properties>content/Language_pt_PT.properties</language-properties>
+	<custom-jsp-dir>/META-INF/custom_jsps</custom-jsp-dir>
+	<indexer-post-processor>
+		<indexer-class-name>com.liferay.portal.model.Organization</indexer-class-name>
+		<indexer-post-processor-impl>com.liferay.portal.security.pacl.test.hook.indexer.OrganizationIndexerPostProcessor</indexer-post-processor-impl>
+	</indexer-post-processor>
+	<indexer-post-processor>
+		<indexer-class-name>com.liferay.portal.model.User</indexer-class-name>
+		<indexer-post-processor-impl>com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcessor</indexer-post-processor-impl>
+	</indexer-post-processor>
+	<service>
+		<service-type>com.liferay.portlet.blogs.service.BlogsEntryLocalService</service-type>
+		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLBlogsEntryLocalServiceImpl</service-impl>
+	</service>
+	<service>
+		<service-type>com.liferay.portlet.blogs.service.BlogsStatsUserLocalService</service-type>
+		<service-impl>com.liferay.portal.security.pacl.test.hook.service.impl.TestPACLBlogsStatsUserLocalServiceImpl</service-impl>
+	</service>
+	<servlet-filter>
+		<servlet-filter-name>Failure Filter</servlet-filter-name>
+		<servlet-filter-impl>com.liferay.portal.security.pacl.test.hook.filter.FailureFilter</servlet-filter-impl>
+	</servlet-filter>
+	<servlet-filter-mapping>
+		<servlet-filter-name>Failure Filter</servlet-filter-name>
+		<before-filter>SSO Open SSO Filter</before-filter>
+		<url-pattern>/group/*</url-pattern>
+		<url-pattern>/user/*</url-pattern>
+		<url-pattern>/web/*</url-pattern>
+		<url-pattern>*.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</servlet-filter-mapping>
+	<struts-action>
+		<struts-action-path>/portal/test/pacl/failure</struts-action-path>
+		<struts-action-impl>com.liferay.portal.security.pacl.test.hook.action.FailureStrutsAction</struts-action-impl>
+	</struts-action>
+	<struts-action>
+		<struts-action-path>/portal/test/pacl/success</struts-action-path>
+		<struts-action-impl>com.liferay.portal.security.pacl.test.hook.action.SuccessStrutsAction</struts-action-impl>
+	</struts-action>
+</hook>

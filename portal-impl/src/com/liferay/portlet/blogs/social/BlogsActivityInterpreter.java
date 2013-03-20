@@ -59,13 +59,12 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
 			activity.getClassPK());
 
-		String displayTitle = wrapLink(link, entry.getTitle());
 		String displayDate = StringPool.BLANK;
 
 		if ((activity.getType() == BlogsActivityKeys.ADD_ENTRY) &&
 			(entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED)) {
 
-			displayTitle = entry.getTitle();
+			link = null;
 
 			Format dateFormatDate =
 				FastDateFormatFactoryUtil.getSimpleDateFormat(
@@ -74,6 +73,8 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 			displayDate = dateFormatDate.format(entry.getDisplayDate());
 		}
+
+		String displayTitle = wrapLink(link, entry.getTitle());
 
 		return new Object[] {
 			groupName, creatorUserName, receiverUserName, displayTitle,

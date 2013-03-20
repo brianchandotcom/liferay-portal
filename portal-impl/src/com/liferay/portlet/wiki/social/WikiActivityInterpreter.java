@@ -81,6 +81,8 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 			String fileEntryTitle = activity.getExtraDataValue("title");
 
+			String link = null;
+
 			if ((fileVersion != null) && !fileVersion.isInTrash()) {
 				StringBundler sb = new StringBundler(9);
 
@@ -94,11 +96,11 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				sb.append("&fileName=");
 				sb.append(fileEntryTitle);
 
-				return wrapLink(sb.toString(), HtmlUtil.escape(fileEntryTitle));
+				link = sb.toString();
+
 			}
-			else {
-				return HtmlUtil.escape(fileEntryTitle);
-			}
+
+			return wrapLink(link, fileEntryTitle);
 		}
 
 		return StringPool.BLANK;
@@ -141,11 +143,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		String creatorUserName = getUserName(
 			activity.getUserId(), themeDisplay);
 
-		title = HtmlUtil.escape(title);
-
-		if (Validator.isNotNull(link)) {
-			title = wrapLink(link, title);
-		}
+		title = wrapLink(link, title);
 
 		return new Object[] {
 			groupName, creatorUserName, title,

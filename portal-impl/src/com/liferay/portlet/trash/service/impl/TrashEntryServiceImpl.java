@@ -97,11 +97,24 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		}
 	}
 
+	@Transactional(noRollbackFor={TrashPermissionException.class})
 	public void deleteEntries(long[] entryIds)
 		throws PortalException, SystemException {
 
+		boolean error = false;
+
 		for (long entryId : entryIds) {
-			deleteEntry(entryId);
+			try {
+				deleteEntry(entryId);
+			}
+			catch (TrashPermissionException tpe) {
+				error = true;
+			}
+		}
+
+		if (error) {
+			throw new TrashPermissionException(
+				TrashPermissionException.ERROR_EMPTY_TRASH);
 		}
 	}
 

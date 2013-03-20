@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.ArrayList;
@@ -124,7 +122,7 @@ public class HotDeployImpl implements HotDeploy {
 
 		TemplateManagerUtil.destroy(classLoader);
 
-		PACLPolicyManager.unregister(classLoader);
+		_pacl.unregister(classLoader);
 	}
 
 	public void registerListener(HotDeployListener hotDeployListener) {
@@ -284,10 +282,30 @@ public class HotDeployImpl implements HotDeploy {
 
 	private static Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);
 
+	private static PACL _pacl = new NoPACL();
+
 	private boolean _capturePrematureEvents = true;
 	private List<HotDeployEvent> _dependentHotDeployEvents;
 	private Set<String> _deployedServletContextNames;
 	private List<HotDeployListener> _hotDeployListeners;
+
+	private static class NoPACL implements PACL {
+
+		public void initPolicy(
+			String servletContextName, ClassLoader classLoader,
+			Properties properties) {
+
+			// no operation
+
+		}
+
+		public void unregister(ClassLoader classLoader) {
+
+			// no operation
+
+		}
+
+	}
 
 	private class HotDeployPortalLifecycle extends BasePortalLifecycle {
 
@@ -318,15 +336,23 @@ public class HotDeployImpl implements HotDeploy {
 				properties = new Properties();
 			}
 
-			PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
+			_pacl.initPolicy(
 				_servletContext.getServletContextName(), _classLoader,
 				properties);
-
-			PACLPolicyManager.register(_classLoader, paclPolicy);
 		}
 
 		private ClassLoader _classLoader;
 		private ServletContext _servletContext;
+
+	}
+
+	public static interface PACL {
+
+		public void initPolicy(
+			String servletContextName, ClassLoader classLoader,
+			Properties properties);
+
+		public void unregister(ClassLoader classLoader);
 
 	}
 

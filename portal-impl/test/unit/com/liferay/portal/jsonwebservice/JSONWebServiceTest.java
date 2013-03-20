@@ -223,7 +223,8 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		try {
 			jsonWebServiceAction.invoke();
-		} catch (InvocationTargetException e) {
+		}
+		catch (InvocationTargetException e) {
 			throw e.getTargetException();
 		}
 	}

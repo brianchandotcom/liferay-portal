@@ -38,6 +38,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
+
+			<#assign blockElement = setUpElement>
+
+			<#include "testcase_block_element.ftl">
 		</#if>
 	}
 
@@ -58,6 +62,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
+
+			<#assign blockElement = commandElement>
+
+			<#include "testcase_block_element.ftl">
 		}
 	</#list>
 
@@ -77,6 +85,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
+
+			<#assign blockElement = tearDownElement>
+
+			<#include "testcase_block_element.ftl">
 		</#if>
 	}
 

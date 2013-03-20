@@ -32,8 +32,6 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
  */
 public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = MBMessage.class.getName();
-
 	public static final String TYPE = "message";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -45,7 +43,7 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return MBMessage.class.getName();
 	}
 
 	public String getType() {

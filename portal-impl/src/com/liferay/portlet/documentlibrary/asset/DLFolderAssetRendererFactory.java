@@ -30,8 +30,6 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
  */
 public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = DLFolder.class.getName();
-
 	public static final String TYPE = "folder";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -43,7 +41,7 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFolder.class.getName();
 	}
 
 	public String getType() {

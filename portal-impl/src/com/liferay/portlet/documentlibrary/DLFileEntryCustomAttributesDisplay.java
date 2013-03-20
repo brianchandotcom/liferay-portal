@@ -24,10 +24,8 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 public class DLFileEntryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
-	public static final String CLASS_NAME = DLFileEntry.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFileEntry.class.getName();
 	}
 
 	@Override

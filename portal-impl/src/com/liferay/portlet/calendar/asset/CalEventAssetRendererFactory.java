@@ -41,8 +41,6 @@ import javax.portlet.PortletURL;
  */
 public class CalEventAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = CalEvent.class.getName();
-
 	public static final String TYPE = "event";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -54,7 +52,7 @@ public class CalEventAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return CalEvent.class.getName();
 	}
 
 	public String getType() {

@@ -30,8 +30,6 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermissio
 public class BookmarksFolderAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = BookmarksFolder.class.getName();
-
 	public static final String TYPE = "bookmarks_folder";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -44,7 +42,7 @@ public class BookmarksFolderAssetRendererFactory
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return BookmarksFolder.class.getName();
 	}
 
 	public String getType() {

@@ -33,8 +33,6 @@ import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission
  */
 public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = MBCategory.class.getName();
-
 	public static final String TYPE = "category";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -46,7 +44,7 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return MBCategory.class.getName();
 	}
 
 	public String getType() {

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -35,7 +34,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return MBMessageAssetRendererFactory.CLASS_NAME;
+		return MBMessage.class.getName();
 	}
 
 	@Override

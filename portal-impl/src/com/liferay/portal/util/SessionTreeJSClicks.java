@@ -35,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SessionTreeJSClicks {
 
-	public static final String CLASS_NAME = SessionTreeJSClicks.class.getName();
-
 	public static void closeLayoutNodes(
 		HttpServletRequest request, String treeId, boolean privateLayout,
 		long layoutId, boolean recursive) {
@@ -174,7 +172,8 @@ public class SessionTreeJSClicks {
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			return preferences.getValue(CLASS_NAME, key);
+			return preferences.getValue(
+				SessionTreeJSClicks.class.getName(), key);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -210,7 +209,8 @@ public class SessionTreeJSClicks {
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			preferences.setValue(CLASS_NAME, key, value);
+			preferences.setValue(
+				SessionTreeJSClicks.class.getName(), key, value);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

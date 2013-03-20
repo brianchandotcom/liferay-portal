@@ -43,8 +43,6 @@ import javax.portlet.PortletRequest;
  */
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
-	public static final String CLASS_NAME = JournalArticle.class.getName();
-
 	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
@@ -90,7 +88,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return JournalArticle.class.getName();
 	}
 
 	@Override

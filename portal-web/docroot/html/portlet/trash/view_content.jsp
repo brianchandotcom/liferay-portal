@@ -219,7 +219,7 @@
 		AssetRenderer assetRenderer = (AssetRenderer)trashRenderer;
 		%>
 
-		<c:if test="<%= !assetRenderer.getAssetRendererFactoryClassName().equals(DLFileEntryAssetRendererFactory.CLASS_NAME) %>">
+		<c:if test="<%= !assetRenderer.getClassName().equals(DLFileEntry.class.getName()) %>">
 			<div class="asset-ratings">
 				<liferay-ui:ratings
 					className="<%= className %>"

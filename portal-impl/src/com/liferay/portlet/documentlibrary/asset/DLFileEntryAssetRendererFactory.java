@@ -57,8 +57,6 @@ import javax.portlet.PortletURL;
  */
 public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String CLASS_NAME = DLFileEntry.class.getName();
-
 	public static final String TYPE = "document";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -82,7 +80,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	public String getClassName() {
-		return CLASS_NAME;
+		return DLFileEntry.class.getName();
 	}
 
 	@Override
@@ -176,7 +174,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			"folderId",
 			String.valueOf(
 				AssetPublisherUtil.getRecentFolderId(
-					liferayPortletRequest, CLASS_NAME)));
+					liferayPortletRequest, getClassName())));
 
 		return portletURL;
 	}

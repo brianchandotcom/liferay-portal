@@ -24,10 +24,8 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 public class BookmarksFolderCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
-	public static final String CLASS_NAME = BookmarksFolder.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return BookmarksFolder.class.getName();
 	}
 
 	@Override

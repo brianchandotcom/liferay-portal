@@ -24,10 +24,8 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 public class OrganizationCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
-	public static final String CLASS_NAME = Organization.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return Organization.class.getName();
 	}
 
 	@Override

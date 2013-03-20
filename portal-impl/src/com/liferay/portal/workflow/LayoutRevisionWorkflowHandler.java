@@ -35,14 +35,12 @@ import java.util.Map;
  */
 public class LayoutRevisionWorkflowHandler extends BaseWorkflowHandler {
 
-	public static final String CLASS_NAME = LayoutRevision.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return LayoutRevision.class.getName();
 	}
 
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	public Object updateStatus(

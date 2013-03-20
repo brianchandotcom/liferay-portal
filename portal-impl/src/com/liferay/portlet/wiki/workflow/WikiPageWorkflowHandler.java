@@ -36,14 +36,12 @@ import java.util.Map;
  */
 public class WikiPageWorkflowHandler extends BaseWorkflowHandler {
 
-	public static final String CLASS_NAME = WikiPage.class.getName();
-
 	public String getClassName() {
-		return CLASS_NAME;
+		return WikiPage.class.getName();
 	}
 
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, CLASS_NAME);
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	public WikiPage updateStatus(

@@ -107,13 +107,6 @@ public abstract class BaseSocialActivityInterpreter
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return doInterpret(activity, themeDisplay);
-	}
-
-	protected SocialActivityFeedEntry doInterpret(
-			SocialActivity activity, ThemeDisplay themeDisplay)
-		throws Exception {
-
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
@@ -123,16 +116,17 @@ public abstract class BaseSocialActivityInterpreter
 			return null;
 		}
 
-		String link = getLink(activity, themeDisplay);
+		String link = getLink(activity, serviceContext);
 
-		String title = getTitle(activity, themeDisplay);
+		String title = getTitle(activity, serviceContext);
 
-		String body = getBody(activity, themeDisplay);
+		String body = getBody(activity, serviceContext);
 
 		return new SocialActivityFeedEntry(link, title, body);
 	}
 
-	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getBody(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -220,8 +214,14 @@ public abstract class BaseSocialActivityInterpreter
 		return HtmlUtil.escape(defaultValue);
 	}
 
-	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getClassName(activity));
@@ -250,8 +250,13 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String getTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String groupName = StringPool.BLANK;
 
@@ -259,12 +264,12 @@ public abstract class BaseSocialActivityInterpreter
 			groupName = getGroupName(activity.getGroupId(), themeDisplay);
 		}
 
-		String link = getLink(activity, themeDisplay);
+		String link = getLink(activity, serviceContext);
 
 		String entryTitle = getEntryTitle(activity, themeDisplay);
 
 		Object[] titleArguments = getTitleArguments(
-			groupName, activity, link, entryTitle, themeDisplay);
+			groupName, activity, link, entryTitle, serviceContext);
 
 		String titlePattern = getTitlePattern(groupName, activity);
 
@@ -273,8 +278,13 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected Object[] getTitleArguments(
 			String groupName, SocialActivity activity, String link,
-			String title, ThemeDisplay themeDisplay)
+			String title, ServiceContext serviceContext)
 		throws Exception {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String userName = getUserName(activity.getUserId(), themeDisplay);
 

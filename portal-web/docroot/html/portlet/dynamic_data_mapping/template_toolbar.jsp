@@ -144,11 +144,7 @@ public List<TemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker
 	List<TemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<TemplateHandler>();
 
 	for (TemplateHandler templateHandler : templateHandlers) {
-		if (templateHandler instanceof JournalTemplateHandler) {
-			continue;
-		}
-
-		if (DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+		if ((templateHandler instanceof BasePortletDisplayTemplateHandler) && DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 			allowedPortletDisplayTemplateHandlers.add(templateHandler);
 		}
 	}

@@ -18,6 +18,7 @@
 
 <%@ page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.kernel.editor.EditorUtil" %><%@
+page import="com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
@@ -58,7 +59,6 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" 
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
-page import="com.liferay.portlet.journal.template.JournalTemplateHandler" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

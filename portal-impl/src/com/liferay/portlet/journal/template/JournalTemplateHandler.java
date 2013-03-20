@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-public class JournalPortletDisplayTemplateHandler extends BaseTemplateHandler {
+public class JournalTemplateHandler extends BaseTemplateHandler {
 
 	public String getClassName() {
 		return JournalArticle.class.getName();

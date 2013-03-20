@@ -146,7 +146,7 @@
 		<friendly-url-mapping>journal</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/journal/journal-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.journal.lar.JournalPortletDataHandler</portlet-data-handler-class>
-		<portlet-display-template-handler>com.liferay.portlet.journal.template.JournalPortletDisplayTemplateHandler</portlet-display-template-handler>
+		<portlet-display-template-handler>com.liferay.portlet.journal.template.JournalTemplateHandler</portlet-display-template-handler>
 		<webdav-storage-token>journal</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>

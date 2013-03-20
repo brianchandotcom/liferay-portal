@@ -144,7 +144,7 @@ public List<TemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker
 	List<TemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<TemplateHandler>();
 
 	for (TemplateHandler templateHandler : templateHandlers) {
-		if (templateHandler instanceof JournalPortletDisplayTemplateHandler) {
+		if (templateHandler instanceof JournalTemplateHandler) {
 			continue;
 		}
 

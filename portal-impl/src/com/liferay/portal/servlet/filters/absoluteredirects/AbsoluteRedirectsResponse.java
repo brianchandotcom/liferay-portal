@@ -41,7 +41,8 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void sendRedirect(String redirect) throws IOException {
-		String portalURL = PortalUtil.getPortalURL(_request);
+		boolean isSecure = _request.isSecure();
+		String portalURL = PortalUtil.getPortalURL(_request, isSecure);
 
 		if (redirect.charAt(0) == CharPool.SLASH) {
 			if (Validator.isNotNull(portalURL)) {

@@ -23,14 +23,6 @@ import com.liferay.portal.kernel.log.LogUtil;
  */
 public class JavaDetector {
 
-	public static final double JAVA_CLASS_VERSION_JDK_4 = 48.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_5 = 49.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_6 = 50.0;
-
-	public static final double JAVA_CLASS_VERSION_JDK_7 = 51.0;
-
 	public static String getJavaClassPath() {
 		return _instance._javaClassPath;
 	}
@@ -72,7 +64,7 @@ public class JavaDetector {
 	}
 
 	public static boolean isJDK4() {
-		if (getJavaClassVersion() >= JAVA_CLASS_VERSION_JDK_4) {
+		if (getJavaVersion().startsWith(_JAVA_VERSION_JDK_4)) {
 			return true;
 		}
 		else {
@@ -81,7 +73,7 @@ public class JavaDetector {
 	}
 
 	public static boolean isJDK5() {
-		if (getJavaClassVersion() >= JavaDetector.JAVA_CLASS_VERSION_JDK_5) {
+		if (getJavaVersion().startsWith(_JAVA_VERSION_JDK_5)) {
 			return true;
 		}
 		else {
@@ -90,7 +82,7 @@ public class JavaDetector {
 	}
 
 	public static boolean isJDK6() {
-		if (getJavaClassVersion() >= JavaDetector.JAVA_CLASS_VERSION_JDK_6) {
+		if (getJavaVersion().startsWith(_JAVA_VERSION_JDK_6)) {
 			return true;
 		}
 		else {
@@ -99,7 +91,7 @@ public class JavaDetector {
 	}
 
 	public static boolean isJDK7() {
-		if (getJavaClassVersion() >= JavaDetector.JAVA_CLASS_VERSION_JDK_7) {
+		if (getJavaVersion().startsWith(_JAVA_VERSION_JDK_7)) {
 			return true;
 		}
 		else {
@@ -138,6 +130,14 @@ public class JavaDetector {
 			LogUtil.debug(_log, new SortedProperties(System.getProperties()));
 		}
 	}
+
+	private static final String _JAVA_VERSION_JDK_4 = "1.4.";
+
+	private static final String _JAVA_VERSION_JDK_5 = "1.5.";
+
+	private static final String _JAVA_VERSION_JDK_6 = "1.6.";
+
+	private static final String _JAVA_VERSION_JDK_7 = "1.7.";
 
 	private static Log _log = LogFactoryUtil.getLog(JavaDetector.class);
 

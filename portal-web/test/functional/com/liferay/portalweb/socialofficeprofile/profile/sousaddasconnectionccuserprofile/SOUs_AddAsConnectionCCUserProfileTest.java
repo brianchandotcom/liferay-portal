@@ -59,10 +59,10 @@ public class SOUs_AddAsConnectionCCUserProfileTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		selenium.clickAt("//span[@class='action add-connection']/a",
-			RuntimeVariables.replace("Add Connection"));
+			RuntimeVariables.replace("Connect"));
 		selenium.waitForVisible("//span[contains(.,'Connection Requested')]");
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[contains(.,'Connection Requested')]"));

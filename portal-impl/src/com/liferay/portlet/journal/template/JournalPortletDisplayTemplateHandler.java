@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.util.StringPool;
@@ -38,8 +38,7 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-public class JournalPortletDisplayTemplateHandler
-	extends BasePortletDisplayTemplateHandler {
+public class JournalPortletDisplayTemplateHandler extends BaseTemplateHandler {
 
 	public String getClassName() {
 		return JournalArticle.class.getName();

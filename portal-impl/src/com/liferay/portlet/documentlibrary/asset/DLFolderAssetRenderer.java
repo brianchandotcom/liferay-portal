@@ -49,10 +49,6 @@ public class DLFolderAssetRenderer
 		_folder = folder;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return DLFolderAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return DLFolder.class.getName();
 	}

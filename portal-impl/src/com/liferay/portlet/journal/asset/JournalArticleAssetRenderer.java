@@ -78,10 +78,6 @@ public class JournalArticleAssetRenderer
 		return _article;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return JournalArticleAssetRendererFactory.CLASS_NAME;
-	}
-
 	@Override
 	public String[] getAvailableLocales() {
 		return _article.getAvailableLocales();

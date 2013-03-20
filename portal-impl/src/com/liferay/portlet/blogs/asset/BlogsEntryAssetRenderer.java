@@ -50,10 +50,6 @@ public class BlogsEntryAssetRenderer
 		_entry = entry;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return BlogsEntryAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return BlogsEntry.class.getName();
 	}

@@ -63,8 +63,8 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return DDLRecordAssetRendererFactory.CLASS_NAME;
+	public String getClassName() {
+		return DDLRecord.class.getName();
 	}
 
 	public long getClassPK() {

@@ -55,7 +55,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		_assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getAssetRendererFactoryClassName());
+				getClassName());
 
 		return _assetRendererFactory;
 	}

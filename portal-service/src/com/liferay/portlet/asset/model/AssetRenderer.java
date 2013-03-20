@@ -39,9 +39,9 @@ public interface AssetRenderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
-	public String getAssetRendererFactoryClassName();
-
 	public String[] getAvailableLocales() throws Exception;
+
+	public String getClassName();
 
 	public long getClassPK();
 

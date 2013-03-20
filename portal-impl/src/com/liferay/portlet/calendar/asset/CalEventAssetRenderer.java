@@ -45,8 +45,8 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		_event = event;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return CalEventAssetRendererFactory.CLASS_NAME;
+	public String getClassName() {
+		return CalEvent.class.getName();
 	}
 
 	public long getClassPK() {

@@ -47,10 +47,6 @@ public class BookmarksEntryAssetRenderer
 		_entry = entry;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return BookmarksEntryAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
 	}

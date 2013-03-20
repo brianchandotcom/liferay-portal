@@ -63,10 +63,6 @@ public class DLFileEntryAssetRenderer
 		_type = type;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return DLFileEntryAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}

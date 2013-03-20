@@ -52,10 +52,6 @@ public class MBMessageAssetRenderer
 		_message = message;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return MBCategoryAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}

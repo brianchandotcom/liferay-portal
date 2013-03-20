@@ -49,10 +49,6 @@ public class BookmarksFolderAssetRenderer
 		_folder = folder;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return BookmarksFolderAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return BookmarksFolder.class.getName();
 	}

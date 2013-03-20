@@ -48,10 +48,6 @@ public class JournalFolderAssetRenderer
 		_folder = folder;
 	}
 
-	public String getAssetRendererFactoryClassName() {
-		return JournalFolderAssetRendererFactory.CLASS_NAME;
-	}
-
 	public String getClassName() {
 		return JournalFolder.class.getName();
 	}

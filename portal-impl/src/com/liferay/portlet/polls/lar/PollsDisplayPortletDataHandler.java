@@ -101,7 +101,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext,
-			new Element[]{questionsElement, choicesElement, votesElement},
+			new Element[] {questionsElement, choicesElement, votesElement},
 			question);
 
 		return getExportDataRootElementString(rootElement);

@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -31,9 +32,10 @@ import java.util.Map;
 
 /**
  * @author Shinn Lok
+ * @author Mate Thurzo
  */
 public class PollsVoteStagedModelDataHandler
-		extends BaseStagedModelDataHandler<PollsVote> {
+	extends BaseStagedModelDataHandler<PollsVote> {
 
 	@Override
 	public String getClassName() {
@@ -46,7 +48,18 @@ public class PollsVoteStagedModelDataHandler
 			PollsVote vote)
 		throws Exception {
 
-		Element votesElement = elements[0];
+		// Choice
+
+		Element questionsElement = elements[0];
+		Element choicesElement = elements[1];
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext,
+			new Element[] {questionsElement, choicesElement}, vote.getChoice());
+
+		// Vote
+
+		Element votesElement = elements[2];
 
 		Element voteElement = votesElement.addElement("vote");
 
@@ -61,6 +74,18 @@ public class PollsVoteStagedModelDataHandler
 			PollsVote vote)
 		throws Exception {
 
+		// Choice (implies Question)
+
+		String choicePath = StagedModelPathUtil.getPath(
+			portletDataContext, PollsChoice.class.getName(),
+			vote.getChoiceId());
+
+		PollsChoice choice =
+			(PollsChoice)portletDataContext.getZipEntryAsObject(choicePath);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, element, choicePath, choice);
+
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);
@@ -74,6 +99,8 @@ public class PollsVoteStagedModelDataHandler
 
 		long choiceId = MapUtil.getLong(
 			choiceIds, vote.getChoiceId(), vote.getChoiceId());
+
+		// Vote
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			path, vote, PollsPortletDataHandler.NAMESPACE);

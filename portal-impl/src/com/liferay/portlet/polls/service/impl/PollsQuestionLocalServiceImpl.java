@@ -107,7 +107,7 @@ public class PollsQuestionLocalServiceImpl
 			for (PollsChoice choice : choices) {
 				pollsChoiceLocalService.addChoice(
 					userId, questionId, choice.getName(),
-					choice.getDescription(), new ServiceContext());
+					choice.getDescription(), serviceContext);
 			}
 		}
 

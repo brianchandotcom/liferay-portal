@@ -15,6 +15,8 @@
 package com.liferay.portlet.expando.util;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
+
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 
@@ -25,13 +27,15 @@ import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 public class ExpandoBridgeFactoryImpl implements ExpandoBridgeFactory {
 
 	public ExpandoBridge getExpandoBridge(long companyId, String className) {
-		return new ExpandoBridgeImpl(companyId, className);
+		return DoPrivilegedUtil.wrap(
+			new ExpandoBridgeImpl(companyId, className));
 	}
 
 	public ExpandoBridge getExpandoBridge(
 		long companyId, String className, long classPK) {
 
-		return new ExpandoBridgeImpl(companyId, className, classPK);
+		return DoPrivilegedUtil.wrap(
+			new ExpandoBridgeImpl(companyId, className, classPK));
 	}
 
 }

@@ -44,6 +44,7 @@ import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -62,6 +63,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import java.security.Key;
+import java.security.PrivilegedAction;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -679,12 +681,7 @@ public class PortletURLImpl
 			return _toString;
 		}
 
-		if (_wsrp) {
-			_toString = generateWSRPToString();
-		}
-		else {
-			_toString = generateToString();
-		}
+		_toString = DoPrivilegedUtil.wrap(new ToStringPrivilegedAction());
 
 		return _toString;
 	}
@@ -1427,5 +1424,16 @@ public class PortletURLImpl
 	private boolean _windowStateRestoreCurrentView;
 	private String _windowStateString;
 	private boolean _wsrp;
+
+	private class ToStringPrivilegedAction implements PrivilegedAction<String> {
+
+		public String run() {
+			if (_wsrp) {
+				return generateWSRPToString();
+			}
+
+			return generateToString();
+		}
+	}
 
 }

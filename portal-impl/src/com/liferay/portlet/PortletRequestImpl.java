@@ -41,6 +41,7 @@ import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
@@ -50,6 +51,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
 import java.security.Principal;
+import java.security.PrivilegedAction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -328,8 +330,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public PortletPreferences getPreferences() {
-		return new PortletPreferencesWrapper(
-			getPreferencesImpl(), getLifecycle());
+		return DoPrivilegedUtil.wrap(new PreferencesPrivilegedAction());
 	}
 
 	public PortletPreferencesImpl getPreferencesImpl() {
@@ -874,5 +875,15 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private Principal _userPrincipal;
 	private boolean _wapTheme;
 	private WindowState _windowState;
+
+	private class PreferencesPrivilegedAction
+		implements PrivilegedAction<PortletPreferences> {
+
+		public PortletPreferences run() {
+			return new PortletPreferencesWrapper(
+				getPreferencesImpl(), getLifecycle());
+		}
+
+	}
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.io.InputStream;
 
@@ -100,8 +101,9 @@ public class PortletContextImpl implements LiferayPortletContext {
 		}
 
 		if (requestDispatcher != null) {
-			return new PortletRequestDispatcherImpl(
-				requestDispatcher, true, this);
+			return DoPrivilegedUtil.wrap(
+				new PortletRequestDispatcherImpl(
+					requestDispatcher, true, this), true);
 		}
 		else {
 			return null;
@@ -131,8 +133,9 @@ public class PortletContextImpl implements LiferayPortletContext {
 		}
 
 		if (requestDispatcher != null) {
-			return new PortletRequestDispatcherImpl(
-				requestDispatcher, false, this, path);
+			return DoPrivilegedUtil.wrap(
+				new PortletRequestDispatcherImpl(
+					requestDispatcher, false, this, path), true);
 		}
 		else {
 			return null;

@@ -31,6 +31,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletURLListener;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -40,6 +41,8 @@ import com.liferay.portal.util.WebKeys;
 import java.io.Writer;
 
 import java.lang.reflect.Constructor;
+
+import java.security.PrivilegedAction;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -242,6 +245,15 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	public LiferayPortletURL createLiferayPortletURL(
+		long plid, String portletName, String lifecycle,
+		boolean includeLinkToLayoutUuid) {
+
+		return DoPrivilegedUtil.wrap(
+			new LiferayPortletURLPrivilegedAction(
+				plid, portletName, lifecycle, includeLinkToLayoutUuid));
+	}
+
+	protected LiferayPortletURL doCreateLiferayPortletURL(
 		long plid, String portletName, String lifecycle,
 		boolean includeLinkToLayoutUuid) {
 
@@ -696,5 +708,30 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	private HttpServletResponse _response;
 	private URLEncoder _urlEncoder;
 	private boolean _wsrp;
+
+	private class LiferayPortletURLPrivilegedAction
+		implements PrivilegedAction<LiferayPortletURL> {
+
+		public LiferayPortletURLPrivilegedAction(
+			long plid, String portletName, String lifecycle,
+			boolean includeLinkToLayoutUuid) {
+
+			_plid = plid;
+			_portletName = portletName;
+			_lifecycle = lifecycle;
+			_includeLinkToLayoutUuid = includeLinkToLayoutUuid;
+		}
+
+		public LiferayPortletURL run() {
+			return doCreateLiferayPortletURL(
+				_plid, _portletName, _lifecycle, _includeLinkToLayoutUuid);
+		}
+
+		private long _plid;
+		private String _portletName;
+		private String _lifecycle;
+		private boolean _includeLinkToLayoutUuid;
+
+	}
 
 }

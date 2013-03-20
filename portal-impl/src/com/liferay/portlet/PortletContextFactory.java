@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -90,7 +91,7 @@ public class PortletContextFactory {
 			portletContexts.put(portlet.getPortletId(), portletContext);
 		}
 
-		return portletContext;
+		return DoPrivilegedUtil.wrap(portletContext);
 	}
 
 	private void _destroy(Portlet portlet) {

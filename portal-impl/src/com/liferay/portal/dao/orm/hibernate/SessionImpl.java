@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 
 import java.io.Serializable;
 
@@ -78,7 +79,9 @@ public class SessionImpl implements Session {
 		try {
 			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
-			return new QueryImpl(_session.createQuery(queryString), strictName);
+			return DoPrivilegedUtil.wrap(
+				new QueryImpl(_session.createQuery(queryString), strictName),
+				true);
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);
@@ -95,8 +98,10 @@ public class SessionImpl implements Session {
 		try {
 			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
-			return new SQLQueryImpl(
-				_session.createSQLQuery(queryString), strictName);
+			return DoPrivilegedUtil.wrap(
+				new SQLQueryImpl(
+					_session.createSQLQuery(queryString), strictName),
+				true);
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

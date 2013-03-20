@@ -146,8 +146,7 @@ public abstract class AbstractMessagingConfigurator
 	public void setDestinations(List<Destination> destinations) {
 		for (Destination destination : destinations) {
 			try {
-				PortalMessageBusPermission.checkPermission(
-					destination.getName());
+				PortalMessageBusPermission.checkListen(destination.getName());
 			}
 			catch (SecurityException se) {
 				if (_log.isInfoEnabled()) {

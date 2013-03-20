@@ -24,7 +24,21 @@ import java.security.Permission;
  */
 public class PortalMessageBusPermission extends BasicPermission {
 
-	public static void checkPermission(String destinationName) {
+	public static void checkListen(String destinationName) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalMessageBusPermission(
+			PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
+			destinationName);
+
+		securityManager.checkPermission(permission);
+	}
+
+	public static void checkSend(String destinationName) {
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {

@@ -162,13 +162,13 @@ public class MessageBusUtil {
 	}
 
 	private void _addDestination(Destination destination) {
-		PortalMessageBusPermission.checkPermission(destination.getName());
+		PortalMessageBusPermission.checkListen(destination.getName());
 
 		_messageBus.addDestination(destination);
 	}
 
 	private boolean _hasMessageListener(String destinationName) {
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkListen(destinationName);
 
 		return _messageBus.hasMessageListener(destinationName);
 	}
@@ -185,19 +185,19 @@ public class MessageBusUtil {
 	private void _registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkListen(destinationName);
 
 		_messageBus.registerMessageListener(destinationName, messageListener);
 	}
 
 	private void _removeDestination(String destinationName) {
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkListen(destinationName);
 
 		_messageBus.removeDestination(destinationName);
 	}
 
 	private void _sendMessage(String destinationName, Message message) {
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkSend(destinationName);
 
 		_messageBus.sendMessage(destinationName, message);
 	}
@@ -214,7 +214,7 @@ public class MessageBusUtil {
 			String destinationName, Message message)
 		throws MessageBusException {
 
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkSend(destinationName);
 
 		return _synchronousMessageSender.send(destinationName, message);
 	}
@@ -223,7 +223,7 @@ public class MessageBusUtil {
 			String destinationName, Message message, long timeout)
 		throws MessageBusException {
 
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkSend(destinationName);
 
 		return _synchronousMessageSender.send(
 			destinationName, message, timeout);
@@ -270,7 +270,7 @@ public class MessageBusUtil {
 	private boolean _unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
 
-		PortalMessageBusPermission.checkPermission(destinationName);
+		PortalMessageBusPermission.checkListen(destinationName);
 
 		return _messageBus.unregisterMessageListener(
 			destinationName, messageListener);

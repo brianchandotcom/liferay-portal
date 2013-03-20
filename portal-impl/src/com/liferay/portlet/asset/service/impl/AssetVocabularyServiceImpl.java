@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,6 +33,7 @@ import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -87,13 +87,12 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getUserId(), title, serviceContext);
 	}
 
-	public long[] deleteVocabularies(
+	public List<AssetVocabulary> deleteVocabularies(
 			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long[] failedToDeleteIds = new long[0];
-
-		int failedToDeleteIndex = 0;
+		List<AssetVocabulary> failedVocabularies =
+			new ArrayList<AssetVocabulary>(vocabularyIds.length);
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -120,22 +119,11 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 				assetVocabularyLocalService.deleteVocabulary(vocabulary);
 			}
 			else {
-				if (failedToDeleteIds.length == 0) {
-					failedToDeleteIds = new long[vocabularyIds.length];
-				}
-
-				failedToDeleteIds[failedToDeleteIndex++] = vocabularyId;
+				failedVocabularies.add(vocabulary);
 			}
 		}
 
-		if ((failedToDeleteIndex > 0) &&
-			(failedToDeleteIndex < vocabularyIds.length)) {
-
-			failedToDeleteIds = ArrayUtil.subset(
-				failedToDeleteIds, 0, failedToDeleteIndex);
-		}
-
-		return failedToDeleteIds;
+		return failedVocabularies;
 	}
 
 	public void deleteVocabulary(long vocabularyId)

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -81,13 +80,12 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getUserId(), title, vocabularyId, serviceContext);
 	}
 
-	public long[] deleteCategories(
+	public List<AssetCategory> deleteCategories(
 			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long[] failedToDeleteIds = new long[0];
-
-		int failedToDeleteIndex = 0;
+		List<AssetCategory> failedCategories = new ArrayList<AssetCategory>(
+			categoryIds.length);
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -114,22 +112,11 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				assetCategoryLocalService.deleteCategory(category);
 			}
 			else {
-				if (failedToDeleteIds.length == 0) {
-					failedToDeleteIds = new long[categoryIds.length];
-				}
-
-				failedToDeleteIds[failedToDeleteIndex++] = categoryId;
+				failedCategories.add(category);
 			}
 		}
 
-		if ((failedToDeleteIndex > 0) &&
-			(failedToDeleteIndex < categoryIds.length)) {
-
-			failedToDeleteIds = ArrayUtil.subset(
-				failedToDeleteIds, 0, failedToDeleteIndex);
-		}
-
-		return failedToDeleteIds;
+		return failedCategories;
 	}
 
 	public void deleteCategory(long categoryId)

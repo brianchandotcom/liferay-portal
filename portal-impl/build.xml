@@ -1493,23 +1493,36 @@ security-manager-awt-operations=\
 		<replaceregexp
 			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-files-delete=(\\\n[^\\\n]+)*(?=\n\n)"
-			replace="security-manager-files-delete=\\\\${line.separator}    $\{liferay.home}$\{/}pacl-test$\{/}-"
+			match="security-manager-files-(delete|execute|write)=(\\\n[^\\\n]+)*(?=\n\n)"
+			replace="security-manager-files-\1="
 		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-delete=</replacetoken>
+			<replacevalue>security-manager-files-delete=\
+    ${liferay.home}${/}pacl-test${/}-</replacevalue>
+		</replace>
 
 		<replaceregexp
 			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-files-(execute|write)=(\\\n[^\\\n]+)*\n\n"
-			replace="security-manager-files-\1=\\\\${line.separator}    $\{liferay.home}$\{/}pacl-test$\{/},\\\\${line.separator}    $\{liferay.home}$\{/}pacl-test$\{/}-${line.separator}${line.separator}"
+			match="security-manager-files-read=(\\\n[^\\\n]+)*(\\\n\s*\\)(?=\n[ ]{4}/bin/bash)"
+			replace="security-manager-files-read=\2"
 		/>
 
-		<replaceregexp
-			flags="g"
-			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-files-read=(\\\n[^\\\n]+)*(?=/bin/bash)"
-			replace="security-manager-files-read=\\\\${line.separator}    $\{liferay.home}$\{/}pacl-test$\{/},\\\\${line.separator}    $\{liferay.home}$\{/}pacl-test$\{/}-,\\\\${line.separator}    \\\\${line.separator}    "
-		/>
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-read=</replacetoken>
+			<replacevalue>security-manager-files-read=\
+    ${liferay.home}${/}pacl-test${/},\
+    ${liferay.home}${/}pacl-test${/}-,</replacevalue>
+		</replace>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-write=</replacetoken>
+			<replacevalue>security-manager-files-write=\
+    ${liferay.home}${/}pacl-test${/},\
+    ${liferay.home}${/}pacl-test${/}-</replacevalue>
+		</replace>
 
 		<replaceregexp
 			flags="g"

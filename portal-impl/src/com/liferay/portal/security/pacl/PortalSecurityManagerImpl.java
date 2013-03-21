@@ -30,6 +30,8 @@ import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
+import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
+import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -46,6 +48,9 @@ import java.util.Properties;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
 
@@ -322,6 +327,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
 		initPACLImpl(
 			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
+		initPACLImpl(
+			DirectRequestDispatcherFactoryImpl.class,
+			new DoDirectRequestDispatcherFactoryImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
 		initPACLImpl(HotDeployImpl.class, new DoHotDeployImplPACL());
 	}
@@ -356,6 +364,22 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			return new PACLDataSource(dataSource);
 		}
 
+	}
+
+	private static class DoDirectRequestDispatcherFactoryImplPACL
+		implements DirectRequestDispatcherFactoryImpl.PACL {
+
+		public RequestDispatcher getRequestDispatcher(
+			ServletContext servletContext,
+			RequestDispatcher requestDispatcher) {
+
+			if (PACLPolicyManager.isActive()) {
+				requestDispatcher = new PACLRequestDispatcherWrapper(
+					servletContext, requestDispatcher);
+			}
+
+			return requestDispatcher;
+		}
 	}
 
 	private static class DoDoPrivilegedPACL implements DoPrivilegedUtil.PACL {

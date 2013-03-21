@@ -16,19 +16,20 @@ package com.liferay.portal.dao.jdbc.aop;
 
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import java.lang.reflect.Method;
 
+import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
+import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Michael Young
  */
 public class DynamicDataSourceTransactionInterceptor
-	extends TransactionInterceptor {
+	implements MethodInterceptor {
 
 	public void afterPropertiesSet() {
 		if (_dynamicDataSourceTargetSource == null) {
@@ -41,7 +42,7 @@ public class DynamicDataSourceTransactionInterceptor
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (_dynamicDataSourceTargetSource == null) {
-			return super.invoke(methodInvocation);
+			return _transactionInterceptor.invoke(methodInvocation);
 		}
 
 		Class<?> targetClass = null;
@@ -55,7 +56,7 @@ public class DynamicDataSourceTransactionInterceptor
 		Method targetMethod = methodInvocation.getMethod();
 
 		TransactionAttribute transactionAttribute =
-			transactionAttributeSource.getTransactionAttribute(
+			_transactionAttributeSource.getTransactionAttribute(
 				targetMethod, targetClass);
 
 		if ((transactionAttribute != null) &&
@@ -74,7 +75,7 @@ public class DynamicDataSourceTransactionInterceptor
 		Object returnValue = null;
 
 		try {
-			returnValue = super.invoke(methodInvocation);
+			returnValue = _transactionInterceptor.invoke(methodInvocation);
 		}
 		finally {
 			_dynamicDataSourceTargetSource.popMethod();
@@ -89,6 +90,20 @@ public class DynamicDataSourceTransactionInterceptor
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
+	public void setTransactionAttributeSource(
+		TransactionAttributeSource transactionAttributeSource) {
+
+		_transactionAttributeSource = transactionAttributeSource;
+	}
+
+	public void setTransactionInterceptor(
+		MethodInterceptor transactionInterceptor) {
+
+		_transactionInterceptor = transactionInterceptor;
+	}
+
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
+	private TransactionAttributeSource _transactionAttributeSource;
+	private MethodInterceptor _transactionInterceptor;
 
 }

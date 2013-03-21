@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -4273,8 +4273,16 @@ public class PortalImpl implements Portal {
 					// called from a hot deployable portlet. See LayoutAction.
 
 					if (ServerDetector.isWebLogic()) {
-						parentRequest = new NonSerializableObjectRequestWrapper(
-							parentRequest);
+						if (requestWrapper instanceof
+							NonSerializableObjectRequestWrapper) {
+
+							parentRequest = requestWrapper;
+						}
+						else {
+							parentRequest =
+								new NonSerializableObjectRequestWrapper(
+								parentRequest);
+						}
 					}
 
 					uploadServletRequest = new UploadServletRequestImpl(
@@ -6512,13 +6520,13 @@ public class PortalImpl implements Portal {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
-	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
-		WebServerServlet.class);
-
 	private static Map<Long, String> _cdnHostHttpMap =
 		new ConcurrentHashMap<Long, String>();
 	private static Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<Long, String>();
+	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+		WebServerServlet.class);
+
 	private static MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();

@@ -259,7 +259,7 @@ body:first-of-type {
 
 .portlet-boundary.yui3-dd-dragging {
 	@include transform(scale(0.8));
-	@include transition(scale 0.3s ease);
+	@include transition(transform 0.3s ease);
 }
 
 @mixin lfr-drop-active {

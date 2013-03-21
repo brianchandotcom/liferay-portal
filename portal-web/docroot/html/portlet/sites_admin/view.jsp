@@ -29,12 +29,22 @@ portletURL.setParameter("sitesListView", sitesListView);
 pageContext.setAttribute("portletURL", portletURL);
 
 String portletURLString = portletURL.toString();
+
+PortletURL searchURL = renderResponse.createRenderURL();
+
+searchURL.setParameter("struts_action", "/sites_admin/view");
+searchURL.setParameter("sitesListView", SiteConstants.LIST_VIEW_FLAT_SITES);
+searchURL.setParameter("toolbarItem", "view-all-sites");
+
+pageContext.setAttribute("searchURL", searchURL);
+
+String searchURLString = searchURL.toString();
 %>
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
-<aui:form action="<%= portletURLString %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
+<aui:form action="<%= searchURLString %>" method="get" name="fm">
+	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />

@@ -634,7 +634,14 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImage(oldArticle.isSmallImage());
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
-		newArticle.setStatus(oldArticle.getStatus());
+
+		if (oldArticle.isPending()) {
+			newArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+		else {
+			newArticle.setStatus(oldArticle.getStatus());
+		}
+
 		newArticle.setExpandoBridgeAttributes(oldArticle);
 
 		journalArticlePersistence.update(newArticle);

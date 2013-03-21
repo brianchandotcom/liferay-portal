@@ -17,35 +17,70 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.bean.VelocityBeanHandler;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.PreloadClassLoader;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
+import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
+import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.context.PortletApplicationContext;
+import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.TemplateControlContext;
+import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.lang.reflect.ReflectPermission;
 
+import java.net.SocketPermission;
+
+import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
+import java.security.ProtectionDomain;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+
 import javax.sql.DataSource;
 
+import org.springframework.aop.framework.AdvisedSupport;
+
+import sun.reflect.Reflection;
 import sun.security.util.SecurityConstants;
 
 /**
@@ -319,7 +354,31 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
 		initPACLImpl(
 			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
+		initPACLImpl(
+			DirectRequestDispatcherFactoryImpl.class,
+			new DoDirectRequestDispatcherFactoryImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
+		initPACLImpl(HotDeployImpl.class, new DoHotDeployImplPACL());
+		initPACLImpl(
+			PortalFilePermission.class, new DoPortalFilePermissionPACL());
+		initPACLImpl(
+			PortalHookPermission.class, new DoPortalHookPermissionPACL());
+		initPACLImpl(
+			PortalMessageBusPermission.class,
+			new DoPortalMessageBusPermissionPACL());
+		initPACLImpl(
+			PortalRuntimePermission.class, new DoPortalRuntimePermissionPACL());
+		initPACLImpl(
+			PortalServicePermission.class, new DoPortalServicePermissionPACL());
+		initPACLImpl(
+			PortalSocketPermission.class, new DoPortalSocketPermissionPACL());
+		initPACLImpl(
+			PortletApplicationContext.class,
+			new DoPortletApplicationContextPACL());
+		initPACLImpl(
+			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
+		initPACLImpl(
+			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -352,6 +411,22 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			return new PACLDataSource(dataSource);
 		}
 
+	}
+
+	private static class DoDirectRequestDispatcherFactoryImplPACL
+		implements DirectRequestDispatcherFactoryImpl.PACL {
+
+		public RequestDispatcher getRequestDispatcher(
+			ServletContext servletContext,
+			RequestDispatcher requestDispatcher) {
+
+			if (PACLPolicyManager.isActive()) {
+				requestDispatcher = new PACLRequestDispatcherWrapper(
+					servletContext, requestDispatcher);
+			}
+
+			return requestDispatcher;
+		}
 	}
 
 	private static class DoDoPrivilegedPACL implements DoPrivilegedUtil.PACL {
@@ -387,6 +462,423 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			}
 
 			return DoPrivilegedFactory.wrap(t);
+		}
+
+	}
+
+	private static class DoHotDeployImplPACL implements HotDeployImpl.PACL {
+
+		public void initPolicy(
+			String servletContextName, ClassLoader classLoader,
+			Properties properties) {
+
+			PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
+				servletContextName, classLoader, properties);
+
+			PACLPolicyManager.register(classLoader, paclPolicy);
+		}
+
+		public void unregister(ClassLoader classLoader) {
+			PACLPolicyManager.unregister(classLoader);
+		}
+
+	}
+
+	private static class DoPortalFilePermissionPACL
+		implements PortalFilePermission.PACL {
+
+		public void checkCopy(String source, String destination) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNotNull(source)) {
+				securityManager.checkRead(source);
+			}
+
+			if (Validator.isNull(destination)) {
+				return;
+			}
+
+			securityManager.checkWrite(destination);
+		}
+
+		public void checkDelete(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkDelete(path);
+		}
+
+		public void checkMove(String source, String destination) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNotNull(source)) {
+				securityManager.checkRead(source);
+				securityManager.checkDelete(source);
+			}
+
+			if (Validator.isNull(destination)) {
+				return;
+			}
+
+			securityManager.checkWrite(destination);
+			securityManager.checkDelete(destination);
+		}
+
+		public void checkRead(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkRead(path);
+		}
+
+		public void checkWrite(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkWrite(path);
+		}
+
+	}
+
+	private static class DoPortalHookPermissionPACL
+		implements PortalHookPermission.PACL {
+
+		public void checkPermission(
+			String name, ClassLoader portletClassLoader, Object subject) {
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				portletClassLoader);
+
+			if (paclPolicy == null) {
+				return;
+			}
+
+			Permission permission = new PortalHookPermission(
+				name, portletClassLoader, subject);
+
+			if (!paclPolicy.implies(permission)) {
+				throw new SecurityException(permission.toString());
+			}
+		}
+
+	}
+
+	private static class DoPortalMessageBusPermissionPACL
+		implements PortalMessageBusPermission.PACL {
+
+		public void checkListen(String destinationName) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalMessageBusPermission(
+				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
+				destinationName);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSend(String destinationName) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalMessageBusPermission(
+				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
+				destinationName);
+
+			securityManager.checkPermission(permission);
+		}
+
+	}
+
+	private static class DoPortalRuntimePermissionPACL
+		implements PortalRuntimePermission.PACL {
+
+		public void checkExpandoBridge(String className) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, null,
+				className);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkGetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Class<?> callerClass = Reflection.getCallerClass(5);
+
+			if (clazz == callerClass) {
+
+				// The bean is calling it's own getBean method.
+
+				return;
+			}
+
+			clazz = PACLUtil.getClass(clazz);
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY,
+				servletContextName, clazz, property);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkGetClassLoader(String classLoaderReferenceId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER, null,
+				classLoaderReferenceId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkPortletBagPool(String portletId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL, null,
+				portletId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSearchEngine(String searchEngineId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE, null,
+				searchEngineId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			clazz = PACLUtil.getClass(clazz);
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY,
+				servletContextName, clazz, property);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkThreadPoolExecutor(String name) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
+				null, name);
+
+			securityManager.checkPermission(permission);
+		}
+
+	}
+
+	private static class DoPortalServicePermissionPACL
+		implements PortalServicePermission.PACL {
+
+		public void checkDynamicQuery(Class<?> implClass) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalServicePermission(
+				PACLConstants.PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY,
+				implClass, null);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkService(
+			Object object, Method method, Object[] arguments) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			PortalServicePermission portalServicePermission =
+				new PortalServicePermission(
+					PACLConstants.PORTAL_SERVICE_PERMISSION_SERVICE, object,
+					method, arguments);
+
+			securityManager.checkPermission(portalServicePermission);
+		}
+
+	}
+
+	private static class DoPortalSocketPermissionPACL
+		implements PortalSocketPermission.PACL {
+
+		public void checkPermission(String host, String action) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new SocketPermission(host, action);
+
+			securityManager.checkPermission(permission);
+		}
+
+	}
+
+	private static class DoPortletApplicationContextPACL
+		implements PortletApplicationContext.PACL {
+
+		public ClassLoader getBeanClassLoader() {
+			if (PACLPolicyManager.isActive()) {
+				return DoPrivilegedFactory.wrap(
+					new PreloadClassLoader(
+						PortletClassLoaderUtil.getClassLoader(), _classes));
+			}
+
+			ClassLoader beanClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					new ClassLoader[] {
+						PortletClassLoaderUtil.getClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader()
+					});
+
+			return new FilterClassLoader(beanClassLoader);
+		}
+
+		private static Map<String, Class<?>> _classes =
+			new HashMap<String, Class<?>>();
+
+		static {
+			for (String className :
+					PropsValues.
+						PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES) {
+
+				Class<?> clazz = null;
+
+				try {
+					clazz = Class.forName(className);
+				}
+				catch (ClassNotFoundException cnfe) {
+					_log.error(cnfe, cnfe);
+				}
+
+				_classes.put(clazz.getName(), clazz);
+			}
+		}
+	}
+
+	private static class DoServiceBeanAopProxyPACL
+		implements ServiceBeanAopProxy.PACL {
+
+		public InvocationHandler getInvocationHandler(
+			InvocationHandler invocationHandler,
+			AdvisedSupport advisedSupport) {
+
+			return new PACLInvocationHandler(invocationHandler, advisedSupport);
+		}
+
+	}
+
+	private static class DoTemplateContextHelperPACL
+		implements TemplateContextHelper.PACL {
+
+		public TemplateControlContext getTemplateControlContext() {
+			PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
+
+			ClassLoader contextClassLoader =
+				ClassLoaderUtil.getContextClassLoader();
+
+			if (paclPolicy == null) {
+				paclPolicy = PACLPolicyManager.getPACLPolicy(
+					contextClassLoader);
+			}
+
+			if ((paclPolicy == null) || !paclPolicy.isActive()) {
+				return new TemplateControlContext(null, contextClassLoader);
+			}
+
+			ProtectionDomain protectionDomain = new ProtectionDomain(
+				null, null, paclPolicy.getClassLoader(), null);
+
+			AccessControlContext accessControlContext =
+				new AccessControlContext(
+					new ProtectionDomain[] {protectionDomain});
+
+			return new TemplateControlContext(
+				accessControlContext, paclPolicy.getClassLoader());
 		}
 
 	}

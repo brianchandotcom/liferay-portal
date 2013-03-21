@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
-import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.RequestDispatcher;
@@ -119,15 +117,29 @@ public class DirectRequestDispatcherFactoryImpl
 				servlet, queryString);
 		}
 
-		if (PACLPolicyManager.isActive()) {
-			requestDispatcher = new PACLRequestDispatcherWrapper(
-				servletContext, requestDispatcher);
-		}
-
-		return requestDispatcher;
+		return _pacl.getRequestDispatcher(servletContext, requestDispatcher);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DirectRequestDispatcherFactoryImpl.class);
+
+	private static PACL _pacl = new NoPACL();
+
+	public static interface PACL {
+
+		public RequestDispatcher getRequestDispatcher(
+			ServletContext servletContext, RequestDispatcher requestDispatcher);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public RequestDispatcher getRequestDispatcher(
+			ServletContext servletContext,
+			RequestDispatcher requestDispatcher) {
+
+			return requestDispatcher;
+		}
+	}
 
 }

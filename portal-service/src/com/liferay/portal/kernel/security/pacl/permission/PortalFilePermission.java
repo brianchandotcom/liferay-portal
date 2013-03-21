@@ -14,85 +14,79 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
-import com.liferay.portal.kernel.util.Validator;
-
 /**
  * @author Raymond Augé
  */
 public class PortalFilePermission {
 
-	public static void checkCopy(String sourcePath, String destinationPath) {
-		if (Validator.isNull(sourcePath) || Validator.isNull(destinationPath)) {
-			return;
-		}
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		securityManager.checkRead(sourcePath);
-		securityManager.checkWrite(destinationPath);
+	public static void checkCopy(String source, String destination) {
+		_pacl.checkCopy(source, destination);
 	}
 
 	public static void checkDelete(String path) {
-		if (Validator.isNull(path)) {
-			return;
-		}
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		securityManager.checkDelete(path);
+		_pacl.checkDelete(path);
 	}
 
-	public static void checkMove(String sourcePath, String destinationPath) {
-		if (Validator.isNull(sourcePath) || Validator.isNull(destinationPath)) {
-			return;
-		}
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		securityManager.checkRead(sourcePath);
-		securityManager.checkWrite(destinationPath);
-		securityManager.checkDelete(sourcePath);
-		securityManager.checkDelete(destinationPath);
+	public static void checkMove(String source, String destination) {
+		_pacl.checkMove(source, destination);
 	}
 
 	public static void checkRead(String path) {
-		if (Validator.isNull(path)) {
-			return;
-		}
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		securityManager.checkRead(path);
+		_pacl.checkRead(path);
 	}
 
 	public static void checkWrite(String path) {
-		if (Validator.isNull(path)) {
-			return;
+		_pacl.checkWrite(path);
+	}
+
+	private static PACL _pacl = new NoPACL();
+
+	public static interface PACL {
+
+		public void checkCopy(String source, String destination);
+
+		public void checkDelete(String path);
+
+		public void checkMove(String source, String destination);
+
+		public void checkRead(String path);
+
+		public void checkWrite(String path);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public void checkCopy(String source, String destination) {
+
+			// no operation
+
 		}
 
-		SecurityManager securityManager = System.getSecurityManager();
+		public void checkDelete(String path) {
 
-		if (securityManager == null) {
-			return;
+			// no operation
+
 		}
 
-		securityManager.checkWrite(path);
+		public void checkMove(String source, String destination) {
+
+			// no operation
+
+		}
+
+		public void checkRead(String path) {
+
+			// no operation
+
+		}
+
+		public void checkWrite(String path) {
+
+			// no operation
+
+		}
+
 	}
 
 }

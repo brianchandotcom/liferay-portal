@@ -14,12 +14,10 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.security.BasicPermission;
-import java.security.Permission;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,17 +26,7 @@ import java.security.Permission;
 public class PortalRuntimePermission extends BasicPermission {
 
 	public static void checkExpandoBridge(String className) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, "portal",
-			className);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkExpandoBridge(className);
 	}
 
 	public static void checkGetBeanProperty(Class<?> clazz) {
@@ -61,126 +49,40 @@ public class PortalRuntimePermission extends BasicPermission {
 		_checkGetBeanProperty(servletContextName, clazz, property);
 	}
 
-	public static void checkGetBeanProperty(
-		String servletContextName, String className, String property) {
-
-		_checkGetBeanProperty(servletContextName, className, property);
-	}
-
 	public static void checkGetClassLoader(String classLoaderReferenceId) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER, "portal",
-			classLoaderReferenceId);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkGetClassLoader(classLoaderReferenceId);
 	}
 
 	public static void checkPortletBagPool(String portletId) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL, null,
-			portletId);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkPortletBagPool(portletId);
 	}
 
 	public static void checkSearchEngine(String searchEngineId) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE, "portal",
-			searchEngineId);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSearchEngine(searchEngineId);
 	}
 
 	public static void checkSetBeanProperty(Class<?> clazz) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY, "portal",
-			clazz, null);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSetBeanProperty("portal", clazz, null);
 	}
 
 	public static void checkSetBeanProperty(Class<?> clazz, String property) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY, "portal",
-			clazz, property);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSetBeanProperty("portal", clazz, property);
 	}
 
 	public static void checkSetBeanProperty(
 		String servletContextName, Class<?> clazz) {
 
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY,
-			servletContextName, clazz, null);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSetBeanProperty(servletContextName, clazz, null);
 	}
 
 	public static void checkSetBeanProperty(
 		String servletContextName, Class<?> clazz, String property) {
 
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY,
-			servletContextName, clazz, property);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSetBeanProperty(servletContextName, clazz, property);
 	}
 
 	public static void checkThreadPoolExecutor(String name) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
-			"portal", name);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkThreadPoolExecutor(name);
 	}
 
 	public PortalRuntimePermission(
@@ -249,40 +151,81 @@ public class PortalRuntimePermission extends BasicPermission {
 	private static void _checkGetBeanProperty(
 		String servletContextName, Class<?> clazz, String property) {
 
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY,
-			servletContextName, clazz, property);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkGetBeanProperty(servletContextName, clazz, property);
 	}
 
-	/**
-	 * This method ensures the calls stack is the proper length.
-	 */
-	private static void _checkGetBeanProperty(
-		String servletContextName, String className, String property) {
-
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY,
-			servletContextName, className, property);
-
-		securityManager.checkPermission(permission);
-	}
+	private static PACL _pacl = new NoPACL();
 
 	private String _property;
 	private String _servletContextName;
 	private Object _subject;
+
+	public static interface PACL {
+
+		public void checkExpandoBridge(String className);
+
+		public void checkGetBeanProperty(
+			String servletContextName, Class<?> clazz, String property);
+
+		public void checkGetClassLoader(String classLoaderReferenceId);
+
+		public void checkPortletBagPool(String portletId);
+
+		public void checkSearchEngine(String searchEngineId);
+
+		public void checkSetBeanProperty(
+			String servletContextName, Class<?> clazz, String property);
+
+		public void checkThreadPoolExecutor(String name);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public void checkExpandoBridge(String className) {
+
+			// no operation
+
+		}
+
+		public void checkGetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			// no operation
+
+		}
+
+		public void checkGetClassLoader(String classLoaderReferenceId) {
+
+			// no operation
+
+		}
+
+		public void checkPortletBagPool(String portletId) {
+
+			// no operation
+
+		}
+
+		public void checkSearchEngine(String searchEngineId) {
+
+			// no operation
+
+		}
+
+		public void checkSetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			// no operation
+
+		}
+
+		public void checkThreadPoolExecutor(String name) {
+
+			// no operation
+
+		}
+
+	}
 
 }

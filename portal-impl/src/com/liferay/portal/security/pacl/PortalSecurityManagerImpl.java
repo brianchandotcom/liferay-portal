@@ -42,6 +42,7 @@ import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -72,6 +73,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
+
+import org.springframework.aop.framework.AdvisedSupport;
 
 import sun.reflect.Reflection;
 import sun.security.util.SecurityConstants;
@@ -368,6 +371,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			PortletApplicationContext.class,
 			new DoPortletApplicationContextPACL());
+		initPACLImpl(
+			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -827,6 +832,18 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				_classes.put(clazz.getName(), clazz);
 			}
 		}
+	}
+
+	private static class DoServiceBeanAopProxyPACL
+		implements ServiceBeanAopProxy.PACL {
+
+		public InvocationHandler getInvocationHandler(
+			InvocationHandler invocationHandler,
+			AdvisedSupport advisedSupport) {
+
+			return new PACLInvocationHandler(invocationHandler, advisedSupport);
+		}
+
 	}
 
 }

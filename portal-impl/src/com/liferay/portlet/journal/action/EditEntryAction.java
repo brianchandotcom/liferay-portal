@@ -225,7 +225,9 @@ public class EditEntryAction extends PortletAction {
 			}
 		}
 
-		if (moveToTrash && (deleteArticleIds.length > 0)) {
+		if (moveToTrash &&
+			((deleteArticleIds.length > 0) || (deleteFolderIds.length > 0))) {
+
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
 			data.put(

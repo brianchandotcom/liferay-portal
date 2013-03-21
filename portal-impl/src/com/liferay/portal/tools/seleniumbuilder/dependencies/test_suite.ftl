@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 
 public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)} extends BaseTestSuite {
 
-	public static TestSuite testSuite() {
+	public static TestSuite suite() {
 		TestSuite testSuite = new TestSuite();
 
 		<#list executeElements as executeElement>

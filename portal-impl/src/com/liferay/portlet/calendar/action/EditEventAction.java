@@ -236,7 +236,7 @@ public class EditEventAction extends PortletAction {
 		}
 		else {
 			locale = LocaleUtil.getDefault();
-			timeZone = TimeZoneUtil.getDefault();
+			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar(timeZone, locale);

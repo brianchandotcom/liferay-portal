@@ -20,8 +20,10 @@ import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -338,6 +340,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			PortalFilePermission.class, new DoPortalFilePermissionPACL());
 		initPACLImpl(
 			PortalHookPermission.class, new DoPortalHookPermissionPACL());
+		initPACLImpl(
+			PortalMessageBusPermission.class,
+			new DoPortalMessageBusPermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -547,6 +552,39 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			if (!paclPolicy.implies(permission)) {
 				throw new SecurityException(permission.toString());
 			}
+		}
+
+	}
+
+	private static class DoPortalMessageBusPermissionPACL
+		implements PortalMessageBusPermission.PACL {
+
+		public void checkListen(String destinationName) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalMessageBusPermission(
+				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
+				destinationName);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSend(String destinationName) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalMessageBusPermission(
+				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
+				destinationName);
+
+			securityManager.checkPermission(permission);
 		}
 
 	}

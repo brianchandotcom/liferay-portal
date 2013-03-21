@@ -95,19 +95,9 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  * @author Julio Camarero
  */
-public class AssetPublisherUtil {
+public class AssetPublisherImpl implements AssetPublisher {
 
-	public static final String SCOPE_ID_CHILD_GROUP_PREFIX = "ChildGroup_";
-
-	public static final String SCOPE_ID_GROUP_PREFIX = "Group_";
-
-	public static final String SCOPE_ID_LAYOUT_PREFIX = "Layout_";
-
-	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
-
-	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
-
-	public static void addAndStoreSelection(
+	public void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
 			int assetEntryOrder)
 		throws Exception {
@@ -147,13 +137,13 @@ public class AssetPublisherUtil {
 		portletPreferences.store();
 	}
 
-	public static void addRecentFolderId(
+	public void addRecentFolderId(
 		PortletRequest portletRequest, String className, long classPK) {
 
 		_getRecentFolderIds(portletRequest).put(className, classPK);
 	}
 
-	public static void addSelection(
+	public void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
@@ -172,7 +162,7 @@ public class AssetPublisherUtil {
 			assetEntryOrder, assetEntryType);
 	}
 
-	public static void addSelection(
+	public void addSelection(
 			ThemeDisplay themeDisplay, PortletPreferences portletPreferences,
 			String portletId, long assetEntryId, int assetEntryOrder,
 			String assetEntryType)
@@ -212,7 +202,7 @@ public class AssetPublisherUtil {
 		notifySubscribers(portletPreferences, plid, portletId, assetEntries);
 	}
 
-	public static void addUserAttributes(
+	public void addUserAttributes(
 			User user, String[] customUserAttributeNames,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
@@ -256,7 +246,7 @@ public class AssetPublisherUtil {
 		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
 
-	public static void checkAssetEntries() throws Exception {
+	public void checkAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			new PortletPreferencesActionableDynamicQuery() {
 
@@ -287,7 +277,7 @@ public class AssetPublisherUtil {
 		actionableDynamicQuery.performActions();
 	}
 
-	public static List<AssetEntry> getAssetEntries(
+	public List<AssetEntry> getAssetEntries(
 			PortletPreferences preferences, Layout layout, long scopeGroupId,
 			int max, boolean checkPermission)
 		throws PortalException, SystemException {
@@ -366,7 +356,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static AssetEntryQuery getAssetEntryQuery(
+	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws PortalException, SystemException {
 
@@ -468,7 +458,7 @@ public class AssetPublisherUtil {
 		return assetEntryQuery;
 	}
 
-	public static String[] getAssetTagNames(
+	public String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception {
 
@@ -502,9 +492,7 @@ public class AssetPublisherUtil {
 		return allAssetTagNames;
 	}
 
-	public static String getClassName(
-		AssetRendererFactory assetRendererFactory) {
-
+	public String getClassName(AssetRendererFactory assetRendererFactory) {
 		Class<?> clazz = assetRendererFactory.getClass();
 
 		String className = clazz.getName();
@@ -514,7 +502,7 @@ public class AssetPublisherUtil {
 		return className.substring(pos + 1);
 	}
 
-	public static long[] getClassNameIds(
+	public long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
@@ -543,7 +531,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static Long[] getClassTypeIds(
+	public Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		Long[] availableClassTypeIds) {
 
@@ -575,7 +563,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static Map<Locale, String> getEmailAssetEntryAddedBodyMap(
+	public Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences preferences) {
 
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
@@ -598,7 +586,7 @@ public class AssetPublisherUtil {
 		return map;
 	}
 
-	public static boolean getEmailAssetEntryAddedEnabled(
+	public boolean getEmailAssetEntryAddedEnabled(
 		PortletPreferences preferences) {
 
 		String emailAssetEntryAddedEnabled = preferences.getValue(
@@ -612,7 +600,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
+	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences preferences) {
 
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
@@ -636,7 +624,7 @@ public class AssetPublisherUtil {
 		return map;
 	}
 
-	public static String getEmailFromAddress(
+	public String getEmailFromAddress(
 			PortletPreferences preferences, long companyId)
 		throws SystemException {
 
@@ -645,7 +633,7 @@ public class AssetPublisherUtil {
 			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_ADDRESS);
 	}
 
-	public static String getEmailFromName(
+	public String getEmailFromName(
 			PortletPreferences preferences, long companyId)
 		throws SystemException {
 
@@ -654,7 +642,7 @@ public class AssetPublisherUtil {
 			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 	}
 
-	public static long getGroupIdFromScopeId(
+	public long getGroupIdFromScopeId(
 			String scopeId, long siteGroupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -726,7 +714,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static long[] getGroupIds(
+	public long[] getGroupIds(
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
 
@@ -752,7 +740,7 @@ public class AssetPublisherUtil {
 		return groupIds;
 	}
 
-	public static long getRecentFolderId(
+	public long getRecentFolderId(
 		PortletRequest portletRequest, String className) {
 
 		Long classPK = _getRecentFolderIds(portletRequest).get(className);
@@ -765,7 +753,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static String getScopeId(Group group, long scopeGroupId)
+	public String getScopeId(Group group, long scopeGroupId)
 		throws PortalException, SystemException {
 
 		String key = null;
@@ -798,26 +786,22 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
-	public static boolean isScopeIdSelectable(
+	public boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
 		throws PortalException, SystemException {
 
-		long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
-			scopeId, layout.getGroupId(), layout.isPrivateLayout());
+		long groupId = getGroupIdFromScopeId(
+				scopeId, layout.getGroupId(), layout.isPrivateLayout());
 
-		if (scopeId.startsWith(
-				AssetPublisherUtil.SCOPE_ID_CHILD_GROUP_PREFIX)) {
-
+		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			if (!group.hasAncestor(layout.getGroupId())) {
 				return false;
 			}
 		}
-		else if (scopeId.startsWith(
-					AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
-
+		else if (scopeId.startsWith(SCOPE_ID_PARENT_GROUP_PREFIX)) {
 			Group siteGroup = layout.getGroup();
 
 			if (!siteGroup.hasAncestor(groupId)) {
@@ -837,7 +821,7 @@ public class AssetPublisherUtil {
 		return true;
 	}
 
-	public static boolean isSubscribed(
+	public boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException, SystemException {
 
@@ -847,7 +831,7 @@ public class AssetPublisherUtil {
 			_getPortletPreferencesId(plid, portletId));
 	}
 
-	public static void notifySubscribers(
+	public void notifySubscribers(
 			PortletPreferences preferences, long plid, String portletId,
 			List<AssetEntry> assetEntries)
 		throws PortalException, SystemException {
@@ -893,7 +877,7 @@ public class AssetPublisherUtil {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	public static void removeAndStoreSelection(
+	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -929,7 +913,7 @@ public class AssetPublisherUtil {
 		portletPreferences.store();
 	}
 
-	public static void removeRecentFolderId(
+	public void removeRecentFolderId(
 		PortletRequest portletRequest, String className, long classPK) {
 
 		if (getRecentFolderId(portletRequest, className) == classPK) {
@@ -937,7 +921,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	public static void subscribe(
+	public void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
 		throws PortalException, SystemException {
@@ -951,7 +935,7 @@ public class AssetPublisherUtil {
 			_getPortletPreferencesId(plid, portletId));
 	}
 
-	public static void unsubscribe(
+	public void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException, SystemException {
 
@@ -964,7 +948,7 @@ public class AssetPublisherUtil {
 			_getPortletPreferencesId(plid, portletId));
 	}
 
-	private static void _checkAssetEntries(
+	private void _checkAssetEntries(
 			com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws PortalException, SystemException {
 
@@ -1025,7 +1009,7 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	private static String _getAssetEntryXml(
+	private String _getAssetEntryXml(
 		String assetEntryType, String assetEntryUuid) {
 
 		String xml = null;
@@ -1056,7 +1040,7 @@ public class AssetPublisherUtil {
 		return xml;
 	}
 
-	private static long _getPortletPreferencesId(long plid, String portletId)
+	private long _getPortletPreferencesId(long plid, String portletId)
 		throws PortalException, SystemException {
 
 		com.liferay.portal.model.PortletPreferences portletPreferences =
@@ -1067,7 +1051,7 @@ public class AssetPublisherUtil {
 		return portletPreferences.getPortletPreferencesId();
 	}
 
-	private static Map<String, Long> _getRecentFolderIds(
+	private Map<String, Long> _getRecentFolderIds(
 		PortletRequest portletRequest) {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -1093,9 +1077,9 @@ public class AssetPublisherUtil {
 		return recentFolderIds;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetPublisherUtil.class);
+	private Log _log = LogFactoryUtil.getLog(AssetPublisherUtil.class);
 
-	private static Accessor<AssetEntry, String> _titleAccessor =
+	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {
 
 			public String get(AssetEntry assetEntry) {

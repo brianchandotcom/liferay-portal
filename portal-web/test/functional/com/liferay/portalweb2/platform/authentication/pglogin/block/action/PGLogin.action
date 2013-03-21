@@ -1,7 +1,7 @@
 <definition>
 	<command name="Click">
 		<case locator-key="SIGN_IN">
-			<execute function="Click#valueClickAtAndWait" value="Sign In" />
+			<execute function="Click#valueClickAtAndWait" value1="Sign In" />
 		</case>
 	</command>
 </definition>

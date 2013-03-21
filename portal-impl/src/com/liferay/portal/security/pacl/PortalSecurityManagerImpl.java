@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -44,6 +45,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.ReflectPermission;
+
+import java.net.SocketPermission;
 
 import java.security.AccessController;
 import java.security.Permission;
@@ -351,6 +354,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			PortalRuntimePermission.class, new DoPortalRuntimePermissionPACL());
 		initPACLImpl(
 			PortalServicePermission.class, new DoPortalServicePermissionPACL());
+		initPACLImpl(
+			PortalSocketPermission.class, new DoPortalSocketPermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -749,6 +754,23 @@ public class PortalSecurityManagerImpl extends SecurityManager
 					method, arguments);
 
 			securityManager.checkPermission(portalServicePermission);
+		}
+
+	}
+
+	private static class DoPortalSocketPermissionPACL
+		implements PortalSocketPermission.PACL {
+
+		public void checkPermission(String host, String action) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new SocketPermission(host, action);
+
+			securityManager.checkPermission(permission);
 		}
 
 	}

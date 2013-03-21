@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.test;
+package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;

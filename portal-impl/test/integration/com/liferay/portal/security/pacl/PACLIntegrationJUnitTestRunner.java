@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.test;
+package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.Context;
 
 import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.TestClass;
 
 /**
  * @author Raymond Augé
@@ -50,15 +49,11 @@ public class PACLIntegrationJUnitTestRunner
 
 	@Override
 	public void initApplicationContext() {
-		TestClass testClass = getTestClass();
-
-		Class<?> clazz = testClass.getJavaClass();
-
 		if (_initialized) {
 			return;
 		}
 
-		URL resource = clazz.getResource("dependencies/pacl-test.properties");
+		URL resource = getClass().getResource("pacl-test.properties");
 
 		if (resource != null) {
 			System.setProperty("external-properties", resource.getPath());
@@ -160,6 +155,19 @@ public class PACLIntegrationJUnitTestRunner
 				}
 
 				newName = RESOURCE_PATH.concat(newName);
+
+				resource = super.findResource(newName);
+			}
+
+			if ((resource == null) && !name.contains(RESOURCE_PATH)) {
+				String newName = name;
+
+				if (!newName.startsWith(StringPool.SLASH)) {
+					newName = StringPool.SLASH.concat(newName);
+				}
+
+				newName = RESOURCE_PATH.concat("/WEB-INF/classes").concat(
+					newName);
 
 				resource = super.findResource(newName);
 			}

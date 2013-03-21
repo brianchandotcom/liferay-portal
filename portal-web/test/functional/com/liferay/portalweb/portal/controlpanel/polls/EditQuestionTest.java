@@ -75,6 +75,6 @@ public class EditQuestionTest extends BaseTestCase {
 			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("d. NEW Test Choice D"),
-			selenium.getText("//span[4]/span/label"));
+			selenium.getText("xPath=(//label[@class='aui-choice-label'])[4]"));
 	}
 }

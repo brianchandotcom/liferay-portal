@@ -98,12 +98,12 @@ public class ExpireQuestionTest extends BaseTestCase {
 				assertFalse(selenium.isChecked(
 						"//input[@id='_25_neverExpireCheckbox']"));
 				selenium.waitForVisible(
-					"//select[@id='_25_expirationDateMonth']");
-				selenium.select("//select[@id='_25_expirationDateYear']",
+					"//select[@id='_25_expirationdatemonth']");
+				selenium.select("//select[@id='_25_expirationdateyear']",
 					RuntimeVariables.replace("2008"));
-				selenium.select("//select[@id='_25_expirationDateMonth']",
+				selenium.select("//select[@id='_25_expirationdatemonth']",
 					RuntimeVariables.replace("January"));
-				selenium.select("//select[@id='_25_expirationDateDay']",
+				selenium.select("//select[@id='_25_expirationdateday']",
 					RuntimeVariables.replace("1"));
 				selenium.select("//select[@name='_25_expirationDateHour']",
 					RuntimeVariables.replace("12"));

@@ -70,15 +70,16 @@ public class LoginAction extends Action {
 		}
 
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-				!request.isSecure()) {
+			!request.isSecure()) {
 
-			StringBundler redirect = new StringBundler();
-			redirect.append(PortalUtil.getPortalURL(request, true));
-			redirect.append(request.getRequestURI());
-			redirect.append(StringPool.QUESTION);
-			redirect.append(request.getQueryString());
+			StringBundler sb = new StringBundler(4);
 
-			response.sendRedirect(redirect.toString());
+			sb.append(PortalUtil.getPortalURL(request, true));
+			sb.append(request.getRequestURI());
+			sb.append(StringPool.QUESTION);
+			sb.append(request.getQueryString());
+
+			response.sendRedirect(sb.toString());
 
 			return null;
 		}
@@ -101,28 +102,27 @@ public class LoginAction extends Action {
 			if (PropsValues.PORTAL_JAAS_ENABLE) {
 				return mapping.findForward("/portal/touch_protected.jsp");
 			}
-			else {
-				String redirect = ParamUtil.getString(request, "redirect");
 
-				redirect = PortalUtil.escapeRedirect(redirect);
+			String redirect = ParamUtil.getString(request, "redirect");
 
-				if (Validator.isNull(redirect)) {
-					redirect = themeDisplay.getPathMain();
-				}
+			redirect = PortalUtil.escapeRedirect(redirect);
 
-				if (redirect.charAt(0) == CharPool.SLASH) {
-					String portalURL = PortalUtil.getPortalURL(
-						request, request.isSecure());
-
-					if (Validator.isNotNull(portalURL)) {
-						redirect = portalURL.concat(redirect);
-					}
-				}
-
-				response.sendRedirect(redirect);
-
-				return null;
+			if (Validator.isNull(redirect)) {
+				redirect = themeDisplay.getPathMain();
 			}
+
+			if (redirect.charAt(0) == CharPool.SLASH) {
+				String portalURL = PortalUtil.getPortalURL(
+					request, request.isSecure());
+
+				if (Validator.isNotNull(portalURL)) {
+					redirect = portalURL.concat(redirect);
+				}
+			}
+
+			response.sendRedirect(redirect);
+
+			return null;
 		}
 
 		String redirect = PortalUtil.getSiteLoginURL(themeDisplay);

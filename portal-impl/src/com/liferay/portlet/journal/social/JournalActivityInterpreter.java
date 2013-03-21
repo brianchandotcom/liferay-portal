@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.social;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -41,8 +42,10 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	protected String getEntryTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
 			activity.getClassPK());
@@ -51,8 +54,11 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
 			activity.getClassPK());
@@ -130,7 +136,7 @@ public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		int activityType = activity.getType();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -48,13 +49,15 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected Object[] getTitleArguments(
 			String groupName, SocialActivity activity, String link,
-			String title, ThemeDisplay themeDisplay)
+			String title, ServiceContext serviceContext)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
 		String creatorUserName = getUserName(
-			activity.getUserId(), themeDisplay);
+			activity.getUserId(), serviceContext);
 		String receiverUserName = getUserName(
-			activity.getReceiverUserId(), themeDisplay);
+			activity.getReceiverUserId(), serviceContext);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(
 			activity.getClassPK());
@@ -151,7 +154,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		return BlogsEntryPermission.contains(

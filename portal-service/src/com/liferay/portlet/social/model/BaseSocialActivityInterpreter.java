@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -39,8 +38,6 @@ import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,37 +99,28 @@ public abstract class BaseSocialActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		HttpServletRequest request = serviceContext.getRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return doInterpret(activity, themeDisplay);
-	}
-
-	protected SocialActivityFeedEntry doInterpret(
-			SocialActivity activity, ThemeDisplay themeDisplay)
-		throws Exception {
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
 		if (!hasPermissions(
-				permissionChecker, activity, ActionKeys.VIEW, themeDisplay)) {
+				permissionChecker, activity, ActionKeys.VIEW, serviceContext)) {
 
 			return null;
 		}
 
-		String link = getLink(activity, themeDisplay);
+		String link = getLink(activity, serviceContext);
 
-		String title = getTitle(activity, themeDisplay);
+		String title = getTitle(activity, serviceContext);
 
-		String body = getBody(activity, themeDisplay);
+		String body = getBody(activity, serviceContext);
 
 		return new SocialActivityFeedEntry(link, title, body);
 	}
 
-	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getBody(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -147,17 +135,19 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String getEntryTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		return StringPool.BLANK;
 	}
 
-	protected String getGroupName(long groupId, ThemeDisplay themeDisplay) {
+	protected String getGroupName(long groupId, ServiceContext serviceContext) {
 		try {
 			if (groupId <= 0) {
 				return StringPool.BLANK;
 			}
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -220,8 +210,11 @@ public abstract class BaseSocialActivityInterpreter
 		return HtmlUtil.escape(defaultValue);
 	}
 
-	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getClassName(activity));
@@ -250,21 +243,23 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String getTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		String groupName = StringPool.BLANK;
 
 		if (activity.getGroupId() != themeDisplay.getScopeGroupId()) {
-			groupName = getGroupName(activity.getGroupId(), themeDisplay);
+			groupName = getGroupName(activity.getGroupId(), serviceContext);
 		}
 
-		String link = getLink(activity, themeDisplay);
+		String link = getLink(activity, serviceContext);
 
-		String entryTitle = getEntryTitle(activity, themeDisplay);
+		String entryTitle = getEntryTitle(activity, serviceContext);
 
 		Object[] titleArguments = getTitleArguments(
-			groupName, activity, link, entryTitle, themeDisplay);
+			groupName, activity, link, entryTitle, serviceContext);
 
 		String titlePattern = getTitlePattern(groupName, activity);
 
@@ -273,10 +268,10 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected Object[] getTitleArguments(
 			String groupName, SocialActivity activity, String link,
-			String title, ThemeDisplay themeDisplay)
+			String title, ServiceContext serviceContext)
 		throws Exception {
 
-		String userName = getUserName(activity.getUserId(), themeDisplay);
+		String userName = getUserName(activity.getUserId(), serviceContext);
 
 		if (Validator.isNotNull(link)) {
 			title = wrapLink(link, title);
@@ -291,11 +286,13 @@ public abstract class BaseSocialActivityInterpreter
 		return StringPool.BLANK;
 	}
 
-	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
+	protected String getUserName(long userId, ServiceContext serviceContext) {
 		try {
 			if (userId <= 0) {
 				return StringPool.BLANK;
 			}
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			User user = UserLocalServiceUtil.getUserById(userId);
 
@@ -326,7 +323,7 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		return false;
@@ -345,7 +342,9 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String wrapLink(
-		String link, String key, ThemeDisplay themeDisplay) {
+		String link, String key, ServiceContext serviceContext) {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		return wrapLink(link, themeDisplay.translate(key));
 	}

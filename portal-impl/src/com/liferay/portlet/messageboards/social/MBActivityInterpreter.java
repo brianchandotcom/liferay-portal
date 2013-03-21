@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -41,8 +42,11 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getBody(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getBody(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		MBMessage message = getMessage(activity);
 
@@ -59,12 +63,12 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		String categoryLink = sb.toString();
 
-		return wrapLink(categoryLink, "go-to-category", themeDisplay);
+		return wrapLink(categoryLink, "go-to-category", serviceContext);
 	}
 
 	@Override
 	protected String getEntryTitle(
-			SocialActivity activity, ThemeDisplay themeDisplay)
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
 		MBMessage message = getMessage(activity);
@@ -73,8 +77,11 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getLink(SocialActivity activity, ThemeDisplay themeDisplay)
+	protected String getLink(
+			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		MBMessage message = getMessage(activity);
 
@@ -168,7 +175,7 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
-			String actionId, ThemeDisplay themeDisplay)
+			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
 		MBMessage message = getMessage(activity);

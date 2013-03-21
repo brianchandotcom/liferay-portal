@@ -53,7 +53,7 @@
 				},
 
 				indexType: {
-					value: STR_BLANK
+					value: 'keyword'
 				},
 
 				name: {

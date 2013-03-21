@@ -716,6 +716,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<resourcecount property="test.functional.count">
 					<fileset dir="test-classes/functional" includes="**/${class}.class" />
 				</resourcecount>
+
+				<resourcecount property="test.functional-generated.count">
+					<fileset dir="test-classes/functional-generated" includes="**/${class}.class" />
+				</resourcecount>
 			</then>
 		</if>
 
@@ -749,6 +753,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</then>
 			<elseif>
 				<and>
+					<isset property="test.functional-generated.count"/>
+					<not>
+						<equals arg1="${test.functional-generated.count}" arg2="0" />
+					</not>
+				</and>
+				<then>
+					<var name="test.type" value="functional" />
+					<var name="test.dir" value="functional-generated" />
+				</then>
+			</elseif>
+			<elseif>
+				<and>
 					<isset property="test.integration.count"/>
 					<not>
 						<equals arg1="${test.integration.count}" arg2="0" />
@@ -772,6 +788,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<else>
 				<fail>The property "test.type" is invalid.</fail>
 			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset property="test.dir" />
+			</not>
+			<then>
+				<var name="test.dir" value="${test.type}" />
+			</then>
 		</if>
 
 		<ant target="test-cmd">
@@ -806,7 +831,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<formatter type="brief" usefile="false" />
 					<formatter type="xml" />
 					<batchtest todir="test-results/${test.type}">
-						<fileset dir="test-classes/${test.type}" includes="**/${class}.class">
+						<fileset dir="test-classes/${test.dir}" includes="**/${class}.class">
 							<exclude name="**/DLAppServiceHttpTest.class" />
 							<exclude name="**/DLAppServiceJsonTest.class" />
 							<exclude name="**/DLAppServiceSoapTest.class" />

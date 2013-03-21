@@ -14,6 +14,9 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.io.Serializable;
 
 import java.util.Properties;
@@ -22,6 +25,12 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  */
 public interface ColorScheme extends Comparable<ColorScheme>, Serializable {
+
+	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = PropsUtil.get(
+		PropsKeys.DEFAULT_REGULAR_COLOR_SCHEME_ID);
+
+	public static final String DEFAULT_WAP_COLOR_SCHEME_ID = PropsUtil.get(
+		PropsKeys.DEFAULT_WAP_COLOR_SCHEME_ID);
 
 	public String getColorSchemeId();
 

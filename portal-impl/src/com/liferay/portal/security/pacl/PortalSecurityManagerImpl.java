@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -41,6 +42,7 @@ import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.lang.reflect.ReflectPermission;
 
 import java.security.AccessController;
@@ -347,6 +349,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			new DoPortalMessageBusPermissionPACL());
 		initPACLImpl(
 			PortalRuntimePermission.class, new DoPortalRuntimePermissionPACL());
+		initPACLImpl(
+			PortalServicePermission.class, new DoPortalServicePermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -709,6 +713,42 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				null, name);
 
 			securityManager.checkPermission(permission);
+		}
+
+	}
+
+	private static class DoPortalServicePermissionPACL
+		implements PortalServicePermission.PACL {
+
+		public void checkDynamicQuery(Class<?> implClass) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalServicePermission(
+				PACLConstants.PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY,
+				implClass, null);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkService(
+			Object object, Method method, Object[] arguments) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			PortalServicePermission portalServicePermission =
+				new PortalServicePermission(
+					PACLConstants.PORTAL_SERVICE_PERMISSION_SERVICE, object,
+					method, arguments);
+
+			securityManager.checkPermission(portalServicePermission);
 		}
 
 	}

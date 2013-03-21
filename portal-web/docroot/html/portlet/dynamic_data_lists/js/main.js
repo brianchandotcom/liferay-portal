@@ -466,7 +466,7 @@ AUI.add(
 									var value = data[name];
 
 									if (value !== STR_EMPTY) {
-										var date = new Date(parseInt(value, 10));
+										var date = new Date(Lang.toInt(value));
 
 										date = DateMath.add(value, DateMath.MINUTES, value.getTimezoneOffset());
 

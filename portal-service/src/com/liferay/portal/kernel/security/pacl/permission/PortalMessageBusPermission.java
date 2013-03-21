@@ -14,10 +14,7 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
-
 import java.security.BasicPermission;
-import java.security.Permission;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,30 +22,11 @@ import java.security.Permission;
 public class PortalMessageBusPermission extends BasicPermission {
 
 	public static void checkListen(String destinationName) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalMessageBusPermission(
-			PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
-			destinationName);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkListen(destinationName);
 	}
 
 	public static void checkSend(String destinationName) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalMessageBusPermission(
-			PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND, destinationName);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkSend(destinationName);
 	}
 
 	public PortalMessageBusPermission(String name, String destinationName) {
@@ -61,6 +39,31 @@ public class PortalMessageBusPermission extends BasicPermission {
 		return _destinationName;
 	}
 
+	private static PACL _pacl = new NoPACL();
+
 	private String _destinationName;
+
+	public static interface PACL {
+
+		public void checkListen(String destinationName);
+
+		public void checkSend(String destinationName);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public void checkListen(String destinationName) {
+
+			// no operation
+
+		}
+
+		public void checkSend(String destinationName) {
+
+			// no operation
+
+		}
+	}
 
 }

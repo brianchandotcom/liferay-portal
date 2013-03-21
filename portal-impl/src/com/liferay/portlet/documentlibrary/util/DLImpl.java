@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCo
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
@@ -688,7 +689,14 @@ public class DLImpl implements DL {
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntry.getFolderId());
 		sb.append(StringPool.SLASH);
-		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(fileEntry.getTitle())));
+
+		String title = fileEntry.getTitle();
+
+		if (fileVersion.isInTrash()) {
+			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
+		}
+
+		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
 		sb.append(StringPool.SLASH);
 		sb.append(fileEntry.getUuid());
 

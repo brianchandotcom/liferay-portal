@@ -14,16 +14,12 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.SocketPermission;
 import java.net.URL;
-
-import java.security.Permission;
 
 /**
  * @author Raymond Augé
@@ -82,16 +78,25 @@ public class PortalSocketPermission {
 		String location = domain.concat(StringPool.COLON).concat(
 			String.valueOf(port));
 
-		SecurityManager securityManager = System.getSecurityManager();
+		_pacl.checkPermission(location, "connect");
+	}
 
-		if (securityManager == null) {
-			return;
+	private static PACL _pacl = new NoPACL();
+
+	public static interface PACL {
+
+		public void checkPermission(String host, String action);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public void checkPermission(String host, String action) {
+
+			// no operation
+
 		}
 
-		Permission permission = new SocketPermission(
-			location, PACLConstants.SOCKET_PERMISSION_CONNECT);
-
-		securityManager.checkPermission(permission);
 	}
 
 }

@@ -62,32 +62,30 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
-					targetfile="${app.server.parent.dir}/${file.name}"
+					srcfile="${hudson.portal.dependencies.dir}/${file.dir}/${bundled.file.name}"
+					targetfile="${app.server.parent.dir}/${bundled.file.name}"
 				/>
 			</not>
 			<then>
 				<copy
-					file="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
+					file="${hudson.portal.dependencies.dir}/${file.dir}/${bundled.file.name}"
 					todir="${app.server.parent.dir}"
 				/>
 			</then>
 		</if>
 
-		<unzip src="${app.server.parent.dir}/${file.name}" dest="${app.server.parent.dir}" />
+		<unzip src="${app.server.parent.dir}/${bundled.file.name}" dest="${app.server.parent.dir}" />
 
 		<echo file="app.server.${user.name}.properties">app.server.type=glassfish
+
 app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 
 		<antcall target="revert-test-properties" />
-		
-		<antcall target="prepare-versioned-mysql" inheritAll="false"> 
-			<param name="app.server.type" value="glassfish" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="sql.version" value="${lp.version}" />
-		</antcall>
+
+		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
 
 		<delete dir="${user.home}/liferay" />
+
 		<if>
 			<or>
 				<equals arg1="${lp.version}" arg2="5.2.5" />
@@ -97,7 +95,7 @@ app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 			<then>
 				<copy
 					file="${hudson.license.dependencies.dir}/${lp.version}/license"
-					todir="${user.home}/liferay"
+					todir="${user.home}/liferay/ee"
 				/>
 			</then>
 			<elseif>
@@ -110,16 +108,16 @@ app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 					<equals arg1="${lp.version}" arg2="6.1.20" />
 				</or>
 				<then>
-					<copy
-						todir="${user.home}/liferay/deploy">
-							<fileset
-								dir="${hudson.license.dependencies.dir}/${lp.version}"
-								includes="license-portal-*.xml"
+					<copy todir="${user.home}/liferay/deploy">
+						<fileset
+							dir="${hudson.license.dependencies.dir}/${lp.version}"
+							includes="license-portal-*.xml"
 						/>
 					</copy>
 				</then>
 			</elseif>
 		</if>
+
 		<antcall target="start-selenium" />
 
 		<antcall target="run-glassfish" inheritAll="false">

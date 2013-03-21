@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.bean.VelocityBeanHandler;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -40,6 +41,8 @@ import java.security.Permission;
 import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
+
+import java.util.Properties;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
@@ -320,6 +323,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
+		initPACLImpl(HotDeployImpl.class, new DoHotDeployImplPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -387,6 +391,24 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			}
 
 			return DoPrivilegedFactory.wrap(t);
+		}
+
+	}
+
+	private static class DoHotDeployImplPACL implements HotDeployImpl.PACL {
+
+		public void initPolicy(
+			String servletContextName, ClassLoader classLoader,
+			Properties properties) {
+
+			PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
+				servletContextName, classLoader, properties);
+
+			PACLPolicyManager.register(classLoader, paclPolicy);
+		}
+
+		public void unregister(ClassLoader classLoader) {
+			PACLPolicyManager.unregister(classLoader);
 		}
 
 	}

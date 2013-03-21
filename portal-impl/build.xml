@@ -1614,6 +1614,13 @@ security-manager-sockets-accept=\</replacevalue>
 
 		<replaceregexp
 			flags="s"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes/service.properties"
+			match="WEB-INF/classes/META-INF/ext-spring.xml"
+			replace="WEB-INF/classes/META-INF/messaging-spring.xml"
+		/>
+
+		<replaceregexp
+			flags="s"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes/META-INF/hibernate-spring.xml"
 			match="&lt;/bean(.*)&lt;bean id=&quot;liferaySessionFactory"
 			replace="&lt;/bean>${line.separator}&#x9;&lt;bean id=&quot;liferaySessionFactory"

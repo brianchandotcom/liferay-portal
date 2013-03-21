@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -87,13 +86,12 @@ public class ThemeServicePreAction extends Action {
 			if (wapTheme) {
 				themeId = ThemeImpl.getDefaultWapThemeId(
 					themeDisplay.getCompanyId());
-				colorSchemeId = ColorSchemeImpl.getDefaultWapColorSchemeId();
+				colorSchemeId = ColorScheme.DEFAULT_WAP_COLOR_SCHEME_ID;
 			}
 			else {
 				themeId = ThemeImpl.getDefaultRegularThemeId(
 					themeDisplay.getCompanyId());
-				colorSchemeId =
-					ColorSchemeImpl.getDefaultRegularColorSchemeId();
+				colorSchemeId = ColorScheme.DEFAULT_REGULAR_COLOR_SCHEME_ID;
 			}
 
 			theme = ThemeLocalServiceUtil.getTheme(

@@ -399,6 +399,11 @@
 			<bean class="com.liferay.portal.util.CalendarFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.ColorSchemeFactoryUtil" class="com.liferay.portal.kernel.util.ColorSchemeFactoryUtil">
+		<property name="colorSchemeFactory">
+			<bean class="com.liferay.portal.util.ColorSchemeFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.DateFormatFactoryUtil" class="com.liferay.portal.kernel.util.DateFormatFactoryUtil">
 		<property name="dateFormatFactory">
 			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />

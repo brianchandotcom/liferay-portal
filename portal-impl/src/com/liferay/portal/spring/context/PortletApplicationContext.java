@@ -21,18 +21,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.FileNotFoundException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -53,19 +47,7 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
 	public static ClassLoader getBeanClassLoader() {
-		if (_isUseRestrictedClassLoader()) {
-			return new PreloadClassLoader(
-				PortletClassLoaderUtil.getClassLoader(), _classes);
-		}
-
-		ClassLoader beanClassLoader =
-			AggregateClassLoader.getAggregateClassLoader(
-				new ClassLoader[] {
-					PortletClassLoaderUtil.getClassLoader(),
-					ClassLoaderUtil.getPortalClassLoader()
-				});
-
-		return new FilterClassLoader(beanClassLoader);
+		return _pacl.getBeanClassLoader();
 	}
 
 	@Override
@@ -153,32 +135,30 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		}
 	}
 
-	private static boolean _isUseRestrictedClassLoader() {
-		return PACLPolicyManager.isActive();
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletApplicationContext.class);
 
-	private static Map<String, Class<?>> _classes =
-		new HashMap<String, Class<?>>();
+	private static PACL _pacl = new NoPACL();
 
-	static {
-		for (String className :
-				PropsValues.
-					PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES) {
+	public static interface PACL {
 
-			Class<?> clazz = null;
+		public ClassLoader getBeanClassLoader();
 
-			try {
-				clazz = Class.forName(className);
-			}
-			catch (ClassNotFoundException cnfe) {
-				_log.error(cnfe, cnfe);
-			}
+	}
 
-			_classes.put(clazz.getName(), clazz);
+	private static class NoPACL implements PACL {
+
+		public ClassLoader getBeanClassLoader() {
+			ClassLoader beanClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					new ClassLoader[] {
+						PortletClassLoaderUtil.getClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader()
+					});
+
+			return new FilterClassLoader(beanClassLoader);
 		}
+
 	}
 
 }

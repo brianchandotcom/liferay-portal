@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.plugin.PluginUtil;
 import com.liferay.portal.service.base.ThemeLocalServiceBaseImpl;
@@ -121,16 +121,12 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		if (colorScheme == null) {
 			if (wapTheme) {
-				colorSchemeId = ColorSchemeImpl.getDefaultWapColorSchemeId();
+				colorScheme = ColorSchemeFactoryUtil.getDefaultWapColorScheme();
 			}
 			else {
-				colorSchemeId =
-					ColorSchemeImpl.getDefaultRegularColorSchemeId();
+				colorScheme =
+					ColorSchemeFactoryUtil.getDefaultRegularColorScheme();
 			}
-		}
-
-		if (colorScheme == null) {
-			colorScheme = ColorSchemeImpl.getNullColorScheme();
 		}
 
 		return colorScheme;
@@ -405,7 +401,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			ColorScheme colorSchemeModel = colorSchemes.get(id);
 
 			if (colorSchemeModel == null) {
-				colorSchemeModel = new ColorSchemeImpl(id);
+				colorSchemeModel = ColorSchemeFactoryUtil.getColorScheme(id);
 			}
 
 			String name = GetterUtil.getString(

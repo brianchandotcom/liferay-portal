@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.Context;
 
 import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.TestClass;
 
 /**
  * @author Raymond Augé
@@ -50,15 +49,11 @@ public class PACLIntegrationJUnitTestRunner
 
 	@Override
 	public void initApplicationContext() {
-		TestClass testClass = getTestClass();
-
-		Class<?> clazz = testClass.getJavaClass();
-
 		if (_initialized) {
 			return;
 		}
 
-		URL resource = clazz.getResource("dependencies/pacl-test.properties");
+		URL resource = getClass().getResource("pacl-test.properties");
 
 		if (resource != null) {
 			System.setProperty("external-properties", resource.getPath());

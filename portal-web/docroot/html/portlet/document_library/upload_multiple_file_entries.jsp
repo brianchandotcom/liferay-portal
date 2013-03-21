@@ -188,7 +188,12 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 										<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 									</liferay-portlet:resourceURL>
 
-									commonFileMetadataContainer.load('<%= uploadMultipleFileEntries %>');
+									if (commonFileMetadataContainer.io) {
+										commonFileMetadataContainer.io.start();
+									}
+									else {
+										commonFileMetadataContainer.load('<%= uploadMultipleFileEntries %>');
+									}
 
 									Liferay.fire('filesSaved');
 								},

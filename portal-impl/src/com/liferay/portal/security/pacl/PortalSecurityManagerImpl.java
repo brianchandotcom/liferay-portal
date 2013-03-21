@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -58,6 +59,7 @@ import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
 
+import sun.reflect.Reflection;
 import sun.security.util.SecurityConstants;
 
 /**
@@ -343,6 +345,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			PortalMessageBusPermission.class,
 			new DoPortalMessageBusPermissionPACL());
+		initPACLImpl(
+			PortalRuntimePermission.class, new DoPortalRuntimePermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -583,6 +587,126 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			Permission permission = new PortalMessageBusPermission(
 				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
 				destinationName);
+
+			securityManager.checkPermission(permission);
+		}
+
+	}
+
+	private static class DoPortalRuntimePermissionPACL
+		implements PortalRuntimePermission.PACL {
+
+		public void checkExpandoBridge(String className) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, null,
+				className);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkGetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Class<?> callerClass = Reflection.getCallerClass(5);
+
+			if (clazz == callerClass) {
+
+				// The bean is calling it's own getBean method.
+
+				return;
+			}
+
+			clazz = PACLUtil.getClass(clazz);
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY,
+				servletContextName, clazz, property);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkGetClassLoader(String classLoaderReferenceId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER, null,
+				classLoaderReferenceId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkPortletBagPool(String portletId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL, null,
+				portletId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSearchEngine(String searchEngineId) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE, null,
+				searchEngineId);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkSetBeanProperty(
+			String servletContextName, Class<?> clazz, String property) {
+
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			clazz = PACLUtil.getClass(clazz);
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY,
+				servletContextName, clazz, property);
+
+			securityManager.checkPermission(permission);
+		}
+
+		public void checkThreadPoolExecutor(String name) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			Permission permission = new PortalRuntimePermission(
+				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
+				null, name);
 
 			securityManager.checkPermission(permission);
 		}

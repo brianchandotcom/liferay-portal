@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -67,7 +68,11 @@ public class VerifyOracle extends VerifyProcess {
 						buildNumber, ReleaseInfo.RELEASE_6_0_5_BUILD_NUMBER,
 						ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER)) {
 
-					if (dataLength != 4000) {
+					// LPS-33903
+
+					if (!ArrayUtil.contains(
+							_ORIGINAL_DATA_LENGTH_VALUES, dataLength)) {
+
 						dataLength = dataLength / 4;
 					}
 				}
@@ -127,6 +132,10 @@ public class VerifyOracle extends VerifyProcess {
 
 		return false;
 	}
+
+	private static final int[] _ORIGINAL_DATA_LENGTH_VALUES = {
+		75, 100, 150, 200, 255, 500, 1000, 1024, 2000, 4000
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyOracle.class);
 

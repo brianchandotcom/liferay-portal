@@ -1461,6 +1461,139 @@ import java.util.HashMap;]]></replacevalue>
 			</filterchain>
 		</copy>
 
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>Test Portal Access Control List</replacetoken>
+			<replacevalue>A Test</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="(portal-dependency-jars|portal-dependency-tlds|required-deployment-contexts)=(\\\n[^\\\n]+)*\n\n"
+			replace=""
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-enabled=true</replacetoken>
+			<replacevalue>security-manager-enabled=true
+
+security-manager-awt-operations=\
+    accessEventQueue</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-files-(delete|execute|write)=(\\\n[^\\\n]+)*(?=\n\n)"
+			replace="security-manager-files-\1="
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-delete=</replacetoken>
+			<replacevalue>security-manager-files-delete=\
+    ${liferay.home}${/}pacl-test${/}-</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-files-read=(\\\n[^\\\n]+)*(?=\\\n    /bin/bash)"
+			replace="security-manager-files-read="
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-read=</replacetoken>
+			<replacevalue>security-manager-files-read=\
+    ${liferay.home}${/}pacl-test${/},\
+    ${liferay.home}${/}pacl-test${/}-,\
+    </replacevalue>
+		</replace>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-files-write=</replacetoken>
+			<replacevalue>security-manager-files-write=\
+    ${liferay.home}${/}pacl-test${/},\
+    ${liferay.home}${/}pacl-test${/}-</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-get-bean-property=(\\\n[^\\\n]+)*(?=\n\n)"
+			replace="security-manager-get-bean-property="
+		/>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-get-bean-property=(\\\n[^\\\n]+)*(?=\n\n)"
+			replace="security-manager-get-bean-property="
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-get-bean-property=</replacetoken>
+			<replacevalue>security-manager-get-bean-property=\
+    com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil,\
+    com.liferay.portal.kernel.language.LanguageUtil,\
+    com.liferay.portal.kernel.util.InfrastructureUtil,\
+    com.liferay.portal.util.PortalUtil</replacevalue>
+		</replace>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-hook-custom-jsp-dir-enabled=false</replacetoken>
+			<replacevalue>security-manager-get-bean-property[portal]=\
+    com.liferay.portal.kernel.xml.SAXReader
+
+security-manager-get-bean-property[flash-portlet]=\
+    com.liferay.portal.kernel.bean.PortletBeanLocatorUtil#liferayDataSource
+
+security-manager-hook-custom-jsp-dir-enabled=false</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-services\[portal\]=(\\\n[^\\\n]+)*(?=\n\n)"
+			replace="security-manager-services[portal]="
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-services[portal]=</replacetoken>
+			<replacevalue>security-manager-services[portal]=\
+    com.liferay.portal.service.CompanyLocalService#getCompany,\
+    com.liferay.portal.service.GroupLocalService,\
+    com.liferay.portal.service.PortalService#getBuildNumber,\
+    com.liferay.portal.service.PortletPreferencesLocalService#getStrictPreferences,\
+    com.liferay.portal.service.UserLocalService#getDefaultUser,\
+    com.liferay.portal.service.persistence.CompanyPersistence,\
+    com.liferay.portlet.blogs.service.BlogsEntryLocalService,\
+    com.liferay.portlet.blogs.service.BlogsStatsUserLocalService</replacevalue>
+		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="security-manager-message-bus-send=((\\\n[^\\\n]+)*)(?=liferay/test_pacl_listen_failure)"
+			replace="security-manager-message-bus-send=\1liferay/test_pacl,\\\\${line.separator}    "
+		/>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-search-engine-ids=\</replacetoken>
+			<replacevalue>security-manager-portlet-bag-pool-portlet-ids=\
+    1_WAR_flashportlet,\
+    flash-portlet
+
+security-manager-search-engine-ids=\</replacevalue>
+		</replace>
+
+		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
+			<replacetoken>security-manager-sockets-accept=\</replacetoken>
+			<replacevalue>security-manager-set-bean-property[flash-portlet]=\
+    com.liferay.portal.kernel.bean.PortletBeanLocatorUtil
+
+security-manager-sockets-accept=\</replacevalue>
+		</replace>
+
 		<copy overwrite="true" todir="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes">
 			<fileset
 				dir="${lp.plugins.dir}/portlets/test-pacl-portlet/docroot/WEB-INF/src"

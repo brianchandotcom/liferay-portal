@@ -304,10 +304,8 @@ public class GroupServiceTest {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group1.getGroupId());
-		serviceContext.setUserId(user.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group1.getGroupId(), user.getUserId());
 
 		if (addGroup) {
 			try {

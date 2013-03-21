@@ -220,11 +220,8 @@ public class JournalTestUtil {
 
 		titleMap.put(defaultLocale, "Test Article");
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			TestPropsValues.getUserId(), groupId, folderId, classNameId, 0,

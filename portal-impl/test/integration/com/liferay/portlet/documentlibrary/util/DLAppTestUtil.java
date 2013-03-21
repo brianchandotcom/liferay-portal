@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
@@ -37,11 +38,8 @@ public abstract class DLAppTestUtil {
 	public static DLFileRank addDLFileRank(long groupId, long fileEntryId)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
 
 		return DLAppLocalServiceUtil.addFileRank(
 			groupId, TestPropsValues.getCompanyId(),
@@ -52,11 +50,8 @@ public abstract class DLAppTestUtil {
 			FileEntry fileEntry, long groupId, long folderId)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
 
 		return DLAppServiceUtil.addFileShortcut(
 			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);
@@ -221,11 +216,8 @@ public abstract class DLAppTestUtil {
 
 		String description = StringPool.BLANK;
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
 
 		if (deleteExisting) {
 			try {

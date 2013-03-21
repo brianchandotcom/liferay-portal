@@ -121,9 +121,8 @@ public abstract class BaseSearchTestCase {
 	@Test
 	@Transactional
 	public void testUserPermissions() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);

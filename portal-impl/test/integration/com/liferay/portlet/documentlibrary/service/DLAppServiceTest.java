@@ -183,11 +183,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		try {
 			String name = "InvalidMime.txt";
@@ -223,11 +220,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		try {
 			String name = "Bytes-null.txt";
@@ -322,18 +316,15 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testAsstTags() throws Exception {
+	public void testAssetTags() throws Exception {
 		long folderId = parentFolder.getFolderId();
 		String name = "TestTags.txt";
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 		byte[] bytes = CONTENT.getBytes();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		String[] assetTagNames = new String[] {"hello", "world"};
 

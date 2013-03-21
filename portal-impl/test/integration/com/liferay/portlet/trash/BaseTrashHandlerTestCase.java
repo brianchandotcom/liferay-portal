@@ -352,9 +352,8 @@ public abstract class BaseTrashHandlerTestCase {
 	protected void trashBaseModel(boolean approved, boolean delete)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -521,9 +520,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashDuplicateBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -566,9 +564,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashMoveBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		int initialBaseModelsSearchCount = 0;
 
@@ -621,9 +618,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashMyBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -652,9 +648,8 @@ public abstract class BaseTrashHandlerTestCase {
 			boolean delete, boolean deleteTrashEntries)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -744,9 +739,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashRecentBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -770,9 +764,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashVersionBaseModel(boolean delete) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -893,9 +886,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashVersionParentBaseModel() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);

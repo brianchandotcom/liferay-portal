@@ -113,8 +113,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DLFolder dlFolder = (DLFolder)parentBaseModel;
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			dlFolder.getGroupId(), dlFolder.getFolderId(), keywords + ".txt",
-			keywords, approved);
+			dlFolder.getFolderId(), keywords + ".txt", keywords, approved,
+			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}
@@ -153,8 +153,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
+			serviceContext);
 
 		return (DLFolder)folder.getModel();
 	}

@@ -92,7 +92,7 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
 		return BookmarksTestUtil.addFolder(
-			parentFolder.getGroupId(), parentFolder.getFolderId(), keywords);
+			parentFolder.getFolderId(), keywords, serviceContext);
 	}
 
 	@Override
@@ -106,9 +106,8 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return BookmarksTestUtil.addFolder(
-			group.getGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

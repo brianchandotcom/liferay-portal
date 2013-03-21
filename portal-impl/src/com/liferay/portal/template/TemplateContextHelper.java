@@ -158,13 +158,7 @@ public class TemplateContextHelper {
 	}
 
 	public TemplateControlContext getTemplateControlContext() {
-
-		// Temporarily return a TemplateControlContext with the default behavior
-
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
-
-		return new TemplateControlContext(null, contextClassLoader);
+		return _pacl.getTemplateControlContext();
 	}
 
 	public void prepare(Template template, HttpServletRequest request) {
@@ -843,9 +837,17 @@ public class TemplateContextHelper {
 	private static Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);
 
+	private static PACL _pacl = new NoPACL();
+
 	private Map<ClassLoader, HelperUtilitiesMap>
 		_helperUtilitiesMaps = new ConcurrentHashMap
 			<ClassLoader, HelperUtilitiesMap>();
+
+	public static interface PACL {
+
+		public TemplateControlContext getTemplateControlContext();
+
+	}
 
 	private class DoGetHelperUtilitiesPrivilegedAction
 		implements PrivilegedAction<Map<String, Object>> {
@@ -863,6 +865,17 @@ public class TemplateContextHelper {
 
 		private ClassLoader _classLoader;
 		private TemplateContextType _templateContextType;
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public TemplateControlContext getTemplateControlContext() {
+			ClassLoader contextClassLoader =
+				ClassLoaderUtil.getContextClassLoader();
+
+			return new TemplateControlContext(null, contextClassLoader);
+		}
 
 	}
 

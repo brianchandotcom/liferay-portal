@@ -123,7 +123,7 @@ if (category != null) {
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "category") %>',
-					uri: '<%= HtmlUtil.escape(selectCategoryURL) %>'
+					uri: '<%= selectCategoryURL %>'
 				},
 				function(event){
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;

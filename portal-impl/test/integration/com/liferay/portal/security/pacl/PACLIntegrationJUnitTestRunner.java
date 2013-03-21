@@ -159,6 +159,19 @@ public class PACLIntegrationJUnitTestRunner
 				resource = super.findResource(newName);
 			}
 
+			if ((resource == null) && !name.contains(RESOURCE_PATH)) {
+				String newName = name;
+
+				if (!newName.startsWith(StringPool.SLASH)) {
+					newName = StringPool.SLASH.concat(newName);
+				}
+
+				newName = RESOURCE_PATH.concat("/WEB-INF/classes").concat(
+					newName);
+
+				resource = super.findResource(newName);
+			}
+
 			if (resource == null) {
 				resource = super.findResource(name);
 			}

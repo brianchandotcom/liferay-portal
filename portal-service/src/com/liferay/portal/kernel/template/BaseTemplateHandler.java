@@ -30,6 +30,7 @@ import java.util.List;
  * @author Jorge Ferrer
  */
 public abstract class BaseTemplateHandler implements TemplateHandler {
+
 	public List<Element> getDefaultTemplateElements() throws Exception {
 		String templatesConfigPath = getTemplatesConfigPath();
 

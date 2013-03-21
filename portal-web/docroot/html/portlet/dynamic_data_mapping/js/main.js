@@ -537,6 +537,12 @@ AUI.add(
 							}
 						);
 
+						fields.sort(
+							function(a, b) {
+								return A.ArraySort.compare(a.get('label'), b.get('label'));
+							}
+						);
+
 						return fields;
 					},
 

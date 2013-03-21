@@ -274,7 +274,9 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 					if (resourceLayout.isPrivateLayout()) {
 						Group resourceLayoutGroup = resourceLayout.getGroup();
 
-						if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+						if (!resourceLayoutGroup.isLayoutPrototype() &&
+								!resourceLayoutGroup.isLayoutSetPrototype()) {
+
 							itr.remove();
 						}
 					}

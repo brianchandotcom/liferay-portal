@@ -17,7 +17,10 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.bean.VelocityBeanHandler;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
+import com.liferay.portal.freemarker.FreeMarkerTemplate;
+import com.liferay.portal.freemarker.LiferayTemplateCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -35,20 +38,34 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
+import com.liferay.portal.security.lang.DoPrivilegedHandler;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.pacl.dao.jdbc.PACLConnectionHandler;
 import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
+import com.liferay.portal.security.pacl.dao.jdbc.PACLStatementHandler;
+import com.liferay.portal.security.pacl.jndi.PACLContext;
+import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactory;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.template.AbstractProcessingTemplate;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateControlContext;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.velocity.LiferayResourceManager;
+import com.liferay.portal.velocity.VelocityTemplate;
+import com.liferay.portal.xsl.XSLTemplate;
+import com.liferay.portlet.PortletRequestImpl;
+import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.PortletURLImpl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -69,6 +86,8 @@ import java.security.ProtectionDomain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.ccpp.Profile;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
@@ -287,9 +306,43 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		// Load dependent classes to prevent ClassCircularityError
 
+		// this class' own inner classes
+
+		initClass(getClass());
+
+		initClass(AbstractProcessingTemplate.class);
+		initClass(ActivePACLPolicy.class);
+		initClass(BaseTemplateManager.class);
 		initClass(CentralizedThreadLocal.class);
+		initClass(DoPrivilegedBean.class);
+		initClass(DoPrivilegedFactory.class);
+		initClass(DoPrivilegedHandler.class);
+		initClass(DynamicQueryFactoryImpl.class);
 		initClass(FileAvailabilityUtil.class);
-		initClass(PortalHookPermission.class);
+		initClass(FreeMarkerTemplate.class);
+		initClass(GeneratingPACLPolicy.class);
+		initClass(InactivePACLPolicy.class);
+		initClass(LiferayResourceManager.class);
+		initClass(LiferayTemplateCache.class);
+		initClass(PACLConnectionHandler.class);
+		initClass(PACLContext.class);
+		initClass(PACLDataSource.class);
+		initClass(PACLInvocationHandler.class);
+		initClass(PACLInitialContextFactory.class);
+		initClass(PACLInitialContextFactoryBuilder.class);
+		initClass(PACLPolicyManager.class);
+		initClass(PACLRequestDispatcherWrapper.class);
+		initClass(PACLStatementHandler.class);
+		initClass(PACLUtil.class);
+		initClass(PortalPermissionCollection.class);
+		initClass(PortalPolicy.class);
+		initClass(PortletRequestImpl.class);
+		initClass(PortletResponseImpl.class);
+		initClass(PortletURLImpl.class);
+		initClass(Profile.class);
+		initClass(TemplateContextHelper.class);
+		initClass(VelocityTemplate.class);
+		initClass(XSLTemplate.class);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

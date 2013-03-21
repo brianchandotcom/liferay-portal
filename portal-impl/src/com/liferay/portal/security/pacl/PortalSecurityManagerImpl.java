@@ -20,6 +20,7 @@ import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -28,9 +29,11 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
@@ -39,6 +42,10 @@ import com.liferay.portal.security.pacl.dao.jdbc.PACLDataSource;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
+import com.liferay.portal.spring.context.PortletApplicationContext;
+import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -54,6 +61,8 @@ import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.spi.InitialContextFactoryBuilder;
@@ -356,6 +365,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			PortalServicePermission.class, new DoPortalServicePermissionPACL());
 		initPACLImpl(
 			PortalSocketPermission.class, new DoPortalSocketPermissionPACL());
+		initPACLImpl(
+			PortletApplicationContext.class,
+			new DoPortletApplicationContextPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -773,6 +785,48 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			securityManager.checkPermission(permission);
 		}
 
+	}
+
+	private static class DoPortletApplicationContextPACL
+		implements PortletApplicationContext.PACL {
+
+		public ClassLoader getBeanClassLoader() {
+			if (PACLPolicyManager.isActive()) {
+				return DoPrivilegedFactory.wrap(
+					new PreloadClassLoader(
+						PortletClassLoaderUtil.getClassLoader(), _classes));
+			}
+
+			ClassLoader beanClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					new ClassLoader[] {
+						PortletClassLoaderUtil.getClassLoader(),
+						ClassLoaderUtil.getPortalClassLoader()
+					});
+
+			return new FilterClassLoader(beanClassLoader);
+		}
+
+		private static Map<String, Class<?>> _classes =
+			new HashMap<String, Class<?>>();
+
+		static {
+			for (String className :
+					PropsValues.
+						PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES) {
+
+				Class<?> clazz = null;
+
+				try {
+					clazz = Class.forName(className);
+				}
+				catch (ClassNotFoundException cnfe) {
+					_log.error(cnfe, cnfe);
+				}
+
+				_classes.put(clazz.getName(), clazz);
+			}
+		}
 	}
 
 }

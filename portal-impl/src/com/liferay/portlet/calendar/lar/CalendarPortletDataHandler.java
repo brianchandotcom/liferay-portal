@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
@@ -198,7 +199,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 			}
 			else {
 				locale = LocaleUtil.getDefault();
-				timeZone = TimeZoneUtil.getDefault();
+				timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 			}
 
 			Calendar startCal = CalendarFactoryUtil.getCalendar(

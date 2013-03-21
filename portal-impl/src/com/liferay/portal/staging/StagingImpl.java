@@ -1531,7 +1531,7 @@ public class StagingImpl implements Staging {
 		}
 		else {
 			locale = LocaleUtil.getDefault();
-			timeZone = TimeZoneUtil.getDefault();
+			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
 		Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);

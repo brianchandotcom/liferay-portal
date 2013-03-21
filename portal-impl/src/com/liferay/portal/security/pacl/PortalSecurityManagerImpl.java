@@ -336,6 +336,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(HotDeployImpl.class, new DoHotDeployImplPACL());
 		initPACLImpl(
 			PortalFilePermission.class, new DoPortalFilePermissionPACL());
+		initPACLImpl(
+			PortalHookPermission.class, new DoPortalHookPermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -522,6 +524,29 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			}
 
 			securityManager.checkWrite(path);
+		}
+
+	}
+
+	private static class DoPortalHookPermissionPACL
+		implements PortalHookPermission.PACL {
+
+		public void checkPermission(
+			String name, ClassLoader portletClassLoader, Object subject) {
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				portletClassLoader);
+
+			if (paclPolicy == null) {
+				return;
+			}
+
+			Permission permission = new PortalHookPermission(
+				name, portletClassLoader, subject);
+
+			if (!paclPolicy.implies(permission)) {
+				throw new SecurityException(permission.toString());
+			}
 		}
 
 	}

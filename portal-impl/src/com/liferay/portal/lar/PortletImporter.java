@@ -95,6 +95,7 @@ import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
@@ -1862,7 +1863,7 @@ public class PortletImporter {
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		String companyGroupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + companyGroupId;
+			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroupId;
 
 		List<String> newValues = new ArrayList<String>(oldValues.length);
 

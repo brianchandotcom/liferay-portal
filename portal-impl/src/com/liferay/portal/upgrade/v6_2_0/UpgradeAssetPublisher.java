@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
@@ -82,7 +82,7 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			portletPreferences.setValues(
 				"scopeIds",
 				new String[] {
-					AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					AssetPublisher.SCOPE_ID_GROUP_PREFIX +
 						GroupConstants.DEFAULT
 				});
 		}

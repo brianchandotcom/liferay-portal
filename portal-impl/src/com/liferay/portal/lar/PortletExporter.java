@@ -76,7 +76,7 @@ import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -1539,26 +1539,25 @@ public class PortletExporter {
 		Group companyGroup = company.getGroup();
 
 		String companyGroupScopeId =
-			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-				companyGroup.getGroupId();
+			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroup.getGroupId();
 
 		String[] newValues = new String[oldValues.length];
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
-			if (oldValue.startsWith(AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX)) {
+			if (oldValue.startsWith(AssetPublisher.SCOPE_ID_GROUP_PREFIX)) {
 				newValues[i] = StringUtil.replace(
 					oldValue, companyGroupScopeId,
 					"[$COMPANY_GROUP_SCOPE_ID$]");
 			}
 			else if (oldValue.startsWith(
-						AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
+						AssetPublisher.SCOPE_ID_LAYOUT_PREFIX)) {
 
 				// Legacy preferences
 
 				String scopeIdSuffix = oldValue.substring(
-					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX.length());
+					AssetPublisher.SCOPE_ID_LAYOUT_PREFIX.length());
 
 				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
@@ -1567,7 +1566,7 @@ public class PortletExporter {
 					scopeIdLayoutId);
 
 				newValues[i] =
-					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
+					AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
 						scopeIdLayout.getUuid();
 			}
 			else {

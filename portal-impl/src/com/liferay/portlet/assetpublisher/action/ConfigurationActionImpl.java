@@ -39,6 +39,7 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import java.util.Map;
@@ -160,8 +161,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-					GroupConstants.DEFAULT
+				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
 			});
 
 		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
@@ -313,8 +313,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
-					GroupConstants.DEFAULT
+				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
 			});
 
 		String scopeId = ParamUtil.getString(actionRequest, "scopeId");

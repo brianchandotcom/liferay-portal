@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.User;
@@ -30,28 +28,24 @@ public class OrganizationTestUtil {
 	public static Organization addOrganization() throws Exception {
 		return addOrganization(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			ServiceTestUtil.randomString(),
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, false);
+			ServiceTestUtil.randomString(), false);
 	}
 
 	public static Organization addOrganization(boolean site) throws Exception {
 		return addOrganization(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			ServiceTestUtil.randomString(),
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, site);
+			ServiceTestUtil.randomString(), site);
 	}
 
 	public static Organization addOrganization(
-			long parentOrganizationId, String name, String type, boolean site)
+			long parentOrganizationId, String name, boolean site)
 		throws Exception {
 
 		User user = UserTestUtil.addUser(
 			ServiceTestUtil.randomString(), false, null);
 
 		return OrganizationLocalServiceUtil.addOrganization(
-			user.getUserId(), parentOrganizationId, name, type, false, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			site, ServiceTestUtil.getServiceContext());
+			user.getUserId(), parentOrganizationId, name, site);
 	}
 
 }

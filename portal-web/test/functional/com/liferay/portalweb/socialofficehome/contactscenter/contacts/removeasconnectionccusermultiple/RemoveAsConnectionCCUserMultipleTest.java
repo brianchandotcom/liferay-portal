@@ -101,7 +101,7 @@ public class RemoveAsConnectionCCUserMultipleTest extends BaseTestCase {
 				"xPath=(//div[contains(@class, 'lfr-contact-name')]/a)[contains(.,'User03, Social03')]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[3]"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertFalse(selenium.isVisible(

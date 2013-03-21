@@ -53,7 +53,7 @@ public class ViewRemoveConnectionCCUserProfileTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertFalse(selenium.isVisible(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		selenium.clickAt("//div[contains(@class, 'contacts-profile')]/div/div[2]/div/a",
@@ -64,7 +64,7 @@ public class ViewRemoveConnectionCCUserProfileTest extends BaseTestCase {
 				"xPath=(//div[@class='lfr-contact-name'])[contains(.,'Social01 Office01 User01')]"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='action remove-connection']/a"));

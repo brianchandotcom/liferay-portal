@@ -63,7 +63,7 @@ public class SOUs_ViewFollowCCUserProfileTest extends BaseTestCase {
 				"xPath=(//div[@class='lfr-contact-name'])[contains(.,'Joe Bloggs')]"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='action follow']/a"));

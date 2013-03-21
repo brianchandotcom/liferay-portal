@@ -52,7 +52,7 @@ public class ViewUnblockCCUserProfileTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),
@@ -69,7 +69,7 @@ public class ViewUnblockCCUserProfileTest extends BaseTestCase {
 				"xPath=(//div[@class='lfr-contact-name'])[contains(.,'Social01 Office01 User01')]"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText("//span[@class='action follow']/a"));

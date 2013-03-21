@@ -65,7 +65,7 @@ public class SOUs_RemoveConnectionCCUserProfileTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='action remove-connection']/a",
 			RuntimeVariables.replace("Remove Connection"));
 		selenium.waitForVisible("//span[@class='action add-connection']/a");
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 	}
 }

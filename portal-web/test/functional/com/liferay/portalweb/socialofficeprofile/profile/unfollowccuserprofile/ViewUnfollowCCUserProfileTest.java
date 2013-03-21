@@ -65,7 +65,7 @@ public class ViewUnfollowCCUserProfileTest extends BaseTestCase {
 				"xPath=(//div[@class='lfr-contact-name'])[contains(.,'Social01 Office01 User01')]"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Add Connection"),
+		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText("//span[@class='action follow']/a"));

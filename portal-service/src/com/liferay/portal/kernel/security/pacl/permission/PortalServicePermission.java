@@ -14,12 +14,9 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
-import com.liferay.portal.kernel.security.pacl.PACLConstants;
-
 import java.lang.reflect.Method;
 
 import java.security.BasicPermission;
-import java.security.Permission;
 
 /**
  * @author Raymond Augé
@@ -27,34 +24,13 @@ import java.security.Permission;
 public class PortalServicePermission extends BasicPermission {
 
 	public static void checkDynamicQuery(Class<?> implClass) {
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		Permission permission = new PortalServicePermission(
-			PACLConstants.PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY, implClass,
-			null);
-
-		securityManager.checkPermission(permission);
+		_pacl.checkDynamicQuery(implClass);
 	}
 
 	public static void checkService(
 		Object object, Method method, Object[] arguments) {
 
-		SecurityManager securityManager = System.getSecurityManager();
-
-		if (securityManager == null) {
-			return;
-		}
-
-		PortalServicePermission portalServicePermission =
-			new PortalServicePermission(
-				PACLConstants.PORTAL_SERVICE_PERMISSION_SERVICE, object, method,
-				arguments);
-
-		securityManager.checkPermission(portalServicePermission);
+		_pacl.checkService(object, method, arguments);
 	}
 
 	public PortalServicePermission(String name, Object object, Method method) {
@@ -83,8 +59,36 @@ public class PortalServicePermission extends BasicPermission {
 		return _object;
 	}
 
+	private static PACL _pacl = new NoPACL();
+
 	private transient Object[] _arguments;
 	private transient Method _method;
 	private transient Object _object;
+
+	public static interface PACL {
+
+		public void checkDynamicQuery(Class<?> implClass);
+
+		public void checkService(
+			Object object, Method method, Object[] arguments);
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		public void checkDynamicQuery(Class<?> implClass) {
+
+			// no operation
+
+		}
+
+		public void checkService(
+			Object object, Method method, Object[] arguments) {
+
+			// no operation
+
+		}
+
+	}
 
 }

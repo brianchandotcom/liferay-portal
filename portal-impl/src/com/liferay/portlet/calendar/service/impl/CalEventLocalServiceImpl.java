@@ -528,9 +528,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			// Time zone sensitive
 
 			List<CalEvent> timeZoneSensitiveEvents =
-				calEventFinder.findByG_SD_T(groupId,
-				CalendarUtil.getGTDate(cal), CalendarUtil.getLTDate(cal), true,
-				types);
+				calEventFinder.findByG_SD_T(
+					groupId, CalendarUtil.getGTDate(cal),
+					CalendarUtil.getLTDate(cal), true, types);
 
 			// Time zone insensitive
 
@@ -542,9 +542,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				cal.get(Calendar.DATE));
 
 			List<CalEvent> timeZoneInsensitiveEvents =
-				calEventFinder.findByG_SD_T(groupId,
-				CalendarUtil.getGTDate(tzICal), CalendarUtil.getLTDate(tzICal),
-				false, types);
+				calEventFinder.findByG_SD_T(
+					groupId, CalendarUtil.getGTDate(tzICal),
+					CalendarUtil.getLTDate(tzICal), false, types);
 
 			// Create new list
 

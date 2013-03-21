@@ -34,6 +34,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
+import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
+import org.springframework.transaction.support.TransactionCallback;
 
 /**
  * @author Shuyang Zhou
@@ -57,6 +59,10 @@ public class TransactionInterceptor implements MethodInterceptor {
 
 		if (transactionAttribute == null) {
 			return methodInvocation.proceed();
+		}
+
+		if (_doCallback) {
+			return _doCallbackInvoke(transactionAttribute, methodInvocation);
 		}
 
 		TransactionStatus transactionStatus =
@@ -93,6 +99,12 @@ public class TransactionInterceptor implements MethodInterceptor {
 		PlatformTransactionManager platformTransactionManager) {
 
 		_platformTransactionManager = platformTransactionManager;
+
+		if (_platformTransactionManager instanceof
+			CallbackPreferringPlatformTransactionManager) {
+
+			_doCallback = true;
+		}
 	}
 
 	public void setTransactionAttributeSource(
@@ -108,7 +120,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 	public void setTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {
 
-		_platformTransactionManager = platformTransactionManager;
+		setPlatformTransactionManager(platformTransactionManager);
 	}
 
 	protected void invokeCallbacks() {
@@ -222,9 +234,103 @@ public class TransactionInterceptor implements MethodInterceptor {
 
 	protected TransactionAttributeSource transactionAttributeSource;
 
+	private Object _doCallbackInvoke(
+			final TransactionAttribute transactionAttribute,
+			final MethodInvocation methodInvocation)
+		throws Throwable {
+
+		CallbackPreferringPlatformTransactionManager
+			callbackPreferringPlatformTransactionManager =
+				(CallbackPreferringPlatformTransactionManager)
+					_platformTransactionManager;
+
+		Object result = callbackPreferringPlatformTransactionManager.execute(
+			transactionAttribute, new TransactionCallback<Object>() {
+
+				public Object doInTransaction(
+					TransactionStatus transactionStatus) {
+
+					boolean newTransaction =
+						transactionStatus.isNewTransaction();
+
+					if (newTransaction) {
+						TransactionalPortalCacheHelper.begin();
+
+						TransactionCommitCallbackUtil.pushCallbackList();
+					}
+
+					boolean rollback = false;
+
+					try {
+						if (newTransaction) {
+							LastSessionRecorderUtil.syncLastSessionState();
+						}
+
+						return methodInvocation.proceed();
+					}
+					catch (Throwable throwable) {
+						if (transactionAttribute.rollbackOn(throwable)) {
+							if (newTransaction) {
+								TransactionalPortalCacheHelper.rollback();
+
+								TransactionCommitCallbackUtil.popCallbackList();
+
+								EntityCacheUtil.clearLocalCache();
+								FinderCacheUtil.clearLocalCache();
+
+								rollback = true;
+							}
+
+							if (throwable instanceof RuntimeException) {
+								throw (RuntimeException)throwable;
+							}
+							else {
+								throw new RuntimeException(throwable);
+							}
+						}
+						else {
+							return new ThrowableHolder(throwable);
+						}
+					}
+					finally {
+						if (newTransaction && !rollback) {
+							TransactionalPortalCacheHelper.commit();
+
+							invokeCallbacks();
+						}
+					}
+				}
+			});
+
+		if (result instanceof ThrowableHolder) {
+			ThrowableHolder throwableHolder = (ThrowableHolder)result;
+
+			throw throwableHolder.getThrowable();
+		}
+		else {
+			return result;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		TransactionInterceptor.class);
 
+	private boolean _doCallback;
+
 	private PlatformTransactionManager _platformTransactionManager;
+
+	private static class ThrowableHolder {
+
+		public ThrowableHolder(Throwable throwable) {
+			_throwable = throwable;
+		}
+
+		public Throwable getThrowable() {
+			return _throwable;
+		}
+
+		private final Throwable _throwable;
+
+	}
 
 }

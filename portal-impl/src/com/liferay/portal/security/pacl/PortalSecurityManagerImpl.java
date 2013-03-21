@@ -45,6 +45,8 @@ import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.TemplateControlContext;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -56,11 +58,13 @@ import java.lang.reflect.ReflectPermission;
 
 import java.net.SocketPermission;
 
+import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
+import java.security.ProtectionDomain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -373,6 +377,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			new DoPortletApplicationContextPACL());
 		initPACLImpl(
 			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
+		initPACLImpl(
+			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -842,6 +848,37 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			AdvisedSupport advisedSupport) {
 
 			return new PACLInvocationHandler(invocationHandler, advisedSupport);
+		}
+
+	}
+
+	private static class DoTemplateContextHelperPACL
+		implements TemplateContextHelper.PACL {
+
+		public TemplateControlContext getTemplateControlContext() {
+			PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
+
+			ClassLoader contextClassLoader =
+				ClassLoaderUtil.getContextClassLoader();
+
+			if (paclPolicy == null) {
+				paclPolicy = PACLPolicyManager.getPACLPolicy(
+					contextClassLoader);
+			}
+
+			if ((paclPolicy == null) || !paclPolicy.isActive()) {
+				return new TemplateControlContext(null, contextClassLoader);
+			}
+
+			ProtectionDomain protectionDomain = new ProtectionDomain(
+				null, null, paclPolicy.getClassLoader(), null);
+
+			AccessControlContext accessControlContext =
+				new AccessControlContext(
+					new ProtectionDomain[] {protectionDomain});
+
+			return new TemplateControlContext(
+				accessControlContext, paclPolicy.getClassLoader());
 		}
 
 	}

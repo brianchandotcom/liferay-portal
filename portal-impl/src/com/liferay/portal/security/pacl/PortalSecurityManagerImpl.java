@@ -20,11 +20,13 @@ import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
@@ -332,6 +334,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			new DoDirectRequestDispatcherFactoryImplPACL());
 		initPACLImpl(DoPrivilegedUtil.class, new DoDoPrivilegedPACL());
 		initPACLImpl(HotDeployImpl.class, new DoHotDeployImplPACL());
+		initPACLImpl(
+			PortalFilePermission.class, new DoPortalFilePermissionPACL());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -433,6 +437,91 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		public void unregister(ClassLoader classLoader) {
 			PACLPolicyManager.unregister(classLoader);
+		}
+
+	}
+
+	private static class DoPortalFilePermissionPACL
+		implements PortalFilePermission.PACL {
+
+		public void checkCopy(String source, String destination) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNotNull(source)) {
+				securityManager.checkRead(source);
+			}
+
+			if (Validator.isNull(destination)) {
+				return;
+			}
+
+			securityManager.checkWrite(destination);
+		}
+
+		public void checkDelete(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkDelete(path);
+		}
+
+		public void checkMove(String source, String destination) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNotNull(source)) {
+				securityManager.checkRead(source);
+				securityManager.checkDelete(source);
+			}
+
+			if (Validator.isNull(destination)) {
+				return;
+			}
+
+			securityManager.checkWrite(destination);
+			securityManager.checkDelete(destination);
+		}
+
+		public void checkRead(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkRead(path);
+		}
+
+		public void checkWrite(String path) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager == null) {
+				return;
+			}
+
+			if (Validator.isNull(path)) {
+				return;
+			}
+
+			securityManager.checkWrite(path);
 		}
 
 	}

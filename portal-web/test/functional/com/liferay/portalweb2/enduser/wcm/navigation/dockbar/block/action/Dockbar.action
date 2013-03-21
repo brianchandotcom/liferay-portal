@@ -1,7 +1,7 @@
 <definition>
 	<command name="Click">
 		<case locator-key="USER_SIGN_OUT">
-			<execute function="Click#textClickAtAndWait" value="Sign Out" />
+			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
 	</command>
 </definition>

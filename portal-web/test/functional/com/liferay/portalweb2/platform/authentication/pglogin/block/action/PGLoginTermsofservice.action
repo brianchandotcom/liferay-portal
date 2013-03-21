@@ -1,10 +1,10 @@
 <definition>
 	<command name="Click">
 		<case locator-key="I_AGREE">
-			<execute function="Click#valueClickAtAndWait" value="I Agree" />
+			<execute function="Click#valueClickAtAndWait" value1="I Agree" />
 		</case>
 		<case locator-key="I_DISAGREE">
-			<execute function="Click#valueClickAtAndWait" value="I Disagree" />
+			<execute function="Click#valueClickAtAndWait" value1="I Disagree" />
 		</case>
 	</command>
 </definition>

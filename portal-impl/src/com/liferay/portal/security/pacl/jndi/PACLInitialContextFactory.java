@@ -118,6 +118,8 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
+		context = new SchemeAwareContextWrapper(context);
+
 		PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
 
 		if (paclPolicy == null) {

@@ -442,12 +442,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			String valueString = String.valueOf(fieldValue);
 
-			if (valueString != null) {
-				valueString = valueString.trim();
-			}
-
 			updateDynamicContentValue(
-				dynamicContentElement, fieldType, valueString);
+				dynamicContentElement, fieldType, valueString.trim());
 		}
 
 		ddmFieldsCounter.incrementKey(fieldName);

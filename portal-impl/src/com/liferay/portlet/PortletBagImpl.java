@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -63,7 +63,7 @@ public class PortletBagImpl implements PortletBag {
 		URLEncoder urlEncoderInstance,
 		PortletDataHandler portletDataHandlerInstance,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
-		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance,
+		TemplateHandler templateHandlerInstance,
 		PortletLayoutListener portletLayoutListenerInstance,
 		PollerProcessor pollerProcessorInstance,
 		MessageListener popMessageListenerInstance,
@@ -90,8 +90,7 @@ public class PortletBagImpl implements PortletBag {
 		_urlEncoderInstance = urlEncoderInstance;
 		_portletDataHandlerInstance = portletDataHandlerInstance;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
-		_portletDisplayTemplateHandlerInstance =
-			portletDisplayTemplateHandlerInstance;
+		_templateHandlerInstance = templateHandlerInstance;
 		_portletLayoutListenerInstance = portletLayoutListenerInstance;
 		_pollerProcessorInstance = pollerProcessorInstance;
 		_popMessageListenerInstance = popMessageListenerInstance;
@@ -118,8 +117,7 @@ public class PortletBagImpl implements PortletBag {
 			getConfigurationActionInstance(), getIndexerInstances(),
 			getOpenSearchInstance(), getFriendlyURLMapperInstance(),
 			getURLEncoderInstance(), getPortletDataHandlerInstance(),
-			getStagedModelDataHandlerInstances(),
-			getPortletDisplayTemplateHandlerInstance(),
+			getStagedModelDataHandlerInstances(), getTemplateHandlerInstance(),
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
@@ -181,12 +179,6 @@ public class PortletBagImpl implements PortletBag {
 		return _portletDataHandlerInstance;
 	}
 
-	public PortletDisplayTemplateHandler
-		getPortletDisplayTemplateHandlerInstance() {
-
-		return _portletDisplayTemplateHandlerInstance;
-	}
-
 	public Portlet getPortletInstance() {
 		return _portletInstance;
 	}
@@ -243,6 +235,10 @@ public class PortletBagImpl implements PortletBag {
 		return _stagedModelDataHandlerInstances;
 	}
 
+	public TemplateHandler getTemplateHandlerInstance() {
+		return _templateHandlerInstance;
+	}
+
 	public List<TrashHandler> getTrashHandlerInstances() {
 		return _trashHandlerInstances;
 	}
@@ -283,8 +279,6 @@ public class PortletBagImpl implements PortletBag {
 	private PollerProcessor _pollerProcessorInstance;
 	private MessageListener _popMessageListenerInstance;
 	private PortletDataHandler _portletDataHandlerInstance;
-	private PortletDisplayTemplateHandler
-		_portletDisplayTemplateHandlerInstance;
 	private Portlet _portletInstance;
 	private PortletLayoutListener _portletLayoutListenerInstance;
 	private String _portletName;
@@ -294,6 +288,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;
 	private SocialRequestInterpreter _socialRequestInterpreterInstance;
 	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
+	private TemplateHandler _templateHandlerInstance;
 	private List<TrashHandler> _trashHandlerInstances;
 	private URLEncoder _urlEncoderInstance;
 	private WebDAVStorage _webDAVStorageInstance;

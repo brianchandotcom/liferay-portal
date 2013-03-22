@@ -34,11 +34,11 @@
 	<div class="display-template">
 
 		<%
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(WikiPage.class.getName());
+		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(WikiPage.class.getName());
 		%>
 
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 			preferenceValue="<%= displayStyle %>"
 			refreshURL="<%= portletURL.toString() %>"
 			showEmptyOption="<%= true %>"

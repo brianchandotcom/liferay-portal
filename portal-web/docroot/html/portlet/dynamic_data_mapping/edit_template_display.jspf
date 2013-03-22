@@ -34,12 +34,16 @@ boolean useRichEditor = editorType.equals("rich");
 
 Map<String, TemplateVariableGroup> templateVariableGroups = Collections.emptyMap();
 
-if (template != null) {
-	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(template.getClassNameId(), classPK);
+if (classPK > 0) {
+	DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(classPK);
+
+	classNameId = ddmStructure.getClassNameId();
 }
-else if (classNameId > 0) {
-	templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK);
+else if (template != null) {
+	classNameId = template.getClassNameId();
 }
+
+templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK, locale);
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
@@ -104,6 +108,7 @@ else if (classNameId > 0) {
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
 											String dataContent1 = "${" + templateVariableDefinition.getName() + "}";
 											String dataContent2 = StringPool.BLANK;
+											String dataContent3 = StringPool.BLANK;
 
 											if (templateVariableDefinition.isCollection()) {
 												TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
@@ -111,11 +116,22 @@ else if (classNameId > 0) {
 												dataContent1 = "<#list " + itemTemplateVariableDefinition.getName() + " as " + templateVariableDefinition.getName() + ">";
 												dataContent2 = "</#list>";
 											}
+											else if (templateVariableDefinition.isRepeatable()) {
+												String itemName = "cur_" + templateVariableDefinition.getName();
+
+												dataContent1 = "<#list " + templateVariableDefinition.getName() + ".getSiblings()" + " as " + itemName + ">";
+												dataContent2 = "${" + itemName + ".getData()}";
+												dataContent3 = "</#list>";
+											}
+											else if (Validator.isNotNull(templateVariableDefinition.getDataType())) {
+												dataContent1 = "${" + templateVariableDefinition.getName() + ".getData()}";
+											}
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= dataContent1 %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= dataContent2 %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContent1) %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContent2) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContent3) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContent3) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" />
+													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
 
@@ -517,9 +533,25 @@ private String _getPaletteItemTitle(PageContext pageContext, String label, Class
 private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDefinition templateVariableDefinition) {
 	StringBundler sb = new StringBundler();
 
-	sb.append("<p>");
-	sb.append(LanguageUtil.get(pageContext, templateVariableDefinition.getLabel() + "-help"));
-	sb.append("</p>");
+	String help = templateVariableDefinition.getHelp();
+
+	if (Validator.isNotNull(help)) {
+		sb.append("<p>");
+		sb.append(LanguageUtil.get(pageContext, help));
+		sb.append("</p>");
+	}
+
+	if (templateVariableDefinition.isCollection()) {
+		sb.append("<p><i>* ");
+		sb.append(LanguageUtil.get(pageContext, "this-is-a-collection-of-fields"));
+		sb.append("</i></p>");
+	}
+	else if (templateVariableDefinition.isRepeatable()) {
+		sb.append("<p><i>* ");
+		sb.append(LanguageUtil.get(pageContext, "this-is-a-repeatable-field"));
+		sb.append("</i></p>");
+	}
+
 	sb.append(LanguageUtil.get(pageContext, "variable"));
 	sb.append(StringPool.COLON);
 	sb.append("&nbsp;");

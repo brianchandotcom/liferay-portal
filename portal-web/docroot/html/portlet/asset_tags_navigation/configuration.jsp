@@ -62,7 +62,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					<div class="display-template">
 
 						<%
-						PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetTag.class.getName());
+						TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetTag.class.getName());
 
 						List<String> displayStyles = new ArrayList<String>();
 
@@ -71,7 +71,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 						%>
 
 						<liferay-ui:ddm-template-selector
-							classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+							classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 							displayStyles="<%= displayStyles %>"
 							preferenceValue="<%= displayStyle %>"
 							refreshURL="<%= currentURL %>"

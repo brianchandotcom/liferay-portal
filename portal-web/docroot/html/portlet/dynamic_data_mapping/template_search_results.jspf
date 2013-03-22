@@ -27,7 +27,7 @@ long[] clasNameIds = null;
 long searchClassPK = 0;
 
 if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) && (classNameId == 0)) {
-	clasNameIds = PortletDisplayTemplateHandlerRegistryUtil.getClassNameIds();
+	clasNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
 	searchClassPK = -1;
 }
 else {

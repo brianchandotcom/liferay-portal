@@ -47,12 +47,12 @@ String script = BeanParamUtil.getString(template, request, "script");
 Set<String> supportedLanguageTypes = TemplateManagerUtil.getTemplateManagerNames();
 
 if (Validator.isNull(script)) {
-	PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+	TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-	if (portletDisplayTemplateHandler != null) {
-		script = ContentUtil.get(portletDisplayTemplateHandler.getTemplatesHelpPath(language));
+	if (templateHandler != null) {
+		script = ContentUtil.get(templateHandler.getTemplatesHelpPath(language));
 
-		String propertyNamePrefix = portletDisplayTemplateHandler.getTemplatesHelpPropertyKey();
+		String propertyNamePrefix = templateHandler.getTemplatesHelpPropertyKey();
 
 		supportedLanguageTypes = TemplateManagerUtil.getSupportedLanguageTypes(propertyNamePrefix);
 	}
@@ -131,9 +131,9 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	}
 	else {
 		if (classNameId > 0) {
-			PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-			title = LanguageUtil.get(pageContext, "new") + StringPool.SPACE + portletDisplayTemplateHandler.getName(locale);
+			title = LanguageUtil.get(pageContext, "new") + StringPool.SPACE + templateHandler.getName(locale);
 		}
 		else {
 			title = LanguageUtil.get(pageContext, "new-application-display-template");

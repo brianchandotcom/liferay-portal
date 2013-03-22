@@ -188,6 +188,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return field.get(property);
 	}
 
+	public boolean getFieldRepeatable(String fieldName)
+		throws PortalException, SystemException {
+
+		return GetterUtil.getBoolean(getFieldProperty(fieldName, "repeatable"));
+	}
+
 	public boolean getFieldRequired(String fieldName)
 		throws PortalException, SystemException {
 
@@ -248,6 +254,19 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			locale);
 
 		return fieldsMap;
+	}
+
+	public String getFieldTip(String fieldName, Locale locale)
+		throws PortalException, SystemException {
+
+		return getFieldTip(fieldName, LocaleUtil.toLanguageId(locale));
+	}
+
+	public String getFieldTip(String fieldName, String locale)
+		throws PortalException, SystemException {
+
+		return GetterUtil.getString(
+			getFieldProperty(fieldName, "tip", locale), fieldName);
 	}
 
 	public String getFieldType(String fieldName)

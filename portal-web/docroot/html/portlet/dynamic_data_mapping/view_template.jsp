@@ -169,9 +169,9 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				String value = null;
 
 				if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
-					PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(template.getClassNameId());
+					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(template.getClassNameId());
 
-					value = portletDisplayTemplateHandler.getName(locale);
+					value = templateHandler.getName(locale);
 				}
 				else if (Validator.isNull(templateTypeValue)) {
 					value = LanguageUtil.get(pageContext, template.getType());

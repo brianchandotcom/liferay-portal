@@ -59,10 +59,11 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classPK) {
+			long classPK, Locale locale)
+		throws Exception {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			super.getTemplateVariableGroups(classPK);
+			super.getTemplateVariableGroups(classPK, locale);
 
 		TemplateVariableGroup assetPublisherUtilTemplateVariableGroup =
 			new TemplateVariableGroup("asset-publisher-util");

@@ -14,67 +14,24 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
 public abstract class BasePortletDisplayTemplateHandler
-	implements PortletDisplayTemplateHandler {
-
-	public long getClassPK() {
-		return 0;
-	}
-
-	public List<Element> getDefaultTemplateElements() throws Exception {
-		String templatesConfigPath = getTemplatesConfigPath();
-
-		if (Validator.isNull(templatesConfigPath)) {
-			return Collections.emptyList();
-		}
-
-		Class<?> clazz = getClass();
-
-		String xml = StringUtil.read(
-			clazz.getClassLoader(), templatesConfigPath, false);
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.elements("template");
-	}
-
-	public String getTemplatesHelpPath(String language) {
-		return PropsUtil.get(
-			getTemplatesHelpPropertyKey(), new Filter(language));
-	}
-
-	public String getTemplatesHelpPropertyKey() {
-		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
-	}
+	extends BaseTemplateHandler {
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classPK) {
+			long classPK, Locale locale)
+		throws Exception {
 
 		return PortletDisplayTemplateUtil.getTemplateVariableGroups();
-	}
-
-	protected String getTemplatesConfigPath() {
-		return null;
 	}
 
 }

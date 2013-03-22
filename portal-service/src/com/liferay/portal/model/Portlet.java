@@ -607,20 +607,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public com.liferay.portal.kernel.lar.PortletDataHandler getPortletDataHandlerInstance();
 
 	/**
-	* Returns the name of the portlet display style class of the portlet.
-	*
-	* @return the name of the portlet display style class of the portlet
-	*/
-	public java.lang.String getPortletDisplayTemplateHandlerClass();
-
-	/**
-	* Returns the portlet display style instance of the portlet.
-	*
-	* @return the portlet display style instance of the portlet
-	*/
-	public com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler getPortletDisplayTemplateHandlerInstance();
-
-	/**
 	* Returns the filters of the portlet.
 	*
 	* @return filters of the portlet
@@ -982,6 +968,21 @@ public interface Portlet extends PortletModel, PersistedModel {
 	cannot manually add to their page
 	*/
 	public boolean getSystem();
+
+	/**
+	* Returns the name of the template handler class of the portlet.
+	*
+	* @return the name of the template handler class of the portlet
+	*/
+	public java.lang.String getTemplateHandlerClass();
+
+	/**
+	* Returns the name of the template handler instance of the portlet.
+	*
+	* @return the name of the template handler instance of the portlet
+	*/
+	public com.liferay.portal.kernel.template.TemplateHandler
+		getTemplateHandlerInstance();
 
 	/**
 	* Returns the timestamp of the portlet.
@@ -1816,16 +1817,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 		java.lang.String portletDataHandlerClass);
 
 	/**
-	* Sets the name of the portlet display template handler class of the
-	* portlet.
-	*
-	* @param portletDisplayTemplateHandlerClass the name of display template
-	handler class of the portlet
-	*/
-	public void setPortletDisplayTemplateHandlerClass(
-		java.lang.String portletDisplayTemplateHandlerClass);
-
-	/**
 	* Sets the filters of the portlet.
 	*
 	* @param portletFilters the filters of the portlet
@@ -2122,6 +2113,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 	that a user cannot manually add to their page
 	*/
 	public void setSystem(boolean system);
+
+	/**
+	 * Sets the name of the template handler class of the portlet.
+	 *
+	 * @param templateHandlerClass the name of template handler class of the
+	 * portlet
+	 */
+	public void setTemplateHandlerClass(java.lang.String templateHandlerClass);
 
 	/**
 	* Sets the timestamp of the portlet.

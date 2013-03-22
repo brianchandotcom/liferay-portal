@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
@@ -151,8 +151,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String friendlyURLMapperClass, String friendlyURLMapping,
 		String friendlyURLRoutes, String urlEncoderClass,
 		String portletDataHandlerClass,
-		List<String> stagedModelDataHandlerClasses,
-		String portletDisplayTemplateHandlerClass,
+		List<String> stagedModelDataHandlerClasses, String templateHandlerClass,
 		String portletLayoutListenerClass, String pollerProcessorClass,
 		String popMessageListenerClass,
 		List<String> socialActivityInterpreterClasses,
@@ -215,13 +214,12 @@ public class PortletImpl extends PortletBaseImpl {
 		_urlEncoderClass = urlEncoderClass;
 		_portletDataHandlerClass = portletDataHandlerClass;
 		_stagedModelDataHandlerClasses = stagedModelDataHandlerClasses;
-		_portletDisplayTemplateHandlerClass =
-			portletDisplayTemplateHandlerClass;
 		_portletLayoutListenerClass = portletLayoutListenerClass;
 		_pollerProcessorClass = pollerProcessorClass;
 		_popMessageListenerClass = popMessageListenerClass;
 		_socialActivityInterpreterClasses = socialActivityInterpreterClasses;
 		_socialRequestInterpreterClass = socialRequestInterpreterClass;
+		_templateHandlerClass =templateHandlerClass;
 		_webDAVStorageToken = webDAVStorageToken;
 		_webDAVStorageClass = webDAVStorageClass;
 		_xmlRpcMethodClass = xmlRpcMethodClass;
@@ -358,9 +356,9 @@ public class PortletImpl extends PortletBaseImpl {
 			getFriendlyURLMapperClass(), getFriendlyURLMapping(),
 			getFriendlyURLRoutes(), getURLEncoderClass(),
 			getPortletDataHandlerClass(), getStagedModelDataHandlerClasses(),
-			getPortletDisplayTemplateHandlerClass(),
-			getPortletLayoutListenerClass(), getPollerProcessorClass(),
-			getPopMessageListenerClass(), getSocialActivityInterpreterClasses(),
+			getTemplateHandlerClass(), getPortletLayoutListenerClass(),
+			getPollerProcessorClass(), getPopMessageListenerClass(),
+			getSocialActivityInterpreterClasses(),
 			getSocialRequestInterpreterClass(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
@@ -1193,32 +1191,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns the name of the portlet display style class of the portlet.
-	 *
-	 * @return the name of the portlet display style class of the portlet
-	 */
-	public String getPortletDisplayTemplateHandlerClass() {
-		return _portletDisplayTemplateHandlerClass;
-	}
-
-	/**
-	 * Returns the portlet display style instance of the portlet.
-	 *
-	 * @return the portlet display style instance of the portlet
-	 */
-	public PortletDisplayTemplateHandler
-		getPortletDisplayTemplateHandlerInstance() {
-
-		if (Validator.isNull(getPortletDisplayTemplateHandlerClass())) {
-			return null;
-		}
-
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getPortletDisplayTemplateHandlerInstance();
-	}
-
-	/**
 	 * Returns the filters of the portlet.
 	 *
 	 * @return filters of the portlet
@@ -1714,6 +1686,30 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	public boolean getSystem() {
 		return _system;
+	}
+
+	/**
+	 * Returns the name of the template handler class of the portlet.
+	 *
+	 * @return the name of the template handler class of the portlet
+	 */
+	public String getTemplateHandlerClass() {
+		return _templateHandlerClass;
+	}
+
+	/**
+	 * Returns the template handler instance of the portlet.
+	 *
+	 * @return the template handler instance of the portlet
+	 */
+	public TemplateHandler getTemplateHandlerInstance() {
+		if (Validator.isNull(getTemplateHandlerClass())) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getTemplateHandlerInstance();
 	}
 
 	/**
@@ -2868,20 +2864,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the name of the portlet display template handler class of the
-	 * portlet.
-	 *
-	 * @param portletDisplayTemplateHandlerClass the name of display template
-	 *        handler class of the portlet
-	 */
-	public void setPortletDisplayTemplateHandlerClass(
-		String portletDisplayTemplateHandlerClass) {
-
-		_portletDisplayTemplateHandlerClass =
-			portletDisplayTemplateHandlerClass;
-	}
-
-	/**
 	 * Sets the filters of the portlet.
 	 *
 	 * @param portletFilters the filters of the portlet
@@ -3278,6 +3260,16 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	public void setSystem(boolean system) {
 		_system = system;
+	}
+
+	/**
+	 * Sets the name of the template handler class of the portlet.
+	 *
+	 * @param templateHandlerClass the name of template handler class of the
+	 * portlet
+	 */
+	public void setTemplateHandlerClass(String templateHandlerClass) {
+		_templateHandlerClass = templateHandlerClass;
 	}
 
 	/**
@@ -3684,11 +3676,6 @@ public class PortletImpl extends PortletBaseImpl {
 	private String _portletDataHandlerClass;
 
 	/**
-	 * The name of the display style handler class of the portlet.
-	 */
-	private String _portletDisplayTemplateHandlerClass;
-
-	/**
 	 * The filters of the portlet.
 	 */
 	private Map<String, PortletFilter> _portletFilters;
@@ -3898,6 +3885,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * manually add to their page.
 	 */
 	private boolean _system;
+
+	/**
+	 * The name of the display style handler class of the portlet.
+	 */
+	private String _templateHandlerClass;
 
 	/**
 	 * The timestamp of the portlet.

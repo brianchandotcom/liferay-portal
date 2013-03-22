@@ -57,10 +57,11 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classPK) {
+			long classPK, Locale locale)
+		throws Exception {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			super.getTemplateVariableGroups(classPK);
+			super.getTemplateVariableGroups(classPK, locale);
 
 		TemplateVariableGroup fieldsTemplateVariableGroup =
 			templateVariableGroups.get("fields");

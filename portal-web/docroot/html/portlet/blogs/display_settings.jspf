@@ -36,7 +36,7 @@
 	<div class="display-template">
 
 		<%
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(BlogsEntry.class.getName());
+		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(BlogsEntry.class.getName());
 
 		List<String> displayStyles = new ArrayList<String>();
 
@@ -46,7 +46,7 @@
 		%>
 
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 			displayStyles="<%= displayStyles %>"
 			preferenceName="pageDisplayStyle"
 			preferenceValue="<%= pageDisplayStyle %>"

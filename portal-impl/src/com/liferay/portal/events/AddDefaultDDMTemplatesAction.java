@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -90,18 +90,15 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 			long userId, long groupId, ServiceContext serviceContext)
 		throws Exception {
 
-		List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers =
-			PortletDisplayTemplateHandlerRegistryUtil
-				.getPortletDisplayTemplateHandlers();
+		List<TemplateHandler> templateHandlers =
+			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
-		for (PortletDisplayTemplateHandler portletDisplayTemplateHandler :
-				portletDisplayTemplateHandlers) {
-
+		for (TemplateHandler templateHandler : templateHandlers) {
 			long classNameId = PortalUtil.getClassNameId(
-				portletDisplayTemplateHandler.getClassName());
+				templateHandler.getClassName());
 
 			List<Element> templateElements =
-				portletDisplayTemplateHandler.getDefaultTemplateElements();
+				templateHandler.getDefaultTemplateElements();
 
 			for (Element templateElement : templateElements) {
 				String templateKey = templateElement.elementText(

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
 import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
@@ -90,6 +90,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -111,18 +112,18 @@ import org.apache.struts.tiles.ComponentContext;
 public class TemplateContextHelper {
 
 	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-		long classNameId, long classPK) {
+			long classNameId, long classPK, Locale locale)
+		throws Exception {
 
-		PortletDisplayTemplateHandler portletDisplayTemplateHandler =
-			PortletDisplayTemplateHandlerRegistryUtil.
-				getPortletDisplayTemplateHandler(classNameId);
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-		if (portletDisplayTemplateHandler == null) {
+		if (templateHandler == null) {
 			return Collections.emptyMap();
 		}
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			portletDisplayTemplateHandler.getTemplateVariableGroups(classPK);
+			templateHandler.getTemplateVariableGroups(classPK, locale);
 
 		TemplateVariableGroup utilTemplateVariableGroup =
 			templateVariableGroups.get("util");

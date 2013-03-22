@@ -18,7 +18,7 @@ parent-struts-path?, configuration-path?, configuration-action-class?,
 indexer-class*, open-search-class?, scheduler-entry*, portlet-url-class?,
 friendly-url-mapper-class?, friendly-url-mapping?, friendly-url-routes?,
 url-encoder-class?, portlet-data-handler-class?,
-staged-model-data-handler-class*, portlet-display-template-handler?,
+staged-model-data-handler-class*, template-handler?,
 portlet-layout-listener-class?, poller-processor-class?,
 pop-message-listener-class?, social-activity-interpreter-class*,
 social-request-interpreter-class?, webdav-storage-token?, webdav-storage-class?,
@@ -406,11 +406,11 @@ propagate permissions.
 <!ELEMENT permission-propagator (#PCDATA)>
 
 <!--
-The portlet-display-template-handler value must be a class that implements
-com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler
-and is called when displaying the portlet.
+The template-handler value must be a class that implements
+com.liferay.portal.kernel.template.TemplateHandler and is called when displaying
+the portlet.
 -->
-<!ELEMENT portlet-display-template-handler (#PCDATA)>
+<!ELEMENT template-handler (#PCDATA)>
 
 <!--
 The trash-handler value must be a class that implements

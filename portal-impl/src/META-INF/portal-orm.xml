@@ -3997,7 +3997,6 @@
 			<transient name="portletApp" />
 			<transient name="portletClass" />
 			<transient name="portletDataHandlerClass" />
-			<transient name="portletDisplayTemplateHandlerClass" />
 			<transient name="portletFilters" />
 			<transient name="portletInfo" />
 			<transient name="portletLayoutListenerClass" />
@@ -4033,6 +4032,7 @@
 			<transient name="strutsPath" />
 			<transient name="supportedLocales" />
 			<transient name="system" />
+			<transient name="templateHandlerClass" />
 			<transient name="timestamp" />
 			<transient name="trashHandlerClasses" />
 			<transient name="undeployedPortlet" />

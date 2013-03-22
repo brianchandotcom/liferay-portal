@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
@@ -42,6 +40,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -154,12 +154,10 @@ public class PortletBagFactory {
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
 
-		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance =
-			newPortletDisplayTemplateHandler(portlet);
+		TemplateHandler templateHandlerInstance = newTemplateHandler(portlet);
 
-		if (portletDisplayTemplateHandlerInstance != null) {
-			PortletDisplayTemplateHandlerRegistryUtil.register(
-				portletDisplayTemplateHandlerInstance);
+		if (templateHandlerInstance != null) {
+			TemplateHandlerRegistryUtil.register(templateHandlerInstance);
 		}
 
 		PortletLayoutListener portletLayoutListenerInstance =
@@ -323,9 +321,9 @@ public class PortletBagFactory {
 			configurationActionInstance, indexerInstances, openSearchInstance,
 			friendlyURLMapperInstance, urlEncoderInstance,
 			portletDataHandlerInstance, stagedModelDataHandlerInstances,
-			portletDisplayTemplateHandlerInstance,
-			portletLayoutListenerInstance, pollerProcessorInstance,
-			popMessageListenerInstance, socialActivityInterpreterInstances,
+			templateHandlerInstance, portletLayoutListenerInstance,
+			pollerProcessorInstance, popMessageListenerInstance,
+			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance, webDAVStorageInstance,
 			xmlRpcMethodInstance, controlPanelEntryInstance,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
@@ -816,19 +814,6 @@ public class PortletBagFactory {
 			PortletDataHandler.class, portlet.getPortletDataHandlerClass());
 	}
 
-	protected PortletDisplayTemplateHandler newPortletDisplayTemplateHandler(
-			Portlet portlet)
-		throws Exception {
-
-		if (Validator.isNull(portlet.getPortletDisplayTemplateHandlerClass())) {
-			return null;
-		}
-
-		return (PortletDisplayTemplateHandler)newInstance(
-			PortletDisplayTemplateHandler.class,
-			portlet.getPortletDisplayTemplateHandlerClass());
-	}
-
 	protected PortletLayoutListener newPortletLayoutListener(Portlet portlet)
 		throws Exception {
 
@@ -903,6 +888,17 @@ public class PortletBagFactory {
 		}
 
 		return stagedModelDataHandlerInstances;
+	}
+
+	protected TemplateHandler newTemplateHandler(Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getTemplateHandlerClass())) {
+			return null;
+		}
+
+		return (TemplateHandler)newInstance(
+			TemplateHandler.class, portlet.getTemplateHandlerClass());
 	}
 
 	protected URLEncoder newURLEncoder(Portlet portlet) throws Exception {

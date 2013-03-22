@@ -44,6 +44,19 @@ public class TemplateVariableGroup {
 		return collectionTemplateVariableDefinition;
 	}
 
+	public TemplateVariableDefinition addFieldVariable(
+		String labelKey, Class<?> clazz, String variableName, String help,
+		String dataType, boolean repeatable) {
+
+		TemplateVariableDefinition templateVariableDefinition =
+			new TemplateVariableDefinition(
+				labelKey, clazz, dataType, variableName, help, repeatable);
+
+		_templateVariableDefinitions.add(templateVariableDefinition);
+
+		return templateVariableDefinition;
+	}
+
 	public TemplateVariableDefinition addVariable(
 		String labelKey, Class<?> clazz, String variableName) {
 

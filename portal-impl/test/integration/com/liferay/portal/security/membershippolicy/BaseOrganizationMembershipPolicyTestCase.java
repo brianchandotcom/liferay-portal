@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class BaseOrganizationMembershipPolicyTestCase {
+public abstract class BaseOrganizationMembershipPolicyTestCase {
 
 	public static long[] getForbiddenOrganizationIds() {
 		return _forbiddenOrganizationIds;
@@ -189,8 +189,8 @@ public class BaseOrganizationMembershipPolicyTestCase {
 		return _userIds;
 	}
 
-	protected static Group group;
-	protected static Organization organization;
+	protected Group group;
+	protected Organization organization;
 
 	private static long[] _forbiddenOrganizationIds = new long[2];
 	private static long[] _forbiddenRoleIds = new long[2];

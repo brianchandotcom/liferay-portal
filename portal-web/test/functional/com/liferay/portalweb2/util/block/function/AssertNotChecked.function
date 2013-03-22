@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertNotChecked">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertNotChecked" />
+	</command>
+</definition>

@@ -1,0 +1,23 @@
+<definition>
+	<command name="assertPartialText">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForPartialText" />
+
+		<execute selenium="assertPartialText" />
+	</command>
+	<command name="assertText">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForText" />
+
+		<execute selenium="assertText" />
+	</command>
+	<command name="assertValue">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+	</command>
+</definition>

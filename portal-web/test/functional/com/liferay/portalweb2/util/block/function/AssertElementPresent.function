@@ -1,0 +1,12 @@
+<definition>
+	<command name="assertVisible">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertVisible" />
+	</command>
+	<command name="assertElementPresent">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertElementPresent" />
+	</command>
+</definition>

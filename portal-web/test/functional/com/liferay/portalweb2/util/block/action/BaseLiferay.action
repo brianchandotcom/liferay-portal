@@ -1,7 +1,48 @@
 <definition>
+	<command name="AssertChecked">
+		<default>
+			<execute function="AssertChecked#assertChecked" />
+		</default>
+	</command>
 	<command name="AssertElementNotPresent">
 		<default>
 			<execute function="AssertElementNotPresent#assertElementNotPresent" />
+		</default>
+	</command>
+	<command name="AssertElementPresent">
+		<default>
+			<execute function="AssertElementPresent#assertVisible" />
+		</default>
+	</command>
+	<command name="AssertNotChecked">
+		<default>
+			<execute function="AssertNotChecked#assertNotChecked" />
+		</default>
+	</command>
+	<command name="AssertTextEquals">
+		<case comparator="contains" locator="/input">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<default>
+			<execute function="AssertTextEquals#assertText" />
+		</default>
+	</command>
+	<command name="AssertTextNotEquals">
+		<case comparator="contains" locator="/input">
+			<execute function="AssertTextNotEquals#assertNotValue" />
+		</case>
+		<default>
+			<execute function="AssertTextNotEquals#assertNotText" />
+		</default>
+	</command>
+	<command name="AssertTextNotPresent">
+		<default>
+			<execute function="AssertTextNotPresent#assertTextNotPresent" />
+		</default>
+	</command>
+	<command name="AssertTextPresent">
+		<default>
+			<execute function="AssertTextPresent#assertTextPresent" />
 		</default>
 	</command>
 	<command name="Click">

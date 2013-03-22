@@ -716,7 +716,12 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<resourcecount property="test.functional.count">
 					<fileset dir="test-classes/functional" includes="**/${class}.class" />
 				</resourcecount>
+			</then>
+		</if>
 
+		<if>
+			<available file="test/functional-generated" type="dir" />
+			<then>
 				<resourcecount property="test.functional-generated.count">
 					<fileset dir="test-classes/functional-generated" includes="**/${class}.class" />
 				</resourcecount>

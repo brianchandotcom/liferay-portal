@@ -517,48 +517,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the user groups that match the name and
-	 * description.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the user group's company
-	 * @param  name the user group's name (optionally <code>null</code>)
-	 * @param  description the user group's description (optionally
-	 *         <code>null</code>)
-	 * @param  params the finder params (optionally <code>null</code>). For more
-	 *         information see {@link
-	 *         com.liferay.portal.service.persistence.UserGroupFinder}
-	 * @param  andOperator whether every field must match its keywords, or just
-	 *         one field.
-	 * @param  start the lower bound of the range of user groups to return
-	 * @param  end the upper bound of the range of user groups to return (not
-	 *         inclusive)
-	 * @param  obc the comparator to order the user groups (optionally
-	 *         <code>null</code>)
-	 * @return the matching user groups ordered by comparator <code>obc</code>
-	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.service.persistence.UserGroupFinder
-	 */
-	public List<UserGroup> search(
-			long companyId, String name, String description,
-			LinkedHashMap<String, Object> params, boolean andOperator,
-			int start, int end, OrderByComparator obc)
-		throws SystemException {
-
-		return userGroupFinder.findByC_N_D(
-			companyId, name, description, params, andOperator, start, end, obc);
-	}
-
-	/**
-	 * Returns an ordered range of all the user groups that match the name and
 	 * description. It is preferable to use this method instead of the
 	 * non-indexed version whenever possible for performance reasons.
 	 *
@@ -644,7 +602,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of user groups that match the keywords.
+	 * Returns the number of user groups that match the keywords
 	 *
 	 * @param  companyId the primary key of the user group's company
 	 * @param  keywords the keywords (space separated), which may occur in the
@@ -662,30 +620,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		return userGroupFinder.countByKeywords(companyId, keywords, params);
-	}
-
-	/**
-	 * Returns the number of user groups that match the name and description.
-	 *
-	 * @param  companyId the primary key of the user group's company
-	 * @param  name the user group's name (optionally <code>null</code>)
-	 * @param  description the user group's description (optionally
-	 *         <code>null</code>)
-	 * @param  params the finder params (optionally <code>null</code>). For more
-	 *         information see {@link
-	 *         com.liferay.portal.service.persistence.UserGroupFinder}
-	 * @param  andOperator whether every field must match its keywords, or just
-	 *         one field.
-	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
-	 */
-	public int searchCount(
-			long companyId, String name, String description,
-			LinkedHashMap<String, Object> params, boolean andOperator)
-		throws SystemException {
-
-		return userGroupFinder.countByC_N_D(
-			companyId, name, description, params, andOperator);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,47 +14,35 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_user_group_roles.jsp-tabs1");
+String tabs3 = (String)request.getAttribute("edit_organization_assignments.jsp-tabs3");
 
-int cur = (Integer)request.getAttribute("edit_user_group_roles.jsp-cur");
+int cur = (Integer)request.getAttribute("edit_organization_assignments.jsp-cur");
 
-Group group = (Group)request.getAttribute("edit_user_group_roles.jsp-group");
-String groupName = (String)request.getAttribute("edit_user_group_roles.jsp-groupName");
-Role role = (Role)request.getAttribute("edit_user_group_roles.jsp-role");
-long roleId = (Long)request.getAttribute("edit_user_group_roles.jsp-roleId");
-Organization organization = (Organization)request.getAttribute("edit_user_group_roles.jsp-organization");
+Organization organization = (Organization)request.getAttribute("edit_organization_assignments.jsp-organization");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.jsp-portletURL");
+Group group = organization.getGroup();
+
+PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assignments.jsp-portletURL");
 %>
 
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />
 
-<div class="portlet-section-body results-row" style="border: 1px solid; padding: 5px;">
-	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}) %>
-
-	<em>Current</em> signifies current user groups associated with the <em><%= HtmlUtil.escape(role.getTitle(locale)) %></em> role. <em>Available</em> signifies all user groups associated with the <em><%= HtmlUtil.escape(groupName) %></em> <%= (group.isOrganization()) ? "organization" : "site" %>.
-</div>
-
-<br />
-
-<h3><liferay-ui:message key="user-groups" /></h3>
-
 <liferay-ui:tabs
 	names="current,available"
-	param="tabs1"
+	param="tabs3"
 	url="<%= portletURL.toString() %>"
 />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>"
+	rowChecker="<%= new UserGroupGroupChecker(renderResponse, group) %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_group_search.jsp"
+		page="/html/portlet/user_groups_admin/user_group_search.jsp"
 	/>
 
 	<%
@@ -62,12 +50,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-	if (group.isSite()) {
+	if (tabs3.equals("current")) {
 		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
-	}
-
-	if (tabs1.equals("current")) {
-		userGroupParams.put("userGroupGroupRole", new Long[] {new Long(roleId), new Long(group.getGroupId())});
 	}
 	%>
 
@@ -98,7 +82,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 	<div class="separator"><!-- --></div>
 
 	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRoleUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+	String taglibOnClick = renderResponse.getNamespace() + "updateOrganizationUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />

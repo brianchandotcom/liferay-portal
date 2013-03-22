@@ -69,19 +69,29 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[2]</td>
 	<td>WC Structure Decimal Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[2]</td>
 	<td>WC Structure Decimal Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[3]</td>
+	<td>WC Structure Decimal Description</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a</td>
-	<td>WC Structure Decimal Name</td>
+	<td>//tr[contains(.,'WC Structure Decimal Name')]/td[5]/span/span/input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
@@ -127,6 +137,21 @@
 	<td>assertText</td>
 	<td>//label[contains(@for,'_15_decimal')]</td>
 	<td>Decimal</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@class='aui-datepicker-month']</td>
+	<td>value=0</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@class='aui-datepicker-day']</td>
+	<td>value=1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@class='aui-datepicker-year']</td>
+	<td>value=2020</td>
 </tr>
 <tr>
 	<td>type</td>

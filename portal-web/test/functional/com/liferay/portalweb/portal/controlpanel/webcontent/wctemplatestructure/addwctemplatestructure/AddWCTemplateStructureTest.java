@@ -188,6 +188,26 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("html"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div/label"));
+		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]",
+			RuntimeVariables.replace("Edit Image Settings"));
+		selenium.waitForVisible(
+			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']",
+			RuntimeVariables.replace("Edit Image Settings"));
+		assertEquals(RuntimeVariables.replace("Name"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[5]/td[1]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[5]/td[2]",
+			RuntimeVariables.replace("Name"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
+		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
+			RuntimeVariables.replace("image"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div/label"));
@@ -374,8 +394,8 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -401,7 +421,7 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("value=rich"));
 		selenium.sendKeys("//div[@id=\"_166_richEditor\"]/textarea",
 			RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p>$textbox.getData()</p>"));
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p><img src=\"$dm.getData()\"></img></p><p>$fileupload.getData()</p><p>$html.getData()</p><p><img src=\"$image.getData()\"></img></p><p>$integer.getData()</p><p><a href=\"$link.getData()\">Test Link</a></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p>$textbox.getData()</p>"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

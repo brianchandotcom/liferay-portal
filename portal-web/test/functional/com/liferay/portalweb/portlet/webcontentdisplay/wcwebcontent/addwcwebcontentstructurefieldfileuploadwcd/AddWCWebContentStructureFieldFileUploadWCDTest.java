@@ -51,13 +51,18 @@ public class AddWCWebContentStructureFieldFileUploadWCDTest extends BaseTestCase
 			RuntimeVariables.replace("WC Structure File Upload Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a");
+			"//tr[contains(.,'WC Structure File Upload Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure File Upload Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure File Upload Name"));
+				"//tr[contains(.,'WC Structure File Upload Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure File Upload Description"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure File Upload Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure File Upload Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
@@ -74,7 +79,9 @@ public class AddWCWebContentStructureFieldFileUploadWCDTest extends BaseTestCase
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace(
 				"WC WebContent Structure File Upload Title"));
-		selenium.uploadCommonFile("//input[contains(@id,'_15_file_')]",
+		assertEquals(RuntimeVariables.replace("File Upload"),
+			selenium.getText("//label[contains(@for,'_15_fileupload')]"));
+		selenium.uploadCommonFile("//input[contains(@id,'_15_fileupload')]",
 			RuntimeVariables.replace("Document_1.txt"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));

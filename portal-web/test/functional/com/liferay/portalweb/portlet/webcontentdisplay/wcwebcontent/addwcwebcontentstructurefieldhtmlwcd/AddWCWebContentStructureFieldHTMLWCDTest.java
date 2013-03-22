@@ -50,13 +50,15 @@ public class AddWCWebContentStructureFieldHTMLWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure HTML Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure HTML Name')]/td[3]/a");
+			"//tr[contains(.,'WC Structure HTML Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure HTML Name"),
-			selenium.getText(
-				"//tr[contains(.,'WC Structure HTML Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure HTML Name"));
+			selenium.getText("//tr[contains(.,'WC Structure HTML Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace("WC Structure HTML Description"),
+			selenium.getText("//tr[contains(.,'WC Structure HTML Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
@@ -71,6 +73,8 @@ public class AddWCWebContentStructureFieldHTMLWCDTest extends BaseTestCase {
 		Thread.sleep(1000);
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Structure HTML Title"));
+		assertEquals(RuntimeVariables.replace("HTML"),
+			selenium.getText("//div[@data-fieldname='html']/div/label"));
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");

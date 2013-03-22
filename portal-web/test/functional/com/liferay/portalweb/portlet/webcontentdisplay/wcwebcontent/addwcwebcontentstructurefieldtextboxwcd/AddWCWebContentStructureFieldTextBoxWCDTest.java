@@ -51,13 +51,18 @@ public class AddWCWebContentStructureFieldTextBoxWCDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure TextBox Name')]/td[3]/a");
+			"//tr[contains(.,'WC Structure TextBox Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure TextBox Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure TextBox Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure TextBox Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure TextBox Name"));
+				"//tr[contains(.,'WC Structure TextBox Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure TextBox Description"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure TextBox Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure TextBox Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
@@ -74,7 +79,7 @@ public class AddWCWebContentStructureFieldTextBoxWCDTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Structure TextBox Title"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
-			selenium.getText("//label[contains(@for,'_15_text')]"));
+			selenium.getText("//label[contains(@for,'_15_textbox')]"));
 		selenium.type("//textarea[contains(@id,'_15_textbox')]",
 			RuntimeVariables.replace("WC Structure TextBox"));
 		selenium.clickAt("//input[@value='Publish']",

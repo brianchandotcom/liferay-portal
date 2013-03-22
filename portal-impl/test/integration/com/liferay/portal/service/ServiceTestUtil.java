@@ -18,6 +18,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
@@ -170,18 +172,20 @@ public class ServiceTestUtil {
 		return searchContext;
 	}
 
-	public static ServiceContext getServiceContext() throws Exception {
+	public static ServiceContext getServiceContext()
+		throws PortalException, SystemException {
+
 		return getServiceContext(TestPropsValues.getGroupId());
 	}
 
 	public static ServiceContext getServiceContext(long groupId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		return getServiceContext(groupId, TestPropsValues.getUserId());
 	}
 
 	public static ServiceContext getServiceContext(long groupId, long userId)
-		throws Exception {
+		throws PortalException, SystemException {
 
 		ServiceContext serviceContext = new ServiceContext();
 

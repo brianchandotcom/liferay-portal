@@ -855,9 +855,8 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, int expectedResults)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
@@ -887,9 +886,8 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, int expectedResult)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
@@ -911,9 +909,8 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, boolean classType)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);
@@ -947,9 +944,8 @@ public abstract class BaseAssetSearchTestCase {
 			String[] titles, String[] orderedTitles)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group, serviceContext);

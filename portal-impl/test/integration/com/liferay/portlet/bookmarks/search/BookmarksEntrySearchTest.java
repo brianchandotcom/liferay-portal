@@ -96,7 +96,7 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
 		return BookmarksTestUtil.addEntry(
-			group.getGroupId(), folder.getFolderId(), true);
+			folder.getFolderId(), true, serviceContext);
 	}
 
 	@Override

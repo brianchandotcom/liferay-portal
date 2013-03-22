@@ -84,13 +84,13 @@ public class MBMessageServiceTest {
 				ServiceTestUtil.randomString(), _group.getGroupId());
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		serviceContext.setGroupPermissions(
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
 		serviceContext.setGuestPermissions(
 			new String[] {ActionKeys.ADD_MESSAGE, ActionKeys.VIEW});
-		serviceContext.setScopeGroupId(_group.getGroupId());
 
 		_category = MBCategoryServiceUtil.addCategory(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, name, description,

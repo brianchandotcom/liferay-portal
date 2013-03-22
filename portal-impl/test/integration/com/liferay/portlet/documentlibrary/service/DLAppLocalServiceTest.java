@@ -94,11 +94,8 @@ public class DLAppLocalServiceTest {
 			long parentFolderId, String name, boolean deleteExisting)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		if (deleteExisting) {
 			try {

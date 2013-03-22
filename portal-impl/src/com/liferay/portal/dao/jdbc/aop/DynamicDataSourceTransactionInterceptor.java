@@ -39,7 +39,6 @@ public class DynamicDataSourceTransactionInterceptor
 		}
 	}
 
-	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (_dynamicDataSourceTargetSource == null) {
 			return _transactionInterceptor.invoke(methodInvocation);

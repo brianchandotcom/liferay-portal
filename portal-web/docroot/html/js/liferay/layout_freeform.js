@@ -10,6 +10,14 @@ AUI.add(
 				Layout.DEFAULT_LAYOUT_OPTIONS,
 				{
 					after: {
+						addPortlet: function(event) {
+							var instance = this;
+
+							var portlet = event.portlet;
+
+							instance._setupNodeResize(portlet);
+							instance._setupNodeStack(portlet);
+						},
 						'drag:start': function(event) {
 							var instance = this;
 

@@ -226,6 +226,14 @@
 
 							var portletOptions = {
 								beforePortletLoaded: beforePortletLoaded,
+								onComplete: function(portlet) {
+									Layout.fire(
+										'addPortlet',
+										{
+											portlet: portlet
+										}
+									);
+								},
 								plid: plid,
 								placeHolder: placeHolder,
 								portletId: portletId,

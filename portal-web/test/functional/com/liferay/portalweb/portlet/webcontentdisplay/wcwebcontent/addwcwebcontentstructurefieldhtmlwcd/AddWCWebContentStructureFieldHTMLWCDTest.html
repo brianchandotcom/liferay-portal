@@ -69,19 +69,29 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure HTML Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure HTML Name')]/td[2]</td>
 	<td>WC Structure HTML Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure HTML Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure HTML Name')]/td[2]</td>
 	<td>WC Structure HTML Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure HTML Name')]/td[3]</td>
+	<td>WC Structure HTML Description</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure HTML Name')]/td[3]/a</td>
-	<td>WC Structure HTML Name</td>
+	<td>//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/span/input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
@@ -122,6 +132,11 @@
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td>WC WebContent Structure HTML Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@data-fieldname='html']/div/label</td>
+	<td>HTML</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

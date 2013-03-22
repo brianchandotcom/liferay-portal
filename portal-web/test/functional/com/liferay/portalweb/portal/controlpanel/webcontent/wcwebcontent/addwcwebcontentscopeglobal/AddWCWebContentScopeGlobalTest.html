@@ -115,12 +115,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>typeFrame</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>WC WebContent Global Content</td>
 </tr>
 <tr>

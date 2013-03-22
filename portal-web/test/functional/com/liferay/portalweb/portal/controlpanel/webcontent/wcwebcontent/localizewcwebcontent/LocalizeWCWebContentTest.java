@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -43,9 +43,8 @@ public class LocalizeWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//div[@data-title='WC WebContent Title']/a/span[@class='entry-title']");
+			"//div[@data-title='WC WebContent Title']/a/span");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//div[@data-title='WC WebContent Title']/a/span"));
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/a/span",
@@ -68,39 +67,24 @@ public class LocalizeWCWebContentTest extends BaseTestCase {
 			"//iframe[contains(@src,'_15_toLanguageId=es_ES')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-panel/aui-panel-min.js')]");
-		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//div[@id='_15_availableTranslationContainer']");
 		assertEquals(RuntimeVariables.replace(
 				"Translating Web Content to Spanish (Spain)"),
 			selenium.getText("//div[@id='_15_availableTranslationContainer']"));
 		selenium.type("//input[@id='_15_title_es_ES']",
-			RuntimeVariables.replace("WC WebContent Spanish Title"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
+			RuntimeVariables.replace("WC WebContent T\u00edtulo "));
 		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_on']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/textarea");
-		selenium.type("//div[@id='cke_1_contents']/textarea",
-			RuntimeVariables.replace("WC WebContent Spanish Content"));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible(
-			"//a[@class='cke_button cke_button__source cke_button_off']");
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
-		selenium.waitForText("//body", "WC WebContent Spanish Content");
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
+			RuntimeVariables.replace("WC WebContent Contenido "));
 		selenium.selectFrame("relative=top");
 		selenium.selectFrame(
 			"//iframe[contains(@src,'_15_toLanguageId=es_ES')]");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-panel/aui-panel-min.js')]");
-		selenium.clickAt("//input[@value='Save']",
+		selenium.clickAt("//span[@class='aui-button-content']/input[@value='Save']",
 			RuntimeVariables.replace("Save"));
+		Thread.sleep(3000);
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
 			"//div[@id='_15_availableTranslationContainer']/span/a");

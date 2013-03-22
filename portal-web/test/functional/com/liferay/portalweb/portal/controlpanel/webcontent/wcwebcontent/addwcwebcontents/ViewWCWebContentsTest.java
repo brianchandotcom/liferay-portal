@@ -39,26 +39,28 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC WebContent1 Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent1 Title')]"));
+				"//div[@data-title='WC WebContent1 Title']/a/span[@class='entry-title']/span"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC WebContent2 Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
+				"//div[@data-title='WC WebContent2 Title']/a/span[@class='entry-title']/span"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC WebContent3 Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]"));
-		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent1 Title')]",
+				"//div[@data-title='WC WebContent3 Title']/a/span[@class='entry-title']/span"));
+		selenium.clickAt("//div[@data-title='WC WebContent1 Title']/a/span[@class='entry-title']/span",
 			RuntimeVariables.replace("WC WebContent1 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals("WC WebContent1 Title",
-			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent1 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Content"),
 			selenium.getText("//body"));
@@ -80,18 +82,14 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
-		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]",
+				"//div[@data-title='WC WebContent2 Title']/a/span[@class='entry-title']/span"));
+		selenium.clickAt("//div[@data-title='WC WebContent2 Title']/a/span[@class='entry-title']/span",
 			RuntimeVariables.replace("WC WebContent2 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals("WC WebContent2 Title",
-			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent2 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
 			selenium.getText("//body"));
@@ -113,18 +111,14 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]"));
-		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent3 Title')]",
+				"//div[@data-title='WC WebContent3 Title']/a/span[@class='entry-title']/span"));
+		selenium.clickAt("//div[@data-title='WC WebContent3 Title']/a/span[@class='entry-title']/span",
 			RuntimeVariables.replace("WC WebContent3 Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals("WC WebContent3 Title",
-			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent3 Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Content"),
 			selenium.getText("//body"));

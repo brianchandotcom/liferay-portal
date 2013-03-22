@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -98,10 +98,18 @@ public class ViewMoveWCWebContentToFolderTest extends BaseTestCase {
 		assertEquals("20",
 			selenium.getSelectedLabel(
 				"//div[contains(@class,'article-entries-paginator')]/select"));
-		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
+		selenium.waitForVisible(
+			"//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img");
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC Folder Name']/a/div[@class='entry-thumbnail']/img"));
+		assertEquals(RuntimeVariables.replace("WC Folder Name"),
+			selenium.getText(
+				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']/span"));
+		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']/span",
 			RuntimeVariables.replace("WC Folder Name"));
-		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//div[@data-title='WC WebContent Title']/a/div[@class='entry-thumbnail']/img");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -134,8 +142,11 @@ public class ViewMoveWCWebContentToFolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),
 			selenium.getText(
 				"//div[@class='journal-breadcrumb']/ul/li[@class='last']/span/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@data-title='WC WebContent Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//div[@data-title='WC WebContent Title']/a/span"));
+			selenium.getText(
+				"//div[@data-title='WC WebContent Title']/a/span[@class='entry-title']/span"));
 		assertEquals(RuntimeVariables.replace("<<"),
 			selenium.getText(
 				"//div[contains(@class,'article-entries-paginator')]/a[1]"));

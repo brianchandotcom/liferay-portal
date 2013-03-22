@@ -395,6 +395,51 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div/label</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]</td>
+	<td>Edit Image Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']</td>
+	<td>Edit Image Settings</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']</td>
+	<td>Edit Image Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[5]/td[1]</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[5]/td[2]</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>image</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div/label</td>
 	<td>Integer</td>
 </tr>
@@ -830,12 +875,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -891,7 +936,7 @@
 <tr>
 	<td>sendKeys</td>
 	<td>//div[@id="_166_richEditor"]/textarea</td>
-	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p>$textbox.getData()</p></td>
+	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p><img src="$dm.getData()"></img></p><p>$fileupload.getData()</p><p>$html.getData()</p><p><img src="$image.getData()"></img></p><p>$integer.getData()</p><p><a href="$link.getData()">Test Link</a></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p>$textbox.getData()</p></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>

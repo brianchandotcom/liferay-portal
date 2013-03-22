@@ -74,19 +74,29 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[2]</td>
 	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[2]</td>
 	<td>WC Structure File Upload Name</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]</td>
+	<td>WC Structure File Upload Description</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[3]/a</td>
-	<td>WC Structure File Upload Name</td>
+	<td>//tr[contains(.,'WC Structure File Upload Name')]/td[5]/span/span/input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
@@ -129,8 +139,13 @@
 	<td>WC WebContent Structure File Upload Title</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//label[contains(@for,'_15_fileupload')]</td>
+	<td>File Upload</td>
+</tr>
+<tr>
 	<td>uploadCommonFile</td>
-	<td>//input[contains(@id,'_15_file_')]</td>
+	<td>//input[contains(@id,'_15_fileupload')]</td>
 	<td>Document_1.txt</td>
 </tr>
 <tr>

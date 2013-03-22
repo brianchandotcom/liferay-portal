@@ -50,13 +50,18 @@ public class AddWCWebContentStructureFieldIntegerWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure Integer Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure Integer Name')]/td[3]/a");
+			"//tr[contains(.,'WC Structure Integer Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure Integer Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Integer Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Integer Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure Integer Name"));
+				"//tr[contains(.,'WC Structure Integer Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure Integer Description"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure Integer Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Integer Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");

@@ -51,13 +51,18 @@ public class AddWCWebContentStructureFieldDecimalWCDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		selenium.waitForVisible(
-			"//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a");
+			"//tr[contains(.,'WC Structure Decimal Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure Decimal Name"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Decimal Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure Decimal Name"));
+				"//tr[contains(.,'WC Structure Decimal Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure Decimal Description"),
+			selenium.getText(
+				"//tr[contains(.,'WC Structure Decimal Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Decimal Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.waitForConfirmation(
 			"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 		selenium.selectFrame("relative=top");
@@ -75,6 +80,12 @@ public class AddWCWebContentStructureFieldDecimalWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("WC WebContent Structure Decimal Title"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText("//label[contains(@for,'_15_decimal')]"));
+		selenium.select("//select[@class='aui-datepicker-month']",
+			RuntimeVariables.replace("value=0"));
+		selenium.select("//select[@class='aui-datepicker-day']",
+			RuntimeVariables.replace("value=1"));
+		selenium.select("//select[@class='aui-datepicker-year']",
+			RuntimeVariables.replace("value=2020"));
 		selenium.type("//input[contains(@id,'_15_decimal')]",
 			RuntimeVariables.replace("0.888"));
 		selenium.clickAt("//input[@value='Publish']",

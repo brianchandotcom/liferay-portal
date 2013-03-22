@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -41,7 +41,7 @@ public class MoveWCWebContentToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//div[@data-title='WC WebContent Title']/a/span"));
-		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[2]/span/ul/li/strong/a",
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("WC WebContent Title Menu"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
@@ -53,12 +53,13 @@ public class MoveWCWebContentToFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.selectWindow("title=Web Content");
 		selenium.waitForVisible("//tr[contains(.,'WC Folder Name')]/td[1]/a");
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),
 			selenium.getText("//tr[contains(.,'WC Folder Name')]/td[1]/a"));
-		selenium.click("//tr[contains(.,'WC Folder Name')]/td[4]/input");
+		selenium.click(
+			"//tr[contains(.,'WC Folder Name')]/td[4]/input[@value='Choose']");
 		selenium.selectWindow("null");
 		Thread.sleep(1000);
 		selenium.waitForVisible("//a[@id='_15_folderName']");
@@ -72,7 +73,7 @@ public class MoveWCWebContentToFolderTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),
 			selenium.getText(
-				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
+				"//span[@class='entry-title']/span[contains(.,'WC Folder Name')]"));
 		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 	}
 }

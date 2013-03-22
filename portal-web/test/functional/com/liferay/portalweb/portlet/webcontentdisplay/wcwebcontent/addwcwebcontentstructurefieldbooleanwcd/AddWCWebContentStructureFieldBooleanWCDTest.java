@@ -57,14 +57,19 @@ public class AddWCWebContentStructureFieldBooleanWCDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 				selenium.waitForVisible(
-					"//tr[contains(.,'WC Structure Boolean Name')]/td[3]/a");
+					"//tr[contains(.,'WC Structure Boolean Name')]/td[2]");
 				assertEquals(RuntimeVariables.replace(
 						"WC Structure Boolean Name"),
 					selenium.getText(
-						"//tr[contains(.,'WC Structure Boolean Name')]/td[3]/a"));
-				selenium.clickAt("//tr[contains(.,'WC Structure Boolean Name')]/td[3]/a",
-					RuntimeVariables.replace("WC Structure Boolean Name"));
+						"//tr[contains(.,'WC Structure Boolean Name')]/td[2]"));
+				assertEquals(RuntimeVariables.replace(
+						"WC Structure Boolean Description"),
+					selenium.getText(
+						"//tr[contains(.,'WC Structure Boolean Name')]/td[3]"));
+				selenium.clickAt("//tr[contains(.,'WC Structure Boolean Name')]/td[5]/span/span/input[@value='Choose']",
+					RuntimeVariables.replace("Choose"));
 				selenium.waitForConfirmation(
 					"Selecting a new structure will change the available input fields and available templates? Do you want to proceed?");
 				selenium.selectFrame("relative=top");
@@ -82,6 +87,8 @@ public class AddWCWebContentStructureFieldBooleanWCDTest extends BaseTestCase {
 				selenium.type("//input[@id='_15_title_en_US']",
 					RuntimeVariables.replace(
 						"WC WebContent Structure Boolean Title"));
+				assertEquals(RuntimeVariables.replace("Boolean"),
+					selenium.getText("//label[contains(@for,'_15_boolean')]"));
 
 				boolean booleanChecked = selenium.isChecked(
 						"//input[contains(@id,'_15_boolean') and @type='checkbox']");

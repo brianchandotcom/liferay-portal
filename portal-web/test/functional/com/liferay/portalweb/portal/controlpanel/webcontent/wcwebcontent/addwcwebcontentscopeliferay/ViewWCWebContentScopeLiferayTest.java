@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,35 @@ public class ViewWCWebContentScopeLiferayTest extends BaseTestCase {
 	public void testViewWCWebContentScopeLiferay() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForVisible("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Liferay"),
+			selenium.getText("//a[@id='_160_groupSelectorButton']"));
+		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
+			RuntimeVariables.replace("Liferay"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]",
+			RuntimeVariables.replace("Global"));
+		selenium.waitForText("//a[@id='_160_groupSelectorButton']", "Global");
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("No Web Content was found."),
+			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -81,11 +110,10 @@ public class ViewWCWebContentScopeLiferayTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(
 				"//div[@id='_15_breadcrumbContainer']/ul/li/span/a"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Liferay Title"),
-			selenium.getText(
-				"//div[@data-title='WC WebContent Liferay Title']/a/span"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//div[@data-title='WC WebContent Title']/a/span"));
 		assertTrue(selenium.isVisible(
-				"//div[@data-title='WC WebContent Liferay Title']/a/div/img"));
+				"//div[@data-title='WC WebContent Title']/a/div/img"));
 		assertEquals(RuntimeVariables.replace("<<"),
 			selenium.getText(
 				"//div[contains(@class,'article-entries-paginator')]/a[1]"));
@@ -110,5 +138,20 @@ public class ViewWCWebContentScopeLiferayTest extends BaseTestCase {
 		assertEquals("20",
 			selenium.getSelectedLabel(
 				"//div[contains(@class,'article-entries-paginator')]/select"));
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/a/span",
+			RuntimeVariables.replace("WC WebContent Title"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText("//span[@class='article-name']"));
+		assertEquals("WC WebContent Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
+		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
+			selenium.getText("//body"));
 	}
 }

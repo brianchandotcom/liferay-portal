@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -88,10 +88,9 @@ public class TearDownWCWebContentScopeGlobalTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace(
-						"The selected item was moved to the Recycle Bin. Undo"),
-					selenium.getText(
-						"//div[@class='portlet-msg-success taglib-trash-undo']"));
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"The selected item was moved to the Recycle Bin. Undo"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

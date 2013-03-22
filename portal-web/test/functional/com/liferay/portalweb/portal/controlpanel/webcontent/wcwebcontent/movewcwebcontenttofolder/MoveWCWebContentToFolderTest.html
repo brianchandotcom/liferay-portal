@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@data-title='WC WebContent Title']/span[2]/span/ul/li/strong/a</td>
+	<td>//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a</td>
 	<td>WC WebContent Title Menu</td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//tr[contains(.,'WC Folder Name')]/td[4]/input</td>
+	<td>//tr[contains(.,'WC Folder Name')]/td[4]/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
+	<td>//span[@class='entry-title']/span[contains(.,'WC Folder Name')]</td>
 	<td>WC Folder Name</td>
 </tr>
 <tr>

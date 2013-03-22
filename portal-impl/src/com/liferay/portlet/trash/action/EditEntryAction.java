@@ -17,6 +17,7 @@ package com.liferay.portlet.trash.action;
 import com.liferay.portal.TrashPermissionException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -45,6 +46,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -103,11 +105,23 @@ public class EditEntryAction extends PortletAction {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (TrashPermissionException tpe) {
-			SessionErrors.add(actionRequest, tpe.getClass(), tpe);
-		}
 		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+			if (e instanceof TrashPermissionException) {
+				TrashPermissionException tpe = (TrashPermissionException)e;
+
+				SessionErrors.add(actionRequest, tpe.getClass(), tpe);
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (windowState.equals(LiferayWindowState.EXCLUSIVE) ||
+				windowState.equals(LiferayWindowState.POP_UP)) {
+
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 	}
 

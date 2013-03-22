@@ -412,6 +412,9 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 			}
 
 			trashHandler.deleteTrashEntry(overrideClassPK);
+
+			trashHandler.checkDuplicateTrashEntry(
+				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, null);
 		}
 		else if (name != null) {
 			if (!trashHandler.hasTrashPermission(
@@ -422,11 +425,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 					TrashPermissionException.RESTORE_RENAME);
 			}
 
+			trashHandler.checkDuplicateTrashEntry(
+				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, name);
+
 			trashHandler.updateTitle(entry.getClassPK(), name);
 		}
-
-		trashHandler.checkDuplicateTrashEntry(
-			entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, null);
 
 		trashHandler.restoreTrashEntry(getUserId(), entry.getClassPK());
 

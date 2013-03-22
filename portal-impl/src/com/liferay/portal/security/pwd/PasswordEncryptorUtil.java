@@ -28,13 +28,9 @@ import com.liferay.portal.util.PropsUtil;
 public class PasswordEncryptorUtil {
 
 	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
-			GetterUtil.getString(
-				PropsUtil.get(
-					PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
-
-	public static final char[] SALT_CHARS =
-		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
-			.toCharArray();
+		GetterUtil.getString(
+			PropsUtil.get(
+				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
@@ -64,7 +60,7 @@ public class PasswordEncryptorUtil {
 	public static String encrypt(String clearTextPassword)
 		throws PwdEncryptorException {
 
-		return encrypt(PASSWORDS_ENCRYPTION_ALGORITHM, clearTextPassword, null);
+		return encrypt(clearTextPassword, null);
 	}
 
 	public static String encrypt(
@@ -83,6 +79,10 @@ public class PasswordEncryptorUtil {
 
 		return _passwordEncryptor.encrypt(
 			algorithm, clearTextPassword, currentEncryptedPassword);
+	}
+
+	public PasswordEncryptor getPasswordEncryptor() {
+		return _passwordEncryptor;
 	}
 
 	public void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {

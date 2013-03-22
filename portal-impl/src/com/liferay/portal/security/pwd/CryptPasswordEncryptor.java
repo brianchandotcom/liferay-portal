@@ -31,6 +31,10 @@ import org.vps.crypt.Crypt;
 public class CryptPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	public static final char[] SALT_CHARS =
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
+			.toCharArray();
+
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {
 			PasswordEncryptorUtil.TYPE_CRYPT,
@@ -64,15 +68,15 @@ public class CryptPasswordEncryptor
 
 				Random random = new Random();
 
-				int numSaltChars = PasswordEncryptorUtil.SALT_CHARS.length;
+				int numSaltChars = SALT_CHARS.length;
 
 				StringBuilder sb = new StringBuilder();
 
 				int x = random.nextInt(Integer.MAX_VALUE) % numSaltChars;
 				int y = random.nextInt(Integer.MAX_VALUE) % numSaltChars;
 
-				sb.append(PasswordEncryptorUtil.SALT_CHARS[x]);
-				sb.append(PasswordEncryptorUtil.SALT_CHARS[y]);
+				sb.append(SALT_CHARS[x]);
+				sb.append(SALT_CHARS[y]);
 
 				String salt = sb.toString();
 

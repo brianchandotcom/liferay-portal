@@ -14,9 +14,7 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.PropsUtil;
@@ -40,14 +38,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PowerMockIgnore({"javax.crypto.*" })
 @PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
-public class PasswordEncryptorUtilTest extends PowerMockito {
+public class CompositePasswordEncryptorTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
 		new DigesterUtil().setDigester(new DigesterImpl());
-
-		PasswordEncryptorUtil passwordEncryptorUtil =
-			new PasswordEncryptorUtil();
 
 		CompositePasswordEncryptor compositePasswordEncryptor =
 			new CompositePasswordEncryptor();
@@ -69,6 +64,9 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 		passwordEncryptors.add(new SSHAPasswordEncryptor());
 
 		compositePasswordEncryptor.setPasswordEncryptors(passwordEncryptors);
+
+		PasswordEncryptorUtil passwordEncryptorUtil =
+			new PasswordEncryptorUtil();
 
 		passwordEncryptorUtil.setPasswordEncryptor(compositePasswordEncryptor);
 	}
@@ -111,10 +109,6 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT + "/10";
 
 		testAlgorithm(algorithm);
-
-		testAlgorithm(
-			algorithm, "password",
-			"$2a$10$/ST7LsB.7AAHsn/tlK6hr.nudQaBbJhPX9KfRSSzsn.1ij45lVzaK");
 	}
 
 	@Test
@@ -177,8 +171,8 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 
 	@Test
 	public void testEncryptPBKDF2With50000Rounds() throws Exception {
-		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 +
-			"WithHmacSHA1/50000";
+		String algorithm =
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/50000";
 
 		testAlgorithm(algorithm);
 
@@ -189,8 +183,8 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 
 	@Test
 	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
-		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 +
-			"WithHmacSHA1/128/50000";
+		String algorithm =
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000";
 
 		testAlgorithm(algorithm);
 
@@ -285,26 +279,6 @@ public class PasswordEncryptorUtilTest extends PowerMockito {
 		Assert.assertEquals(encrypted, actual);
 
 		return actual;
-	}
-
-	protected void testFail(String password) {
-		try {
-			PasswordEncryptorUtil.encrypt(password);
-
-			Assert.fail();
-		}
-		catch (PwdEncryptorException e) {
-		}
-	}
-
-	protected void testFail(String password, String encryptedPassword) {
-		try {
-			PasswordEncryptorUtil.encrypt(password, encryptedPassword);
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
 	}
 
 	protected void testFail(

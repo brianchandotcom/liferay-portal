@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,11 @@ public class CompositePasswordEncryptor
 			String algorithm, String clearTextPassword,
 			String currentEncryptedPassword)
 		throws PwdEncryptorException {
+
+		if (Validator.isNull(algorithm)) {
+			throw new IllegalArgumentException(
+				"Must specify an encryption algorithm.");
+		}
 
 		PasswordEncryptor passwordEncryptor = null;
 

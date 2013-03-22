@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface AuditedModel {
+public interface AuditedModel extends ClassedModel {
 
 	public long getCompanyId();
 

@@ -162,7 +162,7 @@ public class DDMTemplateStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			DDMTemplate template)
 		throws Exception {
 
@@ -202,7 +202,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			element, template, DDMPortletDataHandler.NAMESPACE);
+			template, DDMPortletDataHandler.NAMESPACE);
 
 		DDMTemplate importedTemplate = null;
 

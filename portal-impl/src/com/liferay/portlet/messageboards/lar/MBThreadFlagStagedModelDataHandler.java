@@ -86,7 +86,7 @@ public class MBThreadFlagStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			MBThreadFlag threadFlag)
 		throws Exception {
 
@@ -108,7 +108,7 @@ public class MBThreadFlagStagedModelDataHandler
 				getZipEntryAsObject(rootMessagePath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, element, rootMessagePath, rootMessage);
+				portletDataContext, element, rootMessage);
 
 			threadId = MapUtil.getLong(
 				threadIds, threadFlag.getThreadId(), threadFlag.getThreadId());

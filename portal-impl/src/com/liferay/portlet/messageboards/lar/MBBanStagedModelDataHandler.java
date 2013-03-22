@@ -56,8 +56,7 @@ public class MBBanStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
-			MBBan ban)
+			PortletDataContext portletDataContext, Element element, MBBan ban)
 		throws Exception {
 
 		User user = UserUtil.fetchByUuid_C_First(

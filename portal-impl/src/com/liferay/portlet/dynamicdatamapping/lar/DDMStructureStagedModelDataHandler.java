@@ -67,7 +67,7 @@ public class DDMStructureStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			DDMStructure structure)
 		throws Exception {
 
@@ -80,7 +80,7 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructure.class);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			path, structure, DDMPortletDataHandler.NAMESPACE);
+			structure, DDMPortletDataHandler.NAMESPACE);
 
 		DDMStructure importedStructure = null;
 

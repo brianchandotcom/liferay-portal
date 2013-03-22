@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.StagedModel;
 
 import java.io.Serializable;
@@ -49,11 +48,9 @@ public class StagedModelPathUtil {
 	public static String getPath(
 		StagedModel stagedModel, String dependentFileName) {
 
-		ClassedModel classedModel = (ClassedModel)stagedModel;
-
 		return getPath(
-			stagedModel.getGroupId(), classedModel.getModelClassName(),
-			classedModel.getPrimaryKeyObj(), dependentFileName);
+			stagedModel.getGroupId(), stagedModel.getModelClassName(),
+			stagedModel.getPrimaryKeyObj(), dependentFileName);
 	}
 
 	protected static String getPath(

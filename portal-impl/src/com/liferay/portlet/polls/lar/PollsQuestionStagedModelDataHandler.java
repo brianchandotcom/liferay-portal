@@ -55,7 +55,7 @@ public class PollsQuestionStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			PollsQuestion question)
 		throws Exception {
 
@@ -88,7 +88,7 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			path, question, PollsPortletDataHandler.NAMESPACE);
+			question, PollsPortletDataHandler.NAMESPACE);
 
 		PollsQuestion importedQuestion = null;
 

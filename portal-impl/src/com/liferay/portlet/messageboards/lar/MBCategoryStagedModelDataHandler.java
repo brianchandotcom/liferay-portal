@@ -70,7 +70,7 @@ public class MBCategoryStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			MBCategory category)
 		throws Exception {
 
@@ -117,8 +117,7 @@ public class MBCategoryStagedModelDataHandler
 					parentCategoryPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, element, parentCategoryPath,
-				parentCategory);
+				portletDataContext, element, parentCategory);
 
 			parentCategoryId = MapUtil.getLong(
 				categoryIds, category.getParentCategoryId(),
@@ -126,7 +125,7 @@ public class MBCategoryStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			path, category, MBPortletDataHandler.NAMESPACE);
+			category, MBPortletDataHandler.NAMESPACE);
 
 		MBCategory importedCategory = null;
 

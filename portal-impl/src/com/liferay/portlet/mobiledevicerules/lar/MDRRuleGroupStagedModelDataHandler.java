@@ -52,13 +52,13 @@ public class MDRRuleGroupStagedModelDataHandler
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Element ruleGroupElement,
-			String path, MDRRuleGroup ruleGroup)
+			MDRRuleGroup ruleGroup)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(ruleGroup.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			ruleGroupElement, ruleGroup, MDRPortletDataHandler.NAMESPACE);
+			ruleGroup, MDRPortletDataHandler.NAMESPACE);
 
 		serviceContext.setUserId(userId);
 

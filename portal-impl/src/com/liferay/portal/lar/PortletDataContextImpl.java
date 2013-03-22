@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -650,6 +652,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Element element, ClassedModel classedModel, String namespace) {
 
 		return createServiceContext(element, null, classedModel, namespace);
+	}
+
+	public ServiceContext createServiceContext(
+		StagedModel stagedModel, String namespace) {
+
+		return createServiceContext(
+			StagedModelPathUtil.getPath(stagedModel), stagedModel, namespace);
 	}
 
 	public ServiceContext createServiceContext(

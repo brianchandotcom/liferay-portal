@@ -56,16 +56,18 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public abstract String getClassName();
 
 	public void importStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			T stagedModel)
 		throws PortletDataException {
+
+		String path = StagedModelPathUtil.getPath(stagedModel);
 
 		if (portletDataContext.isPathProcessed(path)) {
 			return;
 		}
 
 		try {
-			doImportStagedModel(portletDataContext, element, path, stagedModel);
+			doImportStagedModel(portletDataContext, element, stagedModel);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -78,7 +80,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws Exception;
 
 	protected abstract void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			T stagedModel)
 		throws Exception;
 

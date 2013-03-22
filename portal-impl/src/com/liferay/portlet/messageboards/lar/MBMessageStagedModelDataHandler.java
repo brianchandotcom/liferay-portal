@@ -118,7 +118,7 @@ public class MBMessageStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			MBMessage message)
 		throws Exception {
 
@@ -175,7 +175,7 @@ public class MBMessageStagedModelDataHandler
 						categoryPath);
 
 				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, element, categoryPath, category);
+					portletDataContext, element, category);
 
 				parentCategoryId = MapUtil.getLong(
 					categoryIds, message.getCategoryId(),

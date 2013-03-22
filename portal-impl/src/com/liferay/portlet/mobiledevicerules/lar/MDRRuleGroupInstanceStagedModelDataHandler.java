@@ -86,7 +86,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			Element ruleGroupInstanceElement, String path,
+			Element ruleGroupInstanceElement,
 			MDRRuleGroupInstance ruleGroupInstance)
 		throws Exception {
 
@@ -101,8 +101,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			(MDRRuleGroup)portletDataContext.getZipEntryAsObject(ruleGroupPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, ruleGroupInstanceElement, ruleGroupPath,
-			ruleGroup);
+			portletDataContext, ruleGroupInstanceElement, ruleGroup);
 
 		Map<Long, Long> ruleGroupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -151,8 +150,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			ruleGroupInstanceElement, ruleGroupInstance,
-			MDRPortletDataHandler.NAMESPACE);
+			ruleGroupInstance, MDRPortletDataHandler.NAMESPACE);
 
 		serviceContext.setUserId(userId);
 

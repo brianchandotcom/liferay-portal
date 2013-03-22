@@ -67,7 +67,7 @@ public class BookmarksEntryStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			BookmarksEntry entry)
 		throws Exception {
 
@@ -91,14 +91,14 @@ public class BookmarksEntryStagedModelDataHandler
 					parentFolderPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, element, parentFolderPath, parentFolder);
+				portletDataContext, element, parentFolder);
 
 			folderId = MapUtil.getLong(
 				folderIds, entry.getFolderId(), entry.getFolderId());
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			path, entry, BookmarksPortletDataHandler.NAMESPACE);
+			entry, BookmarksPortletDataHandler.NAMESPACE);
 
 		BookmarksEntry importedEntry = null;
 

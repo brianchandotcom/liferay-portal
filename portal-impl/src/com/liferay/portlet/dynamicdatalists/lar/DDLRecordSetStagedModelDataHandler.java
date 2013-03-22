@@ -76,7 +76,7 @@ public class DDLRecordSetStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element, String path,
+			PortletDataContext portletDataContext, Element element,
 			DDLRecordSet recordSet)
 		throws Exception {
 
@@ -103,7 +103,7 @@ public class DDLRecordSetStagedModelDataHandler
 			recordSet.getDDMStructureId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			path, recordSet, DDLPortletDataHandler.NAMESPACE);
+			recordSet, DDLPortletDataHandler.NAMESPACE);
 
 		DDLRecordSet importedRecordSet = null;
 

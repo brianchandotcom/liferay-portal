@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -118,6 +119,9 @@ public interface PortletDataContext extends Serializable {
 
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace);
+
+	public ServiceContext createServiceContext(
+		StagedModel stagedModel, String namespace);
 
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel, String namespace);

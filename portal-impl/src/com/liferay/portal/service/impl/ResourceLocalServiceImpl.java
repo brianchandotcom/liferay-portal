@@ -143,15 +143,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ClassedModel classedModel = (ClassedModel)auditedModel;
-
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
 			addResources(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
-				auditedModel.getUserId(), classedModel.getModelClassName(),
-				String.valueOf(classedModel.getPrimaryKeyObj()), false,
+				auditedModel.getUserId(), auditedModel.getModelClassName(),
+				String.valueOf(auditedModel.getPrimaryKeyObj()), false,
 				serviceContext.isAddGroupPermissions(),
 				serviceContext.isAddGuestPermissions(),
 				getPermissionedModel(auditedModel));
@@ -159,13 +157,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		else {
 			if (serviceContext.isDeriveDefaultPermissions()) {
 				serviceContext.deriveDefaultPermissions(
-					getGroupId(auditedModel), classedModel.getModelClassName());
+					getGroupId(auditedModel), auditedModel.getModelClassName());
 			}
 
 			addModelResources(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
-				auditedModel.getUserId(), classedModel.getModelClassName(),
-				String.valueOf(classedModel.getPrimaryKeyObj()),
+				auditedModel.getUserId(), auditedModel.getModelClassName(),
+				String.valueOf(auditedModel.getPrimaryKeyObj()),
 				serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions(),
 				getPermissionedModel(auditedModel));

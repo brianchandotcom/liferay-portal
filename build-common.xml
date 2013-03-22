@@ -790,15 +790,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</else>
 		</if>
 
-		<if>
-			<not>
-				<isset property="test.dir" />
-			</not>
-			<then>
-				<var name="test.dir" value="${test.type}" />
-			</then>
-		</if>
-
 		<ant target="test-cmd">
 			<property name="test.type" value="${test.type}" />
 		</ant>
@@ -809,6 +800,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="test-cmd">
+		<if>
+			<not>
+				<isset property="test.dir" />
+			</not>
+			<then>
+				<var name="test.dir" value="${test.type}" />
+			</then>
+		</if>
+
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>

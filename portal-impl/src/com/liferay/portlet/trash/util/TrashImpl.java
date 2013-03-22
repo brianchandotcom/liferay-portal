@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -58,10 +59,9 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -263,9 +263,12 @@ public class TrashImpl implements Trash {
 		return getTrashTitle(trashEntryId, StringPool.SLASH);
 	}
 
-	public String getViewContentURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
+	public PortletURL getViewContentURL(
+			String className, long classPK, HttpServletRequest request)
 		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn() ||
 			!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
@@ -295,41 +298,33 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		String namespace = PortalUtil.getPortletNamespace(PortletKeys.TRASH);
+		Layout layout = themeDisplay.getLayout();
 
-		Map<String, String[]> params = new HashMap<String, String[]>();
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			request, PortletKeys.TRASH, layout.getLayoutId(),
+			PortletRequest.RENDER_PHASE);
 
-		params.put(
-			namespace + "struts_action", new String[] {"/trash/view_content"});
-		params.put(
-			namespace + "redirect",
-			new String[] {themeDisplay.getURLCurrent()});
+		portletURL.setParameter("struts_action", "/trash/view_content");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 			className, classPK);
 
 		if (trashEntry.getRootEntry() != null) {
-			params.put(namespace + "className", new String[] {className});
-			params.put(
-				namespace + "classPK", new String[] {String.valueOf(classPK)});
+			portletURL.setParameter("className", className);
+			portletURL.setParameter("classPK", String.valueOf(classPK));
 		}
 		else {
-			params.put(
-				namespace + "trashEntryId",
-				new String[] {String.valueOf(trashEntry.getEntryId())});
+			portletURL.setParameter(
+				"trashEntryId", String.valueOf(trashEntry.getEntryId()));
 		}
 
-		params.put(namespace + "type", new String[] {trashRenderer.getType()});
-		params.put(
-			namespace + "showActions", new String[] {Boolean.FALSE.toString()});
-		params.put(
-			namespace + "showAssetMetadata",
-			new String[] {Boolean.TRUE.toString()});
-		params.put(
-			namespace + "showEditURL", new String[] {Boolean.FALSE.toString()});
+		portletURL.setParameter("type", trashRenderer.getType());
+		portletURL.setParameter("showActions", Boolean.FALSE.toString());
+		portletURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
+		portletURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
-		return PortalUtil.getControlPanelFullURL(
-			themeDisplay.getScopeGroupId(), PortletKeys.TRASH, params);
+		return portletURL;
 	}
 
 	public boolean isInTrash(String className, long classPK)

@@ -29,6 +29,8 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
@@ -83,9 +85,11 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		MBThread thread = message.getThread();
 
 		if (thread.isInTrash()) {
-			return TrashUtil.getViewContentURL(
+			PortletURL portletURL = TrashUtil.getViewContentURL(
 				MBThread.class.getName(), thread.getThreadId(),
-				serviceContext.getThemeDisplay());
+				serviceContext.getRequest());
+
+			return portletURL.toString();
 		}
 
 		StringBundler sb = new StringBundler(4);

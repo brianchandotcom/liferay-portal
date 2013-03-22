@@ -102,11 +102,11 @@ public class TrashUtil {
 		return getTrash().getTrashTitle(trashEntryId);
 	}
 
-	public static String getViewContentURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
+	public static PortletURL getViewContentURL(
+			String className, long classPK, HttpServletRequest request)
 		throws PortalException, SystemException {
 
-		return getTrash().getViewContentURL(className, classPK, themeDisplay);
+		return getTrash().getViewContentURL(className, classPK, request);
 	}
 
 	public static boolean isInTrash(String className, long classPK)

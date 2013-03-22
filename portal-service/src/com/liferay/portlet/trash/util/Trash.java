@@ -67,8 +67,8 @@ public interface Trash {
 
 	public String getTrashTitle(long trashEntryId);
 
-	public String getViewContentURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
+	public PortletURL getViewContentURL(
+			String className, long classPK, HttpServletRequest request)
 		throws PortalException, SystemException;
 
 	public boolean isInTrash(String className, long classPK)

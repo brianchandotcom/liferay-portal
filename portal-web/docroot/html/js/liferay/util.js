@@ -1640,13 +1640,13 @@
 		Util,
 		'selectEntity',
 		function(config, callback) {
-			var dialog = Util.getTop().Liferay.Util.Window._map[config.id];
+			var dialog = Util.getWindow(config.id);
 
 			if (dialog) {
 				dialog.show();
 			}
 			else {
-				this.openWindow(config);
+				Util.openWindow(config);
 
 				var eventName = config.eventName || config.id;
 

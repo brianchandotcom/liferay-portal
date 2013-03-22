@@ -224,17 +224,16 @@
 								}
 							}
 
-							var onComplete = function(portlet) {
-								Layout.fire("portletAdded",
-									{
-										portlet: portlet
-									}
-								);
-							};
-
 							var portletOptions = {
 								beforePortletLoaded: beforePortletLoaded,
-								onComplete: onComplete,
+								onComplete: function(portlet) {
+									Layout.fire(
+										'addPortlet',
+										{
+											portlet: portlet
+										}
+									);
+								},
 								plid: plid,
 								placeHolder: placeHolder,
 								portletId: portletId,

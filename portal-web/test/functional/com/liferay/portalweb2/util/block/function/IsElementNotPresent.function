@@ -1,0 +1,13 @@
+<definition>
+	<command name="isElementNotPresent">
+		<if>
+			<condition selenium="isElementPresent" />
+			<then>
+				<execute selenium="isNotVisible" />
+			</then>
+			<else>
+				<execute selenium="isElementNotPresent" />
+			</else>
+		</if>
+	</command>
+</definition>

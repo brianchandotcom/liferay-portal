@@ -1,0 +1,17 @@
+<definition>
+	<command name="isNotPartialText">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotPartialText" />
+	</command>
+	<command name="isNotText">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotText" />
+	</command>
+	<command name="isNotValue">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotValue" />
+	</command>
+</definition>

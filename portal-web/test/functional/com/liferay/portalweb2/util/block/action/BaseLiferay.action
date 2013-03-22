@@ -60,9 +60,30 @@
 			<execute function="DragAndDrop#dragAndDrop" />
 		</default>
 	</command>
+	<command name="IsElementNotPresent">
+		<default>
+			<execute function="IsElementNotPresent#isElementNotPresent" />
+		</default>
+	</command>
 	<command name="IsElementPresent">
 		<default>
 			<execute function="IsElementPresent#isElementPresent" />
+		</default>
+	</command>
+	<command name="IsTextEqual">
+		<case comparator="contains" locator="/input">
+			<execute function="IsTextEqual#isValue" />
+		</case>
+		<default>
+			<execute function="IsTextEqual#isText" />
+		</default>
+	</command>
+	<command name="IsTextNotEqual">
+		<case comparator="contains" locator="/input">
+			<execute function="IsTextNotEqual#isNotValue" />
+		</case>
+		<default>
+			<execute function="IsTextNotEqual#isNotText" />
 		</default>
 	</command>
 	<command name="Open">

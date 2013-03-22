@@ -148,9 +148,9 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 
 			Package pkg = clazz.getPackage();
 
-			String packageName = pkg.getName();
+			if (clazz.isPrimitive() ||
+				((pkg != null) && (pkg.getName().startsWith("java.")))) {
 
-			if (clazz.isPrimitive() || packageName.startsWith("java.")) {
 				return _bean;
 			}
 

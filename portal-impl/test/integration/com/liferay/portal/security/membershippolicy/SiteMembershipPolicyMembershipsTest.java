@@ -42,6 +42,7 @@ public class SiteMembershipPolicyMembershipsTest
 			null, null, addForbiddenGroups(), null);
 	}
 
+	@Test
 	public void testAddUserToRequiredGroups() throws Exception {
 		long[] requiredGroupIds = addRequiredGroups();
 

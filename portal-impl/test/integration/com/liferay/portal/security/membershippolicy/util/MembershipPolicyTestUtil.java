@@ -21,11 +21,15 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserServiceUtil;
@@ -66,6 +70,16 @@ public class MembershipPolicyTestUtil {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
 			GroupConstants.TYPE_SITE_OPEN, friendlyURL, true, true,
 			populateServiceContext());
+	}
+
+	public static Organization addOrganization() throws Exception {
+		String name = ServiceTestUtil.randomString();
+
+		return OrganizationServiceUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
+			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, false, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			false, populateServiceContext());
 	}
 
 	public static User addUser(

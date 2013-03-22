@@ -179,7 +179,7 @@ public abstract class BaseOrganizationMembershipPolicy
 			userId, organization.getGroupId(), roleId);
 
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.getUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
 
 		userGroupRoles.add(userGroupRole);
 

@@ -173,7 +173,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
 		if (!filteredOrganizationUserGroupRoles.isEmpty()) {
 			OrganizationMembershipPolicyUtil.checkRoles(
-				null, filteredSiteUserGroupRoles);
+				null, filteredOrganizationUserGroupRoles);
 		}
 
 		if (!filteredSiteUserGroupRoles.isEmpty()) {

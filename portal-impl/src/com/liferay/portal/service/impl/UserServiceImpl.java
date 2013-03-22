@@ -2415,7 +2415,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 							organization.getOrganizationId(),
 							role.getRoleId()) ||
 						OrganizationMembershipPolicyUtil.isRoleRequired(
-							userId, group.getGroupId(), role.getRoleId())) {
+							userId, organization.getOrganizationId(),
+							role.getRoleId())) {
 
 						userGroupRoles.add(oldUserGroupRole);
 					}

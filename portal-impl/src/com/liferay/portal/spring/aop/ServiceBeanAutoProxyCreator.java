@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.Skip;
-import com.liferay.portal.security.lang.SecurityManagerUtil;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
@@ -78,11 +77,7 @@ public class ServiceBeanAutoProxyCreator
 
 		Object[] advices = DO_NOT_PROXY;
 
-		if ((!SecurityManagerUtil.isPACLDisabled() &&
-			 (beanName.endsWith(_FINDER_SUFFIX) ||
-			  beanName.endsWith(_PERSISTENCE_SUFFIX))) ||
-			beanName.endsWith(_SERVICE_SUFFIX)) {
-
+		if (beanName.endsWith(_SERVICE_SUFFIX)) {
 			advices = super.getAdvicesAndAdvisorsForBean(
 				beanClass, beanName, targetSource);
 
@@ -94,8 +89,6 @@ public class ServiceBeanAutoProxyCreator
 		return advices;
 	}
 
-	private static final String _FINDER_SUFFIX = "Finder";
-	private static final String _PERSISTENCE_SUFFIX = "Persistence";
 	private static final String _SERVICE_SUFFIX = "Service";
 
 	private MethodInterceptor _methodInterceptor;

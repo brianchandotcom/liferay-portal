@@ -125,9 +125,6 @@ public abstract class BaseSearchTestCase {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		serviceContext.setAddGroupPermissions(false);
-		serviceContext.setAddGuestPermissions(false);
-
 		SearchContext searchContext = ServiceTestUtil.getSearchContext(
 			group.getGroupId());
 
@@ -138,6 +135,9 @@ public abstract class BaseSearchTestCase {
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
 
 		baseModel = addBaseModel(
 			parentBaseModel, true, getSearchKeywords(), serviceContext);

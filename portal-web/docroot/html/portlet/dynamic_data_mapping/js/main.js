@@ -526,14 +526,16 @@ AUI.add(
 					_setAvailableFields: function(val) {
 						var instance = this;
 
-						var fields = [];
-
-						AArray.each(
+						var fields = AArray.map(
 							val,
 							function(item, index, collection) {
-								fields.push(
-									A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item)
-								);
+								return A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item);
+							}
+						);
+
+						fields.sort(
+							function(a, b) {
+								return A.ArraySort.compare(a.get('label'), b.get('label'));
 							}
 						);
 

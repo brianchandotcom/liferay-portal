@@ -9,21 +9,23 @@
 
 		<execute selenium="clickAtAndWait" />
 	</command>
+	<command name="partialTextClickAt">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="clickAt" />
+	</command>
+	<command name="partialTextClickAtAndWait">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="clickAtAndWait" />
+	</command>
 	<command name="textClickAt">
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="waitForText" />
-
-		<execute selenium="assertText" />
+		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="clickAt" />
 	</command>
 	<command name="textClickAtAndWait">
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="waitForText" />
-
-		<execute selenium="assertText" />
+		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
@@ -36,12 +38,13 @@
 
 		<execute function="Click#textClickAt" />
 	</command>
+	<command name="valueClickAt">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="clickAt" />
+	</command>
 	<command name="valueClickAtAndWait">
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="waitForValue" />
-
-		<execute selenium="assertValue" />
+		<execute function="AssertTextEquals#assertValue" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>

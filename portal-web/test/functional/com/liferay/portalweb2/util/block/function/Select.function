@@ -1,0 +1,12 @@
+<definition>
+	<command name="select">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="select" />
+	</command>
+	<command name="selectAndWait">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="selectAndWait" />
+	</command>
+</definition>

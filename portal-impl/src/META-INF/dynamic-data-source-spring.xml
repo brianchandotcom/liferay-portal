@@ -29,7 +29,9 @@
 	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor">
 		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
-		<property name="transactionManager" ref="liferayTransactionManager" />
+		<property name="transactionInterceptor">
+			<bean factory-bean="transactionInterceptorFactoryBean" factory-method="create" />
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.InfrastructureUtil" class="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />

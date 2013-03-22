@@ -21,46 +21,36 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
-import java.lang.reflect.Method;
-
-import java.util.List;
-import java.util.concurrent.Callable;
-
-import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.interceptor.TransactionAttribute;
-import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransactionInterceptor implements MethodInterceptor {
+public class TransactionInterceptor extends BaseTransactionInterceptor {
 
-	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		Method method = methodInvocation.getMethod();
+	/**
+	 * @deprecated As of 6.1.0, replaced by {@link
+	 *             #setPlatformTransactionManager(PlatformTransactionManager)}
+	 */
+	public void setTransactionManager(
+		PlatformTransactionManager platformTransactionManager) {
 
-		Class<?> targetClass = null;
+		setPlatformTransactionManager(platformTransactionManager);
+	}
 
-		Object targetBean = methodInvocation.getThis();
-
-		if (targetBean != null) {
-			targetClass = targetBean.getClass();
-		}
-
-		TransactionAttribute transactionAttribute =
-			transactionAttributeSource.getTransactionAttribute(
-				method, targetClass);
-
-		if (transactionAttribute == null) {
-			return methodInvocation.proceed();
-		}
+	@Override
+	protected Object doInvoke(
+			MethodInvocation methodInvocation,
+			TransactionAttribute transactionAttribute)
+		throws Throwable {
 
 		TransactionStatus transactionStatus =
-			_platformTransactionManager.getTransaction(transactionAttribute);
+			platformTransactionManager.getTransaction(transactionAttribute);
 
 		boolean newTransaction = transactionStatus.isNewTransaction();
 
@@ -89,47 +79,11 @@ public class TransactionInterceptor implements MethodInterceptor {
 		return returnValue;
 	}
 
-	public void setPlatformTransactionManager(
-		PlatformTransactionManager platformTransactionManager) {
-
-		_platformTransactionManager = platformTransactionManager;
-	}
-
-	public void setTransactionAttributeSource(
-		TransactionAttributeSource transactionAttributeSource) {
-
-		this.transactionAttributeSource = transactionAttributeSource;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link
-	 *             #setPlatformTransactionManager(PlatformTransactionManager)}
-	 */
-	public void setTransactionManager(
-		PlatformTransactionManager platformTransactionManager) {
-
-		_platformTransactionManager = platformTransactionManager;
-	}
-
-	protected void invokeCallbacks() {
-		List<Callable<?>> callables =
-			TransactionCommitCallbackUtil.popCallbackList();
-
-		for (Callable<?> callable : callables) {
-			try {
-				callable.call();
-			}
-			catch (Exception e) {
-				_log.error("Failed to execute transaction commit callback", e);
-			}
-		}
-	}
-
 	protected void processCommit(TransactionStatus transactionStatus) {
 		boolean hasError = false;
 
 		try {
-			_platformTransactionManager.commit(transactionStatus);
+			platformTransactionManager.commit(transactionStatus);
 		}
 		catch (TransactionSystemException tse) {
 			_log.error(
@@ -180,7 +134,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 
 		if (transactionAttribute.rollbackOn(throwable)) {
 			try {
-				_platformTransactionManager.rollback(transactionStatus);
+				platformTransactionManager.rollback(transactionStatus);
 			}
 			catch (TransactionSystemException tse) {
 				_log.error(
@@ -220,11 +174,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 		throw throwable;
 	}
 
-	protected TransactionAttributeSource transactionAttributeSource;
-
 	private static Log _log = LogFactoryUtil.getLog(
 		TransactionInterceptor.class);
-
-	private PlatformTransactionManager _platformTransactionManager;
 
 }

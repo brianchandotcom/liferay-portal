@@ -733,6 +733,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				return;
 			}
 
+			if (Validator.isNull(classLoaderReferenceId)) {
+				classLoaderReferenceId = "portal";
+			}
+
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER, null,
 				classLoaderReferenceId);

@@ -86,7 +86,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			WikiPage duplicatePage = WikiPageLocalServiceUtil.getPage(
 				pageResource.getResourcePrimKey());
 
-			dee.setDuplicateEntryId(duplicatePage.getPageId());
+			dee.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
 			dee.setOldName(duplicatePage.getTitle());
 			dee.setTrashEntryId(trashEntry.getEntryId());
 

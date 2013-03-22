@@ -69,7 +69,7 @@ public class TrashEntryServiceSoap {
 	* permissions.
 	*
 	* @param groupId the primary key of the group
-	* @throws PrincipalException if a principal exception occurred
+	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteEntries(long groupId) throws RemoteException {
@@ -83,6 +83,15 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the trash entries with the primary keys.
+	*
+	* @param entryIds the primary keys of the trash entries
+	* @throws PortalException if a trash entry with the primary key could not
+	be found or if the user did not have permission to delete any one
+	of the trash entries
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteEntries(long[] entryIds) throws RemoteException {
 		try {
 			TrashEntryServiceUtil.deleteEntries(entryIds);
@@ -94,6 +103,21 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param entryId the primary key of the trash entry
+	* @throws PortalException if a trash entry with the primary key could not
+	be found or if the user did not have permission to delete the
+	trash entry
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteEntry(long entryId) throws RemoteException {
 		try {
 			TrashEntryServiceUtil.deleteEntry(entryId);
@@ -105,6 +129,22 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Deletes the trash entry with the entity class name and class primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @throws PortalException if a trash entry with the entity class name and
+	primary key could not be found or if the user did not have
+	permission to delete the entry
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void deleteEntry(java.lang.String className, long classPK)
 		throws RemoteException {
 		try {
@@ -170,6 +210,41 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Moves the trash entry with the entity class name and primary key,
+	* restoring it to a new location identified by the destination container
+	* model ID.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} if the user did not
+	* have the permission to perform one of the necessary operations. The
+	* exception is created with a type specific to the operation:
+	* </p>
+	*
+	* <ul>
+	* <li>
+	* {@link TrashPermissionException#MOVE} - if the user did not have
+	* permission to move the trash entry to the new
+	* destination
+	* </li>
+	* <li>
+	* {@link TrashPermissionException#RESTORE} - if the user did not have
+	* permission to restore the trash entry
+	* </li>
+	* </ul>
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param destinationContainerModelId the primary key of the new location
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
+	* @throws PortalException if a matching trash entry could not be found, if
+	the user did not have permission to move the trash entry to the
+	new location, if the user did not have permission to restore the
+	trash entry, if a duplicate trash entry exists at the new
+	location, or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -199,6 +274,45 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Restores the trash entry to its original location. In order to handle a
+	* duplicate trash entry already existing at the original location, either
+	* pass in the primary key of the existing trash entry's entity to overwrite
+	* or pass in a new name to give to the trash entry being restored.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} if the user did not
+	* have the permission to perform one of the necessary operations. The
+	* exception is created with a type specific to the operation:
+	* </p>
+	*
+	* <ul>
+	* <li>
+	* {@link TrashPermissionException#RESTORE} - if the user did not have
+	* permission to restore the trash entry
+	* </li>
+	* <li>
+	* {@link TrashPermissionException#RESTORE_OVERWRITE} - if the user did not
+	* have permission to delete the existing trash entry
+	* </li>
+	* <li>
+	* {@link TrashPermissionException#RESTORE_RENAME} - if the user did not
+	* have permission to rename the trash entry
+	* </li>
+	* </ul>
+	*
+	* @param entryId the primary key of the trash entry to restore
+	* @param overrideClassPK the primary key of the entity to overwrite
+	(optionally <code>0</code>)
+	* @param name a new name to give to the trash entry being restored
+	(optionally <code>null</code>)
+	* @return the restored trash entry
+	* @throws PortalException if a matching trash entry could not be found, if
+	the user did not have permission to overwrite an existing trash
+	entry, to rename the trash entry being restored, or to restore
+	the trash entry in general
+	* @throws SystemException if a system exception occurred
+	*/
 	public static com.liferay.portlet.trash.model.TrashEntrySoap restoreEntry(
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws RemoteException {

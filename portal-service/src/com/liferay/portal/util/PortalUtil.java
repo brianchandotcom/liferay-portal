@@ -201,8 +201,8 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+				groupId, privateLayout, mainPath, friendlyURL, params,
+				requestContext);
 	}
 
 	public static Locale[] getAlternateLocales(HttpServletRequest request)
@@ -385,7 +385,7 @@ public class PortalUtil {
 		String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			request, portletId, referrerPlid, lifecycle);
+				request, portletId, referrerPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
@@ -393,7 +393,7 @@ public class PortalUtil {
 		String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			portletRequest, portletId, referrerPlid, lifecycle);
+				portletRequest, portletId, referrerPlid, lifecycle);
 	}
 
 	public static String getCreateAccountURL(
@@ -1746,6 +1746,7 @@ public class PortalUtil {
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
 	}
+
 
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {

@@ -62,6 +62,9 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			PropsValues.DEFAULT_REGULAR_THEME_ID);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public static String getDefaultRegularThemeId(long companyId)
 		throws SystemException {
 
@@ -78,6 +81,9 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		return PortalUtil.getJsSafePortletId(PropsValues.DEFAULT_WAP_THEME_ID);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public static String getDefaultWapThemeId(long companyId)
 		throws SystemException {
 

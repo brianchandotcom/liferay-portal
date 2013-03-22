@@ -489,6 +489,11 @@
 			<bean class="com.liferay.portal.util.ServiceBeanMethodInvocationFactoryImpl" />
 		</property>
 	</bean>
+    <bean id="com.liferay.portal.kernel.util.ThemeFactoryUtil" class="com.liferay.portal.kernel.util.ThemeFactoryUtil">
+        <property name="ThemeFactory">
+            <bean class="com.liferay.portal.util.ThemeFactoryImpl" />
+        </property>
+    </bean>
 	<bean id="com.liferay.portal.kernel.util.ThreadLocalDistributor" class="com.liferay.portal.kernel.util.ThreadLocalDistributor">
 		<property name="threadLocalSources">
 			<list>

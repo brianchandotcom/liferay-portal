@@ -342,11 +342,7 @@ public class DDMXMLImpl implements DDMXML {
 
 		String valueString = String.valueOf(fieldValue);
 
-		if (valueString != null) {
-			valueString = valueString.trim();
-		}
-
-		dynamicContentElement.addCDATA(valueString);
+		dynamicContentElement.addCDATA(valueString.trim());
 	}
 
 	private static final String _AVAILABLE_LOCALES = "available-locales";

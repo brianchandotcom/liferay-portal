@@ -15,7 +15,6 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
-import com.liferay.portal.bean.VelocityBeanHandler;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
@@ -37,6 +36,8 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
@@ -100,7 +101,6 @@ import javax.sql.DataSource;
 import org.springframework.aop.framework.AdvisedSupport;
 
 import sun.reflect.Reflection;
-
 import sun.security.util.SecurityConstants;
 
 /**
@@ -449,13 +449,27 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
 
-		public InvocationHandler getInvocationHandler(
-			Object bean, ClassLoader classLoader) {
+		public Object getBean(final Object bean, ClassLoader classLoader) {
+			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
+				return bean;
+			}
 
-			InvocationHandler invocationHandler = new VelocityBeanHandler(
-				bean, classLoader);
+			InvocationHandler invocationHandler = new InvocationHandler() {
 
-			return new PACLInvocationHandler(invocationHandler);
+				public Object invoke(
+						Object proxy, Method method, Object[] arguments)
+					throws Throwable {
+
+					return method.invoke(bean, arguments);
+				}
+
+			};
+
+			invocationHandler = new PACLInvocationHandler(invocationHandler);
+
+			return ProxyUtil.newProxyInstance(
+				classLoader, ReflectionUtil.getInterfaces(bean, classLoader),
+				invocationHandler);
 		}
 
 	}

@@ -17,6 +17,7 @@ package com.liferay.portal.security.lang;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -60,6 +61,10 @@ public class DoPrivilegedHandler
 
 	protected Object doInvoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
+
+		if (!PACLPolicyManager.isActive()) {
+			return method.invoke(_bean, arguments);
+		}
 
 		Class<?> methodDeclaringClass = method.getDeclaringClass();
 		String methodName = method.getName();

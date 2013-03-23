@@ -47,7 +47,18 @@ public class DoPrivilegedHandler
 		return _bean;
 	}
 
-	public Object invoke(Object object, Method method, Object[] arguments)
+	public Object invoke(Object proxy, Method method, Object[] arguments)
+		throws Throwable {
+
+		try {
+			return doInvoke(proxy, method, arguments);
+		}
+		catch (InvocationTargetException ite) {
+			throw ite.getTargetException();
+		}
+	}
+
+	protected Object doInvoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
 		Class<?> methodDeclaringClass = method.getDeclaringClass();
@@ -75,15 +86,7 @@ public class DoPrivilegedHandler
 				new InvokePrivilegedExceptionAction(_bean, method, arguments));
 		}
 		catch (PrivilegedActionException pae) {
-			Exception e = pae.getException();
-
-			if (e instanceof InvocationTargetException) {
-				InvocationTargetException ite = (InvocationTargetException)e;
-
-				throw ite.getTargetException();
-			}
-
-			throw e;
+			throw pae.getException().getCause();
 		}
 	}
 

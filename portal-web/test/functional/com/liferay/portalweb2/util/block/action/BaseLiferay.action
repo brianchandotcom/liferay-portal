@@ -50,9 +50,22 @@
 			<execute function="Click#clickAt" />
 		</default>
 	</command>
+	<command name="Close">
+		<default>
+			<execute function="Close#close" />
+		</default>
+	</command>
 	<command name="Confirm">
 		<default>
 			<execute function="Confirm#assertConfirmation" />
+		</default>
+	</command>
+	<command name="Copy">
+		<case comparator="contains" locator="/input">
+			<execute function="Copy#valueCopy" />
+		</case>
+		<default>
+			<execute function="Copy#textCopy" />
 		</default>
 	</command>
 	<command name="DragAndDrop">
@@ -86,9 +99,29 @@
 			<execute function="IsTextNotEqual#isNotText" />
 		</default>
 	</command>
+	<command name="MouseOver">
+		<default>
+			<execute function="MouseOver#mouseOver" />
+		</default>
+	</command>
 	<command name="Open">
 		<default>
 			<execute function="Open#open" />
+		</default>
+	</command>
+	<command name="Paste">
+		<default>
+			<execute function="Paste#paste" />
+		</default>
+	</command>
+	<command name="Select">
+		<default>
+			<execute function="Select#select" />
+		</default>
+	</command>
+	<command name="SelectWindow">
+		<default>
+			<execute function="SelectWindow#selectWindow" />
 		</default>
 	</command>
 	<command name="Type">

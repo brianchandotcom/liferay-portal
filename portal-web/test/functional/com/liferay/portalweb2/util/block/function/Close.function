@@ -1,0 +1,17 @@
+<definition>
+	<command name="close">
+		<execute selenium="selectWindow" argument1="null" />
+
+		<execute selenium="selectFrame" argument1="relative=top" />
+	</command>
+
+	<command name="closeWindow">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="close" />
+
+		<execute selenium="selectWindow" argument1="null" />
+
+		<execute selenium="selectFrame" argument1="relative=top" />
+	</command>
+</definition>

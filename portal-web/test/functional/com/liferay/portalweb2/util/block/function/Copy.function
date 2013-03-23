@@ -1,0 +1,12 @@
+<definition>
+	<command name="textCopy">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="copyText" />
+	</command>
+	<command name="valueCopy">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="copyValue" />
+	</command>
+</definition>

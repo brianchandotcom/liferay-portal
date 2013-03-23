@@ -1,0 +1,32 @@
+<definition>
+	<command name="mouseOver">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+	</command>
+	<command name="partialTextMouseOver">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="mouseOver" />
+	</command>
+	<command name="textMouseOver">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
+	</command>
+	<command name="textMouseOverClickDockbar">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="clickAt" argument1="//div[@id='dockbar']" argument2="" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />
+
+		<execute function="MouseOver#textMouseOver" />
+	</command>
+
+	<command name="valueMouseOver">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="mouseOver" />
+	</command>
+</definition>

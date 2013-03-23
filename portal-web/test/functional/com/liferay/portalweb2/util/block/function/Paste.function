@@ -1,0 +1,7 @@
+<definition>
+	<command name="paste">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="paste" />
+	</command>
+</definition>

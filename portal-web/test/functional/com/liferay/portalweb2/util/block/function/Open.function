@@ -1,16 +1,22 @@
 <definition>
 	<command name="open">
 		<execute selenium="selectWindow" argument1="null" />
+
 		<execute selenium="selectFrame" argument1="relative=top" />
+
 		<execute selenium="open" />
 	</command>
-
 	<command name="openWindow">
 		<execute selenium="pause" argument1="15000" />
+
 		<execute selenium="selectWindow" argument1="null" />
+
 		<execute selenium="selectFrame" argument1="relative=top" />
+
 		<execute selenium="openWindow" argument1="${locator1}" argument2="windowName" />
+
 		<execute selenium="waitForPopUp" argument1="windowName" argument2="windowName" />
+
 		<execute selenium="selectWindow" argument1="windowName" />
 	</command>
 </definition>

@@ -1,0 +1,7 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<condition selenium="selenium" />
+		</if>
+	</command>
+</definition>

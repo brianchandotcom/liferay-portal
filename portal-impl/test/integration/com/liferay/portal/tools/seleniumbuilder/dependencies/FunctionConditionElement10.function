@@ -1,0 +1,7 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<condition argument1="argument1" />
+		</if>
+	</command>
+</definition>

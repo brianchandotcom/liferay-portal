@@ -1,0 +1,5 @@
+<definition>
+	<command name="commandName">
+		<execute argument1="argument1" />
+	</command>
+</definition>

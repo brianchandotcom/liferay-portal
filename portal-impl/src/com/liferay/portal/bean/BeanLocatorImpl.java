@@ -21,13 +21,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -176,47 +175,6 @@ public class BeanLocatorImpl implements BeanLocator {
 			_paclServletContextName, bean.getClass());
 
 		return bean;
-	}
-
-	/**
-	 * @see {@link
-	 *      com.liferay.portal.security.lang.DoPrivilegedFactory#_getInterfaces(
-	 *      List, Class)}
-	 */
-	protected void getInterfaces(
-		List<Class<?>> interfaceClasses, Class<?> clazz) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			try {
-				interfaceClasses.add(
-					_classLoader.loadClass(interfaceClass.getName()));
-			}
-			catch (ClassNotFoundException cnfe) {
-			}
-		}
-	}
-
-	/**
-	 * @see {@link
-	 *      com.liferay.portal.security.lang.DoPrivilegedFactory#_getInterfaces(
-	 *      Object)}
-	 */
-	protected Class<?>[] getInterfaces(Object object) {
-		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
-
-		Class<?> clazz = object.getClass();
-
-		getInterfaces(interfaceClasses, clazz);
-
-		Class<?> superClass = clazz.getSuperclass();
-
-		while (superClass != null) {
-			getInterfaces(interfaceClasses, superClass);
-
-			superClass = superClass.getSuperclass();
-		}
-
-		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BeanLocatorImpl.class);

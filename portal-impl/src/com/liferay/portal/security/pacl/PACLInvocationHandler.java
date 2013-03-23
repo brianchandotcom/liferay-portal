@@ -72,7 +72,7 @@ public class PACLInvocationHandler implements InvocationHandler {
 				return false;
 			}
 			else if (methodName.equals("toString")) {
-				return method.invoke(proxy, arguments);
+				return _invocationHandler.invoke(proxy, method, arguments);
 			}
 		}
 

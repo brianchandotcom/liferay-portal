@@ -120,7 +120,7 @@ public class PortalRuntimePermission extends BasicPermission {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{class=");
 

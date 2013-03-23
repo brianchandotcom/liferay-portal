@@ -15,6 +15,7 @@
 package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.InvocationHandler;
@@ -59,6 +60,14 @@ public class DoPrivilegedHandler
 		}
 		else if (_isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);
+		}
+
+		String declaringClassName = methodDeclaringClass.getName();
+
+		if (declaringClassName.endsWith(_FINDER_SUFFIX) ||
+			declaringClassName.endsWith(_PERSISTENCE_SUFFIX)) {
+
+			PortalServicePermission.checkService(_bean, method, arguments);
 		}
 
 		try {
@@ -113,6 +122,9 @@ public class DoPrivilegedHandler
 
 		return false;
 	}
+
+	private static final String _FINDER_SUFFIX = "Finder";
+	private static final String _PERSISTENCE_SUFFIX = "Persistence";
 
 	private Object _bean;
 	private boolean _hasNotPrivilegedMethods = false;

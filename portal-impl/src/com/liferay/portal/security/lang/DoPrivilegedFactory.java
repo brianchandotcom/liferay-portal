@@ -19,13 +19,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-
-import java.util.List;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -68,40 +66,6 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 		throws BeansException {
 
 		return bean;
-	}
-
-	/**
-	 * @see {@link com.liferay.portal.bean.BeanLocatorImpl#getInterfaces(List,
-	 *      Class)}
-	 */
-	private static void _getInterfaces(
-		List<Class<?>> interfaceClasses, Class<?> clazz) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			interfaceClasses.add(interfaceClass);
-		}
-	}
-
-	/**
-	 * @see {@link
-	 *      com.liferay.portal.bean.BeanLocatorImpl#getInterfaces(Object)}
-	 */
-	private static Class<?>[] _getInterfaces(Object object) {
-		List<Class<?>> interfaceClasses = new UniqueList<Class<?>>();
-
-		Class<?> clazz = object.getClass();
-
-		_getInterfaces(interfaceClasses, clazz);
-
-		Class<?> superClass = clazz.getSuperclass();
-
-		while (superClass != null) {
-			_getInterfaces(interfaceClasses, superClass);
-
-			superClass = superClass.getSuperclass();
-		}
-
-		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
 	private boolean _isDoPrivileged(Class<?> beanClass) {
@@ -160,7 +124,7 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 				}
 			}
 
-			Class<?>[] interfaces = _getInterfaces(_bean);
+			Class<?>[] interfaces = ReflectionUtil.getInterfaces(_bean);
 
 			if (interfaces.length <= 0) {
 				return _bean;

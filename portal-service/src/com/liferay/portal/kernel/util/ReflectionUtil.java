@@ -18,6 +18,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
@@ -63,6 +65,30 @@ public class ReflectionUtil {
 		}
 
 		return method;
+	}
+
+	public static Class<?>[] getInterfaces(Object object) {
+		return getInterfaces(object, null);
+	}
+
+	public static Class<?>[] getInterfaces(
+		Object object, ClassLoader classLoader) {
+
+		List<Class<?>> interfaceClasses = new UniqueList<Class<?>>();
+
+		Class<?> clazz = object.getClass();
+
+		getInterfaces(interfaceClasses, clazz, classLoader);
+
+		Class<?> superClass = clazz.getSuperclass();
+
+		while (superClass != null) {
+			getInterfaces(interfaceClasses, superClass, classLoader);
+
+			superClass = superClass.getSuperclass();
+		}
+
+		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}
 
 	public static Class<?>[] getParameterTypes(Object[] arguments) {
@@ -124,6 +150,25 @@ public class ReflectionUtil {
 		}
 
 		return false;
+	}
+
+	private static void getInterfaces(
+		List<Class<?>> interfaceClasses, Class<?> clazz,
+		ClassLoader classLoader) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			try {
+				if (classLoader != null) {
+					interfaceClasses.add(
+						classLoader.loadClass(interfaceClass.getName()));
+				}
+				else {
+					interfaceClasses.add(interfaceClass);
+				}
+			}
+			catch (ClassNotFoundException cnfe) {
+			}
+		}
 	}
 
 }

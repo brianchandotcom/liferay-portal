@@ -192,12 +192,16 @@ public class PortalServiceChecker extends BaseChecker {
 		Object object, Method method, Object[] arguments,
 		Permission permission) {
 
-		int stackIndex = getStackIndex(16, 15);
+		int stackIndex = getStackIndex(15, 14);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
 		if (isTrustedCaller(callerClass, permission)) {
-			return true;
+			callerClass = Reflection.getCallerClass(stackIndex + 1);
+
+			if (isTrustedCaller(callerClass, permission)) {
+				return true;
+			}
 		}
 
 		Class<?> clazz = PACLUtil.getClass(object);

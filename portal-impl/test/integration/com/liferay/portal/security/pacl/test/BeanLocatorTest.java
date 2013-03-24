@@ -144,12 +144,14 @@ public class BeanLocatorTest {
 	@Test
 	public void testPortal3() throws Exception {
 		try {
-			PortalBeanLocatorUtil.locate(PortalUUID.class.getName());
+			PortalUUID portalUuid = (PortalUUID)PortalBeanLocatorUtil.locate(
+				PortalUUID.class.getName());
+
+			portalUuid.generate();
 
 			Assert.fail();
 		}
 		catch (SecurityException se) {
-
 		}
 	}
 

@@ -189,7 +189,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			throw new NullPointerException("Class cannot be null");
 		}
 
-		ClassLoader clazzClassLoader = clazz.getClassLoader();
+		ClassLoader clazzClassLoader = ClassLoaderUtil.getClassLoader(clazz);
 
 		if (accessibility == Member.PUBLIC) {
 			_checkMemberAccessClassLoader.set(clazzClassLoader);
@@ -209,7 +209,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		// [0] SecurityManager.checkMemberAccess
 
 		if ((stack.length < 4) ||
-			(stack[3].getClassLoader() != clazzClassLoader)) {
+			(ClassLoaderUtil.getClassLoader(stack[3]) != clazzClassLoader)) {
 
 			_checkMemberAccessClassLoader.set(null);
 
@@ -265,7 +265,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				// [0] SecurityManager.checkMemberAccess
 
 				if (_checkMemberAccessClassLoader.get() ==
-						stack[2].getClassLoader()) {
+						ClassLoaderUtil.getClassLoader(stack[2])) {
 
 					// The clearCheckMemberAccessClassLoader variable is set to
 					// false to support the calls to getDeclared*s that return

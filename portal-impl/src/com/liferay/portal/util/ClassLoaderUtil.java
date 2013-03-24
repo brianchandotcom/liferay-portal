@@ -16,29 +16,66 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 /**
  * @author Raymond Augé
  */
 public class ClassLoaderUtil {
 
-	public static ClassLoader getClassLoader(Class<?> clazz) {
-		return clazz.getClassLoader();
+	public static ClassLoader getClassLoader(final Class<?> clazz) {
+		return AccessController.doPrivileged(
+			new PrivilegedAction<ClassLoader>() {
+
+				public ClassLoader run() {
+					return clazz.getClassLoader();
+				}
+
+			}
+		);
 	}
 
 	public static ClassLoader getContextClassLoader() {
-		Thread thread = Thread.currentThread();
+		return AccessController.doPrivileged(
+			new PrivilegedAction<ClassLoader>() {
 
-		return thread.getContextClassLoader();
+				public ClassLoader run() {
+					Thread thread = Thread.currentThread();
+
+					return thread.getContextClassLoader();
+				}
+
+			}
+		);
 	}
 
 	public static ClassLoader getPortalClassLoader() {
-		return PortalClassLoaderUtil.getClassLoader();
+		return AccessController.doPrivileged(
+			new PrivilegedAction<ClassLoader>() {
+
+				public ClassLoader run() {
+					return PortalClassLoaderUtil.getClassLoader();
+				}
+
+			}
+		);
 	}
 
-	public static void setContextClassLoader(ClassLoader classLoader) {
-		Thread thread = Thread.currentThread();
+	public static void setContextClassLoader(final ClassLoader classLoader) {
+		AccessController.doPrivileged(
+			new PrivilegedAction<Void>() {
 
-		thread.setContextClassLoader(classLoader);
+				public Void run() {
+					Thread thread = Thread.currentThread();
+
+					thread.setContextClassLoader(classLoader);
+
+					return null;
+				}
+
+			}
+		);
 	}
 
 }

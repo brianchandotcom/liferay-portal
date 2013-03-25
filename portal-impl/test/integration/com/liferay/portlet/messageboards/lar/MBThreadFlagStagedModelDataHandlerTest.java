@@ -15,15 +15,12 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -78,22 +75,6 @@ public class MBThreadFlagStagedModelDataHandlerTest
 
 		return MBTestUtil.addThreadFlag(
 			group.getGroupId(), message.getThread());
-	}
-
-	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(MBCategory.class.getName()),
-			SAXReaderUtil.createElement(MBMessage.class.getName()),
-			SAXReaderUtil.createElement(MBThreadFlag.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "thread-flag";
 	}
 
 	@Override

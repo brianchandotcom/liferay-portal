@@ -15,8 +15,6 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -94,22 +92,6 @@ public class PollsVoteStagedModelDataHandlerTest
 
 		return PollsTestUtil.addVote(
 			group.getGroupId(), question.getQuestionId(), choice.getChoiceId());
-	}
-
-	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(PollsQuestion.class.getName()),
-			SAXReaderUtil.createElement(PollsChoice.class.getName()),
-			SAXReaderUtil.createElement(PollsVote.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "vote";
 	}
 
 	@Override

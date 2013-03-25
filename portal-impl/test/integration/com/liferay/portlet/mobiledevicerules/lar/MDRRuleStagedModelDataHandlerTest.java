@@ -77,11 +77,6 @@ public class MDRRuleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "rule";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(

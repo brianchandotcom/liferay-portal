@@ -76,11 +76,6 @@ public class MBCategoryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "category";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(

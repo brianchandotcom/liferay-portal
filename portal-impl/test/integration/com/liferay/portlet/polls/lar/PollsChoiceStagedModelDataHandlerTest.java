@@ -79,11 +79,6 @@ public class PollsChoiceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "choice";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return PollsChoiceLocalServiceUtil.getPollsChoiceByUuidAndGroupId(

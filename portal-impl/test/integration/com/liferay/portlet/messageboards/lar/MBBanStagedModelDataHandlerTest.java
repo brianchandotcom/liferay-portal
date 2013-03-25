@@ -53,11 +53,6 @@ public class MBBanStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "user-ban";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		List<MBBan> bans = null;
 

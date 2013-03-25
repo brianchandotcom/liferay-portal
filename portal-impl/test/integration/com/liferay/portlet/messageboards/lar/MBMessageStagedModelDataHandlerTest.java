@@ -15,8 +15,6 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -77,21 +75,6 @@ public class MBMessageStagedModelDataHandlerTest
 
 		return MBTestUtil.addMessageWithWorkflow(
 			group.getGroupId(), category.getCategoryId(), true);
-	}
-
-	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(MBCategory.class.getName()),
-			SAXReaderUtil.createElement(MBMessage.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "message";
 	}
 
 	@Override

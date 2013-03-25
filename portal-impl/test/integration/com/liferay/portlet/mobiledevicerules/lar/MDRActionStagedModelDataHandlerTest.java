@@ -89,11 +89,6 @@ public class MDRActionStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "action";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return MDRActionLocalServiceUtil.getMDRActionByUuidAndGroupId(

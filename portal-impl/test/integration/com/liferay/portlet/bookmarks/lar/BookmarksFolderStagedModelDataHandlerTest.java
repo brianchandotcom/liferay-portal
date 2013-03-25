@@ -79,11 +79,6 @@ public class BookmarksFolderStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "folder";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return BookmarksFolderLocalServiceUtil.

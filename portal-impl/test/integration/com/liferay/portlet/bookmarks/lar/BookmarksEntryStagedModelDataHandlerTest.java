@@ -84,11 +84,6 @@ public class BookmarksEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "entry";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return BookmarksEntryLocalServiceUtil.

@@ -104,11 +104,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "rule-group-instance";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return MDRRuleGroupInstanceLocalServiceUtil.

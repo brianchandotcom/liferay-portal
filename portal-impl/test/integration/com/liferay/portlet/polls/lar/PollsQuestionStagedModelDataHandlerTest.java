@@ -52,11 +52,6 @@ public class PollsQuestionStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "question";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return PollsQuestionLocalServiceUtil.

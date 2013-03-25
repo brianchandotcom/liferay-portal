@@ -65,16 +65,14 @@ public class User_ViewBlogsEntryPermissionsTest extends BaseTestCase {
 			selenium.getText("//tr[contains(@class,'lfr-role-guest')]/td[1]"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='guest_ACTION_ADD_DISCUSSION']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_DELETE']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_DELETE' and @disabled='']"));
+				"//input[@id='guest_ACTION_DELETE_DISCUSSION']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_DELETE_DISCUSSION' and @disabled='']"));
+				"//input[@id='guest_ACTION_PERMISSIONS']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_UPDATE']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_PERMISSIONS' and @disabled='']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_UPDATE' and @disabled='']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_UPDATE_DISCUSSION' and @disabled='']"));
+				"//input[@id='guest_ACTION_UPDATE_DISCUSSION']"));
 		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 	}

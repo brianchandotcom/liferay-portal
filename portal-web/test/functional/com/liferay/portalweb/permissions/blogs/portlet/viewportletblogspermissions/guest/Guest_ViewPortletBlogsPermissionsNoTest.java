@@ -29,7 +29,7 @@ public class Guest_ViewPortletBlogsPermissionsNoTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Permissions"));
 		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
+		assertFalse(selenium.isTextPresent("Permissions"));
 	}
 }

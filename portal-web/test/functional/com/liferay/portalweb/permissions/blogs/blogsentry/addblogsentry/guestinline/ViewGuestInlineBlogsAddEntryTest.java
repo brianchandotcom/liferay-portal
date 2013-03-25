@@ -31,7 +31,6 @@ public class ViewGuestInlineBlogsAddEntryTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Permissions']",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_ENTRY' and @disabled='']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_ADD_ENTRY']"));
 	}
 }

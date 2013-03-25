@@ -30,8 +30,8 @@ public class User_SubscribePortletBlogsSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
-				"//div[@class='subscribe']/span/a[contains(@href,'subscribe')]/span"));
-		selenium.clickAt("//div[@class='subscribe']/span/a[contains(@href,'subscribe')]/span",
+				"//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span"));
+		selenium.clickAt("//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span",
 			RuntimeVariables.replace("Subscribe"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
@@ -39,6 +39,6 @@ public class User_SubscribePortletBlogsSiteTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//div[@class='subscribe']/span/a[contains(@href,'unsubscribe')]/span"));
+				"//div[@class='subscribe']/span/a[contains(.,'Unsubscribe')]/span"));
 	}
 }

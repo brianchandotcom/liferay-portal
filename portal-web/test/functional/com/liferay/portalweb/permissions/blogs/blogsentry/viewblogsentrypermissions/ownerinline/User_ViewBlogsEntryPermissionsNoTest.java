@@ -31,7 +31,5 @@ public class User_ViewBlogsEntryPermissionsNoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
 				"//td[contains(.,'Permissions')]/span/a/span"));
-		assertFalse(selenium.isTextPresent(
-				"//td[contains(.,'Permissions')]/span/a/span"));
 	}
 }

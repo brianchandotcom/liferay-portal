@@ -28,8 +28,8 @@ public class Guest_DeleteBlogsEntryNoTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Move to the Recycle Bin"));
 		assertTrue(selenium.isElementNotPresent(
 				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
+		assertFalse(selenium.isTextPresent("Move to the Recycle Bin"));
 	}
 }

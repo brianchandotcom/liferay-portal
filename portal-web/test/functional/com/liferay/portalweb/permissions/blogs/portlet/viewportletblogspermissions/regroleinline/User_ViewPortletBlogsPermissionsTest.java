@@ -55,14 +55,12 @@ public class User_ViewPortletBlogsPermissionsTest extends BaseTestCase {
 				"//tr[@class='portlet-section-header results-header']/th[5]"));
 		assertEquals(RuntimeVariables.replace("Guest"),
 			selenium.getText("//tr[contains(@class,'lfr-role-guest')]/td[1]"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_ADD_ENTRY']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_ENTRY' and @disabled='']"));
+				"//input[@id='guest_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE']"));
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE' and @disabled='']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_PERMISSIONS' and @disabled='']"));
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_SUBSCRIBE' and @disabled='']"));
+				"//input[@id='guest_ACTION_PERMISSIONS']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_SUBSCRIBE']"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 	}
 }

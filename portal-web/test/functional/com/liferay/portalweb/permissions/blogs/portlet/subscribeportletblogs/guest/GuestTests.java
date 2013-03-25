@@ -32,7 +32,6 @@ public class GuestTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
-		testSuite.addTestSuite(ViewGuestContentBlogsSubscribeTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_SubscribePortletBlogsNoTest.class);
 		testSuite.addTestSuite(SignInTest.class);

@@ -35,7 +35,6 @@ public class GuestTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
-		testSuite.addTestSuite(ViewGuestContentBlogsDeleteEntryTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(Guest_DeleteBlogsEntryNoTest.class);
 		testSuite.addTestSuite(SignInTest.class);

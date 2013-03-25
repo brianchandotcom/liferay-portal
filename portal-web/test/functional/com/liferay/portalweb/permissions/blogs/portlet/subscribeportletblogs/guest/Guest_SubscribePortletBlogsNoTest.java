@@ -30,6 +30,6 @@ public class Guest_SubscribePortletBlogsNoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("Subscribe"));
 		assertTrue(selenium.isElementNotPresent(
-				"//span[contains(.,'Subscribe')]/a/span[@class='taglib-text']"));
+				"//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span"));
 	}
 }

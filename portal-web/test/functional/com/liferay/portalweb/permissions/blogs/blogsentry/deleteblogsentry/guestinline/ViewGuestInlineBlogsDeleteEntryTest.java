@@ -33,7 +33,6 @@ public class ViewGuestInlineBlogsDeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("//td[contains(.,'Permissions')]/span/a/span",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_DELETE' and @disabled='']"));
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_DELETE']"));
 	}
 }

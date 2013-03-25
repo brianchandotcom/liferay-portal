@@ -32,6 +32,6 @@ public class ViewGuestInlineBlogsPermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked(
-				"//input[@id='guest_ACTION_PERMISSIONS' and @disabled='']"));
+				"//input[@id='guest_ACTION_PERMISSIONS']"));
 	}
 }

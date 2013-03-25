@@ -33,8 +33,9 @@ public class User_EditBlogsEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/div"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//td[1]/span/a/span"));
-		selenium.click(RuntimeVariables.replace("//td[1]/span/a/span"));
+			selenium.getText("//td[contains(.,'Edit')]/span/a/span"));
+		selenium.click(RuntimeVariables.replace(
+				"//td[contains(.,'Edit')]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title Edit"));
@@ -51,11 +52,7 @@ public class User_EditBlogsEntryTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title Edit"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
-		assertNotEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content Edit"),
-			selenium.getText("//div[@class='entry-body']/div"));
-		assertNotEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/div"));
 	}
 }

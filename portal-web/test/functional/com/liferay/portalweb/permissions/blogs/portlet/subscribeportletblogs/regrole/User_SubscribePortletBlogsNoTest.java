@@ -29,7 +29,7 @@ public class User_SubscribePortletBlogsNoTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='subscribe']/span/a[contains(@href,'subscribe')]/span"));
+				"//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span"));
 		assertFalse(selenium.isTextPresent("Subscribe"));
 	}
 }

@@ -32,6 +32,7 @@ public class User_EditBlogsEntryNoTest extends BaseTestCase {
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/div"));
-		assertFalse(selenium.isTextPresent("//td[1]/span/a/span"));
+		assertFalse(selenium.isTextPresent(
+				"//td[contains(.,'Edit')]/span/a/span"));
 	}
 }

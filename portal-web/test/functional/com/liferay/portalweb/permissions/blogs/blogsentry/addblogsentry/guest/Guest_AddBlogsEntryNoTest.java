@@ -28,8 +28,8 @@ public class Guest_AddBlogsEntryNoTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertFalse(selenium.isTextPresent("Add Blogs Entry"));
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
+		assertFalse(selenium.isTextPresent("Add Blogs Entry"));
 	}
 }

@@ -82,7 +82,7 @@ public interface PortletFileRepository {
 		throws PortalException, SystemException;
 
 	public Repository fetchPortletRepository(long groupId, String portletId)
-		throws PortalException, SystemException;
+		throws SystemException;
 
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException;

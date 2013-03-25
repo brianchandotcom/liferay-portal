@@ -301,9 +301,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	public Repository fetchPortletRepository(long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		return DLAppLocalServiceUtil.fetchRepository(groupId, portletId);
+		return RepositoryLocalServiceUtil.fetchRepository(groupId, portletId);
 	}
 
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)

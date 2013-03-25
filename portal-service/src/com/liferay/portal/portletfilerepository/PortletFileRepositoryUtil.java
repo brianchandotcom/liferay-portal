@@ -127,7 +127,7 @@ public class PortletFileRepositoryUtil {
 
 	public static Repository fetchPortletRepository(
 			long groupId, String portletId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return getPortletFileRepository().fetchPortletRepository(
 			groupId, portletId);

@@ -153,11 +153,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		Repository repository = fetchPortletRepository(groupId, portletId);
-
-		if (repository == null) {
-			return null;
-		}
+		Repository repository = addPortletRepository(
+			groupId, portletId, serviceContext);
 
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));

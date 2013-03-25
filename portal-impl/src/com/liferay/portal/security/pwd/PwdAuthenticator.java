@@ -37,7 +37,7 @@ public class PwdAuthenticator {
 			String currentEncryptedPassword)
 		throws PwdEncryptorException, SystemException {
 
-		String encryptedPassword = PwdEncryptor.encrypt(
+		String encryptedPassword = PasswordEncryptorUtil.encrypt(
 			clearTextPassword, currentEncryptedPassword);
 
 		if (currentEncryptedPassword.equals(encryptedPassword)) {

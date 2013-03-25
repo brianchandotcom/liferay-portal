@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AutoLogin;
-import com.liferay.portal.security.pwd.PwdEncryptor;
+import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.Portal;
@@ -109,7 +109,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 			session.setAttribute("j_password", jPassword);
 		}
 		else {
-			session.setAttribute("j_password", PwdEncryptor.encrypt(jPassword));
+			session.setAttribute(
+				"j_password", PasswordEncryptorUtil.encrypt(jPassword));
 
 			if (PropsValues.SESSION_STORE_PASSWORD) {
 				session.setAttribute(WebKeys.USER_PASSWORD, jPassword);

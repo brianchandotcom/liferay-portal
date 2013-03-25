@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.pwd.PwdEncryptor;
+import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -107,10 +107,10 @@ public class ParameterAutoLogin extends BaseAutoLogin implements AuthVerifier {
 			String userPassword = user.getPassword();
 
 			if (!user.isPasswordEncrypted()) {
-				userPassword = PwdEncryptor.encrypt(userPassword);
+				userPassword = PasswordEncryptorUtil.encrypt(userPassword);
 			}
 
-			String encPassword = PwdEncryptor.encrypt(password);
+			String encPassword = PasswordEncryptorUtil.encrypt(password);
 
 			if (!userPassword.equals(password) &&
 				!userPassword.equals(encPassword)) {

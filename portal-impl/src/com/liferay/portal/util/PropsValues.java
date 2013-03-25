@@ -1312,6 +1312,8 @@ public class PropsValues {
 
 	public static final long PASSWORDS_DEFAULT_POLICY_WARNING_TIME = GetterUtil.getLong(PropsUtil.get(PropsKeys.PASSWORDS_DEFAULT_POLICY_WARNING_TIME));
 
+	public static String PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY = GetterUtil.getString(PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY));
+
 	public static final String PASSWORDS_DIGEST_ENCODING = PropsUtil.get(PropsKeys.PASSWORDS_DIGEST_ENCODING);
 
 	public static final String PASSWORDS_PASSWORDPOLICYTOOLKIT_CHARSET_LOWERCASE = PropsUtil.get(PropsKeys.PASSWORDS_PASSWORDPOLICYTOOLKIT_CHARSET_LOWERCASE);

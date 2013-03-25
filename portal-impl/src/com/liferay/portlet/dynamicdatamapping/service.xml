@@ -247,6 +247,7 @@
 		<exception>ContentName</exception>
 		<exception>ContentXml</exception>
 		<exception>RequiredStructure</exception>
+		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>
 		<exception>StorageFieldName</exception>
 		<exception>StorageFieldRequired</exception>

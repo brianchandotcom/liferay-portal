@@ -388,12 +388,10 @@ public class DDMTemplateLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (template.getClassNameId() ==
-				PortalUtil.getClassNameId(
-					DDMStructure.class.getName())) {
+				PortalUtil.getClassNameId(DDMStructure.class.getName())) {
 
-			DDMStructure structure =
-				ddmStructureLocalService.fetchDDMStructure(
-					template.getClassPK());
+			DDMStructure structure = ddmStructureLocalService.fetchDDMStructure(
+				template.getClassPK());
 
 			if ((structure != null) &&
 				(structure.getClassNameId() ==

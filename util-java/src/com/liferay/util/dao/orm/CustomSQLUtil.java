@@ -50,6 +50,10 @@ public class CustomSQLUtil {
 		return _instance._customSQL.isVendorDB2();
 	}
 
+	public static boolean isVendorHSQL() {
+		return _instance._customSQL.isVendorHSQL();
+	}
+
 	public static boolean isVendorInformix() {
 		return _instance._customSQL.isVendorInformix();
 	}

@@ -21,13 +21,9 @@ JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-List<DDMStructure> ddmStructures = new ArrayList<DDMStructure>();
+List<DDMStructure> ddmStructures = Collections.emptyList();
 
-ddmStructures.addAll(DDMStructureLocalServiceUtil.getStructures(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class)));
-
-if (themeDisplay.getCompanyGroupId() != themeDisplay.getScopeGroupId()) {
-	ddmStructures.addAll(DDMStructureLocalServiceUtil.getStructures(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(JournalArticle.class)));
-}
+ddmStructures = DDMStructureLocalServiceUtil.getStructures(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class));
 %>
 
 <liferay-ui:icon-menu align="left" direction="down" icon="" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">

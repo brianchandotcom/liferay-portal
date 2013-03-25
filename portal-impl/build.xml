@@ -1524,28 +1524,17 @@ security-manager-awt-operations=\
     ${liferay.home}${/}pacl-test${/}-</replacevalue>
 		</replace>
 
-		<replaceregexp
-			flags="g"
-			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-get-bean-property=(\\\n[^\\\n]+)*(?=\n\n)"
-			replace="security-manager-get-bean-property="
-		/>
-
-		<replaceregexp
-			flags="g"
-			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-get-bean-property=(\\\n[^\\\n]+)*(?=\n\n)"
-			replace="security-manager-get-bean-property="
-		/>
-
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
-			<replacetoken>security-manager-get-bean-property=</replacetoken>
-			<replacevalue>security-manager-get-bean-property=\
-    com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil,\
-    com.liferay.portal.kernel.language.LanguageUtil,\
-    com.liferay.portal.kernel.util.InfrastructureUtil,\
-    com.liferay.portal.util.PortalUtil</replacevalue>
+			<replacetoken>security-manager-get-bean-property[portal]=</replacetoken>
+			<replacevalue>security-manager-get-bean-property=</replacevalue>
 		</replace>
+
+		<replaceregexp
+			flags="g"
+			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			match="(security-manager-get-bean-property=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.util.PortalUtil)"
+			replace="\1\2\3com.liferay.portal.kernel.util.InfrastructureUtil\3"
+		/>
 
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
 			<replacetoken>security-manager-hook-custom-jsp-dir-enabled=false</replacetoken>
@@ -1561,38 +1550,9 @@ security-manager-hook-custom-jsp-dir-enabled=false</replacevalue>
 		<replaceregexp
 			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-services\[portal\]=(\\\n[^\\\n]+)*(?=\n\n)"
-			replace="security-manager-services[portal]="
+			match="(security-manager-services\[portal\]=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.service.ResourceLocalService)"
+			replace="\1\2\3com.liferay.portal.service.PortletPreferencesLocalService#getStrictPreferences\3com.liferay.portal.service.UserLocalService#getDefaultUser\3"
 		/>
-
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
-			<replacetoken>security-manager-services[portal]=</replacetoken>
-			<replacevalue>security-manager-services[portal]=\
-    com.liferay.portal.service.CompanyLocalService#getCompany,\
-    com.liferay.portal.service.GroupLocalService,\
-    com.liferay.portal.service.PortalService#getBuildNumber,\
-    com.liferay.portal.service.PortletPreferencesLocalService#getStrictPreferences,\
-    com.liferay.portal.service.UserLocalService#getDefaultUser,\
-    com.liferay.portal.service.persistence.CompanyPersistence,\
-    com.liferay.portlet.blogs.service.BlogsEntryLocalService,\
-    com.liferay.portlet.blogs.service.BlogsStatsUserLocalService</replacevalue>
-		</replace>
-
-		<replaceregexp
-			flags="g"
-			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
-			match="security-manager-message-bus-send=((\\\n[^\\\n]+)*)(?=liferay/test_pacl_listen_failure)"
-			replace="security-manager-message-bus-send=\1liferay/test_pacl,\\\\${line.separator}    "
-		/>
-
-		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
-			<replacetoken>security-manager-search-engine-ids=\</replacetoken>
-			<replacevalue>security-manager-portlet-bag-pool-portlet-ids=\
-    1_WAR_flashportlet,\
-    flash-portlet
-
-security-manager-search-engine-ids=\</replacevalue>
-		</replace>
 
 		<replace file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties">
 			<replacetoken>security-manager-sockets-accept=\</replacetoken>

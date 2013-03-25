@@ -15,6 +15,8 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -67,9 +69,21 @@ public class PasswordEncryptorUtil {
 			String clearTextPassword, String currentEncryptedPassword)
 		throws PwdEncryptorException {
 
-		return encrypt(
+		long clock = 0;
+		if (_log.isDebugEnabled()) {
+			clock = System.currentTimeMillis();
+		}
+
+		String encryptedPassword = encrypt(
 			PASSWORDS_ENCRYPTION_ALGORITHM, clearTextPassword,
 			currentEncryptedPassword);
+
+		if (_log.isDebugEnabled()) {
+			clock = System.currentTimeMillis() - clock;
+			_log.debug("Password encrypted in " + clock + "ms.");
+		}
+
+		return encryptedPassword;
 	}
 
 	public static String encrypt(
@@ -88,6 +102,9 @@ public class PasswordEncryptorUtil {
 	public void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
 		_passwordEncryptor = passwordEncryptor;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PasswordEncryptorUtil.class);
 
 	private static PasswordEncryptor _passwordEncryptor;
 

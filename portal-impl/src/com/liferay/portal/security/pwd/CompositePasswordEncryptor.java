@@ -15,6 +15,9 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -41,13 +44,24 @@ public class CompositePasswordEncryptor
 		List<PasswordEncryptor> passwordEncryptors) {
 
 		for (PasswordEncryptor passwordEncryptor : passwordEncryptors) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Registering " + passwordEncryptor);
+			}
+
 			String[] supportedAlgorithmTypes =
 				passwordEncryptor.getSupportedAlgorithmTypes();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Registering " + StringUtil.merge(supportedAlgorithmTypes) +
+						" for " + passwordEncryptor.getClass().getName());
+			}
 
 			for (String supportedAlgorithmType : supportedAlgorithmTypes) {
 				_passwordEncryptors.put(
 					supportedAlgorithmType, passwordEncryptor);
 			}
+
 		}
 	}
 
@@ -60,6 +74,10 @@ public class CompositePasswordEncryptor
 		if (Validator.isNull(algorithm)) {
 			throw new IllegalArgumentException(
 				"Must specify an encryption algorithm.");
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Searching passwordEncryptor for " + algorithm);
 		}
 
 		PasswordEncryptor passwordEncryptor = null;
@@ -77,13 +95,27 @@ public class CompositePasswordEncryptor
 		}
 
 		if (passwordEncryptor == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No passwordEncryptor found for " + algorithm +
+						", using default");
+			}
+
 			passwordEncryptor = _defaultPasswordEncryptor;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Found " + passwordEncryptor.getClass().getName() +
+					" to encrypt password using " + algorithm);
 		}
 
 		return passwordEncryptor.encrypt(
 			algorithm, clearTextPassword, currentEncryptedPassword);
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		CompositePasswordEncryptor.class);
 	private PasswordEncryptor _defaultPasswordEncryptor;
 	private Map<String, PasswordEncryptor> _passwordEncryptors =
 		new HashMap<String, PasswordEncryptor>();

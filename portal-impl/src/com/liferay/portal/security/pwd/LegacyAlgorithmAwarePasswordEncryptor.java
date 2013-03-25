@@ -15,7 +15,10 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -45,8 +48,24 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 		if (Validator.isNull(
 				PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY)) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping passwords upgrade scheme, " +
+						PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
+							" is null.");
+			}
+
 			return _parentPasswordEncryptor.encrypt(
 				algorithm, clearTextPassword, currentEncryptedPassword);
+		}
+
+		if (_log.isDebugEnabled()) {
+			boolean isCEPNull = Validator.isNull(currentEncryptedPassword);
+
+			_log.debug(
+				"Using legacy detection scheme for algorithm " + algorithm +
+					" with current password " +
+						(isCEPNull? "empty" : "provided"));
 		}
 
 		boolean prependAlgorithm = true;
@@ -57,6 +76,10 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 			algorithm = PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY;
 
 			prependAlgorithm = false;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Using legacy algorithm " + algorithm);
+			}
 		}
 		else if (Validator.isNotNull(currentEncryptedPassword) &&
 			(currentEncryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {
@@ -70,13 +93,29 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 				currentEncryptedPassword = currentEncryptedPassword.substring(
 					endPos + 1);
 			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Upgraded password, using new algorithm " + algorithm);
+			}
 		}
 
 		String encryptedPassword = _parentPasswordEncryptor.encrypt(
 			algorithm, clearTextPassword, currentEncryptedPassword);
 
 		if (!prependAlgorithm) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Generated password without algorithm prefix using " +
+						algorithm);
+			}
+
 			return encryptedPassword;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Generated password with algorithm prefix using " + algorithm);
 		}
 
 		StringBuilder result = new StringBuilder(4);
@@ -102,6 +141,8 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 		return algorithm;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		LegacyAlgorithmAwarePasswordEncryptor.class);
 	private PasswordEncryptor _parentPasswordEncryptor;
 
 }

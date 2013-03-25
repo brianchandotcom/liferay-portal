@@ -62,10 +62,6 @@ public class DoPrivilegedHandler
 	protected Object doInvoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		if (!PACLPolicyManager.isActive()) {
-			return method.invoke(_bean, arguments);
-		}
-
 		Class<?> methodDeclaringClass = method.getDeclaringClass();
 		String methodName = method.getName();
 
@@ -74,7 +70,7 @@ public class DoPrivilegedHandler
 
 			return getActualBean();
 		}
-		else if (_isNotPrivileged(method)) {
+		else if (!PACLPolicyManager.isActive() || _isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);
 		}
 

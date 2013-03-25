@@ -452,7 +452,14 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		public Object getBean(final Object bean, ClassLoader classLoader) {
 			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
-				return bean;
+				Class<?> callerClass = Reflection.getCallerClass(5);
+
+				ClassLoader callerClassLoader = ClassLoaderUtil.getClassLoader(
+					callerClass);
+
+				if (callerClassLoader == classLoader) {
+					return bean;
+				}
 			}
 
 			InvocationHandler invocationHandler = new InvocationHandler() {

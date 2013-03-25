@@ -113,8 +113,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		final Element categoriesElement = rootElement.addElement("categories");
-
 		ActionableDynamicQuery categoriesActionableDynamicQuery =
 			new MBCategoryActionableDynamicQuery() {
 
@@ -129,7 +127,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				MBCategory category = (MBCategory)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, categoriesElement, category);
+					portletDataContext, category);
 			}
 
 		};
@@ -138,8 +136,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		categoriesActionableDynamicQuery.performActions();
-
-		final Element messagesElement = rootElement.addElement("messages");
 
 		ActionableDynamicQuery messagesActionableDynamicQuery =
 			new MBMessageActionableDynamicQuery() {
@@ -155,9 +151,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				MBMessage message = (MBMessage)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext,
-					new Element[] {categoriesElement, messagesElement},
-					message);
+					portletDataContext, message);
 			}
 
 		};
@@ -166,9 +160,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		messagesActionableDynamicQuery.performActions();
-
-		final Element threadFlagsElement = rootElement.addElement(
-			"thread-flags");
 
 		if (portletDataContext.getBooleanParameter(
 				MBPortletDataHandler.NAMESPACE, "thread-flags")) {
@@ -189,12 +180,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 					MBThreadFlag message = (MBThreadFlag)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext,
-						new Element[] {
-							categoriesElement, messagesElement,
-							threadFlagsElement
-						},
-						message);
+						portletDataContext, message);
 				}
 
 			};
@@ -205,10 +191,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			threadFlagsActionableDynamicQuery.performActions();
 		}
 
-		final Element userBansElement = rootElement.addElement("user-bans");
-
 		if (!portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
-			return rootElement.formattedString();
+			return getExportDataRootElementString(rootElement);
 		}
 
 		ActionableDynamicQuery userBansActionableDynamicQuery =
@@ -225,7 +209,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				MBBan userBan = (MBBan)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, userBansElement, userBan);
+					portletDataContext, userBan);
 			}
 
 		};
@@ -249,20 +233,20 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element categoriesElement =
+			portletDataContext.getImportDataGroupElement(MBCategory.class);
 
-		Element categoriesElement = rootElement.element("categories");
-
-		List<Element> categoryElements = categoriesElement.elements("category");
+		List<Element> categoryElements = categoriesElement.elements();
 
 		for (Element categoryElement : categoryElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, categoryElement);
 		}
 
-		Element messagesElement = rootElement.element("messages");
+		Element messagesElement = portletDataContext.getImportDataGroupElement(
+			MBMessage.class);
 
-		List<Element> messageElements = messagesElement.elements("message");
+		List<Element> messageElements = messagesElement.elements();
 
 		for (Element messageElement : messageElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -270,10 +254,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
-			Element threadFlagsElement = rootElement.element("thread-flags");
+			Element threadFlagsElement =
+				portletDataContext.getImportDataGroupElement(
+					MBThreadFlag.class);
 
-			List<Element> threadFlagElements = threadFlagsElement.elements(
-				"thread-flag");
+			List<Element> threadFlagElements = threadFlagsElement.elements();
 
 			for (Element threadFlagElement : threadFlagElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
@@ -282,10 +267,10 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
-			Element userBansElement = rootElement.element("user-bans");
+			Element userBansElement =
+				portletDataContext.getImportDataGroupElement(MBBan.class);
 
-			List<Element> userBanElements = userBansElement.elements(
-				"user-ban");
+			List<Element> userBanElements = userBansElement.elements();
 
 			for (Element userBanElement : userBanElements) {
 				StagedModelDataHandlerUtil.importStagedModel(

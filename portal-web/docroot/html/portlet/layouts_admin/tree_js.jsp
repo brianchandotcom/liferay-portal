@@ -190,6 +190,12 @@ if (!selectableTree) {
 
 					var expanded = (total > 0);
 
+					var type = 'task';
+
+					<c:if test="<%= !selectableTree %>">
+						type = (nodeChildren && expanded) ? 'node' : 'io';
+					</c:if>
+
 					var newNode = {
 						<c:if test="<%= saveState %>">
 							after: {
@@ -290,7 +296,7 @@ if (!selectableTree) {
 							start: Math.max(childLayouts.length - TreeUtil.PAGINATION_LIMIT, 0),
 							total: total
 						},
-						type: '<%= !selectableTree ? "io" : "task" %>'
+						type: type
 					};
 
 					if (nodeChildren && expanded) {

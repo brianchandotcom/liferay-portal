@@ -444,7 +444,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 					PortalUtil.getPortalLibDir() + "log4j-extras.jar";
 
 				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j-extras.jar", true);
+					portalJarPath, srcFile + "/WEB-INF/lib/log4j-extras.jar",
+					true);
 			}
 		}
 	}

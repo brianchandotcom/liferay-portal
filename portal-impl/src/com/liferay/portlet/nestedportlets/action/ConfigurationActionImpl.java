@@ -93,7 +93,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		for (String columnId : columnIds) {
 			if (!columnId.contains(portletId)) {
-				columnNames.add(PortalUtil.getPortletNamespace(portletId) + StringPool.UNDERLINE + columnId);
+				columnNames.add(
+					PortalUtil.getPortletNamespace(portletId) +
+						StringPool.UNDERLINE + columnId);
 			}
 		}
 

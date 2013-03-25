@@ -84,15 +84,91 @@ public class ViewRemovePowerUserRoleUserTest extends BaseTestCase {
 						"Roles"));
 				selenium.clickAt("//a[@id='_125_rolesLink']",
 					RuntimeVariables.replace("Roles"));
-				selenium.waitForVisible("//h1[@class='header-title']/span");
+				assertEquals(RuntimeVariables.replace("Users and Organizations"),
+					selenium.getText("//span[@class='portlet-title-text']"));
+				assertEquals(RuntimeVariables.replace("Browse"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
+				assertEquals(RuntimeVariables.replace("View Organizations"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Organizations')]"));
+				assertEquals(RuntimeVariables.replace("View Users"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View Users')]"));
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span/ul/li/strong/a[contains(.,'Add')]/span"));
+				assertEquals(RuntimeVariables.replace("Export Users"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Export Users')]"));
 				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
 					selenium.getText("//a[@id='_125_TabsBack']"));
 				assertEquals(RuntimeVariables.replace("Regular Roles"),
-					selenium.getText("//div[@id='_125_roles']/h3"));
+					selenium.getText("//h3[contains(.,'Regular Roles')]"));
 				assertEquals(RuntimeVariables.replace("Select"),
-					selenium.getText("//span[@class='modify-link']/a/span"));
+					selenium.getText("//div[6]/span/a/span"));
+				assertEquals(RuntimeVariables.replace("Inherited Roles"),
+					selenium.getText("//h3[contains(.,'Inherited Roles')]"));
+				assertEquals(RuntimeVariables.replace("Organization Roles"),
+					selenium.getText("//h3[contains(.,'Organization Roles')]"));
+				assertEquals(RuntimeVariables.replace("Site Roles"),
+					selenium.getText("//h3[contains(.,'Site Roles')]"));
+				assertTrue(selenium.isVisible("//img[@class='user-logo']"));
+				assertEquals(RuntimeVariables.replace("userfn userln"),
+					selenium.getText("//span[@class='user-name']"));
+				assertEquals(RuntimeVariables.replace("User Information"),
+					selenium.getText("//h3[contains(.,'User Information')]"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_detailsLink']", "Details"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_passwordLink']", "Password"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_organizationsLink']", "Organizations"));
+				assertTrue(selenium.isPartialText("//a[@id='_125_sitesLink']",
+						"Sites"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_userGroupsLink']", "User Groups"));
+				assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']",
+						"Roles"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_personalSiteLink']", "Personal site"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_categorizationLink']", "Categorization"));
+				assertEquals(RuntimeVariables.replace("Identification"),
+					selenium.getText("//h3[contains(.,'Identification')]"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_addressesLink']", "Addresses"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_phoneNumbersLink']", "Phone Numbers"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_additionalEmailAddressesLink']",
+						"Additional Email Addresses"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_websitesLink']", "Websites"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_instantMessengerLink']",
+						"Instant Messenger"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_socialNetworkLink']", "Social Network"));
+				assertTrue(selenium.isPartialText("//a[@id='_125_smsLink']",
+						"SMS"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_openIdLink']", "OpenID"));
+				assertEquals(RuntimeVariables.replace("Miscellaneous"),
+					selenium.getText("//h3[contains(.,'Miscellaneous')]"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_announcementsLink']", "Announcements"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_displaySettingsLink']",
+						"Display Settings"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_commentsLink']", "Comments"));
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_125_customFieldsLink']", "Custom Fields"));
+				assertTrue(selenium.isVisible("//input[@value='Save']"));
+				assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 
 			case 100:
 				label = -1;

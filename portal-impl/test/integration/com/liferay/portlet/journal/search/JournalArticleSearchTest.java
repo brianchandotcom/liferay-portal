@@ -33,6 +33,8 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
@@ -62,6 +64,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
 		String xsd = DDMStructureTestUtil.getSampleStructureXSD("name");
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
@@ -75,8 +79,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			"name", getSearchKeywords());
 
 		return JournalTestUtil.addArticleWithXMLContent(
-			serviceContext.getScopeGroupId(), content,
-			_ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), serviceContext);
 	}
 
 	@Override
@@ -85,8 +89,10 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
 		return JournalTestUtil.addArticleWithWorkflow(
-			serviceContext.getScopeGroupId(), keywords, approved);
+			folder.getFolderId(), keywords, approved, serviceContext);
 	}
 
 	@Override
@@ -132,7 +138,9 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return JournalTestUtil.addFolder(group.getGroupId(), "Test Folder");
+		return JournalTestUtil.addFolder(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			serviceContext);
 	}
 
 	@Override

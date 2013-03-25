@@ -19,10 +19,16 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,7 +39,7 @@ public class JournalArticlePermission {
 	public static void check(
 			PermissionChecker permissionChecker, JournalArticle article,
 			String actionId)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (!contains(permissionChecker, article, actionId)) {
 			throw new PrincipalException();
@@ -85,8 +91,9 @@ public class JournalArticlePermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, JournalArticle article,
-		String actionId) {
+			PermissionChecker permissionChecker, JournalArticle article,
+			String actionId)
+		throws PortalException, SystemException {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, article.getGroupId(),
@@ -105,6 +112,35 @@ public class JournalArticlePermission {
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
+			}
+		}
+
+		if (article.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			try {
+				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+					article.getFolderId());
+
+				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.ACCESS) &&
+					!JournalFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.VIEW)) {
+
+					return false;
+				}
+
+				if (JournalFolderPermission.contains(
+						permissionChecker, folder, actionId)) {
+
+					return true;
+				}
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!article.isInTrash()) {
+					throw nsfe;
+				}
 			}
 		}
 

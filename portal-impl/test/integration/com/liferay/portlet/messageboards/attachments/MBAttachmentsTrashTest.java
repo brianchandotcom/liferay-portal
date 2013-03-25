@@ -22,6 +22,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.GroupTestUtil;
@@ -55,9 +56,8 @@ public class MBAttachmentsTrashTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		_message = MBMessageLocalServiceUtil.addMessage(
 			user.getUserId(), user.getFullName(), _group.getGroupId(),
@@ -122,9 +122,8 @@ public class MBAttachmentsTrashTest {
 			existingFiles.add(String.valueOf(fileEntry.getFileEntryId()));
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		String fileName = "OSX_Test.docx";
 

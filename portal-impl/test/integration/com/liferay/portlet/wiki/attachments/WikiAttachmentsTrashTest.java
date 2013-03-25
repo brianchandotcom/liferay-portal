@@ -52,9 +52,8 @@ public class WikiAttachmentsTrashTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		_node = WikiNodeLocalServiceUtil.addNode(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), "",

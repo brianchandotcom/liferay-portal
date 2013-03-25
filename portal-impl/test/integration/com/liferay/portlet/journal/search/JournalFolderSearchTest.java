@@ -92,8 +92,7 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 		JournalFolder parentFolder = (JournalFolder)parentBaseModel;
 
 		return JournalTestUtil.addFolder(
-			parentFolder.getGroupId(), parentFolder.getParentFolderId(),
-			keywords);
+			parentFolder.getFolderId(), keywords, serviceContext);
 	}
 
 	@Override
@@ -107,8 +106,8 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return JournalTestUtil.addFolder(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			ServiceTestUtil.randomString());
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

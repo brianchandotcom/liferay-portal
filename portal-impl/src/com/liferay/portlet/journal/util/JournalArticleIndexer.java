@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -53,6 +55,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -78,6 +81,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
 	public JournalArticleIndexer() {
+		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
@@ -87,6 +91,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		return JournalArticlePermission.contains(
+			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override

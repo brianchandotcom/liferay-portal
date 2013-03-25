@@ -1,0 +1,7 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<condition locator1="locator1" />
+		</if>
+	</command>
+</definition>

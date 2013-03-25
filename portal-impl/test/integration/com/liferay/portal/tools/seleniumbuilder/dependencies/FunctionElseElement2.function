@@ -1,0 +1,10 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<condition selenium="isSelenium" />
+		</if>
+		<else>
+			<var name="name" value="value" />
+		</else>
+	</command>
+</definition>

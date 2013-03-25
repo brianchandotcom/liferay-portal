@@ -1,0 +1,5 @@
+<definition>
+	<command name-fail="commandName">
+		<execute selenium="selenium" />
+	</command>
+</definition>

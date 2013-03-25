@@ -1,0 +1,9 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<condition selenium="IsFunction#isFunction">
+				<var name="name" value="value" />
+			</condition>
+		</if>
+	</command>
+</definition>

@@ -262,7 +262,7 @@ public class SeleniumBuilderFileUtil {
 
 			if (elementName.equals("execute")) {
 				validateExecuteElement(
-					fileName, element, allowedExecuteAttributeNames, ".*",
+					fileName, element, allowedExecuteAttributeNames, ".+",
 					allowedExecuteChildElementNames);
 			}
 			else if (elementName.equals("if")) {
@@ -286,7 +286,7 @@ public class SeleniumBuilderFileUtil {
 		String allowedExecuteAttributeValuesRegex,
 		String[] allowedExecuteChildElementNames) {
 
-		boolean hasAllowedAttributeName = true;
+		boolean hasAllowedAttributeName = false;
 
 		List<Attribute> attributes = executeElement.attributes();
 
@@ -356,7 +356,7 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 		else if (Validator.isNotNull(macro) &&
-				 selenium.matches(allowedExecuteAttributeValuesRegex)) {
+				 macro.matches(allowedExecuteAttributeValuesRegex)) {
 
 			if (attributes.size() != 1) {
 				throw new IllegalArgumentException(fileName);
@@ -377,14 +377,14 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 		else if (Validator.isNotNull(testCase) &&
-				 selenium.matches(allowedExecuteAttributeValuesRegex)) {
+				 testCase.matches(allowedExecuteAttributeValuesRegex)) {
 
 			if (attributes.size() != 1) {
 				throw new IllegalArgumentException(fileName);
 			}
 		}
 		else if (Validator.isNotNull(testSuite) &&
-				 selenium.matches(allowedExecuteAttributeValuesRegex)) {
+				 testSuite.matches(allowedExecuteAttributeValuesRegex)) {
 
 			if (attributes.size() != 1) {
 				throw new IllegalArgumentException(fileName);
@@ -450,13 +450,17 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = ifElement.elements();
 
+		if (elements.isEmpty()) {
+			throw new IllegalArgumentException(fileName);
+		}
+
 		for (Element element : elements) {
 			String elementName = element.getName();
 
 			if (elementName.equals("condition")) {
 				validateExecuteElement(
-					fileName, element, allowedExecuteAttributeNames, ".*",
-					allowedExecuteChildElementNames);
+					fileName, element, allowedExecuteAttributeNames,
+					"(is|Is).+", allowedExecuteChildElementNames);
 			}
 			else if (elementName.equals("else") || elementName.equals("then")) {
 				validateCommandElement(

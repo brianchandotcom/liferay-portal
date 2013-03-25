@@ -190,7 +190,10 @@ public class SQLTransformer {
 	private String _replaceCastLong(String sql) {
 		Matcher matcher = _castLongPattern.matcher(sql);
 
-		if (_vendorSybase) {
+		if (_vendorHypersonic) {
+			return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+		}
+		else if (_vendorSybase) {
 			return matcher.replaceAll("CONVERT(BIGINT, $1)");
 		}
 		else {

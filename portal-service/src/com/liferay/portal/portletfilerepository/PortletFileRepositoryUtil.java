@@ -209,6 +209,14 @@ public class PortletFileRepositoryUtil {
 			repositoryId, parentFolderId, folderName);
 	}
 
+	public static Repository getPortletRepository(
+			long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().getPortletRepository(
+			groupId, portletId);
+	}
+
 	public static void movePortletFileEntryToTrash(
 			long userId, long fileEntryId)
 		throws PortalException, SystemException {

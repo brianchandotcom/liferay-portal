@@ -72,10 +72,6 @@ public class TempFileUtil {
 
 		Folder folder = getTempFolder(groupId, userId, tempFolderName);
 
-		if (folder == null) {
-			return;
-		}
-
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			groupId, folder.getFolderId(), fileName);
 	}
@@ -86,10 +82,6 @@ public class TempFileUtil {
 
 		Folder folder = getTempFolder(groupId, userId, tempFolderName);
 
-		if (folder == null) {
-			return null;
-		}
-
 		return PortletFileRepositoryUtil.getPortletFileEntry(
 			groupId, folder.getFolderId(), fileName);
 	}
@@ -98,11 +90,7 @@ public class TempFileUtil {
 			long groupId, long userId, String tempFolderName)
 		throws PortalException, SystemException {
 
-		Folder folder = getTempFolder(groupId, userId, tempFolderName);
-
-		if (folder == null) {
-			return new String[]{};
-		}
+		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
 		List<FileEntry> fileEntries =
 			PortletFileRepositoryUtil.getPortletFileEntries(
@@ -147,13 +135,8 @@ public class TempFileUtil {
 			long groupId, long userId, String tempFolderName)
 		throws PortalException, SystemException {
 
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				groupId, PortletKeys.DOCUMENT_LIBRARY);
-
-		if (repository == null) {
-			return null;
-		}
+		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
+			groupId, PortletKeys.DOCUMENT_LIBRARY);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -164,10 +147,6 @@ public class TempFileUtil {
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, String.valueOf(userId),
 			serviceContext);
-
-		if (userFolder == null) {
-			return null;
-		}
 
 		Folder tempFolder = PortletFileRepositoryUtil.getPortletFolder(
 			userId, repository.getRepositoryId(), userFolder.getFolderId(),

@@ -264,6 +264,18 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return localRepositoryImpl;
 	}
 
+	public Repository getRepository(long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		return getRepository(groupId, portletId, portletId);
+	}
+
+	public Repository getRepository(long groupId, String name, String portletId)
+		throws PortalException, SystemException {
+
+		return repositoryPersistence.findByG_N_P(groupId, name, portletId);
+	}
+
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long repositoryId)
 		throws PortalException, SystemException {

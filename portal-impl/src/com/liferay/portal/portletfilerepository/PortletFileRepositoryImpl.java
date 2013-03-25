@@ -387,6 +387,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			repositoryId, parentFolderId, folderName);
 	}
 
+	public Repository getPortletRepository(long groupId, String portletId)
+		throws PortalException, SystemException {
+
+		return RepositoryLocalServiceUtil.getRepository(groupId, portletId);
+	}
+
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 

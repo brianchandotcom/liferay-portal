@@ -117,6 +117,9 @@ public interface PortletFileRepository {
 			long repositoryId, long parentFolderId, String folderName)
 		throws PortalException, SystemException;
 
+	public Repository getPortletRepository(long groupId, String portletId)
+		throws PortalException, SystemException;
+
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException;
 

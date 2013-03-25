@@ -33,8 +33,18 @@ public class ViewPortletFullContentMBCategoryThreadMessageAPTest
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
-				"MB Category Thread Message Body"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a[contains(.,Edit)]/span",
+				"Edit"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/strong"));
+		assertEquals(RuntimeVariables.replace("MB Category Thread Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//span[@class='user-name']"));
 		assertTrue(selenium.isVisible(
 				"//li[@class='taglib-social-bookmark-twitter']"));
 		assertTrue(selenium.isVisible(

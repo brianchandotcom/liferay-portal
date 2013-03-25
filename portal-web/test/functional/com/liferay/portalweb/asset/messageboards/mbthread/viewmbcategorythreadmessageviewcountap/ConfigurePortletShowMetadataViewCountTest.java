@@ -29,9 +29,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForElementPresent(
-			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
-		selenium.waitForVisible("//span[@title='Options']/ul/li/strong/a");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -53,8 +51,8 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",
 			RuntimeVariables.replace("View Count"));
 		selenium.waitForVisible(
-			"xPath=(//button[@title='Move selected items from Available to Current.'])/span");
-		selenium.clickAt("xPath=(//button[@title='Move selected items from Available to Current.'])/span",
+			"//button[@title='Move selected items from Available to Current.']/span");
+		selenium.clickAt("//button[@title='Move selected items from Available to Current.']/span",
 			RuntimeVariables.replace("Left Arrow"));
 		selenium.waitForPartialText("//select[@id='_86_currentMetadataFields']",
 			"View Count");

@@ -36,6 +36,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageNameException;
@@ -111,12 +112,22 @@ public class EditTemplateAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.dynamic_data_mapping.error");
 			}
-			else if (e instanceof TemplateNameException ||
+			else if (e instanceof RequiredTemplateException ||
+					 e instanceof TemplateNameException ||
 					 e instanceof TemplateScriptException ||
 					 e instanceof TemplateSmallImageNameException ||
 					 e instanceof TemplateSmallImageSizeException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				if (e instanceof RequiredTemplateException) {
+					String redirect = PortalUtil.escapeRedirect(
+						ParamUtil.getString(actionRequest, "redirect"));
+
+					if (Validator.isNotNull(redirect)) {
+						actionResponse.sendRedirect(redirect);
+					}
+				}
 			}
 			else {
 				throw e;

@@ -52,6 +52,12 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 }
 %>
 
+<liferay-ui:error exception="<%= RequiredTemplateException.class %>">
+	<liferay-ui:message key="required-templates-could-not-be-deleted" />
+
+	<liferay-ui:message key="they-are-referenced-by-web-contents" />
+</liferay-ui:error>
+
 <portlet:renderURL var="viewRecordsURL">
 	<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
 </portlet:renderURL>

@@ -25,11 +25,15 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.util.List;
 
@@ -124,6 +128,29 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertNull(
 			DDMTemplateLocalServiceUtil.fetchDDMTemplate(
 				template.getTemplateId()));
+	}
+
+	@Test
+	public void testDeleteTemplateReferencedByWebContents() throws Exception {
+		DDMStructure structure = addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			"Test Structure");
+
+		DDMTemplate template = addDisplayTemplate(
+			structure.getPrimaryKey(), "Test Display Template");
+
+		JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), "<title>Test Article</title>",
+			structure.getStructureKey(), template.getTemplateKey());
+
+		try {
+			DDMTemplateLocalServiceUtil.deleteTemplate(
+				template.getTemplateId());
+
+			Assert.fail();
+		}
+		catch (RequiredTemplateException rse) {
+		}
 	}
 
 	@Test

@@ -73,6 +73,7 @@ else if (Validator.isNotNull(structureId)) {
 		ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), structureId);
 	}
 	catch (NoSuchStructureException nsse) {
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(JournalArticle.class), structureId);
 	}
 }
 

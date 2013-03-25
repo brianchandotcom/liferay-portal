@@ -130,7 +130,20 @@
 
 			var positionOptions = options.positionOptions;
 			var beforePortletLoaded = options.beforePortletLoaded;
-			var onComplete = options.onComplete;
+			var onCompleteFn = options.onComplete;
+
+			var onComplete = function(portlet, portletId) {
+				if (onCompleteFn) {
+					onCompleteFn(portlet, portletId);
+				}
+
+				Liferay.fire(
+					'addPortlet',
+					{
+						portlet: portlet
+					}
+				);
+			};
 
 			var container = null;
 

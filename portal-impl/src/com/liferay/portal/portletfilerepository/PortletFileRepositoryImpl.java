@@ -383,15 +383,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long repositoryId, long parentFolderId, String folderName)
 		throws PortalException, SystemException {
 
-		Folder folder = null;
-
-		try {
-			folder = DLAppLocalServiceUtil.getFolder(
-				repositoryId, parentFolderId, folderName);
-		}
-		finally {
-			return folder;
-		}
+		return DLAppLocalServiceUtil.getFolder(
+			repositoryId, parentFolderId, folderName);
 	}
 
 	public void movePortletFileEntryToTrash(long userId, long fileEntryId)

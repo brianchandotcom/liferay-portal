@@ -50,22 +50,19 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
+			PortletDataContext portletDataContext,
 			MDRRuleGroupInstance ruleGroupInstance)
 		throws Exception {
-
-		Element ruleGroupsElement = elements[0];
 
 		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(
 			ruleGroupInstance.getRuleGroupId());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, ruleGroupsElement, ruleGroup);
+			portletDataContext, ruleGroup);
 
-		Element ruleGroupInstancesElement = elements[1];
-
-		Element ruleGroupInstanceElement = ruleGroupInstancesElement.addElement(
-			"rule-group-instance");
+		Element ruleGroupInstanceElement =
+			portletDataContext.getExportDataStagedModelElement(
+				ruleGroupInstance);
 
 		String className = ruleGroupInstance.getClassName();
 
@@ -86,7 +83,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			Element ruleGroupInstanceElement,
 			MDRRuleGroupInstance ruleGroupInstance)
 		throws Exception {
 
@@ -101,7 +97,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			(MDRRuleGroup)portletDataContext.getZipEntryAsObject(ruleGroupPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, ruleGroupInstanceElement, ruleGroup);
+			portletDataContext, ruleGroup);
 
 		Map<Long, Long> ruleGroupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -112,6 +108,10 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			ruleGroupInstance.getRuleGroupId());
 
 		long classPK = 0;
+
+		Element ruleGroupInstanceElement =
+			portletDataContext.getImportDataStagedModelElement(
+				ruleGroupInstance);
 
 		String layoutUuid = ruleGroupInstanceElement.attributeValue(
 			"layout-uuid");

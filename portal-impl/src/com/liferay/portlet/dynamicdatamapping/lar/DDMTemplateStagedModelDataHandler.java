@@ -25,8 +25,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -89,28 +95,24 @@ public class DDMTemplateStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			DDMTemplate template)
+			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
 
-		Element templatesElement = elements[0];
-		Element dlFileEntryTypesElement = null;
-		Element dlFoldersElement = null;
-		Element dlFileEntriesElement = null;
-		Element dlFileRanksElement = null;
-		Element dlRepositoriesElement = null;
-		Element dlRepositoryEntriesElement = null;
+		Element dlFileEntryTypesElement =
+			portletDataContext.getExportDataGroupElement(DLFileEntryType.class);
+		Element dlFoldersElement = portletDataContext.getExportDataGroupElement(
+			DLFolder.class);
+		Element dlFileEntriesElement =
+			portletDataContext.getExportDataGroupElement(DLFileEntry.class);
+		Element dlFileRanksElement =
+			portletDataContext.getExportDataGroupElement(DLFileRank.class);
+		Element dlRepositoriesElement =
+			portletDataContext.getExportDataGroupElement(Repository.class);
+		Element dlRepositoryEntriesElement =
+			portletDataContext.getExportDataGroupElement(RepositoryEntry.class);
 
-		if (elements.length > 1) {
-			dlFileEntryTypesElement = elements[1];
-			dlFoldersElement = elements[2];
-			dlFileEntriesElement = elements[3];
-			dlFileRanksElement = elements[4];
-			dlRepositoriesElement = elements[5];
-			dlRepositoryEntriesElement = elements[6];
-		}
-
-		Element templateElement = templatesElement.addElement("template");
+		Element templateElement =
+			portletDataContext.getExportDataStagedModelElement(template);
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageUtil.fetchByPrimaryKey(
@@ -162,8 +164,7 @@ public class DDMTemplateStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			DDMTemplate template)
+			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
@@ -178,6 +179,9 @@ public class DDMTemplateStagedModelDataHandler
 		File smallFile = null;
 
 		if (template.isSmallImage()) {
+			Element element =
+				portletDataContext.getImportDataStagedModelElement(template);
+
 			String smallImagePath = element.attributeValue("small-image-path");
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {

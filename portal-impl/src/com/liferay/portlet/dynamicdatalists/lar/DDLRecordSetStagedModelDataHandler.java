@@ -43,54 +43,43 @@ public class DDLRecordSetStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			DDLRecordSet recordSet)
+			PortletDataContext portletDataContext, DDLRecordSet recordSet)
 		throws Exception {
 
-		Element recordSetsElement = elements[0];
-
-		Element recordSetElement = recordSetsElement.addElement("record-set");
+		Element recordSetElement =
+			portletDataContext.getExportDataStagedModelElement(recordSet);
 
 		portletDataContext.addClassedModel(
 			recordSetElement, StagedModelPathUtil.getPath(recordSet), recordSet,
 			DDLPortletDataHandler.NAMESPACE);
 
-		Element ddmStructuresElement = recordSetElement.addElement(
-			"ddm-structures");
-
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, ddmStructuresElement, ddmStructure);
-
-		Element ddmTemplatesElement = recordSetElement.addElement(
-			"ddm-templates");
+			portletDataContext, ddmStructure);
 
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, ddmTemplatesElement, ddmTemplate);
+				portletDataContext, ddmTemplate);
 		}
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			DDLRecordSet recordSet)
+			PortletDataContext portletDataContext, DDLRecordSet recordSet)
 		throws Exception {
 
-		Element ddmStructuresElement = element.element("ddm-structures");
+		Element ddmStructuresElement =
+			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 
-		if (ddmStructuresElement != null) {
-			importDDMStructures(portletDataContext, ddmStructuresElement);
-		}
+		importDDMStructures(portletDataContext, ddmStructuresElement);
 
-		Element ddmTemplatesElement = element.element("ddm-templates");
+		Element ddmTemplatesElement =
+			portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-		if (ddmTemplatesElement != null) {
-			importDDMTemplates(portletDataContext, ddmTemplatesElement);
-		}
+		importDDMTemplates(portletDataContext, ddmTemplatesElement);
 
 		long userId = portletDataContext.getUserId(recordSet.getUserUuid());
 
@@ -147,7 +136,7 @@ public class DDLRecordSetStagedModelDataHandler
 		throws Exception {
 
 		List<Element> ddmStructureElements =
-			ddmStructureReferencesElement.elements("structure");
+			ddmStructureReferencesElement.elements();
 
 		for (Element ddmStructureElement : ddmStructureElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -161,7 +150,7 @@ public class DDLRecordSetStagedModelDataHandler
 		throws Exception {
 
 		List<Element> ddmTemplateElements =
-			ddmTemplateReferencesElement.elements("template");
+			ddmTemplateReferencesElement.elements();
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
 			StagedModelDataHandlerUtil.importStagedModel(

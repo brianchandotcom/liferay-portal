@@ -226,14 +226,6 @@
 
 							var portletOptions = {
 								beforePortletLoaded: beforePortletLoaded,
-								onComplete: function(portlet) {
-									Liferay.fire(
-										'addPortlet',
-										{
-											portlet: portlet
-										}
-									);
-								},
 								plid: plid,
 								placeHolder: placeHolder,
 								portletId: portletId,

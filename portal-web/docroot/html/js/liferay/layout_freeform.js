@@ -63,7 +63,6 @@ AUI.add(
 						);
 
 						Liferay.on('addPortlet', instance._onAddPortlet, instance);
-
 					},
 
 					alignPortlet: function(portletNode, referenceNode) {

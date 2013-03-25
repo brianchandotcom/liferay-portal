@@ -278,7 +278,7 @@ else if (dlFileEntryType != null) {
 			</c:if>
 		</aui:field-wrapper>
 
-		<aui:input name="file" style="width: auto;" type="file">
+		<aui:input name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' style="width: auto;" type="file">
 			<aui:validator name="acceptFiles">
 				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
 			</aui:validator>
@@ -512,6 +512,10 @@ else if (dlFileEntryType != null) {
 		};
 
 		Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/document_library/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
+	}
+
+	function <portlet:namespace />validateTitle() {
+		Liferay.Form._INSTANCES.<portlet:namespace />fm.formValidator.validateField('<portlet:namespace />title');
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

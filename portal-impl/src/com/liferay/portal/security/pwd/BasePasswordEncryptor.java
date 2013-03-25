@@ -17,8 +17,6 @@ package com.liferay.portal.security.pwd;
 import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.lang.String;
-
 /**
  * @author Michael C. Han
  */

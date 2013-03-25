@@ -6,11 +6,11 @@
 
 		<execute action="Dockbar#Click" locator-key1="ADD_PAGE" />
 
-		<execute action="Home#Type" locator-key1="PAGE_NAME" value1="${page-name}" />
+		<execute action="Home#Type" locator-key1="PAGE_NAME" value1="${pageName}" />
 
 		<execute action="Home#Click" locator-key1="PAGE_SAVE" />
 
-		<execute action="Home#Click" locator1="link=${page-name}" />
+		<execute action="Home#Click" locator1="link=${pageName}" />
 	</command>
 	<command name="pgTearDown">
 		<execute action="Home#Open" locator-key1="HOME_URL" />

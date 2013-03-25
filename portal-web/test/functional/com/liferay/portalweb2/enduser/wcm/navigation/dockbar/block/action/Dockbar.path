@@ -45,6 +45,22 @@
 	<td>//a[@id='addPage']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_PORTLET</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--APPLICATION-->
+<tr>
+	<td>APPLICATION_SEARCH</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

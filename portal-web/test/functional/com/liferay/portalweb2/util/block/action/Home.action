@@ -3,6 +3,9 @@
 		<case comparator="startsWith" locator-key="PAGE_DELETE">
 			<execute function="Click#textClick" value1="X" />
 		</case>
+		<case comparator="startsWith" locator="link=">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 	<command name="Confirm">
 		<case locator-key="PAGE_CONFIRM">

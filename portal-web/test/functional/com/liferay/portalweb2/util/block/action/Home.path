@@ -74,6 +74,27 @@
 	<td>//button[contains(@id,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET-->
+<tr>
+	<td>PORTLET_1</td>
+	<td>xpath=(//section)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_2</td>
+	<td>xpath=(//section)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_3</td>
+	<td>xpath=(//section)[3]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

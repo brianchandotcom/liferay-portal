@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -59,7 +60,19 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 			channel = FeedParser.parse(builder, reader);*/
 
-			HttpImpl httpImpl = (HttpImpl)HttpUtil.getHttp();
+			HttpImpl httpImpl = null;
+
+			Object httpObject = HttpUtil.getHttp();
+
+			if (httpObject instanceof DoPrivilegedBean) {
+				DoPrivilegedBean doPrivilegedBean =
+					(DoPrivilegedBean)httpObject;
+
+				httpImpl = (HttpImpl)doPrivilegedBean.getActualBean();
+			}
+			else {
+				httpImpl = (HttpImpl)httpObject;
+			}
 
 			HostConfiguration hostConfiguration = httpImpl.getHostConfiguration(
 				_url);

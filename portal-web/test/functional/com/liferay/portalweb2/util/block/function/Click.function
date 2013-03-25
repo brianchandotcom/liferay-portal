@@ -19,6 +19,11 @@
 
 		<execute selenium="clickAtAndWait" />
 	</command>
+	<command name="textClick">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="click" />
+	</command>
 	<command name="textClickAt">
 		<execute function="AssertTextEquals#assertText" />
 
@@ -30,8 +35,6 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 	<command name="textClickAtClickDockbar">
-		<execute selenium="pause" argument1="1000" />
-
 		<execute selenium="clickAt" argument1="//div[@id='dockbar']" argument2="" />
 
 		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]" />

@@ -1,23 +1,19 @@
 <definition>
 	<set-up>
-		<execute macro="User#pgLogin" />
+		<execute macro="User#pgFirstLogin" />
 	</set-up>
 	<command name="AddBlogsEntry">
-		<execute macro="BlogsEntry#cpAdd">
-			<var name="title" value="Blogs Entry Title" />
-			<var name="content" value="Blogs Entry Content" />
+		<execute macro="Page#pgAdd">
+			<var name="page-name" value="Blogs Page" />
 		</execute>
 	</command>
 	<command name="DeleteBlogsEntry">
-		<var name="title" value="Blogs Entry Title" />
-		<var name="content" value="Blogs Entry Content" />
-
-		<execute macro="BlogsEntry#cpAdd" />
-
-		<execute macro="BlogsEntry#cpDelete" />
+		<execute macro="Page#pgAdd">
+			<var name="page-name" value="Blogs Page" />
+		</execute>
 	</command>
 	<tear-down>
-		<execute macro="BlogsEntry#cpTearDown" />
+		<execute macro="Page#pgTearDown" />
 
 		<execute macro="User#pgLogout" />
 	</tear-down>

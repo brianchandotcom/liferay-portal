@@ -1,0 +1,17 @@
+<definition>
+	<command name="Click">
+		<case comparator="startsWith" locator-key="PAGE_DELETE">
+			<execute function="Click#textClick" value1="X" />
+		</case>
+	</command>
+	<command name="Confirm">
+		<case locator-key="PAGE_CONFIRM">
+			<execute function="Confirm#waitForConfirmation" />
+		</case>
+	</command>
+	<command name="IsElementPresent">
+		<case comparator="startsWith" locator-key="PAGE_">
+			<execute function="IsElementPresent#isElementPresentClickNavigation" />
+		</case>
+	</command>
+</definition>

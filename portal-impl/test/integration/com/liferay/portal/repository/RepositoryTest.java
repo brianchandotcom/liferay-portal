@@ -210,31 +210,30 @@ public class RepositoryTest {
 		int initialMountFolders = DLFolderServiceUtil.getMountFoldersCount(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Repository[] repositories = new Repository[2];
 		long[] repositoryIds = new long[2];
 
 		long classNameId = PortalUtil.getClassNameId(LiferayRepository.class);
 
-		repositories[0] = RepositoryLocalServiceUtil.addRepository(
+		Repository repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1", "Test 1",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
-		repositoryIds[0] = repositories[0].getRepositoryId();
+		repositoryIds[0] = repository.getRepositoryId();
 
 		DLFolder dlFolder = DLFolderServiceUtil.addFolder(
 			_group.getGroupId(), _group.getGroupId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", "Folder",
 			new ServiceContext());
 
-		repositories[1] = RepositoryLocalServiceUtil.addRepository(
+		repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			dlFolder.getFolderId(), "Test 2", "Test 2",
 			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), hidden,
 			new ServiceContext());
 
-		repositoryIds[1] = repositories[1].getRepositoryId();
+		repositoryIds[1] = repository.getRepositoryId();
 
 		if (hidden) {
 			Assert.assertEquals(

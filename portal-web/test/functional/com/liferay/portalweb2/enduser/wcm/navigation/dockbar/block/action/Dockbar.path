@@ -29,6 +29,22 @@
 	<td>//span[@class='sign-out']/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE</td>
+	<td>//a[@id='addPage']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

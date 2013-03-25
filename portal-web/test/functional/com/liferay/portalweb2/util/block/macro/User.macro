@@ -22,7 +22,7 @@
 		</if>
 	</command>
 	<command name="pgLogin">
-		<execute action="PGLogin#Open" locator1="/web/guest/home/" />
+		<execute action="Home#Open" locator-key1="HOME_URL" />
 
 		<execute action="PGLogin#Type" locator-key1="EMAIL_ADDRESS" value1="${emailAddress}" />
 
@@ -31,7 +31,7 @@
 		<execute action="PGLogin#Click" locator-key1="SIGN_IN" />
 	</command>
 	<command name="pgLogout">
-		<execute action="PGLogin#Open" locator1="/web/guest/home/" />
+		<execute action="Home#Open" locator-key1="HOME_URL" />
 
 		<if>
 			<condition action="Dockbar#IsElementPresent" locator-key1="USER_NAME" />

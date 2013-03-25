@@ -70,8 +70,8 @@ public class MBBanStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MBBan.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MBBan.class;
 	}
 
 	@Override

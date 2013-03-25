@@ -81,12 +81,12 @@ public class PollsVoteStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			PollsQuestion.class.getName());
+			PollsQuestion.class.getSimpleName());
 
 		PollsQuestion question = (PollsQuestion)dependentStagedModels.get(0);
 
 		dependentStagedModels = dependentStagedModelsMap.get(
-			PollsChoice.class.getName());
+			PollsChoice.class.getSimpleName());
 
 		PollsChoice choice = (PollsChoice)dependentStagedModels.get(0);
 
@@ -106,8 +106,8 @@ public class PollsVoteStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return PollsVote.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return PollsVote.class;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class PollsVoteStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			PollsChoice.class.getName());
+			PollsChoice.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
@@ -127,7 +127,7 @@ public class PollsVoteStagedModelDataHandlerTest
 			choice.getUuid(), group.getGroupId());
 
 		dependentStagedModels = dependentStagedModelsMap.get(
-			PollsQuestion.class.getName());
+			PollsQuestion.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

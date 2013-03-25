@@ -63,8 +63,8 @@ public class PollsQuestionStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return PollsQuestion.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return PollsQuestion.class;
 	}
 
 }

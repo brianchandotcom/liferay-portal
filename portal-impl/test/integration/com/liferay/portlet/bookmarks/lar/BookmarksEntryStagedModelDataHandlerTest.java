@@ -72,7 +72,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			BookmarksFolder.class.getName());
+			BookmarksFolder.class.getSimpleName());
 
 		BookmarksFolder folder = (BookmarksFolder)dependentStagedModels.get(0);
 
@@ -95,8 +95,8 @@ public class BookmarksEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return BookmarksEntry.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return BookmarksEntry.class;
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			BookmarksFolder.class.getName());
+			BookmarksFolder.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

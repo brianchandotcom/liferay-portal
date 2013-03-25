@@ -69,7 +69,7 @@ public class MBMessageStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getName());
+			MBCategory.class.getSimpleName());
 
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
@@ -89,8 +89,8 @@ public class MBMessageStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MBMessage.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MBMessage.class;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class MBMessageStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getName());
+			MBCategory.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

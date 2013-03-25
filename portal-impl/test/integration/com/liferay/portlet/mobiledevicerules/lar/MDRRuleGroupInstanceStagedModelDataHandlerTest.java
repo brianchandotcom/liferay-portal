@@ -94,7 +94,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getName());
+			MDRRuleGroup.class.getSimpleName());
 
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
@@ -116,8 +116,8 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MDRRuleGroupInstance.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MDRRuleGroupInstance.class;
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getName());
+			MDRRuleGroup.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

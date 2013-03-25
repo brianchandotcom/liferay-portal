@@ -63,8 +63,8 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MDRRuleGroup.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MDRRuleGroup.class;
 	}
 
 }

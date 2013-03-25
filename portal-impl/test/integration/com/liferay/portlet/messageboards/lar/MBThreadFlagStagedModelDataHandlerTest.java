@@ -69,7 +69,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 
@@ -83,8 +83,8 @@ public class MBThreadFlagStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MBThreadFlag.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MBThreadFlag.class;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
@@ -116,7 +116,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		MBThreadFlag threadFlag = (MBThreadFlag)stagedModel;
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 

@@ -45,9 +45,8 @@ public class PACLInitialContextFactoryBuilder
 		_initialContextFactoryBuilder = initialContextFactoryBuilder;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PACLInitialContextFactoryBuilder.class.getName());
-
 	private InitialContextFactoryBuilder _initialContextFactoryBuilder;
+	private Log _log = LogFactoryUtil.getLog(
+		PACLInitialContextFactoryBuilder.class.getName());
 
 }

@@ -132,10 +132,9 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		return new PACLContext(context, paclPolicy);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PACLInitialContextFactory.class.getName());
-
 	private Hashtable<?, ?> _environment;
 	private InitialContextFactoryBuilder _initialContextFactoryBuilder;
+	private Log _log = LogFactoryUtil.getLog(
+		PACLInitialContextFactory.class.getName());
 
 }

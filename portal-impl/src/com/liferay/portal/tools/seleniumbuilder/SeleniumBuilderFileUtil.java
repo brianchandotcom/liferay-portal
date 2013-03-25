@@ -465,7 +465,7 @@ public class SeleniumBuilderFileUtil {
 			if (elementName.equals("condition")) {
 				validateExecuteElement(
 					fileName, element, allowedExecuteAttributeNames,
-					"(is|Is).+", allowedExecuteChildElementNames);
+					".*(is|Is).+", allowedExecuteChildElementNames);
 			}
 			else if (elementName.equals("else") || elementName.equals("then")) {
 				validateCommandElement(

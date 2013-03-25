@@ -35,7 +35,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${selen
 
 			"${actionLocatorKey}"
 		<#else>
-			null
+			""
 		</#if>
 
 		,
@@ -51,7 +51,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${selen
 
 			"${actionValue}"
 		<#else>
-			null
+			""
 		</#if>
 
 		<#if i_has_next>

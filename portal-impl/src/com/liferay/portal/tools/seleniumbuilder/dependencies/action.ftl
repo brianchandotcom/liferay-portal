@@ -116,6 +116,10 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 
 							<#include "function_element.ftl">
 						<#else>
+							<#if commandName?starts_with("Is")>
+								return
+							</#if>
+
 							super.${seleniumBuilderFileUtil.getVariableName(commandName)}(
 
 							<#list 1..seleniumBuilderContext.getFunctionLocatorCount(commandName) as i>

@@ -2579,7 +2579,7 @@ public class SourceFormatter {
 				}
 			}
 
-			if (!fileName.endsWith("/touch.jsp")) {
+			if (!fileName.endsWith(File.separator + "touch.jsp")) {
 				int x = line.indexOf("<%@ include file");
 
 				if (x != -1) {

@@ -696,8 +696,8 @@ public class SourceFormatter {
 
 		int x = 0;
 
-		if (fileName.endsWith("-ext/build.xml")) {
-			x = fileName.indexOf("ext/");
+		if (fileName.endsWith("-ext" + File.separator + "build.xml")) {
+			x = fileName.indexOf("ext" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -706,8 +706,8 @@ public class SourceFormatter {
 				x = x + 4;
 			}
 		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			x = fileName.indexOf("hooks/");
+		else if (fileName.endsWith("-hook" + File.separator + "build.xml")) {
+			x = fileName.indexOf("hooks" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -716,8 +716,10 @@ public class SourceFormatter {
 				x = x + 6;
 			}
 		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			x = fileName.indexOf("layouttpl/");
+		else if (fileName.endsWith(
+					"-layouttpl" + File.separator + "build.xml")) {
+
+			x = fileName.indexOf("layouttpl" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -726,8 +728,8 @@ public class SourceFormatter {
 				x = x + 10;
 			}
 		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			x = fileName.indexOf("portlets/");
+		else if (fileName.endsWith("-portlet" + File.separator + "build.xml")) {
+			x = fileName.indexOf("portlets" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -736,8 +738,8 @@ public class SourceFormatter {
 				x = x + 9;
 			}
 		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			x = fileName.indexOf("themes/");
+		else if (fileName.endsWith("-theme" + File.separator + "build.xml")) {
+			x = fileName.indexOf("themes" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -746,10 +748,12 @@ public class SourceFormatter {
 				x = x + 7;
 			}
 		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
+		else if (fileName.endsWith("-web" + File.separator + "build.xml") &&
+				 !fileName.endsWith(
+					 File.separator + "ext-web" + File.separator +
+						 "build.xml")) {
 
-			x = fileName.indexOf("webs/");
+			x = fileName.indexOf("webs" + File.separator);
 
 			if (x == -1) {
 				x = 0;
@@ -762,7 +766,7 @@ public class SourceFormatter {
 			return content;
 		}
 
-		int y = fileName.indexOf("/", x);
+		int y = fileName.indexOf(File.separator, x);
 
 		String correctProjectElementText =
 			"<project name=\"" + fileName.substring(x, y) + "\"";
@@ -2579,7 +2583,7 @@ public class SourceFormatter {
 				}
 			}
 
-			if (!fileName.endsWith("/touch.jsp")) {
+			if (!fileName.endsWith(File.separator + "touch.jsp")) {
 				int x = line.indexOf("<%@ include file");
 
 				if (x != -1) {

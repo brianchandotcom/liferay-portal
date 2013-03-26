@@ -2579,7 +2579,10 @@ public class SourceFormatter {
 				}
 			}
 
-			if (!fileName.endsWith("/touch.jsp")) {
+			String encodedFileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			if (!encodedFileName.endsWith("/touch.jsp")) {
 				int x = line.indexOf("<%@ include file");
 
 				if (x != -1) {

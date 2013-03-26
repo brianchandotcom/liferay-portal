@@ -24,7 +24,7 @@ import com.liferay.portal.model.Theme;
 public class ThemeFactoryUtil {
 
 	public static Theme getDefaultRegularTheme(long companyId)
-			throws SystemException {
+		throws SystemException {
 
 		return getThemeFactory().getDefaultRegularTheme(companyId);
 	}
@@ -36,7 +36,7 @@ public class ThemeFactoryUtil {
 	}
 
 	public static Theme getDefaultWapTheme(long companyId)
-			throws SystemException {
+		throws SystemException {
 
 		return getThemeFactory().getDefaultWapTheme(companyId);
 	}
@@ -56,7 +56,6 @@ public class ThemeFactoryUtil {
 	}
 
 	public static Theme getTheme(String themeId, String name) {
-
 		return getThemeFactory().getTheme(themeId, name);
 	}
 
@@ -72,6 +71,6 @@ public class ThemeFactoryUtil {
 		_ThemeFactory = ThemeFactory;
 	}
 
-private static ThemeFactory _ThemeFactory;
+	private static ThemeFactory _ThemeFactory;
 
 }

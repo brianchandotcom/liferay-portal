@@ -108,7 +108,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		else {
 			layoutSet.setThemeId(
 				ThemeFactoryUtil.getDefaultRegularThemeId(
-						group.getCompanyId()));
+					group.getCompanyId()));
 			layoutSet.setColorSchemeId(
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId());
 			layoutSet.setWapThemeId(

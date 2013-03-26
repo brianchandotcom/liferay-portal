@@ -28,8 +28,8 @@ public class ThemeFactoryImpl implements ThemeFactory {
 
 	public Theme getDefaultRegularTheme(long companyId) throws SystemException {
 		return new ThemeImpl(
-				ThemeFactoryUtil.getDefaultRegularThemeId(companyId),
-				StringPool.BLANK);
+			ThemeFactoryUtil.getDefaultRegularThemeId(companyId),
+			StringPool.BLANK);
 	}
 
 	public String getDefaultRegularThemeId(long companyId)
@@ -43,9 +43,7 @@ public class ThemeFactoryImpl implements ThemeFactory {
 
 	public Theme getDefaultWapTheme(long companyId) throws SystemException {
 		return new ThemeImpl(
-				ThemeFactoryUtil.getDefaultWapThemeId(companyId),
-				StringPool.BLANK);
-
+			ThemeFactoryUtil.getDefaultWapThemeId(companyId), StringPool.BLANK);
 	}
 
 	public String getDefaultWapThemeId(long companyId) throws SystemException {
@@ -64,7 +62,6 @@ public class ThemeFactoryImpl implements ThemeFactory {
 	}
 
 	public Theme getTheme(String themeId, String name) {
-
 		return new ThemeImpl(themeId, name);
 	}
 

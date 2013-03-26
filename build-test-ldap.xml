@@ -24,11 +24,25 @@ test.properties to point to an ApacheDS installation file.
 		</if>
 
 		<delete dir="${app.server.parent.dir}/apacheds_1.5.7" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${apache.directory.win32.zip}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<copy
+					file="${apache.directory.win32.dir}/${apache.directory.win32.zip}"
+					tofile="${app.server.parent.dir}/${apache.directory.win32.zip}"
+				/>
+			</then>
+		</if>
+
 		<unzip
 			 dest="${app.server.parent.dir}"
-			 src="C:/${apache.directory.win32.zip}"
-		>
-		</unzip>
+			 src="${app.server.parent.dir}/${apache.directory.win32.zip}"
+		/>
 	</target>
 
 	<target name="run-ldap-tomcat">
@@ -106,20 +120,17 @@ cn: usergroup
 uniqueMember: cn=janesmith,ou=users,dc=example,dc=com
 businessCategory: cn=janesmith,ou=users,dc=example,dc=com</echo>
 
-				<echo file="execute-command.bat">
-					cd /d ${app.server.parent.dir}/apacheds_1.5.7/bin
-					java -jar ${app.server.parent.dir}/apacheds_1.5.7/bin/apacheds-tools.jar import -e -f ${project.dir}\${tstamp.value}
-				</echo>
-
-				<exec dir="${project.dir}" executable="cmd">
-					<arg value="/c" />
-					<arg value="execute-command.bat" />
+				<exec dir="${app.server.parent.dir}/apacheds_1.5.7/bin" executable="java">
+					<arg value="-jar" />
+					<arg value="apacheds-tools.jar" />
+					<arg value="import" />
+					<arg value="-e" />
+					<arg value="-f" />
+					<arg value="${project.dir}\${tstamp.value}" />
 				</exec>
-				
+
 				<delete file="${tstamp.value}" />
 
-				<delete file="execute-command.bat" />
-				
 				<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 					<property name="test.class" value="${test.name}" />
 				</ant>

@@ -427,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -4085,17 +4085,10 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="start-ldap">
-		<echo file="execute-command.bat">
-			cd /d ${app.server.parent.dir}/apacheds_1.5.7
-			apacheds.bat
-		</echo>
-
-		<exec dir="${project.dir}" executable="cmd">
+		<exec dir="${app.server.parent.dir}/apacheds_1.5.7" executable="cmd">
 			<arg value="/c" />
-			<arg value="execute-command.bat" />
+			<arg value="apacheds.bat" />
 		</exec>
-
-		<delete file="execute-command.bat" />
 	</target>
 
 	<target name="start-selenium">

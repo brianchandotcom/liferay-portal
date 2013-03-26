@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.EmptyElement;
 import com.liferay.portal.kernel.xml.Entity;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.Node;
@@ -314,6 +315,10 @@ public class SAXReaderImpl implements SAXReader {
 		return createXPath(xPathExpression, namespaceContextMap);
 	}
 
+	public Element emptyElement() {
+		return _EMPTY_ELEMENT;
+	}
+
 	public Document read(File file) throws DocumentException {
 		return read(file, false);
 	}
@@ -516,6 +521,9 @@ public class SAXReaderImpl implements SAXReader {
 
 		return reader;
 	}
+
+	private static final Element _EMPTY_ELEMENT = new EmptyElementImpl(
+		DocumentHelper.createElement(EmptyElement.EMPTY_ELEMENT_NAME));
 
 	private static final String _FEATURES_DYNAMIC =
 		"http://apache.org/xml/features/validation/dynamic";

@@ -56,7 +56,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					<aui:input name="use-custom-title" type="checkbox" />
 
 					<aui:select label="link-portlet-urls-to-page" name="lfr-point-links">
-						<aui:option label="current-page" />
+						<aui:option label="current-page" value="" />
 
 						<%
 						String linkToLayoutUuid = StringPool.BLANK;

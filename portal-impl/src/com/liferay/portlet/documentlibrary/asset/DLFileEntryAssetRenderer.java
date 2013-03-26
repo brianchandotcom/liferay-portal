@@ -124,9 +124,8 @@ public class DLFileEntryAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/document.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/document.png";
 	}
 
 	public String getTitle(Locale locale) {

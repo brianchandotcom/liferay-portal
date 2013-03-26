@@ -94,8 +94,8 @@ public class BlogsEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return
-			themeDisplay.getPathThemeImages() + "/file_system/large/blog.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/blog.png";
 	}
 
 	public String getTitle(Locale locale) {

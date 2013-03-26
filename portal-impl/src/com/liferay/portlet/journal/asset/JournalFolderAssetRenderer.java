@@ -101,14 +101,12 @@ public class JournalFolderAssetRenderer
 			_folder.getGroupId(), _folder.getFolderId());
 
 		if ((articlesCount + foldersCount) > 0) {
-			return
-				themeDisplay.getPathThemeImages() +
-					"/file_system/large/folder_full_document.png";
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_full_article.png";
 		}
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/folder_empty.png";
 	}
 
 	public String getTitle(Locale locale) {

@@ -91,9 +91,8 @@ public class MBMessageAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/message.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/message.png";
 	}
 
 	public String getTitle(Locale locale) {

@@ -128,9 +128,8 @@ public class JournalArticleAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/web_content.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/article.png";
 	}
 
 	public String getTitle(Locale locale) {

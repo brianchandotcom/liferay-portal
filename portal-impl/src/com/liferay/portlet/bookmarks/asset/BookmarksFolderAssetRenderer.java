@@ -102,14 +102,12 @@ public class BookmarksFolderAssetRenderer
 			_folder.getGroupId(), _folder.getFolderId());
 
 		if ((entriesCount + foldersCount) > 0) {
-			return
-				themeDisplay.getPathThemeImages() +
-					"/file_system/large/folder_full_bookmark.png";
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_full_bookmark.png";
 		}
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/folder_empty.png";
 	}
 
 	public String getTitle(Locale locale) {

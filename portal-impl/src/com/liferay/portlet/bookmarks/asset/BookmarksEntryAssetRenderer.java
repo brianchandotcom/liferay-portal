@@ -81,9 +81,8 @@ public class BookmarksEntryAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/bookmark.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/bookmark.png";
 	}
 
 	public String getTitle(Locale locale) {

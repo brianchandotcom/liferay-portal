@@ -103,14 +103,12 @@ public class DLFolderAssetRenderer
 				WorkflowConstants.STATUS_APPROVED);
 
 		if ((entriesCount + foldersCount) > 0) {
-			return
-				themeDisplay.getPathThemeImages() +
-					"/file_system/large/folder_full_image.png";
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_full_document.png";
 		}
 
-		return
-			themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty.png";
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/folder_empty.png";
 	}
 
 	public String getTitle(Locale locale) {

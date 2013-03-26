@@ -564,6 +564,9 @@ public class EditArticleAction extends PortletAction {
 	protected Object[] updateArticle(ActionRequest actionRequest)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
@@ -635,6 +638,13 @@ public class EditArticleAction extends PortletAction {
 				DDMStructureLocalServiceUtil.fetchStructure(
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
 					structureId);
+
+			if (ddmStructure == null) {
+				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+					themeDisplay.getCompanyGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class),
+					structureId);
+			}
 
 			Fields fields = DDMUtil.getFields(
 				ddmStructure.getStructureId(), serviceContext);

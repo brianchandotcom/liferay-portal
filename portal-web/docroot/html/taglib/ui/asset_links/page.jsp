@@ -65,7 +65,7 @@ if (assetEntryId > 0) {
 					assetPublisherURL.setParameter("type", assetRendererFactory.getType());
 
 					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
-						if (assetRenderer.getGroupId() != scopeGroupId) {
+						if (assetRenderer.getGroupId() != themeDisplay.getSiteGroupId()) {
 							assetPublisherURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
 						}
 

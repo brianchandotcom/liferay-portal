@@ -22,7 +22,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
 if (article != null) {
-	if (article.getExpirationDate() != null) {
+	if ((article.getExpirationDate() != null) && !article.isExpired()) {
 		neverExpire = false;
 	}
 }

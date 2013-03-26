@@ -694,10 +694,13 @@ public class SourceFormatter {
 			String basedir, String fileName, String content)
 		throws IOException {
 
+		String encodedFileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 		int x = 0;
 
-		if (fileName.endsWith("-ext/build.xml")) {
-			x = fileName.indexOf("ext/");
+		if (encodedFileName.endsWith("-ext/build.xml")) {
+			x = encodedFileName.indexOf("ext/");
 
 			if (x == -1) {
 				x = 0;
@@ -706,8 +709,8 @@ public class SourceFormatter {
 				x = x + 4;
 			}
 		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			x = fileName.indexOf("hooks/");
+		else if (encodedFileName.endsWith("-hook/build.xml")) {
+			x = encodedFileName.indexOf("hooks/");
 
 			if (x == -1) {
 				x = 0;
@@ -716,8 +719,8 @@ public class SourceFormatter {
 				x = x + 6;
 			}
 		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			x = fileName.indexOf("layouttpl/");
+		else if (encodedFileName.endsWith("-layouttpl/build.xml")) {
+			x = encodedFileName.indexOf("layouttpl/");
 
 			if (x == -1) {
 				x = 0;
@@ -726,8 +729,8 @@ public class SourceFormatter {
 				x = x + 10;
 			}
 		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			x = fileName.indexOf("portlets/");
+		else if (encodedFileName.endsWith("-portlet/build.xml")) {
+			x = encodedFileName.indexOf("portlets/");
 
 			if (x == -1) {
 				x = 0;
@@ -736,8 +739,8 @@ public class SourceFormatter {
 				x = x + 9;
 			}
 		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			x = fileName.indexOf("themes/");
+		else if (encodedFileName.endsWith("-theme/build.xml")) {
+			x = encodedFileName.indexOf("themes/");
 
 			if (x == -1) {
 				x = 0;
@@ -746,10 +749,10 @@ public class SourceFormatter {
 				x = x + 7;
 			}
 		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
+		else if (encodedFileName.endsWith("-web/build.xml") &&
+				 !encodedFileName.endsWith("/ext-web/build.xml")) {
 
-			x = fileName.indexOf("webs/");
+			x = encodedFileName.indexOf("webs/");
 
 			if (x == -1) {
 				x = 0;
@@ -762,7 +765,7 @@ public class SourceFormatter {
 			return content;
 		}
 
-		int y = fileName.indexOf("/", x);
+		int y = encodedFileName.indexOf(StringPool.SLASH, x);
 
 		String correctProjectElementText =
 			"<project name=\"" + fileName.substring(x, y) + "\"";
@@ -1665,8 +1668,8 @@ public class SourceFormatter {
 
 			String excluded = null;
 
-			String fileNameWithForwardSlashes = StringUtil.replace(
-				fileName, "\\", "/");
+			String encodedFileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
@@ -1913,11 +1916,11 @@ public class SourceFormatter {
 
 			if (_lineLengthExclusions != null) {
 				excluded = _lineLengthExclusions.getProperty(
-					fileNameWithForwardSlashes + StringPool.AT + lineCount);
+					encodedFileName + StringPool.AT + lineCount);
 
 				if (excluded == null) {
 					excluded = _lineLengthExclusions.getProperty(
-						fileNameWithForwardSlashes);
+						encodedFileName);
 				}
 			}
 
@@ -4486,8 +4489,8 @@ public class SourceFormatter {
 		String previousJavaTermName = StringPool.BLANK;
 		int previousJavaTermType = -1;
 
-		String fileNameWithForwardSlashes = StringUtil.replace(
-			fileName, "\\", "/");
+		String encodedFileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 		Iterator<JavaTerm> itr = javaTerms.iterator();
 
@@ -4503,18 +4506,16 @@ public class SourceFormatter {
 
 			if (_javaTermSortExclusions != null) {
 				excluded = _javaTermSortExclusions.getProperty(
-					fileNameWithForwardSlashes + StringPool.AT +
-						javaTermLineCount);
+					encodedFileName + StringPool.AT + javaTermLineCount);
 
 				if (excluded == null) {
 					excluded = _javaTermSortExclusions.getProperty(
-						fileNameWithForwardSlashes + StringPool.AT +
-							javaTermName);
+						encodedFileName + StringPool.AT + javaTermName);
 				}
 
 				if (excluded == null) {
 					excluded = _javaTermSortExclusions.getProperty(
-						fileNameWithForwardSlashes);
+						encodedFileName);
 				}
 			}
 

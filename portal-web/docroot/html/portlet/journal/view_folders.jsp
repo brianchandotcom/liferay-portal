@@ -174,7 +174,7 @@ else {
 				</c:if>
 
 				<%
-				List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class));
+				List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class));
 				%>
 
 				<c:if test="<%= !ddmStructures.isEmpty() %>">

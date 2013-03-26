@@ -3,6 +3,9 @@
 		<case locator-key="ADD_PAGE">
 			<execute function="Click#textClickAt" value1="Page" />
 		</case>
+		<case locator-key="ADD_PORTLET">
+			<execute function="Click#partialTextClickAt" value1="More" />
+		</case>
 		<case locator-key="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
@@ -10,6 +13,11 @@
 	<command name="MouseOver">
 		<case locator-key="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
+		</case>
+	</command>
+	<command name="Type">
+		<case locator-key="APPLICATION_SEARCH">
+			<execute function="Type#sendKeysApplicationSearch" />
 		</case>
 	</command>
 </definition>

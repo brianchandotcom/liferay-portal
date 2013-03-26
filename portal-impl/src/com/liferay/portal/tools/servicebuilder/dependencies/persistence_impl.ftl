@@ -1464,6 +1464,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 	</#list>
 
+	<#if entity.getBadNamedColumns()?size != 0>
+		@Override
+	    protected Set<String> getBadColumnNames() {
+			return _badColumnNames;
+		}
+	</#if>
+
 	<#if entity.isHierarchicalTree()>
 		/**
 		 * Rebuilds the ${entity.humanNames} tree for the scope using the modified pre-order tree traversal algorithm.
@@ -2085,6 +2092,20 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE))<#else>com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE</#if>;
 
 	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
+
+	<#if entity.getBadNamedColumns()?size != 0>
+		private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+
+			<#list entity.getBadNamedColumns() as column>
+				"${column.name}"
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+		});
+	</#if>
 
 	private static ${entity.name} _null${entity.name} = new ${entity.name}Impl() {
 

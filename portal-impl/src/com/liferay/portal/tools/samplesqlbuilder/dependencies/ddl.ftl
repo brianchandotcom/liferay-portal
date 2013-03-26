@@ -8,12 +8,12 @@
 	insert into DDMStructure values ('${ddmStructure.uuid}', ${ddmStructure.structureId}, ${ddmStructure.groupId}, ${ddmStructure.companyId}, ${ddmStructure.userId}, '${ddmStructure.userName}', '${dataFactory.getDateString(ddmStructure.createDate)}', '${dataFactory.getDateString(ddmStructure.modifiedDate)}', ${ddmStructure.parentStructureId}, ${ddmStructure.classNameId}, '${ddmStructure.structureKey}', '${ddmStructure.name}', '${ddmStructure.description}', '${ddmStructure.xsd}', '${ddmStructure.storageType}', ${ddmStructure.type});
 
 	<#list 1..maxDDLRecordSetCount as ddlRecordSetCount>
-		<#assign ddlLayoutName = "dynamic_data_list_display_" + ddlRecordSetCount>
-		<#assign ddlPortletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
+		<#assign layoutName = "dynamic_data_list_display_" + ddlRecordSetCount>
+		<#assign portletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
 
-		<#assign ddlDisplayLayout = dataFactory.newLayout(groupId, ddlLayoutName, "", ddlPortletId)>
+		<#assign layout = dataFactory.newLayout(groupId, layoutName, "", portletId)>
 
-		${sampleSQLBuilder.insertLayout(ddlDisplayLayout)}
+		${sampleSQLBuilder.insertLayout(layout)}
 
 		<#assign ddlRecordSet = dataFactory.newDDLRecordSet(ddmStructure.groupId, ddmStructure.companyId, ddmStructure.userId, ddmStructure.structureId)>
 
@@ -25,16 +25,18 @@
 
 				${sampleSQLBuilder.insertDDLRecord(ddlRecord, ddlRecordSet, ddlRecordCount)}
 
-				${writerDynamicDataListsCSV.write(ddlLayoutName + "," + ddlPortletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "\n")}
+				${writerDynamicDataListsCSV.write(layoutName + "," + portletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "\n")}
 			</#list>
 		</#if>
 
-		<#assign preferences = "<portlet-preferences><preference><name>recordSetId</name><value>" + ddlRecordSet.recordSetId +"</value></preference><preference><name>displayDDMTemplateId</name><value></value></preference><preference><name>editable</name><value>true</value></preference></portlet-preferences>">
+		<#assign portletPreferencesList = dataFactory.newPortletPreferences(layout.plid, portletId, ddlRecordSet)>
 
-		<#assign portletPreferences = dataFactory.newPortletPreferences(0, ddlDisplayLayout.plid, ddlPortletId, preferences)>
+		<#list portletPreferencesList as portletPreferences>
+			insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
 
-		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
+			<#assign primKey = dataFactory.getPermissionPrimaryKey(layout.plid, portletPreferences.portletId)>
 
-		${sampleSQLBuilder.insertResourcePermission("169", ddlDisplayLayout.plid + "_LAYOUT_" + ddlPortletId)}
+			${sampleSQLBuilder.insertResourcePermission(portletPreferences.portletId, primKey)}
+		</#list>
 	</#list>
 </#if>

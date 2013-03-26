@@ -43,5 +43,19 @@
 		<#assign varValue = element.attributeValue("value")>
 
 		commandScopeVariables.put("${varName}", "${varValue}");
+	<#elseif name == "while">
+		<#assign conditionElement = element.element("condition")>
+
+		while (
+			<#assign actionElement = conditionElement>
+
+			<#include "action_element.ftl">
+		) {
+			<#assign thenElement = element.element("then")>
+
+			<#assign blockElement = thenElement>
+
+			<#include "macro_block_element.ftl">
+		}
 	</#if>
 </#list>

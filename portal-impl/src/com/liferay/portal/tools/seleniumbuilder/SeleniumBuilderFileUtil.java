@@ -341,6 +341,12 @@ public class SeleniumBuilderFileUtil {
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
 			}
+			else if (elementName.equals("while")) {
+				validateWhileElement(
+					fileName, element, allowedCommandChildElementNames,
+					allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames);
+			}
 			else {
 				throwValidationException(1002, fileName, element);
 			}
@@ -568,7 +574,8 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				validateCommandElement(
-					fileName, element, new String[] {"execute", "if", "var"},
+					fileName, element,
+					new String[] {"execute", "if", "var", "while"},
 					new String[] {"action", "macro"}, new String[] {"var"});
 			}
 			else if (elementName.equals("var")) {
@@ -635,6 +642,38 @@ public class SeleniumBuilderFileUtil {
 
 		if (!elements.isEmpty()) {
 			throwValidationException(0, fileName);
+		}
+	}
+
+	protected void validateWhileElement(
+		String fileName, Element whileElement,
+		String[] allowedCommandChildElementNames,
+		String[] allowedExecuteAttributeNames,
+		String[] allowedExecuteChildElementNames) {
+
+		List<Element> elements = whileElement.elements();
+
+		if (elements.isEmpty()) {
+			throwValidationException(1001, fileName, whileElement);
+		}
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (elementName.equals("condition")) {
+				validateExecuteElement(
+					fileName, element, allowedExecuteAttributeNames,
+					".*(is|Is).+", allowedExecuteChildElementNames);
+			}
+			else if (elementName.equals("then")) {
+				validateCommandElement(
+					fileName, element, allowedCommandChildElementNames,
+					allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames);
+			}
+			else {
+				throwValidationException(0, fileName);
+			}
 		}
 	}
 

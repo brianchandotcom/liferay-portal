@@ -16,7 +16,6 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 

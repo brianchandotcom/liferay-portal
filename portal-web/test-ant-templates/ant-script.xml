@@ -25,10 +25,11 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+		<ant antfile="build-dist.xml" target="build-dist-glassfish" />
 
 		<antcall target="prepare-versioned-mysql">
 			${test.ant.script.file.properties}
+			<param name="app.server.bundled" value="true" />
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="$${lp.version}" />
 		</antcall>
@@ -43,6 +44,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
+			<property name="app.server.bundled" value="true" />
 			<property name="app.server.type" value="glassfish" />
 			<property name="bundled.dir.name" value="$${db-upgrade.bundled.glassfish.dir.name}" />
 			<property name="bundled.file.name" value="$${db-upgrade.bundled.glassfish.file.name}" />
@@ -61,7 +63,7 @@
 
 		<antcall target="clean-up-test-properties" />
 
-		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+		<ant antfile="build-dist.xml" target="build-dist-jboss" />
 
 		<antcall target="prepare-versioned-mysql">
 			${test.ant.script.file.properties}

@@ -55,27 +55,12 @@ public class EditEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Edited Test Event"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_8_editor' and @style='display: none;']");
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForVisible("//a[@class='cke_button_source cke_on']");
-		selenium.waitForVisible("//td[@id='cke_contents__8_editor']/textarea");
-		selenium.type("//td[@id='cke_contents__8_editor']/textarea",
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"This is a test event! This test event has been edited."));
-		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[.='Source']"));
-		selenium.clickAt("//span[.='Source']",
-			RuntimeVariables.replace("Source"));
-		selenium.waitForElementPresent(
-			"//textarea[@id='_8_editor' and @style='display: none;']");
-		selenium.waitForVisible("//td[@id='cke_contents__8_editor']/iframe");
-		selenium.selectFrame("//td[@id='cke_contents__8_editor']/iframe");
-		selenium.waitForText("//body",
-			"This is a test event! This test event has been edited.");
 		selenium.selectFrame("relative=top");
 		selenium.select("//select[@name='_8_startDateHour']",
 			RuntimeVariables.replace("5"));

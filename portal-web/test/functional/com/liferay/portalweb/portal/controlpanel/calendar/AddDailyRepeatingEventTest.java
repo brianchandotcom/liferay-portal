@@ -40,8 +40,8 @@ public class AddDailyRepeatingEventTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		assertTrue(selenium.isVisible(
+				"//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
@@ -61,11 +61,11 @@ public class AddDailyRepeatingEventTest extends BaseTestCase {
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace("End by"));
-		selenium.select("//select[@id='_8_endDateMonth']",
+		selenium.select("//select[@id='_8_enddatemonth']",
 			RuntimeVariables.replace("January"));
-		selenium.select("//select[@id='_8_endDateDay']",
+		selenium.select("//select[@id='_8_enddateday']",
 			RuntimeVariables.replace("1"));
-		selenium.select("//select[@id='_8_endDateYear']",
+		selenium.select("//select[@id='_8_enddateyear']",
 			RuntimeVariables.replace("2011"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

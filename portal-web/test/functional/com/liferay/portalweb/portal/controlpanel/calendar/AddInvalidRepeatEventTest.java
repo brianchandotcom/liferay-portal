@@ -46,11 +46,11 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_8_title']");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid Repeat Test Event"));
-		selenium.select("//select[@id='_8_startDateMonth']",
+		selenium.select("//select[@id='_8_startdatemonth']",
 			RuntimeVariables.replace("February"));
-		selenium.select("//select[@id='_8_startDateDay']",
+		selenium.select("//select[@id='_8_startdateday']",
 			RuntimeVariables.replace("25"));
-		selenium.select("//select[@id='_8_startDateYear']",
+		selenium.select("//select[@id='_8_startdateyear']",
 			RuntimeVariables.replace("2009"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
 			RuntimeVariables.replace("Repeat Daily"));
@@ -59,11 +59,11 @@ public class AddInvalidRepeatEventTest extends BaseTestCase {
 			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace("End by"));
-		selenium.select("//select[@id='_8_endDateMonth']",
+		selenium.select("//select[@id='_8_enddatemonth']",
 			RuntimeVariables.replace("February"));
-		selenium.select("//select[@id='_8_endDateDay']",
+		selenium.select("//select[@id='_8_enddateday']",
 			RuntimeVariables.replace("23"));
-		selenium.select("//select[@id='_8_endDateYear']",
+		selenium.select("//select[@id='_8_enddateyear']",
 			RuntimeVariables.replace("2009"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

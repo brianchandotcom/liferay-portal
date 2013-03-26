@@ -41,7 +41,7 @@ public class GetVacationEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Vacation"));
+			RuntimeVariables.replace("vacation"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
 			selenium.getText(
@@ -53,7 +53,7 @@ public class GetVacationEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Vacation"));
+			RuntimeVariables.replace("vacation"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
 			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[1]/a"));
@@ -64,7 +64,7 @@ public class GetVacationEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Vacation"));
+			RuntimeVariables.replace("vacation"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Off to Yosemite!"),
 			selenium.getText("//tr[contains(.,'Off to Yosemite!')]/td[1]/a"));

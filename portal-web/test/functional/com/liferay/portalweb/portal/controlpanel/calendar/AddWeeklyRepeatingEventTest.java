@@ -47,8 +47,7 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 				selenium.clickAt("link=Events",
 					RuntimeVariables.replace("Events"));
 				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText(
+				assertTrue(selenium.isVisible(
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
@@ -163,11 +162,11 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					RuntimeVariables.replace("Saturday Checkbox"));
 
 			case 8:
-				selenium.select("//select[@id='_8_endDateMonth']",
+				selenium.select("//select[@id='_8_enddatemonth']",
 					RuntimeVariables.replace("January"));
-				selenium.select("//select[@id='_8_endDateDay']",
+				selenium.select("//select[@id='_8_enddateday']",
 					RuntimeVariables.replace("1"));
-				selenium.select("//select[@id='_8_endDateYear']",
+				selenium.select("//select[@id='_8_enddateyear']",
 					RuntimeVariables.replace("2011"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));

@@ -35,6 +35,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -364,13 +365,18 @@ public class WebDriverToSeleniumBridge
 
 		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
 
-		Alert alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
-
 		try {
-			return alert.getText();
-		}
-		finally {
+			Alert alert = webDriverWait.until(
+				ExpectedConditions.alertIsPresent());
+
+			String confirmation = alert.getText();
+
 			alert.accept();
+
+			return confirmation;
+		}
+		catch (Exception e) {
+			throw new WebDriverException("Error: There were no confirmations");
 		}
 	}
 

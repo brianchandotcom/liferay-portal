@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.Calendar;
@@ -219,6 +218,10 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	public boolean isConfirmation(String pattern) {
+		return LiferaySeleniumHelper.isConfirmation(this, pattern);
+	}
+
 	public boolean isElementNotPresent(String locator) {
 		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
 	}
@@ -350,11 +353,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= timeout) {
-				BaseTestCase.fail("Timeout");
+				assertConfirmation(pattern);
 			}
 
 			try {
-				if (pattern.equals(getConfirmation())) {
+				if (isConfirmation(pattern)) {
 					break;
 				}
 			}

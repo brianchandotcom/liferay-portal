@@ -46,9 +46,10 @@ public class LiferaySeleniumHelper {
 
 		String confirmation = liferaySelenium.getConfirmation();
 
-		BaseTestCase.assertTrue(
-			confirmation.matches(
-				"^" + StringUtil.replace(pattern, "?", "[\\\\s\\\\S]") + "$"));
+		if (!pattern.equals(confirmation)) {
+			BaseTestCase.fail(
+				"Pattern " + pattern + " does not match " + confirmation);
+		}
 	}
 
 	public static void assertElementNotPresent(
@@ -248,6 +249,14 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static boolean isConfirmation(
+		LiferaySelenium liferaySelenium, String pattern) {
+
+		String confirmation = liferaySelenium.getConfirmation();
+
+		return pattern.equals(confirmation);
 	}
 
 	public static boolean isElementNotPresent(

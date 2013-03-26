@@ -8,6 +8,8 @@
 	<#assign pkColumn = entity.getPKList()?first>
 </#if>
 
+<#assign finderFieldSQLSuffix = "_SQL">
+
 package ${packagePath}.service.persistence;
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>

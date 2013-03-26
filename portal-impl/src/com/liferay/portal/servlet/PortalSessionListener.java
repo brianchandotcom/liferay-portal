@@ -47,9 +47,7 @@ public class PortalSessionListener implements HttpSessionListener {
 
 		HttpSession session = httpSessionEvent.getSession();
 
-		session.setAttribute(
-			PortalSessionActivationListener.class.getName(),
-			PortalSessionActivationListener.getInstance());
+		PortalSessionActivationListener.setInstance(session);
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			if (_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED) {

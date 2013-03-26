@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.concurrent.PortalCallable;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -948,10 +949,7 @@ public class MBUtil {
 					return null;
 				}
 
-				int messageCount =
-					MBMessageLocalServiceUtil.getCategoryMessagesCount(
-						category.getGroupId(), category.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
+				int messageCount = _getMessageCount(category);
 
 				category.setMessageCount(messageCount);
 
@@ -978,10 +976,7 @@ public class MBUtil {
 					return null;
 				}
 
-				int messageCount =
-					MBMessageLocalServiceUtil.getCategoryMessagesCount(
-						category.getGroupId(), category.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
+				int messageCount = _getMessageCount(category);
 
 				int threadCount =
 					MBThreadLocalServiceUtil.getCategoryThreadsCount(
@@ -1085,6 +1080,26 @@ public class MBUtil {
 		}
 
 		return null;
+	}
+
+	private static int _getMessageCount(MBCategory category)
+		throws SystemException {
+
+		int messageCount = MBMessageLocalServiceUtil.getCategoryMessagesCount(
+			category.getGroupId(), category.getCategoryId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_IN_TRASH);
+
+		List<MBThread> threads = MBThreadLocalServiceUtil.getGroupThreads(
+			category.getGroupId(), queryDefinition);
+
+		for (MBThread thread : threads) {
+			messageCount = messageCount - thread.getMessageCount();
+		}
+
+		return messageCount;
 	}
 
 	private static String _getParentMessageIdFromSubject(Message message)

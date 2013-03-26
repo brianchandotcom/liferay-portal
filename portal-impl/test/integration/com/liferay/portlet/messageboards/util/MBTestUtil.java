@@ -106,10 +106,15 @@ public class MBTestUtil {
 	public static MBMessage addMessage(long groupId, long categoryId)
 		throws Exception {
 
+		return addMessage(groupId, categoryId, 0, 0);
+	}
+
+	public static MBMessage addMessage(
+			long groupId, long categoryId, long threadId, long parentMessageId)
+		throws Exception {
+
 		long userId = TestPropsValues.getUserId();
 		String userName = ServiceTestUtil.randomString();
-		long threadId = 0;
-		long parentMessageId = 0;
 		String subject = ServiceTestUtil.randomString();
 		String body = ServiceTestUtil.randomString();
 		String format = MBMessageConstants.DEFAULT_FORMAT;

@@ -149,9 +149,9 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return MBThread.class;
 	}
 
-	protected int getMessageCount(long primaryKey) throws Exception {
+	protected int getMessageCount(long categoryId) throws Exception {
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			primaryKey);
+			categoryId);
 
 		return category.getMessageCount();
 	}

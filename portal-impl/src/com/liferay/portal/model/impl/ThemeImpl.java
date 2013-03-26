@@ -14,14 +14,12 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeHelper;
@@ -35,7 +33,6 @@ import com.liferay.portal.theme.ThemeCompanyId;
 import com.liferay.portal.theme.ThemeCompanyLimit;
 import com.liferay.portal.theme.ThemeGroupLimit;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
@@ -53,45 +50,6 @@ import javax.servlet.ServletContext;
  * @author Raymond Augé
  */
 public class ThemeImpl extends PluginBaseImpl implements Theme {
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	public static String getDefaultRegularThemeId() {
-		return PortalUtil.getJsSafePortletId(
-			PropsValues.DEFAULT_REGULAR_THEME_ID);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public static String getDefaultRegularThemeId(long companyId)
-		throws SystemException {
-
-		String defaultRegularThemeId = PrefsPropsUtil.getString(
-			companyId, PropsKeys.DEFAULT_REGULAR_THEME_ID);
-
-		return PortalUtil.getJsSafePortletId(defaultRegularThemeId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	public static String getDefaultWapThemeId() {
-		return PortalUtil.getJsSafePortletId(PropsValues.DEFAULT_WAP_THEME_ID);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public static String getDefaultWapThemeId(long companyId)
-		throws SystemException {
-
-		String defaultWapThemeId = PrefsPropsUtil.getString(
-			companyId, PropsKeys.DEFAULT_WAP_THEME_ID);
-
-		return PortalUtil.getJsSafePortletId(defaultWapThemeId);
-	}
 
 	public ThemeImpl() {
 	}

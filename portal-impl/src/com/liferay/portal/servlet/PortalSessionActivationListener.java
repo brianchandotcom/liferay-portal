@@ -14,8 +14,11 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.util.TransientValue;
+
 import java.io.Serializable;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionEvent;
 
@@ -27,6 +30,33 @@ public class PortalSessionActivationListener
 
 	public static PortalSessionActivationListener getInstance() {
 		return _instance;
+	}
+
+	public static PortalSessionActivationListener getInstance(
+		HttpSession session) {
+
+		TransientValue<PortalSessionActivationListener> transientValue =
+			(TransientValue<PortalSessionActivationListener>)
+				session.getAttribute(
+					PortalSessionActivationListener.class.getName());
+
+		PortalSessionActivationListener portalSessionActivationListener = null;
+
+		if (transientValue != null) {
+			portalSessionActivationListener = transientValue.getValue();
+		}
+
+		return portalSessionActivationListener;
+	}
+
+	public static void setInstance(HttpSession session) {
+
+		TransientValue<PortalSessionActivationListener> transientValue =
+			new TransientValue<PortalSessionActivationListener>(
+				PortalSessionActivationListener.getInstance());
+
+		session.setAttribute(
+			PortalSessionActivationListener.class.getName(), transientValue);
 	}
 
 	public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {

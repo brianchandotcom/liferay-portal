@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdHttpSession;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
-import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
@@ -48,10 +47,7 @@ public class PortalSessionListener implements HttpSessionListener {
 
 		HttpSession session = httpSessionEvent.getSession();
 
-		session.setAttribute(
-			PortalSessionActivationListener.class.getName(),
-			new TransientValue<PortalSessionActivationListener>(
-				PortalSessionActivationListener.getInstance()));
+		PortalSessionActivationListener.setInstance(session);
 
 		if (PropsValues.SESSION_MAX_ALLOWED > 0) {
 			if (_counter.incrementAndGet() > PropsValues.SESSION_MAX_ALLOWED) {

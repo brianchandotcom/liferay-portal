@@ -821,6 +821,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
 		}
 
+		// Preferences
+
+		portletPreferencesLocalService.deletePortletPreferences(
+			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			PortletKeys.PREFS_PLID_SHARED);
+
 		// Group
 
 		if (!group.isStagingGroup() && group.isOrganization() &&

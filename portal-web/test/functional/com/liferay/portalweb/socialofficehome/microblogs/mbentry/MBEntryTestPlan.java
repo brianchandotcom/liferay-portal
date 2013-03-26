@@ -18,6 +18,8 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontent150character.AddMicroblogsContent150CharacterTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontent151character.AddMicroblogsContent151CharacterTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentmentions.AddMicroblogsContentMentionsTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentmultipletag.AddMicroblogsContentMultipleTagTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentmultipletagmultiple.AddMicroblogsContentMultipleTagMultipleTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontenttagviewablebyeveryone.AddMicroblogsContentTagViewableByEveryoneTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyconnections.AddMicroblogsContentViewableByConnectionsTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontentviewablebyeveryone.AddMicroblogsContentViewableByEveryoneTests;
@@ -28,10 +30,14 @@ import com.liferay.portalweb.socialofficehome.microblogs.mbentry.editmicroblogsc
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.editmicroblogscontentviewablebyfollowers.EditMicroblogsContentViewableByFollowersTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousdeletereplymicroblogscontentprofile.SOUs_DeleteReplyMicroblogsContentProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousdeleterepostmicroblogscontent.SOUs_DeleteRepostMicroblogsContentTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymbcontentviewablebyconnectioncomment.SOUs_ReplyMBContentViewableByConnectionCommentTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymbcontentviewablebyfollowerscomment.SOUs_ReplyMBContentViewableByFollowersCommentTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymicroblogscontentcommenttag.SOUs_ReplyMicroblogsContentCommentTagTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymicroblogscontentprofile.SOUs_ReplyMicroblogsContentProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousreplymicroblogscontenttagprofile.SOUs_ReplyMicroblogsContentTagProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousrepostmicroblogscontentprofile.SOUs_RepostMicroblogsContentProfileTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousviewmbcontentmultiple.SOUs_ViewMBContentMultipleTests;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.sousviewmicroblogscontenttag.SOUs_ViewMicroblogsContentTagTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.viewmicroblogsmentions.ViewMicroblogsMentionsTests;
 import com.liferay.portalweb.socialofficehome.microblogs.mbentry.viewmicroblogstimeline.ViewMicroblogsTimelineTests;
 
@@ -49,6 +55,8 @@ public class MBEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddMicroblogsContent150CharacterTests.suite());
 		testSuite.addTest(AddMicroblogsContent151CharacterTests.suite());
 		testSuite.addTest(AddMicroblogsContentMentionsTests.suite());
+		testSuite.addTest(AddMicroblogsContentMultipleTagTests.suite());
+		testSuite.addTest(AddMicroblogsContentMultipleTagMultipleTests.suite());
 		testSuite.addTest(
 			AddMicroblogsContentTagViewableByEveryoneTests.suite());
 		testSuite.addTest(
@@ -64,10 +72,16 @@ public class MBEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			SOUs_DeleteReplyMicroblogsContentProfileTests.suite());
 		testSuite.addTest(SOUs_DeleteRepostMicroblogsContentTests.suite());
+		testSuite.addTest(
+			SOUs_ReplyMBContentViewableByConnectionCommentTests.suite());
+		testSuite.addTest(
+			SOUs_ReplyMBContentViewableByFollowersCommentTests.suite());
+		testSuite.addTest(SOUs_ReplyMicroblogsContentCommentTagTests.suite());
 		testSuite.addTest(SOUs_ReplyMicroblogsContentProfileTests.suite());
 		testSuite.addTest(SOUs_ReplyMicroblogsContentTagProfileTests.suite());
 		testSuite.addTest(SOUs_RepostMicroblogsContentProfileTests.suite());
 		testSuite.addTest(SOUs_ViewMBContentMultipleTests.suite());
+		testSuite.addTest(SOUs_ViewMicroblogsContentTagTests.suite());
 		testSuite.addTest(ViewMicroblogsMentionsTests.suite());
 		testSuite.addTest(ViewMicroblogsTimelineTests.suite());
 

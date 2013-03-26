@@ -110,6 +110,25 @@ public class DLFileEntryAssetRenderer
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String thumbnailSrc = DLUtil.getThumbnailSrc(
+			_fileEntry, null, themeDisplay);
+
+		if (Validator.isNotNull(thumbnailSrc)) {
+			return thumbnailSrc;
+		}
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/document.png";
+	}
+
 	public String getTitle(Locale locale) {
 		String title = null;
 

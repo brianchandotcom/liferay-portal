@@ -71,6 +71,18 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		return HtmlUtil.extractText(_event.getDescription());
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/calendar.png";
+	}
+
 	public String getTitle(Locale locale) {
 		return _event.getTitle();
 	}

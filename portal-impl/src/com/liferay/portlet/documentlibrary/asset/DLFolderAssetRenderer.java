@@ -88,6 +88,31 @@ public class DLFolderAssetRenderer
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int foldersCount = DLAppServiceUtil.getFoldersCount(
+			_folder.getRepositoryId(), _folder.getFolderId());
+		int entriesCount =
+			DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+				_folder.getRepositoryId(), _folder.getFolderId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		if ((entriesCount + foldersCount) > 0) {
+			return
+				themeDisplay.getPathThemeImages() +
+					"/file_system/large/folder_full_image.png";
+		}
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_empty.png";
+	}
+
 	public String getTitle(Locale locale) {
 		return TrashUtil.getOriginalTitle(_folder.getName());
 	}

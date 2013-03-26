@@ -103,6 +103,18 @@ public class WikiPageAssetRenderer
 		return content;
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/wiki_page.png";
+	}
+
 	public String getTitle(Locale locale) {
 		if (!_page.isInTrash()) {
 			return _page.getTitle();

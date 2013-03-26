@@ -25,6 +25,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -86,6 +87,29 @@ public class BookmarksFolderAssetRenderer
 
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
+	}
+
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(
+			_folder.getGroupId(), _folder.getFolderId());
+		int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(
+			_folder.getGroupId(), _folder.getFolderId());
+
+		if ((entriesCount + foldersCount) > 0) {
+			return
+				themeDisplay.getPathThemeImages() +
+					"/file_system/large/folder_full_bookmark.png";
+		}
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_empty.png";
 	}
 
 	public String getTitle(Locale locale) {

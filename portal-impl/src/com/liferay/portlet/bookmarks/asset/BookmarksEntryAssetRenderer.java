@@ -74,6 +74,18 @@ public class BookmarksEntryAssetRenderer
 		return HtmlUtil.stripHtml(_entry.getDescription());
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return
+			themeDisplay.getPathThemeImages() +
+				"/file_system/large/bookmark.png";
+	}
+
 	public String getTitle(Locale locale) {
 		return _entry.getName();
 	}

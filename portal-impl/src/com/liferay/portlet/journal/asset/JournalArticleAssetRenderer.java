@@ -115,6 +115,23 @@ public class JournalArticleAssetRenderer
 		return _article.getDescription(locale);
 	}
 
+	@Override
+	public String getThumbnailPath(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String thumbnailSrc = _article.getArticleImageURL(themeDisplay);
+
+		if (Validator.isNotNull(thumbnailSrc)) {
+			return thumbnailSrc;
+		}
+
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/article.png";
+	}
+
 	public String getTitle(Locale locale) {
 		return _article.getTitle(locale);
 	}

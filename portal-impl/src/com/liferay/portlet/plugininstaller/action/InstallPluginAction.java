@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.plugin.RepositoryReport;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -345,7 +346,19 @@ public class InstallPluginAction extends PortletAction {
 			actionRequest, "deploymentContext");
 
 		try {
-			HttpImpl httpImpl = (HttpImpl)HttpUtil.getHttp();
+			HttpImpl httpImpl = null;
+
+			Object httpObject = HttpUtil.getHttp();
+
+			if (httpObject instanceof DoPrivilegedBean) {
+				DoPrivilegedBean doPrivilegedBean =
+					(DoPrivilegedBean)httpObject;
+
+				httpImpl = (HttpImpl)doPrivilegedBean.getActualBean();
+			}
+			else {
+				httpImpl = (HttpImpl)httpObject;
+			}
 
 			HostConfiguration hostConfiguration = httpImpl.getHostConfiguration(
 				url);

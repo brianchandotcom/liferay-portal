@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portlet.softwarecatalog.DuplicateProductVersionDirectDownloadURLException;
@@ -220,7 +221,19 @@ public class SCProductVersionLocalServiceImpl
 		throws PortalException {
 
 		try {
-			HttpImpl httpImpl = (HttpImpl)HttpUtil.getHttp();
+			HttpImpl httpImpl = null;
+
+			Object httpObject = HttpUtil.getHttp();
+
+			if (httpObject instanceof DoPrivilegedBean) {
+				DoPrivilegedBean doPrivilegedBean =
+					(DoPrivilegedBean)httpObject;
+
+				httpImpl = (HttpImpl)doPrivilegedBean.getActualBean();
+			}
+			else {
+				httpImpl = (HttpImpl)httpObject;
+			}
 
 			HostConfiguration hostConfiguration = httpImpl.getHostConfiguration(
 				directDownloadURL);

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.EmptyElement;
 import com.liferay.portal.kernel.xml.Entity;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.Node;
@@ -314,6 +315,15 @@ public class SAXReaderImpl implements SAXReader {
 		return createXPath(xPathExpression, namespaceContextMap);
 	}
 
+	public Element emptyElement() {
+		if (_empty_element_instance == null) {
+			_empty_element_instance = new EmptyElementImpl(
+				DocumentHelper.createElement(EmptyElement.EMPTY_ELEMENT_NAME));
+		}
+
+		return _empty_element_instance;
+	}
+
 	public Document read(File file) throws DocumentException {
 		return read(file, false);
 	}
@@ -541,5 +551,7 @@ public class SAXReaderImpl implements SAXReader {
 	private static Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 
 	private static SAXReaderImpl _instance = new SAXReaderImpl();
+	private static Element _empty_element_instance;
+
 
 }

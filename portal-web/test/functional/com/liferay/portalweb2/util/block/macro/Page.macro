@@ -15,7 +15,7 @@
 	<command name="pgTearDown">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<if>
+		<while>
 			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
 				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
@@ -26,32 +26,6 @@
 
 				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
 			</then>
-		</if>
-
-		<if>
-			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
-			<then>
-				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
-
-				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
-
-				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-
-				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
-			</then>
-		</if>
-
-		<if>
-			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
-			<then>
-				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
-
-				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
-
-				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-
-				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
-			</then>
-		</if>
+		</while>
 	</command>
 </definition>

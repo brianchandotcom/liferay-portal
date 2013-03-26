@@ -139,7 +139,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#include "persistence_impl_finder_count.ftl">
 
-		<#include "persistence_impl_finder_field.ftl">
+		<#include "persistence_impl_finder_fields.ftl">
 	</#list>
 
 	/**

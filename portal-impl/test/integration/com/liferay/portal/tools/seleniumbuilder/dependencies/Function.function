@@ -1,0 +1,31 @@
+<definition>
+	<command name="name">
+		<execute function="function" />
+
+		<execute selenium="selenium" />
+
+		<if>
+			<condition function="IsFunction#isFunction" />
+		</if>
+
+		<if>
+			<condition function="isFunction" />
+			<then>
+				<execute function="function" />
+			</then>
+			<else>
+				<execute function="function" />
+			</else>
+		</if>
+
+		<if>
+			<condition selenium="isSelenium" />
+			<then>
+				<execute selenium="selenium" />
+			</then>
+			<else>
+				<execute selenium="selenium" />
+			</else>
+		</if>
+	</command>
+</definition>

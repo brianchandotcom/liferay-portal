@@ -274,6 +274,11 @@ public class SeleniumBuilderFileUtil {
 				"Error " + errorCode + ": Missing child elements at " +
 					fileName + ":" + element.attributeValue("line-number"));
 		}
+		else if (errorCode == 1002) {
+			throw new IllegalArgumentException(
+				"Error " + errorCode + ": Invalid child element at " +
+					fileName + ":" + element.attributeValue("line-number"));
+		}
 		else {
 			throw new IllegalArgumentException(
 				"Error " + errorCode + ": " + fileName);
@@ -330,7 +335,7 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, commandElement);
 			}
 		}
 	}
@@ -467,7 +472,7 @@ public class SeleniumBuilderFileUtil {
 					validateVarElement(fileName, element);
 				}
 				else {
-					throwValidationException(0, fileName);
+					throwValidationException(1002, fileName, executeElement);
 				}
 			}
 		}
@@ -499,7 +504,7 @@ public class SeleniumBuilderFileUtil {
 					new String[] {"function", "selenium"}, new String[0]);
 			}
 			else {
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, rootElement);
 			}
 		}
 	}
@@ -531,7 +536,7 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames);
 			}
 			else {
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, ifElement);
 			}
 		}
 	}
@@ -563,7 +568,7 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, rootElement);
 			}
 		}
 	}

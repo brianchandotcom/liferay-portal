@@ -1,5 +1,5 @@
 <definition>
-	<command name="Click">
+	<command name="click">
 		<case comparator="startsWith" locator-key="PAGE_DELETE">
 			<execute function="Click#textClick" value1="X" />
 		</case>
@@ -7,12 +7,12 @@
 			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
-	<command name="Confirm">
+	<command name="confirm">
 		<case locator-key="PAGE_CONFIRM">
 			<execute function="Confirm#waitForConfirmation" />
 		</case>
 	</command>
-	<command name="IsElementPresent">
+	<command name="isElementPresent">
 		<case comparator="startsWith" locator-key="PAGE_">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />
 		</case>

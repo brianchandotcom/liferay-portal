@@ -1,5 +1,5 @@
 <definition>
-	<command name="Click">
+	<command name="click">
 		<case locator-key="I_AGREE">
 			<execute function="Click#valueClickAtAndWait" value1="I Agree" />
 		</case>

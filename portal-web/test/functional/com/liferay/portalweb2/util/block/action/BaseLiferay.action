@@ -1,25 +1,25 @@
 <definition>
-	<command name="AssertChecked">
+	<command name="assertChecked">
 		<default>
 			<execute function="AssertChecked#assertChecked" />
 		</default>
 	</command>
-	<command name="AssertElementNotPresent">
+	<command name="assertElementNotPresent">
 		<default>
 			<execute function="AssertElementNotPresent#assertElementNotPresent" />
 		</default>
 	</command>
-	<command name="AssertElementPresent">
+	<command name="assertElementPresent">
 		<default>
 			<execute function="AssertElementPresent#assertVisible" />
 		</default>
 	</command>
-	<command name="AssertNotChecked">
+	<command name="assertNotChecked">
 		<default>
 			<execute function="AssertNotChecked#assertNotChecked" />
 		</default>
 	</command>
-	<command name="AssertTextEquals">
+	<command name="assertTextEquals">
 		<case comparator="contains" locator="/input">
 			<execute function="AssertTextEquals#assertValue" />
 		</case>
@@ -27,7 +27,7 @@
 			<execute function="AssertTextEquals#assertText" />
 		</default>
 	</command>
-	<command name="AssertTextNotEquals">
+	<command name="assertTextNotEquals">
 		<case comparator="contains" locator="/input">
 			<execute function="AssertTextNotEquals#assertNotValue" />
 		</case>
@@ -35,32 +35,32 @@
 			<execute function="AssertTextNotEquals#assertNotText" />
 		</default>
 	</command>
-	<command name="AssertTextNotPresent">
+	<command name="assertTextNotPresent">
 		<default>
 			<execute function="AssertTextNotPresent#assertTextNotPresent" />
 		</default>
 	</command>
-	<command name="AssertTextPresent">
+	<command name="assertTextPresent">
 		<default>
 			<execute function="AssertTextPresent#assertTextPresent" />
 		</default>
 	</command>
-	<command name="Click">
+	<command name="click">
 		<default>
 			<execute function="Click#clickAt" />
 		</default>
 	</command>
-	<command name="Close">
+	<command name="close">
 		<default>
 			<execute function="Close#close" />
 		</default>
 	</command>
-	<command name="Confirm">
+	<command name="confirm">
 		<default>
 			<execute function="Confirm#assertConfirmation" />
 		</default>
 	</command>
-	<command name="Copy">
+	<command name="copy">
 		<case comparator="contains" locator="/input">
 			<execute function="Copy#valueCopy" />
 		</case>
@@ -68,22 +68,22 @@
 			<execute function="Copy#textCopy" />
 		</default>
 	</command>
-	<command name="DragAndDrop">
+	<command name="dragAndDrop">
 		<default>
 			<execute function="DragAndDrop#dragAndDrop" />
 		</default>
 	</command>
-	<command name="IsElementNotPresent">
+	<command name="isElementNotPresent">
 		<default>
 			<execute function="IsElementNotPresent#isElementNotPresent" />
 		</default>
 	</command>
-	<command name="IsElementPresent">
+	<command name="isElementPresent">
 		<default>
 			<execute function="IsElementPresent#isElementPresent" />
 		</default>
 	</command>
-	<command name="IsTextEqual">
+	<command name="isTextEqual">
 		<case comparator="contains" locator="/input">
 			<execute function="IsTextEqual#isValue" />
 		</case>
@@ -91,7 +91,7 @@
 			<execute function="IsTextEqual#isText" />
 		</default>
 	</command>
-	<command name="IsTextNotEqual">
+	<command name="isTextNotEqual">
 		<case comparator="contains" locator="/input">
 			<execute function="IsTextNotEqual#isNotValue" />
 		</case>
@@ -99,32 +99,32 @@
 			<execute function="IsTextNotEqual#isNotText" />
 		</default>
 	</command>
-	<command name="MouseOver">
+	<command name="mouseOver">
 		<default>
 			<execute function="MouseOver#mouseOver" />
 		</default>
 	</command>
-	<command name="Open">
+	<command name="open">
 		<default>
 			<execute function="Open#open" />
 		</default>
 	</command>
-	<command name="Paste">
+	<command name="paste">
 		<default>
 			<execute function="Paste#paste" />
 		</default>
 	</command>
-	<command name="Select">
+	<command name="select">
 		<default>
 			<execute function="Select#select" />
 		</default>
 	</command>
-	<command name="SelectWindow">
+	<command name="selectWindow">
 		<default>
 			<execute function="SelectWindow#selectWindow" />
 		</default>
 	</command>
-	<command name="Type">
+	<command name="type">
 		<default>
 			<execute function="Type#type" />
 		</default>

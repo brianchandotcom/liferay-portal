@@ -1,5 +1,5 @@
 <definition>
-	<command name="Click">
+	<command name="click">
 		<case locator-key="ADD_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value="Add Blogs Entry" />
 		</case>

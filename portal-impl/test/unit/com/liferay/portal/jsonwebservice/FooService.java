@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
@@ -40,6 +41,25 @@ public class FooService {
 		List<Long> longs, int[] ints, Map<String, Long> map) {
 
 		return longs.size() + ints.length + map.size();
+	}
+
+	public static long[] dontFailOnError(
+		long[] ids, ServiceContext serviceContext) {
+
+		if (!serviceContext.isFailOnError()) {
+			return ids;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static void failOnError(long[] ids, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext.isFailOnError()) {
+			throw new PortalException();
+		}
 	}
 
 	public static FooData getFooData(int id) {

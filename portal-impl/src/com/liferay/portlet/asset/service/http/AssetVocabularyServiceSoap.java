@@ -138,10 +138,16 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
-	public static void deleteVocabularies(long[] vocabularyIds)
+	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] deleteVocabularies(
+		long[] vocabularyIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds);
+			java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> returnValue =
+				AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds,
+					serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetVocabularySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -91,10 +91,12 @@ public class AssetVocabularyServiceUtil {
 		return getService().addVocabulary(title, serviceContext);
 	}
 
-	public static void deleteVocabularies(long[] vocabularyIds)
+	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> deleteVocabularies(
+		long[] vocabularyIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteVocabularies(vocabularyIds);
+		return getService().deleteVocabularies(vocabularyIds, serviceContext);
 	}
 
 	public static void deleteVocabulary(long vocabularyId)

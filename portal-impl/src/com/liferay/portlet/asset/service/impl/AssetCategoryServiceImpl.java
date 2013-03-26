@@ -80,8 +80,22 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			getUserId(), title, vocabularyId, serviceContext);
 	}
 
-	public void deleteCategories(long[] categoryIds)
+	/**
+	 * Deletes the categories identified by categoryIds. If the
+	 * serviceContext is not failOnError, then the method will return a list
+	 * with the categories that could not be deleted.
+	 *
+	 * @param  categoryIds the primary key of the categories to be deleted
+	 * @param  serviceContext the service context to be applied.
+	 * @return the list of categories that could not be deleted when
+	 *         serviceContext.failOnError is false
+	 */
+	public List<AssetCategory> deleteCategories(
+			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		List<AssetCategory> failedCategories = new ArrayList<AssetCategory>(
+			categoryIds.length);
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
@@ -93,11 +107,26 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				continue;
 			}
 
-			AssetCategoryPermission.check(
-				permissionChecker, categoryId, ActionKeys.DELETE);
+			boolean hasPermission = true;
 
-			assetCategoryLocalService.deleteCategory(category);
+			if (serviceContext.isFailOnError()) {
+				AssetCategoryPermission.check(
+					permissionChecker, categoryId, ActionKeys.DELETE);
+			}
+			else {
+				hasPermission = AssetCategoryPermission.contains(
+					permissionChecker, categoryId, ActionKeys.DELETE);
+			}
+
+			if (hasPermission) {
+				assetCategoryLocalService.deleteCategory(category);
+			}
+			else {
+				failedCategories.add(category);
+			}
 		}
+
+		return failedCategories;
 	}
 
 	public void deleteCategory(long categoryId)

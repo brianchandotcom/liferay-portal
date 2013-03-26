@@ -33,6 +33,7 @@ import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -86,17 +87,53 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getUserId(), title, serviceContext);
 	}
 
-	public void deleteVocabularies(long[] vocabularyIds)
+	/**
+	 * Deletes the vocabularies identified by vocabularyIds. If the
+	 * serviceContext is not failOnError, then the method will return a list
+	 * with the vocabularies that could not be deleted.
+	 *
+	 * @param  vocabularyIds the primary key of the vocabularies to be deleted
+	 * @param  serviceContext the service context to be applied.
+	 * @return the list of vocabularies that could not be deleted when
+	 *         serviceContext.failOnError is false
+	 */
+	public List<AssetVocabulary> deleteVocabularies(
+			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		List<AssetVocabulary> failedVocabularies =
+			new ArrayList<AssetVocabulary>(vocabularyIds.length);
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		for (long vocabularyId : vocabularyIds) {
-			AssetVocabularyPermission.check(
-				permissionChecker, vocabularyId, ActionKeys.DELETE);
+			AssetVocabulary vocabulary =
+				assetVocabularyPersistence.fetchByPrimaryKey(vocabularyId);
 
-			assetVocabularyLocalService.deleteVocabulary(vocabularyId);
+			if (vocabulary == null) {
+				continue;
+			}
+
+			boolean hasPermission = true;
+
+			if (serviceContext.isFailOnError()) {
+				AssetVocabularyPermission.check(
+					permissionChecker, vocabulary, ActionKeys.DELETE);
+			}
+			else {
+				hasPermission = AssetVocabularyPermission.contains(
+					permissionChecker, vocabulary, ActionKeys.DELETE);
+			}
+
+			if (hasPermission) {
+				assetVocabularyLocalService.deleteVocabulary(vocabulary);
+			}
+			else {
+				failedVocabularies.add(vocabulary);
+			}
 		}
+
+		return failedVocabularies;
 	}
 
 	public void deleteVocabulary(long vocabularyId)

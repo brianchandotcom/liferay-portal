@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -37,7 +38,6 @@ import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.plugin.PluginUtil;
 import com.liferay.portal.service.base.ThemeLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeCompanyId;
@@ -149,10 +149,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			}
 
 			if (wapTheme) {
-				themeId = ThemeImpl.getDefaultWapThemeId(companyId);
+				themeId = ThemeFactoryUtil.getDefaultWapThemeId(companyId);
 			}
 			else {
-				themeId = ThemeImpl.getDefaultRegularThemeId(companyId);
+				themeId = ThemeFactoryUtil.getDefaultRegularThemeId(companyId);
 			}
 
 			theme = _themes.get(themeId);
@@ -560,7 +560,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			Theme theme = _themes.get(themeId);
 
 			if (theme == null) {
-				theme = new ThemeImpl(themeId);
+				theme = ThemeFactoryUtil.getTheme(themeId);
 			}
 
 			theme.setTimestamp(timestamp);

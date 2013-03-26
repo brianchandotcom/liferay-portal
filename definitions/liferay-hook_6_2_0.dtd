@@ -40,7 +40,9 @@ control.panel.entry.class.default
 convert.processes
 default.landing.page.path
 default.regular.color.scheme.id
+default.regular.theme.id
 default.wap.color.scheme.id
+default.wap.theme.id
 dl.file.entry.drafts.enabled
 dl.file.entry.processors
 dl.repository.impl

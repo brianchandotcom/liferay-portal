@@ -779,8 +779,6 @@ public class SourceFormatter {
 
 			_processErrorMessage(
 				fileName, fileName + " has an incorrect project name");
-
-			_fileUtil.write(basedir + fileName, content);
 		}
 
 		return content;
@@ -974,6 +972,9 @@ public class SourceFormatter {
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
 
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 			String content = _fileUtil.read(file);
 
 			String newContent = _trimContent(content, true);
@@ -1044,6 +1045,9 @@ public class SourceFormatter {
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
+
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 				_sourceFormatterHelper.printError(fileName, file);
 			}
@@ -1118,6 +1122,9 @@ public class SourceFormatter {
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
+
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 				_sourceFormatterHelper.printError(fileName, file);
 			}
@@ -1279,6 +1286,9 @@ public class SourceFormatter {
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
 
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 				_sourceFormatterHelper.printError(fileName, file);
 			}
 		}
@@ -1369,6 +1379,9 @@ public class SourceFormatter {
 
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 			String content = _fileUtil.read(file);
 
@@ -1665,9 +1678,6 @@ public class SourceFormatter {
 
 			String excluded = null;
 
-			String fileNameWithForwardSlashes = StringUtil.replace(
-				fileName, "\\", "/");
-
 			if (line.startsWith(StringPool.TAB + "private ") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
 				line.startsWith(StringPool.TAB + "public ")) {
@@ -1913,11 +1923,10 @@ public class SourceFormatter {
 
 			if (_lineLengthExclusions != null) {
 				excluded = _lineLengthExclusions.getProperty(
-					fileNameWithForwardSlashes + StringPool.AT + lineCount);
+					fileName + StringPool.AT + lineCount);
 
 				if (excluded == null) {
-					excluded = _lineLengthExclusions.getProperty(
-						fileNameWithForwardSlashes);
+					excluded = _lineLengthExclusions.getProperty(fileName);
 				}
 			}
 
@@ -2180,6 +2189,9 @@ public class SourceFormatter {
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
 
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 			String content = _fileUtil.read(file);
 
 			String newContent = _trimContent(content, false);
@@ -2262,10 +2274,10 @@ public class SourceFormatter {
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
 
-			String content = _fileUtil.read(file);
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			fileName = fileName.replace(
-				CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
+			String content = _fileUtil.read(file);
 
 			_jspContents.put(fileName, content);
 		}
@@ -2274,6 +2286,9 @@ public class SourceFormatter {
 
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 			String content = _fileUtil.read(file);
 
@@ -2694,6 +2709,9 @@ public class SourceFormatter {
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
 
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 			String content = _fileUtil.read(file);
 
 			_formatPortalProperties(fileName, content, portalPortalProperties);
@@ -2783,6 +2801,9 @@ public class SourceFormatter {
 				if ((newContent != null) && !content.equals(newContent)) {
 					_fileUtil.write(file, newContent);
 
+					fileName = StringUtil.replace(
+						fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 					_sourceFormatterHelper.printError(fileName, file);
 				}
 			}
@@ -2831,6 +2852,9 @@ public class SourceFormatter {
 
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 			String content = _fileUtil.read(file);
 
@@ -2972,6 +2996,9 @@ public class SourceFormatter {
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
+
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 				_sourceFormatterHelper.printError(fileName, file);
 			}
@@ -3208,6 +3235,9 @@ public class SourceFormatter {
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
 
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 				_sourceFormatterHelper.printError(fileName, file);
 			}
 		}
@@ -3322,6 +3352,9 @@ public class SourceFormatter {
 				String content = _fileUtil.read(basedir + fileName);
 
 				if (content.equals(webXML)) {
+					fileName = StringUtil.replace(
+						fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
 					_processErrorMessage(fileName, fileName);
 				}
 			}
@@ -4483,9 +4516,6 @@ public class SourceFormatter {
 		String previousJavaTermName = StringPool.BLANK;
 		int previousJavaTermType = -1;
 
-		String fileNameWithForwardSlashes = StringUtil.replace(
-			fileName, "\\", "/");
-
 		Iterator<JavaTerm> itr = javaTerms.iterator();
 
 		while (itr.hasNext()) {
@@ -4500,18 +4530,15 @@ public class SourceFormatter {
 
 			if (_javaTermSortExclusions != null) {
 				excluded = _javaTermSortExclusions.getProperty(
-					fileNameWithForwardSlashes + StringPool.AT +
-						javaTermLineCount);
+					fileName + StringPool.AT + javaTermLineCount);
 
 				if (excluded == null) {
 					excluded = _javaTermSortExclusions.getProperty(
-						fileNameWithForwardSlashes + StringPool.AT +
-							javaTermName);
+						fileName + StringPool.AT + javaTermName);
 				}
 
 				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(
-						fileNameWithForwardSlashes);
+					excluded = _javaTermSortExclusions.getProperty(fileName);
 				}
 			}
 

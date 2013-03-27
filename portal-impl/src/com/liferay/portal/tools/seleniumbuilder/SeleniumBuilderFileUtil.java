@@ -186,6 +186,10 @@ public class SeleniumBuilderFileUtil {
 		return content;
 	}
 
+	public String getObjectName(String name) {
+		return StringUtil.upperCaseFirstLetter(name);
+	}
+
 	public String getPackageName(String fileName) {
 		String packagePath = getPackagePath(fileName);
 

@@ -1,56 +1,56 @@
 <definition>
 	<command name="pgAdd">
-		<execute action="Home#Open" locator-key1="HOME_URL" />
+		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<execute action="Dockbar#MouseOver" locator-key1="ADD" />
+		<execute action="Dockbar#mouseOver" locator-key1="ADD" />
 
-		<execute action="Dockbar#Click" locator-key1="ADD_PAGE" />
+		<execute action="Dockbar#click" locator-key1="ADD_PAGE" />
 
-		<execute action="Home#Type" locator-key1="PAGE_NAME" value1="${pageName}" />
+		<execute action="Home#type" locator-key1="PAGE_NAME" value1="${pageName}" />
 
-		<execute action="Home#Click" locator-key1="PAGE_SAVE" />
+		<execute action="Home#click" locator-key1="PAGE_SAVE" />
 
-		<execute action="Home#Click" locator1="link=${pageName}" />
+		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 	<command name="pgTearDown">
-		<execute action="Home#Open" locator-key1="HOME_URL" />
+		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<if>
-			<condition action="Home#IsElementPresent" locator-key1="PAGE_2" />
+			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
-				<execute action="Home#MouseOver" locator-key1="PAGE_2" />
+				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
 
-				<execute action="Home#Click" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
 
-				<execute action="Home#Confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
 
-				<execute action="Home#AssertElementNotPresent" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="Home#IsElementPresent" locator-key1="PAGE_2" />
+			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
-				<execute action="Home#MouseOver" locator-key1="PAGE_2" />
+				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
 
-				<execute action="Home#Click" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
 
-				<execute action="Home#Confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
 
-				<execute action="Home#AssertElementNotPresent" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="Home#IsElementPresent" locator-key1="PAGE_2" />
+			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
-				<execute action="Home#MouseOver" locator-key1="PAGE_2" />
+				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
 
-				<execute action="Home#Click" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
 
-				<execute action="Home#Confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
 
-				<execute action="Home#AssertElementNotPresent" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
 			</then>
 		</if>
 	</command>

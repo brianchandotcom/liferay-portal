@@ -1,5 +1,5 @@
 <definition>
-	<command name="Click">
+	<command name="click">
 		<case locator-key="ADD_PAGE">
 			<execute function="Click#textClickAt" value1="Page" />
 		</case>
@@ -10,12 +10,12 @@
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
 	</command>
-	<command name="MouseOver">
+	<command name="mouseOver">
 		<case locator-key="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
 		</case>
 	</command>
-	<command name="Type">
+	<command name="type">
 		<case locator-key="APPLICATION_SEARCH">
 			<execute function="Type#sendKeysApplicationSearch" />
 		</case>

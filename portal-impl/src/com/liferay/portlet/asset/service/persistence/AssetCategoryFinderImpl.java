@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -54,17 +53,11 @@ public class AssetCategoryFinderImpl
 	public static final String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
 
-	public static final String FIND_BY_ENTRY_ID =
-		AssetCategoryFinder.class.getName() + ".findByEntryId";
-
 	public static final String FIND_BY_G_L =
 		AssetCategoryFinder.class.getName() + ".findByG_L";
 
 	public static final String FIND_BY_G_N =
 		AssetCategoryFinder.class.getName() + ".findByG_N";
-
-	public static final String FIND_BY_C_C =
-		AssetCategoryFinder.class.getName() + ".findByC_C";
 
 	public static final String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
@@ -150,35 +143,6 @@ public class AssetCategoryFinderImpl
 			}
 
 			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<AssetCategory> findByEntryId(long entryId)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_ENTRY_ID);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("AssetCategory", AssetCategoryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(entryId);
-
-			return (List<AssetCategory>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -287,41 +251,6 @@ public class AssetCategoryFinderImpl
 		sb.append("}");
 
 		throw new NoSuchCategoryException(sb.toString());
-	}
-
-	public List<AssetCategory> findByC_C(long classNameId, long classPK)
-		throws SystemException {
-
-		AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
-
-		if (entry == null) {
-			return Collections.emptyList();
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_C);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("AssetCategory", AssetCategoryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(entry.getEntryId());
-
-			return (List<AssetCategory>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	public List<AssetCategory> findByG_N_P(

@@ -29,13 +29,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.asset.NoSuchTagException;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,14 +53,8 @@ public class AssetTagFinderImpl
 	public static final String COUNT_BY_G_N_P =
 		AssetTagFinder.class.getName() + ".countByG_N_P";
 
-	public static final String FIND_BY_ENTRY_ID =
-		AssetTagFinder.class.getName() + ".findByEntryId";
-
 	public static final String FIND_BY_G_N =
 		AssetTagFinder.class.getName() + ".findByG_N";
-
-	public static final String FIND_BY_C_C =
-		AssetTagFinder.class.getName() + ".findByC_C";
 
 	public static final String FIND_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".findByG_C_N";
@@ -127,72 +119,10 @@ public class AssetTagFinderImpl
 			groupIds, name, tagProperties, start, end, obc, true);
 	}
 
-	public List<AssetTag> findByEntryId(long entryId) throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_ENTRY_ID);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("AssetTag", AssetTagImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(entryId);
-
-			return (List<AssetTag>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	public AssetTag findByG_N(long groupId, String name)
 		throws NoSuchTagException, SystemException {
 
 		return doFindByG_N(groupId, name, false);
-	}
-
-	public List<AssetTag> findByC_C(long classNameId, long classPK)
-		throws SystemException {
-
-		AssetEntry entry = AssetEntryUtil.fetchByC_C(classNameId, classPK);
-
-		if (entry == null) {
-			return Collections.emptyList();
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_C);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("AssetTag", AssetTagImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(entry.getEntryId());
-
-			return (List<AssetTag>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	public List<AssetTag> findByG_C_N(

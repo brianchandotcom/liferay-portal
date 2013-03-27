@@ -36,18 +36,6 @@
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByEntryId">
-		<![CDATA[
-			SELECT
-				{AssetCategory.*}
-			FROM
-				AssetCategory
-			INNER JOIN
-				AssetEntries_AssetCategories ON
-					(AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId) AND
-					(AssetEntries_AssetCategories.entryId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_L">
 		<![CDATA[
 			SELECT
@@ -68,19 +56,6 @@
 			WHERE
 				(AssetCategory.groupId = ?) AND
 				(lower(AssetCategory.name) = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByC_C">
-		<![CDATA[
-			SELECT
-				{AssetCategory.*}
-			FROM
-				AssetCategory
-			INNER JOIN
-				AssetEntries_AssetCategories ON
-					(AssetEntries_AssetCategories.categoryId = AssetCategory.categoryId)
-			WHERE
-				(AssetEntries_AssetCategories.entryId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N_P">
@@ -237,18 +212,6 @@
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByEntryId">
-		<![CDATA[
-			SELECT
-				{AssetTag.*}
-			FROM
-				AssetTag
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId) AND
-					(AssetEntries_AssetTags.entryId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">
 		<![CDATA[
 			SELECT
@@ -258,19 +221,6 @@
 			WHERE
 				(AssetTag.groupId = ?) AND
 				(lower(AssetTag.name) = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByC_C">
-		<![CDATA[
-			SELECT
-				{AssetTag.*}
-			FROM
-				AssetTag
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.tagId = AssetTag.tagId)
-			WHERE
-				(AssetEntries_AssetTags.entryId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_C_N">

@@ -26,10 +26,6 @@ public interface AssetCategoryFinder {
 		java.lang.String[] categoryProperties)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByEntryId(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public java.util.List<java.lang.Long> findByG_L(
 		java.lang.Long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -38,10 +34,6 @@ public interface AssetCategoryFinder {
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException;
-
-	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_N_P(
 		long groupId, java.lang.String name,

@@ -40,6 +40,7 @@ import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -229,7 +230,14 @@ public class AssetCategoryLocalServiceImpl
 	public List<AssetCategory> getCategories(long classNameId, long classPK)
 		throws SystemException {
 
-		return assetCategoryFinder.findByC_C(classNameId, classPK);
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (entry == null) {
+			return Collections.emptyList();
+		}
+
+		return assetEntryPersistence.getAssetCategories(entry.getEntryId());
 	}
 
 	public List<AssetCategory> getCategories(String className, long classPK)
@@ -299,7 +307,7 @@ public class AssetCategoryLocalServiceImpl
 	public List<AssetCategory> getEntryCategories(long entryId)
 		throws SystemException {
 
-		return assetCategoryFinder.findByEntryId(entryId);
+		return assetEntryPersistence.getAssetCategories(entryId);
 	}
 
 	public List<Long> getSubcategoryIds(long parentCategoryId)

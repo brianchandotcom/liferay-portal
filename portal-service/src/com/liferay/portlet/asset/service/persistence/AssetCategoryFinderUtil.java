@@ -33,12 +33,6 @@ public class AssetCategoryFinderUtil {
 		return getFinder().countByG_N_P(groupId, name, categoryProperties);
 	}
 
-	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByEntryId(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByEntryId(entryId);
-	}
-
 	public static java.util.List<java.lang.Long> findByG_L(
 		java.lang.Long parentCategoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -50,12 +44,6 @@ public class AssetCategoryFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException {
 		return getFinder().findByG_N(groupId, name);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByC_C(classNameId, classPK);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_N_P(

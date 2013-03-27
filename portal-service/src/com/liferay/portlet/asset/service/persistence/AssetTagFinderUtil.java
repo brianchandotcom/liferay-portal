@@ -76,23 +76,11 @@ public class AssetTagFinderUtil {
 			end, obc);
 	}
 
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByEntryId(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByEntryId(entryId);
-	}
-
 	public static com.liferay.portlet.asset.model.AssetTag findByG_N(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchTagException {
 		return getFinder().findByG_N(groupId, name);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByC_C(classNameId, classPK);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_C_N(

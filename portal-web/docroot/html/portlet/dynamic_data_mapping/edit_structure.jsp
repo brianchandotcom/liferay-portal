@@ -232,25 +232,25 @@ if (Validator.isNotNull(script)) {
 			function(event){
 				document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = event.ddmstructureid;
 
-				var nameEl = document.getElementById("<portlet:namespace />parentStructureName");
+				var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
 
-				nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=" + event.ddmstructureid;
-				nameEl.innerHTML = event.name + "&nbsp;";
+				nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=' + event.ddmstructureid;
+				nameEl.innerHTML = event.name + '&nbsp;';
 
-				document.getElementById("<portlet:namespace />removeParentStructureButton").disabled = false;
+				document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = false;
 			}
 		);
 	}
 
 	function <portlet:namespace />removeParentStructure() {
-		document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = "";
+		document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = '';
 
-		var nameEl = document.getElementById("<portlet:namespace />parentStructureName");
+		var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
 
-		nameEl.href = "#";
-		nameEl.innerHTML = "";
+		nameEl.href = '#';
+		nameEl.innerHTML = '';
 
-		document.getElementById("<portlet:namespace />removeParentStructureButton").disabled = true;
+		document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = true;
 	}
 </aui:script>
 

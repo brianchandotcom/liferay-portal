@@ -65,16 +65,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 			<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= HtmlUtil.escape(parentCategoryName) %></aui:a>
 
-			<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/message_boards/select_category" />
-				<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
-			</portlet:renderURL>
-
-			<%
-			String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + HtmlUtil.escape(selectCategoryURL) + "','category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-			%>
-
-			<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+			<aui:button name="selectCategoryButton" value="select" />
 
 			<aui:button id="removeCategoryButton" onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 
@@ -99,15 +90,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		nameEl.innerHTML = "";
 	}
 
-	function <portlet:namespace />selectCategory(parentCategoryId, parentCategoryName) {
-		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
-
-		var nameEl = document.getElementById("<portlet:namespace />parentCategoryName");
-
-		nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + parentCategoryId;
-		nameEl.innerHTML = parentCategoryName + "&nbsp;";
-	}
-
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
@@ -120,3 +102,34 @@ if (category != null) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move"), currentURL);
 }
 %>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />selectCategoryButton').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						stack: true,
+						width: 680
+					},
+					id: '<portlet:namespace />selectCategory',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "category") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /></portlet:renderURL>'
+				},
+				function(event){
+					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
+
+					var nameEl = document.getElementById("<portlet:namespace />parentCategoryName");
+
+					nameEl.innerHTML = event.name + "&nbsp;";
+
+					nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + event.categoryid;
+				}
+			);
+		}
+	);
+</aui:script>

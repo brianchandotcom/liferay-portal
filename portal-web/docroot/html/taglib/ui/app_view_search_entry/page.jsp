@@ -100,7 +100,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 							/>
 						</span>
 
-						<span cssClass="body">
+						<span class="body">
 							<%= StringUtil.highlight((Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getTitle(), queryTerms) %>
 						</span>
 				</aui:a>
@@ -133,7 +133,7 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 						/>
 					</span>
 
-					<span cssClass="body">
+					<span class="body">
 						<%= StringUtil.highlight(mbMessage.getSubject(), queryTerms) %>
 					</span>
 				</aui:a>

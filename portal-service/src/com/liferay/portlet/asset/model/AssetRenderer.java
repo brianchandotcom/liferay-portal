@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -50,9 +52,14 @@ public interface AssetRenderer {
 
 	public String getDiscussionPath();
 
+	public Date getDisplayDate();
+
 	public long getGroupId();
 
 	public String getIconPath(PortletRequest portletRequest);
+
+	public String getImagePreviewURL(PortletRequest portletRequest)
+		throws Exception;
 
 	public String getSearchSummary(Locale locale);
 
@@ -117,6 +124,10 @@ public interface AssetRenderer {
 	public boolean isPreviewInContext();
 
 	public boolean isPrintable();
+
+	public String preview(
+			PortletRequest portletRequest, PortletResponse PortletResponse)
+		throws Exception;
 
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,

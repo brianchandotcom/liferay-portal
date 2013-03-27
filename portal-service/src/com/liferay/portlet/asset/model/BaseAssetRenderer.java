@@ -36,11 +36,13 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -76,11 +78,21 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return null;
 	}
 
+	public Date getDisplayDate() {
+		return null;
+	}
+
 	public String getIconPath(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return getIconPath(themeDisplay);
+	}
+
+	public String getImagePreviewURL(PortletRequest portletRequest)
+		throws Exception {
+
+		return getThumbnailPath(portletRequest);
 	}
 
 	public String getSearchSummary(Locale locale) {
@@ -229,6 +241,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	public boolean isPrintable() {
 		return false;
+	}
+
+	public String preview(
+			PortletRequest portletRequest, PortletResponse PortletResponse)
+		throws Exception {
+
+		return "/html/portlet/asset_publisher/display/preview.jsp";
 	}
 
 	public String renderActions(

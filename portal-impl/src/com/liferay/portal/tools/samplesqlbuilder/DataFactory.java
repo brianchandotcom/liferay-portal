@@ -820,16 +820,18 @@ public class DataFactory {
 	}
 
 	public DLFileEntryMetadata newDLFileEntryMetadata(
-		long ddmStorageId, long ddmStructureId, long fileEntryId,
-		long fileVersionId) {
+		DDMStorageLink ddmStorageLink, DLFileVersion dlFileVersion) {
 
 		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
 
+		dlFileEntryMetadata.setUuid(SequentialUUID.generate());
 		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
-		dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
-		dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
-		dlFileEntryMetadata.setFileEntryId(fileEntryId);
-		dlFileEntryMetadata.setFileVersionId(fileVersionId);
+		dlFileEntryMetadata.setDDMStorageId(ddmStorageLink.getPrimaryKey());
+		dlFileEntryMetadata.setDDMStructureId(ddmStorageLink.getStructureId());
+		dlFileEntryMetadata.setFileEntryTypeId(
+			dlFileVersion.getFileEntryTypeId());
+		dlFileEntryMetadata.setFileEntryId(dlFileVersion.getFileEntryId());
+		dlFileEntryMetadata.setFileVersionId(dlFileVersion.getFileVersionId());
 
 		return dlFileEntryMetadata;
 	}
@@ -837,16 +839,22 @@ public class DataFactory {
 	public DLFileVersion newDLFileVersion(DLFileEntry dlFileEntry) {
 		DLFileVersion dlFileVersion = new DLFileVersionImpl();
 
+		dlFileVersion.setUuid(SequentialUUID.generate());
 		dlFileVersion.setFileVersionId(_counter.get());
 		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
-		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
-		dlFileVersion.setUserId(dlFileEntry.getUserId());
+		dlFileVersion.setCompanyId(_companyId);
+		dlFileVersion.setUserId(_sampleUserId);
+		dlFileVersion.setUserName(_SAMPLE_USER_NAME);
+		dlFileVersion.setCreateDate(nextFutureDate());
+		dlFileVersion.setModifiedDate(nextFutureDate());
 		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
+		dlFileVersion.setFolderId(dlFileEntry.getFolderId());
 		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
 		dlFileVersion.setExtension(dlFileEntry.getExtension());
 		dlFileVersion.setMimeType(dlFileEntry.getMimeType());
 		dlFileVersion.setTitle(dlFileEntry.getTitle());
-		dlFileVersion.setDescription(dlFileEntry.getDescription());
+		dlFileVersion.setFileEntryTypeId(dlFileEntry.getFileEntryTypeId());
+		dlFileVersion.setVersion(dlFileEntry.getVersion());
 		dlFileVersion.setSize(dlFileEntry.getSize());
 
 		return dlFileVersion;
@@ -874,27 +882,18 @@ public class DataFactory {
 		return dlFolder;
 	}
 
-	public DLSync newDLSync(
-		long companyId, long fileId, long repositoryId, long parentFolderId,
-		boolean typeFolder) {
+	public DLSync newDLSync(DLFileEntry dlFileEntry) {
+		return newDLSync(
+			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
+			dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId(),
+			dlFileEntry.getName(), DLSyncConstants.TYPE_FILE);
+	}
 
-		DLSync dlSync = new DLSyncImpl();
-
-		dlSync.setSyncId(_counter.get());
-		dlSync.setCompanyId(companyId);
-		dlSync.setFileId(fileId);
-		dlSync.setRepositoryId(repositoryId);
-		dlSync.setParentFolderId(parentFolderId);
-		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
-
-		if (typeFolder) {
-			dlSync.setType(DLSyncConstants.TYPE_FOLDER);
-		}
-		else {
-			dlSync.setType(DLSyncConstants.TYPE_FILE);
-		}
-
-		return dlSync;
+	public DLSync newDLSync(DLFolder dLFolder) {
+		return newDLSync(
+			dLFolder.getFolderId(), dLFolder.getUuid(),
+			dLFolder.getRepositoryId(), dLFolder.getParentFolderId(),
+			dLFolder.getName(), DLSyncConstants.TYPE_FOLDER);
 	}
 
 	public Group newGroup(User user) throws Exception {
@@ -1453,6 +1452,27 @@ public class DataFactory {
 		ddmStructureLink.setStructureId(structureId);
 
 		return ddmStructureLink;
+	}
+
+	protected DLSync newDLSync(
+		long fileId, String fileUuid, long repositoryId, long parentFolderId,
+		String name, String type) {
+
+		DLSync dlSync = new DLSyncImpl();
+
+		dlSync.setSyncId(_counter.get());
+		dlSync.setCompanyId(_companyId);
+		dlSync.setCreateDate(nextFutureDate().getTime());
+		dlSync.setModifiedDate(nextFutureDate().getTime());
+		dlSync.setFileId(fileId);
+		dlSync.setFileUuid(fileUuid);
+		dlSync.setRepositoryId(repositoryId);
+		dlSync.setParentFolderId(parentFolderId);
+		dlSync.setName(name);
+		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
+		dlSync.setType(type);
+
+		return dlSync;
 	}
 
 	protected Group newGroup(

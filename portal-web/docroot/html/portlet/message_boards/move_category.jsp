@@ -127,7 +127,7 @@ if (category != null) {
 
 					nameEl.innerHTML = event.name + "&nbsp;";
 
-					nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + event.categoryid;
+					nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + event.categoryid;
 				}
 			);
 		}

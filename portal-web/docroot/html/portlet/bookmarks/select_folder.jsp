@@ -126,7 +126,7 @@ if (folder != null) {
 			data.put("name", HtmlUtil.escape(folderName));
 			%>
 
-			<aui:button cssClass="selector-button"  data="<%= data %>" value="choose-this-folder" />
+			<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
 		</aui:button-row>
 
 		<liferay-ui:search-iterator />

@@ -120,11 +120,6 @@ MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move-thread"), currentURL);
 %>
 
-<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/message_boards/select_category" />
-	<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" />
-</portlet:renderURL>
-
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />selectCategoryButton').on(
 		'click',
@@ -140,15 +135,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "mov
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "category") %>',
-					uri: '<%= selectCategoryURL %>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event){
 					document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = event.categoryid;
 
 					var nameEl = document.getElementById("<portlet:namespace />categoryName");
 
+					nameEl.innerHTML = event.name + '&nbsp;';
+
 					nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + event.categoryid;
-					nameEl.innerHTML = event.name + "&nbsp;";
 				}
 			);
 		}

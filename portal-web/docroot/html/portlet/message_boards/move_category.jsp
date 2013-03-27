@@ -103,11 +103,6 @@ if (category != null) {
 }
 %>
 
-<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/message_boards/select_category" />
-	<portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" />
-</portlet:renderURL>
-
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />selectCategoryButton').on(
 		'click',
@@ -123,15 +118,16 @@ if (category != null) {
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "category") %>',
-					uri: '<%= selectCategoryURL %>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event){
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
 
 					var nameEl = document.getElementById("<portlet:namespace />parentCategoryName");
 
-					nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + event.categoryid;
 					nameEl.innerHTML = event.name + "&nbsp;";
+
+					nameEl.href = "<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=" + event.categoryid;
 				}
 			);
 		}

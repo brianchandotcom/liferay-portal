@@ -17,7 +17,9 @@
 <%
 String cssClasses = StringPool.BLANK;
 
-for (String curCssClass : StringUtil.split(cssClass, CharPool.SPACE)) {
-	cssClasses += curCssClass + "-content ";
+if (Validator.isNotNull(cssClass)) {
+	for (String curCssClass : StringUtil.split(cssClass, CharPool.SPACE)) {
+		cssClasses += curCssClass + "-content ";
+	}
 }
 %>

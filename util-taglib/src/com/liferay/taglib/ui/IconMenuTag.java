@@ -273,7 +273,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("lfr-menu-list lfr-menu-expanded align-");
 					jspWriter.write(_align);
 					jspWriter.write(" ");
-					jspWriter.print(_cssClass);
+					jspWriter.write(_cssClass);
 					jspWriter.write("\" id=\"");
 					jspWriter.write(_id);
 					jspWriter.write("\">");
@@ -295,10 +295,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write(" max-display-items-");
 					jspWriter.write(String.valueOf(_maxDisplayItems));
 					jspWriter.write(" ");
-
-					if (Validator.isNotNull(_cssClass)) {
-						jspWriter.print(_cssClass);
-					}
+					jspWriter.write(_cssClass);
 
 					if (_disabled) {
 						jspWriter.write(" disabled");

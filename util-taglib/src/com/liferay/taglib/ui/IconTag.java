@@ -119,7 +119,7 @@ public class IconTag extends IncludeTag {
 		_imageHover = null;
 		_label = false;
 		_lang = null;
-		_linkCssClass = null;
+		_linkCssClass = StringPool.BLANK;
 		_localizeMessage = true;
 		_message = null;
 		_method = null;
@@ -215,7 +215,7 @@ public class IconTag extends IncludeTag {
 	private String _imageHover;
 	private boolean _label;
 	private String _lang;
-	private String _linkCssClass;
+	private String _linkCssClass = StringPool.BLANK;
 	private boolean _localizeMessage = true;
 	private String _message;
 	private String _method;

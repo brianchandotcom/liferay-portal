@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/ui/icon/init.jsp" %>
 
 <%
-String cssClassHtml = "class=\"".concat(cssClass).concat("\"");
-
 if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImage) {
 	SpriteImage spriteImage = null;
 	String spriteFileName = null;
@@ -147,7 +145,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 <c:choose>
 	<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
-		<li <%= cssClassHtml %>>
+		<li class="<%= cssClass %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
@@ -161,7 +159,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</li>
 	</c:when>
 	<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
-		<li <%= cssClassHtml %>>
+		<li class="<%= cssClass %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
@@ -175,7 +173,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</li>
 	</c:when>
 	<c:otherwise>
-		<span <%= cssClassHtml %> >
+		<span class="<%= cssClass %>" >
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">

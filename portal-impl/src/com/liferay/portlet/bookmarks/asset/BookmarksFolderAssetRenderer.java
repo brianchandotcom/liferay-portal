@@ -29,6 +29,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -56,6 +57,11 @@ public class BookmarksFolderAssetRenderer
 
 	public long getClassPK() {
 		return _folder.getFolderId();
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _folder.getModifiedDate();
 	}
 
 	public long getGroupId() {

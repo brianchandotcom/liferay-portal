@@ -32,6 +32,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -58,6 +59,11 @@ public class MBMessageAssetRenderer
 
 	public long getClassPK() {
 		return _message.getMessageId();
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _message.getModifiedDate();
 	}
 
 	public long getGroupId() {

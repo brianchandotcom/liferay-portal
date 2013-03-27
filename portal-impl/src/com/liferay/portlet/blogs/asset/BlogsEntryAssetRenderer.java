@@ -29,6 +29,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -66,6 +67,11 @@ public class BlogsEntryAssetRenderer
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _entry.getModifiedDate();
 	}
 
 	public long getGroupId() {

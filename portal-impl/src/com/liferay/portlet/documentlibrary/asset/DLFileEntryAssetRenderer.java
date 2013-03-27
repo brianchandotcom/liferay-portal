@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -88,6 +89,11 @@ public class DLFileEntryAssetRenderer
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _fileEntry.getModifiedDate();
 	}
 
 	public long getGroupId() {

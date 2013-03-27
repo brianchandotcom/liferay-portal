@@ -29,6 +29,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -55,6 +56,11 @@ public class JournalFolderAssetRenderer
 
 	public long getClassPK() {
 		return _folder.getFolderId();
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _folder.getModifiedDate();
 	}
 
 	public long getGroupId() {

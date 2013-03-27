@@ -4,14 +4,17 @@
 
 		<execute selenium="selectFrame" />
 	</command>
+
 	<command name="selectFrameTop">
 		<execute selenium="selectFrame" argument1="relative=top" />
 	</command>
+
 	<command name="selectWindow">
 		<execute selenium="pause" argument1="5000" />
 
 		<execute selenium="selectWindow" />
 	</command>
+
 	<command name="selectWindowTop">
 		<execute selenium="pause" argument1="5000" />
 

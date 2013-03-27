@@ -4,6 +4,7 @@
 
 		<execute selenium="select" />
 	</command>
+
 	<command name="selectAndWait">
 		<execute selenium="waitForVisible" />
 

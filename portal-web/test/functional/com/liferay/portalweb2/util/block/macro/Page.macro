@@ -12,6 +12,7 @@
 
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
+
 	<command name="pgTearDown">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

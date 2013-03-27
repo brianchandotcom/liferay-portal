@@ -18,6 +18,7 @@
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
+
 	<command name="cpTearDown">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

@@ -21,6 +21,7 @@
 			</then>
 		</if>
 	</command>
+
 	<command name="pgLogin">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
@@ -30,6 +31,7 @@
 
 		<execute action="PGLogin#click" locator-key1="SIGN_IN" />
 	</command>
+
 	<command name="pgLogout">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

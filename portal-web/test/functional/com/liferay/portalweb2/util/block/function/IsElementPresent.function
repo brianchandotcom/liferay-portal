@@ -2,6 +2,7 @@
 	<command name="isElementPresent">
 		<execute selenium="isElementPresent" />
 	</command>
+
 	<command name="isElementPresentClickNavigation">
 		<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
 
@@ -9,9 +10,11 @@
 
 		<execute selenium="isElementPresent" />
 	</command>
+
 	<command name="isVisible">
 		<execute selenium="isVisible" />
 	</command>
+
 	<command name="waitForVisible">
 		<execute selenium="waitForVisible" />
 

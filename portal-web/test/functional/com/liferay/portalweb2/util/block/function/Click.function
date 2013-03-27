@@ -4,36 +4,43 @@
 
 		<execute selenium="clickAt" />
 	</command>
+
 	<command name="clickAtAndWait">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
+
 	<command name="partialTextClickAt">
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="clickAt" />
 	</command>
+
 	<command name="partialTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
+
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="click" />
 	</command>
+
 	<command name="textClickAt">
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="clickAt" />
 	</command>
+
 	<command name="textClickAtAndWait">
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
+
 	<command name="textClickAtClickDockbar">
 		<execute selenium="clickAt" argument1="//div[@id='dockbar']" argument2="" />
 
@@ -41,11 +48,13 @@
 
 		<execute function="Click#textClickAt" />
 	</command>
+
 	<command name="valueClickAt">
 		<execute function="AssertTextEquals#assertValue" />
 
 		<execute selenium="clickAt" />
 	</command>
+
 	<command name="valueClickAtAndWait">
 		<execute function="AssertTextEquals#assertValue" />
 

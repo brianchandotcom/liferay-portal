@@ -4,6 +4,7 @@
 			<execute function="Click#valueClickAtAndWait" value="Move to the Recycle Bin" />
 		</case>
 	</command>
+
 	<command name="isElementPresent">
 		<case locator-key="ENTRIES_ALL_ROWS">
 			<execute function="IsElementPresent#isVisible" />

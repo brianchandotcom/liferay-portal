@@ -2,15 +2,18 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
+
 	<command name="Login">
 		<execute macro="User#pgLogout" />
 		<execute macro="User#pgLogin" />
 	</command>
+
 	<command name="Logout">
 		<execute macro="User#pgLogout" />
 		<execute macro="User#pgLogin" />
 		<execute macro="User#pgLogout" />
 	</command>
+
 	<tear-down>
 		<execute macro="User#pgLogout" />
 	</tear-down>

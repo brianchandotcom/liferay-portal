@@ -7,11 +7,13 @@
 			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
+
 	<command name="confirm">
 		<case locator-key="PAGE_CONFIRM">
 			<execute function="Confirm#waitForConfirmation" />
 		</case>
 	</command>
+
 	<command name="isElementPresent">
 		<case comparator="startsWith" locator-key="PAGE_">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />

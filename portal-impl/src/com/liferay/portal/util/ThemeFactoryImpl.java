@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeFactory;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -36,7 +37,7 @@ public class ThemeFactoryImpl implements ThemeFactory {
 		throws SystemException {
 
 		String defaultRegularThemeId = PrefsPropsUtil.getString(
-			companyId, PropsValues.DEFAULT_REGULAR_THEME_ID);
+			companyId, PropsKeys.DEFAULT_REGULAR_THEME_ID);
 
 		return PortalUtil.getJsSafePortletId(defaultRegularThemeId);
 	}
@@ -48,7 +49,7 @@ public class ThemeFactoryImpl implements ThemeFactory {
 
 	public String getDefaultWapThemeId(long companyId) throws SystemException {
 		String defaultWapThemeId = PrefsPropsUtil.getString(
-			companyId, PropsValues.DEFAULT_WAP_THEME_ID);
+			companyId, PropsKeys.DEFAULT_WAP_THEME_ID);
 
 		return PortalUtil.getJsSafePortletId(defaultWapThemeId);
 	}

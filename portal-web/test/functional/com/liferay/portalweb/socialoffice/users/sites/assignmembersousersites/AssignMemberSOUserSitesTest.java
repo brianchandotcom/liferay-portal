@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialoffice.users.sites.assignrolesosites;
+package com.liferay.portalweb.socialoffice.users.sites.assignmembersousersites;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

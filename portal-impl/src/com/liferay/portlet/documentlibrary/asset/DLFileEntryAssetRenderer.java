@@ -36,7 +36,11 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -104,6 +108,56 @@ public class DLFileEntryAssetRenderer
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
 			_fileEntry.getIcon() + ".png";
+	}
+
+	@Override
+	public String getImagePreviewURL(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
+			if (AudioProcessorUtil.hasAudio(_fileVersion)) {
+				return themeDisplay.getPathThemeImages() +
+					"/file_system/large/music.png";
+			}
+			else if (ImageProcessorUtil.hasImages(_fileVersion)) {
+				return themeDisplay.getPathThemeImages() +
+					"/file_system/large/image.png";
+			}
+			else if (PDFProcessorUtil.hasImages(_fileVersion)) {
+				return themeDisplay.getPathThemeImages() +
+					"/file_system/large/pdf.png";
+			}
+			else if (VideoProcessorUtil.hasVideo(_fileVersion)) {
+				return themeDisplay.getPathThemeImages() +
+					"/file_system/large/video.png";
+			}
+
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/document.png";
+		}
+
+		if (AudioProcessorUtil.hasAudio(_fileVersion)) {
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/music.png";
+		}
+		else if (ImageProcessorUtil.hasImages(_fileVersion)) {
+			return DLUtil.getPreviewURL(
+				_fileEntry, _fileVersion, themeDisplay, "&imagePreview=1");
+		}
+		else if (PDFProcessorUtil.hasImages(_fileVersion)) {
+			return DLUtil.getPreviewURL(
+				_fileEntry, _fileVersion, themeDisplay, "&previewFileIndex=1");
+		}
+		else if (VideoProcessorUtil.hasVideo(_fileVersion)) {
+			return DLUtil.getPreviewURL(
+				_fileEntry, _fileVersion, themeDisplay, "&videoPreview=1");
+		}
+
+		return themeDisplay.getPathThemeImages() +
+			"/file_system/large/document.png";
 	}
 
 	public String getPortletId() {

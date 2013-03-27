@@ -2,6 +2,7 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
+
 	<command name="AddBlogsEntry">
 		<execute macro="Page#pgAdd">
 			<var name="pageName" value="Blogs Page" />
@@ -12,6 +13,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 	</command>
+
 	<command name="DeleteBlogsEntry">
 		<execute macro="Page#pgAdd">
 			<var name="pageName" value="Blogs Page" />
@@ -22,6 +24,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 	</command>
+
 	<tear-down>
 		<execute macro="Page#pgTearDown" />
 

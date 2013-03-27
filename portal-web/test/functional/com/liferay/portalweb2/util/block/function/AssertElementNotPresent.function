@@ -4,6 +4,7 @@
 
 		<execute selenium="assertElementNotPresent" />
 	</command>
+
 	<command name="assertNotVisible">
 		<execute selenium="waitForNotVisible" />
 

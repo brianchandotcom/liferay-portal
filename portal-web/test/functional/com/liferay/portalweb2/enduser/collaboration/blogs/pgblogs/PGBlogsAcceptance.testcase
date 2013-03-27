@@ -2,6 +2,7 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
+
 	<command name="AddBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -14,6 +15,7 @@
 
 		<execute macro="BlogsEntry#pgAdd" />
 	</command>
+
 	<command name="DeleteBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -26,6 +28,7 @@
 
 		<execute macro="BlogsEntry#pgAdd" />
 	</command>
+
 	<tear-down>
 		<execute macro="BlogsEntry#cpTearDown" />
 

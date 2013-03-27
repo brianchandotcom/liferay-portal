@@ -4,6 +4,7 @@
 
 		<execute selenium="copyText" />
 	</command>
+
 	<command name="valueCopy">
 		<execute selenium="waitForVisible" />
 

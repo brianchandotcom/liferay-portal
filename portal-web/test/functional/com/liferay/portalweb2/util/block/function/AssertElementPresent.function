@@ -4,6 +4,7 @@
 
 		<execute selenium="assertElementPresent" />
 	</command>
+
 	<command name="assertVisible">
 		<execute selenium="waitForVisible" />
 

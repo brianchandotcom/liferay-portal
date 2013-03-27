@@ -4,16 +4,19 @@
 
 		<execute selenium="mouseOver" />
 	</command>
+
 	<command name="partialTextMouseOver">
 		<execute function="AssertTextEquals#assertPartialText" />
 
 		<execute selenium="mouseOver" />
 	</command>
+
 	<command name="textMouseOver">
 		<execute function="AssertTextEquals#assertText" />
 
 		<execute selenium="mouseOver" />
 	</command>
+
 	<command name="textMouseOverClickDockbar">
 		<execute selenium="clickAt" argument1="//div[@id='dockbar']" argument2="" />
 
@@ -21,6 +24,7 @@
 
 		<execute function="MouseOver#textMouseOver" />
 	</command>
+
 	<command name="valueMouseOver">
 		<execute function="AssertTextEquals#assertValue" />
 

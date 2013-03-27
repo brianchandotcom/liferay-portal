@@ -4,11 +4,13 @@
 
 		<execute selenium="isPartialText" />
 	</command>
+
 	<command name="isText">
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="isText" />
 	</command>
+
 	<command name="isValue">
 		<execute selenium="waitForElementPresent" />
 

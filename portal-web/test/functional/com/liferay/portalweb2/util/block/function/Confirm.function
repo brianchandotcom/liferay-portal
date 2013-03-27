@@ -2,6 +2,7 @@
 	<command name="assertConfirmation">
 		<execute selenium="assertConfirmation" />
 	</command>
+
 	<command name="waitForConfirmation">
 		<execute selenium="waitForConfirmation" />
 	</command>

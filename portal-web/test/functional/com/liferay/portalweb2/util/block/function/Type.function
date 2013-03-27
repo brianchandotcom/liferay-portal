@@ -4,16 +4,19 @@
 
 		<execute selenium="sendKeys" />
 	</command>
+
 	<command name="sendKeysApplicationSearch">
 		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
 
 		<execute function="Type#sendKeys" />
 	</command>
+
 	<command name="type">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="type" />
 	</command>
+
 	<command name="typeFrame">
 		<execute selenium="waitForVisible" />
 

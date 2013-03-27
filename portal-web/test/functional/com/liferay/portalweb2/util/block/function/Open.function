@@ -6,6 +6,7 @@
 
 		<execute selenium="open" />
 	</command>
+
 	<command name="openWindow">
 		<execute selenium="pause" argument1="15000" />
 

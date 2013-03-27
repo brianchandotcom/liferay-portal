@@ -4,6 +4,7 @@
 			<execute function="Click#valueClickAtAndWait" value1="Publish" />
 		</case>
 	</command>
+
 	<command name="type">
 		<case locator-key="CONTENT">
 			<execute function="Type#typeFrame" />

@@ -14,35 +14,18 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.RoleTestUtil;
-import com.liferay.portal.util.UserTestUtil;
 
+import org.junit.After;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
-public abstract class BaseOrganizationMembershipPolicyTestCase {
+public abstract class BaseOrganizationMembershipPolicyTestCase
+	extends BaseMembersipPolicyTestCase {
 
 	public static long[] getForbiddenOrganizationIds() {
 		return _forbiddenOrganizationIds;
@@ -68,40 +51,25 @@ public abstract class BaseOrganizationMembershipPolicyTestCase {
 		return _standardRoleIds;
 	}
 
-	public static long[] getUserIds() {
-		return _userIds;
-	}
-
-	public static boolean isPropagateMembership() {
-		return _propagateMembership;
-	}
-
-	public static boolean isPropagateRoles() {
-		return _propagateRoles;
-	}
-
-	public static boolean isVerify() {
-		return _verify;
-	}
-
-	public static void setPropagateMembership(boolean propagateMembership) {
-		_propagateMembership = propagateMembership;
-	}
-
-	public static void setPropagateRoles(boolean propagateRoles) {
-		_propagateRoles = propagateRoles;
-	}
-
-	public static void setVerify(boolean verify) {
-		_verify = verify;
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
+		super.setUp();
 
-		group = GroupTestUtil.addGroup();
 		organization = OrganizationTestUtil.addOrganization();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		organization = null;
+
+		_forbiddenOrganizationIds = new long[2];
+		_forbiddenRoleIds = new long[2];
+		_requiredOrganizationIds = new long[2];
+		_requiredRoleIds = new long[2];
+		_standardOrganizationIds = new long[2];
+		_standardRoleIds = new long[2];
 	}
 
 	protected long[] addForbiddenOrganizations() throws Exception {
@@ -175,32 +143,13 @@ public abstract class BaseOrganizationMembershipPolicyTestCase {
 		return _standardRoleIds;
 	}
 
-	protected long[] addUsers() throws Exception {
-		User user1= UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
-
-		_userIds[0] = user1.getUserId();
-
-		User user2 = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
-
-		_userIds[1] = user2.getUserId();
-
-		return _userIds;
-	}
-
-	protected Group group;
 	protected Organization organization;
 
 	private static long[] _forbiddenOrganizationIds = new long[2];
 	private static long[] _forbiddenRoleIds = new long[2];
-	private static boolean _propagateMembership;
-	private static boolean _propagateRoles;
 	private static long[] _requiredOrganizationIds = new long[2];
 	private static long[] _requiredRoleIds = new long[2];
 	private static long[] _standardOrganizationIds = new long[2];
 	private static long[] _standardRoleIds = new long[2];
-	private static long[] _userIds = new long[2];
-	private static boolean _verify;
 
 }

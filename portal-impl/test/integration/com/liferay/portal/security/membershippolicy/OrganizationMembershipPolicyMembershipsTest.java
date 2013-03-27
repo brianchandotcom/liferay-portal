@@ -198,7 +198,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 
 		User user = UserLocalServiceUtil.getUser(userIds[0]);
 
-		List<Organization> organizations =  user.getOrganizations();
+		List<Organization> organizations = user.getOrganizations();
 
 		Assert.assertEquals(0, organizations.size());
 

@@ -53,7 +53,7 @@ public class DDMXMLImplTest extends PowerMockito {
 		when(
 			SAXReaderUtil.getSAXReader()
 		).thenReturn(
-			_saxReader
+			SAXReaderImpl.getInstance()
 		);
 
 		spy(DDMXMLUtil.class);
@@ -178,7 +178,5 @@ public class DDMXMLImplTest extends PowerMockito {
 	}
 
 	private DDMXMLImpl _ddmXML = new DDMXMLImpl();
-
-	private SAXReaderImpl _saxReader = new SAXReaderImpl();
 
 }

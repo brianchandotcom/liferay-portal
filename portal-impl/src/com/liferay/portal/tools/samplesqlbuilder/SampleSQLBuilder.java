@@ -40,7 +40,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -210,14 +209,14 @@ public class SampleSQLBuilder {
 	}
 
 	public void insertDDLRecord(
-			DDLRecord ddlRecord, DDLRecordSet ddlRecordSet, int ddlRecordCount)
+			DDLRecord ddlRecord, int ddlRecordCount, long ddmStructureId)
 		throws Exception {
 
 		Map<String, Object> context = getContext();
 
 		put(context, "ddlRecord", ddlRecord);
 		put(context, "ddlRecordCount", ddlRecordCount);
-		put(context, "ddlRecordSet", ddlRecordSet);
+		put(context, "ddmStructureId", ddmStructureId);
 
 		processTemplate(_tplDDLRecord, context);
 	}

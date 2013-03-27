@@ -78,16 +78,32 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		Element dlFileEntryTypesElement = pagesElement.addElement(
+		Element dlFileEntryTypesElement = pagesElement.element(
 			"dl-file-entry-types");
-		Element dlFoldersElement = pagesElement.addElement("dl-folders");
-		Element dlFileEntriesElement = pagesElement.addElement(
-			"dl-file-entries");
-		Element dlFileRanksElement = pagesElement.addElement("dl-file-ranks");
-		Element dlRepositoriesElement = pagesElement.addElement(
-			"dl-repositories");
-		Element dlRepositoryEntriesElement = pagesElement.addElement(
+		if (dlFileEntryTypesElement == null) {
+			pagesElement.addElement("dl-file-entry-types");
+		}
+		Element dlFoldersElement = pagesElement.element("dl-folders");
+		if (dlFoldersElement == null) {
+			pagesElement.addElement("dl-folders");
+		}
+		Element dlFileEntriesElement = pagesElement.element("dl-file-entries");
+		if (dlFileEntriesElement == null) {
+			pagesElement.addElement("dl-file-entries");
+		}
+		Element dlFileRanksElement = pagesElement.element("dl-file-ranks");
+		if (dlFileRanksElement == null) {
+			pagesElement.addElement("dl-file-ranks");
+		}
+		Element dlRepositoriesElement = pagesElement.element("dl-repositories");
+		if (dlRepositoriesElement == null) {
+			pagesElement.addElement("dl-repositories");
+		}
+		Element dlRepositoryEntriesElement = pagesElement.element(
 			"dl-repository-entries");
+		if (dlRepositoryEntriesElement == null) {
+			pagesElement.addElement("dl-repository-entries");
+		}
 
 		List<WikiPage> pages = WikiPageUtil.findByN_S(
 			node.getNodeId(), WorkflowConstants.STATUS_APPROVED,

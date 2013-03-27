@@ -50,8 +50,8 @@ public class EditEventTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Edited Test Event"));
@@ -61,7 +61,6 @@ public class EditEventTest extends BaseTestCase {
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
 				"This is a test event! This test event has been edited."));
-		selenium.selectFrame("relative=top");
 		selenium.select("//select[@name='_8_startDateHour']",
 			RuntimeVariables.replace("5"));
 		selenium.select("//select[@name='_8_startDateAmPm']",

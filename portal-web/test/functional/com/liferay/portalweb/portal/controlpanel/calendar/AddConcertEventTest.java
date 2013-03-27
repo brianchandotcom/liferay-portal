@@ -48,8 +48,7 @@ public class AddConcertEventTest extends BaseTestCase {
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
-				"I love this band guys! Everyone should see them! I've never seen them before. :("));
-		selenium.selectFrame("relative=top");
+				"I love this band guys! Everyone should see them! I have never seen them before. :("));
 		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace("Time Zone Sensitive Checkbox"));
 		selenium.select("//select[@id='_8_type']",

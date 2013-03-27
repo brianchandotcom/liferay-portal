@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncTeeWriter;
-import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -40,7 +39,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -219,14 +217,6 @@ public class SampleSQLBuilder {
 		put(context, "ddmStructureId", ddmStructureId);
 
 		processTemplate(_tplDDLRecord, context);
-	}
-
-	public void insertDDLRecordSet(DDMStructure ddmStructure) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "ddmStructure", ddmStructure);
-
-		processTemplate(_tplDLFolders, context);
 	}
 
 	public void insertDLFileEntry(DLFileEntry dlFileEntry, long ddmStructureId)
@@ -490,10 +480,8 @@ public class SampleSQLBuilder {
 	protected Map<String, Object> getContext() {
 		Map<String, Object> context = new HashMap<String, Object>();
 
-		put(context, "companyId", _dataFactory.getCompanyId());
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
-		put(context, "dateUtil", DateUtil_IW.getInstance());
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
@@ -515,7 +503,6 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
-		put(context, "portalUUIDUtil", SequentialUUID.getSequentialUUID());
 		put(context, "sampleSQLBuilder", this);
 		put(context, "stringUtil", StringUtil_IW.getInstance());
 		put(context, "writerBlogsCSV", _writerBlogsCSV);

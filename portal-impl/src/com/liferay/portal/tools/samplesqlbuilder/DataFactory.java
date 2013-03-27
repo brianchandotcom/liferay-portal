@@ -236,10 +236,6 @@ public class DataFactory {
 		return _company;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
 	public SimpleCounter getCounter() {
 		return _counter;
 	}

@@ -281,7 +281,11 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1002) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid child element in " + suffix);
+				prefix + "Invalid element in " + suffix);
+		}
+		else if (errorCode == 1003) {
+			throw new IllegalArgumentException(
+				prefix + "Missing name attribute in " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -320,7 +324,7 @@ public class SeleniumBuilderFileUtil {
 			if (!ArrayUtil.contains(
 					allowedCommandChildElementNames, elementName)) {
 
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, element);
 			}
 
 			if (elementName.equals("execute")) {
@@ -338,7 +342,7 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(1002, fileName, commandElement);
+				throwValidationException(1002, fileName, element);
 			}
 		}
 	}
@@ -499,7 +503,7 @@ public class SeleniumBuilderFileUtil {
 
 			if (elementName.equals("command")) {
 				if (Validator.isNull(element.attributeValue("name"))) {
-					throwValidationException(0, fileName);
+					throwValidationException(1003, fileName, element);
 				}
 
 				validateCommandElement(
@@ -507,7 +511,7 @@ public class SeleniumBuilderFileUtil {
 					new String[] {"function", "selenium"}, new String[0]);
 			}
 			else {
-				throwValidationException(1002, fileName, rootElement);
+				throwValidationException(1002, fileName, element);
 			}
 		}
 	}
@@ -560,7 +564,7 @@ public class SeleniumBuilderFileUtil {
 
 			if (elementName.equals("command")) {
 				if (Validator.isNull(element.attributeValue("name"))) {
-					throwValidationException(0, fileName);
+					throwValidationException(1003, fileName, element);
 				}
 
 				validateCommandElement(

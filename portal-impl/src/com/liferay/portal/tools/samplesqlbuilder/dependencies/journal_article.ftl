@@ -41,5 +41,7 @@
 		${sampleSQLBuilder.insertResourcePermission(portletPreferences.portletId, primKey)}
 	</#list>
 
-	insert into JournalContentSearch values (${counter.get()}, ${groupId}, ${companyId}, 0, ${layout.layoutId}, '56', '${journalArticleResource.articleId}');
+	<#assign journalContentSearch = dataFactory.newJournalContentSearch(journalArticle, layout.plid)>
+
+	insert into JournalContentSearch values (${journalContentSearch.contentSearchId}, ${journalContentSearch.groupId}, ${journalContentSearch.companyId}, ${journalContentSearch.privateLayout?string}, ${journalContentSearch.layoutId}, '${journalContentSearch.portletId}', '${journalContentSearch.articleId}');
 </#list>

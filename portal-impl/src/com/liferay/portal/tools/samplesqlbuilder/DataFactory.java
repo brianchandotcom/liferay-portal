@@ -105,8 +105,10 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
+import com.liferay.portlet.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -970,6 +972,22 @@ public class DataFactory {
 		journalArticleResource.setArticleId(String.valueOf(_counter.get()));
 
 		return journalArticleResource;
+	}
+
+	public JournalContentSearch newJournalContentSearch(
+		JournalArticle journalArticle, long layoutId) {
+
+		JournalContentSearch journalContentSearch =
+			new JournalContentSearchImpl();
+
+		journalContentSearch.setContentSearchId(_counter.get());
+		journalContentSearch.setGroupId(journalArticle.getGroupId());
+		journalContentSearch.setCompanyId(_companyId);
+		journalContentSearch.setLayoutId(layoutId);
+		journalContentSearch.setPortletId(PortletKeys.JOURNAL_CONTENT);
+		journalContentSearch.setArticleId(journalArticle.getArticleId());
+
+		return journalContentSearch;
 	}
 
 	public Layout newLayout(

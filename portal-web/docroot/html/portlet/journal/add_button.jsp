@@ -63,16 +63,8 @@ List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(Po
 				<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 			</liferay-portlet:renderURL>
 
-			<%
-			String ddmStructureName = HtmlUtil.escape(ddmStructure.getName(themeDisplay.getLocale()));
-
-			if (ddmStructure.getGroupId() == themeDisplay.getCompanyGroupId()) {
-				ddmStructureName += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
-			}
-			%>
-
 			<liferay-ui:icon
-				message="<%= ddmStructureName %>"
+				message="<%= HtmlUtil.escape(ddmStructure.getName(themeDisplay.getLocale())) %>"
 				src='<%= themeDisplay.getPathThemeImages() + "/common/history.png" %>'
 				url="<%= addArticleURL.toString() %>"
 			/>

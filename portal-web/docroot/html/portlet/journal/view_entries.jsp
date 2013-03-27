@@ -90,7 +90,14 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 			if (!displayTerms.getStructureId().equals("0")) {
 				structureId = displayTerms.getStructureId();
 
-				DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
+				DDMStructure ddmStructure = null;
+
+				try {
+					ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
+				}
+				catch (NoSuchStructureException nsse) {
+					ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
+				}
 
 				ddmStructureName = ddmStructure.getName(locale);
 			}

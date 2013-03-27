@@ -738,17 +738,19 @@ public class DataFactory {
 		return ddmStorageLink;
 	}
 
+	public DDMStructureLink newDDMStructureLink(DDLRecordSet ddlRecordSet) {
+		return newDDMStructureLink(
+			_classNamesMap.get(DDLRecordSet.class.getName()),
+			ddlRecordSet.getRecordSetId(), ddlRecordSet.getDDMStructureId());
+	}
+
 	public DDMStructureLink newDDMStructureLink(
-		long classPK, long structureId) {
+		DLFileEntryMetadata dLFileEntryMetadata) {
 
-		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
-
-		ddmStructureLink.setStructureLinkId(_counter.get());
-		ddmStructureLink.setClassNameId(getDLFileEntryClassNameId());
-		ddmStructureLink.setClassPK(classPK);
-		ddmStructureLink.setStructureId(structureId);
-
-		return ddmStructureLink;
+		return newDDMStructureLink(
+			_classNamesMap.get(DLFileEntryMetadata.class.getName()),
+			dLFileEntryMetadata.getFileEntryMetadataId(),
+			dLFileEntryMetadata.getDDMStructureId());
 	}
 
 	public DLFileEntry newDlFileEntry(DLFolder dlFoler, int index) {
@@ -1380,6 +1382,19 @@ public class DataFactory {
 		ddmStructure.setStorageType("xml");
 
 		return ddmStructure;
+	}
+
+	protected DDMStructureLink newDDMStructureLink(
+		long classNameId, long classPK, long structureId) {
+
+		DDMStructureLink ddmStructureLink = new DDMStructureLinkImpl();
+
+		ddmStructureLink.setStructureLinkId(_counter.get());
+		ddmStructureLink.setClassNameId(classNameId);
+		ddmStructureLink.setClassPK(classPK);
+		ddmStructureLink.setStructureId(structureId);
+
+		return ddmStructureLink;
 	}
 
 	protected Group newGroup(

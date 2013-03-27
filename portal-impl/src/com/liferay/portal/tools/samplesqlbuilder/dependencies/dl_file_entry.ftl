@@ -35,6 +35,6 @@ insert into SocialActivity values (${socialActivity.activityId}, ${socialActivit
 
 insert into DLFileEntryMetadata values ('${portalUUIDUtil.generate()}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${ddmContent.contentId}, ${ddmStructureId}, 0, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
 
-<#assign ddmStructureLink = dataFactory.newDDMStructureLink(dlFileEntryMetadata.fileEntryMetadataId, ddmContent.contentId)>
+<#assign ddmStructureLink = dataFactory.newDDMStructureLink(dlFileEntryMetadata)>
 
 insert into DDMStructureLink values (${ddmStructureLink.structureLinkId},${ ddmStructureLink.classNameId}, ${ddmStructureLink.classPK}, ${ddmStructureLink.structureId});

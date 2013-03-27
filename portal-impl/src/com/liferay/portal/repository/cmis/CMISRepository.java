@@ -2096,18 +2096,13 @@ public class CMISRepository extends BaseCmisRepository {
 	protected <E> List<E> subList(
 		List<E> list, int start, int end, OrderByComparator obc) {
 
-		if (obc != null) {
-			if ((obc instanceof RepositoryModelCreateDateComparator) ||
-				(obc instanceof RepositoryModelModifiedDateComparator) ||
-				(obc instanceof RepositoryModelSizeComparator)) {
+		if ((obc != null) &&
+			((obc instanceof RepositoryModelCreateDateComparator) ||
+			 (obc instanceof RepositoryModelModifiedDateComparator) ||
+			 (obc instanceof RepositoryModelNameComparator) ||
+			 (obc instanceof RepositoryModelSizeComparator))) {
 
-				list = ListUtil.sort(list, obc);
-			}
-			else if (obc instanceof RepositoryModelNameComparator) {
-				if (!obc.isAscending()) {
-					list = ListUtil.sort(list, obc);
-				}
-			}
+			list = ListUtil.sort(list, obc);
 		}
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {

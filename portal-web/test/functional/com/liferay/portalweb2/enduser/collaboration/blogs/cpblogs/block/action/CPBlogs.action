@@ -1,10 +1,12 @@
 <definition>
 	<command name="click">
-		<case locator-key="ADD_ENTRY">
-			<execute function="Click#valueClickAtAndWait" value="Add Blogs Entry" />
+		<case locator-key="MOVE_RECYCLE_BIN">
+			<execute function="Click#valueClickAtAndWait" value="Move to the Recycle Bin" />
 		</case>
-		<case locator-key="DELETE_ENTRY">
-			<execute function="Click#valueClickAtAndWait" value="Delete" />
+	</command>
+	<command name="isElementPresent">
+		<case locator-key="ENTRIES_ALL_ROWS">
+			<execute function="IsElementPresent#isVisible" />
 		</case>
 	</command>
 </definition>

@@ -14,4 +14,9 @@
 
 		<execute selenium="type" />
 	</command>
+	<command name="typeFrame">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="typeFrame" />
+	</command>
 </definition>

@@ -61,6 +61,22 @@
 	<td>//input[@id='layout_configuration_content']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GO_TO-->
+<tr>
+	<td>GO_TO</td>
+	<td>//li[@id='_145_mySites']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_CONTROL_PANEL</td>
+	<td>link=Control Panel</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>PGBlogs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGBlogs</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ENTRY</td>
+	<td>//input[@value='Add Blog Entry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_TITLE_1</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE_2</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE_3</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DELETE_1</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DELETE_2</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DELETE_3</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_1</td>
+	<td>xpath=(//div[@class='entry-body']/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_2</td>
+	<td>xpath=(//div[@class='entry-body']/div)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_3</td>
+	<td>xpath=(//div[@class='entry-body']/div)[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

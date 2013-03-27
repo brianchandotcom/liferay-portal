@@ -1,0 +1,20 @@
+<definition>
+	<command name="cpEmptyRecycleBin">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator-key1="link=Recycle Bin" />
+
+		<if>
+			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
+			<then>
+				<execute action="CPRecyclebin#click" locator-key1="EMPTY_RECYCLE_BIN" />
+
+				<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
+			</then>
+		</if>
+	</command>
+</definition>

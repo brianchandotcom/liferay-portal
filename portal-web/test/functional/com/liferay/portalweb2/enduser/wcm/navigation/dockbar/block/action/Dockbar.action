@@ -6,6 +6,9 @@
 		<case locator-key="ADD_PORTLET">
 			<execute function="Click#partialTextClickAt" value1="More" />
 		</case>
+		<case locator-key="GO_TO_CONTROL_PANEL">
+			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
+		</case>
 		<case locator-key="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
@@ -13,6 +16,9 @@
 	<command name="mouseOver">
 		<case locator-key="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
+		</case>
+		<case locator-key="GO_TO">
+			<execute function="MouseOver#textMouseOverClickDockbar" value1="Go to" />
 		</case>
 	</command>
 	<command name="type">

@@ -1,19 +1,41 @@
 <definition>
-	<command name="cpAdd">
-		<execute action="CPBlogs#click" locator-key1="ADD_ENTRY"/>
+	<command name="pgAdd">
+		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<execute action="CPBlogs#type" locator-key1="ENTRY_TITLE" value1="${title}" />
+		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="CPBlogs#type" locator-key1="ENTRY_CONTENT" value1="${content}" />
+		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY" />
 
-		<execute action="CPBlogs#click" locator-key1="SAVE" />
-	</command>
-	<command name="cpDelete">
-		<execute action="CPBlogs#click" locator1="link=${title}" />
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE" value1="${entryTitle}" />
 
-		<execute action="CPBlogs#click" locator-key1="DELETE_ENTRY" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT" value1="${entryContent}" />
+
+		<execute action="PGBlogsAdd#click" locator-key1="PUBLISH" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
 	<command name="cpTearDown">
-		<execute action="CPBlogs#click" locator-key1="DELETE_ENTRY" />
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Blogs" />
+
+		<if>
+			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRIES_ALL_ROWS" />
+			<then>
+				<execute action="CPBlogs#click" locator-key1="ENTRIES_ALL_ROWS" />
+
+				<execute action="CPBlogs#click" locator-key1="MOVE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+			</then>
+		</if>
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>
 </definition>

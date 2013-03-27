@@ -22,13 +22,16 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
@@ -50,6 +53,9 @@ import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -98,6 +104,9 @@ public class UpdateLayoutAction extends JSONAction {
 
 			portletId = layoutTypePortlet.addPortletId(
 				userId, portletId, columnId, columnPos);
+
+			storeAssetPortletPreferences(
+				request, layout, portletId, themeDisplay);
 
 			if (layoutTypePortlet.isCustomizable() &&
 				layoutTypePortlet.isCustomizedView() &&
@@ -518,6 +527,49 @@ public class UpdateLayoutAction extends JSONAction {
 		jsonObject.put(
 			"headerJavaScriptPaths",
 			JSONFactoryUtil.createJSONArray(headerJavaScriptPaths));
+	}
+
+	protected void storeAssetPortletPreferences(
+			HttpServletRequest request, Layout layout, String portletId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String portletData = ParamUtil.getString(request, "portletData");
+
+		if (Validator.isNull(portletData)) {
+			return;
+		}
+
+		String[] portletDataArray = StringUtil.split(
+			ParamUtil.getString(request, "portletData"));
+
+		if ((portletDataArray == null) || (portletDataArray.length <= 0)) {
+			return;
+		}
+
+		long classPK = GetterUtil.getLong(portletDataArray[0]);
+
+		String className = GetterUtil.getString(portletDataArray[1]);
+
+		if ((classPK <= 0) || Validator.isNull(className)) {
+			return;
+		}
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
+
+		assetRenderer.setAddContentPreferences(
+			portletSetup, portletId, themeDisplay);
+
+		portletSetup.store();
 	}
 
 }

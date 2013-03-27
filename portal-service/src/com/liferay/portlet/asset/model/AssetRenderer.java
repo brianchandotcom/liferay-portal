@@ -23,6 +23,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -38,6 +39,8 @@ public interface AssetRenderer {
 	public static final String TEMPLATE_ABSTRACT = "abstract";
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
+
+	public String getAddContentPortletId() throws Exception;
 
 	public String[] getAvailableLocales() throws Exception;
 
@@ -118,6 +121,11 @@ public interface AssetRenderer {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)
+		throws Exception;
+
+	public void setAddContentPreferences(
+			PortletPreferences preferences, String portletId,
+			ThemeDisplay themeDisplay)
 		throws Exception;
 
 }

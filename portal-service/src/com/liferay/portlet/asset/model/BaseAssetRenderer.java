@@ -31,11 +31,15 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -47,6 +51,10 @@ import javax.portlet.WindowState;
  * @author Sergio González
  */
 public abstract class BaseAssetRenderer implements AssetRenderer {
+
+	public String getAddContentPortletId() throws Exception {
+		return PortletKeys.ASSET_PUBLISHER;
+	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
@@ -228,6 +236,21 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		throws Exception {
 
 		return null;
+	}
+
+	public void setAddContentPreferences(
+			PortletPreferences preferences, String portletId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		preferences.setValue("selectionStyle", "manual");
+
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(
+			getClassName(), getClassPK());
+
+		AssetPublisherUtil.addSelection(
+			themeDisplay, preferences, portletId, entry.getEntryId(), -1,
+			entry.getClassName());
 	}
 
 	protected long getControlPanelPlid(

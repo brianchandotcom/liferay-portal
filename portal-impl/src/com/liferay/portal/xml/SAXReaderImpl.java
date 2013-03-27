@@ -316,12 +316,7 @@ public class SAXReaderImpl implements SAXReader {
 	}
 
 	public Element emptyElement() {
-		if (_empty_element_instance == null) {
-			_empty_element_instance = new EmptyElementImpl(
-				DocumentHelper.createElement(EmptyElement.EMPTY_ELEMENT_NAME));
-		}
-
-		return _empty_element_instance;
+		return _EMPTY_ELEMENT;
 	}
 
 	public Document read(File file) throws DocumentException {
@@ -527,6 +522,9 @@ public class SAXReaderImpl implements SAXReader {
 		return reader;
 	}
 
+	private static final Element _EMPTY_ELEMENT = new EmptyElementImpl(
+		DocumentHelper.createElement(EmptyElement.EMPTY_ELEMENT_NAME));
+
 	private static final String _FEATURES_DYNAMIC =
 		"http://apache.org/xml/features/validation/dynamic";
 
@@ -551,7 +549,5 @@ public class SAXReaderImpl implements SAXReader {
 	private static Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 
 	private static SAXReaderImpl _instance = new SAXReaderImpl();
-	private static Element _empty_element_instance;
-
 
 }

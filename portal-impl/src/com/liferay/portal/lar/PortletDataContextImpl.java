@@ -1533,7 +1533,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected Element getExportDataGroupElement(String name) {
 		if (_exportDataRootElement == null) {
-			return null;
+			throw new IllegalStateException(
+				"Root data element not initialized");
 		}
 
 		Element groupElement = _exportDataRootElement.element(name);
@@ -1547,7 +1548,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected Element getImportDataGroupElement(String name) {
 		if (_importDataRootElement == null) {
-			return null;
+			throw new IllegalStateException(
+				"Root data element not initialized");
 		}
 
 		if (Validator.isNull(name)) {

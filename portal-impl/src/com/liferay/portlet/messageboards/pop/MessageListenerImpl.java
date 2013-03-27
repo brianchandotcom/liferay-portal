@@ -85,7 +85,9 @@ public class MessageListenerImpl implements MessageListener {
 				categoryId);
 
 			if (category.getCompanyId() != company.getCompanyId()) {
-				return false;
+				if (0 != category.getCompanyId()) {
+					return false;
+				}
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -140,12 +142,22 @@ public class MessageListenerImpl implements MessageListener {
 
 			long groupId = 0;
 			long categoryId = getCategoryId(messageId);
+			long msgId = getMessageId(messageId);
 
 			try {
 				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 					categoryId);
 
 				groupId = category.getGroupId();
+
+				if (0 == groupId) {
+					MBMessage threadMessage =
+							MBMessageLocalServiceUtil.fetchMBMessage(msgId);
+
+					if (threadMessage != null) {
+						groupId = threadMessage.getGroupId();
+					}
+				}
 			}
 			catch (NoSuchCategoryException nsce) {
 				groupId = categoryId;
@@ -254,14 +266,9 @@ public class MessageListenerImpl implements MessageListener {
 	}
 
 	protected long getCategoryId(String recipient) {
-		int pos = recipient.indexOf(CharPool.AT);
+		String[] parts = getMessageCategoryId(recipient);
 
-		String target = recipient.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
-
-		String[] parts = StringUtil.split(target, CharPool.PERIOD);
-
-		return GetterUtil.getLong(parts[0]);
+		return GetterUtil.getLong(parts[MB_CATEGORY_ID_INDEX]);
 	}
 
 	protected Company getCompany(String messageId) throws Exception {
@@ -282,6 +289,23 @@ public class MessageListenerImpl implements MessageListener {
 		String mx = messageId.substring(pos, endPos);
 
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
+	}
+
+	protected String[] getMessageCategoryId(String recipient) {
+		int pos = recipient.indexOf(CharPool.AT);
+
+		String target = recipient.substring(
+			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
+
+		String[] parts = StringUtil.split(target, CharPool.PERIOD);
+
+		return parts;
+	}
+
+	protected long getMessageId(String recipient) {
+		String[] parts = getMessageCategoryId(recipient);
+
+		return GetterUtil.getLong(parts[MB_MESSAGE_ID_INDEX]);
 	}
 
 	protected String getMessageId(String recipient, Message message)
@@ -359,5 +383,7 @@ public class MessageListenerImpl implements MessageListener {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MessageListenerImpl.class);
+	private static int MB_CATEGORY_ID_INDEX = 0;
+	private static int MB_MESSAGE_ID_INDEX = 1;
 
 }

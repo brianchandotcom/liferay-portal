@@ -398,11 +398,26 @@ public class DDMTemplateLocalServiceImpl
 			if ((structure != null) &&
 				(structure.getClassNameId() ==
 					PortalUtil.getClassNameId(
-						JournalArticle.class.getName())) &&
-				(JournalArticleUtil.countByTemplateId(
-					template.getTemplateKey()) > 0)) {
+						JournalArticle.class.getName()))) {
 
-				throw new RequiredTemplateException();
+				Group companyGroup = groupLocalService.getCompanyGroup(
+					template.getCompanyId());
+
+				if (template.getGroupId() == companyGroup.getGroupId()) {
+					if (JournalArticleUtil.countByTemplateId(
+							template.getTemplateKey()) > 0) {
+
+						throw new RequiredTemplateException();
+					}
+				}
+				else {
+					if (JournalArticleUtil.countByG_T(
+							template.getGroupId(),
+							template.getTemplateKey()) > 0) {
+
+						throw new RequiredTemplateException();
+					}
+				}
 			}
 		}
 

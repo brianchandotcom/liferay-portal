@@ -48,11 +48,12 @@ public class ConfigurePortletAssetLinkBehaviorShowFullContentTest
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]");
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText(
-				"//ul[contains(.,'Display Settings')]/li[2]/span/a"));
-		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
+				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]"));
+		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]",
 			RuntimeVariables.replace("Display Settings"));
 		assertEquals(RuntimeVariables.replace("Asset Link Behavior"),
 			selenium.getText("//label[@for='_86_assetLinkBehavior']"));

@@ -50,9 +50,13 @@ public class ConfigurePortletAPEnableRatingsTest extends BaseTestCase {
 				selenium.selectFrame(
 					"//iframe[contains(@id,'configurationIframeDialog')]");
 				selenium.waitForElementPresent(
-					"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
-				selenium.waitForVisible("link=Display Settings");
-				selenium.clickAt("link=Display Settings",
+					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
+				selenium.waitForVisible(
+					"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]");
+				assertEquals(RuntimeVariables.replace("Display Settings"),
+					selenium.getText(
+						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]"));
+				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]",
 					RuntimeVariables.replace("Display Settings"));
 				selenium.waitForVisible(
 					"//input[@id='_86_enableRatingsCheckbox']");

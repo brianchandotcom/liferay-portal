@@ -33,7 +33,10 @@ public class RateBlogsEntryAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
-		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='asset-ratings']/div/div/div/a[5]"));
+		selenium.clickAt("//div[@class='asset-ratings']/div/div/div/a[5]",
+			RuntimeVariables.replace("5 Stars"));
 		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[2]",
 			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),

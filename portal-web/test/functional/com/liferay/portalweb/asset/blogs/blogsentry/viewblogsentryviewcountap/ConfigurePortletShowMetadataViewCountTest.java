@@ -48,8 +48,11 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible(
-			"//ul[contains(.,'Display Settings')]/li[2]/span/a");
-		selenium.clickAt("//ul[contains(.,'Display Settings')]/li[2]/span/a",
+			"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]");
+		assertEquals(RuntimeVariables.replace("Display Settings"),
+			selenium.getText(
+				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]"));
+		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]",
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@id='_86_availableMetadataFields']");
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",

@@ -29,17 +29,33 @@ public class DeleteBlogsEntry2Test extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
-			selenium.getText("//h3[@class='asset-title']/a"));
-		selenium.clickAt("//h3[@class='asset-title']/a",
+			selenium.getText(
+				"//h3[@class='asset-title']/a[contains(.,'Blogs Entry2 Title')]"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
+			selenium.getText(
+				"//div[@class='asset-content']/div[contains(.,'Blogs Entry2 Content')]"));
+		selenium.clickAt("//h3[@class='asset-title']/a[contains(.,'Blogs Entry2 Title')]",
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
+				"Blogs Entry2 Content"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+			selenium.getText(
+				"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 		selenium.click(RuntimeVariables.replace(
 				"//a[@class=' taglib-icon']/span[contains(.,'Move to the Recycle Bin')]"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Error"),
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("The asset could not be found."),
+			selenium.getText("//div[@class='portlet-msg-error']"));
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(
 				"//div[@class='portlet-msg-success taglib-trash-undo']"));
+		assertFalse(selenium.isTextPresent("Blogs Entry2 Title"));
+		assertFalse(selenium.isTextPresent("Blogs Entry2 Content"));
 	}
 }

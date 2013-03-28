@@ -1,4 +1,25 @@
 <definition>
+	<command name="cpTearDown">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Blogs" />
+
+		<if>
+			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRIES_ALL_ROWS" />
+			<then>
+				<execute action="CPBlogs#click" locator-key1="ENTRIES_ALL_ROWS" />
+
+				<execute action="CPBlogs#click" locator-key1="MOVE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+			</then>
+		</if>
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+	</command>
+
 	<command name="pgAdd">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
@@ -19,24 +40,21 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
 
-	<command name="cpTearDown">
+	<command name="pgMoveToRecycleBin">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 
-		<execute action="Home#click" locator1="link=Blogs" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 
-		<if>
-			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRIES_ALL_ROWS" />
-			<then>
-				<execute action="CPBlogs#click" locator-key1="ENTRIES_ALL_ROWS" />
+		<execute action="PGBlogs#click" locator-key1="ENTRY_MOVE_RECYCLE_BIN_1" />
 
-				<execute action="CPBlogs#click" locator-key1="MOVE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-			</then>
-		</if>
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_UNDO" value1="The selected item was moved to the Recycle Bin. Undo" />
 
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
 	</command>
 </definition>

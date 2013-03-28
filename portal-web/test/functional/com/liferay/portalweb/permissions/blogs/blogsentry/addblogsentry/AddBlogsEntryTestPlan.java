@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry;
 
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.guest.GuestTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.guestinline.GuestInlineTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgrole.OrgRoleTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgroleinline.OrgRoleInlineTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.regrole.RegRoleTests;
@@ -41,6 +43,8 @@ public class AddBlogsEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(RegRoleTests.suite());
 		testSuite.addTest(OrgRoleInlineTests.suite());
 		testSuite.addTest(OrgRoleTests.suite());
+		testSuite.addTest(GuestInlineTests.suite());
+		testSuite.addTest(GuestTests.suite());
 
 		return testSuite;
 	}

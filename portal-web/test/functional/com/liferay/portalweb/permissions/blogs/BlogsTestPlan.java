@@ -15,6 +15,7 @@
 package com.liferay.portalweb.permissions.blogs;
 
 import com.liferay.portalweb.permissions.blogs.blogsentry.BlogsEntryTestPlan;
+import com.liferay.portalweb.permissions.blogs.portlet.PortletTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -29,6 +30,7 @@ public class BlogsTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(BlogsEntryTestPlan.suite());
+		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;
 	}

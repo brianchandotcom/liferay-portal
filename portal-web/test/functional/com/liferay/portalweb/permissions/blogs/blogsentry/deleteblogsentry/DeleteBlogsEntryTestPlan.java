@@ -14,6 +14,9 @@
 
 package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry;
 
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.guest.GuestTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.guestinline.GuestInlineTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.ownerinline.OwnerInlineTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrole.RegRoleTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regroleinline.RegRoleInlineTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrolescopesite.RegRoleScopeSiteTests;
@@ -32,6 +35,9 @@ public class DeleteBlogsEntryTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(GuestInlineTests.suite());
+		testSuite.addTest(GuestTests.suite());
+		testSuite.addTest(OwnerInlineTests.suite());
 		testSuite.addTest(RegRoleInlineTests.suite());
 		testSuite.addTest(RegRoleTests.suite());
 		testSuite.addTest(RegRoleScopeSiteTests.suite());

@@ -292,15 +292,6 @@ public class MessageListenerImpl implements MessageListener {
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
 	}
 
-	protected String[] getMessageIdStringParts(String messageIdString) {
-		int pos = messageIdString.indexOf(CharPool.AT);
-
-		String target = messageIdString.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
-
-		return StringUtil.split(target, CharPool.PERIOD);
-	}
-
 	protected long getMessageId(String messageIdString) {
 		String[] parts = getMessageIdStringParts(messageIdString);
 
@@ -316,6 +307,15 @@ public class MessageListenerImpl implements MessageListener {
 		else {
 			return MBUtil.getParentMessageIdString(message);
 		}
+	}
+
+	protected String[] getMessageIdStringParts(String messageIdString) {
+		int pos = messageIdString.indexOf(CharPool.AT);
+
+		String target = messageIdString.substring(
+			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
+
+		return StringUtil.split(target, CharPool.PERIOD);
 	}
 
 	protected int getOffset() {

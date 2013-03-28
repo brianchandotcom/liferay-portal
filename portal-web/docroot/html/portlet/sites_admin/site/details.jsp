@@ -114,6 +114,7 @@ if (showPrototypes && (group != null)) {
 
 	<aui:select label="membership-type" name="type">
 		<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
+		<aui:option label="limited-to-parent-site-members" value="<%= GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS %>" />
 		<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
 		<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
 	</aui:select>

@@ -14,9 +14,8 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 
@@ -33,11 +32,6 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 	public void checkMembership(
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
-	}
-
-	public void checkRoles(
-		List<UserGroupRole> addUserGroupRoles,
-		List<UserGroupRole> removeUserGroupRoles) {
 	}
 
 	@Override
@@ -64,11 +58,6 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
 	}
 
-	public void propagateRoles(
-		List<UserGroupRole> addUserGroupRoles,
-		List<UserGroupRole> removeUserGroupRoles) {
-	}
-
 	@Override
 	public void verifyPolicy(Group group) {
 	}
@@ -77,15 +66,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes,
-		String oldTypeSettings) {
-	}
-
-	public void verifyPolicy(Role role) {
-	}
-
-	public void verifyPolicy(
-		Role role, Role oldRole,
-		Map<String, Serializable> oldExpandoAttributes) {
+		UnicodeProperties oldTypeSettingsProperties) {
 	}
 
 }

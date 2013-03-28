@@ -124,6 +124,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean isLayoutSetPrototype();
 
+	public boolean isLimitedToParentSiteMembers();
+
 	public boolean isOrganization();
 
 	public boolean isRegularSite();

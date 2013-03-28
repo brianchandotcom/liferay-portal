@@ -86,6 +86,7 @@ public interface OrganizationMembershipPolicy {
 			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException, SystemException;
+
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
 	public void verifyPolicy(

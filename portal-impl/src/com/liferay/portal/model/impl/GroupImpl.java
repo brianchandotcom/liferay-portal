@@ -484,6 +484,17 @@ public class GroupImpl extends GroupBaseImpl {
 		return hasClassName(LayoutSetPrototype.class);
 	}
 
+	public boolean isLimitedToParentSiteMembers() {
+		if ((getParentGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) &&
+			(getType() ==
+				GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isOrganization() {
 		return hasClassName(Organization.class);
 	}

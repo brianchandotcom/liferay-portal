@@ -31,14 +31,23 @@ import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.service.persistence.UserGroupRoleActionableDynamicQuery;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
 public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
+
+	public void checkRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
+		throws PortalException, SystemException {
+	}
 
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long groupId)
@@ -170,6 +179,12 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return false;
 	}
 
+	public void propagateRoles(
+			List<UserGroupRole> addUserGroupRoles,
+			List<UserGroupRole> removeUserGroupRoles)
+		throws PortalException, SystemException {
+	}
+
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			new GroupActionableDynamicQuery() {
@@ -218,6 +233,14 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		throws PortalException, SystemException {
 
 		verifyPolicy(group, null, null, null, null, null);
+	}
+
+	public void verifyPolicy(Role role) {
+	}
+
+	public void verifyPolicy(
+		Role role, Role oldRole,
+		Map<String, Serializable> oldExpandoAttributes) {
 	}
 
 }

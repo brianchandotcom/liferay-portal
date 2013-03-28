@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -839,13 +840,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			Map<String, Serializable> oldExpandoAttributes =
 				oldExpandoBridge.getAttributes();
 
+			UnicodeProperties oldTypeSettingsProperties =
+				oldGroup.getTypeSettingsProperties();
+
 			group = groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type, friendlyURL,
 				active, serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, oldAssetCategories, oldAssetTags,
-				oldExpandoAttributes, null);
+				oldExpandoAttributes, oldTypeSettingsProperties);
 
 			return group;
 		}
@@ -878,12 +882,13 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if (group.isSite()) {
 			Group oldGroup = group;
 
-			String oldTypeSettings = oldGroup.getTypeSettings();
+			UnicodeProperties oldTypeSettingsProperties =
+				oldGroup.getTypeSettingsProperties();
 
 			group = groupLocalService.updateGroup(groupId, typeSettings);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
-				group, oldGroup, null, null, null, oldTypeSettings);
+				group, oldGroup, null, null, null, oldTypeSettingsProperties);
 
 			return group;
 		}

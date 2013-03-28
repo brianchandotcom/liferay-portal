@@ -30,8 +30,11 @@ import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery
 import com.liferay.portal.service.persistence.UserGroupRoleActionableDynamicQuery;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -39,6 +42,11 @@ import java.util.List;
  */
 public abstract class BaseOrganizationMembershipPolicy
 	implements OrganizationMembershipPolicy {
+
+	public void checkRoles(
+		List<UserGroupRole> addUserGroupRoles,
+		List<UserGroupRole> removeUserGroupRoles) {
+	}
 
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long organizationId)
@@ -193,6 +201,11 @@ public abstract class BaseOrganizationMembershipPolicy
 		return false;
 	}
 
+	public void propagateRoles(
+		List<UserGroupRole> addUserGroupRoles,
+		List<UserGroupRole> removeUserGroupRoles) {
+	}
+
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery organizationActionableDynamicQuery =
 			new OrganizationActionableDynamicQuery() {
@@ -234,6 +247,14 @@ public abstract class BaseOrganizationMembershipPolicy
 		throws PortalException, SystemException {
 
 		verifyPolicy(organization, null, null, null, null);
+	}
+
+	public void verifyPolicy(Role role) {
+	}
+
+	public void verifyPolicy(
+		Role role, Role oldRole,
+		Map<String, Serializable> oldExpandoAttributes) {
 	}
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -295,7 +296,13 @@ public class Field implements Serializable {
 			locale = LocaleUtil.getDefault();
 		}
 
-		return _valuesMap.get(locale);
+		List<Serializable> values = _valuesMap.get(locale);
+
+		if (values == null) {
+			return Collections.emptyList();
+		}
+
+		return values;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Field.class);

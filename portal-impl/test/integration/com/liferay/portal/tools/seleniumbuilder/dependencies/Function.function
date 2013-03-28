@@ -5,11 +5,11 @@
 		<execute selenium="selenium" />
 
 		<if>
-			<condition function="IsFunction#isFunction" />
+			<condition function="Function#isFunction" />
 		</if>
 
 		<if>
-			<condition function="isFunction" />
+			<condition function="Function#isFunction" />
 			<then>
 				<execute function="function" />
 			</then>

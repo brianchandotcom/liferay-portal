@@ -102,14 +102,6 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testFunctionExecuteElement1003() throws Exception {
-		test(
-			"FunctionExecuteElement1003.function",
-			"Error 1005: Invalid function attribute in " + _DIR_NAME +
-				"/FunctionExecuteElement1003.function:3");
-	}
-
-	@Test
 	public void testFunctionExecuteElement1004_1() throws Exception {
 		test(
 			"FunctionExecuteElement1004_1.function",
@@ -125,6 +117,14 @@ public class SeleniumBuilderTest {
 				_DIR_NAME + "/FunctionExecuteElement1004_2.function:3");
 	}
 
+	@Test
+	public void testFunctionExecuteElement1006() throws Exception {
+		test(
+			"FunctionExecuteElement1006.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionExecuteElement1006.function:3");
+	}
+
 	protected void test(String fileName) throws Exception {
 		test(fileName, null);
 	}
@@ -134,7 +134,7 @@ public class SeleniumBuilderTest {
 			_seleniumBuilderFileUtil.getRootElement(_DIR_NAME + "/" + fileName);
 		}
 		catch (IllegalArgumentException e) {
-			Assert.assertEquals(e.getMessage(), errorMessage);
+			Assert.assertEquals(errorMessage, e.getMessage());
 		}
 	}
 

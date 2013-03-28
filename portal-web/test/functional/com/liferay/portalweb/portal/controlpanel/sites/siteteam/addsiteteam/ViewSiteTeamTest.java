@@ -36,6 +36,8 @@ public class ViewSiteTeamTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible(
+				"//a[contains(@id,'groupSelectorButton')]/span"));
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
 		selenium.waitForVisible(

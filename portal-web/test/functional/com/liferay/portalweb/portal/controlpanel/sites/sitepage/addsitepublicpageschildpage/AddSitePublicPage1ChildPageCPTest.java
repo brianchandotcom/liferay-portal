@@ -62,10 +62,10 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
 					RuntimeVariables.replace("Manage Pages"));
-				selenium.waitForVisible("//li/ul/li/div/div[3]/a");
+				selenium.waitForVisible("//li/ul/li/div/div[2]/a");
 				assertEquals(RuntimeVariables.replace("Public Page1"),
-					selenium.getText("//li/ul/li/div/div[3]/a"));
-				selenium.clickAt("//li/ul/li/div/div[3]/a",
+					selenium.getText("//li/ul/li/div/div[2]/a"));
+				selenium.clickAt("//li/ul/li/div/div[2]/a",
 					RuntimeVariables.replace("Public Page1"));
 				selenium.waitForValue("//input[@id='_156_name_en_US']",
 					"Public Page1");
@@ -106,9 +106,9 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForVisible("//li/ul/li/ul/li/div/div[3]/a");
+				selenium.waitForVisible("//li/ul/li/ul/li/div/div[2]/a");
 				assertEquals(RuntimeVariables.replace("Public Page1 Child Page"),
-					selenium.getText("//li/ul/li/ul/li/div/div[3]/a"));
+					selenium.getText("//li/ul/li/ul/li/div/div[2]/a"));
 
 			case 100:
 				label = -1;

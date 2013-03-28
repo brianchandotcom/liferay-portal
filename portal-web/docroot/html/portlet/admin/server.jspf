@@ -727,11 +727,9 @@ serverURL.setParameter("tabs3", tabs3);
 
 					<c:choose>
 						<c:when test="<%= ShutdownUtil.isInProcess() %>">
-
 							<aui:button onClick="<%= taglibShutdown %>" value="cancel-shutdown" />
 						</c:when>
 						<c:otherwise>
-
 							<aui:fieldset>
 								<aui:input label="number-of-minutes" name="minutes" size="3" type="text" />
 

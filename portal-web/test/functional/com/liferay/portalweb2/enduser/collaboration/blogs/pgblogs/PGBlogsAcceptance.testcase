@@ -1,32 +1,29 @@
 <definition>
+	<var name="pageName" value="Blogs Page" />
+	<var name="portletName" value="Blogs" />
+
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
 	</set-up>
 
 	<command name="AddBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
-
-		<execute macro="Page#pgAdd" />
-
-		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="BlogsEntry#pgAdd" />
 	</command>
 
-	<command name="DeleteBlogsEntry">
+	<command name="MoveToRecycleBinBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
-
-		<execute macro="Page#pgAdd" />
-
-		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="BlogsEntry#pgAdd" />
+
+		<execute macro="BlogsEntry#pgMoveToRecycleBin" />
 	</command>
 
 	<tear-down>

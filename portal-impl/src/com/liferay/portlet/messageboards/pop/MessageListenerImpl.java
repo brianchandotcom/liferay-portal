@@ -72,8 +72,8 @@ public class MessageListenerImpl implements MessageListener {
 			String messageIdString = getMessageIdString(recipient, message);
 
 			if ((messageIdString == null) ||
-				(!messageIdString.startsWith(
-					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset()))) {
+				!messageIdString.startsWith(
+					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset())) {
 
 				return false;
 			}
@@ -142,7 +142,6 @@ public class MessageListenerImpl implements MessageListener {
 
 			long groupId = 0;
 			long categoryId = getCategoryId(messageIdString);
-			long messageId = getMessageId(messageIdString);
 
 			try {
 				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
@@ -151,8 +150,10 @@ public class MessageListenerImpl implements MessageListener {
 				groupId = category.getGroupId();
 
 				if (category.isRoot()) {
+					long messageId = getMessageId(messageIdString);
+
 					MBMessage threadMessage =
-							MBMessageLocalServiceUtil.fetchMBMessage(messageId);
+						MBMessageLocalServiceUtil.fetchMBMessage(messageId);
 
 					if (threadMessage != null) {
 						groupId = threadMessage.getGroupId();
@@ -268,7 +269,7 @@ public class MessageListenerImpl implements MessageListener {
 	protected long getCategoryId(String messageIdString) {
 		String[] parts = getMessageIdStringParts(messageIdString);
 
-		return GetterUtil.getLong(parts[MB_CATEGORY_ID_INDEX]);
+		return GetterUtil.getLong(parts[0]);
 	}
 
 	protected Company getCompany(String messageIdString) throws Exception {
@@ -303,7 +304,7 @@ public class MessageListenerImpl implements MessageListener {
 	protected long getMessageId(String messageIdString) {
 		String[] parts = getMessageIdStringParts(messageIdString);
 
-		return GetterUtil.getLong(parts[MB_MESSAGE_ID_INDEX]);
+		return GetterUtil.getLong(parts[1]);
 	}
 
 	protected String getMessageIdString(String recipient, Message message)
@@ -381,7 +382,5 @@ public class MessageListenerImpl implements MessageListener {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MessageListenerImpl.class);
-	private static int MB_CATEGORY_ID_INDEX = 0;
-	private static int MB_MESSAGE_ID_INDEX = 1;
 
 }

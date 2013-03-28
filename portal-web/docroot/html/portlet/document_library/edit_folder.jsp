@@ -258,7 +258,7 @@ if (workflowEnabled) {
 							for (DLFileEntryType fileEntryType : fileEntryTypes) {
 							%>
 
-								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escapeAttribute(fileEntryType.getName()) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
+								<aui:option id='<%= renderResponse.getNamespace() + "defaultFileEntryTypeId-" + fileEntryType.getFileEntryTypeId() %>' label="<%= HtmlUtil.escape(fileEntryType.getName()) %>" selected="<%= (fileEntryType.getFileEntryTypeId() == defaultFileEntryTypeId) %>" value="<%= fileEntryType.getFileEntryTypeId() %>" />
 
 							<%
 							}

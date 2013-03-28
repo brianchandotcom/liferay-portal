@@ -129,31 +129,8 @@ public class DDMImpl implements DDM {
 				continue;
 			}
 
-			Field field = new Field();
-
-			field.setDDMStructureId(ddmStructureId);
-
-			String languageId = GetterUtil.getString(
-				serviceContext.getAttribute("languageId"),
-				serviceContext.getLanguageId());
-
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-			String defaultLanguageId = GetterUtil.getString(
-				serviceContext.getAttribute("defaultLanguageId"));
-
-			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-
-			if (ddmStructure.isFieldPrivate(fieldName)) {
-				locale = LocaleUtil.getDefault();
-
-				defaultLocale = LocaleUtil.getDefault();
-			}
-
-			field.setDefaultLocale(defaultLocale);
-
-			field.setName(fieldName);
-			field.setValues(locale, fieldValues);
+			Field field = createField(
+				ddmStructure, fieldName, fieldValues, serviceContext);
 
 			fields.put(field);
 		}
@@ -370,14 +347,34 @@ public class DDMImpl implements DDM {
 		List<Serializable> fieldValues = new ArrayList<Serializable>(
 			fieldNames.size());
 
-		for (String fieldNameValue : fieldNames) {
+		for (int i = 0; i < fieldNames.size(); i++) {
 			InputStream inputStream = null;
 
 			try {
-				String fileName = uploadRequest.getFileName(fieldNameValue);
+				String fileName = uploadRequest.getFileName(fieldNames.get(i));
 
 				inputStream = uploadRequest.getFileAsStream(
-					fieldNameValue, true);
+					fieldNames.get(i), true);
+
+				if ((inputStream == null) && fields.contains(fieldName)) {
+					Field field = fields.get(fieldName);
+
+					Serializable fieldValue = field.getValue(
+						field.getDefaultLocale(), i);
+
+					if (fieldValue != null) {
+						JSONObject recordFileJSONObject =
+							JSONFactoryUtil.createJSONObject(
+								String.valueOf(fieldValue));
+
+						fileName = recordFileJSONObject.getString("name");
+
+						inputStream = DLStoreUtil.getFileAsStream(
+							serviceContext.getCompanyId(),
+							CompanyConstants.SYSTEM,
+							recordFileJSONObject.getString("path"));
+					}
+				}
 
 				if (inputStream != null) {
 					String filePath = storeFieldFile(
@@ -398,21 +395,55 @@ public class DDMImpl implements DDM {
 
 					fieldValues.add(fieldValue);
 				}
-				else if (fields.contains(fieldName)) {
-					continue;
-				}
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
 			}
 		}
 
-		Field field = new Field(
-			structureId, fieldName, fieldValues, serviceContext.getLocale());
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			structureId);
+
+		Field field = createField(
+			ddmStructure, fieldName, fieldValues, serviceContext);
 
 		fields.put(field);
 
 		StorageEngineUtil.update(storageId, fields, true, serviceContext);
+	}
+
+	protected Field createField(
+			DDMStructure ddmStructure, String fieldName,
+			List<Serializable> fieldValues, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Field field = new Field();
+
+		field.setDDMStructureId(ddmStructure.getStructureId());
+
+		String languageId = GetterUtil.getString(
+			serviceContext.getAttribute("languageId"),
+			serviceContext.getLanguageId());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		String defaultLanguageId = GetterUtil.getString(
+			serviceContext.getAttribute("defaultLanguageId"));
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		if (ddmStructure.isFieldPrivate(fieldName)) {
+			locale = LocaleUtil.getDefault();
+
+			defaultLocale = LocaleUtil.getDefault();
+		}
+
+		field.setDefaultLocale(defaultLocale);
+
+		field.setName(fieldName);
+		field.setValues(locale, fieldValues);
+
+		return field;
 	}
 
 	protected DDMStructure getDDMStructure(

@@ -70,6 +70,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_EDIT_1</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_EDIT_2</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_EDIT_3</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_MOVE_RECYCLE_BIN_1</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[1]</td>
 	<td></td>

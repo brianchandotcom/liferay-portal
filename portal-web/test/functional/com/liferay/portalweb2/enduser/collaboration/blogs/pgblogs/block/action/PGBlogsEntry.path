@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>PGBlogsEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogsEntry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBlogsEntry</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_SUCCESS</td>
+	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD</td>
+	<td>//fieldset/div/a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY</td>
+	<td>//input[@value='Reply']</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>COMMENTS_BODY</td>
+	<td>//textarea[@name='_33_postReplyBody0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_1</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_2</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_3</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

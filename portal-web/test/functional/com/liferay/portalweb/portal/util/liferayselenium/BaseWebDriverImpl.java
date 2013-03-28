@@ -168,6 +168,10 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.assertVisible(this, locator);
 	}
 
+	public void assertXMLText(String xpath, String text) {
+		LiferaySeleniumHelper.assertXMLText(this, xpath, text);
+	}
+
 	@Override
 	public void clickAndWait(String locator) {
 		super.click(locator);
@@ -269,6 +273,10 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public String getNumberIncrement(String value) {
 		return LiferaySeleniumHelper.getNumberIncrement(value);
+	}
+
+	public String getPageSource() {
+		return super.getPageSource();
 	}
 
 	@Override

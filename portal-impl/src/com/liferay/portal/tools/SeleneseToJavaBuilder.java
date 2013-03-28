@@ -599,7 +599,8 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("addSelection") || param1.equals("clickAt") ||
+			if (param1.equals("assertXMLText") || 
+				param1.equals("addSelection") || param1.equals("clickAt") || 
 				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
 				param1.equals("keyPress") || param1.equals("keyUp") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||

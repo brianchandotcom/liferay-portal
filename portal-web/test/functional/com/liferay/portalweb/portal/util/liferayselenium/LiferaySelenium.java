@@ -67,6 +67,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertVisible(String locator) throws Exception;
 
+	public void assertXMLText(String xpath, String text);
+
 	public void clickAndWait(String locator);
 
 	public void clickAtAndWait(String locator, String coordString);
@@ -92,6 +94,8 @@ public interface LiferaySelenium extends Selenium {
 	public String getNumberDecrement(String value);
 
 	public String getNumberIncrement(String value);
+
+	public String getPageSource();
 
 	public String getPrimaryTestSuiteName();
 

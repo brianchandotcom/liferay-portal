@@ -20,6 +20,21 @@ import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.xml.sax.InputSource;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -260,6 +275,64 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertXMLText(
+		LiferaySelenium liferaySelenium, String xpath, String text) {
+
+		XPathFactory factory = XPathFactory.newInstance();
+
+		XPath xPath = factory.newXPath();
+
+		try {
+			XPathExpression xPathExpression = xPath.compile(xpath);
+
+			String pageSource = liferaySelenium.getHtmlSource();
+
+			int x = pageSource.indexOf("<html");
+
+			pageSource = pageSource.substring(x);
+
+			StringReader stringReader = new StringReader(pageSource);
+
+			InputSource inputSource = new InputSource(stringReader);
+
+			DocumentBuilder builder =
+				DocumentBuilderFactory.newInstance().newDocumentBuilder();
+
+			Document document = builder.parse(inputSource);
+
+			NodeList nodes = (NodeList)xPathExpression.evaluate(
+				document, XPathConstants.NODESET);
+
+			if (nodes.getLength() < 1) {
+				BaseTestCase.fail(
+					"xpath " + xpath + " does not return any nodes.");
+			}
+			else {
+				boolean contains = false;
+
+				for (int i = 0; i < nodes.getLength(); i++) {
+					Node node = nodes.item(i);
+
+					String nodeText = node.getTextContent();
+
+					if (nodeText.equals(text)) {
+						contains = true;
+						break;
+					}
+				}
+
+				if (!contains) {
+					BaseTestCase.fail(
+						"xpath " + xpath + " does not match text \"" +
+						text + "\".");
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void echo(String message) {
 		System.out.println(message);
 	}
@@ -274,6 +347,10 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static String getPageSource(LiferaySelenium liferaySelenium) {
+		return liferaySelenium.getPageSource();
 	}
 
 	public static boolean isConfirmation(

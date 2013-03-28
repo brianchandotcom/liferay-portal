@@ -13,8 +13,6 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
 	<#include "ddl.ftl">
 
-	<#include "dl.ftl">
-
 	<#include "journal_article.ftl">
 
 	<#include "mb.ftl">
@@ -22,6 +20,8 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 	<#include "users.ftl">
 
 	<#include "wiki.ftl">
+
+	${sampleSQLBuilder.insertDLFolders(groupId, 0, 1, dataFactory.defaultDLDDMStructureId)}
 
 	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
 
@@ -32,4 +32,6 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 	<#assign publicPageCount = publicLayouts?size + maxDDLRecordSetCount + maxJournalArticleCount>
 
 	${sampleSQLBuilder.insertGroup(group, publicPageCount)}
+
+	${writerRepositoryCSV.write(groupId + ", " + group.name + "\n")}
 </#list>

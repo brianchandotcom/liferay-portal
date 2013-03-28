@@ -3,8 +3,8 @@
 		<case locator-key="ADD_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value1="Add Blog Entry" />
 		</case>
-		<case comparator="startsWith" locator-key="ENTRY_DELETE_">
-			<execute function="Click#valueClickAtAndWait" value1="Move to the Recycle Bin" />
+		<case comparator="startsWith" locator-key="ENTRY_MOVE_RECYCLE_BIN_">
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case comparator="startsWith" locator-key="ENTRY_TITLE_">
 			<execute function="Click#textClickAtAndWait" />

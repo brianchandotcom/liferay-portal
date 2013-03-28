@@ -524,7 +524,11 @@ public class SeleniumBuilderFileUtil {
 
 		if (allowedExecuteChildElementNames.length == 0) {
 			if (!elements.isEmpty()) {
-				throwValidationException(0, fileName);
+				Element element = elements.get(0);
+
+				String elementName = element.getName();
+
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 		else {
@@ -536,7 +540,7 @@ public class SeleniumBuilderFileUtil {
 				}
 				else {
 					throwValidationException(
-						1002, fileName, executeElement, elementName);
+						1002, fileName, element, elementName);
 				}
 			}
 		}
@@ -600,8 +604,7 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames);
 			}
 			else {
-				throwValidationException(
-					1002, fileName, ifElement, elementName);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}
@@ -725,7 +728,7 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames);
 			}
 			else {
-				throwValidationException(0, fileName);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}

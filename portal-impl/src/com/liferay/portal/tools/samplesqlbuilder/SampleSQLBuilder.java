@@ -36,7 +36,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
@@ -217,17 +216,6 @@ public class SampleSQLBuilder {
 		put(context, "dlFileEntry", dlFileEntry);
 
 		processTemplate(_tplDLFileEntry, context);
-	}
-
-	public void insertDLFolder(DLFolder dlFolder, long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddmStructureId", ddmStructureId);
-		put(context, "dlFolder", dlFolder);
-
-		processTemplate(_tplDLFolder, context);
 	}
 
 	public void insertDLFolders(
@@ -635,7 +623,6 @@ public class SampleSQLBuilder {
 	private File _tempDir;
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplDLFolder = _TPL_ROOT + "dl_folder.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
 	private String _tplLayout = _TPL_ROOT + "layout.ftl";

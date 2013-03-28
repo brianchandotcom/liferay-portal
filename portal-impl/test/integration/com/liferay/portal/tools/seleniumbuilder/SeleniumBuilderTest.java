@@ -41,7 +41,7 @@ public class SeleniumBuilderTest {
 	public void testFunctionCommandElement1001() throws Exception {
 		test(
 			"FunctionCommandElement1001.function",
-			"Error 1001: Missing child elements in " + _DIR_NAME +
+			"Error 1001: Missing (execute|if) child element in " + _DIR_NAME +
 				"/FunctionCommandElement1001.function:2");
 	}
 
@@ -89,7 +89,7 @@ public class SeleniumBuilderTest {
 	public void testFunctionDefinitionElement1001() throws Exception {
 		test(
 			"FunctionDefinitionElement1001.function",
-			"Error 1001: Missing child elements in " + _DIR_NAME +
+			"Error 1001: Missing (command) child element in " + _DIR_NAME +
 				"/FunctionDefinitionElement1001.function:1");
 	}
 

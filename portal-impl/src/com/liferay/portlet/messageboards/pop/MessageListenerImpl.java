@@ -84,10 +84,10 @@ public class MessageListenerImpl implements MessageListener {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 				categoryId);
 
-			if (category.getCompanyId() != company.getCompanyId()) {
-				if (0 != category.getCompanyId()) {
-					return false;
-				}
+			if ((category.getCompanyId() != company.getCompanyId()) &&
+				!category.isRoot()) {
+
+				return false;
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -150,7 +150,7 @@ public class MessageListenerImpl implements MessageListener {
 
 				groupId = category.getGroupId();
 
-				if (0 == groupId) {
+				if (category.isRoot()) {
 					MBMessage threadMessage =
 							MBMessageLocalServiceUtil.fetchMBMessage(messageId);
 

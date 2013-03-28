@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE_UNDO</td>
+	<td>//form[@id='_33_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -50,21 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_DELETE_1</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DELETE_2</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DELETE_3</td>
-	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_CONTENT_1</td>
 	<td>xpath=(//div[@class='entry-body']/div)[1]</td>
 	<td></td>
@@ -77,6 +67,21 @@
 <tr>
 	<td>ENTRY_CONTENT_3</td>
 	<td>xpath=(//div[@class='entry-body']/div)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MOVE_RECYCLE_BIN_1</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MOVE_RECYCLE_BIN_2</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MOVE_RECYCLE_BIN_3</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
 	<td></td>
 </tr>
 </tbody>

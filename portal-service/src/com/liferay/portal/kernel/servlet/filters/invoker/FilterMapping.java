@@ -246,7 +246,7 @@ public class FilterMapping {
 	private boolean _dispatcherRequest;
 	private Filter _filter;
 	private Pattern _uriJSessionIdPattern = Pattern.compile(
-		";jsessionid=[0-9A-F]*");
+		";jsessionid=.*");
 	private List<String> _urlPatterns;
 	private Pattern _urlRegexIgnorePattern;
 	private Pattern _urlRegexPattern;

@@ -40,6 +40,30 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
 
+	<command name="pgEdit">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
+
+		<execute action="PGBlogs#click" locator-key1="ENTRY_EDIT_1" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEdit#type" locator-key1="TITLE" value1="${entryTitleNew}" />
+
+		<execute action="PGBlogsEdit#type" locator-key1="CONTENT" value1="${entryContentNew}" />
+
+		<execute action="PGBlogsEdit#click" locator-key1="PUBLISH" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleNew}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContentNew}" />
+	</command>
+
 	<command name="pgMoveToRecycleBin">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

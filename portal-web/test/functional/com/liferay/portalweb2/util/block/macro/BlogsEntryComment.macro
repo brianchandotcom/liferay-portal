@@ -1,0 +1,19 @@
+<definition>
+	<command name="pgAdd">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGBlogs#click" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#click" locator-key1="COMMENTS_ADD" />
+
+		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY" value1="${entryComment}" />
+
+		<execute action="PGBlogsEntry#click" locator-key1="COMMENTS_REPLY" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="${entryComment}" />
+	</command>
+</definition>

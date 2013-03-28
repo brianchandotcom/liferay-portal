@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGBlogsEdit</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogsEdit</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBlogsEdit</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//input[@id='_33_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT</td>
+	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH</td>
+	<td>//input[@value='Publish']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

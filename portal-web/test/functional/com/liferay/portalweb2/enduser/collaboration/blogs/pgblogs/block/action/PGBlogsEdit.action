@@ -1,0 +1,16 @@
+<definition>
+	<command name="click">
+		<case comparator="startsWith" locator-key="ENTRY_TITLE_">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+		<case locator-key="PUBLISH">
+			<execute function="Click#valueClickAtAndWait" value1="Publish" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key="CONTENT">
+			<execute function="Type#typeFrame" />
+		</case>
+	</command>
+</definition>

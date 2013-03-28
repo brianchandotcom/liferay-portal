@@ -17,6 +17,31 @@
 		<execute macro="BlogsEntry#pgAdd" />
 	</command>
 
+	<command name="AddBlogsEntryComment">
+		<var name="entryComment" value="Blogs Entry Comment" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="BlogsEntry#pgAdd" />
+
+		<execute macro="BlogsEntryComment#pgAdd" />
+	</command>
+
+	<command name="EditBlogsEntry">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentNew" value="Blogs Entry ContentEdit" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitleNew" value="Blogs Entry TitleEdit" />
+
+		<execute macro="BlogsEntry#pgAdd" />
+
+		<execute macro="BlogsEntry#pgEdit" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleNew}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContentNew}" />
+	</command>
+
 	<command name="MoveToRecycleBinBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

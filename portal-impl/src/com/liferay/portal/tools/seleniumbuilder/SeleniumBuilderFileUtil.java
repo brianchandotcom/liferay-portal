@@ -304,7 +304,7 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1002) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid element in " + suffix);
+				prefix + "Invalid " + string + " element in " + suffix);
 		}
 		else if (errorCode == 1003) {
 			throw new IllegalArgumentException(
@@ -356,7 +356,7 @@ public class SeleniumBuilderFileUtil {
 			if (!ArrayUtil.contains(
 					allowedCommandChildElementNames, elementName)) {
 
-				throwValidationException(1002, fileName, element);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 
 			if (elementName.equals("execute")) {
@@ -380,7 +380,7 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames);
 			}
 			else {
-				throwValidationException(1002, fileName, element);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}
@@ -523,7 +523,8 @@ public class SeleniumBuilderFileUtil {
 					validateVarElement(fileName, element);
 				}
 				else {
-					throwValidationException(1002, fileName, executeElement);
+					throwValidationException(
+						1002, fileName, executeElement, elementName);
 				}
 			}
 		}
@@ -555,7 +556,7 @@ public class SeleniumBuilderFileUtil {
 					new String[] {"function", "selenium"}, new String[0]);
 			}
 			else {
-				throwValidationException(1002, fileName, element);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}
@@ -587,7 +588,8 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames);
 			}
 			else {
-				throwValidationException(1002, fileName, ifElement);
+				throwValidationException(
+					1002, fileName, ifElement, elementName);
 			}
 		}
 	}
@@ -620,7 +622,8 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(1002, fileName, rootElement);
+				throwValidationException(
+					1002, fileName, rootElement, elementName);
 			}
 		}
 	}

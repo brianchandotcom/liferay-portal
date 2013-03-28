@@ -49,7 +49,7 @@ public class SeleniumBuilderTest {
 	public void testFunctionCommandElement1002() throws Exception {
 		test(
 			"FunctionCommandElement1002.function",
-			"Error 1002: Invalid element in " + _DIR_NAME +
+			"Error 1002: Invalid var element in " + _DIR_NAME +
 				"/FunctionCommandElement1002.function:3");
 	}
 
@@ -97,7 +97,7 @@ public class SeleniumBuilderTest {
 	public void testFunctionDefinitionElement1002() throws Exception {
 		test(
 			"FunctionDefinitionElement1002.function",
-			"Error 1002: Invalid element in " + _DIR_NAME +
+			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
 				"/FunctionDefinitionElement1002.function:2");
 	}
 

@@ -319,6 +319,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid " + string + " attribute in " + suffix);
 		}
+		else if (errorCode == 1006) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid " + string + " attribute value in " + suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}
@@ -447,7 +451,7 @@ public class SeleniumBuilderFileUtil {
 				!function.matches(allowedExecuteAttributeValuesRegex)) {
 
 				throwValidationException(
-					1005, fileName, executeElement, "function");
+					1006, fileName, executeElement, "function");
 			}
 
 			for (Attribute attribute : attributes) {
@@ -458,13 +462,15 @@ public class SeleniumBuilderFileUtil {
 					!attributeName.startsWith("locator") &&
 					!attributeName.startsWith("value")) {
 
-					throwValidationException(0, fileName);
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
 				}
 
 				if (attributeName.equals("locator") ||
 					attributeName.equals("value")) {
 
-					throwValidationException(0, fileName);
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
 				}
 			}
 		}
@@ -475,8 +481,13 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(0, fileName);
 			}
 		}
-		else if (Validator.isNotNull(selenium) &&
-				 selenium.matches(allowedExecuteAttributeValuesRegex)) {
+		else if (selenium != null) {
+			if (Validator.isNull(selenium) &&
+				!selenium.matches(allowedExecuteAttributeValuesRegex)) {
+
+				throwValidationException(
+					1006, fileName, executeElement, "selenium");
+			}
 
 			for (Attribute attribute : attributes) {
 				String attributeName = attribute.getName();
@@ -486,7 +497,8 @@ public class SeleniumBuilderFileUtil {
 					!attributeName.equals("line-number") &&
 					!attributeName.equals("selenium")) {
 
-					throwValidationException(0, fileName);
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
 				}
 			}
 		}

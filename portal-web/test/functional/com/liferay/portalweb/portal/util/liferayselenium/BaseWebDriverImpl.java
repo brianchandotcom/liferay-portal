@@ -297,6 +297,10 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	public void makeVisible(String locator) {
+		super.makeVisible(locator);
+	}
+
 	public void paste(String location) {
 		super.type(location, _clipBoard);
 	}

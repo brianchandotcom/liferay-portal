@@ -563,8 +563,13 @@ public class SeleniumBuilderFileUtil {
 			String elementName = element.getName();
 
 			if (elementName.equals("command")) {
-				if (Validator.isNull(element.attributeValue("name"))) {
+				String attributeName = element.attributeValue("name");
+
+				if (attributeName == null) {
 					throwValidationException(1003, fileName, element, "name");
+				}
+				else if (Validator.isNull(attributeName)) {
+					throwValidationException(1006, fileName, element, "name");
 				}
 
 				validateCommandElement(

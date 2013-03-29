@@ -30,6 +30,4 @@ insert into SocialActivity values (${socialActivity.activityId}, ${socialActivit
 
 insert into DLFileEntryMetadata values ('${dlFileEntryMetadata.uuid}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${dlFileEntryMetadata.DDMStorageId}, ${dlFileEntryMetadata.DDMStructureId}, ${dlFileEntryMetadata.fileEntryTypeId}, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
 
-<#assign ddmStructureLink = dataFactory.newDDMStructureLink(dlFileEntryMetadata)>
-
-insert into DDMStructureLink values (${ddmStructureLink.structureLinkId},${ ddmStructureLink.classNameId}, ${ddmStructureLink.classPK}, ${ddmStructureLink.structureId});
+<@insertDDMStructureLink _entry = dlFileEntryMetadata/>

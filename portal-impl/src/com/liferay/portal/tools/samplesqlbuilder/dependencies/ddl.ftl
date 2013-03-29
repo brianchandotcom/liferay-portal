@@ -15,9 +15,7 @@
 
 		insert into DDLRecordSet values ('${ddlRecordSet.uuid}', ${ddlRecordSet.recordSetId}, ${ddlRecordSet.groupId}, ${ddlRecordSet.companyId}, ${ddlRecordSet.userId}, '${ddlRecordSet.userName}', '${dataFactory.getDateString(ddlRecordSet.createDate)}', '${dataFactory.getDateString(ddlRecordSet.modifiedDate)}', ${ddlRecordSet.DDMStructureId}, '${ddlRecordSet.recordSetKey}', '${ddlRecordSet.name}', '${ddlRecordSet.description}', ${ddlRecordSet.minDisplayRows}, ${ddlRecordSet.scope});
 
-		<#assign ddmStructureLink = dataFactory.newDDMStructureLink(ddlRecordSet)>
-
-		insert into DDMStructureLink values (${ddmStructureLink.structureLinkId},${ ddmStructureLink.classNameId}, ${ddmStructureLink.classPK}, ${ddmStructureLink.structureId});
+		<@insertDDMStructureLink _entry = ddlRecordSet/>
 
 		<#if (maxDDLRecordCount > 0)>
 			<#list 1..maxDDLRecordCount as ddlRecordCount>

@@ -25,6 +25,7 @@ import com.liferay.portalweb.socialofficehome.sites.site.searchsitesdirectory.Se
 import com.liferay.portalweb.socialofficehome.sites.site.searchsitessite.SearchSitesSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.sousfavoritesite1.SOUs_FavoriteSite1Tests;
 import com.liferay.portalweb.socialofficehome.sites.site.sousjoinsitessite.SOUs_JoinSitesSiteTests;
+import com.liferay.portalweb.socialofficehome.sites.site.sousleavesite.SOUs_LeaveSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessite.SOUs_SearchSitesSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.sousviewsiteslinksauserprofile.SOUs_ViewSitesLinkSAUserProfileTests;
 import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.ViewSitesDirectoryTests;
@@ -52,6 +53,7 @@ public class SiteTestPlan extends BaseTestSuite {
 		testSuite.addTest(SearchSitesSiteTests.suite());
 		testSuite.addTest(SOUs_FavoriteSite1Tests.suite());
 		testSuite.addTest(SOUs_JoinSitesSiteTests.suite());
+		testSuite.addTest(SOUs_LeaveSiteTests.suite());
 		testSuite.addTest(SOUs_SearchSitesSiteTests.suite());
 		testSuite.addTest(SOUs_ViewSitesLinkSAUserProfileTests.suite());
 		testSuite.addTest(ViewSitesDirectoryTests.suite());

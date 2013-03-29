@@ -27,14 +27,6 @@
 			</#list>
 		</#if>
 
-		<#assign portletPreferencesList = dataFactory.newPortletPreferences(layout.plid, portletId, ddlRecordSet)>
-
-		<#list portletPreferencesList as portletPreferences>
-			insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
-
-			<#assign primKey = dataFactory.getPortletPermissionPrimaryKey(layout.plid, portletPreferences.portletId)>
-
-			${sampleSQLBuilder.insertResourcePermission(portletPreferences.portletId, primKey)}
-		</#list>
+		<@insertPortletPreferences _plid = layout.plid _entry = ddlRecordSet _portletId = portletId/>
 	</#list>
 </#if>

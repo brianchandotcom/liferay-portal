@@ -39,3 +39,21 @@
 
 	insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, ${dlSync.createDate}, ${dlSync.modifiedDate}, ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
 </#macro>
+
+<#-- insert PortletPreferences -->
+
+<#macro insertPortletPreferences _plid _entry _portletId = 'null'>
+	<#if (_portletId = 'null')>
+		<#local portletPreferencesList = dataFactory.newPortletPreferences(_plid, _entry)>
+	<#else>
+		<#local portletPreferencesList = dataFactory.newPortletPreferences(_plid, _portletId, _entry)>
+	</#if>
+
+	<#list portletPreferencesList as portletPreferences>
+		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
+
+		<#local primKey = dataFactory.getPortletPermissionPrimaryKey(layout.plid, portletPreferences.portletId)>
+
+		${sampleSQLBuilder.insertResourcePermission(portletPreferences.portletId, primKey)}
+	</#list>
+</#macro>

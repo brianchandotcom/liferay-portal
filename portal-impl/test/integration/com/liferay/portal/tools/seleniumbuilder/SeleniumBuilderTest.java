@@ -70,11 +70,11 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testFunctionCommandElement1003_3() throws Exception {
+	public void testFunctionCommandElement1006() throws Exception {
 		test(
-			"FunctionCommandElement1003_3.function",
-			"Error 1003: Missing name attribute in " + _DIR_NAME +
-				"/FunctionCommandElement1003_3.function:2");
+			"FunctionCommandElement1006.function",
+			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
+				"/FunctionCommandElement1006.function:2");
 	}
 
 	@Test

@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#assign groupIds = dataFactory.getNewUserGroupIds(group.groupId)>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
 

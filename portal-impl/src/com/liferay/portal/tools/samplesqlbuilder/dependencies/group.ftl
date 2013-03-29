@@ -1,4 +1,4 @@
-<#setting number_format = "0">
+<#include "macro.ftl">
 
 insert into Group_ values (${group.groupId}, ${group.companyId}, ${group.creatorUserId}, ${group.classNameId}, ${group.classPK}, ${group.parentGroupId}, ${group.liveGroupId}, '${group.treePath}', '${group.name}', '${group.description}', ${group.type}, '${group.typeSettings}', '${group.friendlyURL}', ${group.site?string}, ${group.active?string});
 

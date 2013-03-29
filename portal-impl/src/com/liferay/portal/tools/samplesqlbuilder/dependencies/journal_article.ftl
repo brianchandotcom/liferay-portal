@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#list 1..maxJournalArticleCount as journalArticleCount>
 	<#assign journalArticleResource = dataFactory.newJournalArticleResource(groupId)>
 

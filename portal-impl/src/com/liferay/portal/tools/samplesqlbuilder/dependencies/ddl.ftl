@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#if (maxDDLRecordSetCount > 0)>
 	<#assign ddmStructure = dataFactory.newDDLDDMStructure(groupId)>
 

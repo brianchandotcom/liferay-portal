@@ -1,4 +1,4 @@
-<#setting number_format = "0">
+<#include "macro.ftl">
 
 <#if (dlFolderDepth <= maxDLFolderDepth)>
 	<#list 1..maxDLFolderCount as dlFolderCount>

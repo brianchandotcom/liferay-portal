@@ -1,4 +1,4 @@
-<#setting number_format = "0">
+<#include "macro.ftl">
 
 <#assign mbThread = dataFactory.newMBThread(mbThreadId, groupId, mbRootMessageId, maxCommentCount)>
 

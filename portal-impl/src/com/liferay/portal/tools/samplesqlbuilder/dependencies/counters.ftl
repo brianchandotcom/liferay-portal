@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#assign counters = dataFactory.newCounters()>
 
 <#list counters as counter>

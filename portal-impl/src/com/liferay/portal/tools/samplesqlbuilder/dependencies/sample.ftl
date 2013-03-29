@@ -1,3 +1,5 @@
+<#include "macro.ftl">
+
 <#include "class_names.ftl">
 
 <#include "company.ftl">

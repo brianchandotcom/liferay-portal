@@ -1,5 +1,3 @@
-<#setting number_format = "0">
-
 <#assign layout = dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")>
 
 ${sampleSQLBuilder.insertLayout(layout)}

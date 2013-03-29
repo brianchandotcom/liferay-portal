@@ -769,12 +769,12 @@ public class DataFactory {
 	}
 
 	public DDMStorageLink newDDMStorageLink(
-		DDMContent ddmContent, long structureId) {
+		long ddmStorageLinkId, DDMContent ddmContent, long structureId) {
 
 		DDMStorageLink ddmStorageLink = new DDMStorageLinkImpl();
 
 		ddmStorageLink.setUuid(SequentialUUID.generate());
-		ddmStorageLink.setStorageLinkId(_counter.get());
+		ddmStorageLink.setStorageLinkId(ddmStorageLinkId);
 		ddmStorageLink.setClassNameId(
 			_classNamesMap.get(DDMContent.class.getName()));
 		ddmStorageLink.setClassPK(ddmContent.getContentId());
@@ -826,14 +826,15 @@ public class DataFactory {
 	}
 
 	public DLFileEntryMetadata newDLFileEntryMetadata(
-		DDMStorageLink ddmStorageLink, DLFileVersion dlFileVersion) {
+		long ddmStorageLinkId, long ddmStructureId,
+		DLFileVersion dlFileVersion) {
 
 		DLFileEntryMetadata dlFileEntryMetadata = new DLFileEntryMetadataImpl();
 
 		dlFileEntryMetadata.setUuid(SequentialUUID.generate());
 		dlFileEntryMetadata.setFileEntryMetadataId(_counter.get());
-		dlFileEntryMetadata.setDDMStorageId(ddmStorageLink.getPrimaryKey());
-		dlFileEntryMetadata.setDDMStructureId(ddmStorageLink.getStructureId());
+		dlFileEntryMetadata.setDDMStorageId(ddmStorageLinkId);
+		dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
 		dlFileEntryMetadata.setFileEntryTypeId(
 			dlFileVersion.getFileEntryTypeId());
 		dlFileEntryMetadata.setFileEntryId(dlFileVersion.getFileEntryId());

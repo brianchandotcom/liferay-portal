@@ -1,5 +1,7 @@
 <definition>
 	<command name="name">
-		<execute selenium="" />
+		<if>
+			<condition selenium="isSelenium" />
+		</if>
 	</command>
 </definition>

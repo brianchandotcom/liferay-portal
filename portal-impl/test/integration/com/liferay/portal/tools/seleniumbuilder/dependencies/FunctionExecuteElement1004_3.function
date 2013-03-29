@@ -1,5 +1,5 @@
 <definition>
-	<command name="command">
+	<command name="name">
 		<execute locator1="locator1" />
 	</command>
 </definition>

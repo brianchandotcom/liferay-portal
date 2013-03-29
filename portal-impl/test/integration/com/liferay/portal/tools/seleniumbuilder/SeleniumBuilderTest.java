@@ -102,6 +102,22 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionElseElement1001() throws Exception {
+		test(
+			"FunctionElseElement1001.function",
+			"Error 1001: Missing (execute|if) child element in " + _DIR_NAME +
+				"/FunctionElseElement1001.function:8");
+	}
+
+	@Test
+	public void testFunctionElseElement1002() throws Exception {
+		test(
+			"FunctionElseElement1002.function",
+			"Error 1002: Invalid var element in " + _DIR_NAME +
+				"/FunctionElseElement1002.function:9");
+	}
+
+	@Test
 	public void testFunctionExecuteElement1002() throws Exception {
 		test(
 			"FunctionExecuteElement1002.function",
@@ -187,6 +203,54 @@ public class SeleniumBuilderTest {
 			"FunctionExecuteElement1006_2.function",
 			"Error 1006: Invalid selenium attribute value in " + _DIR_NAME +
 				"/FunctionExecuteElement1006_2.function:3");
+	}
+
+	@Test
+	public void testFunctionIfElement1001_1() throws Exception {
+		test(
+			"FunctionIfElement1001_1.function",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_1.function:3");
+	}
+
+	@Test
+	public void testFunctionIfElement1001_2() throws Exception {
+		test(
+			"FunctionIfElement1001_2.function",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_2.function:3");
+	}
+
+	@Test
+	public void testFunctionIfElement1001_3() throws Exception {
+		test(
+			"FunctionIfElement1001_3.function",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_3.function:3");
+	}
+
+	@Test
+	public void testFunctionIfElement1002() throws Exception {
+		test(
+			"FunctionIfElement1002.function",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/FunctionIfElement1002.function:4");
+	}
+
+	@Test
+	public void testFunctionThenElement1001() throws Exception {
+		test(
+			"FunctionThenElement1001.function",
+			"Error 1001: Missing (execute|if) child element in " + _DIR_NAME +
+				"/FunctionThenElement1001.function:5");
+	}
+
+	@Test
+	public void testFunctionThenElement1002() throws Exception {
+		test(
+			"FunctionThenElement1002.function",
+			"Error 1002: Invalid var element in " + _DIR_NAME +
+				"/FunctionThenElement1002.function:6");
 	}
 
 	protected void test(String fileName) throws Exception {

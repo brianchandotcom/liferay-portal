@@ -9,9 +9,23 @@
 			<then>
 				<execute function="function" />
 			</then>
+		</if>
+
+		<if>
+			<condition function="Function#isFunction" />
+			<then>
+				<execute function="function" />
+			</then>
 			<else>
 				<execute function="function" />
 			</else>
+		</if>
+
+		<if>
+			<condition selenium="isSelenium" />
+			<then>
+				<execute selenium="selenium" />
+			</then>
 		</if>
 
 		<if>

@@ -56,7 +56,7 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 		headerNames.add(StringPool.BLANK);
 
 		orderableHeaders.put("id", "id");
-		orderableHeaders.put("name", "title");
+		orderableHeaders.put("title", "title");
 		//orderableHeaders.put("version", "version");
 		orderableHeaders.put("modified-date", "modified-date");
 		orderableHeaders.put("display-date", "display-date");

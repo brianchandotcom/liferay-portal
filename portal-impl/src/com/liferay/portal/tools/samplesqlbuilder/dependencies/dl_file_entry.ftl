@@ -10,13 +10,9 @@ insert into DLFileVersion values ('${dlFileVersion.uuid}', ${dlFileVersion.fileV
 
 <@insertAssetEntry _entry = dlFileEntry/>
 
-<#assign ddmContent = dataFactory.newDDMContent(dlFileEntry)>
+<#assign ddmStorageLinkId = counter.get()>
 
-insert into DDMContent values ('${ddmContent.uuid}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '${ddmContent.userName}', '${dataFactory.getDateString(ddmContent.createDate)}', '${dataFactory.getDateString(ddmContent.modifiedDate)}', '${ddmContent.name}', '${ddmContent.description}', '${ddmContent.xml}');
-
-<#assign ddmStorageLink = dataFactory.newDDMStorageLink(ddmContent, ddmStructureId)>
-
-insert into DDMStorageLink values ('${ddmStorageLink.uuid}', ${ddmStorageLink.storageLinkId}, ${ddmStorageLink.classNameId}, ${ddmStorageLink.classPK}, ${ddmStorageLink.structureId});
+<@insertDDMContent _entry = dlFileEntry _ddmStorageLinkId = ddmStorageLinkId _ddmStructureId = ddmStructureId/>
 
 ${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, counter.get(), counter.get(), 0)}
 
@@ -24,7 +20,7 @@ ${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEnt
 
 insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
 
-<#assign dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmStorageLink, dlFileVersion)>
+<#assign dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmStorageLinkId, ddmStructureId, dlFileVersion)>
 
 insert into DLFileEntryMetadata values ('${dlFileEntryMetadata.uuid}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${dlFileEntryMetadata.DDMStorageId}, ${dlFileEntryMetadata.DDMStructureId}, ${dlFileEntryMetadata.fileEntryTypeId}, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
 

@@ -18,8 +18,6 @@
 
 		${sampleSQLBuilder.insertDLFolders(groupId, dlFolder.folderId, dlFolderDepth + 1, ddmStructureId)}
 
-		<#assign dlSync = dataFactory.newDLSync(dlFolder)>
-
-		insert into DLSync values (${dlSync.syncId}, ${dlSync.companyId}, ${dlSync.createDate}, ${dlSync.modifiedDate}, ${dlSync.fileId}, '${dlSync.fileUuid}', ${dlSync.repositoryId}, ${dlSync.parentFolderId}, '${dlSync.name}', '${dlSync.description}', '${dlSync.event}', '${dlSync.type}', '${dlSync.version}');
+		<@insertDLSync _entry = dlFolder/>
 	</#list>
 </#if>

@@ -72,8 +72,8 @@ public class MessageListenerImpl implements MessageListener {
 			String messageId = getMessageId(recipient, message);
 
 			if ((messageId == null) ||
-				(!messageId.startsWith(
-					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset()))) {
+				!messageId.startsWith(
+					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset())) {
 
 				return false;
 			}

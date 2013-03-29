@@ -477,7 +477,12 @@ public class SourceFormatter {
 					String s = ifClause.substring(
 						previousParenthesisPos + 1, i);
 
-					_checkMissingParentheses(s, fileName, lineCount);
+					if (_hasMissingParentheses(s)) {
+						_processErrorMessage(
+							fileName,
+							"missing parentheses: " + fileName + " " +
+								lineCount);
+					}
 				}
 
 				previousParenthesisPos = i;
@@ -502,9 +507,7 @@ public class SourceFormatter {
 							String s = ifClause.substring(
 								posOpenParenthesis + 1, i);
 
-							if (Validator.isNotNull(s) &&
-								!s.contains(StringPool.SPACE)) {
-
+							if (_hasRedundantParentheses(s)) {
 								_processErrorMessage(
 									fileName,
 									"redundant parentheses: " + fileName + " " +
@@ -575,34 +578,6 @@ public class SourceFormatter {
 							StringPool.SPACE + fileName);
 				}
 			}
-		}
-	}
-
-	private static void _checkMissingParentheses(
-		String s, String fileName, int lineCount) {
-
-		if (Validator.isNull(s)) {
-			return;
-		}
-
-		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
-
-		boolean containsCompareOperator =
-			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
-			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
-			 s.contains(" <= ") || s.contains(" >= "));
-
-		boolean containsMathOperator =
-			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
-			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
-			 s.contains(" / "));
-
-		if (containsCompareOperator &&
-			(containsAndOrOperator ||
-			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
-
-			_processErrorMessage(
-				fileName, "missing parentheses: " + fileName + " " + lineCount);
 		}
 	}
 
@@ -4244,6 +4219,64 @@ public class SourceFormatter {
 	private static boolean _hasAnnotationOrJavadoc(String s) {
 		if (s.startsWith(StringPool.TAB + StringPool.AT) ||
 			s.startsWith(StringPool.TAB + "/**")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static boolean _hasMissingParentheses(String s) {
+		if (Validator.isNull(s)) {
+			return false;
+		}
+
+		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
+
+		boolean containsCompareOperator =
+			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
+			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
+			 s.contains(" <= ") || s.contains(" >= "));
+
+		boolean containsMathOperator =
+			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
+			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
+			 s.contains(" / "));
+
+		if (containsCompareOperator &&
+			(containsAndOrOperator ||
+			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static boolean _hasRedundantParentheses(String s) {
+		if (!s.contains("&&") && !s.contains("||")) {
+			for (int x = 0;;) {
+				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
+
+				if (x == -1) {
+					break;
+				}
+
+				int y = s.substring(0, x).lastIndexOf(
+					StringPool.OPEN_PARENTHESIS);
+
+				if (y == -1) {
+					break;
+				}
+
+				s = s.substring(0, y)  + s.substring(x + 1);
+			}
+		}
+
+		if (Validator.isNotNull(s) &&
+			!s.contains(StringPool.SPACE)) {
 
 			return true;
 		}

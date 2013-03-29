@@ -32,6 +32,7 @@ import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.File;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -300,7 +301,8 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1001) {
 			throw new IllegalArgumentException(
-				prefix + "Missing child elements in " + suffix);
+				prefix + "Missing (" + StringUtil.merge(array, "|") +
+					") child element in " + suffix);
 		}
 		else if (errorCode == 1002) {
 			throw new IllegalArgumentException(
@@ -351,7 +353,9 @@ public class SeleniumBuilderFileUtil {
 		List<Element> elements = commandElement.elements();
 
 		if (elements.isEmpty()) {
-			throwValidationException(1001, fileName, commandElement);
+			throwValidationException(
+				1001, fileName, commandElement,
+				allowedCommandChildElementNames);
 		}
 
 		for (Element element : elements) {
@@ -556,7 +560,8 @@ public class SeleniumBuilderFileUtil {
 		List<Element> elements = rootElement.elements();
 
 		if (elements.isEmpty()) {
-			throwValidationException(1001, fileName, rootElement);
+			throwValidationException(
+				1001, fileName, rootElement, new String[] {"command"});
 		}
 
 		for (Element element : elements) {
@@ -585,12 +590,12 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = ifElement.elements();
 
-		if (elements.isEmpty()) {
-			throwValidationException(1001, fileName, ifElement);
-		}
+		Set<String> elementNames = new HashSet<String>();
 
 		for (Element element : elements) {
 			String elementName = element.getName();
+
+			elementNames.add(elementName);
 
 			if (elementName.equals("condition")) {
 				validateExecuteElement(
@@ -607,6 +612,13 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
+
+		if (!elementNames.contains("condition") ||
+			!elementNames.contains("then")) {
+
+			throwValidationException(
+				1001, fileName, ifElement, new String[] {"condition", "then"});
+		}
 	}
 
 	protected void validateMacroDocument(String fileName, Element rootElement) {
@@ -617,7 +629,8 @@ public class SeleniumBuilderFileUtil {
 		List<Element> elements = rootElement.elements();
 
 		if (elements.isEmpty()) {
-			throwValidationException(1001, fileName, rootElement);
+			throwValidationException(
+				1001, fileName, rootElement, new String[] {"command", "var"});
 		}
 
 		for (Element element : elements) {
@@ -709,12 +722,12 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = whileElement.elements();
 
-		if (elements.isEmpty()) {
-			throwValidationException(1001, fileName, whileElement);
-		}
+		Set<String> elementNames = new HashSet<String>();
 
 		for (Element element : elements) {
 			String elementName = element.getName();
+
+			elementNames.add(elementName);
 
 			if (elementName.equals("condition")) {
 				validateExecuteElement(
@@ -730,6 +743,14 @@ public class SeleniumBuilderFileUtil {
 			else {
 				throwValidationException(1002, fileName, element, elementName);
 			}
+		}
+
+		if (!elementNames.contains("condition") ||
+			!elementNames.contains("then")) {
+
+			throwValidationException(
+				1001, fileName, whileElement,
+				new String[] {"condition", "then"});
 		}
 	}
 

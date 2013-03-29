@@ -253,15 +253,16 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public void makeVisible(String locator) {
-		String script = "var xpathResult ="
-					+ "document.evaluate(" + locator + ", document, null,"
-					+ "XPathResult.FIRST_ORDERED_NODE_TYPE, null);"
-					+ "if (xpathResult.singleNodeValue) {"
-					+ "var element = xpathResult.singleNodeValue;"
-					+ "element.style.display='inline-block';"
-					+ "element.style.overflow='visible';"
-					+ "element.style.visibility='visible';"
-					+ "}";
+		String script =
+			"var xpathResult =" +
+			"document.evaluate(" + locator + ", document, null," +
+			"XPathResult.FIRST_ORDERED_NODE_TYPE, null);" +
+			"if (xpathResult.singleNodeValue) {" +
+			"var element = xpathResult.singleNodeValue;" +
+			"element.style.display='inline-block';" +
+			"element.style.overflow='visible';" +
+			"element.style.visibility='visible';" +
+			"}";
 
 		super.runScript(script);
 	}

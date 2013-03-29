@@ -24,7 +24,6 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -849,39 +848,17 @@ public class WebDriverToSeleniumBridge
 	public void mouseOver(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		WebElement bodyElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyElement;
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 		WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+		Actions actions = new Actions(webDriver);
 
-		String code = "var element = arguments[0];"
-				+ "var event = document.createEvent('MouseEvents');"
-				+ "event.initEvent('mouseover', true, true);"
-				+ "element.dispatchEvent(event);";
+		actions.moveToElement(webElement);
 
-		javascriptExecutor.executeScript(code, webElement);
-	}
+		Action action = actions.build();
 
-	public void makeVisible(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WebElement bodyElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
-
-		String code = "var element = arguments[0];"
-					+ "element.style.display='inline-block';"
-					+ "element.style.overflow='visible';"					
-					+ "element.style.visibility='visible';";
-
-		javascriptExecutor.executeScript(code, webElement);
+		action.perform();
 	}
 
 	public void mouseUp(String locator) {

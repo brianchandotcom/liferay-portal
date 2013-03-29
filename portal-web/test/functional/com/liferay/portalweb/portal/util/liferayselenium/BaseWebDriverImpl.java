@@ -23,8 +23,10 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.Calendar;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.WrapsDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -298,7 +300,23 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void makeVisible(String locator) {
-		super.makeVisible(locator);
+		WebElement webElement = getWebElement(locator);
+
+		WebElement bodyElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+
+		String code =
+			"var element = arguments[0];" +
+			"element.style.display='inline-block';" +
+			"element.style.overflow='visible';" +
+			"element.style.visibility='visible';";
+
+		javascriptExecutor.executeScript(code, webElement);
 	}
 
 	public void paste(String location) {

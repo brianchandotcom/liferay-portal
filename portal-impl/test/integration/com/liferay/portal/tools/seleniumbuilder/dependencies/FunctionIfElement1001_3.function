@@ -1,0 +1,9 @@
+<definition>
+	<command name="commandName">
+		<if>
+			<then>
+				<execute selenium="selenium" />
+			</then>
+		</if>
+	</command>
+</definition>

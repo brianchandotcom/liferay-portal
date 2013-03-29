@@ -15,15 +15,12 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -72,7 +69,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 
@@ -81,29 +78,13 @@ public class MBThreadFlagStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(MBCategory.class.getName()),
-			SAXReaderUtil.createElement(MBMessage.class.getName()),
-			SAXReaderUtil.createElement(MBThreadFlag.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "thread-flag";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		return null;
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MBThreadFlag.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MBThreadFlag.class;
 	}
 
 	@Override
@@ -113,7 +94,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
@@ -135,7 +116,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		MBThreadFlag threadFlag = (MBThreadFlag)stagedModel;
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getName());
+			MBMessage.class.getSimpleName());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 

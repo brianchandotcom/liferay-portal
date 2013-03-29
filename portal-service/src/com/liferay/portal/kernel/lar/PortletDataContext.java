@@ -158,11 +158,24 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, List<ExpandoColumn>> getExpandoColumns();
 
+	public Element getExportDataGroupElement(
+		Class<? extends StagedModel> clazz);
+
 	public Element getExportDataRootElement();
+
+	public Element getExportDataStagedModelElement(StagedModel stagedModel);
 
 	public long getGroupId();
 
+	public Element getImportDataGroupElement(
+		Class<? extends StagedModel> clazz);
+
 	public Element getImportDataRootElement();
+
+	public Element getImportDataStagedModelElement(StagedModel stagedModel);
+
+	public Element getImportDataStagedModelElement(
+		StagedModel stagedModel, String attribute, String value);
 
 	public String getLayoutPath(long layoutId);
 

@@ -40,13 +40,11 @@ public class PollsQuestionStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			PollsQuestion question)
+			PortletDataContext portletDataContext, PollsQuestion question)
 		throws Exception {
 
-		Element questionsElement = elements[0];
-
-		Element questionElement = questionsElement.addElement("question");
+		Element questionElement =
+			portletDataContext.getExportDataStagedModelElement(question);
 
 		portletDataContext.addClassedModel(
 			questionElement, StagedModelPathUtil.getPath(question), question,
@@ -55,8 +53,7 @@ public class PollsQuestionStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			PollsQuestion question)
+			PortletDataContext portletDataContext, PollsQuestion question)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(question.getUserUuid());

@@ -186,7 +186,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				"ddm-structure-uuid", ddmStructure.getUuid());
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, ddmStructuresElement, ddmStructure);
+				portletDataContext, ddmStructure);
 		}
 
 		if (Validator.isNotNull(article.getTemplateId())) {
@@ -199,13 +199,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				"ddm-template-uuid", ddmTemplate.getUuid());
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext,
-				new Element[] {
-					ddmTemplatesElement, dlFileEntryTypesElement,
-					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-					dlRepositoriesElement, dlRepositoryEntriesElement
-				},
-				ddmTemplate);
+				portletDataContext, ddmTemplate);
 		}
 
 		if (article.isSmallImage()) {
@@ -1650,7 +1644,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					ddmStructure.getModifiedDate())) {
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmStructuresElement, ddmStructure);
+					portletDataContext, ddmStructure);
 			}
 
 			ddmTemplates.addAll(ddmStructure.getTemplates());
@@ -1672,7 +1666,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					ddmTemplate.getModifiedDate())) {
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmTemplatesElement, ddmTemplate);
+					portletDataContext, ddmTemplate);
 			}
 		}
 
@@ -1746,20 +1740,20 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		importReferencedData(portletDataContext, rootElement);
 
-		Element ddmStructuresElement = rootElement.element("ddm-structures");
+		Element ddmStructuresElement =
+			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 
-		List<Element> ddmStructureElements = ddmStructuresElement.elements(
-			"structure");
+		List<Element> ddmStructureElements = ddmStructuresElement.elements();
 
 		for (Element ddmStructureElement : ddmStructureElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, ddmStructureElement);
 		}
 
-		Element ddmTemplatesElement = rootElement.element("ddm-templates");
+		Element ddmTemplatesElement =
+			portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-		List<Element> ddmTemplateElements = ddmTemplatesElement.elements(
-			"template");
+		List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
 			StagedModelDataHandlerUtil.importStagedModel(

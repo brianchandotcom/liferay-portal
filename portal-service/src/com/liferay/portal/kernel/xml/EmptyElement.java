@@ -12,24 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lar;
-
-import com.liferay.portal.model.StagedModel;
+package com.liferay.portal.kernel.xml;
 
 /**
  * @author Mate Thurzo
- * @author Daniel Kocsis
  */
-public interface StagedModelDataHandler<T extends StagedModel> {
+public interface EmptyElement extends Element {
 
-	public void exportStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException;
-
-	public String getClassName();
-
-	public void importStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException;
+	public static final String EMPTY_ELEMENT_NAME = "EMPTY-ELEMENT";
 
 }

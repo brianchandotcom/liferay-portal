@@ -42,21 +42,17 @@ public class MDRRuleStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			MDRRule rule)
+			PortletDataContext portletDataContext, MDRRule rule)
 		throws Exception {
-
-		Element ruleGroupsElement = elements[0];
 
 		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(
 			rule.getRuleGroupId());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, ruleGroupsElement, ruleGroup);
+			portletDataContext, ruleGroup);
 
-		Element rulesElement = elements[1];
-
-		Element ruleElement = rulesElement.addElement("rule");
+		Element ruleElement =
+			portletDataContext.getExportDataStagedModelElement(rule);
 
 		portletDataContext.addClassedModel(
 			ruleElement, StagedModelPathUtil.getPath(rule), rule,
@@ -65,8 +61,7 @@ public class MDRRuleStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			MDRRule rule)
+			PortletDataContext portletDataContext, MDRRule rule)
 		throws Exception {
 
 		String ruleGroupPath = StagedModelPathUtil.getPath(
@@ -77,7 +72,7 @@ public class MDRRuleStagedModelDataHandler
 			(MDRRuleGroup)portletDataContext.getZipEntryAsObject(ruleGroupPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, element, ruleGroup);
+			portletDataContext, ruleGroup);
 
 		Map<Long, Long> ruleGroupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

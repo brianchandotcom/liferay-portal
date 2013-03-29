@@ -115,6 +115,10 @@ public class SAXReaderUtil {
 		return getSAXReader().createXPath(xPathExpression, prefix, namespace);
 	}
 
+	public static Element emptyElement() {
+		return getSAXReader().emptyElement();
+	}
+
 	public static SAXReader getSAXReader() {
 		PortalRuntimePermission.checkGetBeanProperty(SAXReaderUtil.class);
 

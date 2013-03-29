@@ -15,8 +15,6 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -83,33 +81,17 @@ public class PollsVoteStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			PollsQuestion.class.getName());
+			PollsQuestion.class.getSimpleName());
 
 		PollsQuestion question = (PollsQuestion)dependentStagedModels.get(0);
 
 		dependentStagedModels = dependentStagedModelsMap.get(
-			PollsChoice.class.getName());
+			PollsChoice.class.getSimpleName());
 
 		PollsChoice choice = (PollsChoice)dependentStagedModels.get(0);
 
 		return PollsTestUtil.addVote(
 			group.getGroupId(), question.getQuestionId(), choice.getChoiceId());
-	}
-
-	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(PollsQuestion.class.getName()),
-			SAXReaderUtil.createElement(PollsChoice.class.getName()),
-			SAXReaderUtil.createElement(PollsVote.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "vote";
 	}
 
 	@Override
@@ -124,8 +106,8 @@ public class PollsVoteStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return PollsVote.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return PollsVote.class;
 	}
 
 	@Override
@@ -135,7 +117,7 @@ public class PollsVoteStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			PollsChoice.class.getName());
+			PollsChoice.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
@@ -145,7 +127,7 @@ public class PollsVoteStagedModelDataHandlerTest
 			choice.getUuid(), group.getGroupId());
 
 		dependentStagedModels = dependentStagedModelsMap.get(
-			PollsQuestion.class.getName());
+			PollsQuestion.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

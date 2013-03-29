@@ -15,8 +15,6 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -71,27 +69,12 @@ public class MBMessageStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getName());
+			MBCategory.class.getSimpleName());
 
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
 		return MBTestUtil.addMessageWithWorkflow(
 			group.getGroupId(), category.getCategoryId(), true);
-	}
-
-	@Override
-	protected Element[] getDependentStagedModelsElements(
-		Map<String, List<StagedModel>> dependentStagedModelsMap) {
-
-		return new Element[] {
-			SAXReaderUtil.createElement(MBCategory.class.getName()),
-			SAXReaderUtil.createElement(MBMessage.class.getName())
-		};
-	}
-
-	@Override
-	protected String getElementName() {
-		return "message";
 	}
 
 	@Override
@@ -106,8 +89,8 @@ public class MBMessageStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MBMessage.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MBMessage.class;
 	}
 
 	@Override
@@ -117,7 +100,7 @@ public class MBMessageStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getName());
+			MBCategory.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

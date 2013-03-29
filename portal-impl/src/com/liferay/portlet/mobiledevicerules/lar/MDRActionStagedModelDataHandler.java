@@ -50,25 +50,18 @@ public class MDRActionStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			MDRAction action)
+			PortletDataContext portletDataContext, MDRAction action)
 		throws Exception {
-
-		Element ruleGroupsElement = elements[0];
-		Element ruleGroupInstancesElement = elements[1];
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(
 				action.getRuleGroupInstanceId());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext,
-			new Element[] {ruleGroupsElement, ruleGroupInstancesElement},
-			ruleGroupInstance);
+			portletDataContext, ruleGroupInstance);
 
-		Element actionsElement = elements[2];
-
-		Element actionElement = actionsElement.addElement("action");
+		Element actionElement =
+			portletDataContext.getExportDataStagedModelElement(action);
 
 		String type = action.getType();
 
@@ -101,8 +94,7 @@ public class MDRActionStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			MDRAction action)
+			PortletDataContext portletDataContext, MDRAction action)
 		throws Exception {
 
 		String ruleGroupInstancePath = StagedModelPathUtil.getPath(
@@ -114,7 +106,7 @@ public class MDRActionStagedModelDataHandler
 				ruleGroupInstancePath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, element, ruleGroupInstance);
+			portletDataContext, ruleGroupInstance);
 
 		Map<Long, Long> ruleGroupInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -129,6 +121,9 @@ public class MDRActionStagedModelDataHandler
 
 		serviceContext.setUserId(
 			portletDataContext.getUserId(action.getUserUuid()));
+
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			action);
 
 		validateLayout(element, action);
 

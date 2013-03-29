@@ -47,8 +47,7 @@ public class MBThreadFlagStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			MBThreadFlag threadFlag)
+			PortletDataContext portletDataContext, MBThreadFlag threadFlag)
 		throws Exception {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(
@@ -64,17 +63,11 @@ public class MBThreadFlagStagedModelDataHandler
 			return;
 		}
 
-		Element categoriesElement = elements[0];
-		Element messagesElement = elements[1];
-
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext,
-			new Element[] {categoriesElement, messagesElement}, rootMessage);
+			portletDataContext, rootMessage);
 
-		Element threadFlagsElement = elements[2];
-
-		Element threadFlagElement = threadFlagsElement.addElement(
-			"thread-flag");
+		Element threadFlagElement =
+			portletDataContext.getExportDataStagedModelElement(threadFlag);
 
 		threadFlagElement.addAttribute(
 			"root-message-id", String.valueOf(rootMessage.getMessageId()));
@@ -86,8 +79,7 @@ public class MBThreadFlagStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			MBThreadFlag threadFlag)
+			PortletDataContext portletDataContext, MBThreadFlag threadFlag)
 		throws Exception {
 
 		Map<Long, Long> threadIds =
@@ -98,6 +90,9 @@ public class MBThreadFlagStagedModelDataHandler
 			threadIds, threadFlag.getThreadId(), threadFlag.getThreadId());
 
 		if (threadId == threadFlag.getThreadId()) {
+			Element element =
+				portletDataContext.getImportDataStagedModelElement(threadFlag);
+
 			long rootMessageId = GetterUtil.getLong(
 				element.attributeValue("root-message-id"));
 
@@ -108,7 +103,7 @@ public class MBThreadFlagStagedModelDataHandler
 				getZipEntryAsObject(rootMessagePath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, element, rootMessage);
+				portletDataContext, rootMessage);
 
 			threadId = MapUtil.getLong(
 				threadIds, threadFlag.getThreadId(), threadFlag.getThreadId());
@@ -122,9 +117,8 @@ public class MBThreadFlagStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(threadFlag.getUserUuid());
 
-		ServiceContext serviceContext =
-			portletDataContext.createServiceContext(
-				element, threadFlag, MBPortletDataHandler.NAMESPACE);
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			threadFlag, MBPortletDataHandler.NAMESPACE);
 
 		MBThreadFlagLocalServiceUtil.addThreadFlag(
 			userId, thread, serviceContext);

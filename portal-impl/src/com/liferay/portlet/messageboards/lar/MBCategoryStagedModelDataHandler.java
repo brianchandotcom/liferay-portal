@@ -41,8 +41,7 @@ public class MBCategoryStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			MBCategory category)
+			PortletDataContext portletDataContext, MBCategory category)
 		throws Exception {
 
 		if ((category.getCategoryId() ==
@@ -53,15 +52,13 @@ public class MBCategoryStagedModelDataHandler
 			return;
 		}
 
-		Element categoriesElement = elements[0];
-
 		if (category.getParentCategory() != null) {
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, categoriesElement,
-				category.getParentCategory());
+				portletDataContext, category.getParentCategory());
 		}
 
-		Element categoryElement = categoriesElement.addElement("category");
+		Element categoryElement =
+			portletDataContext.getExportDataStagedModelElement(category);
 
 		portletDataContext.addClassedModel(
 			categoryElement, StagedModelPathUtil.getPath(category), category,
@@ -70,8 +67,7 @@ public class MBCategoryStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			MBCategory category)
+			PortletDataContext portletDataContext, MBCategory category)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(category.getUserUuid());
@@ -117,7 +113,7 @@ public class MBCategoryStagedModelDataHandler
 					parentCategoryPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, element, parentCategory);
+				portletDataContext, parentCategory);
 
 			parentCategoryId = MapUtil.getLong(
 				categoryIds, category.getParentCategoryId(),

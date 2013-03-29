@@ -648,8 +648,6 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		final Element structuresElement = rootElement.addElement("structures");
-
 		ActionableDynamicQuery structureActionableDynamicQuery =
 			new DDMStructureActionableDynamicQuery() {
 
@@ -666,7 +664,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 					DDMStructure structure = (DDMStructure)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, structuresElement, structure);
+						portletDataContext, structure);
 				}
 
 		};
@@ -675,8 +673,6 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		structureActionableDynamicQuery.performActions();
-
-		final Element templatesElement = rootElement.addElement("templates");
 
 		ActionableDynamicQuery templateActionableDynamicQuery =
 			new DDMTemplateActionableDynamicQuery() {
@@ -694,7 +690,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 					DDMTemplate template = (DDMTemplate)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, templatesElement, template);
+						portletDataContext, template);
 				}
 
 		};
@@ -720,10 +716,10 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = portletDataContext.getImportDataRootElement();
 
-		Element structuresElement = rootElement.element("structures");
+		Element structuresElement =
+			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 
-		List<Element> structureElements = structuresElement.elements(
-			"structure");
+		List<Element> structureElements = structuresElement.elements();
 
 		for (Element structureElement : structureElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -731,10 +727,10 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "templates")) {
-			Element templatesElement = rootElement.element("templates");
+			Element templatesElement =
+				portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-			List<Element> templateElements = templatesElement.elements(
-				"template");
+			List<Element> templateElements = templatesElement.elements();
 
 			for (Element templateElement : templateElements) {
 				StagedModelDataHandlerUtil.importStagedModel(

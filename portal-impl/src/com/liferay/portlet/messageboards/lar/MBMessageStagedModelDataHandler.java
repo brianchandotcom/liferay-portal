@@ -56,8 +56,7 @@ public class MBMessageStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			MBMessage message)
+			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {
 
 		if ((message.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
@@ -67,14 +66,11 @@ public class MBMessageStagedModelDataHandler
 			return;
 		}
 
-		Element categoriesElement = elements[0];
-
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, categoriesElement, message.getCategory());
+			portletDataContext, message.getCategory());
 
-		Element messagesElement = elements[1];
-
-		Element messageElement = messagesElement.addElement("message");
+		Element messageElement =
+			portletDataContext.getExportDataStagedModelElement(message);
 
 		message.setPriority(message.getPriority());
 
@@ -118,8 +114,7 @@ public class MBMessageStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			MBMessage message)
+			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(message.getUserUuid());
@@ -147,13 +142,16 @@ public class MBMessageStagedModelDataHandler
 			messageIds, message.getParentMessageId(),
 			message.getParentMessageId());
 
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			message);
+
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			getAttachments(portletDataContext, element, message);
 
 		try {
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(
-					element, message, MBPortletDataHandler.NAMESPACE);
+					message, MBPortletDataHandler.NAMESPACE);
 
 			if (message.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 				serviceContext.setWorkflowAction(
@@ -175,7 +173,7 @@ public class MBMessageStagedModelDataHandler
 						categoryPath);
 
 				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, element, category);
+					portletDataContext, category);
 
 				parentCategoryId = MapUtil.getLong(
 					categoryIds, message.getCategoryId(),

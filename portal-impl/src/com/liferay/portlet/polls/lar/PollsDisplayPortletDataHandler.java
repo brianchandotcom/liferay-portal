@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.polls.NoSuchQuestionException;
+import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
+import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.service.persistence.PollsQuestionUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -95,14 +98,8 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		Element questionsElement = rootElement.addElement("questions");
-		Element choicesElement = rootElement.addElement("choices");
-		Element votesElement = rootElement.addElement("votes");
-
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext,
-			new Element[] {questionsElement, choicesElement, votesElement},
-			question);
+			portletDataContext, question);
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -117,18 +114,22 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 			"com.liferay.portlet.polls", portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element questionsElement = portletDataContext.getImportDataGroupElement(
+			PollsQuestion.class);
 
-		Element questionsElement = rootElement.element("questions");
+		List<Element> questionElements = questionsElement.elements();
 
-		for (Element questionElement : questionsElement.elements("question")) {
+		for (Element questionElement : questionElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, questionElement);
 		}
 
-		Element choicesElement = rootElement.element("choices");
+		Element choicesElement = portletDataContext.getImportDataGroupElement(
+			PollsChoice.class);
 
-		for (Element choiceElement : choicesElement.elements("choice")) {
+		List<Element> choiceElements = choicesElement.elements();
+
+		for (Element choiceElement : choiceElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, choiceElement);
 		}
@@ -136,9 +137,12 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "votes")) {
 
-			Element votesElement = rootElement.element("votes");
+			Element votesElement = portletDataContext.getImportDataGroupElement(
+				PollsVote.class);
 
-			for (Element voteElement : votesElement.elements("vote")) {
+			List<Element> voteElements = votesElement.elements();
+
+			for (Element voteElement : voteElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, voteElement);
 			}

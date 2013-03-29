@@ -16,9 +16,7 @@ insert into DLFileVersion values ('${dlFileVersion.uuid}', ${dlFileVersion.fileV
 
 ${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, counter.get(), counter.get(), 0)}
 
-<#assign socialActivity = dataFactory.newSocialActivity(dlFileEntry)>
-
-insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
+<@insertSocialActivity _entry = dlFileEntry/>
 
 <#assign dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmStorageLinkId, ddmStructureId, dlFileVersion)>
 

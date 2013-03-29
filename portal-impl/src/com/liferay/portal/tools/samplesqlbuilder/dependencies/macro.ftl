@@ -57,3 +57,11 @@
 		${sampleSQLBuilder.insertResourcePermission(portletPreferences.portletId, primKey)}
 	</#list>
 </#macro>
+
+<#-- insert SocialActivity -->
+
+<#macro insertSocialActivity _entry>
+	<#local socialActivity = dataFactory.newSocialActivity(_entry)>
+
+	insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
+</#macro>

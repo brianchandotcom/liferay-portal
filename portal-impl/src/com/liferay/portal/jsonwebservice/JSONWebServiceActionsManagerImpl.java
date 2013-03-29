@@ -53,11 +53,11 @@ import javax.servlet.http.HttpSession;
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 
-	public int countJSONWebServiceActions(String contextPath) {
+	public int getJSONWebServiceActionsCount(String contextPath) {
 		int count = 0;
 
-		for (JSONWebServiceActionConfig
-			jsonWebServiceActionConfig : _jsonWebServiceActionConfigs) {
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_jsonWebServiceActionConfigs) {
 
 			String actionContextPath =
 				jsonWebServiceActionConfig.getContextPath();

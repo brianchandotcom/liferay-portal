@@ -48,11 +48,11 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		_contextPath = ContextPathUtil.getContextPath(servletContext);
 
 		if (_log.isInfoEnabled()) {
-			int actionsCount = JSONWebServiceActionsManagerUtil.
-					countJSONWebServiceActions(_contextPath);
+			int count =
+				JSONWebServiceActionsManagerUtil.getJSONWebServiceActionsCount(
+					_contextPath);
 
-			_log.info(
-				"Configured " + actionsCount + " actions for " + _contextPath);
+			_log.info("Configured " + count + " actions for " + _contextPath);
 		}
 	}
 

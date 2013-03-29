@@ -49,54 +49,46 @@ public class JSONWebServiceDetectorBeanPostProcessor
 	}
 
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
-			throws BeansException {
+		throws BeansException {
 
-		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
+		if (!PropsValues.JSON_WEB_SERVICE_ENABLED ||
+			!beanName.endsWith("Service")) {
+
 			return bean;
 		}
 
-		Class<?> beanClass = bean.getClass();
+		Class<?> type = bean.getClass();
 
-		if (beanName.endsWith("Service")) {
+		JSONWebService jsonWebServiceAnnotation = type.getAnnotation(
+			JSONWebService.class);
 
-			JSONWebService jsonNWebServiceAnnotation = beanClass.getAnnotation(
-				JSONWebService.class);
+		if (jsonWebServiceAnnotation == null) {
+			while (type != Object.class) {
+				Class<?>[] interfaces = type.getInterfaces();
 
-			if (jsonNWebServiceAnnotation == null) {
-
-				Class type = beanClass;
-
-				loop:
-				while (type != Object.class) {
-
-					// check the interface
-
-					Class<?>[] beanInterfaces = type.getInterfaces();
-
-					for (Class<?> beanInterface : beanInterfaces) {
-						if (!beanInterface.getName().endsWith("Service")) {
-							continue;
-						}
-
-						jsonNWebServiceAnnotation = beanInterface.getAnnotation(
-							JSONWebService.class);
-
-						if (jsonNWebServiceAnnotation != null) {
-							break loop;
-						}
+				for (Class<?> interfaceClass : interfaces) {
+					if (!interfaceClass.getName().endsWith("Service")) {
+						continue;
 					}
 
-					type = type.getSuperclass();
-				}
-			}
+					jsonWebServiceAnnotation = interfaceClass.getAnnotation(
+						JSONWebService.class);
 
-			if (jsonNWebServiceAnnotation != null) {
-				try {
-					onJSONWebServiceBean(bean, jsonNWebServiceAnnotation);
+					if (jsonWebServiceAnnotation != null) {
+						break;
+					}
 				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
+
+				type = type.getSuperclass();
+			}
+		}
+
+		if (jsonWebServiceAnnotation != null) {
+			try {
+				onJSONWebServiceBean(bean, jsonWebServiceAnnotation);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -112,17 +104,17 @@ public class JSONWebServiceDetectorBeanPostProcessor
 			return utilClass;
 		}
 
-		String utilClassName = implementationClass.getName();
+		String implementationClassName = implementationClass.getName();
 
-		if (utilClassName.endsWith("Impl")) {
-			utilClassName = utilClassName.substring(
-				0, utilClassName.length() - 4);
-
+		if (implementationClassName.endsWith("Impl")) {
+			implementationClassName = implementationClassName.substring(
+				0, implementationClassName.length() - 4);
 		}
 
-		utilClassName += "Util";
+		String utilClassName = implementationClassName + "Util";
 
-		utilClassName = StringUtil.replace(utilClassName, ".impl.", ".");
+		utilClassName = StringUtil.replace(
+			utilClassName, ".impl.", StringPool.PERIOD);
 
 		ClassLoader classLoader = implementationClass.getClassLoader();
 
@@ -134,22 +126,23 @@ public class JSONWebServiceDetectorBeanPostProcessor
 	}
 
 	protected void onJSONWebServiceBean(
-			Object serviceBean, JSONWebService classJSONWebService)
+			Object serviceBean, JSONWebService jsonWebService)
 		throws Exception {
 
-		JSONWebServiceMode classJSONWebServiceMode = JSONWebServiceMode.MANUAL;
+		JSONWebServiceMode jsonWebServiceMode = JSONWebServiceMode.MANUAL;
 
-		if (classJSONWebService != null) {
-			classJSONWebServiceMode = classJSONWebService.mode();
+		if (jsonWebService != null) {
+			jsonWebServiceMode = jsonWebService.mode();
 		}
 
-		Class serviceBeanClass = serviceBean.getClass();
+		Class<?> serviceBeanClass = serviceBean.getClass();
+
 		Method[] methods = serviceBeanClass.getMethods();
 
 		for (Method method : methods) {
-			Class<?> methodDeclaringClass = method.getDeclaringClass();
+			Class<?> declaringClass = method.getDeclaringClass();
 
-			if (!methodDeclaringClass.equals(serviceBeanClass)) {
+			if (declaringClass != serviceBeanClass) {
 				continue;
 			}
 
@@ -159,40 +152,33 @@ public class JSONWebServiceDetectorBeanPostProcessor
 				continue;
 			}
 
-			boolean registerMethod = false;
-
 			JSONWebService methodJSONWebService = method.getAnnotation(
 				JSONWebService.class);
 
-			if (classJSONWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
-				registerMethod = true;
-
-				if (methodJSONWebService != null) {
-					JSONWebServiceMode methodJSONWebServiceMode =
-						methodJSONWebService.mode();
-
-					if (methodJSONWebServiceMode.equals(
-							JSONWebServiceMode.IGNORE)) {
-
-						registerMethod = false;
-					}
+			if (jsonWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
+				if (methodJSONWebService == null) {
+					registerJSONWebServiceAction(serviceBean, method);
 				}
-			}
-			else {
-				if (methodJSONWebService != null) {
+				else {
 					JSONWebServiceMode methodJSONWebServiceMode =
 						methodJSONWebService.mode();
 
 					if (!methodJSONWebServiceMode.equals(
 							JSONWebServiceMode.IGNORE)) {
 
-						registerMethod = true;
+						registerJSONWebServiceAction(serviceBean, method);
 					}
 				}
 			}
+			else if (methodJSONWebService != null) {
+				JSONWebServiceMode methodJSONWebServiceMode =
+					methodJSONWebService.mode();
 
-			if (registerMethod) {
-				registerJSONWebServiceAction(serviceBean, method);
+				if (!methodJSONWebServiceMode.equals(
+						JSONWebServiceMode.IGNORE)) {
+
+					registerJSONWebServiceAction(serviceBean, method);
+				}
 			}
 		}
 	}
@@ -201,24 +187,10 @@ public class JSONWebServiceDetectorBeanPostProcessor
 			Object serviceBean, Method method)
 		throws Exception {
 
-		Class serviceBeanClass = serviceBean.getClass();
-
-		String path = _jsonWebServiceMappingResolver.resolvePath(
-			serviceBeanClass, method);
-
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
 			method);
 
 		if (_invalidHttpMethods.contains(httpMethod)) {
-			return;
-		}
-
-		Class<?> utilClass = loadUtilClass(serviceBeanClass);
-		try {
-			method = utilClass.getMethod(
-				method.getName(), method.getParameterTypes());
-		}
-		catch (NoSuchMethodException nsme) {
 			return;
 		}
 
@@ -232,10 +204,25 @@ public class JSONWebServiceDetectorBeanPostProcessor
 		else {
 			servletContextName = PropsValues.PORTAL_CTX;
 
-			if (servletContextName.equals("/")) {
+			if (servletContextName.equals(StringPool.SLASH)) {
 				servletContextName = StringPool.BLANK;
 			}
 		}
+
+		Class<?> serviceBeanClass = serviceBean.getClass();
+
+		Class<?> utilClass = loadUtilClass(serviceBeanClass);
+
+		try {
+			method = utilClass.getMethod(
+				method.getName(), method.getParameterTypes());
+		}
+		catch (NoSuchMethodException nsme) {
+			return;
+		}
+
+		String path = _jsonWebServiceMappingResolver.resolvePath(
+			serviceBeanClass, method);
 
 		JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 			servletContextName, method.getDeclaringClass(), method, path,

@@ -1,0 +1,5 @@
+<definition>
+	<command name="command">
+		<execute function="function" fail="fail" />
+	</command>
+</definition>

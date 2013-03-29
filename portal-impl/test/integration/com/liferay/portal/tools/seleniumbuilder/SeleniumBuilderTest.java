@@ -102,6 +102,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionExecuteElement1002() throws Exception {
+		test(
+			"FunctionExecuteElement1002.function",
+			"Error 1002: Invalid var element in " + _DIR_NAME +
+				"/FunctionExecuteElement1002.function:4");
+	}
+
+	@Test
 	public void testFunctionExecuteElement1004_1() throws Exception {
 		test(
 			"FunctionExecuteElement1004_1.function",
@@ -118,11 +126,67 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testFunctionExecuteElement1006() throws Exception {
+	public void testFunctionExecuteElement1004_3() throws Exception {
 		test(
-			"FunctionExecuteElement1006.function",
+			"FunctionExecuteElement1004_3.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1004_3.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1004_4() throws Exception {
+		test(
+			"FunctionExecuteElement1004_4.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1004_4.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1005_1() throws Exception {
+		test(
+			"FunctionExecuteElement1005_1.function",
+			"Error 1005: Invalid fail attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1005_1.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1005_2() throws Exception {
+		test(
+			"FunctionExecuteElement1005_2.function",
+			"Error 1005: Invalid locator attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1005_2.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1005_3() throws Exception {
+		test(
+			"FunctionExecuteElement1005_3.function",
+			"Error 1005: Invalid value attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1005_3.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1005_4() throws Exception {
+		test(
+			"FunctionExecuteElement1005_4.function",
+			"Error 1005: Invalid fail attribute in " +
+				_DIR_NAME + "/FunctionExecuteElement1005_4.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1006_1() throws Exception {
+		test(
+			"FunctionExecuteElement1006_1.function",
 			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
-				"/FunctionExecuteElement1006.function:3");
+				"/FunctionExecuteElement1006_1.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1006_2() throws Exception {
+		test(
+			"FunctionExecuteElement1006_2.function",
+			"Error 1006: Invalid selenium attribute value in " + _DIR_NAME +
+				"/FunctionExecuteElement1006_2.function:3");
 	}
 
 	protected void test(String fileName) throws Exception {

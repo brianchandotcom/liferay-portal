@@ -581,64 +581,6 @@ public class SourceFormatter {
 		}
 	}
 
-	private static boolean _hasMissingParentheses(String s) {
-		if (Validator.isNull(s)) {
-			return false;
-		}
-
-		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
-
-		boolean containsCompareOperator =
-			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
-			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
-			 s.contains(" <= ") || s.contains(" >= "));
-
-		boolean containsMathOperator =
-			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
-			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
-			 s.contains(" / "));
-
-		if (containsCompareOperator &&
-			(containsAndOrOperator ||
-			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	private static boolean _hasRedundantParentheses(String s) {
-		if (!s.contains("&&") && !s.contains("||")) {
-			for (int x = 0;;) {
-				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
-
-				if (x == -1) {
-					break;
-				}
-
-				int y = s.substring(0, x).lastIndexOf(
-					StringPool.OPEN_PARENTHESIS);
-
-				if (y == -1) {
-					break;
-				}
-
-				s = s.substring(0, y)  + s.substring(x + 1);
-			}
-		}
-
-		if (Validator.isNotNull(s) &&
-			!s.contains(StringPool.SPACE)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	private static boolean _checkTaglibVulnerability(
 		String jspContent, String vulnerability) {
 
@@ -4277,6 +4219,64 @@ public class SourceFormatter {
 	private static boolean _hasAnnotationOrJavadoc(String s) {
 		if (s.startsWith(StringPool.TAB + StringPool.AT) ||
 			s.startsWith(StringPool.TAB + "/**")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static boolean _hasMissingParentheses(String s) {
+		if (Validator.isNull(s)) {
+			return false;
+		}
+
+		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
+
+		boolean containsCompareOperator =
+			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
+			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
+			 s.contains(" <= ") || s.contains(" >= "));
+
+		boolean containsMathOperator =
+			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
+			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
+			 s.contains(" / "));
+
+		if (containsCompareOperator &&
+			(containsAndOrOperator ||
+			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static boolean _hasRedundantParentheses(String s) {
+		if (!s.contains("&&") && !s.contains("||")) {
+			for (int x = 0;;) {
+				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
+
+				if (x == -1) {
+					break;
+				}
+
+				int y = s.substring(0, x).lastIndexOf(
+					StringPool.OPEN_PARENTHESIS);
+
+				if (y == -1) {
+					break;
+				}
+
+				s = s.substring(0, y)  + s.substring(x + 1);
+			}
+		}
+
+		if (Validator.isNotNull(s) &&
+			!s.contains(StringPool.SPACE)) {
 
 			return true;
 		}

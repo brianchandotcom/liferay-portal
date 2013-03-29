@@ -14,21 +14,21 @@
 
 package com.liferay.portalweb.portal.selenium.mouseactions.mouseover;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MouseOverTests extends BaseTestSuite {
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(MouseOver1Test.class);
-		testSuite.addTestSuite(MouseOver2Test.class);
-		testSuite.addTestSuite(MouseOver3Test.class);
-
-		return testSuite;
+public class MouseOver3Test extends BaseTestCase {
+	public void testMouseOver3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		selenium.mouseOver("//div[@id='Catherine']");
 	}
 }

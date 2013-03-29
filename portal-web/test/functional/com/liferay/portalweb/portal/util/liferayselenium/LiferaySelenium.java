@@ -121,6 +121,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void keyUpAndWait(String locator, String keySequence);
 
+	public void makeVisible(String locator);
+
 	public void paste(String locator);
 
 	public void pause(String waitTime) throws Exception;

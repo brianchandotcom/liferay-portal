@@ -29,6 +29,56 @@ public class MouseOver2Test extends BaseTestCase {
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		selenium.mouseOver("//div[@id='Catherine']");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='addPage']");
+		assertEquals(RuntimeVariables.replace("Page"),
+			selenium.getText("//a[@id='addPage']"));
+		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
+		selenium.waitForVisible("//input[@type='text']");
+		selenium.type("//input[@type='text']",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.clickAt("//button[contains(@id,'Save')]",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("link=Web Content Display Test Page");
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("w"));
+		selenium.waitForVisible("//li[@title='Web Content Display']/p/a");
+		selenium.clickAt("//li[@title='Web Content Display']/p/a",
+			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible("//section");
+		assertTrue(selenium.isVisible("//section"));
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Web Content Display Test Page",
+			RuntimeVariables.replace("Web Content Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		selenium.mouseOver("//div[@class='portlet-content']");
+		selenium.makeVisible("//span[2]/a/span[.='Add']");
+		selenium.waitForVisible("//span[2]/a/span[.='Add']");
+		selenium.waitForText("//span[2]/a/span[.='Add']", "Add");
+		selenium.clickAt("//span[2]/a/span[.='Add']",
+			RuntimeVariables.replace("Add"));
+		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//h1[@class='header-title']/span",
+			"New Web Content");
 	}
 }

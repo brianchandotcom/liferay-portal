@@ -53,23 +53,6 @@ import javax.servlet.http.HttpSession;
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 
-	public int getJSONWebServiceActionsCount(String contextPath) {
-		int count = 0;
-
-		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
-				_jsonWebServiceActionConfigs) {
-
-			String actionContextPath =
-				jsonWebServiceActionConfig.getContextPath();
-
-			if (contextPath.equals(actionContextPath)) {
-				count++;
-			}
-		}
-
-		return count;
-	}
-
 	public Set<String> getContextPaths() {
 		Set<String> contextPaths = new TreeSet<String>();
 
@@ -227,6 +210,23 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return jsonWebServiceActionMappings;
+	}
+
+	public int getJSONWebServiceActionsCount(String contextPath) {
+		int count = 0;
+
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_jsonWebServiceActionConfigs) {
+
+			String actionContextPath =
+				jsonWebServiceActionConfig.getContextPath();
+
+			if (contextPath.equals(actionContextPath)) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	public void registerJSONWebServiceAction(

@@ -29,11 +29,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JSONWebServiceActionsManagerUtil {
 
-	public static int getJSONWebServiceActionsCount(String contextPath) {
-		return getJSONWebServiceActionsManager().getJSONWebServiceActionsCount(
-			contextPath);
-	}
-
 	public static Set<String> getContextPaths() {
 		return _jsonWebServiceActionsManager. getContextPaths();
 	}
@@ -74,6 +69,11 @@ public class JSONWebServiceActionsManagerUtil {
 		getJSONWebServiceActionsManager() {
 
 		return _jsonWebServiceActionsManager;
+	}
+
+	public static int getJSONWebServiceActionsCount(String contextPath) {
+		return getJSONWebServiceActionsManager().getJSONWebServiceActionsCount(
+			contextPath);
 	}
 
 	public static void registerJSONWebServiceAction(

@@ -1,5 +1,5 @@
 <definition>
-	<command name="commandName">
+	<command name="name">
 		<if>
 			<condition selenium="isSelenium" />
 		</if>

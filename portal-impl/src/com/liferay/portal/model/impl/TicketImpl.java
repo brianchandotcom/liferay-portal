@@ -27,7 +27,7 @@ public class TicketImpl extends TicketBaseImpl {
 	public boolean isExpired() {
 		Date expirationDate = getExpirationDate();
 
-		if ((expirationDate != null) && (expirationDate.before(new Date()))) {
+		if ((expirationDate != null) && expirationDate.before(new Date())) {
 			return true;
 		}
 		else {

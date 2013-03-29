@@ -86,7 +86,7 @@ else {
 			entry = (BlogsEntry)result;
 		}
 
-		if (((entry.getStatus() == WorkflowConstants.STATUS_DRAFT) || (entry.getDisplayDate().after(new Date()))) && (entry.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) {
+		if (((entry.getStatus() == WorkflowConstants.STATUS_DRAFT) || entry.getDisplayDate().after(new Date())) && (entry.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) {
 			searchContainer.setTotal(searchContainer.getTotal() - 1);
 
 			continue;

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>CONTENT_1</td>
-	<td>xpath=(//div[@class=' entry-content entry-type-general']/p)[1]</td>
+	<td>xpath=(//div[@class=' entry-content entry-type-general'])[1]</td>
 	<td></td>
 </tr>
 <tr>

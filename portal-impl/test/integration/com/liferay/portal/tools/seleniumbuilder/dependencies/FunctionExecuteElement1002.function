@@ -1,0 +1,7 @@
+<definition>
+	<command name="command">
+		<execute function="function">
+			<var name="name" value="value" />
+		</execute>
+	</command>
+</definition>

@@ -13,26 +13,36 @@ Selenium.prototype.continueFromRow = function(rowNum) {
 Selenium.prototype.doDownloadTempFile = function(value) {
 };
 
-Selenium.prototype.isXMLTagPresent = function(tag, value) {
-	var x = value.indexOf("=");
+Selenium.prototype.isXMLText = function(locator, text) {
 
-	var tagType = value.substring(0, x);
+	var source = this.browserbot.getDocument().xml;
 
-	var tagString = value.substring(x + 1);
-
-	var pattern =  ".*" + tag + ".*" + tagType + ".=." + tagString + ".*";
-
-	if (tagType === "text") {
-		pattern = ".*" + tag + ".*>" + tagString + "<.*";
+	if (source == null) {
+		source = new XMLSerializer().serializeToString(
+			this.browserbot.getDocument());
 	}
 
-	var allText = this.browserbot.getDocument().xml;
+	var x = source.indexOf("<html");
 
-	if (allText == null) {
-		allText = new XMLSerializer().serializeToString(this.browserbot.getDocument());
+	source = source.substring(x);
+
+	var parser = new DOMParser();
+
+	var xml = parser.parseFromString(source, "text/html");
+
+	var xpathResult = xml.evaluate(
+		locator, xml, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+
+	if (xpathResult.singleNodeValue) {
+		var element = xpathResult.singleNodeValue;
+
+		var nodeText = element.textContent;
+
+		return nodeText == text;
 	}
-
-	return allText.match(pattern);
+	else {
+		return false;
+	}
 };
 
 Selenium.prototype.doGotoIf = function(condition, label) {

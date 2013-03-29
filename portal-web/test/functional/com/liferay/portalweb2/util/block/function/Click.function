@@ -23,6 +23,12 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 
+	<command name="pauseTextClickAt">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="Click#textClickAt" />
+	</command>
+
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 

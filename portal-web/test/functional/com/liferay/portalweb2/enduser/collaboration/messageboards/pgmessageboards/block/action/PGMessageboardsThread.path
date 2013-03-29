@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>PGMessageboardsThread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMessageboardsThread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMessageboardsThread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//h1[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_SUBJECT_1</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[1]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_SUBJECT_2</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[2]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_SUBJECT_3</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[3]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_AUTHOR_1</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[1]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_AUTHOR_2</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[2]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_THREAD_AUTHOR_3</td>
+	<td>//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr[3]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT_1</td>
+	<td>xPath=(//div[@class='subject']/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT_2</td>
+	<td>xPath=(//div[@class='subject']/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT_3</td>
+	<td>xPath=(//div[@class='subject']/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_1</td>
+	<td>xPath=(//div[@class='thread-body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_2</td>
+	<td>xPath=(//div[@class='thread-body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_3</td>
+	<td>xPath=(//div[@class='thread-body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERNAME_1</td>
+	<td>xPath=(//span[@class='user-name'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERNAME_2</td>
+	<td>xPath=(//span[@class='user-name'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERNAME_3</td>
+	<td>xPath=(//span[@class='user-name'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_1</td>
+	<td>xpath=(//span[.='Reply'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_2</td>
+	<td>xpath=(//span[.='Reply'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_3</td>
+	<td>xpath=(//span[.='Reply'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RATING_1</td>
+	<td>xPath=(//div[contains(@id,'ratingThumbContent')]/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RATING_2</td>
+	<td>xPath=(//div[contains(@id,'ratingThumbContent')]/div)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RATING_3</td>
+	<td>xPath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

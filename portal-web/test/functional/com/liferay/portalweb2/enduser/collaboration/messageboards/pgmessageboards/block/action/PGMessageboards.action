@@ -1,0 +1,28 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key="THREADS_LAST_POST">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key="ACTIONS_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+		<case locator-key="ADD_CATEGORY">
+			<execute function="Click#valueClickAtAndWait" value1="Add Category" />
+		</case>
+		<case locator-key="CATEGORIES_CATEGORY">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+		<case locator-key="POST_NEW_THREAD">
+			<execute function="Click#valueClickAtAndWait" value1="Post New Thread" />
+		</case>
+		<case locator-key="THREADS_ACTIONS">
+			<execute function="Click#pauseTextClickAt" />
+		</case>
+		<case locator-key="THREADS_THREAD">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+	</command>
+</definition>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGMessageboardsPostthread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMessageboardsPostthread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMessageboardsPostthread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT</td>
+	<td>//input[@id='_19_subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH</td>
+	<td>//input[@value='Publish']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

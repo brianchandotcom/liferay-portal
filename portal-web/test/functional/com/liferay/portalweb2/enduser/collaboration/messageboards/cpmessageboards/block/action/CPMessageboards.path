@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>CPMessageboards</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMessageboards</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMessageboards</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIES-->
+<tr>
+	<td>CATEGORIES_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//div[contains(@id,'messageBoardsCategoriesPanel')]//input[@value='Move to the Recycle Bin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIES_SELECT_ALL</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREADS-->
+<tr>
+	<td>THREADS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//div[contains(@id,'messageBoardsThreadsPanel')]//input[@value='Move to the Recycle Bin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREADS_SELECT_ALL</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

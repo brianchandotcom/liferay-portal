@@ -2618,6 +2618,36 @@
 		<delete file="execute-remote-command.bat" />
 	</target>
 
+	<target name="generate-test-properties">
+		<xmlproperty
+			file="portal-web/test-data/db-data.xml"
+			keeproot="true"
+		/>
+
+		<echoproperties destfile="${basedir}/test.run.properties">
+			<propertyset>
+				<propertyref prefix="db.${db.type}" />
+			</propertyset>
+		</echoproperties>
+
+		<replaceregexp
+			file="${basedir}/test.run.properties"
+			flags="g"
+			match="db\.${db.type}"
+			replace="db"
+		/>
+
+		<property file="${basedir}/test.run.properties" />
+
+		<loadfile property="test.properties.expanded" srcfile="${basedir}/test.run.properties">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+
+		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
+	</target>
+
 	<target name="install-vm-java">
 		<if>
 			<not>

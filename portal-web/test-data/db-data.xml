@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<db>
+	<db2>
+		<device-name></device-name>
+		<family>db2</family>
+		<driver>com.ibm.db2.jcc.DB2Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:db2://${db.db2.host}:50000/${db.db2.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;</url>
+		<vm-vmdk-suffix>db2-9.7</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\${sql.file} -td;</create-remote-schema>
+			<token>
+				<drop-schema>drop database lportal;</drop-schema>
+				<create-schema>create database lportal;</create-schema>
+				<create-schema-secondary>create database lportal pagesize 8192;</create-schema-secondary>
+				<use-schema>connect to lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database ${schema};</drop-schema>
+				<create-schema>create database ${db.schema} pagesize 8192;</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary>create database ${db.schema} pagesize 8192;</create-schema-secondary>
+				<use-schema>connect to ${db.schema} USER ${db.username} USING ${db.password};</use-schema>
+			</value>
+		</arg>
+	</db2>
+
+	<hsql>
+		<device-name></device-name>
+		<family>hsql</family>
+		<driver>org.hsqldb.jdbcDriver</driver>
+		<schema></schema>
+		<url>jdbc:hsqldb:${liferay.home}/data/hsql/lportal</url>
+		<vm-vmdk-suffix></vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file></copy-remote-file>
+			<create-remote-schema></create-remote-schema>
+			<token>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema></use-schema>
+			</token>
+			<value>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema></use-schema>
+			</value>
+		</arg>
+	</hsql>
+
+	<mysql>
+		<device-name></device-name>
+		<family>mysql</family>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<schema>lportal</schema>
+		<url><![CDATA[jdbc:mysql://${db.mysql.host}/${db.mysql.schema}?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false]]></url>
+		<vm-vmdk-suffix></vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file></copy-remote-file>
+			<create-remote-schema></create-remote-schema>
+			<token>
+				<drop-schema>drop database if exists lportal;</drop-schema>
+				<create-schema>create database lportal character set utf8;</create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database if exists ${db.schema};</drop-schema>
+				<create-schema>create database ${db.schema} character set utf8;</create-schema>
+				<create-schema-collate>create database ${db.schema} character set utf8 collate utf8_bin;</create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use ${db.schema};</use-schema>
+			</value>
+		</arg>
+	</mysql>
+
+	<oracle-10>
+		<device-name></device-name>
+		<family>oracle</family>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<schema></schema>
+		<url>jdbc:oracle:thin:@${db.oracle-10.host}:1521:xe</url>
+		<vm-vmdk-suffix>oracle-10.2.0.1.0</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file></copy-remote-file>
+			<create-remote-schema></create-remote-schema>
+			<token>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}</use-schema>
+			</token>
+			<value>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>-pw ${vm.password} ${vm.username}@${db.host} sqlplus system/password @C:\${tstamp.value}\${sql.file} ${db.username} ${db.password}</use-schema>
+			</value>
+		</arg>
+	</oracle-10>
+
+	<oracle-11>
+		<device-name></device-name>
+		<family>oracle</family>
+		<driver>org.hsqldb.jdbcDriver</driver>
+		<schema></schema>
+		<url>jdbc:oracle:thin:@${db.oracle-11.host}:1521:orcl</url>
+		<vm-vmdk-suffix>oracle-11.2.0.1.0</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file></copy-remote-file>
+			<create-remote-schema></create-remote-schema>
+			<token>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}</use-schema>
+			</token>
+			<value>
+				<drop-schema></drop-schema>
+				<create-schema></create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>-pw ${vm.password} ${vm.username}@${db.host} sqlplus system/password @C:\${tstamp.value}\${sql.file} ${db.username} ${db.password}</use-schema>
+			</value>
+		</arg>
+	</oracle-11>
+
+	<postgresql-8.4>
+		<device-name></device-name>
+		<family>postgresql</family>
+		<driver>org.postgresql.Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:postgresql://${db.postgresql-8.4.host}:5432/${db.postgresql-8.4.schema}</url>
+		<vm-vmdk-suffix>postgresql-8.4.2-1</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<token>
+				<drop-schema>drop database lportal;</drop-schema>
+				<create-schema>create database lportal encoding = 'UNICODE';</create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>\c lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database ${db.schema};</drop-schema>
+				<create-schema>create database ${db.schema} encoding = 'UNICODE';</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>\c ${db.schema};</use-schema>
+			</value>
+		</arg>
+	</postgresql-8.4>
+
+	<postgresql-9.0>
+		<device-name></device-name>
+		<family>postgresql</family>
+		<driver>org.postgresql.Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:postgresql://${db.postgresql-9.0.host}:5432/${db.postgresql-9.0.schema}</url>
+		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<token>
+				<drop-schema>drop database lportal;</drop-schema>
+				<create-schema>create database lportal encoding = 'UNICODE';</create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>\c lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database ${db.schema};</drop-schema>
+				<create-schema>create database ${db.schema} encoding = 'UNICODE';</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>\c ${db.schema};</use-schema>
+			</value>
+		</arg>
+	</postgresql-9.0>
+
+	<sql-server-2005>
+		<device-name></device-name>
+		<family>sql-server</family>
+		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:jtds:sqlserver://${db.sql-server-2005.host}/${db.sql-server-2005.schema}</url>
+		<vm-vmdk-suffix>sql-server-2005-sp2</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<token>
+				<drop-schema>drop database lportal;</drop-schema>
+				<create-schema>create database lportal;</create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database ${db.schema};</drop-schema>
+				<create-schema>create database ${db.schema};</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use ${db.schema};</use-schema>
+			</value>
+		</arg>
+	</sql-server-2005>
+
+	<sql-server-2008>
+		<device-name></device-name>
+		<family>sql-server</family>
+		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:jtds:sqlserver://${db.sql-server-2008.host}/${db.sql-server-2008.schema}</url>
+		<vm-vmdk-suffix>sql-server-2008-r2</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<token>
+				<drop-schema>drop database lportal;</drop-schema>
+				<create-schema>create database lportal;</create-schema>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use lportal;</use-schema>
+			</token>
+			<value>
+				<drop-schema>drop database ${db.schema};</drop-schema>
+				<create-schema>create database ${db.schema};</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary></create-schema-secondary>
+				<use-schema>use ${db.schema};</use-schema>
+			</value>
+		</arg>
+	</sql-server-2008>
+
+	<sybase>
+		<device-name>lportal</device-name>
+		<family>sybase</family>
+		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+		<schema>lportal</schema>
+		<url>jdbc:jtds:sybase://${db.sybase.host}:5000/${db.sybase.schema}</url>
+		<vm-vmdk-suffix>sybase-15.0.2</vm-vmdk-suffix>
+		<arg>
+			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
+			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} isql -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<token>
+				<drop-schema>use master</drop-schema>
+				<create-schema>exec sp_dboption 'lportal', 'allow nulls by default' , true</create-schema>
+				<create-schema-secondary>exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true</create-schema-secondary>
+				<use-schema>use lportal</use-schema>
+			</token>
+			<value>
+				<drop-schema><![CDATA[use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${db.schema}&quot;)${line.separator}begin${line.separator}drop database ${db.schema}${line.separator}end${line.separator}go${line.separator}create database ${db.schema} on ${db.device.name} = &quot;250m&quot;${line.separator}go]]></drop-schema>
+				<create-schema>exec sp_dboption '${db.schema}', 'allow nulls by default' , true</create-schema>
+				<create-schema-collate></create-schema-collate>
+				<create-schema-secondary>exec sp_dboption '${db.schema}', 'select into/bulkcopy/pllsort' , true</create-schema-secondary>
+				<use-schema>use ${db.schema}${line.separator}go</use-schema>
+			</value>
+		</arg>
+	</sybase>
+</db>

@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition selenium="isSelenium" argument="argument" />
+			<then>
+				<execute selenium="selenium" />
+			</then>
+		</if>
+	</command>
+</definition>

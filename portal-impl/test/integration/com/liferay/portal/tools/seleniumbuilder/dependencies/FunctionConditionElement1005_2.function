@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition function="Function#isFunction" locator="locator" />
+			<then>
+				<execute selenium="selenium" />
+			</then>
+		</if>
+	</command>
+</definition>

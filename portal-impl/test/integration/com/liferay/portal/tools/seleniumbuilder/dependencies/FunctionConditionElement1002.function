@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition selenium="Function#isFunction">
+				<var name="name" value="value" />
+			</condition>
+			<then>
+				<execute selenium="selenium" />
+			</then>
+		</if>
+	</command>
+</definition>

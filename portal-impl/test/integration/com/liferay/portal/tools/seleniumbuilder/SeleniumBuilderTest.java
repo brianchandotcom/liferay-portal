@@ -78,6 +78,118 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionConditionElement1002() throws Exception {
+		test(
+			"FunctionConditionElement1002.function",
+			"Error 1002: Invalid var element in " + _DIR_NAME +
+				"/FunctionConditionElement1002.function:5");
+	}
+
+	@Test
+	public void testFunctionConditionElement1004_1() throws Exception {
+		test(
+			"FunctionConditionElement1004_1.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionConditionElement1004_1.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1004_2() throws Exception {
+		test(
+			"FunctionConditionElement1004_2.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionConditionElement1004_2.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1004_3() throws Exception {
+		test(
+			"FunctionConditionElement1004_3.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionConditionElement1004_3.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1004_4() throws Exception {
+		test(
+			"FunctionConditionElement1004_4.function",
+			"Error 1004: Missing (function|selenium) attribute in " +
+				_DIR_NAME + "/FunctionConditionElement1004_4.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1005_1() throws Exception {
+		test(
+			"FunctionConditionElement1005_1.function",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/FunctionConditionElement1005_1.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1005_2() throws Exception {
+		test(
+			"FunctionConditionElement1005_2.function",
+			"Error 1005: Invalid locator attribute in " + _DIR_NAME +
+				"/FunctionConditionElement1005_2.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1005_3() throws Exception {
+		test(
+			"FunctionConditionElement1005_3.function",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/FunctionConditionElement1005_3.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1005_4() throws Exception {
+		test(
+			"FunctionConditionElement1005_4.function",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/FunctionConditionElement1005_4.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1005_5() throws Exception {
+		test(
+			"FunctionConditionElement1005_5.function",
+			"Error 1005: Invalid argument attribute in " + _DIR_NAME +
+				"/FunctionConditionElement1005_5.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_1() throws Exception {
+		test(
+			"FunctionConditionElement1006_1.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_1.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_2() throws Exception {
+		test(
+			"FunctionConditionElement1006_2.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_2.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_3() throws Exception {
+		test(
+			"FunctionConditionElement1006_3.function",
+			"Error 1006: Invalid selenium attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_3.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_4() throws Exception {
+		test(
+			"FunctionConditionElement1006_4.function",
+			"Error 1006: Invalid selenium attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_4.function:4");
+	}
+
+	@Test
 	public void testFunctionDefinitionElement1000() throws Exception {
 		test(
 			"FunctionDefinitionElement1000.function",

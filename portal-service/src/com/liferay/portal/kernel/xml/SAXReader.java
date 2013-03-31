@@ -71,6 +71,8 @@ public interface SAXReader {
 	public XPath createXPath(
 		String xPathExpression, String prefix, String namespace);
 
+	public Element emptyElement();
+
 	public Document read(File file) throws DocumentException;
 
 	public Document read(File file, boolean validate)

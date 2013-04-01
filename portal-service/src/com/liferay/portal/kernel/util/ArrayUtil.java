@@ -56,6 +56,16 @@ public class ArrayUtil {
 	}
 
 	public static boolean[] append(boolean[] array, boolean value) {
+		return append(array, value, true);
+	}
+
+	public static boolean[] append(
+		boolean[] array, boolean value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		boolean[] newArray = new boolean[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -86,6 +96,16 @@ public class ArrayUtil {
 	}
 
 	public static byte[] append(byte[] array, byte value) {
+		return append(array, value, true);
+	}
+
+	public static byte[] append(
+		byte[] array, byte value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		byte[] newArray = new byte[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -116,6 +136,16 @@ public class ArrayUtil {
 	}
 
 	public static char[] append(char[] array, char value) {
+		return append(array, value, true);
+	}
+
+	public static char[] append(
+		char[] array, char value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		char[] newArray = new char[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -146,6 +176,16 @@ public class ArrayUtil {
 	}
 
 	public static double[] append(double[] array, double value) {
+		return append(array, value, true);
+	}
+
+	public static double[] append(
+		double[] array, double value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		double[] newArray = new double[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -176,6 +216,16 @@ public class ArrayUtil {
 	}
 
 	public static float[] append(float[] array, float value) {
+		return append(array, value, true);
+	}
+
+	public static float[] append(
+		float[] array, float value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		float[] newArray = new float[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -206,6 +256,16 @@ public class ArrayUtil {
 	}
 
 	public static int[] append(int[] array, int value) {
+		return append(array, value, true);
+	}
+
+	public static int[] append(
+		int[] array, int value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		int[] newArray = new int[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -236,6 +296,16 @@ public class ArrayUtil {
 	}
 
 	public static long[] append(long[] array, long value) {
+		return append(array, value, true);
+	}
+
+	public static long[] append(
+		long[] array, long value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		long[] newArray = new long[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -266,6 +336,16 @@ public class ArrayUtil {
 	}
 
 	public static short[] append(short[] array, short value) {
+		return append(array, value, true);
+	}
+
+	public static short[] append(
+		short[] array, short value, boolean allowDuplicates) {
+
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		short[] newArray = new short[array.length + 1];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -299,6 +379,14 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[] append(T[] array, T value) {
+		return append(array, value, true);
+	}
+
+	public static <T> T[] append(T[] array, T value, boolean allowDuplicates) {
+		if (!allowDuplicates && contains(array, value)) {
+			return array;
+		}
+
 		Class<?> arrayClass = array.getClass();
 
 		T[] newArray = (T[])Array.newInstance(

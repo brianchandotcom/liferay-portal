@@ -81,19 +81,25 @@
 
 	<#local mbRootMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, 0)>
 
-	${sampleSQLBuilder.insertMBMessage(mbRootMessage)}
+	<@insertMBMessage _mbMessage = mbRootMessage />
 
 	<#if (_maxCommentCount > 0)>
 		<#list 1.._maxCommentCount as commentCount>
 			<#local mbMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, commentCount)>
 
-			${sampleSQLBuilder.insertMBMessage(mbMessage)}
+			<@insertMBMessage _mbMessage = mbMessage />
 		</#list>
 	</#if>
 
 	<#local mbDiscussion = dataFactory.newMBDiscussion(_groupId, _classNameId, _classPK, _mbThreadId)>
 
 	insert into MBDiscussion values ('${mbDiscussion.uuid}', ${mbDiscussion.discussionId}, ${mbDiscussion.groupId}, ${mbDiscussion.companyId}, ${mbDiscussion.userId}, '${mbDiscussion.userName}', '${dataFactory.getDateString(mbDiscussion.createDate)}', '${dataFactory.getDateString(mbDiscussion.modifiedDate)}', ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
+</#macro>
+
+<#macro insertMBMessage _mbMessage>
+	insert into MBMessage values ('${_mbMessage.uuid}', ${_mbMessage.messageId}, ${_mbMessage.groupId}, ${_mbMessage.companyId}, ${_mbMessage.userId}, '${_mbMessage.userName}', '${dataFactory.getDateString(_mbMessage.createDate)}', '${dataFactory.getDateString(_mbMessage.modifiedDate)}', ${_mbMessage.classNameId}, ${_mbMessage.classPK}, ${_mbMessage.categoryId}, ${_mbMessage.threadId}, ${_mbMessage.rootMessageId}, ${_mbMessage.parentMessageId}, '${_mbMessage.subject}', '${_mbMessage.body}', '${_mbMessage.format}', ${_mbMessage.anonymous?string}, ${_mbMessage.priority}, ${_mbMessage.allowPingbacks?string}, ${_mbMessage.answer?string}, ${_mbMessage.status}, ${_mbMessage.statusByUserId}, '${_mbMessage.statusByUserName}', '${dataFactory.getDateString(_mbMessage.statusDate)}');
+
+	<@insertAssetEntry _entry = _mbMessage />
 </#macro>
 
 <#macro insertPortletPreferences _entry _plid _portletId = 'null'>

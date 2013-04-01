@@ -35,7 +35,6 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -214,14 +213,6 @@ public class SampleSQLBuilder {
 		put(context, "dlFileEntry", dlFileEntry);
 
 		processTemplate(_tplDLFileEntry, context);
-	}
-
-	public void insertMBMessage(MBMessage mbMessage) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbMessage", mbMessage);
-
-		processTemplate(_tplMBMessage, context);
 	}
 
 	public void insertResourcePermission(String name, String primKey)
@@ -572,7 +563,6 @@ public class SampleSQLBuilder {
 	private File _tempDir;
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =
 		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";

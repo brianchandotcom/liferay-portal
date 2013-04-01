@@ -186,8 +186,8 @@ String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(preferences, r
 if (!showActions) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(entryColumns, "action")) {
-	entryColumns = ArrayUtil.append(entryColumns, "action");
+else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	entryColumns = ArrayUtil.append(entryColumns, "action", false);
 }
 
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);

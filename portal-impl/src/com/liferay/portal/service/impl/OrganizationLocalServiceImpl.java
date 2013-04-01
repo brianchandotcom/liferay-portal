@@ -1863,12 +1863,8 @@ public class OrganizationLocalServiceImpl
 			organizationIds[i] = curOrganization.getOrganizationId();
 		}
 
-		if (!ArrayUtil.contains(
-				organizationIds, organization.getOrganizationId())) {
-
-			organizationIds = ArrayUtil.append(
-				organizationIds, organization.getOrganizationId());
-		}
+		organizationIds = ArrayUtil.append(
+			organizationIds, organization.getOrganizationId(), false);
 
 		return organizationIds;
 	}

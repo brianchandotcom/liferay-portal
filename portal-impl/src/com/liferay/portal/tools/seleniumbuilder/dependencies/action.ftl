@@ -81,14 +81,14 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 									<#assign caseComparator = "equals">
 								</#if>
 
-								<#if caseElement.attributeValue("locator")??>
-									<#assign caseLocator = caseElement.attributeValue("locator")>
+								<#if caseElement.attributeValue("locator1")??>
+									<#assign caseLocator1 = caseElement.attributeValue("locator1")>
 
-									locator1.${caseComparator}("${caseLocator}")
-								<#elseif caseElement.attributeValue("locator-key")??>
-									<#assign caseLocatorKey = caseElement.attributeValue("locator-key")>
+									locator1.${caseComparator}("${caseLocator1}")
+								<#elseif caseElement.attributeValue("locator-key1")??>
+									<#assign caseLocatorKey1 = caseElement.attributeValue("locator-key1")>
 
-									locatorKey1.${caseComparator}("${caseLocatorKey}")
+									locatorKey1.${caseComparator}("${caseLocatorKey1}")
 								<#else>
 									false
 								</#if>

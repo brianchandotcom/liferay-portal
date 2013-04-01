@@ -1,12 +1,12 @@
 <definition>
 	<command name="click">
-		<case locator-key="EMPTY_RECYCLE_BIN">
+		<case locator-key1="EMPTY_RECYCLE_BIN">
 			<execute function="Click#textClickAtAndWait" value1="Empty the Recycle Bin" />
 		</case>
 	</command>
 
 	<command name="confirm">
-		<case locator-key="CONFIRMATION">
+		<case locator-key1="CONFIRMATION">
 			<execute function="Confirm#waitForConfirmation" />
 		</case>
 	</command>

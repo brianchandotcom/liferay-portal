@@ -27,6 +27,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.permission.CalEventPermission;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -61,6 +62,11 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _event.getModifiedDate();
 	}
 
 	public long getGroupId() {

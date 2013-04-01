@@ -63,6 +63,14 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return expandoBridge.getAttributes();
 	}
 
+	public FileVersion getCachedFileVersion() {
+		if (_dlFileVersion == null) {
+			return null;
+		}
+
+		return new LiferayFileVersion(_dlFileVersion);
+	}
+
 	@Override
 	public long getCompanyId() {
 		return _dlFileEntry.getCompanyId();
@@ -108,7 +116,13 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	public FileVersion getFileVersion()
 		throws PortalException, SystemException {
 
-		return new LiferayFileVersion(_dlFileEntry.getFileVersion());
+		DLFileVersion dlFileVersion = _dlFileVersion;
+
+		if (dlFileVersion == null) {
+			dlFileVersion = _dlFileEntry.getFileVersion();
+		}
+
+		return new LiferayFileVersion(dlFileVersion);
 	}
 
 	public FileVersion getFileVersion(String version)
@@ -278,6 +292,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return true;
 	}
 
+	public void setCachedFileVersion(FileVersion fileVersion) {
+		_dlFileVersion = (DLFileVersion)fileVersion.getModel();
+	}
+
 	public void setCompanyId(long companyId) {
 		_dlFileEntry.setCompanyId(companyId);
 	}
@@ -338,6 +356,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	private DLFileEntry _dlFileEntry;
+	private DLFileVersion _dlFileVersion;
 	private boolean _escapedModel;
 
 }

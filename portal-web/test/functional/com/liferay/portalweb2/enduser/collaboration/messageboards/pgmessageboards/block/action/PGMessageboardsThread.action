@@ -1,6 +1,6 @@
 <definition>
 	<command name="click">
-		<case comparator="startsWith" locator-key="REPLY_">
+		<case comparator="startsWith" locator-key1="REPLY_">
 			<execute function="Click#clickAtAndWait" value1="Reply" />
 		</case>
 	</command>

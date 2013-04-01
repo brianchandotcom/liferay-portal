@@ -1,30 +1,30 @@
 <definition>
 	<command name="click">
-		<case locator-key="ADD_PAGE">
+		<case locator-key1="ADD_PAGE">
 			<execute function="Click#textClickAt" value1="Page" />
 		</case>
-		<case locator-key="ADD_PORTLET">
+		<case locator-key1="ADD_PORTLET">
 			<execute function="Click#partialTextClickAt" value1="More" />
 		</case>
-		<case locator-key="GO_TO_CONTROL_PANEL">
+		<case locator-key1="GO_TO_CONTROL_PANEL">
 			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
 		</case>
-		<case locator-key="USER_SIGN_OUT">
+		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
 	</command>
 
 	<command name="mouseOver">
-		<case locator-key="ADD">
+		<case locator-key1="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
 		</case>
-		<case locator-key="GO_TO">
+		<case locator-key1="GO_TO">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Go to" />
 		</case>
 	</command>
 
 	<command name="type">
-		<case locator-key="APPLICATION_SEARCH">
+		<case locator-key1="APPLICATION_SEARCH">
 			<execute function="Type#sendKeysApplicationSearch" />
 		</case>
 	</command>

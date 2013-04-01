@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -39,6 +42,8 @@ public interface AssetRenderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
+	public String getAddContentPortletId() throws Exception;
+
 	public String[] getAvailableLocales() throws Exception;
 
 	public String getClassName();
@@ -47,9 +52,15 @@ public interface AssetRenderer {
 
 	public String getDiscussionPath();
 
+	public Date getDisplayDate();
+
 	public long getGroupId();
 
 	public String getIconPath(PortletRequest portletRequest);
+
+	public String getPreviewPath(
+			PortletRequest portletRequest, PortletResponse PortletResponse)
+		throws Exception;
 
 	public String getSearchSummary(Locale locale);
 
@@ -76,6 +87,9 @@ public interface AssetRenderer {
 	public PortletURL getURLExport(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
+		throws Exception;
+
+	public String getURLImagePreview(PortletRequest portletRequest)
 		throws Exception;
 
 	public String getUrlTitle();
@@ -118,6 +132,11 @@ public interface AssetRenderer {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)
+		throws Exception;
+
+	public void setAddContentPreferences(
+			PortletPreferences preferences, String portletId,
+			ThemeDisplay themeDisplay)
 		throws Exception;
 
 }

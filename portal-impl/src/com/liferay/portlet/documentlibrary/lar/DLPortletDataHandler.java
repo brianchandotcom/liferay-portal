@@ -139,6 +139,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			return;
 		}
 
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		liferayFileEntry.setCachedFileVersion(fileVersion);
+
 		Element fileEntryElement = fileEntriesElement.addElement("file-entry");
 
 		if (foldersElement != null) {

@@ -73,10 +73,12 @@ public class TestUserGroupMembershipPolicy
 		BaseUserGroupMembershipPolicyTestCase.setPropagateMembership(true);
 	}
 
+	@Override
 	public void verifyPolicy() {
 		BaseUserGroupMembershipPolicyTestCase.setVerify(true);
 	}
 
+	@Override
 	public void verifyPolicy(UserGroup userGroup) {
 		verifyPolicy();
 	}

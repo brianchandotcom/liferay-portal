@@ -1,9 +1,9 @@
 <definition>
 	<command name="click">
-		<case locator-key="COMMENTS_ADD">
+		<case locator-key1="COMMENTS_ADD">
 			<execute function="Click#textClickAt" value1="Be the first." />
 		</case>
-		<case locator-key="COMMENTS_REPLY">
+		<case locator-key1="COMMENTS_REPLY">
 			<execute function="Click#valueClickAt" value1="Reply" />
 		</case>
 	</command>

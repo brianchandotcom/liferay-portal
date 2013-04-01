@@ -1,9 +1,9 @@
 <definition>
 	<command name="click">
-		<case locator-key="I_AGREE">
+		<case locator-key1="I_AGREE">
 			<execute function="Click#valueClickAtAndWait" value1="I Agree" />
 		</case>
-		<case locator-key="I_DISAGREE">
+		<case locator-key1="I_DISAGREE">
 			<execute function="Click#valueClickAtAndWait" value1="I Disagree" />
 		</case>
 	</command>

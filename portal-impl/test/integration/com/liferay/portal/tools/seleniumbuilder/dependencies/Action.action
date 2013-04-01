@@ -1,0 +1,19 @@
+<definition>
+	<command name="name">
+		<case locator1="locator1">
+			<execute function="Function#function" />
+		</case>
+		<case comparator="contains" locator1="locator1">
+			<execute function="Function#function" />
+		</case>
+		<case comparator="endsWith" locator-key1="locator-key1">
+			<execute function="Function#function" />
+		</case>
+		<case comparator="startsWith" locator-key1="locator-key1">
+			<execute function="Function#function" />
+		</case>
+		<default>
+			<execute function="Function#function" />
+		</default>
+	</command>
+</definition>

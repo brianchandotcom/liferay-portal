@@ -1,0 +1,7 @@
+<definition>
+	<command-fail name="name">
+		<default>
+			<execute function="Function#function" />
+		</default>
+	</command-fail>
+</definition>

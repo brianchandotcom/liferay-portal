@@ -333,7 +333,10 @@ public class SeleniumBuilderFileUtil {
 	protected void validate(String fileName, Element rootElement)
 		throws Exception {
 
-		if (fileName.endsWith(".function")) {
+		if (fileName.endsWith(".action")) {
+			validateActionDocument(fileName, rootElement);
+		}
+		else if (fileName.endsWith(".function")) {
 			validateFunctionDocument(fileName, rootElement);
 		}
 		else if (fileName.endsWith(".macro")) {
@@ -341,6 +344,39 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (fileName.endsWith(".path")) {
 			validatePathDocument(fileName, rootElement);
+		}
+	}
+
+	protected void validateActionDocument(
+		String fileName, Element rootElement) {
+
+		if (!Validator.equals(rootElement.getName(), "definition")) {
+			throwValidationException(1000, fileName, rootElement);
+		}
+
+		List<Element> elements = rootElement.elements();
+
+		if (elements.isEmpty()) {
+			throwValidationException(
+				1001, fileName, rootElement, new String[] {"command"});
+		}
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (elementName.equals("command")) {
+				String attributeValue = element.attributeValue("name");
+
+				if (attributeValue == null) {
+					throwValidationException(1003, fileName, element, "name");
+				}
+				else if (Validator.isNull(attributeValue)) {
+					throwValidationException(1006, fileName, element, "name");
+				}
+			}
+			else {
+				throwValidationException(1002, fileName, element, elementName);
+			}
 		}
 	}
 

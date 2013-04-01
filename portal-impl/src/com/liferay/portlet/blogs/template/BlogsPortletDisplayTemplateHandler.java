@@ -16,14 +16,18 @@ package com.liferay.portlet.blogs.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -50,6 +54,26 @@ public class BlogsPortletDisplayTemplateHandler
 	@Override
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.BLOGS_DISPLAY_TEMPLATES_HELP;
+	}
+
+	@Override
+	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
+			long classPK, Locale locale)
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			super.getTemplateVariableGroups(classPK, locale);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addCollectionVariable(
+			"blog-entries", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"blog-entry", BlogsEntry.class, "curBlogEntry");
+
+		return templateVariableGroups;
 	}
 
 	@Override

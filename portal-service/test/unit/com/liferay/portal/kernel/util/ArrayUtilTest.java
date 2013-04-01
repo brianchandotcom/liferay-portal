@@ -21,8 +21,37 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @author Hugo Huijser
  */
 public class ArrayUtilTest extends TestCase {
+
+	public void testAppendWithDuplicates() {
+		String[] array = new String[] {"hello", "world"};
+
+		array = ArrayUtil.append(array, "world", true);
+
+		assertEquals(3, array.length);
+
+		array = new String[] {"hello", "world"};
+
+		array = ArrayUtil.append(array, "world", false);
+
+		assertEquals(2, array.length);
+	}
+
+	public void testAppendWithoutDuplicates() {
+		String[] array = new String[] {"hello", "world"};
+
+		array = ArrayUtil.append(array, "liferay", true);
+
+		assertEquals(3, array.length);
+
+		array = new String[] {"hello", "world"};
+
+		array = ArrayUtil.append(array, "liferay", false);
+
+		assertEquals(3, array.length);
+	}
 
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();

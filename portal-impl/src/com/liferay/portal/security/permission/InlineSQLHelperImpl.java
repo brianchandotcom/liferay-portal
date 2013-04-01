@@ -291,9 +291,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		for (long groupId : groupIds) {
 			for (long roleId : getRoleIds(groupId)) {
-				if (!ArrayUtil.contains(roleIds, roleId)) {
-					roleIds = ArrayUtil.append(roleIds, roleId);
-				}
+				roleIds = ArrayUtil.append(roleIds, roleId, false);
 			}
 		}
 

@@ -168,9 +168,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		checkPermission(actionRequest, scopeId);
 
-		if (!ArrayUtil.contains(scopeIds, scopeId)) {
-			scopeIds = ArrayUtil.append(scopeIds, scopeId);
-		}
+		scopeIds = ArrayUtil.append(scopeIds, scopeId, false);
 
 		preferences.setValues("scopeIds", scopeIds);
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import javax.servlet.FilterChain;
@@ -44,23 +45,65 @@ public class ETagFilter extends BasePortalFilter {
 		}
 	}
 
+	protected boolean isEligibleForEtag(int responseStatusCode) {
+		if ((responseStatusCode >= 200) && (responseStatusCode < 300)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
 
+		final int[] statusCode = {HttpServletResponse.SC_OK};
+
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(response);
+			new BufferCacheServletResponse(response) {
+
+				@Override
+				public void sendError(int status) throws IOException {
+					super.sendError(status);
+					statusCode[0] = status;
+				}
+
+				@Override
+				public void sendError(int status, String errorMessage)
+					throws IOException {
+					super.sendError(status, errorMessage);
+					statusCode[0] = status;
+				}
+
+				@Override
+				public void setStatus(int status) {
+					super.setStatus(status);
+					statusCode[0] = status;
+				}
+
+				@Override
+				public void setStatus(int status, String statusMessage) {
+					super.setStatus(status, statusMessage);
+					statusCode[0] = status;
+				}
+			};
 
 		processFilter(
 			ETagFilter.class, request, bufferCacheServletResponse, filterChain);
 
 		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
-		if (!ETagUtil.processETag(request, response, byteBuffer)) {
+		if (isEligibleForEtag(statusCode[0])) {
+			if (!ETagUtil.processETag(request, response, byteBuffer)) {
+				bufferCacheServletResponse.finishResponse();
+				bufferCacheServletResponse.outputBuffer();
+			}
+		}
+		else {
 			bufferCacheServletResponse.finishResponse();
-			bufferCacheServletResponse.outputBuffer();
 		}
 	}
 

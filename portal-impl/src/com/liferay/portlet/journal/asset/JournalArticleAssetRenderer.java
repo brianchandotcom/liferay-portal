@@ -110,7 +110,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public Date getDisplayDate() {
-		return _article.getModifiedDate();
+		return _article.getDisplayDate();
 	}
 
 	public long getGroupId() {

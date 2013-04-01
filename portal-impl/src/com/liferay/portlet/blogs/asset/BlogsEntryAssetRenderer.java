@@ -71,7 +71,7 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public Date getDisplayDate() {
-		return _entry.getModifiedDate();
+		return _entry.getDisplayDate();
 	}
 
 	public long getGroupId() {

@@ -383,14 +383,15 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		query.append(ORDER_BY_CLAUSE);
 
+		String[] badColumnNames = getBadColumnNames();
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
 		for (int i = 0; i < orderByFields.length; i++) {
 			query.append(entityAlias);
 			query.append(orderByFields[i]);
 
-			if (sqlQuery && (getBadColumnNames() != null) &&
-				ArrayUtil.contains(getBadColumnNames(), orderByFields[i])) {
+			if (sqlQuery && (badColumnNames != null) &&
+				ArrayUtil.contains(badColumnNames, orderByFields[i])) {
 
 				query.append(StringPool.UNDERLINE);
 			}

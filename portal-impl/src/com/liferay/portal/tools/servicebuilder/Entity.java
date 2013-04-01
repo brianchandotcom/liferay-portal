@@ -188,9 +188,9 @@ public class Entity {
 	}
 
 	public List<EntityColumn> getBadNamedColumns() {
-		List<EntityColumn> badNamedColumnList = ListUtil.copy(_columnList);
+		List<EntityColumn> badNamedColumns = ListUtil.copy(_columnList);
 
-		Iterator<EntityColumn> itr = badNamedColumnList.iterator();
+		Iterator<EntityColumn> itr = badNamedColumns.iterator();
 
 		while (itr.hasNext()) {
 			EntityColumn column = itr.next();
@@ -200,7 +200,7 @@ public class Entity {
 			}
 		}
 
-		return badNamedColumnList;
+		return badNamedColumns;
 	}
 
 	public List<EntityColumn> getBlobList() {

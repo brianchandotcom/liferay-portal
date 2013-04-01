@@ -210,7 +210,7 @@ public class MembershipPolicyTestUtil {
 	}
 
 	protected static ServiceContext populateServiceContext(
-			boolean hasCategorization)
+			boolean includeCategorization)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -218,7 +218,7 @@ public class MembershipPolicyTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		if (hasCategorization) {
+		if (includeCategorization) {
 			AssetTag tag = AssetTagLocalServiceUtil.addTag(
 				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
 				null, new ServiceContext());

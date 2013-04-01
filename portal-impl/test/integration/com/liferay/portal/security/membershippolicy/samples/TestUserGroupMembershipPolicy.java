@@ -15,7 +15,6 @@
 package com.liferay.portal.security.membershippolicy.samples;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.membershippolicy.BaseUserGroupMembershipPolicy;
@@ -36,7 +35,7 @@ public class TestUserGroupMembershipPolicy
 
 	public void checkMembership(
 			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (long forbiddenUserGroupId :
 				BaseUserGroupMembershipPolicyTestCase.
@@ -69,8 +68,7 @@ public class TestUserGroupMembershipPolicy
 	}
 
 	public void propagateMembership(
-			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
-		throws PortalException, SystemException {
+		long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds) {
 
 		BaseUserGroupMembershipPolicyTestCase.setPropagateMembership(true);
 	}

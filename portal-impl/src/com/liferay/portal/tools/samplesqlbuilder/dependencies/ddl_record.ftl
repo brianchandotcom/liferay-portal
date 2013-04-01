@@ -6,4 +6,4 @@ insert into DDLRecord values ('${ddlRecord.uuid}', ${ddlRecord.recordId}, ${ddlR
 
 insert into DDLRecordVersion values (${ddlRecordVersion.recordVersionId}, ${ddlRecordVersion.groupId}, ${ddlRecordVersion.companyId}, ${ddlRecordVersion.userId}, '${ddlRecordVersion.userName}', '${dataFactory.getDateString(ddlRecordVersion.createDate)}', ${ddlRecordVersion.DDMStorageId}, ${ddlRecordVersion.recordSetId}, ${ddlRecordVersion.recordId}, '${ddlRecordVersion.version}', ${ddlRecordVersion.displayIndex}, ${ddlRecordVersion.status}, ${ddlRecordVersion.statusByUserId}, '${ddlRecordVersion.statusByUserName}', '${dataFactory.getDateString(ddlRecordVersion.statusDate)}');
 
-<@insertDDMContent _currentIndex = ddlRecordCount _ddmStorageLinkId = counter.get() _ddmStructureId = ddmStructureId _entry = ddlRecord />
+<@insertDDMContent _ddmStorageLinkId = counter.get() _ddmStructureId = ddmStructureId _entry = ddlRecord _currentIndex = ddlRecordCount />

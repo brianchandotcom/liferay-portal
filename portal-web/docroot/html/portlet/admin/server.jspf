@@ -717,7 +717,7 @@ serverURL.setParameter("tabs3", tabs3);
 				</aui:button-row>
 			</c:when>
 			<c:when test='<%= tabs2.equals("shutdown") %>'>
-				<liferay-ui:error key="minutes" message="the-number-of-minutes-is-not-correct" />
+				<liferay-ui:error key="minutes" message="please-enter-the-number-of-minutes" />
 
 				<aui:button-row>
 
@@ -731,7 +731,10 @@ serverURL.setParameter("tabs3", tabs3);
 						</c:when>
 						<c:otherwise>
 							<aui:fieldset>
-								<aui:input label="number-of-minutes" name="minutes" size="3" type="text" />
+								<aui:input label="number-of-minutes" name="minutes" size="3" type="text">
+									<aui:validator name="min">0</aui:validator>
+									<aui:validator name="required" />
+								</aui:input>
 
 								<aui:input cssClass="lfr-textarea-container" label="custom-message" name='<%= "message" + GetterUtil.getString(ShutdownUtil.getMessage()) %>' type="textarea" />
 							</aui:fieldset>

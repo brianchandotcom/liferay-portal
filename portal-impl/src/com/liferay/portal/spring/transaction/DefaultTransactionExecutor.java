@@ -23,6 +23,7 @@ import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.interceptor.TransactionAttribute;
@@ -34,6 +35,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 
 	public Object execute(
+			PlatformTransactionManager platformTransactionManager,
 			TransactionAttribute transactionAttribute,
 			MethodInvocation methodInvocation)
 		throws Throwable {
@@ -60,15 +62,19 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		}
 		catch (Throwable throwable) {
 			processThrowable(
-				throwable, transactionAttribute, transactionStatus);
+				platformTransactionManager, throwable, transactionAttribute,
+				transactionStatus);
 		}
 
-		processCommit(transactionStatus);
+		processCommit(platformTransactionManager, transactionStatus);
 
 		return returnValue;
 	}
 
-	protected void processCommit(TransactionStatus transactionStatus) {
+	protected void processCommit(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionStatus transactionStatus) {
+
 		boolean hasError = false;
 
 		try {
@@ -117,6 +123,7 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 	}
 
 	protected void processThrowable(
+			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable, TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus)
 		throws Throwable {
@@ -157,7 +164,7 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			}
 		}
 		else {
-			processCommit(transactionStatus);
+			processCommit(platformTransactionManager, transactionStatus);
 		}
 
 		throw throwable;

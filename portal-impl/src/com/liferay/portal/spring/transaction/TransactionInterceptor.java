@@ -49,7 +49,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 		}
 
 		return transactionExecutor.execute(
-			transactionAttribute, methodInvocation);
+			platformTransactionManager, transactionAttribute, methodInvocation);
 	}
 
 	public void setPlatformTransactionManager(
@@ -64,8 +64,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 			transactionExecutor = new DefaultTransactionExecutor();
 		}
 
-		transactionExecutor.setPlatformTransactionManager(
-			platformTransactionManager);
+		this.platformTransactionManager = platformTransactionManager;
 	}
 
 	public void setTransactionAttributeSource(
@@ -84,6 +83,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 		setPlatformTransactionManager(platformTransactionManager);
 	}
 
+	protected PlatformTransactionManager platformTransactionManager;
 	protected TransactionAttributeSource transactionAttributeSource;
 	protected TransactionExecutor transactionExecutor;
 

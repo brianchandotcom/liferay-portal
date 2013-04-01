@@ -21,6 +21,7 @@ import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
@@ -34,6 +35,7 @@ public class CallbackPreferringTransactionExecutor
 	extends BaseTransactionExecutor {
 
 	public Object execute(
+			PlatformTransactionManager platformTransactionManager,
 			TransactionAttribute transactionAttribute,
 			MethodInvocation methodInvocation)
 		throws Throwable {
@@ -55,6 +57,20 @@ public class CallbackPreferringTransactionExecutor
 		}
 
 		return result;
+	}
+
+	protected static class ThrowableHolder {
+
+		public ThrowableHolder(Throwable throwable) {
+			_throwable = throwable;
+		}
+
+		public Throwable getThrowable() {
+			return _throwable;
+		}
+
+		private Throwable _throwable;
+
 	}
 
 	private class CallbackPreferringTransactionCallback

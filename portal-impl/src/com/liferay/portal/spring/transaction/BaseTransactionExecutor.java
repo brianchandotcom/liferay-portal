@@ -20,19 +20,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.springframework.transaction.PlatformTransactionManager;
-
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
  */
 public abstract class BaseTransactionExecutor implements TransactionExecutor {
-
-	public void setPlatformTransactionManager(
-		PlatformTransactionManager platformTransactionManager) {
-
-		this.platformTransactionManager = platformTransactionManager;
-	}
 
 	protected void invokeCallbacks() {
 		List<Callable<?>> callables =
@@ -46,22 +38,6 @@ public abstract class BaseTransactionExecutor implements TransactionExecutor {
 				_log.error("Unable to execute transaction commit callback", e);
 			}
 		}
-	}
-
-	protected PlatformTransactionManager platformTransactionManager;
-
-	protected static class ThrowableHolder {
-
-		public ThrowableHolder(Throwable throwable) {
-			_throwable = throwable;
-		}
-
-		public Throwable getThrowable() {
-			return _throwable;
-		}
-
-		private Throwable _throwable;
-
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

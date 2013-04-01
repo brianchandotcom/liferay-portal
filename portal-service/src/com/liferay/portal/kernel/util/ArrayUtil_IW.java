@@ -30,12 +30,21 @@ public class ArrayUtil_IW {
 		return ArrayUtil.append(array, value);
 	}
 
+	public boolean[] append(boolean[] array, boolean value,
+		boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
+	}
+
 	public byte[] append(byte[]... arrays) {
 		return ArrayUtil.append(arrays);
 	}
 
 	public byte[] append(byte[] array, byte value) {
 		return ArrayUtil.append(array, value);
+	}
+
+	public byte[] append(byte[] array, byte value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
 	}
 
 	public char[] append(char[]... arrays) {
@@ -46,12 +55,20 @@ public class ArrayUtil_IW {
 		return ArrayUtil.append(array, value);
 	}
 
+	public char[] append(char[] array, char value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
+	}
+
 	public double[] append(double[]... arrays) {
 		return ArrayUtil.append(arrays);
 	}
 
 	public double[] append(double[] array, double value) {
 		return ArrayUtil.append(array, value);
+	}
+
+	public double[] append(double[] array, double value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
 	}
 
 	public float[] append(float[]... arrays) {
@@ -62,12 +79,20 @@ public class ArrayUtil_IW {
 		return ArrayUtil.append(array, value);
 	}
 
+	public float[] append(float[] array, float value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
+	}
+
 	public int[] append(int[]... arrays) {
 		return ArrayUtil.append(arrays);
 	}
 
 	public int[] append(int[] array, int value) {
 		return ArrayUtil.append(array, value);
+	}
+
+	public int[] append(int[] array, int value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
 	}
 
 	public long[] append(long[]... arrays) {
@@ -78,6 +103,10 @@ public class ArrayUtil_IW {
 		return ArrayUtil.append(array, value);
 	}
 
+	public long[] append(long[] array, long value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
+	}
+
 	public short[] append(short[]... arrays) {
 		return ArrayUtil.append(arrays);
 	}
@@ -86,12 +115,20 @@ public class ArrayUtil_IW {
 		return ArrayUtil.append(array, value);
 	}
 
+	public short[] append(short[] array, short value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
+	}
+
 	public <T> T[] append(T[]... arrays) {
 		return ArrayUtil.append(arrays);
 	}
 
 	public <T> T[] append(T[] array, T value) {
 		return ArrayUtil.append(array, value);
+	}
+
+	public <T> T[] append(T[] array, T value, boolean allowDuplicates) {
+		return ArrayUtil.append(array, value, allowDuplicates);
 	}
 
 	public <T> T[] append(T[] array1, T[] array2) {

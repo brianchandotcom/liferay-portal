@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.io.IOException;
+
 import java.nio.ByteBuffer;
 
 import javax.servlet.FilterChain;
@@ -60,35 +61,45 @@ public class ETagFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		final int[] statusCode = {HttpServletResponse.SC_OK};
-
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(response) {
 
 				@Override
+				public int getStatus() {
+					return _status;
+				}
+
+				@Override
 				public void sendError(int status) throws IOException {
 					super.sendError(status);
-					statusCode[0] = status;
+
+					_status = status;
 				}
 
 				@Override
 				public void sendError(int status, String errorMessage)
 					throws IOException {
+
 					super.sendError(status, errorMessage);
-					statusCode[0] = status;
+
+					_status = status;
 				}
 
 				@Override
 				public void setStatus(int status) {
 					super.setStatus(status);
-					statusCode[0] = status;
+
+					_status = status;
 				}
 
 				@Override
 				public void setStatus(int status, String statusMessage) {
 					super.setStatus(status, statusMessage);
-					statusCode[0] = status;
+
+					_status = status;
 				}
+
+				private int _status = HttpServletResponse.SC_OK;
 			};
 
 		processFilter(
@@ -96,7 +107,7 @@ public class ETagFilter extends BasePortalFilter {
 
 		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
-		if (isEligibleForEtag(statusCode[0])) {
+		if (isEligibleForEtag(bufferCacheServletResponse.getStatus())) {
 			if (!ETagUtil.processETag(request, response, byteBuffer)) {
 				bufferCacheServletResponse.finishResponse();
 				bufferCacheServletResponse.outputBuffer();

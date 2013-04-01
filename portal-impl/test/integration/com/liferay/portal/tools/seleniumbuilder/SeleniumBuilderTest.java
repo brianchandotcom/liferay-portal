@@ -38,6 +38,46 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionCommandElement1001() throws Exception {
+		test(
+			"ActionCommandElement1001.action",
+			"Error 1001: Missing (case|default) child element in " + _DIR_NAME +
+				"/ActionCommandElement1001.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1002() throws Exception {
+		test(
+			"ActionCommandElement1002.action",
+			"Error 1002: Invalid case-fail element in " + _DIR_NAME +
+				"/ActionCommandElement1002.action:3");
+	}
+
+	@Test
+	public void testActionCommandElement1003_1() throws Exception {
+		test(
+			"ActionCommandElement1003_1.action",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/ActionCommandElement1003_1.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1003_2() throws Exception {
+		test(
+			"ActionCommandElement1003_2.action",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/ActionCommandElement1003_2.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement1006() throws Exception {
+		test(
+			"ActionCommandElement1006.action",
+			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
+				"/ActionCommandElement1006.action:2");
+	}
+
+	@Test
 	public void testActionDefinitionElement1000() throws Exception {
 		test(
 			"ActionDefinitionElement1000.action",

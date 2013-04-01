@@ -138,9 +138,7 @@ if (Validator.isNotNull(content)) {
 
 		availableLocales = StringUtil.split(contentEl.attributeValue("available-locales"));
 
-		if (!ArrayUtil.contains(availableLocales, defaultLanguageId)) {
-			availableLocales = ArrayUtil.append(availableLocales, defaultLanguageId);
-		}
+		availableLocales = ArrayUtil.append(availableLocales, defaultLanguageId, false);
 
 		if (ddmStructure == null) {
 			content = contentDoc.getRootElement().element("static-content").getText();

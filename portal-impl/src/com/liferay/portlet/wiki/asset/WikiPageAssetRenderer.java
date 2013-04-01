@@ -31,6 +31,7 @@ import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 import com.liferay.portlet.wiki.util.WikiUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -80,6 +81,11 @@ public class WikiPageAssetRenderer
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _page.getModifiedDate();
 	}
 
 	public long getGroupId() {

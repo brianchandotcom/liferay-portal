@@ -218,6 +218,21 @@ public class DLUtil {
 		return getDL().getGenericName(extension);
 	}
 
+	public static String getImagePreviewURL(
+			FileEntry fileEntry, FileVersion fileVersion,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getDL().getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
+	}
+
+	public static String getImagePreviewURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getDL().getImagePreviewURL(fileEntry, themeDisplay);
+	}
+
 	public static String[] getMediaGalleryMimeTypes(
 		PortletPreferences portletPreferences, PortletRequest portletRequest) {
 

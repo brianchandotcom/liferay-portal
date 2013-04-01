@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -90,6 +91,11 @@ public class DLFileEntryAssetRenderer
 		}
 	}
 
+	@Override
+	public Date getDisplayDate() {
+		return _fileEntry.getModifiedDate();
+	}
+
 	public long getGroupId() {
 		return _fileEntry.getGroupId();
 	}
@@ -98,6 +104,17 @@ public class DLFileEntryAssetRenderer
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
 			_fileEntry.getIcon() + ".png";
+	}
+
+	@Override
+	public String getImagePreviewURL(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return DLUtil.getImagePreviewURL(
+			_fileEntry, _fileVersion, themeDisplay);
 	}
 
 	public String getPortletId() {

@@ -28,6 +28,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -53,6 +54,11 @@ public class BookmarksEntryAssetRenderer
 
 	public long getClassPK() {
 		return _entry.getEntryId();
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _entry.getModifiedDate();
 	}
 
 	public long getGroupId() {

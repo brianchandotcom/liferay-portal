@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -55,6 +56,11 @@ public class DLFolderAssetRenderer
 
 	public long getClassPK() {
 		return _folder.getPrimaryKey();
+	}
+
+	@Override
+	public Date getDisplayDate() {
+		return _folder.getModifiedDate();
 	}
 
 	public long getGroupId() {

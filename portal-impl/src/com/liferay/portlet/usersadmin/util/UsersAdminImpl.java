@@ -165,18 +165,16 @@ public class UsersAdminImpl implements UsersAdmin {
 			administratorRole.getRoleId());
 
 		if (ArrayUtil.contains(administratorUserIds, user.getUserId()) &&
-			!ArrayUtil.contains(roleIds, administratorRole.getRoleId()) &&
 			(administratorUserIds.length == 1)) {
 
-			roleIds = ArrayUtil.append(roleIds, administratorRole.getRoleId());
+			roleIds = ArrayUtil.append(
+				roleIds, administratorRole.getRoleId(), false);
 		}
 
 		Role userRole = RoleLocalServiceUtil.getRole(
 			user.getCompanyId(), RoleConstants.USER);
 
-		if (!ArrayUtil.contains(roleIds, userRole.getRoleId())) {
-			roleIds = ArrayUtil.append(roleIds, userRole.getRoleId());
-		}
+		roleIds = ArrayUtil.append(roleIds, userRole.getRoleId(), false);
 
 		return roleIds;
 	}

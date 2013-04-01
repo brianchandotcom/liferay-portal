@@ -14,7 +14,7 @@ insert into DLFileVersion values ('${dlFileVersion.uuid}', ${dlFileVersion.fileV
 
 <@insertDDMContent _ddmStorageLinkId = ddmStorageLinkId _ddmStructureId = ddmStructureId _entry = dlFileEntry />
 
-${sampleSQLBuilder.insertMBDiscussion(dlFileEntry.groupId, dataFactory.DLFileEntryClassNameId, dlFileEntry.fileEntryId, counter.get(), counter.get(), 0)}
+<@insertMBDiscussion _classNameId = dataFactory.DLFileEntryClassNameId _classPK = dlFileEntry.fileEntryId _groupId = dlFileEntry.groupId _maxCommentCount = 0 _mbRootMessageId = counter.get() _mbThreadId = counter.get() />
 
 <@insertSocialActivity _entry = dlFileEntry />
 

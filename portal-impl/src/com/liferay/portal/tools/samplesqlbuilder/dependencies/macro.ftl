@@ -37,7 +37,29 @@
 
 	${sampleSQLBuilder.insertResourcePermission("com.liferay.portal.model.Layout", stringUtil.valueOf(_layout.plid))}
 
-	${sampleSQLBuilder.insertMBDiscussion(_layout.groupId, dataFactory.layoutClassNameId, _layout.plid, counter.get(), counter.get(), 0)}
+	<@insertMBDiscussion _classNameId = dataFactory.layoutClassNameId _classPK = _layout.plid _groupId = _layout.groupId _maxCommentCount = 0 _mbRootMessageId = counter.get() _mbThreadId = counter.get() />
+</#macro>
+
+<#macro insertMBDiscussion _classNameId _classPK _groupId _maxCommentCount _mbRootMessageId _mbThreadId>
+	<#local mbThread = dataFactory.newMBThread(_mbThreadId, _groupId, _mbRootMessageId, _maxCommentCount)>
+
+	insert into MBThread values ('${mbThread.uuid}', ${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.userId}, '${mbThread.userName}', '${dataFactory.getDateString(mbThread.createDate)}', '${dataFactory.getDateString(mbThread.modifiedDate)}', ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, ${mbThread.viewCount}, ${mbThread.lastPostByUserId}, '${dataFactory.getDateString(mbThread.lastPostDate)}', ${mbThread.priority}, ${mbThread.question?string}, ${mbThread.status}, ${mbThread.statusByUserId}, '${mbThread.statusByUserName}', '${dataFactory.getDateString(mbThread.statusDate)}');
+
+	<#local mbRootMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, 0)>
+
+	${sampleSQLBuilder.insertMBMessage(mbRootMessage)}
+
+	<#if (_maxCommentCount > 0)>
+		<#list 1.._maxCommentCount as commentCount>
+			<#local mbMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, commentCount)>
+
+			${sampleSQLBuilder.insertMBMessage(mbMessage)}
+		</#list>
+	</#if>
+
+	<#local mbDiscussion = dataFactory.newMBDiscussion(_groupId, _classNameId, _classPK, _mbThreadId)>
+
+	insert into MBDiscussion values ('${mbDiscussion.uuid}', ${mbDiscussion.discussionId}, ${mbDiscussion.groupId}, ${mbDiscussion.companyId}, ${mbDiscussion.userId}, '${mbDiscussion.userName}', '${dataFactory.getDateString(mbDiscussion.createDate)}', '${dataFactory.getDateString(mbDiscussion.modifiedDate)}', ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
 </#macro>
 
 <#macro insertPortletPreferences _entry _plid _portletId = 'null'>

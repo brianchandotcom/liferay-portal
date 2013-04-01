@@ -86,7 +86,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			recordSetId);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, rootElement, recordSet);
+			portletDataContext, recordSet);
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -102,14 +102,13 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element recordSetsElement =
+			portletDataContext.getImportDataGroupElement(DDLRecordSet.class);
 
-		Element recordSetElement = rootElement.element("record-set");
+		Element recordSetElement = recordSetsElement.elements().get(0);
 
-		if (recordSetElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, recordSetElement);
-		}
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, recordSetElement);
 
 		long importedRecordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null));

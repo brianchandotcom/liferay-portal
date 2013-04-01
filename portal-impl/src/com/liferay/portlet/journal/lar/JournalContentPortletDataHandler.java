@@ -211,13 +211,7 @@ public class JournalContentPortletDataHandler
 				preferenceTemplateId, true);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext,
-				new Element[] {
-					rootElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, dlRepositoriesElement,
-					dlRepositoryEntriesElement
-				},
-				ddmTemplate);
+				portletDataContext, ddmTemplate);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
@@ -250,20 +244,24 @@ public class JournalContentPortletDataHandler
 		JournalPortletDataHandler.importReferencedData(
 			portletDataContext, rootElement);
 
-		Element structureElement = rootElement.element("structure");
+		Element structuresElement =
+			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 
-		if (structureElement != null) {
+		List<Element> structureElements = structuresElement.elements();
+
+		for (Element structureElement : structureElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, structureElement);
 		}
 
-		List<Element> templateElements = rootElement.elements("template");
+		Element templatesElement = portletDataContext.getImportDataGroupElement(
+			DDMTemplate.class);
 
-		if (templateElements != null) {
-			for (Element templateElement : templateElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, templateElement);
-			}
+		List<Element> templateElements = templatesElement.elements();
+
+		for (Element templateElement : templateElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, templateElement);
 		}
 
 		Element articleElement = rootElement.element("article");

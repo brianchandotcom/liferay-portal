@@ -82,9 +82,6 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		final Element ruleGroupsElement = rootElement.addElement("rule-groups");
-		final Element rulesElement = rootElement.addElement("rules");
-
 		ActionableDynamicQuery rulesActionableDynamicQuery =
 			new MDRRuleActionableDynamicQuery() {
 
@@ -99,8 +96,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 				MDRRule rule = (MDRRule)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext,
-					new Element[] {ruleGroupsElement, rulesElement}, rule);
+					portletDataContext, rule);
 			}
 
 		};
@@ -109,10 +105,6 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		rulesActionableDynamicQuery.performActions();
-
-		final Element ruleGroupInstancesElement = rootElement.addElement(
-			"rule-group-instances");
-		final Element actionsElement = rootElement.addElement("actions");
 
 		ActionableDynamicQuery actionsActionableDynamicQuery =
 			new MDRActionActionableDynamicQuery() {
@@ -128,12 +120,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 				MDRAction action = (MDRAction)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext,
-					new Element[] {
-						ruleGroupsElement, ruleGroupInstancesElement,
-						actionsElement
-					},
-					action);
+					portletDataContext, action);
 			}
 
 		};
@@ -157,20 +144,20 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element rulesElement = portletDataContext.getImportDataGroupElement(
+			MDRRule.class);
 
-		Element rulesElement = rootElement.element("rules");
-
-		List<Element> ruleElements = rulesElement.elements("rule");
+		List<Element> ruleElements = rulesElement.elements();
 
 		for (Element ruleElement : ruleElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, ruleElement);
 		}
 
-		Element actionsElement = rootElement.element("actions");
+		Element actionsElement = portletDataContext.getImportDataGroupElement(
+			MDRAction.class);
 
-		List<Element> actionElements = actionsElement.elements("action");
+		List<Element> actionElements = actionsElement.elements();
 
 		for (Element actionElement : actionElements) {
 			StagedModelDataHandlerUtil.importStagedModel(

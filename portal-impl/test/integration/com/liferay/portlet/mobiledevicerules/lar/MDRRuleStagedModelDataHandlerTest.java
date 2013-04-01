@@ -69,16 +69,11 @@ public class MDRRuleStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getName());
+			MDRRuleGroup.class.getSimpleName());
 
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
 		return MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
-	}
-
-	@Override
-	protected String getElementName() {
-		return "rule";
 	}
 
 	@Override
@@ -93,8 +88,8 @@ public class MDRRuleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MDRRule.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MDRRule.class;
 	}
 
 	@Override
@@ -104,7 +99,7 @@ public class MDRRuleStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getName());
+			MDRRuleGroup.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 

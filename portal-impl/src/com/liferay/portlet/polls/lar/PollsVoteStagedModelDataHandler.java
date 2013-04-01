@@ -44,20 +44,14 @@ public class PollsVoteStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Element[] elements,
-			PollsVote vote)
+			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
-		Element questionsElement = elements[0];
-		Element choicesElement = elements[1];
-
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext,
-			new Element[] {questionsElement, choicesElement}, vote.getChoice());
+			portletDataContext, vote.getChoice());
 
-		Element votesElement = elements[2];
-
-		Element voteElement = votesElement.addElement("vote");
+		Element voteElement =
+			portletDataContext.getExportDataStagedModelElement(vote);
 
 		portletDataContext.addClassedModel(
 			voteElement, StagedModelPathUtil.getPath(vote), vote,
@@ -66,8 +60,7 @@ public class PollsVoteStagedModelDataHandler
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Element element,
-			PollsVote vote)
+			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
 		String choicePath = StagedModelPathUtil.getPath(
@@ -78,7 +71,7 @@ public class PollsVoteStagedModelDataHandler
 			(PollsChoice)portletDataContext.getZipEntryAsObject(choicePath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, element, choice);
+			portletDataContext, choice);
 
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

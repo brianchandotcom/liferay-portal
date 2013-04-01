@@ -52,11 +52,6 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getElementName() {
-		return "rule-group";
-	}
-
-	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
@@ -68,8 +63,8 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected String getStagedModelClassName() {
-		return MDRRuleGroup.class.getName();
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return MDRRuleGroup.class;
 	}
 
 }

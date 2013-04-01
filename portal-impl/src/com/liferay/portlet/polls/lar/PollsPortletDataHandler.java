@@ -83,8 +83,6 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		final Element questionsElement = rootElement.addElement("questions");
-
 		ActionableDynamicQuery questionActionableDynamicQuery =
 			new PollsQuestionActionableDynamicQuery() {
 
@@ -99,8 +97,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				PollsQuestion pollsQuestion = (PollsQuestion)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, new Element[] {questionsElement},
-					pollsQuestion);
+					portletDataContext, pollsQuestion);
 			}
 
 		};
@@ -109,8 +106,6 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getGroupId());
 
 		questionActionableDynamicQuery.performActions();
-
-		final Element choicesElement = rootElement.addElement("choices");
 
 		ActionableDynamicQuery choiceActionableDynamicQuery =
 			new PollsChoiceActionableDynamicQuery() {
@@ -126,9 +121,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				PollsChoice pollsChoice = (PollsChoice)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext,
-					new Element[] {questionsElement, choicesElement},
-					pollsChoice);
+					portletDataContext, pollsChoice);
 			}
 
 		};
@@ -137,8 +130,6 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getGroupId());
 
 		choiceActionableDynamicQuery.performActions();
-
-		final Element votesElement = rootElement.addElement("votes");
 
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "votes")) {
@@ -159,11 +150,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 					PollsVote pollsVote = (PollsVote)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext,
-						new Element[] {
-							questionsElement, choicesElement, votesElement
-						},
-						pollsVote);
+						portletDataContext, pollsVote);
 				}
 
 			};
@@ -187,20 +174,20 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.polls", portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element questionsElement = portletDataContext.getImportDataGroupElement(
+			PollsQuestion.class);
 
-		Element questionsElement = rootElement.element("questions");
-
-		List<Element> questionElements = questionsElement.elements("question");
+		List<Element> questionElements = questionsElement.elements();
 
 		for (Element questionElement : questionElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, questionElement);
 		}
 
-		Element choicesElement = rootElement.element("choices");
+		Element choicesElement = portletDataContext.getImportDataGroupElement(
+			PollsChoice.class);
 
-		List<Element> choiceElements = choicesElement.elements("choice");
+		List<Element> choiceElements = choicesElement.elements();
 
 		for (Element choiceElement : choiceElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
@@ -208,9 +195,10 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "votes")) {
-			Element votesElement = rootElement.element("votes");
+			Element votesElement = portletDataContext.getImportDataGroupElement(
+				PollsVote.class);
 
-			List<Element> voteElements = votesElement.elements("vote");
+			List<Element> voteElements = votesElement.elements();
 
 			for (Element voteElement : voteElements) {
 				StagedModelDataHandlerUtil.importStagedModel(

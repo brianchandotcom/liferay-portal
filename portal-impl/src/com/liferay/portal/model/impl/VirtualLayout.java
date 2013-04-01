@@ -128,6 +128,10 @@ public class VirtualLayout extends LayoutWrapper {
 	}
 
 	protected String injectVirtualGroupURL(String layoutURL) {
+		if (_sourceLayout.isTypeURL()) {
+			return layoutURL;
+		}
+
 		try {
 			Group group = _sourceLayout.getGroup();
 

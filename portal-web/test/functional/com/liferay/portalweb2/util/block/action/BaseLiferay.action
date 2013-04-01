@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case comparator="contains" locator="/input">
+		<case comparator="contains" locator1="/input">
 			<execute function="AssertTextEquals#assertValue" />
 		</case>
 		<default>
@@ -33,7 +33,7 @@
 	</command>
 
 	<command name="assertTextNotEquals">
-		<case comparator="contains" locator="/input">
+		<case comparator="contains" locator1="/input">
 			<execute function="AssertTextNotEquals#assertNotValue" />
 		</case>
 		<default>
@@ -72,7 +72,7 @@
 	</command>
 
 	<command name="copy">
-		<case comparator="contains" locator="/input">
+		<case comparator="contains" locator1="/input">
 			<execute function="Copy#valueCopy" />
 		</case>
 		<default>
@@ -99,7 +99,7 @@
 	</command>
 
 	<command name="isTextEqual">
-		<case comparator="contains" locator="/input">
+		<case comparator="contains" locator1="/input">
 			<execute function="IsTextEqual#isValue" />
 		</case>
 		<default>
@@ -108,7 +108,7 @@
 	</command>
 
 	<command name="isTextNotEqual">
-		<case comparator="contains" locator="/input">
+		<case comparator="contains" locator1="/input">
 			<execute function="IsTextNotEqual#isNotValue" />
 		</case>
 		<default>

@@ -1,21 +1,21 @@
 <definition>
 	<command name="click">
-		<case comparator="startsWith" locator-key="PAGE_DELETE">
+		<case comparator="startsWith" locator-key1="PAGE_DELETE">
 			<execute function="Click#textClick" value1="X" />
 		</case>
-		<case comparator="startsWith" locator="link=">
+		<case comparator="startsWith" locator1="link=">
 			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
 
 	<command name="confirm">
-		<case locator-key="PAGE_CONFIRM">
+		<case locator-key1="PAGE_CONFIRM">
 			<execute function="Confirm#waitForConfirmation" />
 		</case>
 	</command>
 
 	<command name="isElementPresent">
-		<case comparator="startsWith" locator-key="PAGE_">
+		<case comparator="startsWith" locator-key1="PAGE_">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />
 		</case>
 	</command>

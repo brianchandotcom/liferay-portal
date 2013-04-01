@@ -1,12 +1,12 @@
 <definition>
 	<command name="click">
-		<case locator-key="ADD_ENTRY">
+		<case locator-key1="ADD_ENTRY">
 			<execute function="Click#valueClickAtAndWait" value1="Add Blog Entry" />
 		</case>
-		<case comparator="startsWith" locator-key="ENTRY_MOVE_RECYCLE_BIN_">
+		<case comparator="startsWith" locator-key1="ENTRY_MOVE_RECYCLE_BIN_">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
-		<case comparator="startsWith" locator-key="ENTRY_TITLE_">
+		<case comparator="startsWith" locator-key1="ENTRY_TITLE_">
 			<execute function="Click#textClickAtAndWait" />
 		</case>
 	</command>

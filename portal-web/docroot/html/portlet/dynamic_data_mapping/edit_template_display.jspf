@@ -113,7 +113,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 											if (templateVariableDefinition.isCollection()) {
 												TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-												String[] listCodeArray = _getListCode(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), language);
+												String[] listCodeArray = _getListCode(templateVariableDefinition.getName() + ".getSiblings()", itemName, language);
 
 												dataContent1 = listCodeArray[0];
 												dataContent2 = listCodeArray[1];
@@ -598,7 +598,7 @@ private String[] _getListCode(String variableName, String itemName, String langu
 	String[] listCodeArray = new String[2];
 
 	if (language.equalsIgnoreCase("ftl")) {
-		listCodeArray[0] = "<#list " + variableName + ".getSiblings()" + " as " + itemName + ">";
+		listCodeArray[0] = "<#list " + variableName + " as " + itemName + ">";
 		listCodeArray[1] = "</#list>";
 	}
 	else if (language.equalsIgnoreCase("vm")) {

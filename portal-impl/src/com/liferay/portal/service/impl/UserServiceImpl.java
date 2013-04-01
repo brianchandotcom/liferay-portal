@@ -2156,17 +2156,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			for (int i = 0; i < oldGroups.size(); i++) {
 				Group group = oldGroups.get(i);
 
-				if (!ArrayUtil.contains(groupIds, group.getGroupId()) &&
-					(!GroupPermissionUtil.contains(
+				if (!GroupPermissionUtil.contains(
 						permissionChecker, group.getGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
 					SiteMembershipPolicyUtil.isMembershipProtected(
 						permissionChecker, user.getUserId(),
 						group.getGroupId()) ||
 					SiteMembershipPolicyUtil.isMembershipRequired(
-						userId, group.getGroupId()))) {
+						userId, group.getGroupId())) {
 
-					groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+					groupIds = ArrayUtil.append(
+						groupIds, group.getGroupId(), false);
 				}
 
 				oldGroupIds[i] = group.getGroupId();
@@ -2237,19 +2237,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			for (int i = 0; i < oldOrganizations.size(); i++) {
 				Organization organization = oldOrganizations.get(i);
 
-				if (!ArrayUtil.contains(
-						organizationIds, organization.getOrganizationId()) &&
-					(!OrganizationPermissionUtil.contains(
+				if (!OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					 OrganizationMembershipPolicyUtil.isMembershipProtected(
+					OrganizationMembershipPolicyUtil.isMembershipProtected(
 						permissionChecker, userId,
 						organization.getOrganizationId()) ||
-					 OrganizationMembershipPolicyUtil.isMembershipRequired(
-						userId, organization.getOrganizationId()))) {
+					OrganizationMembershipPolicyUtil.isMembershipRequired(
+						userId, organization.getOrganizationId())) {
 
 					organizationIds = ArrayUtil.append(
-						organizationIds, organization.getOrganizationId());
+						organizationIds, organization.getOrganizationId(),
+						false);
 				}
 
 				oldOrganizationIds[i] = organization.getOrganizationId();
@@ -2296,14 +2295,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			for (int i = 0; i < oldRoles.size(); i++) {
 				Role role = oldRoles.get(i);
 
-				if (!ArrayUtil.contains(roleIds, role.getRoleId()) &&
-					(!RolePermissionUtil.contains(
+				if (!RolePermissionUtil.contains(
 						permissionChecker, role.getRoleId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					 RoleMembershipPolicyUtil.isRoleRequired(
-						userId, role.getRoleId()))) {
+					RoleMembershipPolicyUtil.isRoleRequired(
+						userId, role.getRoleId())) {
 
-					roleIds = ArrayUtil.append(roleIds, role.getRoleId());
+					roleIds = ArrayUtil.append(
+						roleIds, role.getRoleId(), false);
 				}
 
 				oldRoleIds[i] = role.getRoleId();
@@ -2347,16 +2346,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			for (int i = 0; i < oldUserGroups.size(); i++) {
 				UserGroup userGroup = oldUserGroups.get(i);
 
-				if (!ArrayUtil.contains(
-						userGroupIds, userGroup.getUserGroupId()) &&
-					(!UserGroupPermissionUtil.contains(
+				if (!UserGroupPermissionUtil.contains(
 						permissionChecker, userGroup.getUserGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					 UserGroupMembershipPolicyUtil.isMembershipRequired(
-						userId, userGroup.getUserGroupId()))) {
+					UserGroupMembershipPolicyUtil.isMembershipRequired(
+						userId, userGroup.getUserGroupId())) {
 
 					userGroupIds = ArrayUtil.append(
-						userGroupIds, userGroup.getUserGroupId());
+						userGroupIds, userGroup.getUserGroupId(), false);
 				}
 
 				oldUserGroupIds[i] = userGroup.getUserGroupId();

@@ -112,8 +112,8 @@ String[] folderColumns = StringUtil.split(PrefsParamUtil.getString(preferences, 
 if (!showActions) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(folderColumns, "action")) {
-	folderColumns = ArrayUtil.append(folderColumns, "action");
+else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	folderColumns = ArrayUtil.append(folderColumns, "action", false);
 }
 
 int fileEntriesPerPage = PrefsParamUtil.getInteger(preferences, request, "fileEntriesPerPage", SearchContainer.DEFAULT_DELTA);
@@ -137,8 +137,8 @@ String[] fileEntryColumns = StringUtil.split(PrefsParamUtil.getString(preference
 if (!showActions) {
 	fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
 }
-else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(fileEntryColumns, "action")) {
-	fileEntryColumns = ArrayUtil.append(fileEntryColumns, "action");
+else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	fileEntryColumns = ArrayUtil.append(fileEntryColumns, "action", false);
 }
 
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);

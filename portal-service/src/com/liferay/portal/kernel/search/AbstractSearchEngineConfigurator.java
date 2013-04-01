@@ -229,7 +229,8 @@ public abstract class AbstractSearchEngineConfigurator {
 		Destination searchWriterDestination = getSearchWriterDestination(
 			messageBus, searchEngineId, searchEngine);
 
-		searchEngineRegistration.setSearchWriterDestinationName(searchEngineId);
+		searchEngineRegistration.setSearchWriterDestinationName(
+			searchWriterDestination.getName());
 
 		SearchEngine originalSearchEngine =
 			SearchEngineUtil.getSearchEngineSilent(searchEngineId);

@@ -95,6 +95,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return getThumbnailPath(portletRequest);
 	}
 
+	public String getPreviewPath(
+			PortletRequest portletRequest, PortletResponse PortletResponse)
+		throws Exception {
+
+		return "/html/portlet/asset_publisher/display/preview.jsp";
+	}
+
 	public String getSearchSummary(Locale locale) {
 		return getSummary(locale);
 	}
@@ -241,13 +248,6 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	public boolean isPrintable() {
 		return false;
-	}
-
-	public String preview(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
-		throws Exception {
-
-		return "/html/portlet/asset_publisher/display/preview.jsp";
 	}
 
 	public String renderActions(

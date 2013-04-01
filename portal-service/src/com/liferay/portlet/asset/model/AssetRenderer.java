@@ -61,6 +61,10 @@ public interface AssetRenderer {
 	public String getImagePreviewURL(PortletRequest portletRequest)
 		throws Exception;
 
+	public String getPreviewPath(
+			PortletRequest portletRequest, PortletResponse PortletResponse)
+		throws Exception;
+
 	public String getSearchSummary(Locale locale);
 
 	public String getSummary(Locale locale);
@@ -124,10 +128,6 @@ public interface AssetRenderer {
 	public boolean isPreviewInContext();
 
 	public boolean isPrintable();
-
-	public String preview(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
-		throws Exception;
 
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,

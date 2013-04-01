@@ -144,11 +144,14 @@ public class CopyStructureAction extends PortletAction {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		DDMStructure structure = DDMStructureServiceUtil.copyStructure(
-			classPK, nameMap, null, serviceContext);
+			classPK, nameMap, descriptionMap, serviceContext);
 
 		copyTemplates(actionRequest, classPK, structure.getStructureId());
 

@@ -139,11 +139,14 @@ public class CopyTemplateAction extends PortletAction {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), actionRequest);
 
 		return DDMTemplateServiceUtil.copyTemplate(
-			templateId, nameMap, null, serviceContext);
+			templateId, nameMap, descriptionMap, serviceContext);
 	}
 
 	protected String getSaveAndContinueRedirect(

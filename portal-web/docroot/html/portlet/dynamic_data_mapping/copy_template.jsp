@@ -41,6 +41,8 @@ long templateId = BeanParamUtil.getLong(template, request, "templateId");
 
 	<aui:fieldset>
 		<aui:input name="name" />
+
+		<aui:input name="description" />
 	</aui:fieldset>
 
 	<aui:button-row>

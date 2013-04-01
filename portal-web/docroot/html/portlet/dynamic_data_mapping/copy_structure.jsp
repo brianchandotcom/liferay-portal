@@ -47,6 +47,8 @@ boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
 	<aui:fieldset>
 		<aui:input name="name" />
 
+		<aui:input name="description" />
+
 		<aui:input checked="<%= copyDetailTemplates %>" label="copy-detail-templates" name="copyDetailTemplates" type="checkbox" />
 
 		<aui:input checked="<%= copyListTemplates %>" label="copy-list-templates" name="copyListTemplates" type="checkbox" />

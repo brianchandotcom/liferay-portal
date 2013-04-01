@@ -1,6 +1,6 @@
 <#assign layout = dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")>
 
-${sampleSQLBuilder.insertLayout(layout)}
+<@insertLayout _layout = layout />
 
 ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
@@ -24,7 +24,7 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
 
 	<#list publicLayouts as publicLayout >
-		${sampleSQLBuilder.insertLayout(publicLayout)}
+		<@insertLayout _layout = publicLayout />
 	</#list>
 
 	<#assign publicPageCount = publicLayouts?size + maxDDLRecordSetCount + maxJournalArticleCount>

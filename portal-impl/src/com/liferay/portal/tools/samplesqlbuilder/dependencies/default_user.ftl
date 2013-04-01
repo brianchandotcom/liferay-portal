@@ -25,7 +25,7 @@ ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#assign layout = dataFactory.newLayout(userGroup.groupId, "home", "", "33,")>
 
-${sampleSQLBuilder.insertLayout(layout)}
+<@insertLayout _layout = layout />
 
 ${sampleSQLBuilder.insertGroup(userGroup, 1)}
 

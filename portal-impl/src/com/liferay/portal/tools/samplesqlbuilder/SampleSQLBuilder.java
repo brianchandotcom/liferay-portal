@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -240,14 +239,6 @@ public class SampleSQLBuilder {
 		put(context, "publicPageCount", publicPageCount);
 
 		processTemplate(_tplGroup, context);
-	}
-
-	public void insertLayout(Layout layout) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "layout", layout);
-
-		processTemplate(_tplLayout, context);
 	}
 
 	public void insertMBDiscussion(
@@ -625,7 +616,6 @@ public class SampleSQLBuilder {
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
 	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
-	private String _tplLayout = _TPL_ROOT + "layout.ftl";
 	private String _tplMBDiscussion = _TPL_ROOT + "mb_discussion.ftl";
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =

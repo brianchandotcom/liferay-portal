@@ -9,7 +9,7 @@
 
 		<#assign layout = dataFactory.newLayout(groupId, layoutName, "", portletId)>
 
-		${sampleSQLBuilder.insertLayout(layout)}
+		<@insertLayout _layout = layout />
 
 		<#assign ddlRecordSet = dataFactory.newDDLRecordSet(ddmStructure, ddlRecordSetCount)>
 

@@ -23,7 +23,7 @@
 
 	${writerLayoutCSV.write(layout.friendlyURL + "\n")}
 
-	${sampleSQLBuilder.insertLayout(layout)}
+	<@insertLayout _layout = layout />
 
 	<@insertPortletPreferences _entry = journalArticleResource _plid = layout.plid />
 

@@ -14,8 +14,19 @@
  */
 --%>
 
+<%
+String curParam = SearchContainer.DEFAULT_CUR_PARAM;
+
+if (type.equals("assigned-to-me")) {
+	curParam = "cur1";
+}
+else if (type.equals("assigned-to-my-roles")) {
+	curParam = "cur2";
+}
+%>
+
 <liferay-ui:search-container
-	searchContainer="<%= new WorkflowTaskSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= new WorkflowTaskSearch(renderRequest, curParam, currentURLObj) %>"
 >
 	<%@ include file="/html/portlet/workflow_tasks/workflow_search_results.jspf" %>
 

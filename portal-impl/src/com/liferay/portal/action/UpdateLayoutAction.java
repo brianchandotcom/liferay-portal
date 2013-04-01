@@ -105,7 +105,7 @@ public class UpdateLayoutAction extends JSONAction {
 			portletId = layoutTypePortlet.addPortletId(
 				userId, portletId, columnId, columnPos);
 
-			storeAssetPortletPreferences(
+			storeAddContentPortletPreferences(
 				request, layout, portletId, themeDisplay);
 
 			if (layoutTypePortlet.isCustomizable() &&
@@ -529,7 +529,7 @@ public class UpdateLayoutAction extends JSONAction {
 			JSONFactoryUtil.createJSONArray(headerJavaScriptPaths));
 	}
 
-	protected void storeAssetPortletPreferences(
+	protected void storeAddContentPortletPreferences(
 			HttpServletRequest request, Layout layout, String portletId,
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -540,10 +540,9 @@ public class UpdateLayoutAction extends JSONAction {
 			return;
 		}
 
-		String[] portletDataArray = StringUtil.split(
-			ParamUtil.getString(request, "portletData"));
+		String[] portletDataArray = StringUtil.split(portletData);
 
-		if ((portletDataArray == null) || (portletDataArray.length <= 0)) {
+		if (Validator.isNull(portletDataArray)) {
 			return;
 		}
 

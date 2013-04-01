@@ -69,22 +69,24 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			String messageId = getMessageId(recipient, message);
+			String messageIdString = getMessageIdString(recipient, message);
 
-			if ((messageId == null) ||
-				!messageId.startsWith(
+			if ((messageIdString == null) ||
+				!messageIdString.startsWith(
 					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset())) {
 
 				return false;
 			}
 
-			Company company = getCompany(messageId);
-			long categoryId = getCategoryId(messageId);
+			Company company = getCompany(messageIdString);
+			long categoryId = getCategoryId(messageIdString);
 
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 				categoryId);
 
-			if (category.getCompanyId() != company.getCompanyId()) {
+			if ((category.getCompanyId() != company.getCompanyId()) &&
+				!category.isRoot()) {
+
 				return false;
 			}
 
@@ -130,22 +132,33 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Deliver message from " + from + " to " + recipient);
 			}
 
-			String messageId = getMessageId(recipient, message);
+			String messageIdString = getMessageIdString(recipient, message);
 
-			Company company = getCompany(messageId);
+			Company company = getCompany(messageIdString);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Message id " + messageId);
+				_log.debug("Message id " + messageIdString);
 			}
 
 			long groupId = 0;
-			long categoryId = getCategoryId(messageId);
+			long categoryId = getCategoryId(messageIdString);
 
 			try {
 				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 					categoryId);
 
 				groupId = category.getGroupId();
+
+				if (category.isRoot()) {
+					long messageId = getMessageId(messageIdString);
+
+					MBMessage threadMessage =
+						MBMessageLocalServiceUtil.fetchMBMessage(messageId);
+
+					if (threadMessage != null) {
+						groupId = threadMessage.getGroupId();
+					}
+				}
 			}
 			catch (NoSuchCategoryException nsce) {
 				groupId = categoryId;
@@ -253,38 +266,39 @@ public class MessageListenerImpl implements MessageListener {
 		return MessageListenerImpl.class.getName();
 	}
 
-	protected long getCategoryId(String recipient) {
-		int pos = recipient.indexOf(CharPool.AT);
-
-		String target = recipient.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
-
-		String[] parts = StringUtil.split(target, CharPool.PERIOD);
+	protected long getCategoryId(String messageIdString) {
+		String[] parts = getMessageIdStringParts(messageIdString);
 
 		return GetterUtil.getLong(parts[0]);
 	}
 
-	protected Company getCompany(String messageId) throws Exception {
+	protected Company getCompany(String messageIdString) throws Exception {
 		int pos =
-			messageId.indexOf(CharPool.AT) +
+			messageIdString.indexOf(CharPool.AT) +
 				PropsValues.POP_SERVER_SUBDOMAIN.length() + 1;
 
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() > 0) {
 			pos++;
 		}
 
-		int endPos = messageId.indexOf(CharPool.GREATER_THAN, pos);
+		int endPos = messageIdString.indexOf(CharPool.GREATER_THAN, pos);
 
 		if (endPos == -1) {
-			endPos = messageId.length();
+			endPos = messageIdString.length();
 		}
 
-		String mx = messageId.substring(pos, endPos);
+		String mx = messageIdString.substring(pos, endPos);
 
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
 	}
 
-	protected String getMessageId(String recipient, Message message)
+	protected long getMessageId(String messageIdString) {
+		String[] parts = getMessageIdStringParts(messageIdString);
+
+		return GetterUtil.getLong(parts[1]);
+	}
+
+	protected String getMessageIdString(String recipient, Message message)
 		throws Exception {
 
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() > 0) {
@@ -293,6 +307,15 @@ public class MessageListenerImpl implements MessageListener {
 		else {
 			return MBUtil.getParentMessageIdString(message);
 		}
+	}
+
+	protected String[] getMessageIdStringParts(String messageIdString) {
+		int pos = messageIdString.indexOf(CharPool.AT);
+
+		String target = messageIdString.substring(
+			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
+
+		return StringUtil.split(target, CharPool.PERIOD);
 	}
 
 	protected int getOffset() {

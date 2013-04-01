@@ -2,7 +2,7 @@
 
 <@insertLayout _layout = layout />
 
-${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
+<@insertGroup _group = dataFactory.guestGroup _publicPageCount = 1 />
 
 <#list dataFactory.groups as group>
 	<#assign groupId = group.groupId>
@@ -29,7 +29,7 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
 	<#assign publicPageCount = publicLayouts?size + maxDDLRecordSetCount + maxJournalArticleCount>
 
-	${sampleSQLBuilder.insertGroup(group, publicPageCount)}
+	<@insertGroup _group = group _publicPageCount = publicPageCount />
 
 	${writerRepositoryCSV.write(groupId + ", " + group.name + "\n")}
 </#list>

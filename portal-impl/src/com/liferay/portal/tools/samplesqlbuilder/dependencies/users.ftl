@@ -11,7 +11,7 @@
 
 		<@insertLayout _layout = layout />
 
-		${sampleSQLBuilder.insertGroup(userGroup, 1)}
+		<@insertGroup _group = userGroup _publicPageCount = 1 />
 
 		${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 	</#list>

@@ -1755,7 +1755,7 @@ closeTemplate()
 				<fail>
 .
 
-Please download ${app.server.websphere.fix.jdk.name},
+Please download ${app.server.websphere.fix.pack.jdk.name},
 ${app.server.websphere.fix.pack.was.name},
 ${app.server.websphere.update.installer.zip.name}, and
 ${app.server.websphere.zip.name} from ${app.server.websphere.zip.url} and put

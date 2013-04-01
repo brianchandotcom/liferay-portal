@@ -26,12 +26,14 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -69,7 +71,7 @@ public class MembershipPolicyTestUtil {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
 			GroupConstants.TYPE_SITE_OPEN, friendlyURL, true, true,
-			populateServiceContext());
+			populateServiceContext(true));
 	}
 
 	public static Organization addOrganization() throws Exception {
@@ -79,7 +81,7 @@ public class MembershipPolicyTestUtil {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, populateServiceContext());
+			false, populateServiceContext(true));
 	}
 
 	public static User addUser(
@@ -117,6 +119,14 @@ public class MembershipPolicyTestUtil {
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, siteIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+	}
+
+	public static UserGroup addUserGroup() throws Exception {
+		String name = ServiceTestUtil.randomString();
+		String description = ServiceTestUtil.randomString(50);
+
+		return UserGroupServiceUtil.addUserGroup(
+			name, description, populateServiceContext(false));
 	}
 
 	public static void updateUser(
@@ -199,29 +209,34 @@ public class MembershipPolicyTestUtil {
 		return expandoMap;
 	}
 
-	protected static ServiceContext populateServiceContext() throws Exception {
+	protected static ServiceContext populateServiceContext(
+			boolean includeCategorization)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		AssetTag tag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), null,
-			new ServiceContext());
-
-		serviceContext.setAssetTagNames(new String[]{tag.getName()});
-
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
+		if (includeCategorization) {
+			AssetTag tag = AssetTagLocalServiceUtil.addTag(
 				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-				new ServiceContext());
+				null, new ServiceContext());
 
-		AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			vocabulary.getVocabularyId(), serviceContext);
+			serviceContext.setAssetTagNames(new String[]{tag.getName()});
 
-		serviceContext.setAssetCategoryIds(
-			new long[]{category.getCategoryId()});
+			AssetVocabulary vocabulary =
+				AssetVocabularyLocalServiceUtil.addVocabulary(
+					TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+					new ServiceContext());
+
+			AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
+				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				vocabulary.getVocabularyId(), serviceContext);
+
+			serviceContext.setAssetCategoryIds(
+				new long[]{category.getCategoryId()});
+		}
 
 		serviceContext.setExpandoBridgeAttributes(addExpandoMap());
 

@@ -63,13 +63,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -568,42 +566,6 @@ public class MBUtil {
 		return entries;
 	}
 
-	public static String getMailingListAddress(
-		long groupId, long categoryId, long messageId, String mx,
-		String defaultMailingListAddress) {
-
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() <= 0) {
-			String mailingListAddress = defaultMailingListAddress;
-
-			try {
-				MBMailingList mailingList =
-					MBMailingListLocalServiceUtil.getCategoryMailingList(
-						groupId, categoryId);
-
-				if (mailingList.isActive()) {
-					mailingListAddress = mailingList.getEmailAddress();
-				}
-			}
-			catch (Exception e) {
-			}
-
-			return mailingListAddress;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(MESSAGE_POP_PORTLET_PREFIX);
-		sb.append(categoryId);
-		sb.append(StringPool.PERIOD);
-		sb.append(messageId);
-		sb.append(StringPool.AT);
-		sb.append(PropsValues.POP_SERVER_SUBDOMAIN);
-		sb.append(StringPool.PERIOD);
-		sb.append(mx);
-
-		return sb.toString();
-	}
-
 	public static String getMessageFormat(PortletPreferences preferences) {
 		String messageFormat = preferences.getValue(
 			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
@@ -698,6 +660,28 @@ public class MBUtil {
 		}
 
 		return parentHeader;
+	}
+
+	public static String getReplyToAddress(
+		long categoryId, long messageId, String mx,
+		String defaultMailingListAddress) {
+
+		if (PropsValues.POP_SERVER_SUBDOMAIN.length() <= 0) {
+			return defaultMailingListAddress;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(MESSAGE_POP_PORTLET_PREFIX);
+		sb.append(categoryId);
+		sb.append(StringPool.PERIOD);
+		sb.append(messageId);
+		sb.append(StringPool.AT);
+		sb.append(PropsValues.POP_SERVER_SUBDOMAIN);
+		sb.append(StringPool.PERIOD);
+		sb.append(mx);
+
+		return sb.toString();
 	}
 
 	public static String getSubjectWithoutMessageId(Message message)

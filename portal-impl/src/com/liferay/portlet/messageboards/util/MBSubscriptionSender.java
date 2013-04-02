@@ -55,6 +55,7 @@ public class MBSubscriptionSender extends SubscriptionSender {
 		}
 
 		setFrom(mailingList.getOutEmailAddress(), null);
+		setReplyToAddress(mailingList.getEmailAddress());
 
 		if (mailingList.isOutCustom()) {
 			String protocol = Account.PROTOCOL_SMTP;

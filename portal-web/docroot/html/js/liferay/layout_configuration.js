@@ -4,61 +4,6 @@
 
 	var LayoutConfiguration = {};
 
-	Liferay.provide(
-		LayoutConfiguration,
-		'toggle',
-		function(ppid) {
-			var instance = this;
-
-			var dialog = instance._applicationsDialog;
-
-			if (!dialog) {
-				var body = A.getBody();
-
-				var url = themeDisplay.getPathMain() + '/portal/render_portlet';
-
-				dialog = new A.Dialog(
-					{
-						on: {
-							visibleChange: function(event) {
-								body.toggleClass('lfr-has-sidebar', event.newVal);
-							}
-						},
-						title: Liferay.Language.get('add-application'),
-						width: 250
-					}
-				).render();
-
-				var contentBox = dialog.get('contentBox');
-
-				dialog.plug(
-					A.Plugin.IO,
-					{
-						data: {
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							p_l_id: themeDisplay.getPlid(),
-							p_p_id: ppid,
-							p_p_state: 'exclusive'
-						},
-						after: {
-							success: function(event) {
-								instance._dialogBody = contentBox;
-
-								instance._loadContent();
-							}
-						},
-						uri: url
-					}
-				);
-
-				instance._applicationsDialog = dialog;
-			}
-
-			dialog.show();
-		},
-		['aui-dialog', 'liferay-layout-configuration']
-	);
-
 	A.add(
 		'liferay-layout-configuration',
 		function(A) {
@@ -384,22 +329,6 @@
 						);
 
 						Util.focusFormField(instance._searchInput);
-					},
-
-					_onPortletClose: function(event) {
-						var instance = this;
-
-						var popup = A.one('#portal_add_content');
-
-						if (popup) {
-							var item = popup.one('.lfr-portlet-item[plid=' + event.plid + '][portletId=' + event.portletId + '][instanceable=false]');
-
-							if (item && item.hasClass('lfr-portlet-used')) {
-								var portletId = item.attr('portletId');
-
-								instance._enablePortletEntry(portletId);
-							}
-						}
 					}
 				}
 			);

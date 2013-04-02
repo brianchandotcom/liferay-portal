@@ -702,66 +702,6 @@ AUI.add(
 					);
 				}
 
-				var addApplicationLink = A.one('#' + namespace + 'addApplication');
-
-				if (addApplicationLink) {
-					addApplicationLink.on(
-						EVENT_CLICK,
-						function(event) {
-							addContent.hide();
-
-							var addApplication = Dockbar.addApplication;
-
-							if (!addApplication) {
-								var setAddApplicationUI = function(visible) {
-									BODY.toggleClass('lfr-has-sidebar', visible);
-								};
-
-								addApplication = instance._addUnderlay(
-									{
-										after: {
-											render: function(event) {
-												setAddApplicationUI(true);
-											}
-										},
-										className: 'add-application',
-										io: {
-											after: {
-												success: Dockbar._loadAddApplications
-											},
-											data: {
-												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-												p_l_id: themeDisplay.getPlid(),
-												p_p_id: 87,
-												p_p_state: 'exclusive'
-											},
-											uri: themeDisplay.getPathMain() + '/portal/render_portlet'
-										},
-										name: 'addApplication',
-										width: '255px'
-									}
-								);
-
-								addApplication.after(
-									'visibleChange',
-									function(event) {
-										if (event.newVal) {
-											Util.focusFormField('#layout_configuration_content');
-										}
-
-										setAddApplicationUI(event.newVal);
-									}
-								);
-							}
-							else {
-								addApplication.show();
-							}
-
-							addApplication.focus();
-						}
-					);
-				}
-
 				var addPanelButton = A.one('#' + instance._namespace + 'addPanel');
 
 				if (addPanelButton) {
@@ -909,19 +849,6 @@ AUI.add(
 				Liferay.fire('dockbarLoaded');
 			},
 			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-portlet-url', 'liferay-store', 'node-focusmanager']
-		);
-
-		Liferay.provide(
-			Dockbar,
-			'_loadAddApplications',
-			function(event, id, obj) {
-				var contentBox = Dockbar.addApplication.get(CONTENT_BOX);
-
-				LayoutConfiguration._dialogBody = contentBox;
-
-				LayoutConfiguration._loadContent();
-			},
-			['liferay-layout-configuration']
 		);
 
 		Liferay.provide(

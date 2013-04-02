@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory;
 import com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler;
 import com.liferay.portlet.blogs.util.BlogsIndexer;
@@ -70,36 +71,23 @@ import com.liferay.portlet.wiki.workflow.WikiPageWorkflowHandler;
 public class PortalRegisterTestUtil {
 
 	protected static void registerAssetRendererFactories() {
-		AssetRendererFactoryRegistryUtil.register(
-			new BlogsEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new BookmarksEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new BookmarksFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new CalEventAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DDLRecordAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DLFileEntryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new DLFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new JournalArticleAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new JournalFolderAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new LayoutRevisionAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBCategoryAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBDiscussionAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new MBMessageAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new UserAssetRendererFactory());
-		AssetRendererFactoryRegistryUtil.register(
-			new WikiPageAssetRendererFactory());
+		for (Class<?> clazz : _ASSET_RENDERER_FACTORY_CLASSES) {
+			try {
+				AssetRendererFactory assetRendererFactory =
+					(AssetRendererFactory)clazz.newInstance();
+
+				assetRendererFactory.setClassName(
+					assetRendererFactory.getClassName());
+
+				AssetRendererFactoryRegistryUtil.register(assetRendererFactory);
+			}
+			catch (IllegalAccessException iae) {
+				iae.printStackTrace();
+			}
+			catch (InstantiationException ie) {
+				ie.printStackTrace();
+			}
+		}
 	}
 
 	protected static void registerIndexers() {
@@ -141,5 +129,21 @@ public class PortalRegisterTestUtil {
 		WorkflowHandlerRegistryUtil.register(new UserWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new WikiPageWorkflowHandler());
 	}
+
+	private static final Class[] _ASSET_RENDERER_FACTORY_CLASSES = {
+		BlogsEntryAssetRendererFactory.class,
+		BookmarksEntryAssetRendererFactory.class,
+		BookmarksFolderAssetRendererFactory.class,
+		CalEventAssetRendererFactory.class, DDLRecordAssetRendererFactory.class,
+		DLFileEntryAssetRendererFactory.class,
+		DLFolderAssetRendererFactory.class,
+		JournalArticleAssetRendererFactory.class,
+		JournalFolderAssetRendererFactory.class,
+		LayoutRevisionAssetRendererFactory.class,
+		MBCategoryAssetRendererFactory.class,
+		MBDiscussionAssetRendererFactory.class,
+		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class,
+		WikiPageAssetRendererFactory.class
+	};
 
 }

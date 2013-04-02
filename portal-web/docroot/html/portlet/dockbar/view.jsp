@@ -25,16 +25,6 @@ if (layout != null) {
 	layoutSet = layout.getLayoutSet();
 }
 
-List<Portlet> portlets = new ArrayList<Portlet>();
-
-for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-	if ((portlet != null) && portlet.isInclude() && portlet.isActive() && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
-		portlets.add(portlet);
-	}
-}
-
 boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 %>
@@ -65,53 +55,16 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 							</c:if>
 
 							<c:if test="<%= !themeDisplay.isStateMaximized() && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive() %>">
-								<li class="last common-items">
-									<div class="aui-menugroup">
-										<div class="aui-menugroup-content">
-											<c:if test="<%= hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) %>">
-												<span class="aui-menu-label"><liferay-ui:message key="applications" /></span>
+								<li class="add-application last">
 
-												<ul>
+									<portlet:renderURL var="addContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+										<portlet:param name="struts_action" value="/dockbar/add_panel" />
+										<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+									</portlet:renderURL>
 
-													<%
-													int j = 0;
-
-													for (int i = 0; i < portlets.size(); i++) {
-														Portlet portlet = portlets.get(i);
-
-														boolean portletInstanceable = portlet.isInstanceable();
-
-														boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
-
-														boolean portletLocked = !portletInstanceable && portletUsed;
-
-														if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
-															continue;
-														}
-													%>
-
-														<li class="<%= (j == 0) ? "first" : "" %>">
-															<a class="app-shortcut <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>" data-portlet-id="<%= portlet.getPortletId() %>" href="javascript:;" <c:if test="<%= portletLocked %>">tabIndex="-1"</c:if>>
-																<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
-
-																<%= PortalUtil.getPortletTitle(portlet.getPortletId(), locale) %>
-															</a>
-														</li>
-
-													<%
-														j++;
-													}
-													%>
-
-													<li class="add-application last more-applications">
-														<a href="javascript:;" id="<portlet:namespace />addApplication">
-															<liferay-ui:message key="more" />&hellip;
-														</a>
-													</li>
-												</ul>
-											</c:if>
-										</div>
-									</div>
+									<a data-url="<%= addContentURL.toString() %>" href="javascript:;" id="<portlet:namespace />addPanel">
+										<liferay-ui:message key="content-and-applications" />
+									</a>
 								</li>
 							</c:if>
 						</ul>

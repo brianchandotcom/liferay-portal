@@ -7,6 +7,11 @@ AUI.add(
 
 		var Node = A.Node;
 
+		var TPL_ERROR =
+			'<div class="portlet-msg-error">' +
+				Liferay.Language.get('failed-to-load-content') +
+			'</div>';
+
 		var isString = Lang.isString;
 
 		var ParseContent = A.Plugin.ParseContent;
@@ -94,7 +99,9 @@ AUI.add(
 					},
 
 					_afterPreviewFailure: function(event) {
+						var instance = this;
 
+						instance._tooltip.set('bodyContent', TPL_ERROR);
 					},
 
 					_afterFailure: function(event) {

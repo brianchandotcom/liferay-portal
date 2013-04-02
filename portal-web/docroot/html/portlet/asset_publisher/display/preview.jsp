@@ -17,10 +17,10 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_add_content_application.jsp-assetEntry");
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view_add_content_application.jsp-assetRenderer");
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("add_panel.jsp-assetEntry");
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp-assetRenderer");
 
-String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60);
+String shortSummary = StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320);
 %>
 
 <div class="asset-preview">
@@ -31,12 +31,12 @@ String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLo
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
 		<div class="asset-image-preview">
-			<img alt="<%= shortTitle %>" src="<%= imagePreviewURL %>" />
+			<img alt="<%= assetRenderer.getTitle(themeDisplay.getLocale()) %>" src="<%= imagePreviewURL %>" />
 		</div>
 	</c:if>
 
 	<div class="asset-title">
-		<%= shortTitle %>
+		<%= assetRenderer.getTitle(themeDisplay.getLocale()) %>
 	</div>
 
 	<%
@@ -54,7 +54,7 @@ String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLo
 	</div>
 
 	<div class="asset-summary">
-		<%= assetRenderer.getSummary(themeDisplay.getLocale()) %>
+		<%= shortSummary %>
 	</div>
 
 	<div class="asset-metadata">

@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ViewNotificationAnnouncementSiteTest extends BaseTestCase {
-	public void testSOUs_ViewNotificationAnnouncementSite()
+public class SOUs_ViewMarkReadNotificationAnnouncementSiteTest
+	extends BaseTestCase {
+	public void testSOUs_ViewMarkReadNotificationAnnouncementSite()
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
@@ -31,24 +32,16 @@ public class SOUs_ViewNotificationAnnouncementSiteTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		selenium.waitForVisible("//span[@class='notification-count']");
-		assertEquals(RuntimeVariables.replace("1"),
+		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
 		selenium.mouseOver("//span[@class='notification-count']");
 		selenium.waitForElementPresent(
 			"//div[contains(@class, 'user-notification-events-container')]");
 		assertTrue(selenium.isVisible(
 				"//div[contains(@class, 'user-notification-events-container')]"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='notification-entry']/div",
-				"Joe Bloggs sent a new announcement"));
-		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
-			selenium.getText("//div[@class='notification-entry']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Mark All as Read"),
-			selenium.getText("//a[@class='dismiss-notifications']"));
-		selenium.clickAt("//a[@class='dismiss-notifications']",
-			RuntimeVariables.replace("Mark All as Read"));
-		selenium.waitForNotText("//span[@class='notification-count']", "1");
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//span[@class='notification-count']"));
+		assertEquals(RuntimeVariables.replace("You have no new notifications."),
+			selenium.getText("//div[@class='user-notification-event-header']"));
+		assertFalse(selenium.isTextPresent("Joe Bloggs sent a new announcement"));
+		assertFalse(selenium.isTextPresent("Announcements Entry Title"));
 	}
 }

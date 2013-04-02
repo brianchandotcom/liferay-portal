@@ -103,9 +103,13 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			message.getGroupId());
 
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			MBTestUtil.getInputStreamOVPs(
+				"OSX_Test.docx", getClass(), getSearchKeywords());
+
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
-			getSearchKeywords(), getSearchKeywords(), _getInputStreamOVPs(),
+			getSearchKeywords(), getSearchKeywords(), inputStreamOVPs,
 			existingFiles, 0, false, serviceContext);
 	}
 
@@ -137,24 +141,6 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
-	}
-
-	private List<ObjectValuePair<String, InputStream>> _getInputStreamOVPs() {
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<ObjectValuePair<String, InputStream>>(1);
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/OSX_Test.docx");
-
-		ObjectValuePair<String, InputStream> inputStreamOVP =
-			new ObjectValuePair<String, InputStream>(
-				getSearchKeywords(), inputStream);
-
-		inputStreamOVPs.add(inputStreamOVP);
-
-		return inputStreamOVPs;
 	}
 
 }

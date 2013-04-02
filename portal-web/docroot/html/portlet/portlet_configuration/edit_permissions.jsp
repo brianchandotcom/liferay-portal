@@ -169,7 +169,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 			Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
 
 			if (modelResourceGroup.isLayoutPrototype() || modelResourceGroup.isLayoutSetPrototype() || modelResourceGroup.isUserGroup()) {
-				actions = new ArrayList(actions);
+				actions = new ArrayList<String>(actions);
 
 				actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
 				actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);

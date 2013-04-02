@@ -59,10 +59,10 @@ public class RemoveConnectionCCUserProfileTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
-		assertEquals(RuntimeVariables.replace("Remove Connection"),
+		assertEquals(RuntimeVariables.replace("Disconnect"),
 			selenium.getText("//span[@class='action remove-connection']/a"));
 		selenium.clickAt("//span[@class='action remove-connection']/a",
-			RuntimeVariables.replace("Remove Connection"));
+			RuntimeVariables.replace("Disconnect"));
 		selenium.waitForVisible("//span[@class='action add-connection']/a");
 		assertEquals(RuntimeVariables.replace("Connect"),
 			selenium.getText("//span[@class='action add-connection']/a"));

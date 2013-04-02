@@ -19,15 +19,15 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (Validator.isNull(redirect)) {
+List results = (List)request.getAttribute("view.jsp-results");
+
+if (Validator.isNull(redirect) && results.isEmpty()) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("struts_action", "/asset_publisher/view");
 
 	redirect = portletURL.toString();
 }
-
-List results = (List)request.getAttribute("view.jsp-results");
 
 int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
 

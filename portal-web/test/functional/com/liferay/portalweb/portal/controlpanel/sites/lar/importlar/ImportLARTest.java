@@ -71,7 +71,7 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@id='_156_importFileName']");
 				selenium.uploadFile("//input[@id='_156_importFileName']",
 					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Sites_Public_Pages.lar"));
+						"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portal\\controlpanel\\sites\\lar\\importlar\\dependencies\\Sites_Public_Pages.lar"));
 
 				boolean deleteMissingPagesCheckbox = selenium.isChecked(
 						"//input[@id='_156_DELETE_MISSING_LAYOUTSCheckbox']");

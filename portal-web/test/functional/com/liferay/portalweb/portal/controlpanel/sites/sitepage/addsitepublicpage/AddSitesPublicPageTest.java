@@ -93,9 +93,9 @@ public class AddSitesPublicPageTest extends BaseTestCase {
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
-				selenium.waitForVisible("//li/ul/li/div/div[3]/a");
+				selenium.waitForVisible("//li/ul/li/div/div[2]/a");
 				assertEquals(RuntimeVariables.replace("Public Page"),
-					selenium.getText("//li/ul/li/div/div[3]/a"));
+					selenium.getText("//li/ul/li/div/div[2]/a"));
 
 			case 100:
 				label = -1;

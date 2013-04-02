@@ -724,12 +724,16 @@
 			var form = event.form;
 			var hasErrors = false;
 
-			var validator = Liferay.Form.get(form.get('id')).formValidator;
+			var liferayForm = Liferay.Form.get(form.get('id'));
 
-			if (A.instanceOf(validator, A.FormValidator)) {
-				validator.validate();
+			if (liferayForm) {
+				var validator = liferayForm.formValidator;
 
-				hasErrors = validator.hasErrors();
+				if (A.instanceOf(validator, A.FormValidator)) {
+					validator.validate();
+
+					hasErrors = validator.hasErrors();
+				}
 			}
 
 			if (!hasErrors) {

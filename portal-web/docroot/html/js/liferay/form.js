@@ -195,7 +195,7 @@ AUI.add(
 				get: function(id) {
 					var instance = this;
 
-					return instance._INSTANCES[id] || instance;
+					return instance._INSTANCES[id];
 				},
 
 				register: function(config) {

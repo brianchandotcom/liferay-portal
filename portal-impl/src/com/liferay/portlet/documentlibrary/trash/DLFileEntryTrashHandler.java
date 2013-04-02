@@ -304,7 +304,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		if (dlFileEntry.isInHiddenFolder()) {
+		if (dlFileEntry.isInHiddenFolder() &&
+			actionId.equals(ActionKeys.VIEW)) {
+
 			return false;
 		}
 

@@ -120,6 +120,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -140,7 +142,7 @@ import jodd.bean.BeanUtil;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Bruno Farache
- * @author Alex Chow
+ * @author Alexander Chow
  */
 public class PortletDataContextImpl implements PortletDataContext {
 
@@ -1512,12 +1514,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		serviceContext.setCompanyId(getCompanyId());
 		serviceContext.setScopeGroupId(getScopeGroupId());
-
+	
 		// Dates
 
 		if (classedModel instanceof AuditedModel) {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
+			serviceContext.setUserId(getUserId(auditedModel));
 			serviceContext.setCreateDate(auditedModel.getCreateDate());
 			serviceContext.setModifiedDate(auditedModel.getModifiedDate());
 		}
@@ -1686,6 +1689,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
 		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
+	}
+
+	protected long getUserId(AuditedModel auditedModel) {
+		try {
+			Class<?> clazz = auditedModel.getModelClass();
+
+			Method method = clazz.getMethod("getUserUuid");
+
+			String userUuid = (String)method.invoke(auditedModel);
+
+			return getUserId(userUuid);
+		}
+		catch (Exception e) {
+		}
+
+		return 0;
 	}
 
 	protected void initXStream() {

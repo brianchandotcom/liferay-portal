@@ -39,7 +39,6 @@ import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.persistence.LockUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -349,12 +348,12 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	public Class<?> getModelClass() {
-		return DLFileEntry.class;
+		return CMISFileEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return DLFileEntry.class.getName();
+		return CMISFileEntry.class.getName();
 	}
 
 	public Date getModifiedDate() {

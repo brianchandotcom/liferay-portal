@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
-import java.io.IOException;
-
 import java.nio.ByteBuffer;
 
 import javax.servlet.FilterChain;

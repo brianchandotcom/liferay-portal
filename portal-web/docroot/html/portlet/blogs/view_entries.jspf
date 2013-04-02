@@ -65,7 +65,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 if (portletDisplayDDMTemplateId > 0) {
 %>
 
-	<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results) %>
+	<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, _convertToBlogEntries(results)) %>
 
 <%
 }
@@ -153,3 +153,24 @@ else {
 </div>
 
 <liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+
+<%!
+private List<BlogsEntry> _convertToBlogEntries(List results) throws PortalException, SystemException {
+	if ((results == null) || (results.isEmpty()) || (results.get(0) instanceof BlogsEntry)) {
+		return results;
+	}
+
+	List<BlogsEntry> entries = new ArrayList<BlogsEntry>(results.size());
+
+	for (Object result : results) {
+		AssetEntry assetEntry = (AssetEntry)result;
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
+
+		entries.add(entry);
+	}
+
+	return entries;
+}
+%>
+%>

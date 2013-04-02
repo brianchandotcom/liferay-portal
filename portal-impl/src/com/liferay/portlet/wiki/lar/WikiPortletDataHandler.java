@@ -64,7 +64,10 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 	public static void exportNode(
 			PortletDataContext portletDataContext, Element nodesElement,
-			Element pagesElement, WikiNode node)
+			Element pagesElement, Element dlFileEntryTypesElement,
+			Element dlFoldersElement, Element dlFileEntriesElement,
+			Element dlFileRanksElement, Element dlRepositoriesElement,
+			Element dlRepositoryEntriesElement, WikiNode node)
 		throws Exception {
 
 		if (portletDataContext.isWithinDateRange(node.getModifiedDate())) {
@@ -76,33 +79,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext.addClassedModel(
 					nodeElement, path, node, NAMESPACE);
 			}
-		}
-
-		Element dlFileEntryTypesElement = pagesElement.element(
-			"dl-file-entry-types");
-		if (dlFileEntryTypesElement == null) {
-			pagesElement.addElement("dl-file-entry-types");
-		}
-		Element dlFoldersElement = pagesElement.element("dl-folders");
-		if (dlFoldersElement == null) {
-			pagesElement.addElement("dl-folders");
-		}
-		Element dlFileEntriesElement = pagesElement.element("dl-file-entries");
-		if (dlFileEntriesElement == null) {
-			pagesElement.addElement("dl-file-entries");
-		}
-		Element dlFileRanksElement = pagesElement.element("dl-file-ranks");
-		if (dlFileRanksElement == null) {
-			pagesElement.addElement("dl-file-ranks");
-		}
-		Element dlRepositoriesElement = pagesElement.element("dl-repositories");
-		if (dlRepositoriesElement == null) {
-			pagesElement.addElement("dl-repositories");
-		}
-		Element dlRepositoryEntriesElement = pagesElement.element(
-			"dl-repository-entries");
-		if (dlRepositoryEntriesElement == null) {
-			pagesElement.addElement("dl-repository-entries");
 		}
 
 		List<WikiPage> pages = WikiPageUtil.findByN_S(
@@ -521,11 +497,26 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		Element nodesElement = rootElement.addElement("nodes");
 		Element pagesElement = rootElement.addElement("pages");
 
+		Element dlFileEntryTypesElement = pagesElement.addElement(
+			"dl-file-entry-types");
+		Element dlFoldersElement = pagesElement.addElement("dl-folders");
+		Element dlFileEntriesElement = pagesElement.addElement(
+			"dl-file-entries");
+		Element dlFileRanksElement = pagesElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = pagesElement.addElement(
+			"dl-repositories");
+		Element dlRepositoryEntriesElement = pagesElement.addElement(
+			"dl-repository-entries");
+
 		List<WikiNode> nodes = WikiNodeUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
 
 		for (WikiNode node : nodes) {
-			exportNode(portletDataContext, nodesElement, pagesElement, node);
+			exportNode(
+				portletDataContext, nodesElement, pagesElement,
+				dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
+				dlFileRanksElement, dlRepositoriesElement,
+				dlRepositoryEntriesElement, node);
 		}
 
 		return getExportDataRootElementString(rootElement);

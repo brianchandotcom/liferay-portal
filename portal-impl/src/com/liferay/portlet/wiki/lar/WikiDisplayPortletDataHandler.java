@@ -110,8 +110,22 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		Element nodesElement = rootElement.addElement("nodes");
 		Element pagesElement = rootElement.addElement("pages");
 
+		Element dlFileEntryTypesElement = pagesElement.addElement(
+			"dl-file-entry-types");
+		Element dlFoldersElement = pagesElement.addElement("dl-folders");
+		Element dlFileEntriesElement = pagesElement.addElement(
+			"dl-file-entries");
+		Element dlFileRanksElement = pagesElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = pagesElement.addElement(
+			"dl-repositories");
+		Element dlRepositoryEntriesElement = pagesElement.addElement(
+			"dl-repository-entries");
+
 		WikiPortletDataHandler.exportNode(
-			portletDataContext, nodesElement, pagesElement, node);
+			portletDataContext, nodesElement, pagesElement,
+			dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
+			dlFileRanksElement, dlRepositoriesElement,
+			dlRepositoryEntriesElement, node);
 
 		return getExportDataRootElementString(rootElement);
 	}

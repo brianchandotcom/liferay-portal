@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.PwdGenerator;
 
@@ -165,7 +164,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		"/html/taglib/ui/panel_container/start.jsp";
 
 	private boolean _accordion;
-	private String _cssClass = StringPool.BLANK;
+	private String _cssClass;
 	private String _endPage;
 	private Boolean _extended;
 	private String _id;

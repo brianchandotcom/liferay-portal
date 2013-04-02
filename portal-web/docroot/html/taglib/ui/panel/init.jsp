@@ -18,7 +18,7 @@
 
 <%
 boolean collapsible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:collapsible"));
-String cssClass = (String)request.getAttribute("liferay-ui:panel:cssClass");
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:panel:cssClass"));
 String defaultState = (String)request.getAttribute("liferay-ui:panel:defaultState");
 boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:extended"));
 String helpMessage = (String)request.getAttribute("liferay-ui:panel:helpMessage");

@@ -57,8 +57,9 @@ public class WaitForConfirmation2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("X"),
 			selenium.getText(
 				"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
-		selenium.waitForConfirmation(
-			"Are you sure you want to delete this page?");
+		selenium.click(
+			"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+		selenium.waitForConfirmation("Catherine");
 		selenium.waitForElementNotPresent(
 			"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
 	}

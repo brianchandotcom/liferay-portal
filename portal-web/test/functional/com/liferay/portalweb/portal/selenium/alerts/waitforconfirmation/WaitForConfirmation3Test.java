@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.selenium.javascript.runscript;
+package com.liferay.portalweb.portal.selenium.alerts.waitforconfirmation;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RunScript1Test extends BaseTestCase {
-	public void testRunScript1() throws Exception {
+public class WaitForConfirmation3Test extends BaseTestCase {
+	public void testWaitForConfirmation3() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.runScript("alert('test');");
-		assertEquals("test", selenium.getAlert());
+		selenium.open("/web/guest/home/");
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this page?");
 	}
 }

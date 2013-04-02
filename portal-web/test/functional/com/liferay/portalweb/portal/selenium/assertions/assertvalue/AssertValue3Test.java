@@ -14,24 +14,16 @@
 
 package com.liferay.portalweb.portal.selenium.assertions.assertvalue;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssertValueTests extends BaseTestSuite {
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AssertValue1Test.class);
-		testSuite.addTestSuite(AssertValue2Test.class);
-		testSuite.addTestSuite(AssertValue3Test.class);
-		testSuite.addTestSuite(AssertNotValue1Test.class);
-		testSuite.addTestSuite(AssertNotValue2Test.class);
-		testSuite.addTestSuite(AssertNotValue3Test.class);
-
-		return testSuite;
+public class AssertValue3Test extends BaseTestCase {
+	public void testAssertValue3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		assertEquals("Catherine", selenium.getValue("//div[@id='Catherine']"));
 	}
 }

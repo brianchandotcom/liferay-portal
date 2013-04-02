@@ -14,24 +14,16 @@
 
 package com.liferay.portalweb.portal.selenium.assertions.assertvisible;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssertVisibleTests extends BaseTestSuite {
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AssertVisible1Test.class);
-		testSuite.addTestSuite(AssertVisible2Test.class);
-		testSuite.addTestSuite(AssertVisible3Test.class);
-		testSuite.addTestSuite(AssertNotVisible1Test.class);
-		testSuite.addTestSuite(AssertNotVisible2Test.class);
-		testSuite.addTestSuite(AssertNotVisible3Test.class);
-
-		return testSuite;
+public class AssertVisible3Test extends BaseTestCase {
+	public void testAssertVisible3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		assertTrue(selenium.isVisible("//div[@id='Catherine']"));
 	}
 }

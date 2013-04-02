@@ -14,24 +14,16 @@
 
 package com.liferay.portalweb.portal.selenium.assertions.assertchecked;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssertCheckedTests extends BaseTestSuite {
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AssertChecked1Test.class);
-		testSuite.addTestSuite(AssertChecked2Test.class);
-		testSuite.addTestSuite(AssertChecked3Test.class);
-		testSuite.addTestSuite(AssertNotChecked1Test.class);
-		testSuite.addTestSuite(AssertNotChecked2Test.class);
-		testSuite.addTestSuite(AssertNotChecked3Test.class);
-
-		return testSuite;
+public class AssertNotChecked3Test extends BaseTestCase {
+	public void testAssertNotChecked3() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
+		selenium.open("/web/guest/home/");
+		assertFalse(selenium.isChecked("//input[@value='Catherine']"));
 	}
 }

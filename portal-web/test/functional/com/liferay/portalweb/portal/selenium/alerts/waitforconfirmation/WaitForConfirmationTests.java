@@ -27,6 +27,7 @@ public class WaitForConfirmationTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(WaitForConfirmation1Test.class);
 		testSuite.addTestSuite(WaitForConfirmation2Test.class);
+		testSuite.addTestSuite(WaitForConfirmation3Test.class);
 
 		return testSuite;
 	}

@@ -27,6 +27,12 @@ public class ClickTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(Click1Test.class);
 		testSuite.addTestSuite(Click2Test.class);
+		testSuite.addTestSuite(ClickAndWait1Test.class);
+		testSuite.addTestSuite(ClickAndWait2Test.class);
+		testSuite.addTestSuite(ClickAt1Test.class);
+		testSuite.addTestSuite(ClickAt2Test.class);
+		testSuite.addTestSuite(ClickAtAndWait1Test.class);
+		testSuite.addTestSuite(ClickAtAndWait2Test.class);
 
 		return testSuite;
 	}

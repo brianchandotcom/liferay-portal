@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,16 +16,26 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Igor Spasic
  */
+@PrepareForTest(ServiceContextFactory.class)
+@RunWith(PowerMockRunner.class)
 public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	@BeforeClass
@@ -34,6 +44,17 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		registerActionClass(CamelFooService.class);
 		registerActionClass(FooService.class);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		stub(
+			method(
+				ServiceContextFactory.class, "getInstance",
+				HttpServletRequest.class)
+		).toReturn(
+			new ServiceContext()
+		);
 	}
 
 	@Test
@@ -262,6 +283,24 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 			mockHttpServletRequest);
 
 		Assert.assertEquals("m-1", jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testModifyServiceContext() throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/srvcctx2");
+
+		mockHttpServletRequest.setParameter(
+			"serviceContext", "{'failOnPortalException' : false}");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		ServiceContext serviceContext =
+			(ServiceContext)jsonWebServiceAction.invoke();
+
+		Assert.assertFalse(serviceContext.isFailOnPortalException());
 	}
 
 	@Test

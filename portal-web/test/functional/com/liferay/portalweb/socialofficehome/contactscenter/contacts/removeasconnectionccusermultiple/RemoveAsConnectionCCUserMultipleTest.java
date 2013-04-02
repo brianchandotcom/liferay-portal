@@ -77,11 +77,11 @@ public class RemoveAsConnectionCCUserMultipleTest extends BaseTestCase {
 		selenium.waitForVisible("xPath=(//div[@class='lfr-contact-thumb'])[6]");
 		assertTrue(selenium.isVisible(
 				"xPath=(//div[@class='lfr-contact-thumb'])[6]"));
-		assertEquals(RuntimeVariables.replace("Remove Connection"),
+		assertEquals(RuntimeVariables.replace("Disconnect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 		selenium.clickAt("//button[@id='_1_WAR_contactsportlet_removeConnectionButton']",
-			RuntimeVariables.replace("Remove Connection"));
+			RuntimeVariables.replace("Disconnect"));
 		selenium.waitForVisible("//span[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You are not connected to this user anymore."),

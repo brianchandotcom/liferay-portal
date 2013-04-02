@@ -53,7 +53,7 @@ public class SOUs1_ViewAddAsConnectionCCUserMultipleTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-profile')]/div/div[2]/div[3]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class, 'contacts-center-home-content')]"));
-		assertEquals(RuntimeVariables.replace("Remove Connection"),
+		assertEquals(RuntimeVariables.replace("Disconnect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 		assertFalse(selenium.isVisible(

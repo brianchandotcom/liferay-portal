@@ -54,7 +54,7 @@ public class SOUs_ViewCCUserProfileTest extends BaseTestCase {
 				"//div[contains(@class, 'contacts-center-home-content')]"));
 		selenium.waitForVisible(
 			"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']");
-		assertEquals(RuntimeVariables.replace("Remove Connection"),
+		assertEquals(RuntimeVariables.replace("Disconnect"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_removeConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),

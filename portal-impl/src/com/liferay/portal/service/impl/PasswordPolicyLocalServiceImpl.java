@@ -212,6 +212,14 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyPersistence.remove(passwordPolicy);
 	}
 
+	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws SystemException {
+
+		return passwordPolicyPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
 	public PasswordPolicy getDefaultPasswordPolicy(long companyId)
 		throws PortalException, SystemException {
 

@@ -1103,7 +1103,7 @@
 			<finder-column name="organizationId" />
 		</finder>
 	</entity>
-	<entity name="PasswordPolicy" local-service="true" remote-service="true">
+	<entity name="PasswordPolicy" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

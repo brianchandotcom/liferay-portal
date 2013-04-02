@@ -44,6 +44,15 @@ public class ETagFilter extends BasePortalFilter {
 		}
 	}
 
+	protected boolean isEligibleForEtag(int responseStatusCode) {
+		if ((responseStatusCode >= 200) && (responseStatusCode < 300)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
@@ -58,9 +67,14 @@ public class ETagFilter extends BasePortalFilter {
 
 		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
-		if (!ETagUtil.processETag(request, response, byteBuffer)) {
+		if (isEligibleForEtag(bufferCacheServletResponse.getStatus())) {
+			if (!ETagUtil.processETag(request, response, byteBuffer)) {
+				bufferCacheServletResponse.finishResponse();
+				bufferCacheServletResponse.outputBuffer();
+			}
+		}
+		else {
 			bufferCacheServletResponse.finishResponse();
-			bufferCacheServletResponse.outputBuffer();
 		}
 	}
 

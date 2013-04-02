@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.nio.intraband;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.IOException;
 
@@ -59,7 +58,7 @@ public abstract class BaseIntraBand implements IntraBand {
 		DatagramReceiveHandler[] datagramReceiveHandlers =
 			datagramReceiveHandlersReference.get();
 
-		return ArrayUtil.clone(datagramReceiveHandlers);
+		return datagramReceiveHandlers.clone();
 	}
 
 	public boolean isOpen() {
@@ -80,8 +79,7 @@ public abstract class BaseIntraBand implements IntraBand {
 		do {
 			datagramReceiveHandlers = datagramReceiveHandlersReference.get();
 
-			copyDatagramReceiveHandlers = ArrayUtil.clone(
-				datagramReceiveHandlers);
+			copyDatagramReceiveHandlers = datagramReceiveHandlers.clone();
 
 			oldDatagramReceiveHandler = copyDatagramReceiveHandlers[index];
 

@@ -14,12 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -181,6 +183,35 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			getPermissionChecker(), roleId, ActionKeys.UPDATE);
 
 		groupLocalService.addRoleGroups(roleId, groupIds);
+	}
+
+	/**
+	 * Checks if the group is valid for Remote Staging.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if the user did not have permission to view the
+	 *         group or if the group belongs to a company different to the
+	 *         users's company
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void checkRemoteStagingGroup(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = getGroup(groupId);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (group.getCompanyId() != permissionChecker.getCompanyId()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("No Group exists with the key {groupId=");
+			sb.append(groupId);
+			sb.append("} in the Company {companyId=");
+			sb.append(permissionChecker.getCompanyId());
+			sb.append("}");
+
+			throw new NoSuchGroupException(sb.toString());
+		}
 	}
 
 	/**

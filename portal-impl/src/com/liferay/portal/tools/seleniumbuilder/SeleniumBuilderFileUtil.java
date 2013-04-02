@@ -379,11 +379,7 @@ public class SeleniumBuilderFileUtil {
 			if (elementName.equals("case")) {
 				List<Attribute> attributes = element.attributes();
 
-				if (attributes.size() == 1) {
-					throwValidationException(
-						1003, fileName, element,
-						new String[] {"locator1", "locator-key1"});
-				}
+				boolean hasNeededAttributeName = false;
 
 				for (Attribute attribute : attributes) {
 					String attributeName = attribute.getName();
@@ -397,9 +393,14 @@ public class SeleniumBuilderFileUtil {
 							!attributeValue.equals("startsWith")) {
 
 							throwValidationException(
-								1006, fileName, element, attributeValue);
+								1006, fileName, element, attributeName);
 						}
 
+					}
+					else if (attributeName.startsWith("locator") ||
+							 attributeName.startsWith("locator-key")) {
+
+						hasNeededAttributeName = true;
 					}
 
 					if (!attributeName.equals("comparator") &&
@@ -417,6 +418,12 @@ public class SeleniumBuilderFileUtil {
 						throwValidationException(
 							1005, fileName, element, attributeName);
 					}
+				}
+
+				if (!hasNeededAttributeName) {
+					throwValidationException(
+						1004, fileName, element,
+						new String[] {"locator1", "locator-key1"});
 				}
 
 				validateBlockElement(

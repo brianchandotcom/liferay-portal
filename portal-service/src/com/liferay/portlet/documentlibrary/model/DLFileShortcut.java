@@ -37,5 +37,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer();
 
+	public boolean isInHiddenFolder();
+
 	public boolean isInTrashContainer();
 }

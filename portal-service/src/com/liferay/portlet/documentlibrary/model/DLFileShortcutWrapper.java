@@ -707,6 +707,10 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return _dlFileShortcut.getTrashContainer();
 	}
 
+	public boolean isInHiddenFolder() {
+		return _dlFileShortcut.isInHiddenFolder();
+	}
+
 	public boolean isInTrashContainer() {
 		return _dlFileShortcut.isInTrashContainer();
 	}

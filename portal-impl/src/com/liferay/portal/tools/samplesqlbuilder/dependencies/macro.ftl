@@ -26,6 +26,30 @@
 	insert into DDMStructureLink values (${ddmStructureLink.structureLinkId},${ ddmStructureLink.classNameId}, ${ddmStructureLink.classPK}, ${ddmStructureLink.structureId});
 </#macro>
 
+<#macro insertDLFolder _ddmStructureId _dlFolderDepth _groupId _parentDLFolderId  >
+	<#if (_dlFolderDepth <= maxDLFolderDepth)>
+		<#list 1..maxDLFolderCount as dlFolderCount>
+			<#local dlFolder = dataFactory.newDLFolder(_groupId, _parentDLFolderId, dlFolderCount)>
+
+			insert into DLFolder values ('${dlFolder.uuid}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '${dlFolder.userName}', '${dataFactory.getDateString(dlFolder.createDate)}', '${dataFactory.getDateString(dlFolder.modifiedDate)}', ${dlFolder.repositoryId}, ${dlFolder.mountPoint?string}, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', '${dataFactory.getDateString(dlFolder.lastPostDate)}', ${dlFolder.defaultFileEntryTypeId}, ${dlFolder.hidden?string}, ${dlFolder.overrideFileEntryTypes?string}, ${dlFolder.status}, ${dlFolder.statusByUserId}, '${dlFolder.statusByUserName}', '${dataFactory.getDateString(dlFolder.statusDate)}');
+
+			<#if (maxDLFileEntryCount > 0)>
+				<#list 1..maxDLFileEntryCount as dlFileEntryCount>
+					<#local dlFileEntry = dataFactory.newDlFileEntry(dlFolder, dlFileEntryCount)>
+
+					${sampleSQLBuilder.insertDLFileEntry(dlFileEntry, _ddmStructureId)}
+
+					${writerDocumentLibraryCSV.write(dlFolder.folderId + "," + dlFileEntry.name + "," + dlFileEntry.fileEntryId + "," + dataFactory.getDateLong(dlFileEntry.createDate) + "," + dataFactory.getDateLong(dlFolder.createDate) +"\n")}
+				</#list>
+			</#if>
+
+			<@insertDLFolder _ddmStructureId = _ddmStructureId _dlFolderDepth = _dlFolderDepth + 1 _groupId = groupId _parentDLFolderId = dlFolder.folderId />
+
+			<@insertDLSync _entry = dlFolder />
+		</#list>
+	</#if>
+</#macro>
+
 <#macro insertDLSync _entry>
 	<#local dlSync = dataFactory.newDLSync(_entry)>
 

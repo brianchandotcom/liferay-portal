@@ -19,7 +19,7 @@ ${sampleSQLBuilder.insertGroup(dataFactory.guestGroup, 1)}
 
 	<#include "wiki.ftl">
 
-	${sampleSQLBuilder.insertDLFolders(groupId, 0, 1, dataFactory.defaultDLDDMStructureId)}
+	<@insertDLFolder _ddmStructureId = dataFactory.defaultDLDDMStructureId _dlFolderDepth = 1 _groupId = groupId _parentDLFolderId = 0 />
 
 	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
 

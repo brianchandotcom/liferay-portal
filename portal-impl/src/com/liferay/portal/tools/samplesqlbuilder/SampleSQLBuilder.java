@@ -217,21 +217,6 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFileEntry, context);
 	}
 
-	public void insertDLFolders(
-			long groupId, long parentDLFolderId, int dlFolderDepth,
-			long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddmStructureId", ddmStructureId);
-		put(context, "dlFolderDepth", dlFolderDepth);
-		put(context, "groupId", groupId);
-		put(context, "parentDLFolderId", parentDLFolderId);
-
-		processTemplate(_tplDLFolders, context);
-	}
-
 	public void insertGroup(Group group, int publicPageCount) throws Exception {
 		Map<String, Object> context = getContext();
 
@@ -597,7 +582,6 @@ public class SampleSQLBuilder {
 	private File _tempDir;
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
 	private String _tplGroup = _TPL_ROOT + "group.ftl";
 	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =

@@ -42,8 +42,8 @@ if (configParams != null) {
 	}
 }
 
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-editor:cssClass");
+String cssClasses = (String)request.getAttribute("liferay-ui:input-editor:cssClasses");
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));

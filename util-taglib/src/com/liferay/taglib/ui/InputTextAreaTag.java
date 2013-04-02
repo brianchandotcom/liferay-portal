@@ -43,7 +43,7 @@ public class InputTextAreaTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_defaultValue = StringPool.BLANK;
 		_disabled = false;
 		_param = null;
@@ -70,7 +70,7 @@ public class InputTextAreaTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_textarea/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _defaultValue = StringPool.BLANK;
 	private boolean _disabled;
 	private String _param;

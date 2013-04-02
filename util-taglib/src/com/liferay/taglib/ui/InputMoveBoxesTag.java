@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class InputMoveBoxesTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_leftBoxName = null;
 		_leftList = null;
 		_leftOnChange = null;
@@ -117,7 +118,7 @@ public class InputMoveBoxesTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_move_boxes/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _leftBoxName;
 	private List<KeyValuePair> _leftList;
 	private String _leftOnChange;

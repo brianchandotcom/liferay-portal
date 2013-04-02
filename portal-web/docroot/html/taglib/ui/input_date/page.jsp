@@ -23,7 +23,7 @@ if (GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:di
 	namespace = StringPool.BLANK;
 }
 
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-date:cssClass");
 String formName = namespace + request.getAttribute("liferay-ui:input-date:name");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:name"));
 String monthParam = namespace + request.getAttribute("liferay-ui:input-date:monthParam");
@@ -98,7 +98,7 @@ else if (yearNullable) {
 }
 %>
 
-<div class="aui-datepicker aui-datepicker-display aui-helper-clearfix <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" id="<%= randomNamespace %>displayDate">
+<div class="aui-datepicker aui-datepicker-display aui-helper-clearfix <%= cssClass %>" id="<%= randomNamespace %>displayDate">
 	<div class="aui-datepicker-content" id="<%= randomNamespace %>displayDateContent">
 		<div class="aui-datepicker-select-wrapper">
 			<c:choose>

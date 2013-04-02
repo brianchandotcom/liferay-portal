@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-checkbox:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-checkbox:cssClass");
 String formName = namespace + request.getAttribute("liferay-ui:input-checkbox:formName");
 String param = (String)request.getAttribute("liferay-ui:input-checkbox:param");
 String id = (String)request.getAttribute("liferay-ui:input-checkbox:id");
@@ -34,4 +34,4 @@ if (Validator.isNull(id)) {
 
 <input id="<%= id %>" name="<%= namespace %><%= param %>" type="hidden" value="<%= value %>" />
 
-<input <%= value ? "checked" : "" %> <%= Validator.isNotNull(cssClass) ? "class=\"" + cssClass + "\"" : StringPool.BLANK %> <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= id %>Checkbox" name="<%= namespace %><%= param %>Checkbox" type="checkbox" onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" />
+<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= id %>Checkbox" name="<%= namespace %><%= param %>Checkbox" type="checkbox" onClick="Liferay.Util.updateCheckboxValue(this); <%= onClick %>" />

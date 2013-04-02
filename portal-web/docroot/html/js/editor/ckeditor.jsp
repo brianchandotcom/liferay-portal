@@ -49,8 +49,8 @@ Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttri
 String configParams = marshallParams(configParamsMap);
 String fileBrowserParams = marshallParams(fileBrowserParamsMap);
 
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-editor:cssClass");
+String cssClasses = (String)request.getAttribute("liferay-ui:input-editor:cssClasses");
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");

@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-textarea:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-textarea:cssClass");
 String param = (String)request.getAttribute("liferay-ui:input-textarea:param");
 String paramId = (String)request.getAttribute("liferay-ui:input-textarea:paramId");
 String defaultValue = (String)request.getAttribute("liferay-ui:input-textarea:defaultValue");

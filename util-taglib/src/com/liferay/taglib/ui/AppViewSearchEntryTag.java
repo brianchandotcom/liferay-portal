@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
@@ -107,7 +108,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_containerIcon = null;
 		_containerName = null;
 		_containerType = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_description = null;
 		_fileEntryTuples = null;
 		_locked = false;
@@ -178,7 +179,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String _containerIcon;
 	private String _containerName;
 	private String _containerType;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _description;
 	private List<Tuple> _fileEntryTuples;
 	private boolean _locked;

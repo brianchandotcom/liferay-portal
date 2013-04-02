@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +54,7 @@ public class InputCheckBoxTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_defaultValue = Boolean.FALSE;
 		_disabled = false;
 		_formName = "fm";
@@ -83,7 +84,7 @@ public class InputCheckBoxTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/input_checkbox/page.jsp";
 
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private Boolean _defaultValue = Boolean.FALSE;
 	private boolean _disabled;
 	private String _formName = "fm";

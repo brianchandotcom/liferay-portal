@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-editor:cssClass");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 %>

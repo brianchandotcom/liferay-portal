@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.util.IncludeTag;
@@ -87,7 +88,7 @@ public class InputEditorTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_configParams = null;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_editorImpl = null;
 		_fileBrowserParams = null;
 		_height = null;
@@ -148,7 +149,7 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	private Map<String, String> _configParams;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _editorImpl;
 	private Map<String, String> _fileBrowserParams;
 	private String _height;

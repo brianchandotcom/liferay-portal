@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.taglib.util.IncludeTag;
@@ -80,7 +81,7 @@ public class InputLocalizedTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_autoSize = false;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_disabled = false;
 		_displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 		_formName = null;
@@ -142,7 +143,7 @@ public class InputLocalizedTag extends IncludeTag {
 		"/html/taglib/ui/input_localized/page.jsp";
 
 	private boolean _autoSize;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _defaultLanguageId;
 	private boolean _disabled;
 	private String _displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;

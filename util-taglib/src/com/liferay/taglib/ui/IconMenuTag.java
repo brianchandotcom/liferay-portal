@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -86,7 +87,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_align = "right";
-				_cssClass = null;
+				_cssClass = StringPool.BLANK;
 				_direction = null;
 				_endPage = null;
 				_extended = true;
@@ -272,7 +273,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("lfr-menu-list lfr-menu-expanded align-");
 					jspWriter.write(_align);
 					jspWriter.write(" ");
-					jspWriter.print(_cssClass);
+					jspWriter.write(_cssClass);
 					jspWriter.write("\" id=\"");
 					jspWriter.write(_id);
 					jspWriter.write("\">");
@@ -294,10 +295,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write(" max-display-items-");
 					jspWriter.write(String.valueOf(_maxDisplayItems));
 					jspWriter.write(" ");
-
-					if (Validator.isNotNull(_cssClass)) {
-						jspWriter.print(_cssClass);
-					}
+					jspWriter.write(_cssClass);
 
 					if (_disabled) {
 						jspWriter.write(" disabled");
@@ -384,7 +382,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		"/html/taglib/ui/icon_menu/start.jsp";
 
 	private String _align = "right";
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private String _direction;
 	private boolean _disabled;
 	private String _endPage;

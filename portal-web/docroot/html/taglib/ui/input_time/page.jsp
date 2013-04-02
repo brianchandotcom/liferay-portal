@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-time:cssClass");
 String hourParam = namespace + request.getAttribute("liferay-ui:input-time:hourParam");
 int hourValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:hourValue"));
 boolean hourNullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:hourNullable"));

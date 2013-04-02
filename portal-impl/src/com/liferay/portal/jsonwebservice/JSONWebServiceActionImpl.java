@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Array;
@@ -314,6 +315,154 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return actionMethod.invoke(actionClass, parameters);
 	}
 
+	private ServiceContext _mergeServiceContext(
+			ServiceContext serviceContextSource,
+			ServiceContext serviceContextDestination) {
+
+		serviceContextSource.setAddGroupPermissions(
+			serviceContextDestination.isAddGroupPermissions());
+		serviceContextSource.setAddGuestPermissions(
+			serviceContextDestination.isAddGuestPermissions());
+
+		if (serviceContextDestination.getAssetCategoryIds() != null) {
+			serviceContextSource.setAssetCategoryIds(
+				serviceContextDestination.getAssetCategoryIds());
+		}
+
+		if (serviceContextDestination.getAssetLinkEntryIds() != null) {
+			serviceContextSource.setAssetLinkEntryIds(
+				serviceContextDestination.getAssetLinkEntryIds());
+		}
+
+		if (serviceContextDestination.getAssetTagNames() != null) {
+			serviceContextSource.setAssetTagNames(
+				serviceContextDestination.getAssetTagNames());
+		}
+
+		if (serviceContextDestination.getAttributes() != null) {
+			serviceContextSource.setAttributes(
+				serviceContextDestination.getAttributes());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getCommand())) {
+			serviceContextSource.setCommand(
+				serviceContextDestination.getCommand());
+		}
+
+		if (serviceContextDestination.getCompanyId() > 0) {
+			serviceContextSource.setCompanyId(
+				serviceContextDestination.getCompanyId());
+		}
+
+		if (serviceContextDestination.getCreateDate() != null) {
+			serviceContextSource.setCreateDate(
+				serviceContextDestination.getCreateDate());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getCurrentURL())) {
+			serviceContextSource.setCurrentURL(
+				serviceContextDestination.getCurrentURL());
+		}
+
+		if (serviceContextDestination.getExpandoBridgeAttributes() != null) {
+			serviceContextSource.setExpandoBridgeAttributes(
+				serviceContextDestination.getExpandoBridgeAttributes());
+		}
+
+		if (serviceContextDestination.getGroupPermissions() != null) {
+			serviceContextSource.setGroupPermissions(
+				serviceContextDestination.getGroupPermissions());
+		}
+
+		if (serviceContextDestination.getGuestPermissions() != null) {
+			serviceContextSource.setGuestPermissions(
+				serviceContextDestination.getGuestPermissions());
+		}
+
+		if (serviceContextDestination.getHeaders() != null) {
+			serviceContextSource.setHeaders(
+				serviceContextDestination.getHeaders());
+		}
+
+		serviceContextSource.setLanguageId(
+			serviceContextDestination.getLanguageId());
+
+		if (Validator.isNotNull(serviceContextDestination.getLayoutFullURL())) {
+			serviceContextSource.setLayoutFullURL(
+				serviceContextDestination.getLayoutFullURL());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getLayoutURL())) {
+			serviceContextSource.setLayoutURL(
+				serviceContextDestination.getLayoutURL());
+		}
+
+		if (serviceContextDestination.getModifiedDate() != null) {
+			serviceContextSource.setModifiedDate(
+				serviceContextDestination.getModifiedDate());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getPathMain())) {
+			serviceContextSource.setPathMain(
+				serviceContextDestination.getPathMain());
+		}
+
+		if (serviceContextDestination.getPlid() > 0) {
+			serviceContextSource.setPlid(serviceContextDestination.getPlid());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getPortalURL())) {
+			serviceContextSource.setPortalURL(
+				serviceContextDestination.getPortalURL());
+		}
+
+		if (serviceContextDestination.getPortletPreferencesIds() != null) {
+			serviceContextSource.setPortletPreferencesIds(
+				serviceContextDestination.getPortletPreferencesIds());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getRemoteAddr())) {
+			serviceContextSource.setRemoteAddr(
+				serviceContextDestination.getRemoteAddr());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getRemoteHost())) {
+			serviceContextSource.setRemoteHost(
+				serviceContextDestination.getRemoteHost());
+		}
+
+		if (serviceContextDestination.getScopeGroupId() > 0) {
+			serviceContextSource.setScopeGroupId(
+				serviceContextDestination.getScopeGroupId());
+		}
+
+		serviceContextSource.setSignedIn(
+			serviceContextDestination.isSignedIn());
+
+		if (Validator.isNotNull(serviceContextDestination.
+			getUserDisplayURL())) {
+
+			serviceContextSource.setUserDisplayURL(
+				serviceContextDestination.getUserDisplayURL());
+		}
+
+		if (serviceContextDestination.getUserId() > 0) {
+			serviceContextSource.setUserId(
+				serviceContextDestination.getUserId());
+		}
+
+		if (Validator.isNotNull(serviceContextDestination.getUuid())) {
+			serviceContextSource.setUuid(serviceContextDestination.getUuid());
+		}
+
+		if (serviceContextDestination.getWorkflowAction() > 0) {
+			serviceContextSource.setWorkflowAction(
+				serviceContextDestination.getWorkflowAction());
+		}
+
+		return serviceContextDestination;
+	}
+
 	private Object[] _prepareParameters(Class<?> actionClass) throws Exception {
 		MethodParameter[] methodParameters =
 			_jsonWebServiceActionConfig.getMethodParameters();
@@ -361,6 +510,26 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = _convertValueToParameterValue(
 						value, parameterType,
 						methodParameters[i].getGenericTypes());
+
+					ServiceContext serviceContext =
+						_jsonWebServiceActionParameters.getServiceContext();
+
+					if ((serviceContext != null) &&
+						parameterName.equals("serviceContext")) {
+
+						if ((parameterValue != null) &&
+							ServiceContext.class.isAssignableFrom(
+								parameterValue.getClass())) {
+
+							parameterValue = _mergeServiceContext(
+									serviceContext,
+									(ServiceContext)parameterValue);
+						}
+						else {
+							parameterValue = serviceContext;
+						}
+					}
+
 				}
 			}
 

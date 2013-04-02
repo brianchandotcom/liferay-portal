@@ -91,6 +91,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_showCheckbox = showCheckbox;
 	}
 
+	public void setShowLinkTitle(boolean showLinkTitle) {
+		_showLinkTitle = showLinkTitle;
+	}
+
 	public void setStatus(int status) {
 		_status = status;
 	}
@@ -132,6 +136,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_rowCheckerName = null;
 		_shortcut = false;
 		_showCheckbox = false;
+		_showLinkTitle = true;
 		_status = 0;
 		_thumbnailDivStyle = null;
 		_thumbnailSrc = null;
@@ -178,6 +183,8 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute("liferay-ui:app-view-entry:shortcut", _shortcut);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:showCheckbox", _showCheckbox);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:showLinkTitle", _showLinkTitle);
 		request.setAttribute("liferay-ui:app-view-entry:status", _status);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailDivStyle", _thumbnailDivStyle);
@@ -209,6 +216,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _rowCheckerName;
 	private boolean _shortcut;
 	private boolean _showCheckbox = false;
+	private boolean _showLinkTitle = true;
 	private int _status = 0;
 	private String _thumbnailDivStyle;
 	private String _thumbnailSrc;

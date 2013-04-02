@@ -109,6 +109,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showLinkTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

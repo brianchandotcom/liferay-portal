@@ -407,6 +407,13 @@ public class OrganizationLocalServiceImpl
 		return deleteOrganization(organization);
 	}
 
+	public Organization fetchOrganizationByUuidAndCompanyId(
+		String uuid, long companyId) throws SystemException {
+
+		return
+			organizationPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
 	/**
 	 * Deletes the organization. The organization's associated resources and
 	 * assets are also deleted.

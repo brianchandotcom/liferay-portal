@@ -991,7 +991,7 @@
 
 		<reference package-path="com.liferay.mail" entity="Mail" />
 	</entity>
-	<entity name="Organization" local-service="true" remote-service="true">
+	<entity name="Organization" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1733,7 +1733,7 @@
 			<finder-column name="roleId" />
 		</finder>
 	</entity>
-	<entity name="Role" local-service="true" remote-service="true">
+	<entity name="Role" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2099,7 +2099,7 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
 	</entity>
-	<entity name="UserGroup" local-service="true" remote-service="true">
+	<entity name="UserGroup" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

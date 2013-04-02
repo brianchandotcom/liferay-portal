@@ -370,6 +370,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
+	public UserGroup fetchUserGroupByUuidAndCompanyId(
+		String uuid, long companyId) throws SystemException {
+
+		return userGroupPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
 	/**
 	 * Returns the user group with the name.
 	 *

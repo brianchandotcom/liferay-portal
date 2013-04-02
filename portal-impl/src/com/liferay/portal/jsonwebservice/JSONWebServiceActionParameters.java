@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -97,6 +97,10 @@ public class JSONWebServiceActionParameters {
 		}
 
 		return _parameterTypes.get(name);
+	}
+
+	public ServiceContext getServiceContext() {
+		return _serviceContext;
 	}
 
 	private void _addDefaultParameters() {
@@ -230,131 +234,6 @@ public class JSONWebServiceActionParameters {
 		}
 	}
 
-	private ServiceContext _mergeServiceContext(ServiceContext serviceContext) {
-		_serviceContext.setAddGroupPermissions(
-			serviceContext.isAddGroupPermissions());
-		_serviceContext.setAddGuestPermissions(
-			serviceContext.isAddGuestPermissions());
-
-		if (serviceContext.getAssetCategoryIds() != null) {
-			_serviceContext.setAssetCategoryIds(
-				serviceContext.getAssetCategoryIds());
-		}
-
-		if (serviceContext.getAssetLinkEntryIds() != null) {
-			_serviceContext.setAssetLinkEntryIds(
-				serviceContext.getAssetLinkEntryIds());
-		}
-
-		if (serviceContext.getAssetTagNames() != null) {
-			_serviceContext.setAssetTagNames(serviceContext.getAssetTagNames());
-		}
-
-		if (serviceContext.getAttributes() != null) {
-			_serviceContext.setAttributes(serviceContext.getAttributes());
-		}
-
-		if (Validator.isNotNull(serviceContext.getCommand())) {
-			_serviceContext.setCommand(serviceContext.getCommand());
-		}
-
-		if (serviceContext.getCompanyId() > 0) {
-			_serviceContext.setCompanyId(serviceContext.getCompanyId());
-		}
-
-		if (serviceContext.getCreateDate() != null) {
-			_serviceContext.setCreateDate(serviceContext.getCreateDate());
-		}
-
-		if (Validator.isNotNull(serviceContext.getCurrentURL())) {
-			_serviceContext.setCurrentURL(serviceContext.getCurrentURL());
-		}
-
-		if (serviceContext.getExpandoBridgeAttributes() != null) {
-			_serviceContext.setExpandoBridgeAttributes(
-				serviceContext.getExpandoBridgeAttributes());
-		}
-
-		if (serviceContext.getGroupPermissions() != null) {
-			_serviceContext.setGroupPermissions(
-				serviceContext.getGroupPermissions());
-		}
-
-		if (serviceContext.getGuestPermissions() != null) {
-			_serviceContext.setGuestPermissions(
-				serviceContext.getGuestPermissions());
-		}
-
-		if (serviceContext.getHeaders() != null) {
-			_serviceContext.setHeaders(serviceContext.getHeaders());
-		}
-
-		_serviceContext.setLanguageId(serviceContext.getLanguageId());
-
-		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
-			_serviceContext.setLayoutFullURL(serviceContext.getLayoutFullURL());
-		}
-
-		if (Validator.isNotNull(serviceContext.getLayoutURL())) {
-			_serviceContext.setLayoutURL(serviceContext.getLayoutURL());
-		}
-
-		if (serviceContext.getModifiedDate() != null) {
-			_serviceContext.setModifiedDate(serviceContext.getModifiedDate());
-		}
-
-		if (Validator.isNotNull(serviceContext.getPathMain())) {
-			_serviceContext.setPathMain(serviceContext.getPathMain());
-		}
-
-		if (serviceContext.getPlid() > 0) {
-			_serviceContext.setPlid(serviceContext.getPlid());
-		}
-
-		if (Validator.isNotNull(serviceContext.getPortalURL())) {
-			_serviceContext.setPortalURL(serviceContext.getPortalURL());
-		}
-
-		if (serviceContext.getPortletPreferencesIds() != null) {
-			_serviceContext.setPortletPreferencesIds(
-				serviceContext.getPortletPreferencesIds());
-		}
-
-		if (Validator.isNotNull(serviceContext.getRemoteAddr())) {
-			_serviceContext.setRemoteAddr(serviceContext.getRemoteAddr());
-		}
-
-		if (Validator.isNotNull(serviceContext.getRemoteHost())) {
-			_serviceContext.setRemoteHost(serviceContext.getRemoteHost());
-		}
-
-		if (serviceContext.getScopeGroupId() > 0) {
-			_serviceContext.setScopeGroupId(serviceContext.getScopeGroupId());
-		}
-
-		_serviceContext.setSignedIn(serviceContext.isSignedIn());
-
-		if (Validator.isNotNull(serviceContext.getUserDisplayURL())) {
-			_serviceContext.setUserDisplayURL(
-				serviceContext.getUserDisplayURL());
-		}
-
-		if (serviceContext.getUserId() > 0) {
-			_serviceContext.setUserId(serviceContext.getUserId());
-		}
-
-		if (Validator.isNotNull(serviceContext.getUuid())) {
-			_serviceContext.setUuid(serviceContext.getUuid());
-		}
-
-		if (serviceContext.getWorkflowAction() > 0) {
-			_serviceContext.setWorkflowAction(
-				serviceContext.getWorkflowAction());
-		}
-
-		return serviceContext;
-	}
-
 	private Map<String, List<NameValue<String, Object>>> _innerParameters;
 	private JSONRPCRequest _jsonRPCRequest;
 	private Map<String, Object> _parameters = new HashMap<String, Object>() {
@@ -412,17 +291,6 @@ public class JSONWebServiceActionParameters {
 				values.add(new NameValue<String, Object>(innerName, value));
 
 				return value;
-			}
-
-			if ((_serviceContext != null) && key.equals("serviceContext")) {
-				if ((value != null) &&
-					ServiceContext.class.isAssignableFrom(value.getClass())) {
-
-					value = _mergeServiceContext((ServiceContext)value);
-				}
-				else {
-					value = _serviceContext;
-				}
 			}
 
 			return super.put(key, value);

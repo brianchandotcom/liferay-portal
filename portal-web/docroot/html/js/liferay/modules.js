@@ -52,6 +52,7 @@
 			'auto-fields': ['aui-base', 'aui-data-set', 'aui-io-request', 'aui-parse-content', 'sortable', 'base', 'liferay-undo-manager'],
 			'ddm-repeatable-field': ['aui-base', 'aui-io-request', 'aui-parse-content'],
 			'dockbar': ['aui-node', 'event-touch'],
+			'dockbar-add-content': ['aui-dialog', 'aui-io-request', 'liferay-portlet-base'],
 			'dockbar-underlay': ['aui-button-item', 'aui-io-plugin', 'aui-overlay-manager'],
 			'dynamic-select': ['aui-base'],
 			'form': ['aui-base', 'aui-form-validator'],

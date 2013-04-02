@@ -515,7 +515,7 @@ else if (dlFileEntryType != null) {
 	}
 
 	function <portlet:namespace />validateTitle() {
-		Liferay.Form._INSTANCES.<portlet:namespace />fm.formValidator.validateField('<portlet:namespace />title');
+		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

@@ -214,6 +214,70 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionExecuteElement1002() throws Exception {
+		test(
+			"ActionExecuteElement1002.action",
+			"Error 1002: Invalid var element in " + _DIR_NAME +
+				"/ActionExecuteElement1002.action:5");
+	}
+
+	@Test
+	public void testActionExecuteElement1004_1() throws Exception {
+		test(
+			"ActionExecuteElement1004_1.action",
+			"Error 1004: Missing (function) attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1004_1.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1004_2() throws Exception {
+		test(
+			"ActionExecuteElement1004_2.action",
+			"Error 1004: Missing (function) attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1004_2.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1004_3() throws Exception {
+		test(
+			"ActionExecuteElement1004_3.action",
+			"Error 1004: Missing (function) attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1004_3.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1005_1() throws Exception {
+		test(
+			"ActionExecuteElement1005_1.action",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1005_1.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1005_2() throws Exception {
+		test(
+			"ActionExecuteElement1005_2.action",
+			"Error 1005: Invalid locator attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1005_2.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1005_3() throws Exception {
+		test(
+			"ActionExecuteElement1005_3.action",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/ActionExecuteElement1005_3.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1006() throws Exception {
+		test(
+			"ActionExecuteElement1006.action",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/ActionExecuteElement1006.action:4");
+	}
+
+	@Test
 	public void testFunction() throws Exception {
 		test("Function.function");
 	}

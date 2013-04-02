@@ -12,36 +12,36 @@
  * details.
  */
 
-package com.liferay.portlet.journal.template;
+package com.liferay.portlet.dynamicdatalists.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.ddm.template.BaseDDMTemplateHandler;
-import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
  */
-public class JournalTemplateHandler extends BaseDDMTemplateHandler {
+public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	public String getClassName() {
-		return JournalArticle.class.getName();
+		return DDLRecordSet.class.getName();
 	}
 
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.JOURNAL, locale);
+			PortletKeys.DYNAMIC_DATA_LISTS, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
 	}
 
 	public String getResourceName() {
-		return "com.liferay.portlet.journal";
+		return "com.liferay.portlet.dynamicdatalists";
 	}
 
 }

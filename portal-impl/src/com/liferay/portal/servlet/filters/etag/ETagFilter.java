@@ -62,45 +62,7 @@ public class ETagFilter extends BasePortalFilter {
 		throws Exception {
 
 		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(response) {
-
-				@Override
-				public int getStatus() {
-					return _status;
-				}
-
-				@Override
-				public void sendError(int status) throws IOException {
-					super.sendError(status);
-
-					_status = status;
-				}
-
-				@Override
-				public void sendError(int status, String errorMessage)
-					throws IOException {
-
-					super.sendError(status, errorMessage);
-
-					_status = status;
-				}
-
-				@Override
-				public void setStatus(int status) {
-					super.setStatus(status);
-
-					_status = status;
-				}
-
-				@Override
-				public void setStatus(int status, String statusMessage) {
-					super.setStatus(status, statusMessage);
-
-					_status = status;
-				}
-
-				private int _status = HttpServletResponse.SC_OK;
-			};
+			new BufferCacheServletResponse(response);
 
 		processFilter(
 			ETagFilter.class, request, bufferCacheServletResponse, filterChain);

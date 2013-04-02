@@ -724,7 +724,7 @@
 			var form = event.form;
 			var hasErrors = false;
 
-			var liferayForm = Liferay.Form.get(form.get('id'));
+			var liferayForm = Liferay.Form.get(form.attr('id'));
 
 			if (liferayForm) {
 				var validator = liferayForm.formValidator;
@@ -1958,7 +1958,7 @@
 				);
 			}
 		},
-		['aui-base', 'aui-form-validator']
+		['aui-base', 'aui-form-validator', 'liferay-form']
 	);
 
 	Liferay.publish(

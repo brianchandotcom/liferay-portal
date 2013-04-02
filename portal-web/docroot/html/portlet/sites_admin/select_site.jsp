@@ -88,13 +88,13 @@ if (selUser != null) {
 
 			groupParams.put("site", Boolean.TRUE);
 
-			List<Long> excludedGroupIds = new ArrayList<Long>();
-
 			if (groupId > 0) {
-				excludedGroupIds.add(groupId);
-			}
+				List<Long> excludedGroupIds = new ArrayList<Long>();
 
-			groupParams.put("excludedGroupIds", excludedGroupIds);
+				excludedGroupIds.add(groupId);
+
+				groupParams.put("excludedGroupIds", excludedGroupIds);
+			}
 
 			int start = searchContainer.getStart();
 

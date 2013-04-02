@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -157,35 +158,6 @@ public class GroupServiceTest {
 	}
 
 	@Test
-	public void testGetParentSites() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		Assert.assertTrue(group.isRoot());
-
-		String keywords = StringPool.BLANK;
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		List<Long> excludedGroupIds = new ArrayList<Long>();
-
-		excludedGroupIds.add(group.getGroupId());
-
-		groupParams.put("excludedGroupIds", excludedGroupIds);
-
-		List<Group> parentCandidates = GroupLocalServiceUtil.search(
-			group.getCompanyId(), null, keywords, groupParams, -1, -1, null);
-
-		for (Group parentCandidate : parentCandidates) {
-			if (parentCandidate.getGroupId() == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
-		}
-	}
-
-	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -202,6 +174,34 @@ public class GroupServiceTest {
 
 		Assert.assertFalse(scope.isRoot());
 		Assert.assertEquals(scope.getParentGroupId(), group.getGroupId());
+	}
+
+	@Test
+	public void testSelectableParentSites() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		excludedGroupIds.add(group.getGroupId());
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> selectableGroups = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, StringPool.BLANK, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Group selectableGroup : selectableGroups) {
+			if (selectableGroup.getGroupId() == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+		}
 	}
 
 	@Test

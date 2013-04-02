@@ -475,16 +475,8 @@ if (parentGroup != null) {
 		return currentValue != '';
 	}
 
-	<%
-	long groupId = 0;
-
-	if (group != null) {
-		groupId = group.getGroupId();
-	}
-	%>
-
 	function <portlet:namespace />openGroupSelector() {
-		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /></portlet:renderURL>&<portlet:namespace />groupId=<%= groupId %>';
+		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /><portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' /></portlet:renderURL>';
 
 		var groupWindow = window.open(url, 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
 

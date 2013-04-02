@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -22,15 +23,25 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,25 +70,16 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		TemplateResource templateResource = new StringTemplateResource(
-			_TEMPLATE_ID, _TEMPLATE_CONTENT);
+		for (TemplateVariableDefinition variableDefinition :
+				getAutocompleteVariableDefinitions(request)) {
 
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource,
-			TemplateContextType.STANDARD);
-
-		template.prepare(request);
-
-		for (String key : template.getKeys()) {
 			JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject();
 
-			Object value = template.get(key);
+			Class<?> clazz = variableDefinition.getClazz();
 
-			if (value == null) {
+			if (clazz == null) {
 				continue;
 			}
-
-			Class<?> clazz = value.getClass();
 
 			for (Field field : clazz.getFields()) {
 				valueJSONObject.put(
@@ -109,10 +111,77 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 					sb.toString(), JSONFactoryUtil.getUnmodifiableJSONObject());
 			}
 
-			jsonObject.put(key, valueJSONObject);
+			jsonObject.put(variableDefinition.getName(), valueJSONObject);
 		}
 
 		return jsonObject.toString();
+	}
+
+	protected List<TemplateVariableDefinition>
+			getAutocompleteVariableDefinitions(HttpServletRequest request)
+		throws Exception {
+
+		List<TemplateVariableDefinition> variableDefinitions =
+			new UniqueList<TemplateVariableDefinition>();
+
+		// Declared variables
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute(
+			WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
+
+		long classPK = BeanParamUtil.getLong(ddmTemplate, request, "classPK");
+		long classNameId = BeanParamUtil.getLong(
+			ddmTemplate, request, "classNameId");
+
+		if (classPK > 0) {
+			DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
+				classPK);
+
+			classNameId = ddmStructure.getClassNameId();
+		}
+		else if (ddmTemplate != null) {
+			classNameId = ddmTemplate.getClassNameId();
+		}
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			TemplateContextHelper.getTemplateVariableGroups(
+				classNameId, classPK, themeDisplay.getLocale());
+
+		for (TemplateVariableGroup templateVariableGroup :
+				templateVariableGroups.values()) {
+
+			variableDefinitions.addAll(
+				templateVariableGroup.getTemplateVariableDefinitions());
+		}
+
+		// Other variables
+
+		TemplateResource templateResource = new StringTemplateResource(
+			_TEMPLATE_ID, _TEMPLATE_CONTENT);
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, templateResource,
+			TemplateContextType.STANDARD);
+
+		template.prepare(request);
+
+		for (String key : template.getKeys()) {
+			Object value = template.get(key);
+
+			if (value == null) {
+				continue;
+			}
+
+			TemplateVariableDefinition variableDefinition =
+				new TemplateVariableDefinition(key, value.getClass(), key);
+
+			variableDefinitions.add(variableDefinition);
+		}
+
+		return variableDefinitions;
 	}
 
 	private static final String _TEMPLATE_CONTENT = "# Placeholder";

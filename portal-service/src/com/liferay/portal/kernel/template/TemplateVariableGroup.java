@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
-import java.util.ArrayList;
+import com.liferay.portal.kernel.util.UniqueList;
+
 import java.util.Collection;
 
 /**
@@ -84,6 +85,6 @@ public class TemplateVariableGroup {
 	private String _label;
 	private Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =
-			new ArrayList<TemplateVariableDefinition>();
+			new UniqueList<TemplateVariableDefinition>();
 
 }

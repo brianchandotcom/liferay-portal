@@ -50,6 +50,28 @@ public class TemplateVariableDefinition {
 		_itemTemplateVariableDefinition = itemTemplateVariableDefinition;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		TemplateVariableDefinition addressImpl = null;
+
+		try {
+			addressImpl = (TemplateVariableDefinition)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
+
+		if (_name.equals(addressImpl._name)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public Class<?> getClazz() {
 		return _clazz;
 	}

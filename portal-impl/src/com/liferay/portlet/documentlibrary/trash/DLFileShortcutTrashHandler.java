@@ -208,6 +208,14 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException, SystemException {
 
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		if (dlFileShortcut.isInHiddenFolder() &&
+			actionId.equals(ActionKeys.VIEW)) {
+
+			return false;
+		}
+
 		return DLFileShortcutPermission.contains(
 			permissionChecker, classPK, actionId);
 	}

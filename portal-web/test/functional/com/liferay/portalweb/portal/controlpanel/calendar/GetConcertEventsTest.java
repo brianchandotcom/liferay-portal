@@ -41,7 +41,7 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Concert"));
+			RuntimeVariables.replace("concert"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
 			selenium.getText(
@@ -53,7 +53,7 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Concert"));
+			RuntimeVariables.replace("concert"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
 			selenium.getText(
@@ -65,7 +65,7 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_8_eventType']",
-			RuntimeVariables.replace("Concert"));
+			RuntimeVariables.replace("concert"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Caedmons Call Concert!"),
 			selenium.getText(

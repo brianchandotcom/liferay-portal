@@ -53,8 +53,8 @@ public class ImportLARTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Export / Import"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
+					RuntimeVariables.replace("Export / Import"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Import",
 					RuntimeVariables.replace("Import"));
@@ -62,7 +62,7 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.waitForVisible("//input[@id='_86_importFileName']");
 				selenium.uploadFile("//input[@id='_86_importFileName']",
 					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\calendar\\dependencies\\Selenium-Calendar.portlet.lar"));
+						"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portal\\controlpanel\\calendar\\dependencies\\Selenium-Calendar.portlet.lar"));
 
 				boolean deletePortletCheckbox = selenium.isChecked(
 						"//input[@id='_86_DELETE_PORTLET_DATACheckbox']");

@@ -48,10 +48,10 @@ public class AddInvalidEndDateEventTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@id='_8_dailyInterval']");
 		selenium.type("//input[@id='_8_dailyInterval']",
 			RuntimeVariables.replace("1"));
-		selenium.clickAt("//select[@id='_8_endDateMonth']",
+		selenium.clickAt("//select[@id='_8_enddatemonth']",
 			RuntimeVariables.replace("End Date Month"));
-		selenium.select("//select[@id='_8_endDateMonth']",
+		selenium.select("//select[@id='_8_enddatemonth']",
 			RuntimeVariables.replace("February"));
-		assertFalse(selenium.isPartialText("//select[@id='_8_endDateDay']", "30"));
+		assertFalse(selenium.isPartialText("//select[@id='_8_enddateday']", "30"));
 	}
 }

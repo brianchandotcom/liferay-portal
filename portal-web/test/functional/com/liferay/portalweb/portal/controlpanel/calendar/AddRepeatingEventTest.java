@@ -47,14 +47,14 @@ public class AddRepeatingEventTest extends BaseTestCase {
 			RuntimeVariables.replace("All Day Event"));
 		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
 			RuntimeVariables.replace(""));
-		selenium.select("//select[@id='_8_startDateMonth']",
+		selenium.select("//select[@id='_8_startdatemonth']",
 			RuntimeVariables.replace("January"));
-		selenium.select("//select[@id='_8_startDateDay']",
+		selenium.select("//select[@id='_8_startdateday']",
 			RuntimeVariables.replace("1"));
-		selenium.select("//select[@id='_8_startDateYear']",
+		selenium.select("//select[@id='_8_startdateyear']",
 			RuntimeVariables.replace("2010"));
 		selenium.select("//select[@id='_8_type']",
-			RuntimeVariables.replace("Event"));
+			RuntimeVariables.replace("event"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

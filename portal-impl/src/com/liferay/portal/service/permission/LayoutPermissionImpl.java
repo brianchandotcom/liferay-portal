@@ -406,7 +406,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			if (GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(),
 					ActionKeys.MANAGE_LAYOUTS) ||
-				 GroupPermissionUtil.contains(
+				GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
 
 				return true;

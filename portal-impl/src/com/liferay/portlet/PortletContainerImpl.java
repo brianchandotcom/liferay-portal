@@ -357,8 +357,8 @@ public class PortletContainerImpl implements PortletContainer {
 
 			if (layout.isTypeControlPanel() &&
 				((windowState == null) ||
-					windowState.equals(WindowState.NORMAL) ||
-					Validator.isNull(windowState.toString()))) {
+				 windowState.equals(WindowState.NORMAL) ||
+				 Validator.isNull(windowState.toString()))) {
 
 				windowState = WindowState.MAXIMIZED;
 			}

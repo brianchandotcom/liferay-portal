@@ -128,7 +128,7 @@ public class ActionUtil {
 		}
 
 		if ((message != null) &&
-				(message.isInTrash() || message.isInTrashThread())) {
+			(message.isInTrash() || message.isInTrashThread())) {
 
 			throw new NoSuchMessageException();
 		}

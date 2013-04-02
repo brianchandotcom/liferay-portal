@@ -1294,7 +1294,7 @@ public class SitesImpl implements Sites {
 			throw new PrincipalException();
 		}
 		else if (group.isUser() &&
-				(permissionChecker.getUserId() != group.getClassPK())) {
+				 (permissionChecker.getUserId() != group.getClassPK())) {
 
 			throw new PrincipalException();
 		}

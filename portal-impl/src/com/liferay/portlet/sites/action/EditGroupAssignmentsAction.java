@@ -97,7 +97,7 @@ public class EditGroupAssignmentsAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
+					 e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

@@ -166,7 +166,7 @@ public class UpdatePasswordAction extends Action {
 			WebKeys.SETUP_WIZARD_PASSWORD_UPDATED);
 
 		if ((setupWizardPasswordUpdated != null) &&
-			 setupWizardPasswordUpdated) {
+			setupWizardPasswordUpdated) {
 
 			return false;
 		}

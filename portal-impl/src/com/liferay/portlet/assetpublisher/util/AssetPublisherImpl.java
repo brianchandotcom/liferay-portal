@@ -765,7 +765,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			key = SCOPE_ID_LAYOUT_UUID_PREFIX + layout.getUuid();
 		}
 		else if (group.isLayoutPrototype() ||
-				(group.getGroupId() == scopeGroupId)) {
+				 (group.getGroupId() == scopeGroupId)) {
 
 			key = SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
 		}

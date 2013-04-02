@@ -941,8 +941,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Indexer
 
 		if (((status == WorkflowConstants.STATUS_APPROVED) ||
-			(status == WorkflowConstants.STATUS_IN_TRASH) ||
-			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
+			 (status == WorkflowConstants.STATUS_IN_TRASH) ||
+			 (oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
 			((serviceContext == null) || serviceContext.isIndexingEnabled())) {
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(

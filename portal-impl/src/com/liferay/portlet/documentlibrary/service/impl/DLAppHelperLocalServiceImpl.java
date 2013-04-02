@@ -1491,7 +1491,7 @@ public class DLAppHelperLocalServiceImpl
 			DLUtil.getEmailFileEntryAddedEnabled(preferences)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-			DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) {
+				 DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;

@@ -195,7 +195,7 @@ public class DLFileEntryLocalServiceImpl
 			long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
 			if (Validator.isNotNull(classNameId) &&
-					Validator.isNotNull(classPK)) {
+				Validator.isNotNull(classPK)) {
 
 				dlFileEntry.setClassNameId(classNameId);
 				dlFileEntry.setClassPK(classPK);
@@ -1554,8 +1554,8 @@ public class DLFileEntryLocalServiceImpl
 		// Indexer
 
 		if (((status == WorkflowConstants.STATUS_APPROVED) ||
-			(status == WorkflowConstants.STATUS_IN_TRASH) ||
-			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
+			 (status == WorkflowConstants.STATUS_IN_TRASH) ||
+			 (oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
 			((serviceContext == null) || serviceContext.isIndexingEnabled())) {
 
 			reindex(dlFileEntry);

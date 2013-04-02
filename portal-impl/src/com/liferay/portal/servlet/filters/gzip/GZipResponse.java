@@ -74,8 +74,8 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 
 			if ((_servletOutputStream == null) ||
 				((_servletOutputStream != null) &&
-					(_unsyncByteArrayOutputStream != null) &&
-					(_unsyncByteArrayOutputStream.size() == 0))) {
+				 (_unsyncByteArrayOutputStream != null) &&
+				 (_unsyncByteArrayOutputStream.size() == 0))) {
 
 				// Reset the wrapped response to clear out the GZip header
 

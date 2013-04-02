@@ -173,7 +173,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</li>
 	</c:when>
 	<c:otherwise>
-		<span class="<%= cssClass %>" >
+		<span class="<%= cssClass %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">

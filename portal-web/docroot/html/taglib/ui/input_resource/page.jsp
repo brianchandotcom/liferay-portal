@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-resource:cssClass");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:id"));
 String title = (String)request.getAttribute("liferay-ui:input-resource:title");
 String url = (String)request.getAttribute("liferay-ui:input-resource:url");

@@ -20,7 +20,7 @@
 <%@ page import="com.liferay.portlet.calendar.model.CalEvent" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-repeat:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-repeat:cssClass");
 
 CalEvent event = (CalEvent)request.getAttribute("liferay-ui:input-repeat:event");
 

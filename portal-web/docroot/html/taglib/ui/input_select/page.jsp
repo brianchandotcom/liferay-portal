@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-select:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-select:cssClass");
 String formName = namespace + request.getAttribute("liferay-ui:input-select:formName");
 String param = (String)request.getAttribute("liferay-ui:input-select:param");
 Boolean defaultValue = (Boolean)request.getAttribute("liferay-ui:input-select:defaultValue");

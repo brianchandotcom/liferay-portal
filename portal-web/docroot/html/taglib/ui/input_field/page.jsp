@@ -18,7 +18,7 @@
 
 <%
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
+String cssClass = (String)request.getAttribute("liferay-ui:input-field:cssClass");
 String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
 String languageId = (String)request.getAttribute("liferay-ui:input-field:languageId");

@@ -15,8 +15,6 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 
@@ -35,11 +33,6 @@ public class DummyOrganizationMembershipPolicy
 	public void checkMembership(
 		long[] userIds, long[] addOrganizationIds,
 		long[] removeOrganizationIds) {
-	}
-
-	public void checkRoles(
-		List<UserGroupRole> addUserGroupRoles,
-		List<UserGroupRole> removeUserGroupRoles) {
 	}
 
 	@Override
@@ -67,11 +60,6 @@ public class DummyOrganizationMembershipPolicy
 		long[] removeOrganizationIds) {
 	}
 
-	public void propagateRoles(
-		List<UserGroupRole> addUserGroupRoles,
-		List<UserGroupRole> removeUserGroupRoles) {
-	}
-
 	@Override
 	public void verifyPolicy(Organization organization) {
 	}
@@ -79,14 +67,6 @@ public class DummyOrganizationMembershipPolicy
 	public void verifyPolicy(
 		Organization organization, Organization oldOrganization,
 		List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
-		Map<String, Serializable> oldExpandoAttributes) {
-	}
-
-	public void verifyPolicy(Role role) {
-	}
-
-	public void verifyPolicy(
-		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {
 	}
 

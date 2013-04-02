@@ -83,7 +83,22 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
+		<c:choose>
+			<c:when test='<%= tabs1.equals("summary") || tabs2.equals("current") || !group.isLimitedToParentSiteMembers() %>'>
+				<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				results = UserLocalServiceUtil.getGroupUsers(group.getParentGroupId(), searchContainer.getStart(), searchContainer.getEnd());
+				total = UserLocalServiceUtil.getGroupUsersCount(group.getParentGroupId());
+
+				pageContext.setAttribute("results", results);
+				pageContext.setAttribute("total", total);
+				%>
+
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row

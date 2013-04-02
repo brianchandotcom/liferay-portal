@@ -744,6 +744,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isLayoutSetPrototype();
 	}
 
+	public boolean isLimitedToParentSiteMembers() {
+		return _group.isLimitedToParentSiteMembers();
+	}
+
 	public boolean isOrganization() {
 		return _group.isOrganization();
 	}

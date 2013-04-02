@@ -41,6 +41,11 @@ public class GroupConstants {
 		CONTROL_PANEL, GUEST, GroupConstants.USER_PERSONAL_SITE
 	};
 
+	public static final int TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS = 5;
+
+	public static final String TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS_LABEL =
+		"limited-to-parent-site-members";
+
 	public static final int TYPE_SITE_OPEN = 1;
 
 	public static final String TYPE_SITE_OPEN_LABEL = "open";
@@ -63,7 +68,10 @@ public class GroupConstants {
 		"/personal_site";
 
 	public static String getTypeLabel(int type) {
-		if (type == TYPE_SITE_OPEN) {
+		if (type == TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS) {
+			return TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS_LABEL;
+		}
+		else if (type == TYPE_SITE_OPEN) {
 			return TYPE_SITE_OPEN_LABEL;
 		}
 		else if (type == TYPE_SITE_PRIVATE) {

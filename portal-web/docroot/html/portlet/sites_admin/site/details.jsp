@@ -73,6 +73,7 @@ if (showPrototypes && (group != null)) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= GroupParentException.class %>" message="the-site-cannot-be-its-own-parent-site" />
 
 <liferay-ui:error exception="<%= RequiredGroupException.class %>">
 
@@ -475,7 +476,7 @@ if (parentGroup != null) {
 	}
 
 	function <portlet:namespace />openGroupSelector() {
-		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /></portlet:renderURL>';
+		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /><portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' /></portlet:renderURL>';
 
 		var groupWindow = window.open(url, 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
 

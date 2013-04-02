@@ -2540,6 +2540,7 @@
 		<exception>ExpiredLock</exception>
 		<exception>GroupFriendlyURL</exception>
 		<exception>GroupName</exception>
+		<exception>GroupParent</exception>
 		<exception>ImageType</exception>
 		<exception>InvalidLock</exception>
 		<exception>InvalidRepository</exception>

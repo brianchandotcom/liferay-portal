@@ -22,6 +22,7 @@ boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
 String callback = ParamUtil.getString(request, "callback", "selectGroup");
 String target = ParamUtil.getString(request, "target");
+long groupId = ParamUtil.getLong(request, "groupId");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -86,6 +87,14 @@ if (selUser != null) {
 			}
 
 			groupParams.put("site", Boolean.TRUE);
+
+			if (groupId > 0) {
+				List<Long> excludedGroupIds = new ArrayList<Long>();
+
+				excludedGroupIds.add(groupId);
+
+				groupParams.put("excludedGroupIds", excludedGroupIds);
+			}
 
 			int start = searchContainer.getStart();
 

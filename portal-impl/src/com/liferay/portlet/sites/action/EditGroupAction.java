@@ -17,6 +17,7 @@ package com.liferay.portlet.sites.action;
 import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.GroupNameException;
+import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchGroupException;
@@ -158,6 +159,7 @@ public class EditGroupAction extends PortletAction {
 					 e instanceof DuplicateGroupException ||
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof GroupNameException ||
+					 e instanceof GroupParentException ||
 					 e instanceof LayoutSetVirtualHostException ||
 					 e instanceof LocaleException ||
 					 e instanceof RemoteExportException ||

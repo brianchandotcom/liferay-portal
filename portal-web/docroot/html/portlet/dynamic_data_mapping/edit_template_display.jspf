@@ -176,9 +176,9 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 </liferay-ui:panel-container>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,event-mouseenter,transition">
+	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
-	var ACPlugin = A.Plugin.AceAutoComplete;
 
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 

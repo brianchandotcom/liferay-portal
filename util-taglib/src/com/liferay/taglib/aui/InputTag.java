@@ -197,7 +197,7 @@ public class InputTag extends BaseInputTag {
 				id = fieldParam;
 			}
 			else if (!Validator.equals(type, "assetTags") &&
-				!Validator.equals(type, "radio")) {
+					 !Validator.equals(type, "radio")) {
 
 				id = name;
 			}

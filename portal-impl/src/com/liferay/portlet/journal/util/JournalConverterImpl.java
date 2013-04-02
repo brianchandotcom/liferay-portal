@@ -267,7 +267,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			if (fieldDisplayName.equals(fieldName) &&
-					(offset == parentOffset)) {
+				(offset == parentOffset)) {
 
 				repetitions++;
 			}

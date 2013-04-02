@@ -293,8 +293,9 @@ public abstract class BaseSocialActivityInterpreter
 
 		long classPK = getClassPK(activity);
 
-		if ((trashHandler != null) && (trashHandler.isInTrash(classPK) ||
-			trashHandler.isInTrashContainer(classPK))) {
+		if ((trashHandler != null) &&
+			(trashHandler.isInTrash(classPK) ||
+			 trashHandler.isInTrashContainer(classPK))) {
 
 			PortletURL portletURL = TrashUtil.getViewContentURL(
 				serviceContext.getRequest(), getClassName(activity), classPK);

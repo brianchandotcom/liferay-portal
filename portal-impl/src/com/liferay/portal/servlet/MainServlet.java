@@ -1202,7 +1202,7 @@ public class MainServlet extends ActionServlet {
 				plid = group.getDefaultPublicPlid();
 
 				if ((plid == LayoutConstants.DEFAULT_PLID) ||
-					 group.isStagingGroup()) {
+					group.isStagingGroup()) {
 
 					Group guestGroup = GroupLocalServiceUtil.getGroup(
 						layout.getCompanyId(), GroupConstants.GUEST);

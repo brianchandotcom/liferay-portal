@@ -297,8 +297,8 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 						}
 					}
 					else if (map.containsKey("image_id") ||
-						map.containsKey("img_id") ||
-						map.containsKey("i_id")) {
+							 map.containsKey("img_id") ||
+							 map.containsKey("i_id")) {
 
 						long imageId = MapUtil.getLong(map, "image_id");
 

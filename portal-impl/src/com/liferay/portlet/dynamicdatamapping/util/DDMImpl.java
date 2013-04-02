@@ -483,7 +483,7 @@ public class DDMImpl implements DDM {
 		List<String> fieldNames = new ArrayList<String>();
 
 		if ((fieldsDisplayValues.length == 0) ||
-			 privateFieldNames.contains(fieldName)) {
+			privateFieldNames.contains(fieldName)) {
 
 			fieldNames.add(fieldNamespace + fieldName);
 		}

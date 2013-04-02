@@ -224,7 +224,7 @@ public class SocialActivityLocalServiceImpl
 
 		if (((activityDefinition == null) && (activity.getType() < 10000)) ||
 			((activityDefinition != null) &&
-				activityDefinition.isLogActivity())) {
+			 activityDefinition.isLogActivity())) {
 
 			long activityId = counterLocalService.increment(
 				SocialActivity.class.getName());

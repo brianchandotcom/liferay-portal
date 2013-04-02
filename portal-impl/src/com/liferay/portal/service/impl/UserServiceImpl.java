@@ -2160,11 +2160,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 					(!GroupPermissionUtil.contains(
 						permissionChecker, group.getGroupId(),
 						ActionKeys.ASSIGN_MEMBERS) ||
-					SiteMembershipPolicyUtil.isMembershipProtected(
-						permissionChecker, user.getUserId(),
-						group.getGroupId()) ||
-					SiteMembershipPolicyUtil.isMembershipRequired(
-						userId, group.getGroupId()))) {
+					 SiteMembershipPolicyUtil.isMembershipProtected(
+						 permissionChecker, user.getUserId(),
+						 group.getGroupId()) ||
+					 SiteMembershipPolicyUtil.isMembershipRequired(
+						 userId, group.getGroupId()))) {
 
 					groupIds = ArrayUtil.append(groupIds, group.getGroupId());
 				}
@@ -2426,11 +2426,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 						(!UserGroupRolePermissionUtil.contains(
 							permissionChecker, oldUserGroupRole.getGroupId(),
 							oldUserGroupRole.getRoleId()) ||
-						SiteMembershipPolicyUtil.isRoleProtected(
-							getPermissionChecker(), userId, group.getGroupId(),
-							role.getRoleId()) ||
-						SiteMembershipPolicyUtil.isRoleRequired(
-							userId, group.getGroupId(), role.getRoleId()))) {
+						 SiteMembershipPolicyUtil.isRoleProtected(
+							 getPermissionChecker(), userId, group.getGroupId(),
+							 role.getRoleId()) ||
+						 SiteMembershipPolicyUtil.isRoleRequired(
+							 userId, group.getGroupId(), role.getRoleId()))) {
 
 						userGroupRoles.add(oldUserGroupRole);
 					}

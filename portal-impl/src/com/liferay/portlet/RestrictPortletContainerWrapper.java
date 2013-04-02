@@ -41,7 +41,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		PortletContainer portletContainer) {
 
 		if ((PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE &&
-				ServerDetector.isTomcat()) ||
+			 ServerDetector.isTomcat()) ||
 			PropsValues.PORTLET_CONTAINER_RESTRICT) {
 
 			portletContainer = new RestrictPortletContainerWrapper(

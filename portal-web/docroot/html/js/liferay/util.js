@@ -724,7 +724,7 @@
 			var form = event.form;
 			var hasErrors = false;
 
-			var validator = A.Widget.getByNode(form);
+			var validator = Liferay.Form.get(form.get('id')).formValidator;
 
 			if (A.instanceOf(validator, A.FormValidator)) {
 				validator.validate();

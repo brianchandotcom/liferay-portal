@@ -98,7 +98,7 @@ else if (yearNullable) {
 }
 %>
 
-<div class="aui-datepicker aui-datepicker-display aui-helper-clearfix <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" id="<%= randomNamespace %>displayDate">
+<div class="aui-datepicker aui-datepicker-display aui-helper-clearfix <%= cssClass %>" id="<%= randomNamespace %>displayDate">
 	<div class="aui-datepicker-content" id="<%= randomNamespace %>displayDateContent">
 		<div class="aui-datepicker-select-wrapper">
 			<c:choose>

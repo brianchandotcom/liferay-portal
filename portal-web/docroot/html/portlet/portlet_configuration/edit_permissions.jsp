@@ -184,6 +184,24 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 				actions.remove(ActionKeys.VIEW_STAGING);
 			}
 		}
+		else if (modelResource.equals(Role.class.getName())) {
+			long modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
+
+			Role modelResourceRole = RoleLocalServiceUtil.getRole(modelResourceRoleId);
+
+			String name = modelResourceRole.getName();
+
+			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
+				actions = new ArrayList<String>(actions);
+
+				actions.remove(ActionKeys.ASSIGN_MEMBERS);
+				actions.remove(ActionKeys.DEFINE_PERMISSIONS);
+				actions.remove(ActionKeys.DELETE);
+				actions.remove(ActionKeys.PERMISSIONS);
+				actions.remove(ActionKeys.UPDATE);
+				actions.remove(ActionKeys.VIEW);
+			}
+		}
 
 		List<Role> roles = ResourceActionsUtil.getRoles(company.getCompanyId(), group, modelResource, roleTypes);
 

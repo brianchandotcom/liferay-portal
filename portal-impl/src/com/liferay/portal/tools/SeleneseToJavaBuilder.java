@@ -890,7 +890,8 @@ public class SeleneseToJavaBuilder {
 					 param1.equals("makeVisible") ||
 					 param1.equals("mouseDown") || param1.equals("mouseMove") ||
 					 param1.equals("mouseOver") || param1.equals("mouseUp") ||
-					 param1.equals("open") || param1.equals("selectFrame") ||
+					 param1.equals("open") || param1.equals("runScript") ||
+					 param1.equals("selectFrame") ||
 					 param1.equals("selectPopUp") ||
 					 param1.equals("selectWindow") ||
 					 param1.equals("setTimeout") ||

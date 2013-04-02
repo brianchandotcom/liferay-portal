@@ -6,9 +6,7 @@ ${sampleSQLBuilder.insertUser(null, null, dataFactory.defaultUser)}
 
 <#assign user = dataFactory.guestUser>
 
-<#assign userGroup = dataFactory.newGroup(user)>
-
-${sampleSQLBuilder.insertGroup(userGroup, 0)}
+<@insertGroup _group = dataFactory.newGroup(user) _publicPageCount = 0 />
 
 <#assign groupIds = [dataFactory.guestGroup.groupId]>
 <#assign roleIds = [dataFactory.administratorRole.roleId]>
@@ -25,9 +23,9 @@ ${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
 
 <#assign layout = dataFactory.newLayout(userGroup.groupId, "home", "", "33,")>
 
-${sampleSQLBuilder.insertLayout(layout)}
+<@insertLayout _layout = layout />
 
-${sampleSQLBuilder.insertGroup(userGroup, 1)}
+<@insertGroup _group = userGroup _publicPageCount = 1 />
 
 <#assign groupIds = 1..maxGroupCount>
 <#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>

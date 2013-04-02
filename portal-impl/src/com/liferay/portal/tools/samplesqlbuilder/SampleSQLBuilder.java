@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -216,63 +213,6 @@ public class SampleSQLBuilder {
 		put(context, "dlFileEntry", dlFileEntry);
 
 		processTemplate(_tplDLFileEntry, context);
-	}
-
-	public void insertDLFolders(
-			long groupId, long parentDLFolderId, int dlFolderDepth,
-			long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddmStructureId", ddmStructureId);
-		put(context, "dlFolderDepth", dlFolderDepth);
-		put(context, "groupId", groupId);
-		put(context, "parentDLFolderId", parentDLFolderId);
-
-		processTemplate(_tplDLFolders, context);
-	}
-
-	public void insertGroup(Group group, int publicPageCount) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "group", group);
-		put(context, "publicPageCount", publicPageCount);
-
-		processTemplate(_tplGroup, context);
-	}
-
-	public void insertLayout(Layout layout) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "layout", layout);
-
-		processTemplate(_tplLayout, context);
-	}
-
-	public void insertMBDiscussion(
-			long groupId, long classNameId, long classPK, long mbThreadId,
-			long mbRootMessageId, int maxCommentCount)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "groupId", groupId);
-		put(context, "classNameId", classNameId);
-		put(context, "classPK", classPK);
-		put(context, "mbThreadId", mbThreadId);
-		put(context, "mbRootMessageId", mbRootMessageId);
-		put(context, "maxCommentCount", maxCommentCount);
-
-		processTemplate(_tplMBDiscussion, context);
-	}
-
-	public void insertMBMessage(MBMessage mbMessage) throws Exception {
-		Map<String, Object> context = getContext();
-
-		put(context, "mbMessage", mbMessage);
-
-		processTemplate(_tplMBMessage, context);
 	}
 
 	public void insertResourcePermission(String name, String primKey)
@@ -623,11 +563,6 @@ public class SampleSQLBuilder {
 	private File _tempDir;
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplDLFolders = _TPL_ROOT + "dl_folders.ftl";
-	private String _tplGroup = _TPL_ROOT + "group.ftl";
-	private String _tplLayout = _TPL_ROOT + "layout.ftl";
-	private String _tplMBDiscussion = _TPL_ROOT + "mb_discussion.ftl";
-	private String _tplMBMessage = _TPL_ROOT + "mb_message.ftl";;
 	private String _tplResourcePermission =
 		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";

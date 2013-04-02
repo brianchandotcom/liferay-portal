@@ -17,13 +17,13 @@
 
 	${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.JournalArticle", stringUtil.valueOf(journalArticleResource.resourcePrimKey))}
 
-	${sampleSQLBuilder.insertMBDiscussion(groupId, dataFactory.journalArticleClassNameId, journalArticleResource.resourcePrimKey, counter.get(), counter.get(), 0)}
+	<@insertMBDiscussion _classNameId = dataFactory.journalArticleClassNameId _classPK = journalArticleResource.resourcePrimKey _groupId = groupId _maxCommentCount = 0 _mbRootMessageId = counter.get() _mbThreadId = counter.get() />
 
 	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", "56,")>
 
 	${writerLayoutCSV.write(layout.friendlyURL + "\n")}
 
-	${sampleSQLBuilder.insertLayout(layout)}
+	<@insertLayout _layout = layout />
 
 	<@insertPortletPreferences _entry = journalArticleResource _plid = layout.plid />
 

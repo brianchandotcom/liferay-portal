@@ -27,8 +27,10 @@ public class AssertSelectedLabelTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AssertSelectedLabel1Test.class);
 		testSuite.addTestSuite(AssertSelectedLabel2Test.class);
+		testSuite.addTestSuite(AssertSelectedLabel3Test.class);
 		testSuite.addTestSuite(AssertNotSelectedLabel1Test.class);
 		testSuite.addTestSuite(AssertNotSelectedLabel2Test.class);
+		testSuite.addTestSuite(AssertNotSelectedLabel3Test.class);
 
 		return testSuite;
 	}

@@ -151,9 +151,7 @@ portletURL.setParameter("tabs1", tabs1);
 			>
 
 				<%
-				Date modifiedDate = structure.getModifiedDate();
-
-				buffer.append(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)));
+				buffer.append(dateFormatDateTime.format(structure.getModifiedDate()));
 				%>
 
 			</liferay-ui:search-container-column-text>

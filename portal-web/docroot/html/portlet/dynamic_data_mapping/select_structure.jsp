@@ -76,14 +76,8 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 			<liferay-ui:search-container-column-text
 				name="modified-date"
-			>
-
-				<%
-				Date modifiedDate = structure.getModifiedDate();
-				%>
-
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
-			</liferay-ui:search-container-column-text>
+				value="<%= dateFormatDateTime.format(structure.getModifiedDate()) %>"
+			/>
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= structure.getStructureId() != classPK %>">

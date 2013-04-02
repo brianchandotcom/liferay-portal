@@ -185,18 +185,20 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		groupLocalService.addRoleGroups(roleId, groupIds);
 	}
 
-	public void checkRemoteStaging(long groupId)
+	public void checkRemoteStagingGroup(long groupId)
 		throws PortalException, SystemException {
 
 		Group group = getGroup(groupId);
 
-		if (group.getCompanyId() != getPermissionChecker().getCompanyId()) {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (group.getCompanyId() != permissionChecker.getCompanyId()) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("No Group exists with the key {groupId=");
 			sb.append(groupId);
 			sb.append("} in the Company {companyId=");
-			sb.append(getPermissionChecker().getCompanyId());
+			sb.append(permissionChecker.getCompanyId());
 			sb.append("}");
 
 			throw new NoSuchGroupException(sb.toString());

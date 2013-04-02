@@ -78,6 +78,38 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionDefaultElement1001() throws Exception {
+		test(
+			"ActionDefaultElement1001.action",
+			"Error 1001: Missing (execute) child element in " + _DIR_NAME +
+				 "/ActionDefaultElement1001.action:3");
+	}
+
+	@Test
+	public void testActionDefaultElement1002() throws Exception {
+		test(
+			"ActionDefaultElement1002.action",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				 "/ActionDefaultElement1002.action:4");
+	}
+
+	@Test
+	public void testActionDefaultElement1005() throws Exception {
+		test(
+			"ActionDefaultElement1005.action",
+			"Error 1005: Invalid locator1 attribute in " + _DIR_NAME +
+				 "/ActionDefaultElement1005.action:3");
+	}
+
+	@Test
+	public void testActionDefaultElement2000() throws Exception {
+		test(
+			"ActionDefaultElement2000.action",
+			"Error 2000: Too many child elements in the default element in " +
+				 _DIR_NAME + "/ActionDefaultElement2000.action:5");
+	}
+
+	@Test
 	public void testActionDefinitionElement1000() throws Exception {
 		test(
 			"ActionDefinitionElement1000.action",

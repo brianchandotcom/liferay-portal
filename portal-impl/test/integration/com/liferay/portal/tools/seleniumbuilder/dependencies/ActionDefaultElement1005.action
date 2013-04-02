@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<default locator1="locator1">
+			<execute function="Function#function" />
+		</default>
+	</command>
+</definition>

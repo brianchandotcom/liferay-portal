@@ -1,7 +1,7 @@
 <definition>
 	<command name="click">
 		<case locator-key1="MOVE_RECYCLE_BIN">
-			<execute function="Click#valueClickAtAndWait" value="Move to the Recycle Bin" />
+			<execute function="Click#valueClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 	</command>
 

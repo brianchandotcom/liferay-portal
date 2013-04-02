@@ -325,6 +325,11 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid " + string + " attribute value in " + suffix);
 		}
+		else if (errorCode == 2000) {
+			throw new IllegalArgumentException(
+				prefix + "Too many child elements in the " + string +
+					" element in " + suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}
@@ -359,6 +364,84 @@ public class SeleniumBuilderFileUtil {
 			throwValidationException(
 				1001, fileName, commandElement,
 				new String[] {"case", "default"});
+		}
+
+		for (Element element : elements) {
+			List<Element> childElements = element.elements();
+
+			String elementName = element.getName();
+
+			if (childElements.size() > 1) {
+				throwValidationException(
+					2000, fileName, childElements.get(1), elementName);
+			}
+
+			if (elementName.equals("case")) {
+				List<Attribute> attributes = element.attributes();
+
+				if (attributes.size() == 1) {
+					throwValidationException(
+						1003, fileName, element,
+						new String[] {"locator1", "locator-key1"});
+				}
+
+				for (Attribute attribute : attributes) {
+					String attributeName = attribute.getName();
+
+					if (attributeName.equals("comparator")) {
+						String attributeValue = attribute.getValue();
+
+						if (!attributeValue.equals("contains") &&
+							!attributeValue.equals("endsWith") &&
+							!attributeValue.equals("equals") &&
+							!attributeValue.equals("startsWith")) {
+
+							throwValidationException(
+								1006, fileName, element, attributeValue);
+						}
+
+					}
+
+					if (!attributeName.equals("comparator") &&
+						!attributeName.equals("line-number") &&
+						!attributeName.startsWith("locator") &&
+						!attributeName.startsWith("locator-key")) {
+
+						throwValidationException(
+							1005, fileName, element, attributeName);
+					}
+
+					if (attributeName.equals("locator") ||
+						attributeName.equals("locator-key")) {
+
+						throwValidationException(
+							1005, fileName, element, attributeName);
+					}
+				}
+
+				validateBlockElement(
+					fileName, element, new String[] {"execute"},
+					new String[] {"function"}, new String[0]);
+			}
+			else if (elementName.equals("default")) {
+				List<Attribute> attributes = element.attributes();
+
+				if (attributes.size() != 1) {
+					Attribute attribute = attributes.get(1);
+
+					String attributeName = attribute.getName();
+
+					throwValidationException(
+						1005, fileName, element, attributeName);
+				}
+
+				validateBlockElement(
+					fileName, element, new String[] {"execute"},
+					new String[] {"function"}, new String[0]);
+			}
+			else {
+				throwValidationException(1002, fileName, element, elementName);
+			}
 		}
 	}
 

@@ -547,15 +547,31 @@ public class SeleniumBuilderTest {
 	}
 
 	protected void test(String fileName) throws Exception {
-		test(fileName, null);
+		test(fileName, null, false);
 	}
 
-	protected void test(String fileName, String errorMessage) throws Exception {
+	protected void test(String fileName, String expectedErrorMessage)
+		throws Exception {
+
+		test(fileName, expectedErrorMessage, true);
+	}
+
+	protected void test(
+		String fileName, String expectedErrorMessage, boolean expectException)
+			throws Exception {
+
+		String actualErrorMessage = null;
+
 		try {
 			_seleniumBuilderFileUtil.getRootElement(_DIR_NAME + "/" + fileName);
 		}
 		catch (IllegalArgumentException e) {
-			Assert.assertEquals(errorMessage, e.getMessage());
+			actualErrorMessage = e.getMessage();
+		}
+		finally {
+			if (expectException) {
+				Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+			}
 		}
 	}
 

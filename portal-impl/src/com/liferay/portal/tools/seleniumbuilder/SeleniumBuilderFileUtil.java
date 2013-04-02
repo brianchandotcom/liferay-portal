@@ -395,10 +395,16 @@ public class SeleniumBuilderFileUtil {
 							throwValidationException(
 								1006, fileName, element, attributeName);
 						}
-
 					}
 					else if (attributeName.startsWith("locator") ||
 							 attributeName.startsWith("locator-key")) {
+
+						String attributeValue = attribute.getValue();
+
+						if (Validator.isNull(attributeValue)) {
+							throwValidationException(
+								1006, fileName, element, attributeName);
+						}
 
 						hasNeededAttributeName = true;
 					}
@@ -630,7 +636,7 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 		else if (selenium != null) {
-			if (Validator.isNull(selenium) &&
+			if (Validator.isNull(selenium) ||
 				!selenium.matches(allowedExecuteAttributeValuesRegex)) {
 
 				throwValidationException(

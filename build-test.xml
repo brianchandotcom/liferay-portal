@@ -428,6 +428,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="control-panel-custom-fields" />
+			<param name="test.ant.script.suite" value="ControlPanelCustomFieldsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="control-panel-dynamic-data-lists" />
 			<param name="test.ant.script.suite" value="ControlPanelDynamicDataListsTestSuite" />
 		</antcall>

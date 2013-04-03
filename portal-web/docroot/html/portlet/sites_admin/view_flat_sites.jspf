@@ -78,7 +78,7 @@
 		</liferay-portlet:renderURL>
 
 		<%
-		if (!GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.UPDATE)) {
+		if (!GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
 			rowURL = null;
 		}
 		%>

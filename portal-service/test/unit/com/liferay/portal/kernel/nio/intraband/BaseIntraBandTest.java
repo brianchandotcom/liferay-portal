@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Time;
 import java.io.IOException;
 
 import java.nio.ByteBuffer;
+import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe.SinkChannel;
 import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.Pipe;
@@ -30,6 +31,7 @@ import java.nio.charset.Charset;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Callable;
@@ -778,6 +780,188 @@ public class BaseIntraBandTest {
 		sinkChannel.close();
 	}
 
+	@Test
+	public void testHandleWriting() throws Exception {
+
+		// IOException, new send datagram, debug log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.FINE);
+
+		ChannelContext channelContext = new ChannelContext(
+			new LinkedList<Datagram>());
+
+		MockRegistrationReference mockRegistrationReference =
+			new MockRegistrationReference(_mockIntraBand);
+
+		channelContext.setRegistrationReference(mockRegistrationReference);
+
+		channelContext.setWritingDatagram(
+			Datagram.createRequestDatagram(_type, _data));
+
+		Assert.assertFalse(
+			_mockIntraBand.handleWriting(
+				new MockGatheringByteChannel(), channelContext));
+		Assert.assertFalse(mockRegistrationReference.isValid());
+		Assert.assertEquals(1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		assertMessageStartWith(logRecord, "Broken write channel, unregister ");
+
+		Assert.assertTrue(logRecord.getThrown() instanceof IOException);
+
+		// IOException, new send datagram, info log
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.INFO);
+
+		channelContext = new ChannelContext(new LinkedList<Datagram>());
+
+		mockRegistrationReference = new MockRegistrationReference(
+			_mockIntraBand);
+
+		channelContext.setRegistrationReference(mockRegistrationReference);
+
+		channelContext.setWritingDatagram(
+			Datagram.createRequestDatagram(_type, _data));
+
+		Assert.assertFalse(
+			_mockIntraBand.handleWriting(
+				new MockGatheringByteChannel(), channelContext));
+		Assert.assertFalse(mockRegistrationReference.isValid());
+		Assert.assertEquals(1, logRecords.size());
+
+		logRecord = logRecords.get(0);
+
+		assertMessageStartWith(logRecord, "Broken write channel, unregister ");
+
+		Assert.assertNull(logRecord.getThrown());
+
+		// IOException, exist send datagram, with CompletionHandler, without log
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.OFF);
+
+		channelContext = new ChannelContext(null);
+
+		mockRegistrationReference = new MockRegistrationReference(
+			_mockIntraBand);
+
+		channelContext.setRegistrationReference(mockRegistrationReference);
+
+		Datagram requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		RecordCompletionHandler<Object> recordCompletionHandler =
+			new RecordCompletionHandler<Object>();
+
+		requestDatagram.completionHandler = recordCompletionHandler;
+
+		channelContext.setWritingDatagram(requestDatagram);
+
+		Assert.assertFalse(
+			_mockIntraBand.handleWriting(
+				new MockGatheringByteChannel(), channelContext));
+		Assert.assertFalse(mockRegistrationReference.isValid());
+
+		recordCompletionHandler.waitUntilFailed();
+
+		Assert.assertNotNull(recordCompletionHandler.getIOException());
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Huge datagram write
+
+		Pipe pipe = Pipe.open();
+
+		SourceChannel sourceChannel = pipe.source();
+		SinkChannel sinkChannel = pipe.sink();
+
+		sourceChannel.configureBlocking(false);
+		sinkChannel.configureBlocking(false);
+
+		int bufferSize = 1024 * 1024 * 10;
+
+		ByteBuffer sendByteBuffer = ByteBuffer.allocate(bufferSize);
+		ByteBuffer receiveByteBuffer = ByteBuffer.allocate(bufferSize + 14);
+
+		channelContext = new ChannelContext(new LinkedList<Datagram>());
+
+		channelContext.setWritingDatagram(
+			Datagram.createRequestDatagram(_type, sendByteBuffer));
+
+		int count = 0;
+
+		while (!_mockIntraBand.handleWriting(sinkChannel, channelContext)) {
+			count++;
+
+			sourceChannel.read(receiveByteBuffer);
+
+			Assert.assertTrue(sendByteBuffer.hasRemaining());
+		}
+
+		sourceChannel.read(receiveByteBuffer);
+
+		Assert.assertFalse(sendByteBuffer.hasRemaining());
+		Assert.assertFalse(receiveByteBuffer.hasRemaining());
+		Assert.assertTrue(count > 0);
+
+		sourceChannel.configureBlocking(true);
+		sinkChannel.configureBlocking(true);
+
+		// SUBMITTED callback
+
+		channelContext = new ChannelContext(new LinkedList<Datagram>());
+
+		requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		Object attachment = new Object();
+
+		requestDatagram.attachment = attachment;
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		requestDatagram.completionHandler = recordCompletionHandler;
+
+		requestDatagram.completionTypes = EnumSet.of(CompletionType.SUBMITTED);
+
+		channelContext.setWritingDatagram(requestDatagram);
+
+		Assert.assertTrue(
+			_mockIntraBand.handleWriting(sinkChannel, channelContext));
+
+		recordCompletionHandler.waitUntilSubmitted();
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+
+		// REPLIED callback
+
+		Queue<Datagram> sendingQueue = new LinkedList<Datagram>();
+
+		channelContext = new ChannelContext(sendingQueue);
+
+		requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		requestDatagram.completionTypes = EnumSet.of(CompletionType.REPLIED);
+
+		channelContext.setWritingDatagram(requestDatagram);
+
+		Assert.assertTrue(
+			_mockIntraBand.handleWriting(sinkChannel, channelContext));
+
+		Assert.assertNull(requestDatagram.getDataByteBuffer());
+
+		String requestDatagramString = requestDatagram.toString();
+
+		Assert.assertTrue(requestDatagramString.contains("dataChunk=null"));
+
+		sourceChannel.close();
+		sinkChannel.close();
+
+		// Satisfy code coverage
+
+		Assert.assertSame(sendingQueue, channelContext.getSendingQueue());
+	}
+
 	protected void assertMessageStartWith(
 		LogRecord logRecord, String messagePrefix) {
 
@@ -794,6 +978,33 @@ public class BaseIntraBandTest {
 	private byte[] _data = _DATA_STRING.getBytes(Charset.defaultCharset());
 	private MockIntraBand _mockIntraBand = new MockIntraBand(_DEFAULT_TIMEOUT);
 	private byte _type = 1;
+
+	private static class MockGatheringByteChannel
+		implements GatheringByteChannel {
+
+		public void close() throws IOException {
+			throw new IOException();
+		}
+
+		public boolean isOpen() {
+			return true;
+		}
+
+		public int write(ByteBuffer byteBuffer) throws IOException {
+			throw new IOException();
+		}
+
+		public long write(ByteBuffer[] byteBuffers) throws IOException {
+			throw new IOException();
+		}
+
+		public long write(ByteBuffer[] byteBuffers, int offset, int length)
+			throws IOException {
+
+			throw new IOException();
+		}
+
+	}
 
 	private static class MockScatteringByteChannel
 		implements ScatteringByteChannel {

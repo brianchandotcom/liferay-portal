@@ -18,6 +18,10 @@ import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+
+import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,15 +29,24 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Igor Spasic
  */
+@PrepareForTest(ServiceContextFactory.class)
+@RunWith(PowerMockRunner.class)
 public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@BeforeClass
@@ -41,6 +54,15 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		initPortalServices();
 
 		registerActionClass(FooService.class);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		Method method = method(
+			ServiceContextFactory.class, "getInstance",
+			HttpServletRequest.class);
+
+		stub(method).toReturn(new ServiceContext());
 	}
 
 	@Test
@@ -503,6 +525,31 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertEquals(
 			"{\"array\":[1,2,3],\"value\":\"value\"}", toJSON(invokerResult));
+	}
+
+	@Test
+	public void testServiceContext() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/srvcctx2", params);
+
+		params.put("serviceContext", "{'failOnPortalException': false}");
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		ServiceContext serviceContext =
+			(ServiceContext)invokerResult.getResult();
+
+		Assert.assertFalse(serviceContext.isFailOnPortalException());
 	}
 
 	@Test

@@ -1,0 +1,15 @@
+<definition>
+	<var name="name" value="value" />
+
+	<command name="name">
+		<var name="name" value="value" />
+
+		<execute action="action" locator1="locator1" value1="value1" />
+
+		<execute macro="macro" />
+
+		<execute macro="macro">
+			<var name="name" value="value" />
+		</execute>
+	</command>
+</definition>

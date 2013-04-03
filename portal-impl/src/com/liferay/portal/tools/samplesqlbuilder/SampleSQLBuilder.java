@@ -29,12 +29,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -189,53 +185,6 @@ public class SampleSQLBuilder {
 		FileUtil.write(
 			new File(_outputDir, "benchmarks-actual.properties"),
 			sb.toString());
-	}
-
-	public void insertDDLRecord(
-			DDLRecord ddlRecord, int ddlRecordCount, long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddlRecord", ddlRecord);
-		put(context, "ddlRecordCount", ddlRecordCount);
-		put(context, "ddmStructureId", ddmStructureId);
-
-		processTemplate(_tplDDLRecord, context);
-	}
-
-	public void insertDLFileEntry(DLFileEntry dlFileEntry, long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddmStructureId", ddmStructureId);
-		put(context, "dlFileEntry", dlFileEntry);
-
-		processTemplate(_tplDLFileEntry, context);
-	}
-
-	public void insertResourcePermission(String name, String primKey)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "resourceName", name);
-		put(context, "resourcePrimkey", primKey);
-
-		processTemplate(_tplResourcePermission, context);
-	}
-
-	public void insertUser(List<Long> groupIds, List<Role> roleIds, User user)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "groupIds", groupIds);
-		put(context, "roleIds", roleIds);
-		put(context, "user", user);
-
-		processTemplate(_tplUser, context);
 	}
 
 	protected void compressInsertSQL(String insertSQL) throws IOException {
@@ -404,7 +353,6 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
-		put(context, "sampleSQLBuilder", this);
 		put(context, "stringUtil", StringUtil_IW.getInstance());
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
@@ -561,12 +509,7 @@ public class SampleSQLBuilder {
 	private String _outputDir;
 	private boolean _outputMerge;
 	private File _tempDir;
-	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
-	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplResourcePermission =
-		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
-	private String _tplUser = _TPL_ROOT + "user.ftl";
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;

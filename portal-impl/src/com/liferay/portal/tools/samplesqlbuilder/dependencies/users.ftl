@@ -13,6 +13,6 @@
 
 		<@insertGroup _group = userGroup _publicPageCount = 1 />
 
-		${sampleSQLBuilder.insertUser(groupIds, roleIds, user)}
+		<@insertUser _user = user _groupIds = groupIds _roleIds = roleIds />
 	</#list>
 </#if>

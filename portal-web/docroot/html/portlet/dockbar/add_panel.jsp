@@ -210,7 +210,7 @@
 									request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 								%>
 
-								<liferay-util:include page="/html/portlet/layout_configuration/view_category.jsp" />
+								<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
 
 								<%
 									portletCategoryIndex++;

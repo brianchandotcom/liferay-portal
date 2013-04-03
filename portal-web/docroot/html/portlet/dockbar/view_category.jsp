@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_configuration/init.jsp" %>
+<%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <%
 PortletCategory portletCategory = (PortletCategory)request.getAttribute(WebKeys.PORTLET_CATEGORY);
@@ -90,7 +90,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
 			%>
 
-				<liferay-util:include page="/html/portlet/layout_configuration/view_category.jsp" />
+				<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
 
 			<%
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);

@@ -1891,7 +1891,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="properties-blogs-entry-increment-view-counter" />
-			<param name="test.ant.script.properties" value="asset.entry.increment.view.counter.enabled=false" />
+			<param name="test.ant.script.properties" value="buffered.increment.enabled[AssetEntry]=false" />
 			<param name="test.ant.script.suite" value="PropertiesBlogsEntryIncrementViewCounterTestSuite" />
 		</antcall>
 

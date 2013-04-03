@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -206,6 +207,58 @@ public class BaseIntraBandTest {
 		}
 		catch (ClosedIntraBandException cibe) {
 		}
+	}
+
+	@Test
+	public void testGenerateSequenceId() throws Exception {
+
+		// Overflow resetting
+
+		AtomicLong sequenceIdGenerator = _mockIntraBand.sequenceIdGenerator;
+
+		sequenceIdGenerator.set(Long.MAX_VALUE);
+
+		Assert.assertEquals(1, _mockIntraBand.generateSequenceId());
+		Assert.assertEquals(2, _mockIntraBand.generateSequenceId());
+
+		// Concurrent resetting
+
+		List<Callable<Long>> getSequenceIdCallables =
+			new ArrayList<Callable<Long>>(2);
+
+		Callable<Long> getSequenceIdCallable = new Callable<Long>() {
+
+			public Long call() {
+				return _mockIntraBand.generateSequenceId();
+			}
+
+		};
+
+		getSequenceIdCallables.add(getSequenceIdCallable);
+		getSequenceIdCallables.add(getSequenceIdCallable);
+
+		int testCount = 10240;
+
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+		for (int i = 0; i < testCount; i++) {
+			sequenceIdGenerator.set(Long.MAX_VALUE);
+
+			List<Future<Long>> getSequenceIdFutures = executorService.invokeAll(
+				getSequenceIdCallables);
+
+			Future<Long> sequenceIdFuture1 = getSequenceIdFutures.get(0);
+			Future<Long> sequenceIdFuture2 = getSequenceIdFutures.get(1);
+
+			long sequenceId1 = sequenceIdFuture1.get();
+			long sequenceId2 = sequenceIdFuture2.get();
+
+			Assert.assertTrue(
+				((sequenceId1 == 1) && (sequenceId2 == 2)) ||
+				((sequenceId1 == 2) && (sequenceId2 == 1)));
+		}
+
+		executorService.shutdownNow();
 	}
 
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;

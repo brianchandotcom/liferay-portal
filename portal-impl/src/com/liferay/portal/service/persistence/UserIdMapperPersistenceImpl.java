@@ -811,6 +811,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "userIdMapper.type IS NULL";
 	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "userIdMapper.type = ?";
 	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = '')";
+	private static final String _FINDER_COLUMN_U_T_TYPE_1_SQL = "userIdMapper.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE_2_SQL = "userIdMapper.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE_3_SQL = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_T_E = new FinderPath(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 			UserIdMapperModelImpl.FINDER_CACHE_ENABLED, UserIdMapperImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
@@ -1099,6 +1102,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _FINDER_COLUMN_T_E_TYPE_1 = "userIdMapper.type IS NULL AND ";
 	private static final String _FINDER_COLUMN_T_E_TYPE_2 = "userIdMapper.type = ? AND ";
 	private static final String _FINDER_COLUMN_T_E_TYPE_3 = "(userIdMapper.type IS NULL OR userIdMapper.type = '') AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_1_SQL = "userIdMapper.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_2_SQL = "userIdMapper.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_T_E_TYPE_3_SQL = "(userIdMapper.type_ IS NULL OR userIdMapper.type_ = '') AND ";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_1 = "userIdMapper.externalUserId IS NULL";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_2 = "userIdMapper.externalUserId = ?";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_3 = "(userIdMapper.externalUserId IS NULL OR userIdMapper.externalUserId = '')";
@@ -1734,6 +1740,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the user ID mapper persistence.
 	 */
@@ -1766,6 +1777,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_USERIDMAPPER = "SELECT userIdMapper FROM UserIdMapper userIdMapper";
 	private static final String _SQL_SELECT_USERIDMAPPER_WHERE = "SELECT userIdMapper FROM UserIdMapper userIdMapper WHERE ";
 	private static final String _SQL_COUNT_USERIDMAPPER = "SELECT COUNT(userIdMapper) FROM UserIdMapper userIdMapper";

@@ -188,7 +188,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			sb.append("companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, repositoryId, mountPoint, ");
 			sb.append("parentFolderId, name, description, lastPostDate, ");
-			sb.append("defaultFileEntryTypeId, hidden, ");
+			sb.append("defaultFileEntryTypeId, hidden_, ");
 			sb.append("overrideFileEntryTypes, status, statusByUserId, ");
 			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
 			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

@@ -1258,6 +1258,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "country.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL = "country.active_ = ?";
 
 	/**
 	 * Caches the country in the entity cache if it is enabled.
@@ -1894,6 +1895,11 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the country persistence.
 	 */
@@ -1926,6 +1932,9 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"number", "idd", "active"
+		};
 	private static final String _SQL_SELECT_COUNTRY = "SELECT country FROM Country country";
 	private static final String _SQL_SELECT_COUNTRY_WHERE = "SELECT country FROM Country country WHERE ";
 	private static final String _SQL_COUNT_COUNTRY = "SELECT COUNT(country) FROM Country country";

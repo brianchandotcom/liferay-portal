@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -274,6 +277,53 @@ public class JournalArticlePersistenceTest {
 			Assert.fail("Missing entity did not throw NoSuchArticleException");
 		}
 		catch (NoSuchArticleException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("JournalArticle",
+				"uuid", true, "id", true, "resourcePrimKey", true, "groupId",
+				true, "companyId", true, "userId", true, "userName", true,
+				"createDate", true, "modifiedDate", true, "folderId", true,
+				"classNameId", true, "classPK", true, "articleId", true,
+				"version", true, "title", true, "urlTitle", true,
+				"description", true, "content", true, "type", true,
+				"structureId", true, "templateId", true, "layoutUuid", true,
+				"displayDate", true, "expirationDate", true, "reviewDate",
+				true, "indexable", true, "smallImage", true, "smallImageId",
+				true, "smallImageURL", true, "status", true, "statusByUserId",
+				true, "statusByUserName", true, "statusDate", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("JournalArticle",
+				"uuid", true, "id", true, "resourcePrimKey", true, "groupId",
+				true, "companyId", true, "userId", true, "userName", true,
+				"createDate", true, "modifiedDate", true, "folderId", true,
+				"classNameId", true, "classPK", true, "articleId", true,
+				"version", true, "title", true, "urlTitle", true,
+				"description", true, "content", true, "type", true,
+				"structureId", true, "templateId", true, "layoutUuid", true,
+				"displayDate", true, "expirationDate", true, "reviewDate",
+				true, "indexable", true, "smallImage", true, "smallImageId",
+				true, "smallImageURL", true, "status", true, "statusByUserId",
+				true, "statusByUserName", true, "statusDate", true);
+
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

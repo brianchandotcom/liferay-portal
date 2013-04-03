@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
@@ -156,6 +159,21 @@ public class UserGroupPersistenceTest {
 			Assert.fail("Missing entity did not throw NoSuchUserGroupException");
 		}
 		catch (NoSuchUserGroupException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("UserGroup",
+				"userGroupId", true, "companyId", true, "parentUserGroupId",
+				true, "name", true, "description", true, "addedByLDAPImport",
+				true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

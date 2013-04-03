@@ -1510,6 +1510,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	}
 
 	private static final String _FINDER_COLUMN_ROWID_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_ROWID_ROWID_2_SQL = "expandoValue.rowId_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_C = new FinderPath(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 			ExpandoValueModelImpl.FINDER_CACHE_ENABLED, ExpandoValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C",
@@ -3052,6 +3053,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	private static final String _FINDER_COLUMN_T_R_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_R_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_T_R_ROWID_2_SQL = "expandoValue.rowId_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_R = new FinderPath(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 			ExpandoValueModelImpl.FINDER_CACHE_ENABLED, ExpandoValueImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
@@ -3278,6 +3280,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	private static final String _FINDER_COLUMN_C_R_COLUMNID_2 = "expandoValue.columnId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_ROWID_2 = "expandoValue.rowId = ?";
+	private static final String _FINDER_COLUMN_C_R_ROWID_2_SQL = "expandoValue.rowId_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 			ExpandoValueModelImpl.FINDER_CACHE_ENABLED, ExpandoValueImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -4645,6 +4648,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_T_C_D_DATA_1 = "expandoValue.data IS NULL";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "expandoValue.data = ?";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = '')";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_1_SQL = "expandoValue.data_ IS NULL";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_2_SQL = "expandoValue.data_ = ?";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_3_SQL = "(expandoValue.data_ IS NULL OR expandoValue.data_ = '')";
 
 	/**
 	 * Caches the expando value in the entity cache if it is enabled.
@@ -5426,6 +5432,11 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the expando value persistence.
 	 */
@@ -5458,6 +5469,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"rowId", "data"
+		};
 	private static final String _SQL_SELECT_EXPANDOVALUE = "SELECT expandoValue FROM ExpandoValue expandoValue";
 	private static final String _SQL_SELECT_EXPANDOVALUE_WHERE = "SELECT expandoValue FROM ExpandoValue expandoValue WHERE ";
 	private static final String _SQL_COUNT_EXPANDOVALUE = "SELECT COUNT(expandoValue) FROM ExpandoValue expandoValue";

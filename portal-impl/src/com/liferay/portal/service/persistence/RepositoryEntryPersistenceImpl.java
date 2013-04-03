@@ -603,6 +603,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "repositoryEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "repositoryEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(repositoryEntry.uuid IS NULL OR repositoryEntry.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "repositoryEntry.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "repositoryEntry.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(repositoryEntry.uuid_ IS NULL OR repositoryEntry.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
 			RepositoryEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -861,6 +864,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "repositoryEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "repositoryEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(repositoryEntry.uuid IS NULL OR repositoryEntry.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "repositoryEntry.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "repositoryEntry.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(repositoryEntry.uuid_ IS NULL OR repositoryEntry.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "repositoryEntry.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -1422,6 +1428,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "repositoryEntry.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "repositoryEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(repositoryEntry.uuid IS NULL OR repositoryEntry.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "repositoryEntry.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "repositoryEntry.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(repositoryEntry.uuid_ IS NULL OR repositoryEntry.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "repositoryEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REPOSITORYID =
 		new FinderPath(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -2862,6 +2871,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the repository entry persistence.
 	 */
@@ -2894,6 +2908,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_REPOSITORYENTRY = "SELECT repositoryEntry FROM RepositoryEntry repositoryEntry";
 	private static final String _SQL_SELECT_REPOSITORYENTRY_WHERE = "SELECT repositoryEntry FROM RepositoryEntry repositoryEntry WHERE ";
 	private static final String _SQL_COUNT_REPOSITORYENTRY = "SELECT COUNT(repositoryEntry) FROM RepositoryEntry repositoryEntry";

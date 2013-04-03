@@ -535,6 +535,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2 = "image.size < ?";
+	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2_SQL = "image.size_ < ?";
 
 	/**
 	 * Caches the image in the entity cache if it is enabled.
@@ -1035,6 +1036,11 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the image persistence.
 	 */
@@ -1067,6 +1073,9 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"type", "size"
+		};
 	private static final String _SQL_SELECT_IMAGE = "SELECT image FROM Image image";
 	private static final String _SQL_SELECT_IMAGE_WHERE = "SELECT image FROM Image image WHERE ";
 	private static final String _SQL_COUNT_IMAGE = "SELECT COUNT(image) FROM Image image";

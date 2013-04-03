@@ -882,6 +882,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the release persistence.
 	 */
@@ -914,6 +919,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "state" };
 	private static final String _SQL_SELECT_RELEASE = "SELECT release FROM Release release";
 	private static final String _SQL_SELECT_RELEASE_WHERE = "SELECT release FROM Release release WHERE ";
 	private static final String _SQL_COUNT_RELEASE = "SELECT COUNT(release) FROM Release release";

@@ -597,6 +597,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mbDiscussion.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mbDiscussion.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mbDiscussion.uuid IS NULL OR mbDiscussion.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "mbDiscussion.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "mbDiscussion.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(mbDiscussion.uuid_ IS NULL OR mbDiscussion.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
 			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -854,6 +857,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mbDiscussion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mbDiscussion.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mbDiscussion.uuid IS NULL OR mbDiscussion.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "mbDiscussion.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "mbDiscussion.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(mbDiscussion.uuid_ IS NULL OR mbDiscussion.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mbDiscussion.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
 			MBDiscussionModelImpl.FINDER_CACHE_ENABLED, MBDiscussionImpl.class,
@@ -1413,6 +1419,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mbDiscussion.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mbDiscussion.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mbDiscussion.uuid IS NULL OR mbDiscussion.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "mbDiscussion.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "mbDiscussion.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(mbDiscussion.uuid_ IS NULL OR mbDiscussion.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mbDiscussion.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CLASSNAMEID =
 		new FinderPath(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
@@ -3046,6 +3055,11 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the message boards discussion persistence.
 	 */
@@ -3078,6 +3092,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_MBDISCUSSION = "SELECT mbDiscussion FROM MBDiscussion mbDiscussion";
 	private static final String _SQL_SELECT_MBDISCUSSION_WHERE = "SELECT mbDiscussion FROM MBDiscussion mbDiscussion WHERE ";
 	private static final String _SQL_COUNT_MBDISCUSSION = "SELECT COUNT(mbDiscussion) FROM MBDiscussion mbDiscussion";

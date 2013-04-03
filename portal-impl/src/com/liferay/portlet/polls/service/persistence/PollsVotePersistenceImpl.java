@@ -597,6 +597,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "pollsVote.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "pollsVote.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "pollsVote.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "pollsVote.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(pollsVote.uuid_ IS NULL OR pollsVote.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -854,6 +857,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "pollsVote.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "pollsVote.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "pollsVote.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "pollsVote.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(pollsVote.uuid_ IS NULL OR pollsVote.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "pollsVote.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
@@ -1412,6 +1418,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "pollsVote.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "pollsVote.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(pollsVote.uuid IS NULL OR pollsVote.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "pollsVote.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "pollsVote.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(pollsVote.uuid_ IS NULL OR pollsVote.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "pollsVote.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_QUESTIONID =
 		new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
@@ -3288,6 +3297,11 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the polls vote persistence.
 	 */
@@ -3320,6 +3334,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_POLLSVOTE = "SELECT pollsVote FROM PollsVote pollsVote";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE = "SELECT pollsVote FROM PollsVote pollsVote WHERE ";
 	private static final String _SQL_COUNT_POLLSVOTE = "SELECT COUNT(pollsVote) FROM PollsVote pollsVote";

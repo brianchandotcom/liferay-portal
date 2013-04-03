@@ -2682,6 +2682,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "phone.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "phone.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "phone.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2_SQL = "phone.primary_ = ?";
 
 	/**
 	 * Caches the phone in the entity cache if it is enabled.
@@ -3294,6 +3295,11 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the phone persistence.
 	 */
@@ -3326,6 +3332,9 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"number", "primary"
+		};
 	private static final String _SQL_SELECT_PHONE = "SELECT phone FROM Phone phone";
 	private static final String _SQL_SELECT_PHONE_WHERE = "SELECT phone FROM Phone phone WHERE ";
 	private static final String _SQL_COUNT_PHONE = "SELECT COUNT(phone) FROM Phone phone";

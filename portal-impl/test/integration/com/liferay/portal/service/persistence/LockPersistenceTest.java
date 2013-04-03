@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
@@ -171,6 +174,22 @@ public class LockPersistenceTest {
 			Assert.fail("Missing entity did not throw NoSuchLockException");
 		}
 		catch (NoSuchLockException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("Lock_",
+				"uuid", true, "lockId", true, "companyId", true, "userId",
+				true, "userName", true, "createDate", true, "className", true,
+				"key", true, "owner", true, "inheritable", true,
+				"expirationDate", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

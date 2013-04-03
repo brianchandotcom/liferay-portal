@@ -1609,6 +1609,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetCategoryProperty.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
+	private static final String _FINDER_COLUMN_C_K_KEY_1_SQL = "assetCategoryProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2_SQL = "assetCategoryProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3_SQL = "(assetCategoryProperty.key_ IS NULL OR assetCategoryProperty.key_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CA_K = new FinderPath(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryPropertyModelImpl.FINDER_CACHE_ENABLED,
 			AssetCategoryPropertyImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1869,6 +1872,9 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_CA_K_KEY_1 = "assetCategoryProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_CA_K_KEY_2 = "assetCategoryProperty.key = ?";
 	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
+	private static final String _FINDER_COLUMN_CA_K_KEY_1_SQL = "assetCategoryProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_CA_K_KEY_2_SQL = "assetCategoryProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_CA_K_KEY_3_SQL = "(assetCategoryProperty.key_ IS NULL OR assetCategoryProperty.key_ = '')";
 
 	/**
 	 * Caches the asset category property in the entity cache if it is enabled.
@@ -2521,6 +2527,11 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the asset category property persistence.
 	 */
@@ -2553,6 +2564,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "key" };
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty";
 	private static final String _SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE = "SELECT assetCategoryProperty FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY = "SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty";

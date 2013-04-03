@@ -601,6 +601,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mbMailingList.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mbMailingList.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mbMailingList.uuid IS NULL OR mbMailingList.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "mbMailingList.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "mbMailingList.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(mbMailingList.uuid_ IS NULL OR mbMailingList.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListModelImpl.FINDER_CACHE_ENABLED,
 			MBMailingListImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -858,6 +861,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mbMailingList.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mbMailingList.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mbMailingList.uuid IS NULL OR mbMailingList.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "mbMailingList.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "mbMailingList.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(mbMailingList.uuid_ IS NULL OR mbMailingList.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mbMailingList.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListModelImpl.FINDER_CACHE_ENABLED,
@@ -1419,6 +1425,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mbMailingList.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mbMailingList.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mbMailingList.uuid IS NULL OR mbMailingList.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "mbMailingList.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "mbMailingList.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(mbMailingList.uuid_ IS NULL OR mbMailingList.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mbMailingList.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACTIVE = new FinderPath(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListModelImpl.FINDER_CACHE_ENABLED,
@@ -1896,6 +1905,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "mbMailingList.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL = "mbMailingList.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_C = new FinderPath(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListModelImpl.FINDER_CACHE_ENABLED,
 			MBMailingListImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_C",
@@ -2827,6 +2837,11 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the message boards mailing list persistence.
 	 */
@@ -2859,6 +2874,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "active"
+		};
 	private static final String _SQL_SELECT_MBMAILINGLIST = "SELECT mbMailingList FROM MBMailingList mbMailingList";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";
 	private static final String _SQL_COUNT_MBMAILINGLIST = "SELECT COUNT(mbMailingList) FROM MBMailingList mbMailingList";

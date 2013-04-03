@@ -597,6 +597,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ddmContent.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ddmContent.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ddmContent.uuid IS NULL OR ddmContent.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "ddmContent.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "ddmContent.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(ddmContent.uuid_ IS NULL OR ddmContent.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentModelImpl.FINDER_CACHE_ENABLED, DDMContentImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -854,6 +857,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ddmContent.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ddmContent.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ddmContent.uuid IS NULL OR ddmContent.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "ddmContent.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "ddmContent.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(ddmContent.uuid_ IS NULL OR ddmContent.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ddmContent.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentModelImpl.FINDER_CACHE_ENABLED, DDMContentImpl.class,
@@ -1413,6 +1419,9 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "ddmContent.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ddmContent.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ddmContent.uuid IS NULL OR ddmContent.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "ddmContent.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "ddmContent.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(ddmContent.uuid_ IS NULL OR ddmContent.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ddmContent.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentModelImpl.FINDER_CACHE_ENABLED, DDMContentImpl.class,
@@ -3026,6 +3035,11 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the d d m content persistence.
 	 */
@@ -3058,6 +3072,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_DDMCONTENT = "SELECT ddmContent FROM DDMContent ddmContent";
 	private static final String _SQL_SELECT_DDMCONTENT_WHERE = "SELECT ddmContent FROM DDMContent ddmContent WHERE ";
 	private static final String _SQL_COUNT_DDMCONTENT = "SELECT COUNT(ddmContent) FROM DDMContent ddmContent";

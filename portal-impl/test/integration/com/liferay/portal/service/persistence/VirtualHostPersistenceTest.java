@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
@@ -150,6 +153,20 @@ public class VirtualHostPersistenceTest {
 				"Missing entity did not throw NoSuchVirtualHostException");
 		}
 		catch (NoSuchVirtualHostException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("VirtualHost",
+				"virtualHostId", true, "companyId", true, "layoutSetId", true,
+				"hostname", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

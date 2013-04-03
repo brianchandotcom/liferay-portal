@@ -26,12 +26,15 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -289,6 +292,64 @@ public class ${entity.name}PersistenceTest {
 		catch (${noSuchEntity}Exception nsee) {
 		}
 	}
+
+	<#if !entity.hasCompoundPK()>
+		@Test
+		public void testFindAll() throws Exception {
+			OrderByComparator obc = OrderByComparatorFactoryUtil.create(
+
+			"${entity.table}",
+
+			<#list entity.regularColList as column>
+				<#if column.type != "Blob">
+					"${column.name}", true
+
+					<#if column_has_next>
+						,
+					</#if>
+				</#if>
+			</#list>
+
+			);
+
+			try {
+				_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+			}
+			catch (Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+
+		<#list entity.getFinderList() as finder>
+			<#if finder.name == "GroupId" && entity.isPermissionCheckEnabled(finder)>
+				@Test
+				public void testFilterFindByGroupId() throws Exception {
+					OrderByComparator obc = OrderByComparatorFactoryUtil.create(
+
+					"${entity.table}",
+
+					<#list entity.regularColList as column>
+						"${column.name}", true
+
+						<#if column_has_next>
+							,
+						</#if>
+					</#list>
+
+					);
+
+					try {
+						_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+					}
+					catch (Exception e) {
+						Assert.fail(e.getMessage());
+					}
+				}
+
+				<#break>
+			</#if>
+		</#list>
+	</#if>
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {

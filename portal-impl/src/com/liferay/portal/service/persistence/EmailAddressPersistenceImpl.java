@@ -2696,6 +2696,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "emailAddress.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "emailAddress.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "emailAddress.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2_SQL = "emailAddress.primary_ = ?";
 
 	/**
 	 * Caches the email address in the entity cache if it is enabled.
@@ -3317,6 +3318,11 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the email address persistence.
 	 */
@@ -3349,6 +3355,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "primary" };
 	private static final String _SQL_SELECT_EMAILADDRESS = "SELECT emailAddress FROM EmailAddress emailAddress";
 	private static final String _SQL_SELECT_EMAILADDRESS_WHERE = "SELECT emailAddress FROM EmailAddress emailAddress WHERE ";
 	private static final String _SQL_COUNT_EMAILADDRESS = "SELECT COUNT(emailAddress) FROM EmailAddress emailAddress";

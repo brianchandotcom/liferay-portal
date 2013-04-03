@@ -605,6 +605,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "journalArticleResource.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "journalArticleResource.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(journalArticleResource.uuid IS NULL OR journalArticleResource.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "journalArticleResource.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "journalArticleResource.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(journalArticleResource.uuid_ IS NULL OR journalArticleResource.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
 			JournalArticleResourceImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -865,6 +868,9 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "journalArticleResource.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "journalArticleResource.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(journalArticleResource.uuid IS NULL OR journalArticleResource.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "journalArticleResource.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "journalArticleResource.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(journalArticleResource.uuid_ IS NULL OR journalArticleResource.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "journalArticleResource.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
@@ -2285,6 +2291,11 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the journal article resource persistence.
 	 */
@@ -2317,6 +2328,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource";
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE_WHERE = "SELECT journalArticleResource FROM JournalArticleResource journalArticleResource WHERE ";
 	private static final String _SQL_COUNT_JOURNALARTICLERESOURCE = "SELECT COUNT(journalArticleResource) FROM JournalArticleResource journalArticleResource";

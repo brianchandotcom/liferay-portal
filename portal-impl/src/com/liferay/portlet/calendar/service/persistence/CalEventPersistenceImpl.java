@@ -607,6 +607,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "calEvent.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "calEvent.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(calEvent.uuid IS NULL OR calEvent.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "calEvent.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "calEvent.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(calEvent.uuid_ IS NULL OR calEvent.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventModelImpl.FINDER_CACHE_ENABLED, CalEventImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -864,6 +867,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "calEvent.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "calEvent.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(calEvent.uuid IS NULL OR calEvent.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "calEvent.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "calEvent.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(calEvent.uuid_ IS NULL OR calEvent.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "calEvent.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventModelImpl.FINDER_CACHE_ENABLED, CalEventImpl.class,
@@ -1424,6 +1430,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "calEvent.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "calEvent.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(calEvent.uuid IS NULL OR calEvent.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "calEvent.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "calEvent.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(calEvent.uuid_ IS NULL OR calEvent.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "calEvent.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(CalEventModelImpl.ENTITY_CACHE_ENABLED,
@@ -2387,11 +2396,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3741,15 +3750,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -3759,11 +3768,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3882,15 +3891,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -4100,13 +4109,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				String type = types[i];
 
 				if (type == null) {
-					query.append(_FINDER_COLUMN_G_T_TYPE_4);
+					query.append(_FINDER_COLUMN_G_T_TYPE_4_SQL);
 				}
 				else if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_T_TYPE_6);
+					query.append(_FINDER_COLUMN_G_T_TYPE_6_SQL);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_T_TYPE_5);
+					query.append(_FINDER_COLUMN_G_T_TYPE_5_SQL);
 				}
 
 				if ((i + 1) < types.length) {
@@ -4126,11 +4135,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4574,15 +4583,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_TYPE_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -4658,13 +4667,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				String type = types[i];
 
 				if (type == null) {
-					query.append(_FINDER_COLUMN_G_T_TYPE_4);
+					query.append(_FINDER_COLUMN_G_T_TYPE_4_SQL);
 				}
 				else if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_T_TYPE_6);
+					query.append(_FINDER_COLUMN_G_T_TYPE_6_SQL);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_T_TYPE_5);
+					query.append(_FINDER_COLUMN_G_T_TYPE_5_SQL);
 				}
 
 				if ((i + 1) < types.length) {
@@ -4722,6 +4731,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_G_T_TYPE_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_T_TYPE_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_TYPE_6 = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_3) + ")";
+	private static final String _FINDER_COLUMN_G_T_TYPE_1_SQL = "calEvent.type_ IS NULL";
+	private static final String _FINDER_COLUMN_G_T_TYPE_2_SQL = "calEvent.type_ = ?";
+	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL = "(calEvent.type_ IS NULL OR calEvent.type_ = '')";
+	private static final String _FINDER_COLUMN_G_T_TYPE_4_SQL = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_1) + ")";
+	private static final String _FINDER_COLUMN_G_T_TYPE_5_SQL = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_TYPE_2) + ")";
+	private static final String _FINDER_COLUMN_G_T_TYPE_6_SQL = "(" +
 		removeConjunction(_FINDER_COLUMN_G_T_TYPE_3) + ")";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_R = new FinderPath(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventModelImpl.FINDER_CACHE_ENABLED, CalEventImpl.class,
@@ -5246,11 +5264,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6205,15 +6223,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
@@ -6225,11 +6243,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6351,15 +6369,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
@@ -6577,13 +6595,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				String type = types[i];
 
 				if (type == null) {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_4);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_4_SQL);
 				}
 				else if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_6);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_6_SQL);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_5);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_5_SQL);
 				}
 
 				if ((i + 1) < types.length) {
@@ -6611,11 +6629,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -7100,15 +7118,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean bindType = false;
 
 		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_1);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_1_SQL);
 		}
 		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_3);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_3_SQL);
 		}
 		else {
 			bindType = true;
 
-			query.append(_FINDER_COLUMN_G_T_R_TYPE_2);
+			query.append(_FINDER_COLUMN_G_T_R_TYPE_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_G_T_R_REPEATING_2);
@@ -7189,13 +7207,13 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				String type = types[i];
 
 				if (type == null) {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_4);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_4_SQL);
 				}
 				else if (type.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_6);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_6_SQL);
 				}
 				else {
-					query.append(_FINDER_COLUMN_G_T_R_TYPE_5);
+					query.append(_FINDER_COLUMN_G_T_R_TYPE_5_SQL);
 				}
 
 				if ((i + 1) < types.length) {
@@ -7263,6 +7281,15 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_2) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_TYPE_6 = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_3) + ")";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_1_SQL = "calEvent.type_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_2_SQL = "calEvent.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_3_SQL = "(calEvent.type_ IS NULL OR calEvent.type_ = '') AND ";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_4_SQL = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_1) + ")";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_5_SQL = "(" +
+		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_2) + ")";
+	private static final String _FINDER_COLUMN_G_T_R_TYPE_6_SQL = "(" +
 		removeConjunction(_FINDER_COLUMN_G_T_R_TYPE_3) + ")";
 	private static final String _FINDER_COLUMN_G_T_R_REPEATING_2 = "calEvent.repeating = ?";
 	private static final String _FINDER_COLUMN_G_T_R_REPEATING_5 = "(" +
@@ -8027,6 +8054,11 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the cal event persistence.
 	 */
@@ -8059,6 +8091,9 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type"
+		};
 	private static final String _SQL_SELECT_CALEVENT = "SELECT calEvent FROM CalEvent calEvent";
 	private static final String _SQL_SELECT_CALEVENT_WHERE = "SELECT calEvent FROM CalEvent calEvent WHERE ";
 	private static final String _SQL_COUNT_CALEVENT = "SELECT COUNT(calEvent) FROM CalEvent calEvent";

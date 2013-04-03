@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
@@ -261,6 +264,29 @@ public class LayoutRevisionPersistenceTest {
 				"Missing entity did not throw NoSuchLayoutRevisionException");
 		}
 		catch (NoSuchLayoutRevisionException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("LayoutRevision",
+				"layoutRevisionId", true, "groupId", true, "companyId", true,
+				"userId", true, "userName", true, "createDate", true,
+				"modifiedDate", true, "layoutSetBranchId", true,
+				"layoutBranchId", true, "parentLayoutRevisionId", true, "head",
+				true, "major", true, "plid", true, "privateLayout", true,
+				"name", true, "title", true, "description", true, "keywords",
+				true, "robots", true, "typeSettings", true, "iconImage", true,
+				"iconImageId", true, "themeId", true, "colorSchemeId", true,
+				"wapThemeId", true, "wapColorSchemeId", true, "css", true,
+				"status", true, "statusByUserId", true, "statusByUserName",
+				true, "statusDate", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

@@ -596,6 +596,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "listType.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_1_SQL = "listType.type_ IS NULL";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_2_SQL = "listType.type_ = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_3_SQL = "(listType.type_ IS NULL OR listType.type_ = '')";
 
 	/**
 	 * Caches the list type in the entity cache if it is enabled.
@@ -1114,6 +1117,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the list type persistence.
 	 */
@@ -1146,6 +1154,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_LISTTYPE = "SELECT listType FROM ListType listType";
 	private static final String _SQL_SELECT_LISTTYPE_WHERE = "SELECT listType FROM ListType listType WHERE ";
 	private static final String _SQL_COUNT_LISTTYPE = "SELECT COUNT(listType) FROM ListType listType";

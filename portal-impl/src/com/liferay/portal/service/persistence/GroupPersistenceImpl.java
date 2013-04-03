@@ -2824,7 +2824,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	private static final String _FINDER_COLUMN_T_A_TYPE_2 = "group_.type = ? AND ";
+	private static final String _FINDER_COLUMN_T_A_TYPE_2_SQL = "group_.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_T_A_ACTIVE_2 = "group_.active = ?";
+	private static final String _FINDER_COLUMN_T_A_ACTIVE_2_SQL = "group_.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
@@ -7688,6 +7690,11 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the group persistence.
 	 */
@@ -8417,6 +8424,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		private SqlUpdate _sqlUpdate;
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"type", "active"
+		};
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";
 	private static final String _SQL_SELECT_GROUP__WHERE = "SELECT group_ FROM Group group_ WHERE ";
 	private static final String _SQL_COUNT_GROUP_ = "SELECT COUNT(group_) FROM Group group_";

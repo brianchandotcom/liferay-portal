@@ -598,6 +598,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "dlFileRank.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "dlFileRank.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(dlFileRank.uuid IS NULL OR dlFileRank.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "dlFileRank.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "dlFileRank.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(dlFileRank.uuid_ IS NULL OR dlFileRank.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -855,6 +858,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "dlFileRank.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "dlFileRank.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(dlFileRank.uuid IS NULL OR dlFileRank.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "dlFileRank.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "dlFileRank.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(dlFileRank.uuid_ IS NULL OR dlFileRank.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "dlFileRank.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
@@ -1415,6 +1421,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "dlFileRank.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "dlFileRank.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(dlFileRank.uuid IS NULL OR dlFileRank.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "dlFileRank.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "dlFileRank.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(dlFileRank.uuid_ IS NULL OR dlFileRank.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "dlFileRank.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
@@ -3436,6 +3445,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_G_U_A_GROUPID_2 = "dlFileRank.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_USERID_2 = "dlFileRank.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2 = "dlFileRank.active = ?";
+	private static final String _FINDER_COLUMN_G_U_A_ACTIVE_2_SQL = "dlFileRank.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_F = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_F",
@@ -4440,6 +4450,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the document library file rank persistence.
 	 */
@@ -4472,6 +4487,9 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "active"
+		};
 	private static final String _SQL_SELECT_DLFILERANK = "SELECT dlFileRank FROM DLFileRank dlFileRank";
 	private static final String _SQL_SELECT_DLFILERANK_WHERE = "SELECT dlFileRank FROM DLFileRank dlFileRank WHERE ";
 	private static final String _SQL_COUNT_DLFILERANK = "SELECT COUNT(dlFileRank) FROM DLFileRank dlFileRank";

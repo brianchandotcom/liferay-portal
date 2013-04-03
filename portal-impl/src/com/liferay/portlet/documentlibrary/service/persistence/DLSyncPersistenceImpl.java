@@ -1380,6 +1380,11 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the d l sync persistence.
 	 */
@@ -1412,6 +1417,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_DLSYNC = "SELECT dlSync FROM DLSync dlSync";
 	private static final String _SQL_SELECT_DLSYNC_WHERE = "SELECT dlSync FROM DLSync dlSync WHERE ";
 	private static final String _SQL_COUNT_DLSYNC = "SELECT COUNT(dlSync) FROM DLSync dlSync";

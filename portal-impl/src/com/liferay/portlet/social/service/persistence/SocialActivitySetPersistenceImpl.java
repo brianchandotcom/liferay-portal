@@ -596,6 +596,11 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the social activity set persistence.
 	 */
@@ -628,6 +633,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_SOCIALACTIVITYSET = "SELECT socialActivitySet FROM SocialActivitySet socialActivitySet";
 	private static final String _SQL_COUNT_SOCIALACTIVITYSET = "SELECT COUNT(socialActivitySet) FROM SocialActivitySet socialActivitySet";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivitySet.";

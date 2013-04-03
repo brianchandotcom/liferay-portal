@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -342,6 +345,71 @@ public class ShoppingOrderPersistenceTest {
 			Assert.fail("Missing entity did not throw NoSuchOrderException");
 		}
 		catch (NoSuchOrderException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("ShoppingOrder",
+				"orderId", true, "groupId", true, "companyId", true, "userId",
+				true, "userName", true, "createDate", true, "modifiedDate",
+				true, "number", true, "tax", true, "shipping", true,
+				"altShipping", true, "requiresShipping", true, "insure", true,
+				"insurance", true, "couponCodes", true, "couponDiscount", true,
+				"billingFirstName", true, "billingLastName", true,
+				"billingEmailAddress", true, "billingCompany", true,
+				"billingStreet", true, "billingCity", true, "billingState",
+				true, "billingZip", true, "billingCountry", true,
+				"billingPhone", true, "shipToBilling", true,
+				"shippingFirstName", true, "shippingLastName", true,
+				"shippingEmailAddress", true, "shippingCompany", true,
+				"shippingStreet", true, "shippingCity", true, "shippingState",
+				true, "shippingZip", true, "shippingCountry", true,
+				"shippingPhone", true, "ccName", true, "ccType", true,
+				"ccNumber", true, "ccExpMonth", true, "ccExpYear", true,
+				"ccVerNumber", true, "comments", true, "ppTxnId", true,
+				"ppPaymentStatus", true, "ppPaymentGross", true,
+				"ppReceiverEmail", true, "ppPayerEmail", true,
+				"sendOrderEmail", true, "sendShippingEmail", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("ShoppingOrder",
+				"orderId", true, "groupId", true, "companyId", true, "userId",
+				true, "userName", true, "createDate", true, "modifiedDate",
+				true, "number", true, "tax", true, "shipping", true,
+				"altShipping", true, "requiresShipping", true, "insure", true,
+				"insurance", true, "couponCodes", true, "couponDiscount", true,
+				"billingFirstName", true, "billingLastName", true,
+				"billingEmailAddress", true, "billingCompany", true,
+				"billingStreet", true, "billingCity", true, "billingState",
+				true, "billingZip", true, "billingCountry", true,
+				"billingPhone", true, "shipToBilling", true,
+				"shippingFirstName", true, "shippingLastName", true,
+				"shippingEmailAddress", true, "shippingCompany", true,
+				"shippingStreet", true, "shippingCity", true, "shippingState",
+				true, "shippingZip", true, "shippingCountry", true,
+				"shippingPhone", true, "ccName", true, "ccType", true,
+				"ccNumber", true, "ccExpMonth", true, "ccExpYear", true,
+				"ccVerNumber", true, "comments", true, "ppTxnId", true,
+				"ppPaymentStatus", true, "ppPaymentGross", true,
+				"ppReceiverEmail", true, "ppPayerEmail", true,
+				"sendOrderEmail", true, "sendShippingEmail", true);
+
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

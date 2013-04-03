@@ -1027,6 +1027,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "region.active = ?";
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL = "region.active_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_R = new FinderPath(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionModelImpl.FINDER_CACHE_ENABLED, RegionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
@@ -1796,6 +1797,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 
 	private static final String _FINDER_COLUMN_C_A_COUNTRYID_2 = "region.countryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "region.active = ?";
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2_SQL = "region.active_ = ?";
 
 	/**
 	 * Caches the region in the entity cache if it is enabled.
@@ -2414,6 +2416,11 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the region persistence.
 	 */
@@ -2446,6 +2453,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "active" };
 	private static final String _SQL_SELECT_REGION = "SELECT region FROM Region region";
 	private static final String _SQL_SELECT_REGION_WHERE = "SELECT region FROM Region region WHERE ";
 	private static final String _SQL_COUNT_REGION = "SELECT COUNT(region) FROM Region region";

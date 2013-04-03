@@ -3277,6 +3277,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "address.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "address.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "address.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2_SQL = "address.primary_ = ?";
 
 	/**
 	 * Caches the address in the entity cache if it is enabled.
@@ -3924,6 +3925,11 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the address persistence.
 	 */
@@ -3956,6 +3962,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "primary" };
 	private static final String _SQL_SELECT_ADDRESS = "SELECT address FROM Address address";
 	private static final String _SQL_SELECT_ADDRESS_WHERE = "SELECT address FROM Address address WHERE ";
 	private static final String _SQL_COUNT_ADDRESS = "SELECT COUNT(address) FROM Address address";

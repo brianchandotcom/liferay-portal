@@ -604,6 +604,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "user.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "user.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(user.uuid IS NULL OR user.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "user.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "user.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(user.uuid_ IS NULL OR user.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserModelImpl.FINDER_CACHE_ENABLED, UserImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -1158,6 +1161,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "user.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "user.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(user.uuid IS NULL OR user.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "user.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "user.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(user.uuid_ IS NULL OR user.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "user.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(UserModelImpl.ENTITY_CACHE_ENABLED,
@@ -9773,6 +9779,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the user persistence.
 	 */
@@ -10672,6 +10683,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		private SqlUpdate _sqlUpdate;
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "password"
+		};
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";
 	private static final String _SQL_COUNT_USER = "SELECT COUNT(user) FROM User user";

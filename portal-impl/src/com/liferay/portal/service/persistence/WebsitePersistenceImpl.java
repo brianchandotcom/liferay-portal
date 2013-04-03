@@ -2685,6 +2685,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 = "website.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "website.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "website.primary = ?";
+	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2_SQL = "website.primary_ = ?";
 
 	/**
 	 * Caches the website in the entity cache if it is enabled.
@@ -3300,6 +3301,11 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the website persistence.
 	 */
@@ -3332,6 +3338,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "primary" };
 	private static final String _SQL_SELECT_WEBSITE = "SELECT website FROM Website website";
 	private static final String _SQL_SELECT_WEBSITE_WHERE = "SELECT website FROM Website website WHERE ";
 	private static final String _SQL_COUNT_WEBSITE = "SELECT COUNT(website) FROM Website website";

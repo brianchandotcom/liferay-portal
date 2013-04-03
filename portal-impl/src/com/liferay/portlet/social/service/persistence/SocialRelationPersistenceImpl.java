@@ -603,6 +603,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "socialRelation.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "socialRelation.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(socialRelation.uuid IS NULL OR socialRelation.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "socialRelation.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "socialRelation.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(socialRelation.uuid_ IS NULL OR socialRelation.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1163,6 +1166,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "socialRelation.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "socialRelation.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(socialRelation.uuid IS NULL OR socialRelation.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "socialRelation.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "socialRelation.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(socialRelation.uuid_ IS NULL OR socialRelation.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "socialRelation.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
@@ -3074,6 +3080,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	}
 
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "socialRelation.type = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_2_SQL = "socialRelation.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -3587,6 +3594,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	private static final String _FINDER_COLUMN_C_T_COMPANYID_2 = "socialRelation.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_T_TYPE_2 = "socialRelation.type = ?";
+	private static final String _FINDER_COLUMN_C_T_TYPE_2_SQL = "socialRelation.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U1_U2 = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -4616,6 +4624,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	private static final String _FINDER_COLUMN_U1_T_USERID1_2 = "socialRelation.userId1 = ? AND ";
 	private static final String _FINDER_COLUMN_U1_T_TYPE_2 = "socialRelation.type = ?";
+	private static final String _FINDER_COLUMN_U1_T_TYPE_2_SQL = "socialRelation.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -5129,6 +5138,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	private static final String _FINDER_COLUMN_U2_T_USERID2_2 = "socialRelation.userId2 = ? AND ";
 	private static final String _FINDER_COLUMN_U2_T_TYPE_2 = "socialRelation.type = ?";
+	private static final String _FINDER_COLUMN_U2_T_TYPE_2_SQL = "socialRelation.type_ = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_U1_U2_T = new FinderPath(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationModelImpl.FINDER_CACHE_ENABLED,
 			SocialRelationImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -5383,6 +5393,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final String _FINDER_COLUMN_U1_U2_T_USERID1_2 = "socialRelation.userId1 = ? AND ";
 	private static final String _FINDER_COLUMN_U1_U2_T_USERID2_2 = "socialRelation.userId2 = ? AND ";
 	private static final String _FINDER_COLUMN_U1_U2_T_TYPE_2 = "socialRelation.type = ?";
+	private static final String _FINDER_COLUMN_U1_U2_T_TYPE_2_SQL = "socialRelation.type_ = ?";
 
 	/**
 	 * Caches the social relation in the entity cache if it is enabled.
@@ -6167,6 +6178,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the social relation persistence.
 	 */
@@ -6199,6 +6215,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] {
+			"uuid", "type"
+		};
 	private static final String _SQL_SELECT_SOCIALRELATION = "SELECT socialRelation FROM SocialRelation socialRelation";
 	private static final String _SQL_SELECT_SOCIALRELATION_WHERE = "SELECT socialRelation FROM SocialRelation socialRelation WHERE ";
 	private static final String _SQL_COUNT_SOCIALRELATION = "SELECT COUNT(socialRelation) FROM SocialRelation socialRelation";

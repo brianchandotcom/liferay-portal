@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
@@ -201,6 +204,25 @@ public class LayoutSetPersistenceTest {
 			Assert.fail("Missing entity did not throw NoSuchLayoutSetException");
 		}
 		catch (NoSuchLayoutSetException nsee) {
+		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		OrderByComparator obc = OrderByComparatorFactoryUtil.create("LayoutSet",
+				"layoutSetId", true, "groupId", true, "companyId", true,
+				"createDate", true, "modifiedDate", true, "privateLayout",
+				true, "logo", true, "logoId", true, "themeId", true,
+				"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+				true, "css", true, "pageCount", true, "settings", true,
+				"layoutSetPrototypeUuid", true,
+				"layoutSetPrototypeLinkEnabled", true);
+
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
 		}
 	}
 

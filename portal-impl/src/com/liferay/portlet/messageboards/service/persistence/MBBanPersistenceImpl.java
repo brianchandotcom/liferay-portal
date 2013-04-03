@@ -595,6 +595,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "mbBan.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "mbBan.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(mbBan.uuid IS NULL OR mbBan.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "mbBan.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "mbBan.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(mbBan.uuid_ IS NULL OR mbBan.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanModelImpl.FINDER_CACHE_ENABLED, MBBanImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
@@ -852,6 +855,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "mbBan.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "mbBan.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(mbBan.uuid IS NULL OR mbBan.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1_SQL = "mbBan.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2_SQL = "mbBan.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3_SQL = "(mbBan.uuid_ IS NULL OR mbBan.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "mbBan.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanModelImpl.FINDER_CACHE_ENABLED, MBBanImpl.class,
@@ -1407,6 +1413,9 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "mbBan.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "mbBan.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(mbBan.uuid IS NULL OR mbBan.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "mbBan.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "mbBan.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(mbBan.uuid_ IS NULL OR mbBan.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "mbBan.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanModelImpl.FINDER_CACHE_ENABLED, MBBanImpl.class,
@@ -3740,6 +3749,11 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the message boards ban persistence.
 	 */
@@ -3772,6 +3786,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "uuid" };
 	private static final String _SQL_SELECT_MBBAN = "SELECT mbBan FROM MBBan mbBan";
 	private static final String _SQL_SELECT_MBBAN_WHERE = "SELECT mbBan FROM MBBan mbBan WHERE ";
 	private static final String _SQL_COUNT_MBBAN = "SELECT COUNT(mbBan) FROM MBBan mbBan";

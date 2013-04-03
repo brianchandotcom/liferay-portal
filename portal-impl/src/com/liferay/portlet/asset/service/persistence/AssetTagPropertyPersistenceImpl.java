@@ -1600,6 +1600,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_C_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "assetTagProperty.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = '')";
+	private static final String _FINDER_COLUMN_C_K_KEY_1_SQL = "assetTagProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_C_K_KEY_2_SQL = "assetTagProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_C_K_KEY_3_SQL = "(assetTagProperty.key_ IS NULL OR assetTagProperty.key_ = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_T_K = new FinderPath(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagPropertyModelImpl.FINDER_CACHE_ENABLED,
 			AssetTagPropertyImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByT_K",
@@ -1857,6 +1860,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_T_K_KEY_1 = "assetTagProperty.key IS NULL";
 	private static final String _FINDER_COLUMN_T_K_KEY_2 = "assetTagProperty.key = ?";
 	private static final String _FINDER_COLUMN_T_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = '')";
+	private static final String _FINDER_COLUMN_T_K_KEY_1_SQL = "assetTagProperty.key_ IS NULL";
+	private static final String _FINDER_COLUMN_T_K_KEY_2_SQL = "assetTagProperty.key_ = ?";
+	private static final String _FINDER_COLUMN_T_K_KEY_3_SQL = "(assetTagProperty.key_ IS NULL OR assetTagProperty.key_ = '')";
 
 	/**
 	 * Caches the asset tag property in the entity cache if it is enabled.
@@ -2494,6 +2500,11 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the asset tag property persistence.
 	 */
@@ -2526,6 +2537,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "key" };
 	private static final String _SQL_SELECT_ASSETTAGPROPERTY = "SELECT assetTagProperty FROM AssetTagProperty assetTagProperty";
 	private static final String _SQL_SELECT_ASSETTAGPROPERTY_WHERE = "SELECT assetTagProperty FROM AssetTagProperty assetTagProperty WHERE ";
 	private static final String _SQL_COUNT_ASSETTAGPROPERTY = "SELECT COUNT(assetTagProperty) FROM AssetTagProperty assetTagProperty";

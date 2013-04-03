@@ -4828,6 +4828,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _FINDER_COLUMN_C_C_T_CLASSNAMEID_2 = "socialActivity.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_CLASSPK_2 = "socialActivity.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "socialActivity.type = ?";
+	private static final String _FINDER_COLUMN_C_C_T_TYPE_2_SQL = "socialActivity.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_C_C_T_R =
 		new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
@@ -5503,6 +5504,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_CLASSNAMEID_2 = "socialActivity.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_CLASSPK_2 = "socialActivity.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_TYPE_2 = "socialActivity.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_C_C_T_R_TYPE_2_SQL = "socialActivity.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_C_C_T_R_RECEIVERUSERID_2 = "socialActivity.receiverUserId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R = new FinderPath(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityModelImpl.FINDER_CACHE_ENABLED,
@@ -5854,6 +5856,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSNAMEID_2 = "socialActivity.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_CLASSPK_2 = "socialActivity.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_TYPE_2 = "socialActivity.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_TYPE_2_SQL = "socialActivity.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_CD_C_C_T_R_RECEIVERUSERID_2 = "socialActivity.receiverUserId = ?";
 
 	/**
@@ -6705,6 +6708,11 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the social activity persistence.
 	 */
@@ -6737,6 +6745,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_SOCIALACTIVITY = "SELECT socialActivity FROM SocialActivity socialActivity";
 	private static final String _SQL_SELECT_SOCIALACTIVITY_WHERE = "SELECT socialActivity FROM SocialActivity socialActivity WHERE ";
 	private static final String _SQL_COUNT_SOCIALACTIVITY = "SELECT COUNT(socialActivity) FROM SocialActivity socialActivity";

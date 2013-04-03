@@ -819,6 +819,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	private static final String _FINDER_COLUMN_U_T_TYPE_1 = "announcementsDelivery.type IS NULL";
 	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type = ?";
 	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type IS NULL OR announcementsDelivery.type = '')";
+	private static final String _FINDER_COLUMN_U_T_TYPE_1_SQL = "announcementsDelivery.type_ IS NULL";
+	private static final String _FINDER_COLUMN_U_T_TYPE_2_SQL = "announcementsDelivery.type_ = ?";
+	private static final String _FINDER_COLUMN_U_T_TYPE_3_SQL = "(announcementsDelivery.type_ IS NULL OR announcementsDelivery.type_ = '')";
 
 	/**
 	 * Caches the announcements delivery in the entity cache if it is enabled.
@@ -1423,6 +1426,11 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		return count.intValue();
 	}
 
+	@Override
+	protected String[] getBadColumnNames() {
+		return _BAD_COLUMN_NAMES;
+	}
+
 	/**
 	 * Initializes the announcements delivery persistence.
 	 */
@@ -1455,6 +1463,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	private static final String[] _BAD_COLUMN_NAMES = new String[] { "type" };
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";
 	private static final String _SQL_COUNT_ANNOUNCEMENTSDELIVERY = "SELECT COUNT(announcementsDelivery) FROM AnnouncementsDelivery announcementsDelivery";

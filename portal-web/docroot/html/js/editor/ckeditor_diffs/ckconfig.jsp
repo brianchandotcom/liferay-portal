@@ -70,7 +70,7 @@ CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.entities = false;
 
-CKEDITOR.config.extraPlugins = 'ajaxsave,restore';
+CKEDITOR.config.extraPlugins = 'ajaxsave,restore,scayt,wsc';
 
 CKEDITOR.config.height = 265;
 

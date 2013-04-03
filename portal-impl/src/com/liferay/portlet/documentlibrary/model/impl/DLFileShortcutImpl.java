@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -82,6 +85,25 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		}
 
 		return dlFolder.getTrashContainer();
+	}
+
+	public boolean isInHiddenFolder() {
+		try {
+			long repositoryId = getRepositoryId();
+
+			Repository repository = RepositoryLocalServiceUtil.getRepository(
+				repositoryId);
+
+			long dlFolderId = repository.getDlFolderId();
+
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
+
+			return dlFolder.isHidden();
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	public boolean isInTrashContainer() {

@@ -280,6 +280,10 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
+		if (dlFolder.isInHiddenFolder() && actionId.equals(ActionKeys.VIEW)) {
+			return false;
+		}
+
 		return DLFolderPermission.contains(
 			permissionChecker, dlFolder, actionId);
 	}

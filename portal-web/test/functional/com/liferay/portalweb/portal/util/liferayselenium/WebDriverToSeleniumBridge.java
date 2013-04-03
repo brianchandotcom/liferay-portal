@@ -24,7 +24,9 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -1223,7 +1225,42 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (webElement.isEnabled()) {
-			webElement.sendKeys(value);
+			Map<String, String> specialChars = new HashMap<String, String>();
+
+			specialChars.put("&", "7");
+			specialChars.put("$", "4");
+			specialChars.put("<", ",");
+			specialChars.put(">", ".");
+			specialChars.put("(", "9");
+			specialChars.put(")", "0");
+
+			Set<String> specialCharsSet = specialChars.keySet();
+
+			String regex = ".*[";
+
+			for (String specialChar : specialCharsSet) {
+				regex += "\\" + specialChar;
+			}
+
+			regex += "]*.*";
+
+			if (value.matches(regex)) {
+				char[] chars = value.toCharArray();
+
+				for (char ch : chars) {
+					String s = String.valueOf(ch);
+
+					if (specialCharsSet.contains(s)) {
+						webElement.sendKeys(Keys.SHIFT, specialChars.get(s));
+					}
+					else {
+						webElement.sendKeys(s);
+					}
+				}
+			}
+			else {
+				webElement.sendKeys(value);
+			}
 		}
 	}
 

@@ -137,7 +137,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		return addRole(
 			userId, className, classPK, name, titleMap, descriptionMap, type,
-			null, null);
+			null, new ServiceContext());
 	}
 
 	/**
@@ -188,6 +188,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Role role = rolePersistence.create(roleId);
 
+		role.setUuid(serviceContext.getUuid());
 		role.setCompanyId(user.getCompanyId());
 		role.setClassNameId(classNameId);
 		role.setClassPK(classPK);

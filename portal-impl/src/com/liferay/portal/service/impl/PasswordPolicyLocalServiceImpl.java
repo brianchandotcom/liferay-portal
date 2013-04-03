@@ -29,6 +29,7 @@ import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PasswordPolicyLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -62,7 +63,7 @@ public class PasswordPolicyLocalServiceImpl
 			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
 			minUpperCase, null, history, historyCount, expireable, maxAge,
 			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge);
+			resetFailureCount, resetTicketMaxAge, new ServiceContext());
 	}
 
 	public PasswordPolicy addPasswordPolicy(
@@ -74,7 +75,7 @@ public class PasswordPolicyLocalServiceImpl
 			boolean history, int historyCount, boolean expireable, long maxAge,
 			long warningTime, int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
-			long resetTicketMaxAge)
+			long resetTicketMaxAge, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Password policy
@@ -89,6 +90,7 @@ public class PasswordPolicyLocalServiceImpl
 		PasswordPolicy passwordPolicy = passwordPolicyPersistence.create(
 			passwordPolicyId);
 
+		passwordPolicy.setUuid(serviceContext.getUuid());
 		passwordPolicy.setUserId(userId);
 		passwordPolicy.setCompanyId(user.getCompanyId());
 		passwordPolicy.setUserName(user.getFullName());
@@ -173,7 +175,8 @@ public class PasswordPolicyLocalServiceImpl
 				PropsValues.PASSWORDS_DEFAULT_POLICY_MAX_FAILURE,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT,
-				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE);
+				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE,
+				new ServiceContext());
 		}
 	}
 
@@ -346,7 +349,7 @@ public class PasswordPolicyLocalServiceImpl
 			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase, null,
 			history, historyCount, expireable, maxAge, warningTime, graceLimit,
 			lockout, maxFailure, lockoutDuration, resetFailureCount,
-			resetTicketMaxAge);
+			resetTicketMaxAge, new ServiceContext());
 	}
 
 	public PasswordPolicy updatePasswordPolicy(
@@ -358,7 +361,7 @@ public class PasswordPolicyLocalServiceImpl
 			boolean history, int historyCount, boolean expireable, long maxAge,
 			long warningTime, int graceLimit, boolean lockout, int maxFailure,
 			long lockoutDuration, long resetFailureCount,
-			long resetTicketMaxAge)
+			long resetTicketMaxAge, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Date now = new Date();

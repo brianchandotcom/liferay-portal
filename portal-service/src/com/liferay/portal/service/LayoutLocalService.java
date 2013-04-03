@@ -816,6 +816,20 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the layouts that are derived from a layout prototype or
+	* layout set prototype.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return the matching layouts, or an empty list if no matches were found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Layout> getLayoutsLinkedWithPrototypes(
+		long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the primary key to use for the next layout.
 	*
 	* @param groupId the primary key of the group

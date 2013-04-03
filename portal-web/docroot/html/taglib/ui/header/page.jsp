@@ -33,7 +33,7 @@ if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);"
 String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : title;
 %>
 
-<div class="taglib-header <%= (cssClass != null) ? cssClass : "" %>">
+<div class="taglib-header <%= cssClass %>">
 	<c:if test="<%= showBackURL && Validator.isNotNull(backURL) %>">
 		<span class="header-back-to">
 			<a href="<%= backURL %>" id="<%= namespace %>TabsBack"><%= backLabel %></a>

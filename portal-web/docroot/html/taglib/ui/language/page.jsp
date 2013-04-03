@@ -47,7 +47,7 @@ if (Validator.isNull(formAction)) {
 
 String name = (String)request.getAttribute("liferay-ui:language:name");
 Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
-boolean displayCurrentLocale = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
+boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:language:displayStyle"));
 
 Map langCounts = new HashMap();

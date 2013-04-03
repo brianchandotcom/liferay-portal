@@ -19,7 +19,7 @@
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:actionJsp");
 boolean browseUp = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:browseUp"));
-String cssClass = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClass");
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClass"));
 Map<String, Object> dataExpand = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataExpand");
 Map<String, Object> dataView = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataView");
 String entryTitle = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:entryTitle");

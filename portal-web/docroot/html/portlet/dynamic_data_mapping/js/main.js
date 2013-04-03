@@ -191,6 +191,7 @@ AUI.add(
 
 						var field = LiferayFormBuilder.superclass.createField.apply(instance, arguments);
 
+						field.set('readOnlyAttributes', instance._getFieldReadOnlyAttributes(field));
 						field.set('strings', instance.get('strings'));
 
 						return field;
@@ -257,28 +258,17 @@ AUI.add(
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 
-						var newVal = event.newVal;
-
-						var translationManager = instance.translationManager;
-
 						var editingField = instance.editingField;
 
 						if (editingField) {
-							var readOnlyAttributes = editingField.get('readOnlyAttributes');
-
-							if (newVal === translationManager.get('defaultLocale')) {
-								AArray.removeItem(readOnlyAttributes, 'name');
-							}
-							else {
-								readOnlyAttributes.push('name');
-							}
+							var readOnlyAttributes = instance._getFieldReadOnlyAttributes(editingField);
 
 							editingField.set('readOnlyAttributes', readOnlyAttributes);
 						}
 
 						instance._updateFieldsLocalizationMap(event.prevVal);
 
-						instance._syncFieldsLocaleUI(newVal);
+						instance._syncFieldsLocaleUI(event.newVal);
 					},
 
 					_appendStructureChildren: function(field, buffer) {
@@ -470,6 +460,25 @@ AUI.add(
 							closeTag: typeElement[1],
 							openTag: typeElement[0]
 						};
+					},
+
+					_getFieldReadOnlyAttributes: function(field) {
+						var instance = this;
+
+						var translationManager = instance.translationManager;
+
+						var editingLocale = translationManager.get('editingLocale');
+
+						var readOnlyAttributes = field.get('readOnlyAttributes');
+
+						if (editingLocale === translationManager.get('defaultLocale')) {
+							AArray.removeItem(readOnlyAttributes, 'name');
+						}
+						else if (AArray.indexOf(readOnlyAttributes, 'name') === -1) {
+							readOnlyAttributes.push('name');
+						}
+
+						return readOnlyAttributes;
 					},
 
 					_onPropertyModelChange: function(event) {

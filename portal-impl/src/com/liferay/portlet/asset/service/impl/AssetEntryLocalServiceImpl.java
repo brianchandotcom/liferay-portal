@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -56,6 +57,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.ArrayList;
@@ -337,6 +339,23 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		assetEntryPersistence.update(entry);
 
 		return entry;
+	}
+
+	public AssetEntry incrementViewCounter(
+			User user, String className, long classPK)
+		throws PortalException, SystemException {
+
+		incrementViewCounter(user.getUserId(), className, classPK, 1);
+
+		AssetEntry assetEntry = getEntry(className, classPK);
+
+		if (!user.isDefaultUser()) {
+			socialActivityLocalService.addActivity(
+				user.getUserId(), assetEntry.getGroupId(), className, classPK,
+				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
+		}
+
+		return assetEntry;
 	}
 
 	public void reindex(List<AssetEntry> entries) throws PortalException {

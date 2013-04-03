@@ -105,7 +105,14 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	// Dynamically created asset entries are never persisted so incrementing the view counter breaks
 
 	if (!assetEntry.isNew() && assetEntry.isVisible()) {
-		AssetEntry incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
+		AssetEntry incrementAssetEntry = null;
+
+		if (assetEntryQuery.isEnablePermissions()) {
+			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
+		}
+		else {
+			incrementAssetEntry = AssetEntryLocalServiceUtil.incrementViewCounter(user, assetEntry.getClassName(), assetEntry.getClassPK());
+		}
 
 		if (incrementAssetEntry != null) {
 			assetEntry = incrementAssetEntry;

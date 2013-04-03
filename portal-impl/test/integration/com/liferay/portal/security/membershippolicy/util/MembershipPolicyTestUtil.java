@@ -25,12 +25,14 @@ import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
+import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
@@ -82,6 +84,15 @@ public class MembershipPolicyTestUtil {
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, populateServiceContext(true));
+	}
+
+	public static Role addRole(int type) throws Exception {
+		String name = ServiceTestUtil.randomString();
+
+		return RoleServiceUtil.addRole(
+			null, 0, name, ServiceTestUtil.randomLocaleStringMap(),
+			ServiceTestUtil.randomLocaleStringMap(), type,
+			ServiceTestUtil.randomString(), populateServiceContext(false));
 	}
 
 	public static User addUser(

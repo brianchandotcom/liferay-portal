@@ -14,9 +14,14 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.membershippolicy.util.MembershipPolicyTestUtil;
+import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -190,6 +195,25 @@ public class SiteMembershipPolicyRolesTest
 			addUsers(), group.getGroupId(), standardRoleIds[0]);
 
 		Assert.assertTrue(isPropagateRoles());
+	}
+
+	@Test
+	public void testVerifyWhenAddingRole() throws Exception {
+		MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+		Assert.assertTrue(isVerify());
+	}
+
+	@Test
+	public void testVerifyWhenUpdatingRole() throws Exception {
+		Role role = MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+		RoleServiceUtil.updateRole(
+			role.getRoleId(), ServiceTestUtil.randomString(),
+			role.getTitleMap(), role.getDescriptionMap(), role.getSubtype(),
+			new ServiceContext());
+
+		Assert.assertTrue(isVerify());
 	}
 
 }

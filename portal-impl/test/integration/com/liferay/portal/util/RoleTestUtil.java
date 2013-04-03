@@ -42,4 +42,13 @@ public class RoleTestUtil {
 		return role.getRoleId();
 	}
 
+	public static long addRegularRole(long groupId) throws Exception {
+		Role role = ServiceTestUtil.addRole(
+			ServiceTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+		RoleLocalServiceUtil.addGroupRole(groupId, role.getRoleId());
+
+		return role.getRoleId();
+	}
+
 }

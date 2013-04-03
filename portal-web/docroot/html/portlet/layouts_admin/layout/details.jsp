@@ -156,53 +156,55 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		</div>
 	</c:if>
 
-	<aui:select name="type">
+	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+		<aui:select name="type">
 
-		<%
-		for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-			if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-				continue;
+			<%
+			for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+				if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+					continue;
+				}
+			%>
+
+				<aui:option disabled="<%= selLayout.isFirstParent() && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
+
+			<%
 			}
-		%>
+			%>
 
-			<aui:option disabled="<%= selLayout.isFirstParent() && !PortalUtil.isLayoutFirstPageable(PropsValues.LAYOUT_TYPES[i]) %>" label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' selected="<%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) %>" value="<%= PropsValues.LAYOUT_TYPES[i] %>" />
+		</aui:select>
 
-		<%
-		}
-		%>
+		<div id="<portlet:namespace />layoutTypeForm">
 
-	</aui:select>
+			<%
+			for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+				String curLayoutType = PropsValues.LAYOUT_TYPES[i];
 
-	<div id="<portlet:namespace />layoutTypeForm">
+				if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+					continue;
+				}
+			%>
 
-		<%
-		for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-			String curLayoutType = PropsValues.LAYOUT_TYPES[i];
+				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">
 
-			if (PropsValues.LAYOUT_TYPES[i].equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-				continue;
+					<%
+					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
+					%>
+
+					<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>" />
+				</div>
+
+			<%
 			}
-		%>
+			%>
 
-			<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">
-
-				<%
-				request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
-				%>
-
-				<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>" />
-			</div>
-
-		<%
-		}
-		%>
-
+		</div>
 	</div>
-
 </aui:fieldset>
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabledCheckbox','<portlet:namespace />layoutPrototypeMergeAlert');
+	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabledCheckbox','<portlet:namespace />typeOptions', true);
 </aui:script>
 
 <aui:script use="aui-base">

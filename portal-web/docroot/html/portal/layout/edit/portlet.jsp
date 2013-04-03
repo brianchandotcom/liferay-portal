@@ -119,6 +119,8 @@
 			}
 		);
 
+		button.toggle('<%= selLayout.getType() %>' == 'portlet');
+
 		var buttonRow = A.one('#<portlet:namespace />layoutToolbar');
 
 		if (buttonRow) {

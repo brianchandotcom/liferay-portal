@@ -26,6 +26,10 @@ public class IgnoreNotificationsAddConnnectionTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/joebloggs/so/dashboard/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("1"),
@@ -37,13 +41,14 @@ public class IgnoreNotificationsAddConnnectionTest extends BaseTestCase {
 			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Ignore"),
 			selenium.getText(
-				"//div[@class='notification-entry']/div[2]/span[2]/a"));
-		selenium.clickAt("//div[@class='notification-entry']/div[2]/span[2]/a",
+				"//span[@class='lfr-user-action-item lfr-user-action-ignore']/a"));
+		selenium.clickAt("//span[@class='lfr-user-action-item lfr-user-action-ignore']/a",
 			RuntimeVariables.replace("Ignore"));
-		assertTrue(selenium.isElementPresent(
-				"//li[@id='_145_notificationsMenu']"));
+		selenium.waitForText("//span[@class='notification-count']", "0");
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
+		assertTrue(selenium.isElementPresent(
+				"//li[@id='_145_notificationsMenu']"));
 		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
 		assertFalse(selenium.isTextPresent(
 				"Social01 Office01 User01 would like to add you as a connection."));

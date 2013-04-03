@@ -610,6 +610,11 @@ public class SeleniumBuilderTest {
 				"/FunctionThenElement1002.function:6");
 	}
 
+	@Test
+	public void testMacro() throws Exception {
+		test("Macro.macro");
+	}
+
 	protected void test(String fileName) throws Exception {
 		test(fileName, null, false);
 	}

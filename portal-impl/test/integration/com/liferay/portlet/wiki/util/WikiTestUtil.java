@@ -101,6 +101,14 @@ public class WikiTestUtil {
 
 		String fileName = ServiceTestUtil.randomString() + ".docx";
 
+		return addWikiAttachment(userId, nodeId, title, fileName, clazz);
+	}
+
+	public static File addWikiAttachment(
+			long userId, long nodeId, String title, String fileName,
+			Class<?> clazz)
+		throws Exception {
+
 		byte[] fileBytes = FileUtil.getBytes(
 			clazz.getResourceAsStream("dependencies/OSX_Test.docx"));
 

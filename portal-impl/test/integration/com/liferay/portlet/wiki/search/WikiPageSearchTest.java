@@ -16,8 +16,6 @@ package com.liferay.portlet.wiki.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -33,11 +31,8 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
-
-import java.io.File;
 
 import java.util.List;
 
@@ -75,24 +70,9 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
 		WikiPage page = (WikiPage)classedModel;
 
-		String fileName = ServiceTestUtil.randomString() + ".docx";
-
-		Class<?> clazz = getClass();
-
-		byte[] bytes = FileUtil.getBytes(
-			clazz.getResourceAsStream("dependencies/OSX_Test.docx"));
-
-		File file = null;
-
-		if ((bytes != null) && (bytes.length > 0)) {
-			file = FileUtil.createTempFile(bytes);
-		}
-
-		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
-
-		WikiPageLocalServiceUtil.addPageAttachment(
+		WikiTestUtil.addWikiAttachment(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
-			fileName, file, mimeType);
+			getClass());
 	}
 
 	@Override

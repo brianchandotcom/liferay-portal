@@ -210,7 +210,7 @@ if (!selectableTree) {
 						draggable: node.sortable,
 						expanded: expanded,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
-						leaf: !hasChildren,
+						leaf: !node.parentable,
 						paginator: {
 							limit: TreeUtil.PAGINATION_LIMIT,
 							offsetParam: 'start',

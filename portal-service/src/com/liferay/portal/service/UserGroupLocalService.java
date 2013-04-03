@@ -595,9 +595,8 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param companyId the primary key of the user group's company
 	* @param name the user group's name
 	* @param description the user group's description
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set expando bridge attributes for the
-	user group.
+	* @param serviceContext the service context to be applied. Can set expando
+	bridge attributes for the user group.
 	* @return the user group
 	* @throws PortalException if the user group's information was invalid
 	* @throws SystemException if a system exception occurred
@@ -650,6 +649,11 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.UserGroup fetchUserGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the user group with the name.

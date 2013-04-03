@@ -60,6 +60,21 @@ public interface RoleModel extends AttachedModel, BaseModel<Role> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this role.
+	 *
+	 * @return the uuid of this role
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this role.
+	 *
+	 * @param uuid the uuid of this role
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the role ID of this role.
 	 *
 	 * @return the role ID of this role

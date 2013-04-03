@@ -506,9 +506,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs, asset tag
-	names, and expando bridge attributes for the organization.
+	* @param serviceContext the service context to be applied.  Can set
+	asset category IDs, asset tag names, and expando bridge
+	attributes for the organization.
 	* @return the organization
 	* @throws PortalException if a creator or parent organization with the
 	primary key could not be found or if the organization's
@@ -547,9 +547,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs, asset tag names,
-	and expando bridge attributes for the organization.
+	* @param serviceContext the service context to be applied. Can set asset
+	category IDs, asset tag names, and expando bridge attributes for
+	the organization.
 	* @return the organization
 	* @throws PortalException if a creator or parent organization with the
 	primary key could not be found or if the organization's
@@ -602,6 +602,11 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void deleteLogo(long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the organization with the name.

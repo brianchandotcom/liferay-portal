@@ -34,9 +34,11 @@ import java.io.ObjectOutput;
 public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{roleId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", roleId=");
 		sb.append(roleId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -61,6 +63,13 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 
 	public Role toEntityModel() {
 		RoleImpl roleImpl = new RoleImpl();
+
+		if (uuid == null) {
+			roleImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			roleImpl.setUuid(uuid);
+		}
 
 		roleImpl.setRoleId(roleId);
 		roleImpl.setCompanyId(companyId);
@@ -103,6 +112,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		roleId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
@@ -116,6 +126,13 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
@@ -152,6 +169,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		}
 	}
 
+	public String uuid;
 	public long roleId;
 	public long companyId;
 	public long classNameId;

@@ -61,6 +61,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	 */
 	public static final String TABLE_NAME = "UserGroup";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "userGroupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "parentUserGroupId", Types.BIGINT },
@@ -68,7 +69,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			{ "description", Types.VARCHAR },
 			{ "addedByLDAPImport", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserGroup (userGroupId LONG not null primary key,companyId LONG,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserGroup (uuid_ VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroup.name ASC";
@@ -87,6 +88,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
 	public static long PARENTUSERGROUPID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -101,6 +103,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		UserGroup model = new UserGroupImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setUserGroupId(soapModel.getUserGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setParentUserGroupId(soapModel.getParentUserGroupId());
@@ -189,6 +192,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("parentUserGroupId", getParentUserGroupId());
@@ -201,6 +205,12 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long userGroupId = (Long)attributes.get("userGroupId");
 
 		if (userGroupId != null) {
@@ -236,6 +246,28 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
 		}
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -371,6 +403,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public Object clone() {
 		UserGroupImpl userGroupImpl = new UserGroupImpl();
 
+		userGroupImpl.setUuid(getUuid());
 		userGroupImpl.setUserGroupId(getUserGroupId());
 		userGroupImpl.setCompanyId(getCompanyId());
 		userGroupImpl.setParentUserGroupId(getParentUserGroupId());
@@ -429,6 +462,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	public void resetOriginalValues() {
 		UserGroupModelImpl userGroupModelImpl = this;
 
+		userGroupModelImpl._originalUuid = userGroupModelImpl._uuid;
+
 		userGroupModelImpl._originalCompanyId = userGroupModelImpl._companyId;
 
 		userGroupModelImpl._setOriginalCompanyId = false;
@@ -445,6 +480,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	@Override
 	public CacheModel<UserGroup> toCacheModel() {
 		UserGroupCacheModel userGroupCacheModel = new UserGroupCacheModel();
+
+		userGroupCacheModel.uuid = getUuid();
+
+		String uuid = userGroupCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			userGroupCacheModel.uuid = null;
+		}
 
 		userGroupCacheModel.userGroupId = getUserGroupId();
 
@@ -475,9 +518,11 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{userGroupId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", userGroupId=");
 		sb.append(getUserGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -495,12 +540,16 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserGroup");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userGroupId</column-name><column-value><![CDATA[");
 		sb.append(getUserGroupId());
@@ -535,6 +584,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			UserGroup.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _userGroupId;
 	private long _companyId;
 	private long _originalCompanyId;

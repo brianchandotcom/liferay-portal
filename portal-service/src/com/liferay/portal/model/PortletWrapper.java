@@ -981,24 +981,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Returns the name of the template handler class of the portlet.
-	*
-	* @return the name of the template handler class of the portlet
-	*/
-	public java.lang.String getTemplateHandlerClass() {
-		return _portlet.getTemplateHandlerClass();
-	}
-
-	/**
-	* Returns the name of the template handler instance of the portlet.
-	*
-	* @return the name of the template handler instance of the portlet
-	*/
-	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
-		return _portlet.getTemplateHandlerInstance();
-	}
-
-	/**
 	* Returns the filters of the portlet.
 	*
 	* @return filters of the portlet
@@ -1451,6 +1433,24 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	public boolean getSystem() {
 		return _portlet.getSystem();
+	}
+
+	/**
+	* Returns the name of the template handler class of the portlet.
+	*
+	* @return the name of the template handler class of the portlet
+	*/
+	public java.lang.String getTemplateHandlerClass() {
+		return _portlet.getTemplateHandlerClass();
+	}
+
+	/**
+	* Returns the template handler instance of the portlet.
+	*
+	* @return the template handler instance of the portlet
+	*/
+	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
+		return _portlet.getTemplateHandlerInstance();
 	}
 
 	/**
@@ -2482,16 +2482,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the name of the template handler class of the portlet.
-	*
-	* @param templateHandlerClass the name of template handler class of the
-	* portlet
-	*/
-	public void setTemplateHandlerClass(java.lang.String templateHandlerClass) {
-		_portlet.setTemplateHandlerClass(templateHandlerClass);
-	}
-
-	/**
 	* Sets the filters of the portlet.
 	*
 	* @param portletFilters the filters of the portlet
@@ -2850,6 +2840,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	public void setSystem(boolean system) {
 		_portlet.setSystem(system);
+	}
+
+	/**
+	* Sets the name of the template handler class of the portlet.
+	*
+	* @param templateHandlerClass the name of template handler class of the
+	portlet
+	*/
+	public void setTemplateHandlerClass(java.lang.String templateHandlerClass) {
+		_portlet.setTemplateHandlerClass(templateHandlerClass);
 	}
 
 	/**

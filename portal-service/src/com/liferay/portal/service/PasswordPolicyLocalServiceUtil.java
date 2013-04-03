@@ -286,7 +286,8 @@ public class PasswordPolicyLocalServiceUtil {
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -295,13 +296,21 @@ public class PasswordPolicyLocalServiceUtil {
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	public static void checkDefaultPasswordPolicy(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().checkDefaultPasswordPolicy(companyId);
+	}
+
+	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchPasswordPolicyByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
@@ -380,7 +389,8 @@ public class PasswordPolicyLocalServiceUtil {
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -389,7 +399,8 @@ public class PasswordPolicyLocalServiceUtil {
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	public static PasswordPolicyLocalService getService() {

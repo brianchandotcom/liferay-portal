@@ -43,6 +43,7 @@ public class OrganizationWrapper implements Organization,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("parentOrganizationId", getParentOrganizationId());
@@ -59,6 +60,12 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long organizationId = (Long)attributes.get("organizationId");
 
 		if (organizationId != null) {
@@ -142,6 +149,24 @@ public class OrganizationWrapper implements Organization,
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_organization.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this organization.
+	*
+	* @return the uuid of this organization
+	*/
+	public java.lang.String getUuid() {
+		return _organization.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this organization.
+	*
+	* @param uuid the uuid of this organization
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_organization.setUuid(uuid);
 	}
 
 	/**

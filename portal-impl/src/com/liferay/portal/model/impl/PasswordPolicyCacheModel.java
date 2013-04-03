@@ -37,9 +37,11 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
-		sb.append("{passwordPolicyId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", passwordPolicyId=");
 		sb.append(passwordPolicyId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -112,6 +114,13 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 
 	public PasswordPolicy toEntityModel() {
 		PasswordPolicyImpl passwordPolicyImpl = new PasswordPolicyImpl();
+
+		if (uuid == null) {
+			passwordPolicyImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			passwordPolicyImpl.setUuid(uuid);
+		}
 
 		passwordPolicyImpl.setPasswordPolicyId(passwordPolicyId);
 		passwordPolicyImpl.setCompanyId(companyId);
@@ -192,6 +201,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		passwordPolicyId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -229,6 +239,13 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(passwordPolicyId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -291,6 +308,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		objectOutput.writeLong(resetTicketMaxAge);
 	}
 
+	public String uuid;
 	public long passwordPolicyId;
 	public long companyId;
 	public long userId;

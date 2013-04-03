@@ -35,9 +35,11 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{userGroupId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", userGroupId=");
 		sb.append(userGroupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -56,6 +58,13 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 	public UserGroup toEntityModel() {
 		UserGroupImpl userGroupImpl = new UserGroupImpl();
+
+		if (uuid == null) {
+			userGroupImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			userGroupImpl.setUuid(uuid);
+		}
 
 		userGroupImpl.setUserGroupId(userGroupId);
 		userGroupImpl.setCompanyId(companyId);
@@ -83,6 +92,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		userGroupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		parentUserGroupId = objectInput.readLong();
@@ -93,6 +103,13 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(userGroupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(parentUserGroupId);
@@ -114,6 +131,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		objectOutput.writeBoolean(addedByLDAPImport);
 	}
 
+	public String uuid;
 	public long userGroupId;
 	public long companyId;
 	public long parentUserGroupId;

@@ -42,6 +42,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("parentUserGroupId", getParentUserGroupId());
@@ -53,6 +54,12 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long userGroupId = (Long)attributes.get("userGroupId");
 
 		if (userGroupId != null) {
@@ -106,6 +113,24 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_userGroup.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this user group.
+	*
+	* @return the uuid of this user group
+	*/
+	public java.lang.String getUuid() {
+		return _userGroup.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this user group.
+	*
+	* @param uuid the uuid of this user group
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_userGroup.setUuid(uuid);
 	}
 
 	/**

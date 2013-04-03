@@ -110,6 +110,8 @@ public class UserGroupPersistenceTest {
 
 		UserGroup newUserGroup = _persistence.create(pk);
 
+		newUserGroup.setUuid(ServiceTestUtil.randomString());
+
 		newUserGroup.setCompanyId(ServiceTestUtil.nextLong());
 
 		newUserGroup.setParentUserGroupId(ServiceTestUtil.nextLong());
@@ -124,6 +126,7 @@ public class UserGroupPersistenceTest {
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
+		Assert.assertEquals(existingUserGroup.getUuid(), newUserGroup.getUuid());
 		Assert.assertEquals(existingUserGroup.getUserGroupId(),
 			newUserGroup.getUserGroupId());
 		Assert.assertEquals(existingUserGroup.getCompanyId(),
@@ -292,6 +295,8 @@ public class UserGroupPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		UserGroup userGroup = _persistence.create(pk);
+
+		userGroup.setUuid(ServiceTestUtil.randomString());
 
 		userGroup.setCompanyId(ServiceTestUtil.nextLong());
 

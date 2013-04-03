@@ -30,6 +30,7 @@ public class UserGroupSoap implements Serializable {
 	public static UserGroupSoap toSoapModel(UserGroup model) {
 		UserGroupSoap soapModel = new UserGroupSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setUserGroupId(model.getUserGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setParentUserGroupId(model.getParentUserGroupId());
@@ -88,6 +89,14 @@ public class UserGroupSoap implements Serializable {
 		setUserGroupId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getUserGroupId() {
 		return _userGroupId;
 	}
@@ -140,6 +149,7 @@ public class UserGroupSoap implements Serializable {
 		_addedByLDAPImport = addedByLDAPImport;
 	}
 
+	private String _uuid;
 	private long _userGroupId;
 	private long _companyId;
 	private long _parentUserGroupId;

@@ -86,7 +86,8 @@ public class PasswordPolicyServiceUtil {
 		int minUpperCase, java.lang.String regex, boolean history,
 		int historyCount, boolean expireable, long maxAge, long warningTime,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -95,7 +96,7 @@ public class PasswordPolicyServiceUtil {
 			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
 			minUpperCase, regex, history, historyCount, expireable, maxAge,
 			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge);
+			resetFailureCount, resetTicketMaxAge, serviceContext);
 	}
 
 	public static void deletePasswordPolicy(long passwordPolicyId)
@@ -136,7 +137,8 @@ public class PasswordPolicyServiceUtil {
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -145,7 +147,8 @@ public class PasswordPolicyServiceUtil {
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	public static PasswordPolicyService getService() {

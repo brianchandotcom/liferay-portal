@@ -667,6 +667,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.fetchRole(companyId, name);
 	}
 
+	public com.liferay.portal.model.Role fetchRoleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId);
+	}
+
 	/**
 	* Returns the default role for the group with the primary key.
 	*

@@ -110,6 +110,8 @@ public class RolePersistenceTest {
 
 		Role newRole = _persistence.create(pk);
 
+		newRole.setUuid(ServiceTestUtil.randomString());
+
 		newRole.setCompanyId(ServiceTestUtil.nextLong());
 
 		newRole.setClassNameId(ServiceTestUtil.nextLong());
@@ -130,6 +132,7 @@ public class RolePersistenceTest {
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
 
+		Assert.assertEquals(existingRole.getUuid(), newRole.getUuid());
 		Assert.assertEquals(existingRole.getRoleId(), newRole.getRoleId());
 		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
 		Assert.assertEquals(existingRole.getClassNameId(),
@@ -304,6 +307,8 @@ public class RolePersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		Role role = _persistence.create(pk);
+
+		role.setUuid(ServiceTestUtil.randomString());
 
 		role.setCompanyId(ServiceTestUtil.nextLong());
 

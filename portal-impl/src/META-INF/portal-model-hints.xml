@@ -456,6 +456,7 @@
 		<field name="statusId" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.Organization">
+		<field name="uuid" type="String" />
 		<field name="organizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="parentOrganizationId" type="long" />
@@ -504,6 +505,7 @@
 		<field name="satClose" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.PasswordPolicy">
+		<field name="uuid" type="String" />
 		<field name="passwordPolicyId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -737,6 +739,7 @@
 		<field name="actionIds" type="long" />
 	</model>
 	<model name="com.liferay.portal.model.Role">
+		<field name="uuid" type="String" />
 		<field name="roleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />
@@ -870,6 +873,7 @@
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroup">
+		<field name="uuid" type="String" />
 		<field name="userGroupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="parentUserGroupId" type="long" />

@@ -61,6 +61,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	 */
 	public static final String TABLE_NAME = "Organization_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "organizationId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "parentOrganizationId", Types.BIGINT },
@@ -73,7 +74,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "statusId", Types.INTEGER },
 			{ "comments", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (organizationId LONG not null primary key,companyId LONG,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -92,6 +93,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
 	public static long PARENTORGANIZATIONID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -106,6 +108,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		Organization model = new OrganizationImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setOrganizationId(soapModel.getOrganizationId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setParentOrganizationId(soapModel.getParentOrganizationId());
@@ -191,6 +194,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("parentOrganizationId", getParentOrganizationId());
@@ -208,6 +212,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long organizationId = (Long)attributes.get("organizationId");
 
 		if (organizationId != null) {
@@ -273,6 +283,28 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		if (comments != null) {
 			setComments(comments);
 		}
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -463,6 +495,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public Object clone() {
 		OrganizationImpl organizationImpl = new OrganizationImpl();
 
+		organizationImpl.setUuid(getUuid());
 		organizationImpl.setOrganizationId(getOrganizationId());
 		organizationImpl.setCompanyId(getCompanyId());
 		organizationImpl.setParentOrganizationId(getParentOrganizationId());
@@ -526,6 +559,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	public void resetOriginalValues() {
 		OrganizationModelImpl organizationModelImpl = this;
 
+		organizationModelImpl._originalUuid = organizationModelImpl._uuid;
+
 		organizationModelImpl._originalCompanyId = organizationModelImpl._companyId;
 
 		organizationModelImpl._setOriginalCompanyId = false;
@@ -542,6 +577,14 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	@Override
 	public CacheModel<Organization> toCacheModel() {
 		OrganizationCacheModel organizationCacheModel = new OrganizationCacheModel();
+
+		organizationCacheModel.uuid = getUuid();
+
+		String uuid = organizationCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			organizationCacheModel.uuid = null;
+		}
 
 		organizationCacheModel.organizationId = getOrganizationId();
 
@@ -594,9 +637,11 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{organizationId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", organizationId=");
 		sb.append(getOrganizationId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -624,12 +669,16 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Organization");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>organizationId</column-name><column-value><![CDATA[");
 		sb.append(getOrganizationId());
@@ -684,6 +733,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			Organization.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _organizationId;
 	private long _companyId;
 	private long _originalCompanyId;

@@ -78,7 +78,8 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		int minUpperCase, java.lang.String regex, boolean history,
 		int historyCount, boolean expireable, long maxAge, long warningTime,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _passwordPolicyService.addPasswordPolicy(name, description,
@@ -86,7 +87,8 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	public void deletePasswordPolicy(long passwordPolicyId)
@@ -126,7 +128,8 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _passwordPolicyService.updatePasswordPolicy(passwordPolicyId,
@@ -134,7 +137,8 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	/**

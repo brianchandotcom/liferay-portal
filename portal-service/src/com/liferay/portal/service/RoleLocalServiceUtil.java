@@ -681,6 +681,12 @@ public class RoleLocalServiceUtil {
 		return getService().fetchRole(companyId, name);
 	}
 
+	public static com.liferay.portal.model.Role fetchRoleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRoleByUuidAndCompanyId(uuid, companyId);
+	}
+
 	/**
 	* Returns the default role for the group with the primary key.
 	*

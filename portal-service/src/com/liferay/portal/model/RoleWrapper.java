@@ -42,6 +42,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("roleId", getRoleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -56,6 +57,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long roleId = (Long)attributes.get("roleId");
 
 		if (roleId != null) {
@@ -127,6 +134,24 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_role.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this role.
+	*
+	* @return the uuid of this role
+	*/
+	public java.lang.String getUuid() {
+		return _role.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this role.
+	*
+	* @param uuid the uuid of this role
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_role.setUuid(uuid);
 	}
 
 	/**

@@ -44,6 +44,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -82,6 +83,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
 
 		if (passwordPolicyId != null) {
@@ -298,6 +305,24 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_passwordPolicy.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this password policy.
+	*
+	* @return the uuid of this password policy
+	*/
+	public java.lang.String getUuid() {
+		return _passwordPolicy.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this password policy.
+	*
+	* @param uuid the uuid of this password policy
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_passwordPolicy.setUuid(uuid);
 	}
 
 	/**

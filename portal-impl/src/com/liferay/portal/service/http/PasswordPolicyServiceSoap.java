@@ -102,7 +102,8 @@ public class PasswordPolicyServiceSoap {
 		int minUpperCase, java.lang.String regex, boolean history,
 		int historyCount, boolean expireable, long maxAge, long warningTime,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.PasswordPolicy returnValue = PasswordPolicyServiceUtil.addPasswordPolicy(name,
@@ -111,7 +112,8 @@ public class PasswordPolicyServiceSoap {
 					minLength, minLowerCase, minNumbers, minSymbols,
 					minUpperCase, regex, history, historyCount, expireable,
 					maxAge, warningTime, graceLimit, lockout, maxFailure,
-					lockoutDuration, resetFailureCount, resetTicketMaxAge);
+					lockoutDuration, resetFailureCount, resetTicketMaxAge,
+					serviceContext);
 
 			return com.liferay.portal.model.PasswordPolicySoap.toSoapModel(returnValue);
 		}
@@ -174,7 +176,8 @@ public class PasswordPolicyServiceSoap {
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.PasswordPolicy returnValue = PasswordPolicyServiceUtil.updatePasswordPolicy(passwordPolicyId,
@@ -183,7 +186,8 @@ public class PasswordPolicyServiceSoap {
 					minLength, minLowerCase, minNumbers, minSymbols,
 					minUpperCase, regex, history, historyCount, expireable,
 					maxAge, warningTime, graceLimit, lockout, maxFailure,
-					lockoutDuration, resetFailureCount, resetTicketMaxAge);
+					lockoutDuration, resetFailureCount, resetTicketMaxAge,
+					serviceContext);
 
 			return com.liferay.portal.model.PasswordPolicySoap.toSoapModel(returnValue);
 		}

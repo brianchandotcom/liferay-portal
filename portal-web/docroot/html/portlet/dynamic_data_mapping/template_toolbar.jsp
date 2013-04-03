@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -25,14 +27,8 @@ long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewTemplatesURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
-		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	</portlet:renderURL>
-
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewTemplatesURL %>"><liferay-ui:message key="view-all" /></a>
+		<a href="<%= PortalUtil.escapeRedirect(redirect) %>"><liferay-ui:message key="view-all" /></a>
 	</span>
 
 	<%
@@ -44,7 +40,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -65,7 +61,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
 				<portlet:renderURL var="addTemplateURL">
 					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -102,8 +98,8 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 					<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
 						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-						<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-						<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="backURL" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 						<portlet:param name="ddmResourceActionId" value="<%= ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE %>" />

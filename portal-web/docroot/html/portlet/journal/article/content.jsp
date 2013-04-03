@@ -715,7 +715,6 @@ if (Validator.isNotNull(content)) {
 		Liferay.Util.openDDMPortlet(
 			{
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
-				chooseCallback: '<portlet:namespace />selectTemplate',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,
 				ddmResource: '<%= ddmResource %>',
@@ -724,13 +723,19 @@ if (Validator.isNotNull(content)) {
 					modal: true,
 					width: '80%'
 				},
+				eventName: '<portlet:namespace />selectTemplate',
 				groupId: <%= groupId %>,
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
-				struts_action: '/dynamic_data_mapping/view_template',
+				struts_action: '/dynamic_data_mapping/select_template',
 				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
+			},
+			function(event) {
+				document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
+
+				submitForm(document.<portlet:namespace />fm1);
 			}
 		);
 	}

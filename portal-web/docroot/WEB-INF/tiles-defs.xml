@@ -580,6 +580,10 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/view.jsp" />
 	</definition>
 
+	<definition name="portlet.dynamic_data_mapping.select_template" extends="portlet.dynamic_data_mapping">
+		<put name="portlet_content" value="/portlet/dynamic_data_mapping/select_template.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_mapping.view_template" extends="portlet.dynamic_data_mapping">
 		<put name="portlet_content" value="/portlet/dynamic_data_mapping/view_template.jsp" />
 	</definition>

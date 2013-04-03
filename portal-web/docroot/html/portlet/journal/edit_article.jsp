@@ -376,16 +376,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		document.getElementById(<portlet:namespace />imageGalleryInput).value = url;
 	}
 
-	function <portlet:namespace />selectTemplate(ddmTemplateId, ddmTemplateName, dialog) {
-		document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = ddmTemplateId;
-
-		if (dialog) {
-			dialog.close();
-		}
-
-		submitForm(document.<portlet:namespace />fm1);
-	}
-
 	function <portlet:namespace />submitForm(event) {
 		event.preventDefault();
 

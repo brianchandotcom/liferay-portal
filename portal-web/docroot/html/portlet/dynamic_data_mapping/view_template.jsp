@@ -68,6 +68,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 />
 
 <liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
+	<liferay-util:param name="redirect" value="<%= currentURL %>" />
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 </liferay-util:include>
@@ -115,34 +116,17 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 		>
 
 			<%
-			String rowHREF = null;
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-			if (Validator.isNotNull(chooseCallback)) {
-				StringBundler sb = new StringBundler(7);
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
+			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
+			rowURL.setParameter("classNameId", String.valueOf(classNameId));
+			rowURL.setParameter("classPK", String.valueOf(classPK));
+			rowURL.setParameter("type", template.getType());
 
-				sb.append("javascript:Liferay.Util.getOpener()['");
-				sb.append(HtmlUtil.escapeJS(chooseCallback));
-				sb.append("']('");
-				sb.append(template.getTemplateId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(template.getName(locale)));
-				sb.append("', Liferay.Util.getWindow());");
-
-				rowHREF = sb.toString();
-			}
-			else {
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
-				rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
-				rowURL.setParameter("classNameId", String.valueOf(classNameId));
-				rowURL.setParameter("classPK", String.valueOf(classPK));
-				rowURL.setParameter("type", template.getType());
-
-				rowHREF = rowURL.toString();
-			}
+			String rowHREF = rowURL.toString();
 			%>
 
 			<liferay-ui:search-container-row-parameter

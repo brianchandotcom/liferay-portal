@@ -64,6 +64,14 @@ public class AccessControlAdvice extends
 	private static AccessControlled _nullAccessControlled =
 		new AccessControlled() {
 
+		public boolean guestAccessEnabled() {
+			return false;
+		}
+
+		public boolean hostAllowedValidationEnabled() {
+			return true;
+		}
+
 		public Class<? extends Annotation> annotationType() {
 			return AccessControlled.class;
 		}

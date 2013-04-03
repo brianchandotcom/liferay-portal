@@ -39,12 +39,16 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 	public void accept(Method method, AccessControlled accessControlled)
 		throws SecurityException {
 
-		checkAllowedHosts();
+		if (accessControlled.hostAllowedValidationEnabled()) {
+			checkAllowedHosts();
+		}
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((permissionChecker == null) || !permissionChecker.isSignedIn()) {
+		if (!accessControlled.guestAccessEnabled() &&
+			((permissionChecker == null) || !permissionChecker.isSignedIn())) {
+
 			throw new SecurityException("Authenticated access required");
 		}
 	}

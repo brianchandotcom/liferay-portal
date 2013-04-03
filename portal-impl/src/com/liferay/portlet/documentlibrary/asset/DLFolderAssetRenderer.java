@@ -183,6 +183,15 @@ public class DLFolderAssetRenderer
 		return _folder.getUuid();
 	}
 
+	@Override
+	public boolean isDisplayable() {
+		if (_folder.isMountPoint()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

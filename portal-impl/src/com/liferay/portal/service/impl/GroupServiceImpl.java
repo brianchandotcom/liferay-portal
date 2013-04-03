@@ -185,6 +185,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		groupLocalService.addRoleGroups(roleId, groupIds);
 	}
 
+	/**
+	 * Checks that the current user is permitted to use the group for Remote
+	 * Staging.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if the current user did not have permission to view the
+	 *         group, or if the group's company was different from the current
+	 *         user's company
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void checkRemoteStagingGroup(long groupId)
 		throws PortalException, SystemException {
 

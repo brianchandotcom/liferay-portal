@@ -111,7 +111,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 		else {
-			incrementAssetEntry = AssetEntryLocalServiceUtil.incrementViewCounter(user, assetEntry.getClassName(), assetEntry.getClassPK());
+			incrementAssetEntry = AssetEntryLocalServiceUtil.incrementViewCounter(user.getUserId(), assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 
 		if (incrementAssetEntry != null) {

@@ -14,53 +14,35 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.util.ThreadUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class FinalizeManagerTest extends PowerMockito {
+@RunWith(NewClassLoaderJUnitTestRunner.class)
+public class FinalizeManagerTest {
 
-	@Before
-	public void setUp() throws Exception {
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.get(PropsKeys.FINALIZE_MANAGER_THREAD_ENABLED)
-		).thenReturn(
-			"false"
-		);
-	}
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
 
 	@After
 	public void tearDown() {
-		PowerMockito.verifyStatic();
+		System.clearProperty(_THREAD_ENABLED_KEY);
 	}
 
 	@Test
-	public void testRegister() throws Exception {
-		if (FinalizeManager.THREAD_ENABLED) {
-			registerWithThread();
-		}
-		else {
-			registerWithoutThread();
-		}
-	}
+	public void testRegisterWithoutThread() throws InterruptedException {
+		System.setProperty(_THREAD_ENABLED_KEY, "false");
 
-	protected void registerWithoutThread() throws InterruptedException {
 		Object testObject = new Object();
 
 		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
@@ -87,7 +69,10 @@ public class FinalizeManagerTest extends PowerMockito {
 		Assert.assertTrue(markFinalizeAction.isMarked());
 	}
 
-	protected void registerWithThread() throws InterruptedException {
+	@Test
+	public void testRegisterWithThread() throws InterruptedException {
+		System.setProperty(_THREAD_ENABLED_KEY, "true");
+
 		Object testObject = new Object();
 
 		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
@@ -111,7 +96,48 @@ public class FinalizeManagerTest extends PowerMockito {
 		}
 
 		Assert.assertTrue(markFinalizeAction.isMarked());
+
+		Thread finializeThread = null;
+
+		for (Thread thread : ThreadUtil.getThreads()) {
+			if (thread.getName().equals("Finalize Thread")) {
+				finializeThread = thread;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(finializeThread);
+
+		// First waiting
+
+		startTime = System.currentTimeMillis();
+
+		while (finializeThread.getState() != Thread.State.WAITING) {
+			if ((System.currentTimeMillis() - startTime) > 10000) {
+				Assert.fail(
+					"Timeout on waiting finialize thread to enter waiting " +
+						"state.");
+			}
+		}
+
+		// Interrupt to wake up
+
+		finializeThread.interrupt();
+
+		// Second waiting
+
+		while (finializeThread.getState() != Thread.State.WAITING) {
+			if ((System.currentTimeMillis() - startTime) > 10000) {
+				Assert.fail(
+					"Timeout on waiting finialize thread to enter waiting " +
+						"state.");
+			}
+		}
 	}
+
+	private static final String _THREAD_ENABLED_KEY =
+		FinalizeManager.class.getName() + ".thread.enabled";
 
 	private class MarkFinalizeAction implements FinalizeAction {
 

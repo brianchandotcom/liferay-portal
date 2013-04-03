@@ -70,7 +70,6 @@ if (Validator.isNotNull(script)) {
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="xsd" type="hidden" />
-	<aui:input name="saveCallback" type="hidden" value="<%= saveCallback %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
@@ -265,8 +264,4 @@ if (Validator.isNotNull(script)) {
 		},
 		['aui-base', 'liferay-portlet-dynamic-data-mapping']
 	);
-
-	<c:if test="<%= Validator.isNotNull(saveCallback) && (classPK != 0) %>">
-		window.parent['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= classPK %>', '<%= HtmlUtil.escape(structure.getName(locale)) %>');
-	</c:if>
 </aui:script>

@@ -28,12 +28,16 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeImageGallery;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeJournal;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoardsAttachments;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeOrganization;
+import com.liferay.portal.upgrade.v6_2_0.UpgradePasswordPolicy;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePolls;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeRepositoryEntry;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeRole;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
+import com.liferay.portal.upgrade.v6_2_0.UpgradeUserGroup;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWikiAttachments;
 
 /**
@@ -62,11 +66,15 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeMessageBoardsAttachments.class);
+		upgrade(UpgradeOrganization.class);
+		upgrade(UpgradePasswordPolicy.class);
 		upgrade(UpgradePolls.class);
 		upgrade(UpgradePortletPreferences.class);
 		upgrade(UpgradeRepositoryEntry.class);
+		upgrade(UpgradeRole.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeUser.class);
+		upgrade(UpgradeUserGroup.class);
 		upgrade(UpgradeWikiAttachments.class);
 	}
 

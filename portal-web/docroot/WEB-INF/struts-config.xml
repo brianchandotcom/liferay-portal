@@ -951,10 +951,6 @@
 			<forward name="portlet.language.view" path="portlet.language.view" />
 		</action>
 
-		<!-- Layout Configuration -->
-
-		<action path="/layout_configuration/view" forward="portlet.layout_configuration.view" />
-
 		<!-- Layout Prototypes -->
 
 		<action path="/layout_prototypes/edit_layout_prototype" type="com.liferay.portlet.layoutprototypes.action.EditLayoutPrototypeAction">

@@ -374,8 +374,7 @@ public class LayoutExporter {
 
 		Portlet layoutConfigurationPortlet =
 			PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(),
-				PortletKeys.LAYOUT_CONFIGURATION);
+				portletDataContext.getCompanyId(), PortletKeys.DOCKBAR);
 
 		Map<String, Object[]> portletIds =
 			new LinkedHashMap<String, Object[]>();

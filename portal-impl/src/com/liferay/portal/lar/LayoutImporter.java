@@ -1363,8 +1363,7 @@ public class LayoutImporter {
 		}
 
 		_portletImporter.importPortletData(
-			portletDataContext, PortletKeys.LAYOUT_CONFIGURATION, null,
-			layoutElement);
+			portletDataContext, PortletKeys.DOCKBAR, null, layoutElement);
 	}
 
 	protected void importLayoutSetPrototype(

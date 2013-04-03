@@ -1243,10 +1243,6 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesList.add(
 			newPortletPreferences(
-				plid, PortletKeys.LAYOUT_CONFIGURATION,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesList.add(
-			newPortletPreferences(
 				plid, PortletKeys.PORTLET_CONFIGURATION,
 				PortletConstants.DEFAULT_PREFERENCES));
 

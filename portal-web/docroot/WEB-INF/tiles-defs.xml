@@ -778,16 +778,6 @@
 		<put name="portlet_content" value="/portlet/language/view.jsp" />
 	</definition>
 
-	<!-- Layout Configuration -->
-
-	<definition name="portlet.layout_configuration" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.layout_configuration.view" extends="portlet.layout_configuration">
-		<put name="portlet_content" value="/portlet/layout_configuration/view.jsp" />
-	</definition>
-
 	<!-- Layout Prototypes -->
 
 	<definition name="portlet.layout_prototypes" extends="portlet" />

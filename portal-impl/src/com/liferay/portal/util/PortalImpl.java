@@ -4822,8 +4822,7 @@ public class PortalImpl implements Portal {
 		}
 
 		if (themeDisplay.isSignedIn() &&
-			(portletId.equals(PortletKeys.LAYOUT_CONFIGURATION) ||
-			 portletId.equals(PortletKeys.LAYOUTS_ADMIN))) {
+			portletId.equals(PortletKeys.LAYOUTS_ADMIN)) {
 
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();

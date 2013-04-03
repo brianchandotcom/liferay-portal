@@ -184,7 +184,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 						<liferay-ui:icon
 							cssClass="highlited"
 							image="add"
-							message='<%= LanguageUtil.get(pageContext, "layouts") + StringPool.TRIPLE_PERIOD %>'
+							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
 							url="<%= taglibLayoutSiteBrowserURL %>"
 						/>
 					</c:if>

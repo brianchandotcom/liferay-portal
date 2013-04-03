@@ -50,9 +50,16 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 	public WorkflowTaskSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
+		this(portletRequest, DEFAULT_CUR_PARAM, iteratorURL);
+	}
+
+	public WorkflowTaskSearch(
+		PortletRequest portletRequest, String curParam,
+		PortletURL iteratorURL) {
+
 		super(
 			portletRequest, new WorkflowTaskDisplayTerms(portletRequest),
-			new WorkflowTaskSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			new WorkflowTaskSearchTerms(portletRequest), curParam,
 			DEFAULT_DELTA, iteratorURL, headerNames, null);
 
 		WorkflowTaskDisplayTerms displayTerms =

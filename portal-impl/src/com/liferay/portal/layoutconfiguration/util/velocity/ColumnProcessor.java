@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util.velocity;
+package com.liferay.portal.layoutconfiguration.util.velocity;
 
 /**
  * @author Raymond Augé

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util;
+package com.liferay.portal.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.executor.CopyThreadLocalCallable;
 import com.liferay.portal.kernel.portlet.PortletContainerException;

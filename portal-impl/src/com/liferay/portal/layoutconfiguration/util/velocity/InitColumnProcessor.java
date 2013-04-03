@@ -12,23 +12,33 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util.xml;
+package com.liferay.portal.layoutconfiguration.util.velocity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  */
-public abstract class RuntimeLogic {
+public class InitColumnProcessor {
 
-	public static final String CLOSE_2_TAG = "/>";
-
-	public abstract String getClose1Tag();
-
-	public String getClose2Tag() {
-		return CLOSE_2_TAG;
+	public InitColumnProcessor() {
+		_columns = new ArrayList<String>();
 	}
 
-	public abstract String getOpenTag();
+	public List<String> getColumns() {
+		return _columns;
+	}
 
-	public abstract String processXML(String xml) throws Exception;
+	public void processColumn(String columnId) {
+		_columns.add(columnId);
+	}
+
+	public void processColumn(String columnId, String classNames) {
+		_columns.add(columnId);
+	}
+
+	private List<String> _columns;
 
 }

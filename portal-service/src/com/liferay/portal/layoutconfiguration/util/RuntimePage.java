@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util;
+package com.liferay.portal.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.portal.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

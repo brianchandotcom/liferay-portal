@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
+<%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
+page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
@@ -35,7 +36,6 @@ page import="com.liferay.portlet.journal.service.JournalArticleServiceUtil" %><%
 page import="com.liferay.portlet.journal.service.permission.JournalArticlePermission" %><%@
 page import="com.liferay.portlet.journal.service.permission.JournalPermission" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
-page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
 
 <%

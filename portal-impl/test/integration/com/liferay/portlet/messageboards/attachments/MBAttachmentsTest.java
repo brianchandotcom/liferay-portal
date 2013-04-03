@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class MBAttachmentsTrashTest {
+public class MBAttachmentsTest {
 
 	@Before
 	public void setUp() throws Exception {

@@ -46,7 +46,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class WikiAttachmentsTrashTest {
+public class WikiAttachmentsTest {
 
 	@Before
 	public void setUp() throws Exception {

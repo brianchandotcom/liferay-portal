@@ -263,16 +263,18 @@ AUI.add(
 
 						var editingField = instance.editingField;
 
-						var readOnlyAttributes = editingField.get('readOnlyAttributes');
+						if (editingField) {
+							var readOnlyAttributes = editingField.get('readOnlyAttributes');
 
-						if (newVal === translationManager.get('defaultLocale')) {
-							AArray.removeItem(readOnlyAttributes, 'name');
-						}
-						else {
-							readOnlyAttributes.push('name');
-						}
+							if (newVal === translationManager.get('defaultLocale')) {
+								AArray.removeItem(readOnlyAttributes, 'name');
+							}
+							else {
+								readOnlyAttributes.push('name');
+							}
 
-						editingField.set('readOnlyAttributes', readOnlyAttributes);
+							editingField.set('readOnlyAttributes', readOnlyAttributes);
+						}
 
 						instance._updateFieldsLocalizationMap(event.prevVal);
 

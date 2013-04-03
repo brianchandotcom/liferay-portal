@@ -15,7 +15,7 @@
 		</#if>
 	</#list>
 
-	${sampleSQLBuilder.insertResourcePermission("com.liferay.portlet.journal.model.JournalArticle", stringUtil.valueOf(journalArticleResource.resourcePrimKey))}
+	<@insertResourcePermission _resourceName = "com.liferay.portlet.journal.model.JournalArticle" _resourcePrimkey = stringUtil.valueOf(journalArticleResource.resourcePrimKey) />
 
 	<@insertMBDiscussion _classNameId = dataFactory.journalArticleClassNameId _classPK = journalArticleResource.resourcePrimKey _groupId = groupId _maxCommentCount = 0 _mbRootMessageId = counter.get() _mbThreadId = counter.get() />
 

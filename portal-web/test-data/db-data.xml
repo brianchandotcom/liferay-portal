@@ -10,7 +10,7 @@
 		<vm-vmdk-suffix>db2-9.7</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\${sql.file} -td;</create-remote-schema>
+			<create-remote-database>-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\${sql.file} -td;</create-remote-database>
 			<token>
 				<drop-schema>drop database lportal;</drop-schema>
 				<create-schema>create database lportal;</create-schema>
@@ -36,7 +36,7 @@
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file></copy-remote-file>
-			<create-remote-schema></create-remote-schema>
+			<create-remote-database></create-remote-database>
 			<token>
 				<drop-schema></drop-schema>
 				<create-schema></create-schema>
@@ -62,7 +62,7 @@
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file></copy-remote-file>
-			<create-remote-schema></create-remote-schema>
+			<create-remote-database></create-remote-database>
 			<token>
 				<drop-schema>drop database if exists lportal;</drop-schema>
 				<create-schema>create database lportal character set utf8;</create-schema>
@@ -88,7 +88,7 @@
 		<vm-vmdk-suffix>oracle-10.2.0.1.0</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file></copy-remote-file>
-			<create-remote-schema></create-remote-schema>
+			<create-remote-database></create-remote-database>
 			<token>
 				<drop-schema></drop-schema>
 				<create-schema></create-schema>
@@ -114,7 +114,7 @@
 		<vm-vmdk-suffix>oracle-11.2.0.1.0</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file></copy-remote-file>
-			<create-remote-schema></create-remote-schema>
+			<create-remote-database></create-remote-database>
 			<token>
 				<drop-schema></drop-schema>
 				<create-schema></create-schema>
@@ -140,7 +140,7 @@
 		<vm-vmdk-suffix>postgresql-8.4.2-1</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<create-remote-database>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-database>
 			<token>
 				<drop-schema>drop database lportal;</drop-schema>
 				<create-schema>create database lportal encoding = 'UNICODE';</create-schema>
@@ -166,7 +166,7 @@
 		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<create-remote-database>-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}</create-remote-database>
 			<token>
 				<drop-schema>drop database lportal;</drop-schema>
 				<create-schema>create database lportal encoding = 'UNICODE';</create-schema>
@@ -192,7 +192,7 @@
 		<vm-vmdk-suffix>sql-server-2005-sp2</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<create-remote-database>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-database>
 			<token>
 				<drop-schema>drop database lportal;</drop-schema>
 				<create-schema>create database lportal;</create-schema>
@@ -218,7 +218,7 @@
 		<vm-vmdk-suffix>sql-server-2008-r2</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<create-remote-database>--pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-database>
 			<token>
 				<drop-schema>drop database lportal;</drop-schema>
 				<create-schema>create database lportal;</create-schema>
@@ -236,7 +236,7 @@
 	</sql-server-2008>
 
 	<sybase>
-		<device-name>lportal</device-name>
+		<device-name>master</device-name>
 		<family>sybase</family>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<schema>lportal</schema>
@@ -244,7 +244,7 @@
 		<vm-vmdk-suffix>sybase-15.0.2</vm-vmdk-suffix>
 		<arg>
 			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}</copy-remote-file>
-			<create-remote-schema>-pw ${vm.password} ${vm.username}@${db.host} isql -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-schema>
+			<create-remote-database>-pw ${vm.password} ${vm.username}@${db.host} isql -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}</create-remote-database>
 			<token>
 				<drop-schema>use master</drop-schema>
 				<create-schema>exec sp_dboption 'lportal', 'allow nulls by default' , true</create-schema>
@@ -252,11 +252,11 @@
 				<use-schema>use lportal</use-schema>
 			</token>
 			<value>
-				<drop-schema><![CDATA[use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${db.schema}&quot;)${line.separator}begin${line.separator}drop database ${db.schema}${line.separator}end${line.separator}go${line.separator}create database ${db.schema} on ${db.device.name} = &quot;250m&quot;${line.separator}go]]></drop-schema>
+				<drop-schema><![CDATA[use master$${line.separator}dump transaction master with no_log$${line.separator}go$${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${db.schema}&quot;)$${line.separator}begin$${line.separator}drop database ${db.schema}$${line.separator}end$${line.separator}go$${line.separator}create database ${db.schema} on ${db.device.name} = &quot;250m&quot;$${line.separator}go]]></drop-schema>
 				<create-schema>exec sp_dboption '${db.schema}', 'allow nulls by default' , true</create-schema>
 				<create-schema-collate></create-schema-collate>
 				<create-schema-secondary>exec sp_dboption '${db.schema}', 'select into/bulkcopy/pllsort' , true</create-schema-secondary>
-				<use-schema>use ${db.schema}${line.separator}go</use-schema>
+				<use-schema>use ${db.schema}$${line.separator}go</use-schema>
 			</value>
 		</arg>
 	</sybase>

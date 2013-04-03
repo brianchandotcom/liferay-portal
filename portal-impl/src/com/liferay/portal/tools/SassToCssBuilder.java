@@ -170,6 +170,25 @@ public class SassToCssBuilder {
 		PropsUtil.setProps(new PropsImpl());
 	}
 
+	private boolean _noFilesModified(
+		String CSSFilesDirName, String[] CSSFileNames) throws Exception {
+
+		for (String fileName : CSSFileNames) {
+			String fileURL = StringUtil.replace(
+				CSSFilesDirName + StringPool.SLASH + fileName,
+				StringPool.BACK_SLASH, StringPool.SLASH);
+
+			long lastModifiedFile = (new File(fileURL)).lastModified();
+			long lastModifiedCacheFile = getCacheFile(fileURL).lastModified();
+
+			if (lastModifiedFile != lastModifiedCacheFile) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private void _parseSassDirectory(String dirName) throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -185,6 +204,10 @@ public class SassToCssBuilder {
 		directoryScanner.scan();
 
 		String[] fileNames = directoryScanner.getIncludedFiles();
+
+		if (_noFilesModified(dirName, fileNames)) {
+			return;
+		}
 
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(

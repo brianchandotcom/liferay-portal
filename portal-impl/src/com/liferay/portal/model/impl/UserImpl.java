@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -67,6 +68,7 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -181,6 +183,18 @@ public class UserImpl extends UserBaseImpl {
 
 		if (isDefaultUser()) {
 			return StringPool.BLANK;
+		}
+
+		String profileFriendlyURL = getProfileFriendlyURL();
+
+		if (Validator.isNotNull(profileFriendlyURL)) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(portalURL);
+			sb.append(PortalUtil.getPathContext());
+			sb.append(profileFriendlyURL);
+
+			return sb.toString();
 		}
 
 		Group group = getGroup();
@@ -640,6 +654,19 @@ public class UserImpl extends UserBaseImpl {
 		_timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
 
 		super.setTimeZoneId(timeZoneId);
+	}
+
+	protected String getProfileFriendlyURL() {
+		if (Validator.isNull(PropsValues.USERS_PROFILE_FRIENDLY_URL)) {
+			return null;
+		}
+
+		return StringUtil.replace(
+			PropsValues.USERS_PROFILE_FRIENDLY_URL,
+			new String[] {"${liferay:userId}", "${liferay:userScreenName}"},
+			new String[] {
+				String.valueOf(getUserId()), HtmlUtil.escapeURL(getScreenName())
+			});
 	}
 
 	private Locale _locale;

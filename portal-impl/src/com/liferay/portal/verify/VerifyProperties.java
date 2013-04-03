@@ -58,6 +58,13 @@ public class VerifyProperties extends VerifyProcess {
 
 		// portal.properties
 
+		for (String[] keys : _MIGRATED_PORTAL_KEYS) {
+			String oldKey = keys[0];
+			String newKey = keys[1];
+
+			verifyMigratedPortalProperty(oldKey, newKey);
+		}
+
 		for (String[] keys : _RENAMED_PORTAL_KEYS) {
 			String oldKey = keys[0];
 			String newKey = keys[1];
@@ -105,6 +112,19 @@ public class VerifyProperties extends VerifyProcess {
 				CompanyLocalServiceUtil.updatePreferences(
 					companyId, properties);
 			}
+		}
+	}
+
+	protected void verifyMigratedPortalProperty(String oldKey, String newKey)
+		throws Exception {
+
+		String value = PropsUtil.get(oldKey);
+
+		if (value != null) {
+			_log.error(
+				"Portal property \"" + oldKey +
+					"\" was migrated to the system property \"" + newKey +
+						"\"");
 		}
 	}
 
@@ -164,6 +184,13 @@ public class VerifyProperties extends VerifyProcess {
 	private static final String[] _LDAP_KEYS = {
 		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,
 		PropsKeys.LDAP_USER_CUSTOM_MAPPINGS
+	};
+
+	private static final String[][] _MIGRATED_PORTAL_KEYS = new String[][] {
+		new String[] {
+			"finalize.manager.thread.enabled",
+			"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled"
+		}
 	};
 
 	private static final String[][] _MIGRATED_SYSTEM_KEYS = new String[][] {

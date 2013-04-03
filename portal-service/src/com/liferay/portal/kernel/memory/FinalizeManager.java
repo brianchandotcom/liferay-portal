@@ -14,10 +14,6 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
@@ -29,8 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FinalizeManager {
 
-	public static final boolean THREAD_ENABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.FINALIZE_MANAGER_THREAD_ENABLED));
+	public static final boolean THREAD_ENABLED = Boolean.getBoolean(
+		FinalizeManager.class.getName() + ".thread.enabled");
 
 	public static <T> Reference<T> register(
 		T realReference, FinalizeAction finalizeAction) {

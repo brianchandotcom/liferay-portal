@@ -36,8 +36,8 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Add Blog Entry']",
 					RuntimeVariables.replace("Add Blog Entry"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForElementPresent(
-					"//textarea[@id='_33_editor' and @style='display: none;']");
+				selenium.waitForVisible(
+					"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 
 				boolean categorizationCollapsed = selenium.isElementPresent(
 						"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]");

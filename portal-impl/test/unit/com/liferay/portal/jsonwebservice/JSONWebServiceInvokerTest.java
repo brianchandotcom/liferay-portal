@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
+import java.lang.reflect.Method;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -56,13 +58,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		stub(
-			method(
-				ServiceContextFactory.class, "getInstance",
-				HttpServletRequest.class)
-		).toReturn(
-			new ServiceContext()
-		);
+		Method method = method(
+			ServiceContextFactory.class, "getInstance",
+			HttpServletRequest.class);
+
+		stub(method).toReturn(new ServiceContext());
 	}
 
 	@Test
@@ -544,7 +544,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		Object result = jsonWebServiceAction.invoke();
 
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
-					(JSONWebServiceInvokerAction.InvokerResult)result;
+			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		ServiceContext serviceContext =
 			(ServiceContext)invokerResult.getResult();

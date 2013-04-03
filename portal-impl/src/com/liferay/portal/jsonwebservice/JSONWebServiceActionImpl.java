@@ -316,8 +316,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private ServiceContext _mergeServiceContext(
-			ServiceContext serviceContextSource,
-			ServiceContext serviceContextDestination) {
+		ServiceContext serviceContextSource,
+		ServiceContext serviceContextDestination) {
 
 		serviceContextSource.setAddGroupPermissions(
 			serviceContextDestination.isAddGroupPermissions());
@@ -522,8 +522,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 								parameterValue.getClass())) {
 
 							parameterValue = _mergeServiceContext(
-									serviceContext,
-									(ServiceContext)parameterValue);
+								serviceContext, (ServiceContext)parameterValue);
 						}
 						else {
 							parameterValue = serviceContext;

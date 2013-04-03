@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
@@ -48,13 +50,11 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		stub(
-			method(
-				ServiceContextFactory.class, "getInstance",
-				HttpServletRequest.class)
-		).toReturn(
-			new ServiceContext()
-		);
+		Method method = method(
+			ServiceContextFactory.class, "getInstance",
+			HttpServletRequest.class);
+
+		stub(method).toReturn(new ServiceContext());
 	}
 
 	@Test
@@ -287,7 +287,6 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	@Test
 	public void testModifyServiceContext() throws Exception {
-
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/foo/srvcctx2");
 

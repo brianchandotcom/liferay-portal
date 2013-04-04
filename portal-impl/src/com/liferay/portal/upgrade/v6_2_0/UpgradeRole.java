@@ -36,7 +36,7 @@ public class UpgradeRole extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select roleId from role_ where uuid_ is null");
+				"select roleId from Role_ where uuid_ is null");
 
 			rs = ps.executeQuery();
 
@@ -44,9 +44,8 @@ public class UpgradeRole extends UpgradeProcess {
 				long roleId = rs.getLong("roleId");
 
 				runSQL(
-					"update Role_ set uuid_ = '" +
-						PortalUUIDUtil.generate() +
-							"' where roleId = " + roleId);
+					"update Role_ set uuid_ = '" + PortalUUIDUtil.generate() +
+						"' where roleId = " + roleId);
 			}
 		}
 		finally {

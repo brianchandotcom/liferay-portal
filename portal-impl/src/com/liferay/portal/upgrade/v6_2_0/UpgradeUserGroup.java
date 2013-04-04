@@ -36,7 +36,7 @@ public class UpgradeUserGroup extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select userGroupId from usergroup where uuid_ is null");
+				"select userGroupId from UserGroup where uuid_ is null");
 
 			rs = ps.executeQuery();
 
@@ -45,8 +45,8 @@ public class UpgradeUserGroup extends UpgradeProcess {
 
 				runSQL(
 					"update UserGroup set uuid_ = '" +
-						PortalUUIDUtil.generate() +
-							"' where userGroupId = " + userGroupId);
+						PortalUUIDUtil.generate() + "' where userGroupId = " +
+							userGroupId);
 			}
 		}
 		finally {

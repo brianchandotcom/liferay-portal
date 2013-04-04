@@ -36,7 +36,7 @@ public class UpgradeOrganization extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select organizationId from organization_ where uuid_ is null");
+				"select organizationId from Organization_ where uuid_ is null");
 
 			rs = ps.executeQuery();
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.social;
 
+import javax.portlet.PortletURL;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,14 +31,10 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import javax.portlet.PortletURL;
-
 /**
- * @author Brian Wing Shun Chan
- * @author Ryan Park
  * @author Zsolt Berentey
  */
-public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
+public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
@@ -103,54 +101,19 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	protected MBMessage getMessage(SocialActivity activity) throws Exception {
-		if (activity.isClassName(MBThread.class.getName())) {
-			MBThread thread = MBThreadLocalServiceUtil.getThread(
-				activity.getClassPK());
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			activity.getClassPK());
 
-			return MBMessageLocalServiceUtil.getMessage(
-				thread.getRootMessageId());
-		}
-
-		return MBMessageLocalServiceUtil.getMessage(activity.getClassPK());
+		return MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
 	}
 
 	@Override
-	protected String getTitlePattern(
-		String groupName, SocialActivity activity) {
+	protected String getTitlePattern(String groupName, SocialActivity activity)
+		throws Exception {
 
 		int activityType = activity.getType();
 
-		long receiverUserId = activity.getReceiverUserId();
-
-		if (activityType == MBActivityKeys.ADD_MESSAGE) {
-			if (receiverUserId == 0) {
-				if (Validator.isNull(groupName)) {
-					return "activity-message-boards-add-message";
-				}
-				else {
-					return "activity-message-boards-add-message-in";
-				}
-			}
-			else {
-				if (Validator.isNull(groupName)) {
-					return "activity-message-boards-reply-message";
-				}
-				else {
-					return "activity-message-boards-reply-message-in";
-				}
-			}
-		}
-		else if ((activityType == MBActivityKeys.REPLY_MESSAGE) &&
-				 (receiverUserId > 0)) {
-
-			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-reply-message";
-			}
-			else {
-				return "activity-message-boards-reply-message-in";
-			}
-		}
-		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
+		if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
 				return "activity-message-boards-move-to-trash";
 			}
@@ -184,7 +147,6 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{MBMessage.class.getName(), MBThread.class.getName()};
+	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};
 
 }

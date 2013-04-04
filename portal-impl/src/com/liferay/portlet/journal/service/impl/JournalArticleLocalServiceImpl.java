@@ -109,6 +109,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.portlet.journal.social.JournalActivityKeys;
@@ -116,6 +117,7 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -1828,7 +1830,19 @@ public class JournalArticleLocalServiceImpl
 
 		reindex(article);
 
-		return journalArticlePersistence.update(article);
+		article = journalArticlePersistence.update(article);
+
+		// Social
+
+		socialActivityCounterLocalService.disableActivityCounters(
+			JournalFolder.class.getName(), article.getFolderId());
+
+		socialActivityLocalService.addActivity(
+			userId, article.getGroupId(), JournalArticle.class.getName(),
+			article.getId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			StringPool.BLANK, 0);
+
+		return article;
 	}
 
 	public JournalArticle moveArticleToTrash(
@@ -1938,6 +1952,16 @@ public class JournalArticleLocalServiceImpl
 		updateStatus(
 			userId, article, trashEntry.getStatus(), null, workflowContext,
 			serviceContext);
+
+		// Social
+
+		socialActivityCounterLocalService.enableActivityCounters(
+			JournalFolder.class.getName(), article.getFolderId());
+
+		socialActivityLocalService.addActivity(
+			userId, article.getGroupId(), JournalArticle.class.getName(),
+			article.getId(), SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			StringPool.BLANK, 0);
 	}
 
 	public List<JournalArticle> search(
@@ -2884,23 +2908,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-
-			// Social
-
-			if (serviceContext.isCommandUpdate()) {
-				socialActivityLocalService.addActivity(
-					user.getUserId(), article.getGroupId(),
-					JournalArticle.class.getName(), article.getId(),
-					JournalActivityKeys.UPDATE_ARTICLE,
-					getExtraDataJSON(article, serviceContext), 0);
-			}
-			else {
-				socialActivityLocalService.addUniqueActivity(
-					user.getUserId(), article.getGroupId(),
-					JournalArticle.class.getName(), article.getId(),
-					JournalActivityKeys.ADD_ARTICLE,
-					getExtraDataJSON(article, serviceContext), 0);
-			}
 
 			// Trash
 

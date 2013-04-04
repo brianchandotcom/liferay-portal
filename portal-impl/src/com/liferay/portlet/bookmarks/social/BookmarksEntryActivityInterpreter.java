@@ -14,16 +14,12 @@
 
 package com.liferay.portlet.bookmarks.social;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -32,7 +28,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
  * @author Juan Fernández
  * @author Zsolt Berentey
  */
-public class BookmarksActivityInterpreter
+public class BookmarksEntryActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
@@ -44,32 +40,15 @@ public class BookmarksActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		if (activity.isClassName(BookmarksEntry.class.getName())) {
-			BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-				activity.getClassPK());
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			activity.getClassPK());
 
-			return entry.getName();
-		}
-		else if (activity.isClassName(BookmarksFolder.class.getName())) {
-			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-				activity.getClassPK());
-
-			return folder.getName();
-		}
-
-		return StringPool.BLANK;
+		return entry.getName();
 	}
 
 	@Override
 	protected String getPath(SocialActivity activity) {
-		if (activity.isClassName(BookmarksEntry.class.getName())) {
-			return "/bookmarks/find_entry?entryId=";
-		}
-		else if (activity.isClassName(BookmarksFolder.class.getName())) {
-			return "/bookmarks/find_folder?folderId=";
-		}
-
-		return StringPool.BLANK;
+		return "/bookmarks/find_entry?entryId=";
 	}
 
 	@Override
@@ -95,41 +74,21 @@ public class BookmarksActivityInterpreter
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
-			if (activity.isClassName(BookmarksEntry.class.getName())) {
-				if (Validator.isNull(groupName)) {
-					return "activity-bookmarks-entry-move-to-trash";
-				}
-				else {
-					return "activity-bookmarks-entry-move-to-trash-in";
-				}
+			if (Validator.isNull(groupName)) {
+				return "activity-bookmarks-entry-move-to-trash";
 			}
-			else if (activity.isClassName(BookmarksFolder.class.getName())) {
-				if (Validator.isNull(groupName)) {
-					return "activity-bookmarks-folder-move-to-trash";
-				}
-				else {
-					return "activity-bookmarks-folder-move-to-trash-in";
-				}
+			else {
+				return "activity-bookmarks-entry-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
-			if (activity.isClassName(BookmarksEntry.class.getName())) {
-				if (Validator.isNull(groupName)) {
-					return "activity-bookmarks-entry-restore-from-trash";
-				}
-				else {
-					return "activity-bookmarks-entry-restore-from-trash-in";
-				}
+			if (Validator.isNull(groupName)) {
+				return "activity-bookmarks-entry-restore-from-trash";
 			}
-			else if (activity.isClassName(BookmarksFolder.class.getName())) {
-				if (Validator.isNull(groupName)) {
-					return "activity-bookmarks-folder-restore-from-trash";
-				}
-				else {
-					return "activity-bookmarks-folder-restore-from-trash-in";
-				}
+			else {
+				return "activity-bookmarks-entry-restore-from-trash-in";
 			}
 		}
 
@@ -142,20 +101,11 @@ public class BookmarksActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		if (activity.isClassName(BookmarksEntry.class.getName())) {
-			return BookmarksEntryPermission.contains(
-				permissionChecker, activity.getClassPK(), actionId);
-		}
-		else if (activity.isClassName(BookmarksFolder.class.getName())) {
-			return BookmarksFolderPermission.contains(
-				permissionChecker, activity.getGroupId(), activity.getClassPK(),
-				actionId);
-		}
-
-		return false;
+		return BookmarksEntryPermission.contains(
+			permissionChecker, activity.getClassPK(), actionId);
 	}
 
 	private static final String[] _CLASS_NAMES =
-		{BookmarksEntry.class.getName(), BookmarksFolder.class.getName()};
+		{BookmarksEntry.class.getName()};
 
 }

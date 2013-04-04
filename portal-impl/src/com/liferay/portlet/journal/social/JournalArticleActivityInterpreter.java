@@ -35,7 +35,8 @@ import javax.portlet.PortletURL;
  * @author Roberto Diaz
  * @author Zsolt Berentey
  */
-public class JournalActivityInterpreter extends BaseSocialActivityInterpreter {
+public class JournalArticleActivityInterpreter
+	extends BaseSocialActivityInterpreter {
 
 	public String[] getClassNames() {
 		return _CLASS_NAMES;

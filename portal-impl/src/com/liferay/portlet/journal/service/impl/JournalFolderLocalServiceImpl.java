@@ -403,14 +403,13 @@ public class JournalFolderLocalServiceImpl
 
 		// Social
 
-		socialActivityCounterLocalService.enableActivityCounters(
+		socialActivityCounterLocalService.disableActivityCounters(
 			JournalFolder.class.getName(), folder.getFolderId());
 
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
-			0);
+			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			StringPool.BLANK, 0);
 	}
 
 	public void restoreFolderFromTrash(long userId, long folderId)

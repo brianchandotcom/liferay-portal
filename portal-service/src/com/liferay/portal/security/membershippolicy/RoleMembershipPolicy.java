@@ -32,10 +32,10 @@ public interface RoleMembershipPolicy {
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
 		throws PortalException, SystemException;
 
-	boolean isRoleAllowed(long userId, long roleId)
+	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException, SystemException;
 
-	boolean isRoleRequired(long userId, long roleId)
+	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException, SystemException;
 
 	public void propagateRoles(

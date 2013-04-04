@@ -32,10 +32,10 @@ public interface UserGroupMembershipPolicy {
 			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException, SystemException;
 
-	boolean isMembershipAllowed(long userId, long userGroupId)
+	public boolean isMembershipAllowed(long userId, long userGroupId)
 		throws PortalException, SystemException;
 
-	boolean isMembershipRequired(long userId, long userGroupId)
+	public boolean isMembershipRequired(long userId, long userGroupId)
 		throws PortalException, SystemException;
 
 	public void propagateMembership(

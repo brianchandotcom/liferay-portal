@@ -49,9 +49,19 @@
 	<td>Custom Fields</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'User')]/td/a/strong</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'User')]/td[1]/a/strong</td>
 	<td>User</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[contains(.,'User')]/td[1]/a/strong</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Custom Field']</td>
+	<td>Add Custom Field</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -66,7 +76,12 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_139_type']</td>
-	<td>value=1</td>
+	<td>True/False</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_139_type']</td>
+	<td>True/False</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -85,13 +100,48 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr/td/a[contains(.,'Boolean')]/strong</td>
+	<td>//tr[contains(.,'Boolean')]/td[1]/a</td>
 	<td>Boolean</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr/td/a[contains(.,'True/False')]</td>
+	<td>//tr[contains(.,'Boolean')]/td[2]/a</td>
 	<td>True/False</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Boolean')]/td[3]/a</td>
+	<td>False</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Boolean')]/td[4]/a</td>
+	<td>Not Searchable</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Boolean')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'User')]/td[1]/a</td>
+	<td>User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'User')]/td[2]/a</td>
+	<td>Boolean</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'User')]/td[3]/span/a/span</td>
+	<td>Edit</td>
 </tr>
 </tbody></table>
 </body>

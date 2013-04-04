@@ -39,16 +39,21 @@ public class AddCustomFieldUserTypeBooleanTest extends BaseTestCase {
 		selenium.clickAt("link=Custom Fields",
 			RuntimeVariables.replace("Custom Fields"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//tr[contains(.,'User')]/td/a/strong",
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText("//tr[contains(.,'User')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'User')]/td[1]/a/strong",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible("//input[@value='Add Custom Field']"));
 		selenium.clickAt("//input[@value='Add Custom Field']",
 			RuntimeVariables.replace("Add Custom Field"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_139_name']",
 			RuntimeVariables.replace("Boolean"));
 		selenium.select("//select[@id='_139_type']",
-			RuntimeVariables.replace("value=1"));
+			RuntimeVariables.replace("True/False"));
+		assertEquals("True/False",
+			selenium.getSelectedLabel("//select[@id='_139_type']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -58,8 +63,24 @@ public class AddCustomFieldUserTypeBooleanTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
-			selenium.getText("//tr/td/a[contains(.,'Boolean')]/strong"));
+			selenium.getText("//tr[contains(.,'Boolean')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("True/False"),
-			selenium.getText("//tr/td/a[contains(.,'True/False')]"));
+			selenium.getText("//tr[contains(.,'Boolean')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("False"),
+			selenium.getText("//tr[contains(.,'Boolean')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("Not Searchable"),
+			selenium.getText("//tr[contains(.,'Boolean')]/td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Boolean')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@class='header-back-to']/a",
+			RuntimeVariables.replace("\u00ab Back"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("User"),
+			selenium.getText("//tr[contains(.,'User')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Boolean"),
+			selenium.getText("//tr[contains(.,'User')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//tr[contains(.,'User')]/td[3]/span/a/span"));
 	}
 }

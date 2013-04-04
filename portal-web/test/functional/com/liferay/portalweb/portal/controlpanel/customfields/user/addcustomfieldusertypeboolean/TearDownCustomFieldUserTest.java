@@ -44,12 +44,14 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				selenium.clickAt("link=Custom Fields",
 					RuntimeVariables.replace("Custom Fields"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("//tr[contains(.,'User')]/td/a/strong",
+				assertEquals(RuntimeVariables.replace("User"),
+					selenium.getText("//tr[contains(.,'User')]/td[1]/a/strong"));
+				selenium.clickAt("//tr[contains(.,'User')]/td[1]/a/strong",
 					RuntimeVariables.replace("User"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean customField1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!customField1Present) {
 					label = 2;
@@ -58,8 +60,9 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
@@ -76,7 +79,7 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean customField2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!customField2Present) {
 					label = 3;
@@ -85,8 +88,9 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
@@ -103,7 +107,7 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean customField3Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!customField3Present) {
 					label = 4;
@@ -112,8 +116,9 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
@@ -130,7 +135,7 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean customField4Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!customField4Present) {
 					label = 5;
@@ -139,8 +144,9 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
@@ -157,7 +163,7 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean customField5Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!customField5Present) {
 					label = 6;
@@ -166,8 +172,9 @@ public class TearDownCustomFieldUserTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");

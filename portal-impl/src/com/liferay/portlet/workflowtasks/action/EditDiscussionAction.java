@@ -26,8 +26,8 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Jorge Ferrer
  */
-public class EditDiscussionAction extends
-	com.liferay.portlet.messageboards.action.EditDiscussionAction {
+public class EditDiscussionAction
+	extends com.liferay.portlet.messageboards.action.EditDiscussionAction {
 
 	@Override
 	public void processAction(

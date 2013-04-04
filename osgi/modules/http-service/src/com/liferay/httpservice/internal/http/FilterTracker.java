@@ -28,8 +28,8 @@ import org.osgi.service.http.HttpContext;
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-public class FilterTracker extends
-	BaseServiceTrackerCustomizer<Filter, Filter> {
+public class FilterTracker
+	extends BaseServiceTrackerCustomizer<Filter, Filter> {
 
 	public FilterTracker(HttpSupport httpSupport) {
 		super(httpSupport);

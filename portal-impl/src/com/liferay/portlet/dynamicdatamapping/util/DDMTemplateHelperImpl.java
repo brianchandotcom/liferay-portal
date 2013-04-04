@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Juan Fernández
+ * @author Jorge Ferrer
  */
 public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
@@ -70,52 +71,68 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		JSONObject typesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject variablesJSONObject = JSONFactoryUtil.createJSONObject();
+
 		for (TemplateVariableDefinition templateVariableDefinition :
 				getAutocompleteTemplateVariableDefinitions(request)) {
-
-			JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject();
 
 			Class<?> clazz = templateVariableDefinition.getClazz();
 
 			if (clazz == null) {
-				continue;
+				variablesJSONObject.put(
+					templateVariableDefinition.getName(), StringPool.BLANK);
 			}
-
-			for (Field field : clazz.getFields()) {
-				valueJSONObject.put(
-					field.getName(),
-					JSONFactoryUtil.getUnmodifiableJSONObject());
-			}
-
-			for (Method method : clazz.getMethods()) {
-				Class<?>[] parameterTypes = method.getParameterTypes();
-
-				StringBundler sb = new StringBundler(
-					3 + ((parameterTypes.length * 2) - 1));
-
-				sb.append(method.getName());
-				sb.append(StringPool.OPEN_PARENTHESIS);
-
-				for (Class<?> parameterType : parameterTypes) {
-					sb.append(parameterType.getSimpleName());
-					sb.append(StringPool.COMMA_AND_SPACE);
+			else {
+				if (!typesJSONObject.has(clazz.getName())) {
+					typesJSONObject.put(
+						clazz.getName(), getAutocompleteClassJSONObject(clazz));
 				}
 
-				if (parameterTypes.length > 0) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				valueJSONObject.put(
-					sb.toString(), JSONFactoryUtil.getUnmodifiableJSONObject());
+				variablesJSONObject.put(
+					templateVariableDefinition.getName(),
+					getAutocompleteVariableJSONObject(clazz));
 			}
-
-			jsonObject.put(
-				templateVariableDefinition.getName(), valueJSONObject);
 		}
 
+		jsonObject.put("types", typesJSONObject);
+		jsonObject.put("variables", variablesJSONObject);
+
 		return jsonObject.toString();
+	}
+
+	protected JSONObject getAutocompleteClassJSONObject(Class<?> clazz) {
+		JSONObject typeJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (Field field : clazz.getFields()) {
+			JSONObject fieldJSONObject =
+				getAutocompleteVariableJSONObject(field.getType());
+
+			typeJSONObject.put(field.getName(), fieldJSONObject);
+		}
+
+		for (Method method : clazz.getMethods()) {
+			JSONObject methodJSONObject = JSONFactoryUtil.createJSONObject();
+
+			methodJSONObject.put("type", "Method");
+			methodJSONObject.put(
+				"returnType", method.getReturnType().getName());
+
+			JSONArray parametersTypesArray = JSONFactoryUtil.createJSONArray();
+
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			for (Class<?> parameterType : parameterTypes) {
+				parametersTypesArray.put(parameterType.getCanonicalName());
+			}
+
+			methodJSONObject.put("argumentTypes", parametersTypesArray);
+
+			typeJSONObject.put(method.getName(), methodJSONObject);
+
+		}
+
+		return typeJSONObject;
 	}
 
 	protected List<TemplateVariableDefinition>
@@ -184,6 +201,14 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		}
 
 		return templateVariableDefinitions;
+	}
+
+	protected JSONObject getAutocompleteVariableJSONObject(Class<?> clazz) {
+		JSONObject variableJSONObject = JSONFactoryUtil.createJSONObject();
+
+		variableJSONObject.put("type", clazz.getName());
+
+		return variableJSONObject;
 	}
 
 	private static final String _TEMPLATE_CONTENT = "# Placeholder";

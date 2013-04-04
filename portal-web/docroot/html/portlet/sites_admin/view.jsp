@@ -26,8 +26,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/sites_admin/view");
 portletURL.setParameter("sitesListView", sitesListView);
 
-pageContext.setAttribute("portletURL", portletURL);
-
 String portletURLString = portletURL.toString();
 
 PortletURL searchURL = renderResponse.createRenderURL();
@@ -110,12 +108,6 @@ String searchURLString = searchURL.toString();
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />sitesRedirect.value;
 		document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = siteIds;
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /></portlet:actionURL>");
-	}
-
-	function <portlet:namespace />search() {
-		document.<portlet:namespace />fm.method = "get";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "";
-		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
 	}
 
 	Liferay.provide(

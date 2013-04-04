@@ -62,10 +62,21 @@ public class ViewCommunitySiteTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Community Site Name')]/td[2]/a",
 			RuntimeVariables.replace("Community Site Name"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//span[@class='portlet-title-text']"));
+		assertEquals(RuntimeVariables.replace("Browse"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'Browse')]"));
+		assertEquals(RuntimeVariables.replace("View All"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span/a[contains(.,'View All')]"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span[@title='Add']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Community Site Name"),
-			selenium.getText("//h1[@class='header-title']"));
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to Sites Home"),
-			selenium.getText("//span[@class='header-back-to']"));
+			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Members:"),
 			selenium.getText(
 				"//div[@class='membership-info']/dl/dt[@class='first']"));

@@ -58,7 +58,7 @@ public class JQTFastStart {
 			boolean isFastStart = false;
 
 			while (randomAccessInputFile.getFilePointer() <
-					randomAccessInputFile.length()) {
+						randomAccessInputFile.length()) {
 
 				atom = new Atom(randomAccessInputFile);
 

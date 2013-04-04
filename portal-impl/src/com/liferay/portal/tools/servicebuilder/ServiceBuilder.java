@@ -4472,8 +4472,8 @@ public class ServiceBuilder {
 		String finderClass = "";
 
 		if (FileUtil.exists(
-			_outputPath + "/service/persistence/" + ejbName +
-				"FinderImpl.java")) {
+				_outputPath + "/service/persistence/" + ejbName +
+					"FinderImpl.java")) {
 
 			finderClass =
 				_packagePath + ".service.persistence." + ejbName + "FinderImpl";

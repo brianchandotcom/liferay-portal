@@ -244,13 +244,25 @@ if (!partDayResults.isEmpty()) {
 		for (CalEvent event : displayResults) {
 			event = event.toEscapedModel();
 
+			Calendar calendar = (Calendar)selCal.clone();
+
 			Date startDate = Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault());
+			Date endDate = CalUtil.getEndTime(event);
+
+			int eventStartPos = 0;
 
 			if (event.isTimeZoneSensitive()) {
-				startDate = Time.getDate(event.getStartDate(), timeZone);
-			}
+				if (event.isRepeating()) {
+					startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, event.getStartDate());
+					endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, CalUtil.getEndTime(event));
+				}
 
-			int eventStartPos = (int)(((((startDate.getHours() * 60) + (float)startDate.getMinutes() ) / 60) * 50) - 2);
+				Date timeZoneSensitiveStartDate = Time.getDate(startDate, timeZone);
+				eventStartPos = (int)(((((timeZoneSensitiveStartDate.getHours() * 60) + (float)startDate.getMinutes() ) / 60) * 50) - 2);
+			}
+			else {
+				eventStartPos = (int)(((((startDate.getHours() * 60) + (float)startDate.getMinutes() ) / 60) * 50) - 2);
+			}
 
 			int eventDisplayDuration = Math.max(50, (event.getDurationHour() * 60) + event.getDurationMinute());
 
@@ -282,9 +294,9 @@ if (!partDayResults.isEmpty()) {
 					<div class="event-time">
 						<c:choose>
 							<c:when test="<%= event.isTimeZoneSensitive() %>">
-								<%= dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) %>
+								<%= dateFormatTime.format(Time.getDate(startDate, timeZone)) %>
 								-
-								<%= dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), timeZone)) %>
+								<%= dateFormatTime.format(Time.getDate(endDate, timeZone)) %>
 							</c:when>
 							<c:otherwise>
 								<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>

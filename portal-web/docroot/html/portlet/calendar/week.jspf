@@ -204,6 +204,17 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 						className = "portlet-section-alternate results-row alt";
 						classHoverName = "portlet-section-alternate-hover results-row alt hover";
 					}
+
+					Date startDate = null;
+
+					if (event.isTimeZoneSensitive()) {
+						if (event.isRepeating()) {
+							startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, cal, event.getStartDate());
+						}
+						else {
+							startDate = event.getStartDate();
+						}
+					}
 				%>
 
 					<tr class="<%= className %>">
@@ -215,7 +226,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 								<c:otherwise>
 									<c:choose>
 										<c:when test="<%= event.isTimeZoneSensitive() %>">
-											<%= dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) %>
+											<%= dateFormatTime.format(Time.getDate(startDate, timeZone)) %>
 										</c:when>
 										<c:otherwise>
 											<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>

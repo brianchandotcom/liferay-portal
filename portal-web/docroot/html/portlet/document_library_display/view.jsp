@@ -145,10 +145,10 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 								deltaConfigurable="<%= false %>"
 								headerNames="<%= StringUtil.merge(folderColumns) %>"
 								iteratorURL="<%= portletURL %>"
+								total="<%= foldersCount %>"
 							>
 								<liferay-ui:search-container-results
 									results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-									total="<%= foldersCount %>"
 								/>
 
 								<liferay-ui:search-container-row

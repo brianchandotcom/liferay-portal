@@ -115,19 +115,19 @@ String htmlAttributes =
 			<aui:fieldset>
 				<aui:input label="resize-automatically" name="preferences--resizeAutomatically--" type="checkbox" value="<%= resizeAutomatically %>" />
 
-                <div id="<portlet:namespace />displaySettings">
-                    <aui:input name="preferences--heightMaximized--" type="text" value="<%= heightMaximized %>">
-                        <aui:validator name="required" />
-                        <aui:validator name="digits" />
-                    </aui:input>
+				<div id="<portlet:namespace />displaySettings">
+					<aui:input name="preferences--heightMaximized--" type="text" value="<%= heightMaximized %>">
+						<aui:validator name="required" />
+						<aui:validator name="digits" />
+					</aui:input>
 
-                    <aui:input name="preferences--heightNormal--" type="text" value="<%= heightNormal %>">
-                        <aui:validator name="required" />
-                        <aui:validator name="digits" />
-                    </aui:input>
+					<aui:input name="preferences--heightNormal--" type="text" value="<%= heightNormal %>">
+						<aui:validator name="required" />
+						<aui:validator name="digits" />
+					</aui:input>
 
-                    <aui:input name="preferences--width--" type="text" value="<%= width %>" />
-                </div>
+					<aui:input name="preferences--width--" type="text" value="<%= width %>" />
+				</div>
 
 				<aui:input cssClass="lfr-textarea-container" name="preferences--htmlAttributes--" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="<%= htmlAttributes %>" wrap="soft" />
 			</aui:fieldset>

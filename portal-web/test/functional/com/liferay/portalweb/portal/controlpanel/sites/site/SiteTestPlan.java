@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.sites.site;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.activatestagingsite.ActivateStagingSiteTests;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addcommunitysite.AddCommunitySiteTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteguestuser.AddMembersSiteGuestUserTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTests;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTests;
@@ -53,6 +54,7 @@ public class SiteTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(ActivateStagingSiteTests.suite());
+		testSuite.addTest(AddCommunitySiteTests.suite());
 		testSuite.addTest(AddMembersSiteGuestUserTests.suite());
 		testSuite.addTest(AddMembersSiteUserTests.suite());
 		testSuite.addTest(AddSiteTests.suite());

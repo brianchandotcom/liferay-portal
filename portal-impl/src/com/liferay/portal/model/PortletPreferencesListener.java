@@ -14,11 +14,13 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
+import com.liferay.portal.service.persistence.PortletPreferencesFinderImpl;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.util.PortletKeys;
 
@@ -46,31 +48,54 @@ public class PortletPreferencesListener
 	protected void clearCache(PortletPreferences portletPreferences) {
 		try {
 			long companyId = 0;
+			long groupId = 0;
+			boolean privateLayout = false;
 
 			Layout layout = LayoutUtil.fetchByPrimaryKey(
 				portletPreferences.getPlid());
 
-			if ((layout != null) && !layout.isPrivateLayout()) {
+			if (layout != null) {
 				companyId = layout.getCompanyId();
+				groupId = layout.getGroupId();
+				privateLayout = layout.isPrivateLayout();
 			}
 			else {
 				LayoutRevision layoutRevision =
 					LayoutRevisionUtil.fetchByPrimaryKey(
 						portletPreferences.getPlid());
 
-				if ((layoutRevision != null) &&
-					!layoutRevision.isPrivateLayout()) {
-
+				if (layoutRevision != null) {
 					companyId = layoutRevision.getCompanyId();
+					groupId = layoutRevision.getGroupId();
+					privateLayout = layoutRevision.isPrivateLayout();
 				}
 			}
 
-			if (companyId > 0) {
-				CacheUtil.clearCache(companyId);
+			if (!privateLayout) {
+				CacheUtil.clearCache();
+			}
+
+			if ((companyId > 0) && (groupId > 0)) {
+				Object[] finderArgs = new Object[] {
+					companyId, groupId, portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(),
+					portletPreferences.getPortletId(), privateLayout
+				};
+
+				FinderCacheUtil.removeResult(
+					PortletPreferencesFinderImpl
+						.FINDER_PATH_FIND_PLIDS_BY_C_G_O_O_P_P,
+					finderArgs);
+
+				FinderCacheUtil.removeResult(
+					PortletPreferencesFinderImpl
+						.FINDER_PATH_FIND_PORTLET_PREFERENCES_BY_C_G_O_O_P_P,
+					finderArgs);
 			}
 		}
 		catch (Exception e) {
-			CacheUtil.clearCache();
+			_log.error(
+				"Clearing cache for " + portletPreferences + " has failed.", e);
 		}
 	}
 

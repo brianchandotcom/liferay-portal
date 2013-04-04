@@ -811,7 +811,7 @@
 	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.findByC_G_O_O_P_P">
 		<![CDATA[
 			SELECT
-				{PortletPreferences.*}
+				[$DISTINCT$] [$PROJECTION$]
 			FROM
 				PortletPreferences
 			INNER JOIN

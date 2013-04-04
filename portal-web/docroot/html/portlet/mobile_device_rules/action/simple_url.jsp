@@ -20,4 +20,4 @@
 String url = GetterUtil.getString(typeSettingsProperties.get("url"));
 %>
 
-<aui:input name="url" type="text" value="<%= url %>" />
+<aui:input inputCssClass="lfr-input-text" name="url" type="text" value="<%= url %>" />

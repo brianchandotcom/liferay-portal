@@ -97,6 +97,11 @@ public class UserTestUtil {
 		return organizationUser;
 	}
 
+	public static User addUser() throws Exception {
+		return addUser(
+			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+	}
+
 	public static User addUser(
 			String screenName, boolean autoScreenName, long[] groupIds)
 		throws Exception {

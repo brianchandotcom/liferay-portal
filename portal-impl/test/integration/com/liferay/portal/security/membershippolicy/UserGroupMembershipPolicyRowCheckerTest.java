@@ -16,9 +16,7 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
 
@@ -36,7 +34,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 	extends BaseUserGroupMembershipPolicyTestCase {
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingForbiddenUserGroupToUser()
+	public void testIsCheckerDisabledWhenSettingForbiddenUserGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -49,14 +47,13 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserUserGroupChecker userUserGroupChecker = new UserUserGroupChecker(
 			renderResponse, forbiddenUserGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertTrue(userUserGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingRequiredUserGroupToUser()
+	public void testIsCheckerDisabledWhenSettingRequiredUserGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -69,14 +66,13 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserUserGroupChecker userUserGroupChecker = new UserUserGroupChecker(
 			renderResponse, requiredUserGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertFalse(userUserGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingForbiddenUserGroupToUser()
+	public void testIsCheckerDisabledWhenUnsettingForbiddenUserGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -89,8 +85,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserUserGroupChecker userUserGroupChecker = new UserUserGroupChecker(
 			renderResponse, forbiddenUserGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			user.getUserId(), forbiddenUserGroupId);
@@ -99,7 +94,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingRequiredUserGroupToUser()
+	public void testIsCheckerDisabledWhenUnsettingRequiredUserGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -112,8 +107,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserUserGroupChecker userUserGroupChecker = new UserUserGroupChecker(
 			renderResponse, requiredUserGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			user.getUserId(), requiredUserGroupId);

@@ -17,8 +17,6 @@ package com.liferay.portal.security.membershippolicy;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.rolesadmin.search.UserRoleChecker;
 
@@ -36,7 +34,7 @@ public class RoleMembershipPolicyRowCheckerTest
 	extends BaseRoleMembershipPolicyTestCase {
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingForbiddenRoleToUser()
+	public void testIsCheckerDisabledWhenSettingForbiddenRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -48,14 +46,13 @@ public class RoleMembershipPolicyRowCheckerTest
 		UserRoleChecker userRoleChecker = new UserRoleChecker(
 			renderResponse, forbiddenRole);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertTrue(userRoleChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingRequiredRoleToUser()
+	public void testIsCheckerDisabledWhenSettingRequiredRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -67,14 +64,13 @@ public class RoleMembershipPolicyRowCheckerTest
 		UserRoleChecker userRoleChecker = new UserRoleChecker(
 			renderResponse, requiredRole);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertFalse(userRoleChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingForbiddenRoleToUser()
+	public void testIsCheckerDisabledWhenUnsettingForbiddenRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -86,8 +82,7 @@ public class RoleMembershipPolicyRowCheckerTest
 		UserRoleChecker userRoleChecker = new UserRoleChecker(
 			renderResponse, forbiddenRole);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		RoleLocalServiceUtil.addUserRole(user.getUserId(), forbiddenRoleId);
 
@@ -95,7 +90,7 @@ public class RoleMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingRequiredRoleToUser()
+	public void testIsCheckerDisabledWhenUnsettingRequiredRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -107,8 +102,7 @@ public class RoleMembershipPolicyRowCheckerTest
 		UserRoleChecker userRoleChecker = new UserRoleChecker(
 			renderResponse, requiredRole);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		RoleLocalServiceUtil.addUserRole(user.getUserId(), requiredRoleId);
 

@@ -21,7 +21,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
@@ -41,7 +40,7 @@ public class SiteMembershipPolicyRowCheckerTest
 	extends BaseSiteMembershipPolicyTestCase {
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingForbiddenGroupToUser()
+	public void testIsCheckerDisabledWhenSettingForbiddenGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -53,14 +52,13 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupChecker userGroupChecker = new UserGroupChecker(
 			renderResponse, forbiddenGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertTrue(userGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingForbiddenRoleToUser()
+	public void testIsCheckerDisabledWhenSettingForbiddenRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -72,14 +70,13 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
 			new UserGroupRoleUserChecker(renderResponse, group, role);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertTrue(userGroupRoleUserChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingRequiredGroupToUser()
+	public void testIsCheckerDisabledWhenSettingRequiredGroupToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -91,14 +88,13 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupChecker userGroupChecker = new UserGroupChecker(
 			renderResponse, requiredGroup);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertFalse(userGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingRequiredRoleToUser()
+	public void testIsCheckerDisabledWhenSettingRequiredRoleToUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -110,20 +106,18 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
 			new UserGroupRoleUserChecker(renderResponse, group, role);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		Assert.assertFalse(userGroupRoleUserChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingUserToForbiddenRole()
+	public void testIsCheckerDisabledWhenSettingUserToForbiddenRole()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
 			new UserGroupRoleRoleChecker(renderResponse, user, group);
@@ -134,13 +128,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenSettingUserToRequiredRole()
+	public void testIsCheckerDisabledWhenSettingUserToRequiredRole()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
 			new UserGroupRoleRoleChecker(renderResponse, user, group);
@@ -151,7 +144,7 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingForbiddenGroupFromUser()
+	public void testIsCheckerDisabledWhenUnsettingForbiddenGroupFromUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -164,15 +157,13 @@ public class SiteMembershipPolicyRowCheckerTest
 			renderResponse, forbiddenGroup);
 
 		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
-
-		GroupLocalServiceUtil.addUserGroup(user.getUserId(), forbiddenGroupId);
+			ServiceTestUtil.randomString(), forbiddenGroupId);
 
 		Assert.assertFalse(userGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingForbiddenRoleFromUser()
+	public void testIsCheckerDisabledWhenUnsettingForbiddenRoleFromUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -184,8 +175,7 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
 			new UserGroupRoleUserChecker(renderResponse, group, role);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			user.getUserId(), group.getGroupId(), new long[] {forbiddenRoleId});
@@ -194,7 +184,7 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingRequiredGroupFromUser()
+	public void testIsCheckerDisabledWhenUnsettingRequiredGroupFromUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -207,15 +197,13 @@ public class SiteMembershipPolicyRowCheckerTest
 			renderResponse, requiredGroup);
 
 		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
-
-		GroupLocalServiceUtil.addUserGroup(user.getUserId(), requiredGroupId);
+			ServiceTestUtil.randomString(), requiredGroupId);
 
 		Assert.assertTrue(userGroupChecker.isDisabled(user));
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingRequiredRoleFromUser()
+	public void testIsCheckerDisabledWhenUnsettingRequiredRoleFromUser()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
@@ -227,8 +215,7 @@ public class SiteMembershipPolicyRowCheckerTest
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
 			new UserGroupRoleUserChecker(renderResponse, group, role);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			user.getUserId(), group.getGroupId(), new long[] {requiredRoleId});
@@ -237,13 +224,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingUserFromForbiddenRole()
+	public void testIsCheckerDisabledWhenUnsettingUserFromForbiddenRole()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
 			new UserGroupRoleRoleChecker(renderResponse, user, group);
@@ -259,13 +245,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsDisabledCheckerWhenUnsettingUserFromRequiredRole()
+	public void testIsCheckerDisabledWhenUnsettingUserFromRequiredRole()
 		throws Exception {
 
 		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
 
-		User user = UserTestUtil.addUser(
-			ServiceTestUtil.randomString(), group.getGroupId());
+		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
 			new UserGroupRoleRoleChecker(renderResponse, user, group);

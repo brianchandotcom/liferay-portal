@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition action="Action#isAction" macro="Macro#isMacro" />
+			<then>
+				<execute action="action" />
+			</then>
+		</if>
+	</command>
+</definition>

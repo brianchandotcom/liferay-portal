@@ -615,6 +615,406 @@ public class SeleniumBuilderTest {
 		test("Macro.macro");
 	}
 
+	@Test
+	public void testMacroCommandElement1001() throws Exception {
+		test(
+			"MacroCommandElement1001.macro",
+			"Error 1001: Missing (execute|if|var|while) child element in " +
+				_DIR_NAME + "/MacroCommandElement1001.macro:2");
+	}
+
+	@Test
+	public void testMacroCommandElement1002() throws Exception {
+		test(
+			"MacroCommandElement1002.macro",
+			"Error 1002: Invalid execute-fail element in " + _DIR_NAME +
+				"/MacroCommandElement1002.macro:3");
+	}
+
+	@Test
+	public void testMacroCommandElement1003_1() throws Exception {
+		test(
+			"MacroCommandElement1003_1.macro",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/MacroCommandElement1003_1.macro:2");
+	}
+
+	@Test
+	public void testMacroCommandElement1003_2() throws Exception {
+		test(
+			"MacroCommandElement1003_2.macro",
+			"Error 1003: Missing name attribute in " + _DIR_NAME +
+				"/MacroCommandElement1003_2.macro:2");
+	}
+
+	@Test
+	public void testMacroCommandElement1006() throws Exception {
+		test(
+			"MacroCommandElement1006.macro",
+			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
+				"/MacroCommandElement1006.macro:2");
+	}
+
+	@Test
+	public void testMacroConditionElement1002_1() throws Exception {
+		test(
+			"MacroConditionElement1002_1.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroConditionElement1002_1.macro:5");
+	}
+
+	@Test
+	public void testMacroConditionElement1002_2() throws Exception {
+		test(
+			"MacroConditionElement1002_2.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroConditionElement1002_2.macro:5");
+	}
+
+	@Test
+	public void testMacroConditionElement1004_1() throws Exception {
+		test(
+			"MacroConditionElement1004_1.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroConditionElement1004_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1004_2() throws Exception {
+		test(
+			"MacroConditionElement1004_2.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroConditionElement1004_2.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1004_3() throws Exception {
+		test(
+			"MacroConditionElement1004_3.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroConditionElement1004_3.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1004_4() throws Exception {
+		test(
+			"MacroConditionElement1004_4.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroConditionElement1004_4.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1005_1() throws Exception {
+		test(
+			"MacroConditionElement1005_1.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroConditionElement1005_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1005_2() throws Exception {
+		test(
+			"MacroConditionElement1005_2.macro",
+			"Error 1005: Invalid locator attribute in " + _DIR_NAME +
+				"/MacroConditionElement1005_2.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1005_3() throws Exception {
+		test(
+			"MacroConditionElement1005_3.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroConditionElement1005_3.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1005_4() throws Exception {
+		test(
+			"MacroConditionElement1005_4.macro",
+			"Error 1005: Invalid macro attribute in " + _DIR_NAME +
+				"/MacroConditionElement1005_4.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1005_5() throws Exception {
+		test(
+			"MacroConditionElement1005_5.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroConditionElement1005_5.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_1() throws Exception {
+		test(
+			"MacroConditionElement1006_1.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_2() throws Exception {
+		test(
+			"MacroConditionElement1006_2.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_2.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_3() throws Exception {
+		test(
+			"MacroConditionElement1006_3.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_3.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_4() throws Exception {
+		test(
+			"MacroConditionElement1006_4.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_4.macro:4");
+	}
+
+	@Test
+	public void testMacroDefinitionElement1000() throws Exception {
+		test(
+			"MacroDefinitionElement1000.macro",
+			"Error 1000: Invalid root element in " + _DIR_NAME +
+				"/MacroDefinitionElement1000.macro:1");
+	}
+
+	@Test
+	public void testMacroDefinitionElement1001() throws Exception {
+		test(
+			"MacroDefinitionElement1001.macro",
+			"Error 1001: Missing (command|var) child element in " + _DIR_NAME +
+				"/MacroDefinitionElement1001.macro:1");
+	}
+
+	@Test
+	public void testMacroDefinitionElement1002() throws Exception {
+		test(
+			"MacroDefinitionElement1002.macro",
+			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
+				"/MacroDefinitionElement1002.macro:1");
+	}
+
+	@Test
+	public void testMacroElseElement1001() throws Exception {
+		test(
+			"MacroElseElement1001.macro",
+			"Error 1001: Missing (execute|if|var|while) child element in " +
+				_DIR_NAME + "/MacroElseElement1001.macro:8");
+	}
+
+	@Test
+	public void testMacroElseElement1002() throws Exception {
+		test(
+			"MacroElseElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroElseElement1002.macro:9");
+	}
+
+	@Test
+	public void testMacroExecuteElement1002_1() throws Exception {
+		test(
+			"MacroExecuteElement1002_1.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroExecuteElement1002_1.macro:4");
+	}
+
+	@Test
+	public void testMacroExecuteElement1002_2() throws Exception {
+		test(
+			"MacroExecuteElement1002_2.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroExecuteElement1002_2.macro:4");
+	}
+
+	@Test
+	public void testMacroExecuteElement1004_1() throws Exception {
+		test(
+			"MacroExecuteElement1004_1.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1004_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1004_2() throws Exception {
+		test(
+			"MacroExecuteElement1004_2.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1004_2.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1004_3() throws Exception {
+		test(
+			"MacroExecuteElement1004_3.macro",
+			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1004_3.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1005_1() throws Exception {
+		test(
+			"MacroExecuteElement1005_1.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1005_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1005_2() throws Exception {
+		test(
+			"MacroExecuteElement1005_2.macro",
+			"Error 1005: Invalid locator attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1005_2.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1005_3() throws Exception {
+		test(
+			"MacroExecuteElement1005_3.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1005_3.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1005_4() throws Exception {
+		test(
+			"MacroExecuteElement1005_4.macro",
+			"Error 1005: Invalid macro attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1005_4.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1005_5() throws Exception {
+		test(
+			"MacroExecuteElement1005_5.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroExecuteElement1005_5.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1006_1() throws Exception {
+		test(
+			"MacroExecuteElement1006_1.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1006_2() throws Exception {
+		test(
+			"MacroExecuteElement1006_2.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_2.macro:3");
+	}
+
+	@Test
+	public void testMacroIfElement1001_1() throws Exception {
+		test(
+			"MacroIfElement1001_1.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroIfElement1001_1.macro:3");
+	}
+
+	@Test
+	public void testMacroIfElement1001_2() throws Exception {
+		test(
+			"MacroIfElement1001_2.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroIfElement1001_2.macro:3");
+	}
+
+	@Test
+	public void testMacroIfElement1001_3() throws Exception {
+		test(
+			"MacroIfElement1001_3.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroIfElement1001_3.macro:3");
+	}
+
+	@Test
+	public void testMacroIfElement1002() throws Exception {
+		test(
+			"MacroIfElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroIfElement1002.macro:4");
+	}
+
+	@Test
+	public void testMacroThenElement1001() throws Exception {
+		test(
+			"MacroThenElement1001.macro",
+			"Error 1001: Missing (execute|if|var|while) child element in " +
+				_DIR_NAME + "/MacroThenElement1001.macro:5");
+	}
+
+	@Test
+	public void testMacroThenElement1002() throws Exception {
+		test(
+			"MacroThenElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroThenElement1002.macro:6");
+	}
+
+	@Test
+	public void testMacroVarElement1002() throws Exception {
+		test(
+			"MacroVarElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroVarElement1002.macro:3");
+	}
+
+	@Test
+	public void testMacroVarElement1004_1() throws Exception {
+		test(
+			"MacroVarElement1004_1.macro",
+			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+				"/MacroVarElement1004_1.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1004_2() throws Exception {
+		test(
+			"MacroVarElement1004_2.macro",
+			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+				"/MacroVarElement1004_2.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1004_3() throws Exception {
+		test(
+			"MacroVarElement1004_3.macro",
+			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+				"/MacroVarElement1004_3.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005() throws Exception {
+		test(
+			"MacroVarElement1005.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroVarElement1005.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1006_1() throws Exception {
+		test(
+			"MacroVarElement1006_1.macro",
+			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
+				"/MacroVarElement1006_1.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1006_2() throws Exception {
+		test(
+			"MacroVarElement1006_2.macro",
+			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
+				"/MacroVarElement1006_2.macro:2");
+	}
+
 	protected void test(String fileName) throws Exception {
 		test(fileName, null, false);
 	}

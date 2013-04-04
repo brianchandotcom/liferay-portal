@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<if>
+			<fail />
+		</if>
+	</command>
+</definition>

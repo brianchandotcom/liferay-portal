@@ -1,0 +1,9 @@
+<definition>
+	<set-up name="name">
+		<execute macro="macro" />
+	</set-up>
+
+	<command name="name">
+		<execute macro="macro" />
+	</command>
+</definition>

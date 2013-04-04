@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<execute macro="macro">
+			<fail />
+		</execute>
+	</command>
+</definition>

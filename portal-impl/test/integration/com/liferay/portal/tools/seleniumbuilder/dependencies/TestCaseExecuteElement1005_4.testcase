@@ -1,0 +1,5 @@
+<definition>
+	<command name="name">
+		<execute action="action" macro="macro" />
+	</command>
+</definition>

@@ -1,0 +1,9 @@
+<definition>
+	<command name="name">
+		<execute macro="macro" />
+	</command>
+
+	<tear-down name="name">
+		<execute macro="macro" />
+	</tear-down>
+</definition>

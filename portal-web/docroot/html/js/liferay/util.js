@@ -1324,7 +1324,6 @@
 				ddmURL.setParameter('refererWebDAVToken', config.refererWebDAVToken);
 			}
 
-			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);
 			ddmURL.setParameter('scopeStructureName', config.structureName);

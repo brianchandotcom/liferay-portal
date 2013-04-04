@@ -678,6 +678,8 @@
 
 		<action path="/dynamic_data_mapping/view" forward="portlet.dynamic_data_mapping.view" />
 
+		<action path="/dynamic_data_mapping/select_template" forward="portlet.dynamic_data_mapping.select_template" />
+
 		<action path="/dynamic_data_mapping/view_template" forward="portlet.dynamic_data_mapping.view_template" />
 
 		<!-- Expando -->

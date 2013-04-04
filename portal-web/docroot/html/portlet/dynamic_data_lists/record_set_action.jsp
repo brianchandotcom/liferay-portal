@@ -26,8 +26,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 
 DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_action.jsp-selRecordSet");
-
-String chooseCallback = (String)request.getAttribute("record_set_action.jsp-chooseCallback");
 %>
 
 <liferay-ui:icon-menu>

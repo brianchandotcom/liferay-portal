@@ -54,22 +54,29 @@
 
 				assetEntryQuery.setExcludeZeroViewCount(false);
 
-				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 				total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-			}
-			else {
-				if (mergedView) {
-					results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd());
-				}
-				else {
-					results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
+
+				if (searchContainer.recalculateCur(total)) {
+					assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
 				}
 
+				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			}
+			else {
 				if (mergedView) {
 					total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
 				}
 				else {
 					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+				}
+
+				searchContainer.setTotal(total);
+
+				if (mergedView) {
+					results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd());
+				}
+				else {
+					results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
 				}
 			}
 

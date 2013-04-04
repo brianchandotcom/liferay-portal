@@ -24,9 +24,11 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 			<a href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-rule-group" /></a>
 		</span>
 
-		<span class="lfr-toolbar-button view-structures">
-			<a href="javascript:;" id="<portlet:namespace />managePriorities"><liferay-ui:message key="manage-rule-group-priorities" /></a>
-		</span>
+		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
+			<span class="lfr-toolbar-button view-structures">
+				<a href="javascript:;" id="<portlet:namespace />managePriorities"><liferay-ui:message key="manage-rule-group-priorities" /></a>
+			</span>
+		</c:if>
 	</c:if>
 </div>
 

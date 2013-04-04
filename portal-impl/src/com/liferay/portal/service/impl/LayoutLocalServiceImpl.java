@@ -1215,6 +1215,44 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the layouts that are derived from a layout prototype or
+	 * layout set prototype.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return the matching layouts, or an empty list if no matches were found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Layout> getLayoutsLinkedWithPrototypes(
+			long groupId, boolean privateLayout)
+		throws SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Layout.class, getClassLoader());
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(groupId));
+
+		Property layoutPrototypeUuidProperty = PropertyFactoryUtil.forName(
+			"layoutPrototypeUuid");
+
+		dynamicQuery.add(layoutPrototypeUuidProperty.isNotNull());
+
+		Property privateLayoutProperty = PropertyFactoryUtil.forName(
+			"privateLayout");
+
+		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
+
+		Property sourcePrototypeLayoutUuidProperty =
+			PropertyFactoryUtil.forName("sourcePrototypeLayoutUuid");
+
+		dynamicQuery.add(sourcePrototypeLayoutUuidProperty.isNotNull());
+
+		return dynamicQuery(dynamicQuery);
+	}
+
+	/**
 	 * Returns the primary key to use for the next layout.
 	 *
 	 * @param  groupId the primary key of the group

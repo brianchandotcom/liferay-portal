@@ -249,8 +249,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				return;
 			}
 
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				group.getGroupId(), privateLayout);
+			List<Layout> layouts =
+				LayoutLocalServiceUtil.getLayoutsLinkedWithPrototypes(
+					group.getGroupId(), privateLayout);
 
 			for (Layout layout : layouts) {
 				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {

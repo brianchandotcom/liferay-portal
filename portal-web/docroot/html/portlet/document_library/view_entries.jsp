@@ -419,7 +419,7 @@ for (int i = 0; i < results.size(); i++) {
 							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= true %>"
 							status="<%= latestFileVersion.getStatus() %>"
-							thumbnailSrc='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) + ".png" %>'
 							title="<%= fileEntry.getTitle() %>"
 							url="<%= rowURL.toString() %>"
 						/>
@@ -543,7 +543,7 @@ for (int i = 0; i < results.size(); i++) {
 							displayStyle="list"
 							folder="<%= true %>"
 							showCheckbox="<%= false %>"
-							thumbnailSrc="<%= folderImage %>"
+							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/common/" + folderImage + ".png" %>'
 							title="<%= curFolder.getName() %>"
 							url="<%= rowURL.toString() %>"
 						/>

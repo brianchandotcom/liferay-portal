@@ -174,12 +174,12 @@ if (showLinkTitle) {
 			<liferay-ui:icon
 				cssClass='<%= showCheckbox ? "app-view-entry app-view-entry-taglib entry-display-style selectable" : "app-view-entry app-view-entry-taglib entry-display-style" %>'
 				data="<%= data %>"
-				image="<%= thumbnailSrc %>"
 				label="<%= true %>"
 				linkCssClass="entry-link"
 				localizeMessage="<%= false %>"
 				message="<%= title %>"
 				method="get"
+				src="<%= thumbnailSrc %>"
 				url="<%= url %>"
 			/>
 

@@ -137,7 +137,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<%= delta %>
 						</c:when>
 						<c:otherwise>
-							<aui:select changesContext="<%= true %>" id='<%= id + "_itemsPerPage" %>' inlineLabel="left" name="itemsPerPage" onchange='<%= namespace + deltaParam + "updateDelta(this);" %>'>
+							<aui:select changesContext="<%= true %>" id='<%= id + "_itemsPerPage" %>' inlineLabel="left" label="items-per-page" name="<%= deltaParam %>" onchange='<%= namespace + deltaParam + "updateDelta(this);" %>'>
 
 								<%
 								for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

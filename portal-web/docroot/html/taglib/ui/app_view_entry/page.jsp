@@ -170,7 +170,7 @@ if (showLinkTitle) {
 		</div>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
-		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %> <%= cssClass %>">
+		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= locked ? "locked" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 			<liferay-ui:icon
 				cssClass='<%= showCheckbox ? "app-view-entry app-view-entry-taglib entry-display-style selectable" : "app-view-entry app-view-entry-taglib entry-display-style" %>'
 				data="<%= data %>"

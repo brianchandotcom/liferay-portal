@@ -186,7 +186,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 
-								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
+								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, width: 960}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
 							%>
 
 								<liferay-ui:icon message="<%= curRendererFactory.getTypeName(locale, false) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>" />

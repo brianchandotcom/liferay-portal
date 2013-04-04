@@ -113,13 +113,7 @@ if ((iconMenuIconCount != null) || (iconMenuSingleIcon != null)) {
 String details = null;
 
 if (alt != null) {
-	StringBundler sb = new StringBundler(3);
-
-	sb.append(" alt=\"");
-	sb.append(LanguageUtil.get(pageContext, alt));
-	sb.append("\"");
-
-	details = sb.toString();
+	details = " alt=\"" + LanguageUtil.get(pageContext, alt) + "\"";
 }
 else if (label) {
 	details = " alt=\"\"";

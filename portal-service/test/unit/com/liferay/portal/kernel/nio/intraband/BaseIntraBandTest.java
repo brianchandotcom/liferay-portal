@@ -1283,6 +1283,64 @@ public class BaseIntraBandTest {
 		Assert.assertEquals(_DEFAULT_TIMEOUT, sentDatagram.timeout);
 	}
 
+	@Test
+	public void testSendDatagramWithoutCallback() {
+
+		// Registration reference is null
+
+		try {
+			_mockIntraBand.sendDatagram(null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Registration reference is null", npe.getMessage());
+		}
+
+		// Registration reference is invalid
+
+		try {
+			RegistrationReference registrationReference =
+				new MockRegistrationReference(_mockIntraBand);
+
+			registrationReference.cancelRegistration();
+
+			_mockIntraBand.sendDatagram(registrationReference, null);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Registration reference is invalid", iae.getMessage());
+		}
+
+		// Datagram is null
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand), null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Datagram is null", npe.getMessage());
+		}
+
+		// Normal send
+
+		Datagram datagram = Datagram.createRequestDatagram(_type, _data);
+
+		RegistrationReference registrationReference =
+			new MockRegistrationReference(_mockIntraBand);
+
+		_mockIntraBand.sendDatagram(registrationReference, datagram);
+
+		Assert.assertSame(
+			registrationReference, _mockIntraBand.getRegistrationReference());
+		Assert.assertSame(datagram, _mockIntraBand.getDatagram());
+	}
+
 	protected void assertMessageStartWith(
 		LogRecord logRecord, String messagePrefix) {
 

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -583,6 +585,27 @@ public class PortletDataContextImpl implements PortletDataContext {
 			getPrimaryKeyString(className, classPK), ratingsEntries);
 	}
 
+	public Element addReferenceElement(
+		Element element, ClassedModel referencedModel) {
+
+		Element referencesElement = element.element("references");
+
+		if (referencesElement == null) {
+			referencesElement = element.addElement("references");
+		}
+
+		Element refElement = referencesElement.addElement("ref");
+
+		refElement.addAttribute(
+			"class-name", referencedModel.getModelClassName());
+
+		Serializable primaryKeyObj = referencedModel.getPrimaryKeyObj();
+
+		refElement.addAttribute("class-pk", primaryKeyObj.toString());
+
+		return refElement;
+	}
+
 	public void addZipEntry(String path, byte[] bytes) throws SystemException {
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
@@ -784,15 +807,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getImportDataStagedModelElement(StagedModel stagedModel) {
 		String path = StagedModelPathUtil.getPath(stagedModel);
 
-		return getImportDataStagedModelElement(stagedModel, "path", path);
+		Class<?> clazz = stagedModel.getModelClass();
+
+		return getImportDataStagedModelElement(
+			clazz.getSimpleName(), "path", path);
 	}
 
 	public Element getImportDataStagedModelElement(
-		StagedModel stagedModel, String attribute, String value) {
+		String name, String attribute, String value) {
 
-		Class<?> clazz = stagedModel.getModelClass();
-
-		Element groupElement = getImportDataGroupElement(clazz.getSimpleName());
+		Element groupElement = getImportDataGroupElement(name);
 
 		if (groupElement == null) {
 			return null;
@@ -860,6 +884,30 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries() {
 		return _ratingsEntriesMap;
+	}
+
+	public List<Element> getReferencedDataElements(
+		StagedModel parentModel, Class<? extends StagedModel> clazz) {
+
+		List<Element> referencedElements = new ArrayList<Element>();
+
+		List<Element> referenceElements = getReferenceElements(
+			parentModel, clazz);
+
+		for (Element referenceElement : referenceElements) {
+			long classPk = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			String path = StagedModelPathUtil.getPath(
+				this, clazz.getName(), classPk);
+
+			Element referencedElement = getImportDataStagedModelElement(
+				clazz.getSimpleName(), "path", path);
+
+			referencedElements.add(referencedElement);
+		}
+
+		return referencedElements;
 	}
 
 	public String getRootPath() {
@@ -963,16 +1011,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsString(path);
 	}
 
-	public List<String> getZipFolderEntries() {
-		return getZipFolderEntries(StringPool.SLASH);
-	}
-
 	public List<String> getZipFolderEntries(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			return null;
 		}
 
 		return getZipReader().getFolderEntries(path);
+	}
+
+	public List<String> getZipFolderEntries() {
+		return getZipFolderEntries(StringPool.SLASH);
 	}
 
 	public ZipReader getZipReader() {
@@ -1581,6 +1629,30 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected String getPrimaryKeyString(String className, String primaryKey) {
 		return className.concat(StringPool.POUND).concat(primaryKey);
+	}
+
+	protected List<Element> getReferenceElements(
+		StagedModel parentModel, Class<? extends StagedModel> clazz) {
+
+		Element stagedModelElement = getImportDataStagedModelElement(
+			parentModel);
+
+		if (stagedModelElement == null) {
+			return null;
+		}
+
+		Element referencesElement = stagedModelElement.element("references");
+
+		if (referencesElement == null) {
+			return null;
+		}
+
+		XPath xPath = SAXReaderUtil.createXPath(
+			"ref[@class-name='"+ clazz.getName() + "']");
+
+		List<Node> nodes = xPath.selectNodes(referencesElement);
+
+		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
 	}
 
 	protected void initXStream() {

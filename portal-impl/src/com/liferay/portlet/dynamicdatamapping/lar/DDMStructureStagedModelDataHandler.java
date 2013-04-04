@@ -29,7 +29,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Mate Thurzo
@@ -71,10 +70,6 @@ public class DDMStructureStagedModelDataHandler
 		prepareLanguagesForImport(structure);
 
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
-
-		Map<Long, Long> structureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			structure, DDMPortletDataHandler.NAMESPACE);
@@ -132,9 +127,6 @@ public class DDMStructureStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			structure, importedStructure, DDMPortletDataHandler.NAMESPACE);
-
-		structureIds.put(
-			structure.getStructureId(), importedStructure.getStructureId());
 	}
 
 	protected void prepareLanguagesForImport(DDMStructure structure)

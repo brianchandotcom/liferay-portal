@@ -651,21 +651,19 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		ActionableDynamicQuery structureActionableDynamicQuery =
 			new DDMStructureActionableDynamicQuery() {
 
-				@Override
-				protected void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
-				}
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
 
-				@Override
-				protected void performAction(Object object)
-					throws PortalException {
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				DDMStructure structure = (DDMStructure)object;
 
-					DDMStructure structure = (DDMStructure)object;
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, structure);
-				}
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, structure);
+			}
 
 		};
 
@@ -677,21 +675,19 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		ActionableDynamicQuery templateActionableDynamicQuery =
 			new DDMTemplateActionableDynamicQuery() {
 
-				@Override
-				protected void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
-				}
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
 
-				@Override
-				protected void performAction(Object object)
-					throws PortalException {
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				DDMTemplate template = (DDMTemplate)object;
 
-					DDMTemplate template = (DDMTemplate)object;
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, template);
-				}
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, template);
+			}
 
 		};
 

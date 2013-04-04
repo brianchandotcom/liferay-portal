@@ -106,6 +106,9 @@ public interface PortletDataContext extends Serializable {
 	public void addRatingsEntries(
 		String className, long classPK, List<RatingsEntry> ratingsEntries);
 
+	public Element addReferenceElement(
+		Element element, ClassedModel referencedModel);
+
 	public void addZipEntry(String path, byte[] bytes) throws SystemException;
 
 	public void addZipEntry(String path, InputStream is) throws SystemException;
@@ -175,7 +178,7 @@ public interface PortletDataContext extends Serializable {
 	public Element getImportDataStagedModelElement(StagedModel stagedModel);
 
 	public Element getImportDataStagedModelElement(
-		StagedModel stagedModel, String attribute, String value);
+		String name, String attribute, String value);
 
 	public String getLayoutPath(long layoutId);
 
@@ -198,6 +201,9 @@ public interface PortletDataContext extends Serializable {
 	public Set<String> getPrimaryKeys();
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
+
+	public List<Element> getReferencedDataElements(
+		StagedModel parentModel, Class<? extends StagedModel> clazz);
 
 	public String getRootPath();
 

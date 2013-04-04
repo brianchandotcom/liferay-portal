@@ -75,7 +75,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 		if (recordSetId == 0) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No record set found for " + portletId);
+				_log.debug("Unable to get record set with ID " + portletId);
 			}
 
 			return StringPool.BLANK;

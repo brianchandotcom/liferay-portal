@@ -16,11 +16,13 @@ package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -36,6 +38,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateUtil;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
@@ -83,10 +86,14 @@ public class DDMTemplateStagedModelDataHandler
 				serviceContext);
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"A template with the key " + template.getTemplateKey() +
-						" already exists. The new generated key is " +
-							newTemplate.getTemplateKey());
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("A template with the key ");
+				sb.append(template.getTemplateKey());
+				sb.append(" already exists. The new generated key is ");
+				sb.append(newTemplate.getTemplateKey());
+
+				_log.warn(sb.toString());
 			}
 		}
 
@@ -97,6 +104,14 @@ public class DDMTemplateStagedModelDataHandler
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
+
+		DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(
+			template.getClassPK());
+
+		if (structure != null) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, structure);
+		}
 
 		Element dlFileEntryTypesElement =
 			portletDataContext.getExportDataGroupElement(DLFileEntryType.class);
@@ -131,8 +146,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 			else if (smallImage != null) {
 				String smallImagePath = StagedModelPathUtil.getPath(
-					template,
-					smallImage.getImageId() + StringPool.PERIOD +
+					template, smallImage.getImageId() + StringPool.PERIOD +
 						template.getSmallImageType());
 
 				templateElement.addAttribute(
@@ -169,9 +183,21 @@ public class DDMTemplateStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
+		// Structure
+
 		Map<Long, Long> structureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class);
+
+		String structurePath = StagedModelPathUtil.getPath(
+			portletDataContext, DDMStructure.class.getName(),
+			template.getClassPK());
+
+		DDMStructure structure =
+			(DDMStructure)portletDataContext.getZipEntryAsObject(structurePath);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, structure);
 
 		long classPK = MapUtil.getLong(
 			structureIds, template.getClassPK(), template.getClassPK());

@@ -839,9 +839,9 @@ public class Recurrence implements Serializable {
 			return false;
 		}
 
-		if (!matchesByDay(candidate) ||!matchesByMonthDay(candidate)
-			||!matchesByYearDay(candidate) ||!matchesByWeekNo(candidate)
-			||!matchesByMonth(candidate)) {
+		if (!matchesByDay(candidate) || !matchesByMonthDay(candidate) ||
+			!matchesByYearDay(candidate) || !matchesByWeekNo(candidate) ||
+			!matchesByMonth(candidate)) {
 
 			// Doesn't match a by* rule
 

@@ -75,7 +75,7 @@ public class SearchResultUtil {
 								entryClassPK);
 						}
 						else if (entryClassName.equals(
-							MBMessage.class.getName())) {
+									MBMessage.class.getName())) {
 
 							mbMessage = MBMessageLocalServiceUtil.getMessage(
 								entryClassPK);

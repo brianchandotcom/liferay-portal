@@ -1305,7 +1305,7 @@ public class DataFactory {
 		int type = JournalActivityKeys.UPDATE_ARTICLE;
 
 		if (journalArticle.getVersion() ==
-			JournalArticleConstants.VERSION_DEFAULT) {
+				JournalArticleConstants.VERSION_DEFAULT) {
 
 			type = JournalActivityKeys.ADD_ARTICLE;
 		}

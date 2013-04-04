@@ -256,7 +256,7 @@ public class JournalUtil {
 		JournalFolder folder = article.getFolder();
 
 		if (folder.getFolderId() !=
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			addPortletBreadcrumbEntries(folder, request, renderResponse);
 		}
@@ -332,7 +332,7 @@ public class JournalUtil {
 				"folderId", String.valueOf(folder.getFolderId()));
 
 			if (folder.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				JournalFolder unescapedFolder = folder.toUnescapedModel();
 

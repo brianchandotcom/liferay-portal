@@ -64,12 +64,12 @@ public class SocialActivityLimitImpl extends SocialActivityLimitBaseImpl {
 			}
 		}
 		else if (limitPeriod ==
-						SocialActivityCounterDefinition.LIMIT_PERIOD_LIFETIME) {
+					SocialActivityCounterDefinition.LIMIT_PERIOD_LIFETIME) {
 
 			return count;
 		}
 		else if (limitPeriod ==
-				SocialActivityCounterDefinition.LIMIT_PERIOD_PERIOD) {
+					SocialActivityCounterDefinition.LIMIT_PERIOD_PERIOD) {
 
 			int activityDay = SocialCounterPeriodUtil.getActivityDay();
 
@@ -94,7 +94,7 @@ public class SocialActivityLimitImpl extends SocialActivityLimitBaseImpl {
 					StringPool.SLASH + String.valueOf(count));
 		}
 		else if (limitPeriod ==
-						SocialActivityCounterDefinition.LIMIT_PERIOD_LIFETIME) {
+					SocialActivityCounterDefinition.LIMIT_PERIOD_LIFETIME) {
 
 			setValue(String.valueOf(count));
 		}

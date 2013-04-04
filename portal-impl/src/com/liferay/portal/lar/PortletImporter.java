@@ -2023,7 +2023,7 @@ public class PortletImporter {
 						}
 					}
 					else if (className.equals(
-							AssetVocabulary.class.getName())) {
+								AssetVocabulary.class.getName())) {
 
 						AssetVocabulary assetVocabulary =
 							AssetVocabularyUtil.fetchByUUID_G(

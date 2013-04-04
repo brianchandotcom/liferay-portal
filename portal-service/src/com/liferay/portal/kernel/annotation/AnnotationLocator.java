@@ -178,7 +178,7 @@ public class AnnotationLocator {
 		for (Annotation sourceAnnotation : sourceAnnotations) {
 			for (Annotation targetAnnotation : targetAnnotationList) {
 				if (sourceAnnotation.annotationType() ==
-								targetAnnotation.annotationType()) {
+						targetAnnotation.annotationType()) {
 
 					continue merge;
 				}

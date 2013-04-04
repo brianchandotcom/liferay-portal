@@ -155,7 +155,7 @@ public class LayoutsLocalPublisherMessageListener
 					parameterMap, startDate, endDate);
 			}
 			else if (command.equals(
-				LayoutsLocalPublisherRequest.COMMAND_SELECTED_PAGES)) {
+						LayoutsLocalPublisherRequest.COMMAND_SELECTED_PAGES)) {
 
 				StagingUtil.publishLayouts(
 					userId, sourceGroupId, targetGroupId, privateLayout,

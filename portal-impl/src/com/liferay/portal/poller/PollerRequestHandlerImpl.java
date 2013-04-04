@@ -260,7 +260,7 @@ public class PollerRequestHandlerImpl
 					pollerHeader.getUserId(), pollerHeader.getBrowserKey());
 
 			if (browserTracker.getBrowserKey() !=
-				pollerHeader.getBrowserKey()) {
+					pollerHeader.getBrowserKey()) {
 
 				suspendPolling = true;
 			}

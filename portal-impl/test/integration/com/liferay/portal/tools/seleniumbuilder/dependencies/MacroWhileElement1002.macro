@@ -1,6 +1,6 @@
 <definition>
 	<command name="name">
-		<if>
+		<while>
 			<condition action="isAction" />
 			<then>
 				<execute action="action" />
@@ -8,7 +8,6 @@
 			<else>
 				<execute action="action" />
 			</else>
-			<fail />
-		</if>
+		</while>
 	</command>
 </definition>

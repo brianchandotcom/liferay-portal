@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<while>
+			<condition action="isAction" />
+		</while>
+	</command>
+</definition>

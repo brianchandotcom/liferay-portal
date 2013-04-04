@@ -591,7 +591,7 @@ public class SeleniumBuilderTest {
 		test(
 			"FunctionIfElement1002.function",
 			"Error 1002: Invalid fail element in " + _DIR_NAME +
-				"/FunctionIfElement1002.function:4");
+				"/FunctionIfElement1002.function:11");
 	}
 
 	@Test
@@ -940,7 +940,7 @@ public class SeleniumBuilderTest {
 		test(
 			"MacroIfElement1002.macro",
 			"Error 1002: Invalid fail element in " + _DIR_NAME +
-				"/MacroIfElement1002.macro:4");
+				"/MacroIfElement1002.macro:11");
 	}
 
 	@Test
@@ -1013,6 +1013,38 @@ public class SeleniumBuilderTest {
 			"MacroVarElement1006_2.macro",
 			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
 				"/MacroVarElement1006_2.macro:2");
+	}
+
+	@Test
+	public void testMacroWhileElement1001_1() throws Exception {
+		test(
+			"MacroWhileElement1001_1.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroWhileElement1001_1.macro:3");
+	}
+
+	@Test
+	public void testMacroWhileElement1001_2() throws Exception {
+		test(
+			"MacroWhileElement1001_2.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroWhileElement1001_2.macro:3");
+	}
+
+	@Test
+	public void testMacroWhileElement1001_3() throws Exception {
+		test(
+			"MacroWhileElement1001_3.macro",
+			"Error 1001: Missing (condition|then) child element in " +
+				_DIR_NAME + "/MacroWhileElement1001_3.macro:3");
+	}
+
+	@Test
+	public void testMacroWhileElement1002() throws Exception {
+		test(
+			"MacroWhileElement1002.macro",
+			"Error 1002: Invalid else element in " + _DIR_NAME +
+				"/MacroWhileElement1002.macro:8");
 	}
 
 	protected void test(String fileName) throws Exception {

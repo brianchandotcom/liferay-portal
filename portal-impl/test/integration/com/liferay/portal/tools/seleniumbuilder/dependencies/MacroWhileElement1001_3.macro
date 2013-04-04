@@ -1,0 +1,9 @@
+<definition>
+	<command name="name">
+		<while>
+			<then>
+				<execute action="action" />
+			</then>
+		</while>
+	</command>
+</definition>

@@ -16,6 +16,7 @@ package com.liferay.portalweb.socialofficesite.calendar.calendarevent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficesite.calendar.calendarevent.addcalendareventcommentsite.AddCalendarEventCommentSiteTests;
+import com.liferay.portalweb.socialofficesite.calendar.calendarevent.addcalendareventduration3hourssite.AddCalendarEventDuration3HoursSiteTests;
 import com.liferay.portalweb.socialofficesite.calendar.calendarevent.addcalendareventmultiplesite.AddCalendarEventMultipleSiteTests;
 import com.liferay.portalweb.socialofficesite.calendar.calendarevent.addcalendareventsite.AddCalendarEventSiteTests;
 import com.liferay.portalweb.socialofficesite.calendar.calendarevent.addcalendareventtagssite.AddCalendarEventTagsSiteTests;
@@ -36,6 +37,7 @@ public class CalendarEventTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddCalendarEventCommentSiteTests.suite());
+		testSuite.addTest(AddCalendarEventDuration3HoursSiteTests.suite());
 		testSuite.addTest(AddCalendarEventMultipleSiteTests.suite());
 		testSuite.addTest(AddCalendarEventSiteTests.suite());
 		testSuite.addTest(AddCalendarEventTagsSiteTests.suite());

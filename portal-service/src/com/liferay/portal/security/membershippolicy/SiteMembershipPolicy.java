@@ -44,17 +44,17 @@ public interface SiteMembershipPolicy {
 			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException;
 
-	boolean isMembershipAllowed(long userId, long groupId)
+	public boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException, SystemException;
 
-	boolean isMembershipProtected(
+	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
 		throws PortalException, SystemException;
 
-	boolean isMembershipRequired(long userId, long groupId)
+	public boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException, SystemException;
 
-	boolean isRoleAllowed(long userId, long groupId, long roleId)
+	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException, SystemException;
 
 	public boolean isRoleProtected(
@@ -62,7 +62,7 @@ public interface SiteMembershipPolicy {
 			long roleId)
 		throws PortalException, SystemException;
 
-	boolean isRoleRequired(long userId, long groupId, long roleId)
+	public boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException, SystemException;
 
 	public void propagateMembership(

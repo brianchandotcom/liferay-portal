@@ -44,26 +44,26 @@ public interface OrganizationMembershipPolicy {
 			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException;
 
-	boolean isMembershipAllowed(long userId, long organizationId)
+	public boolean isMembershipAllowed(long userId, long organizationId)
 		throws PortalException, SystemException;
 
-	boolean isMembershipProtected(
+	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId)
 		throws PortalException, SystemException;
 
-	boolean isMembershipRequired(long userId, long organizationId)
+	public boolean isMembershipRequired(long userId, long organizationId)
 		throws PortalException, SystemException;
 
-	boolean isRoleAllowed(long userId, long organizationId, long roleId)
+	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException;
 
-	boolean isRoleProtected(
+	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId, long roleId)
 		throws PortalException, SystemException;
 
-	boolean isRoleRequired(long userId, long organizationId, long roleId)
+	public boolean isRoleRequired(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException;
 
 	public void propagateMembership(

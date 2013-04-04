@@ -46,7 +46,7 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[3]"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Review"),
@@ -85,11 +85,11 @@ public class ViewWebContentCompletedTest extends BaseTestCase {
 				"//a[contains(@title,'Web Content Name')]/div/img"));
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[@class='entry-title']"));
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
 		assertFalse(selenium.isPartialText(
 				"//a[@class='entry-link']/span[@class='entry-title']",
 				"(Pending)"));
-		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']",
+		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']/span[1]",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Approved"),

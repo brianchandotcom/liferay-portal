@@ -40,10 +40,10 @@ public class SubmitForPublicationWebContentDraftTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText(
-				"//a[@class='entry-link']/span[@class='entry-title']",
-				"Web Content Name"));
-		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']",
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
+		selenium.clickAt("//a[@class='entry-link']/span[@class='entry-title']/span[1]",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
@@ -55,11 +55,11 @@ public class SubmitForPublicationWebContentDraftTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
 				"//a[contains(@title,'Web Content Name')]/div/img"));
-		assertTrue(selenium.isPartialText(
-				"//a[@class='entry-link']/span[@class='entry-title']",
-				"Web Content Name"));
+		assertEquals(RuntimeVariables.replace("Web Content Name"),
+			selenium.getText(
+				"//a[@class='entry-link']/span[@class='entry-title']/span[1]"));
 		assertEquals(RuntimeVariables.replace("(Pending)"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[@class='entry-title']/span"));
+				"//a[@class='entry-link']/span[@class='entry-title']/span[2]"));
 	}
 }

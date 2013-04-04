@@ -45,6 +45,6 @@ public class UserSN_ViewWebContentAssignedToMeTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to your roles."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[3]"));
 	}
 }

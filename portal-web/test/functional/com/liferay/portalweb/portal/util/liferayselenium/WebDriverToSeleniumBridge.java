@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
@@ -24,7 +25,9 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -1223,7 +1226,45 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (webElement.isEnabled()) {
-			webElement.sendKeys(value);
+			Map<String, String> specialChars = new HashMap<String, String>();
+
+			specialChars.put("&", "7");
+			specialChars.put("$", "4");
+			specialChars.put("<", ",");
+			specialChars.put(">", ".");
+			specialChars.put("(", "9");
+			specialChars.put(")", "0");
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(".*[");
+
+			Set<String> specialCharsSet = specialChars.keySet();
+
+			for (String specialChar : specialCharsSet) {
+				sb.append("\\");
+				sb.append(specialChar);
+			}
+
+			sb.append("]*.*");
+
+			if (value.matches(sb.toString())) {
+				char[] chars = value.toCharArray();
+
+				for (char c : chars) {
+					String s = String.valueOf(c);
+
+					if (specialCharsSet.contains(s)) {
+						webElement.sendKeys(Keys.SHIFT, specialChars.get(s));
+					}
+					else {
+						webElement.sendKeys(s);
+					}
+				}
+			}
+			else {
+				webElement.sendKeys(value);
+			}
 		}
 	}
 

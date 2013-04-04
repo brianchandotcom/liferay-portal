@@ -29,7 +29,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 </c:if>
 
 <%
-String summary = entry.getDescription();
+String summary = HtmlUtil.escape(entry.getDescription());
 
 if (Validator.isNull(summary)) {
 	summary = HtmlUtil.stripHtml(entry.getContent());

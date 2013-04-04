@@ -80,7 +80,7 @@ if (folder != null) {
 			<liferay-ui:search-container-column-text
 				href="<%= viewFolderURL %>"
 				name="folder"
-				value="<%= curFolder.getName() %>"
+				value="<%= HtmlUtil.escape(curFolder.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

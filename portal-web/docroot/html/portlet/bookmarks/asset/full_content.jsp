@@ -20,9 +20,9 @@
 BookmarksEntry entry = (BookmarksEntry)request.getAttribute(WebKeys.BOOKMARKS_ENTRY);
 %>
 
-<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() + (portletName.equals(PortletKeys.TRASH) ? "&status=" + WorkflowConstants.STATUS_IN_TRASH : StringPool.BLANK) %>' target="_blank"><%= entry.getName() %> (<%= entry.getUrl() %>)</aui:a>
+<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() + (portletName.equals(PortletKeys.TRASH) ? "&status=" + WorkflowConstants.STATUS_IN_TRASH : StringPool.BLANK) %>' target="_blank"><%= HtmlUtil.escape(entry.getName()) %> (<%= HtmlUtil.escape(entry.getUrl()) %>)</aui:a>
 
-<p class="asset-description"><%= entry.getDescription() %></p>
+<p class="asset-description"><%= HtmlUtil.escape(entry.getDescription()) %></p>
 
 <liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
 	<liferay-ui:custom-attribute-list

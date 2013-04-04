@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Igor Spasic
  */
-public class NonSerializableObjectRequestWrapper extends
-	PersistentHttpServletRequestWrapper {
+public class NonSerializableObjectRequestWrapper
+	extends PersistentHttpServletRequestWrapper {
 
 	public static boolean isWrapped(HttpServletRequest request) {
 		Class<?> clazz = request.getClass();

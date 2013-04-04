@@ -41,8 +41,7 @@ public class LimitedFilesCache<T> {
 
 	private FileRemovingLFUCache<T> _fileRemovingLFUCache;
 
-	private class FileRemovingLFUCache<K> extends
-		ConcurrentLFUCache<K, File> {
+	private class FileRemovingLFUCache<K> extends ConcurrentLFUCache<K, File> {
 
 		public FileRemovingLFUCache(int maxSize) {
 			super(maxSize);

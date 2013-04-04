@@ -102,5 +102,48 @@ public class ViewSitesSiteTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[6]/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[7]/a/span"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+		selenium.waitForElementPresent("link=Control Panel");
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@id='_134_name']",
+			RuntimeVariables.replace("Open Site "));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
+			selenium.getText("//tr[contains(.,'Open Site Name')]/td[1]/a"));
+		selenium.clickAt("//tr[contains(.,'Open Site Name')]/td[1]/a",
+			RuntimeVariables.replace("Open Site Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals("Open Site Name",
+			selenium.getValue("//input[@id='_165_name']"));
+		assertEquals("Open Site Description",
+			selenium.getValue("//textarea[@id='_165_description']"));
+		assertEquals("Open Site Description",
+			selenium.getValue("//textarea[@id='_165_description']"));
+		assertEquals("Open",
+			selenium.getSelectedLabel("//select[@id='_165_type']"));
+		assertEquals(RuntimeVariables.replace(
+				"Enable propagation of changes from the site template Default Social Office Site."),
+			selenium.getText(
+				"//label[@for='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_165_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+		assertTrue(selenium.isPartialText(
+				"//label[@for='customJspServletContextName']",
+				"Application Adapter"));
+		assertEquals("Social Office EE Hook",
+			selenium.getSelectedLabel(
+				"//select[@id='_165_customJspServletContextName']"));
 	}
 }

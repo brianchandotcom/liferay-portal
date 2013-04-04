@@ -84,17 +84,17 @@ public class UpgradeCamelCasePortletPreferences
 			String newName = _camelCasePreferenceNames.get(oldName);
 
 			if (Validator.isNull(newName)) {
-				if (oldName.startsWith("portlet-setup-title-")) {
-					newName = StringUtil.replaceFirst(
-						oldName, "portlet-setup-title-", "portletSetupTitle_");
-				}
-				else if (oldName.startsWith(
-					"portlet-setup-supported-clients-mobile-devices-")) {
+				if (oldName.startsWith(
+						"portlet-setup-supported-clients-mobile-devices-")) {
 
 					newName = StringUtil.replaceFirst(
 						oldName,
 						"portlet-setup-supported-clients-mobile-devices-",
 						"portletSetupSupportedClientsMobileDevices_");
+				}
+				else if (oldName.startsWith("portlet-setup-title-")) {
+					newName = StringUtil.replaceFirst(
+						oldName, "portlet-setup-title-", "portletSetupTitle_");
 				}
 			}
 

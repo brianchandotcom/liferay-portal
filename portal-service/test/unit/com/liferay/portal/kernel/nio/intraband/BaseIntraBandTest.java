@@ -30,9 +30,11 @@ import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -958,6 +960,163 @@ public class BaseIntraBandTest {
 		sinkChannel.close();
 
 		Assert.assertSame(sendingQueue, channelContext.getSendingQueue());
+	}
+
+	@Test
+	public void testResponseWaiting() throws Exception {
+
+		// Add
+
+		Datagram requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		long sequenceId = 100;
+
+		requestDatagram.setSequenceId(sequenceId);
+
+		requestDatagram.timeout = 10000;
+
+		_mockIntraBand.addResponseWaitingDatagram(requestDatagram);
+
+		Map<Long, Datagram> responseWaitingMap =
+			_mockIntraBand.responseWaitingMap;
+
+		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertSame(requestDatagram, responseWaitingMap.get(sequenceId));
+
+		Map<Long, Long> timeoutMap = _mockIntraBand.timeoutMap;
+
+		Collection<Long> timeoutSequenceIds = timeoutMap.values();
+
+		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
+
+		// Remove, hit
+
+		Datagram responseDatagram = Datagram.createResponseDatagram(
+			requestDatagram, _data);
+
+		Assert.assertFalse(responseDatagram.isRequest());
+
+		_mockIntraBand.removeResponseWaitingDatagram(responseDatagram);
+
+		Assert.assertTrue(responseWaitingMap.isEmpty());
+		Assert.assertTrue(timeoutSequenceIds.isEmpty());
+
+		// Remove, miss
+
+		_mockIntraBand.removeResponseWaitingDatagram(responseDatagram);
+
+		Assert.assertTrue(responseWaitingMap.isEmpty());
+		Assert.assertTrue(timeoutSequenceIds.isEmpty());
+
+		// Cleanup timeout, hit, with log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.WARNING);
+
+		Datagram requestDatagram1 = Datagram.createRequestDatagram(
+			_type, _data);
+
+		requestDatagram1.setSequenceId(sequenceId);
+
+		RecordCompletionHandler<Object> recordCompletionHandler1 =
+			new RecordCompletionHandler<Object>();
+
+		requestDatagram1.completionHandler = recordCompletionHandler1;
+
+		requestDatagram1.timeout = 1;
+
+		_mockIntraBand.addResponseWaitingDatagram(requestDatagram1);
+
+		Thread.sleep(10);
+
+		Datagram requestDatagram2 = Datagram.createRequestDatagram(
+			_type, _data);
+
+		requestDatagram2.setSequenceId(sequenceId + 1);
+
+		RecordCompletionHandler<Object> recordCompletionHandler2 =
+			new RecordCompletionHandler<Object>();
+
+		requestDatagram2.completionHandler = recordCompletionHandler2;
+
+		requestDatagram2.timeout = 1;
+
+		_mockIntraBand.addResponseWaitingDatagram(requestDatagram2);
+
+		Assert.assertEquals(2, responseWaitingMap.size());
+		Assert.assertSame(requestDatagram1, responseWaitingMap.get(sequenceId));
+		Assert.assertSame(
+			requestDatagram2, responseWaitingMap.get(sequenceId + 1));
+		Assert.assertEquals(2, timeoutSequenceIds.size());
+		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
+		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId + 1));
+
+		Thread.sleep(10);
+
+		_mockIntraBand.cleanUpTimeoutResponseWaitingDatagrams();
+
+		Assert.assertEquals(2, logRecords.size());
+
+		assertMessageStartWith(
+			logRecords.get(0), "Removed timeout response waiting datagram ");
+		assertMessageStartWith(
+			logRecords.get(1), "Removed timeout response waiting datagram ");
+
+		recordCompletionHandler1.waitUntilTimeouted();
+		recordCompletionHandler2.waitUntilTimeouted();
+
+		// Cleanup timeout, hit, without log
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.OFF);
+
+		requestDatagram1 = Datagram.createRequestDatagram(_type, _data);
+
+		requestDatagram1.setSequenceId(sequenceId);
+
+		recordCompletionHandler1 = new RecordCompletionHandler<Object>();
+
+		requestDatagram1.completionHandler = recordCompletionHandler1;
+
+		requestDatagram1.timeout = 1;
+
+		_mockIntraBand.addResponseWaitingDatagram(requestDatagram1);
+
+		Thread.sleep(10);
+
+		requestDatagram2 = Datagram.createRequestDatagram(_type, _data);
+
+		requestDatagram2.setSequenceId(sequenceId + 1);
+
+		recordCompletionHandler2 = new RecordCompletionHandler<Object>();
+
+		requestDatagram2.completionHandler = recordCompletionHandler2;
+
+		requestDatagram2.timeout = 1;
+
+		_mockIntraBand.addResponseWaitingDatagram(requestDatagram2);
+
+		Assert.assertEquals(2, responseWaitingMap.size());
+		Assert.assertSame(requestDatagram1, responseWaitingMap.get(sequenceId));
+		Assert.assertSame(
+			requestDatagram2, responseWaitingMap.get(sequenceId + 1));
+		Assert.assertEquals(2, timeoutSequenceIds.size());
+		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId));
+		Assert.assertTrue(timeoutSequenceIds.contains(sequenceId + 1));
+
+		Thread.sleep(10);
+
+		_mockIntraBand.cleanUpTimeoutResponseWaitingDatagrams();
+
+		Assert.assertTrue(logRecords.isEmpty());
+
+		recordCompletionHandler1.waitUntilTimeouted();
+		recordCompletionHandler2.waitUntilTimeouted();
+
+		// Cleanup timeout, miss
+
+		_mockIntraBand.cleanUpTimeoutResponseWaitingDatagrams();
 	}
 
 	protected void assertMessageStartWith(

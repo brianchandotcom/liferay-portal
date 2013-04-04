@@ -24,6 +24,7 @@ import com.liferay.portalweb.socialoffice.users.user.removeregularrolessouserrol
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTests;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouserroles.SelectRegularRolesSOUserRolesTests;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTests;
+import com.liferay.portalweb.socialoffice.users.user.viewfootertext.ViewFooterTextTests;
 import com.liferay.portalweb.socialoffice.users.user.viewsiterolesouser.ViewSiteRoleSOUserTests;
 
 import junit.framework.Test;
@@ -46,6 +47,7 @@ public class UserTestPlan extends BaseTestSuite {
 		testSuite.addTest(SelectRegularRolesSOUserTests.suite());
 		testSuite.addTest(SelectRegularRolesSOUserRolesTests.suite());
 		testSuite.addTest(SignInSOTests.suite());
+		testSuite.addTest(ViewFooterTextTests.suite());
 		testSuite.addTest(ViewSiteRoleSOUserTests.suite());
 
 		return testSuite;

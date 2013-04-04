@@ -115,6 +115,7 @@
 			Liferay.fire('initLayout');
 
 			var plid = options.plid || themeDisplay.getPlid();
+			var portletData = options.portletData;
 			var portletId = options.portletId;
 			var portletItemId = options.portletItemId;
 			var doAsUserId = options.doAsUserId || themeDisplay.getDoAsUserIdEncoded();
@@ -178,6 +179,7 @@
 				cmd: 'add',
 				dataType: 'json',
 				doAsUserId: doAsUserId,
+				portletData: portletData,
 				p_auth: Liferay.authToken,
 				p_l_id: plid,
 				p_p_col_id: currentColumnId,

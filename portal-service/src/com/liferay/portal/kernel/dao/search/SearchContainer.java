@@ -331,6 +331,16 @@ public class SearchContainer<R> {
 		return _hover;
 	}
 
+	public boolean recalculateCur(int total) {
+		if (((_cur - 1) * _delta) >= total) {
+			setTotal(total);
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -453,7 +463,7 @@ public class SearchContainer<R> {
 			return;
 		}
 
-		if (((_cur - 1) * _delta) >= _total) {
+		if (recalculateCur(_total)) {
 			if ((_total % _delta) == 0) {
 				_cur = (_total / _delta);
 			}

@@ -56,10 +56,7 @@
 
 				total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-				if (((searchContainer.getCur() - 1) * searchContainer.getDelta()) >= total) {
-
-					searchContainer.setTotal(total);
-
+				if (searchContainer.recalculateCur(total)) {
 					assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
 				}
 

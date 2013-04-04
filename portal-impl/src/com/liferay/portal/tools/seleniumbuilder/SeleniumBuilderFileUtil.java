@@ -353,6 +353,9 @@ public class SeleniumBuilderFileUtil {
 		else if (fileName.endsWith(".testcase")) {
 			validateTestCaseDocument(fileName, rootElement);
 		}
+		else if (fileName.endsWith(".testsuite")) {
+			validateTestSuiteDocument(fileName, rootElement);
+		}
 	}
 
 	protected void validateActionCommandElement(
@@ -678,18 +681,42 @@ public class SeleniumBuilderFileUtil {
 				}
 			}
 		}
-		else if (Validator.isNotNull(testCase) &&
-				 testCase.matches(allowedExecuteAttributeValuesRegex)) {
+		else if (testCase != null) {
+			if (Validator.isNull(testCase) ||
+				!testCase.matches(allowedExecuteAttributeValuesRegex)) {
 
-			if (attributes.size() != 2) {
-				throwValidationException(0, fileName);
+				throwValidationException(
+					1006, fileName, executeElement, "test-case");
+			}
+
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
+
+				if (!attributeName.equals("line-number") &&
+					!attributeName.equals("test-case")) {
+
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
+				}
 			}
 		}
-		else if (Validator.isNotNull(testSuite) &&
-				 testSuite.matches(allowedExecuteAttributeValuesRegex)) {
+		else if (testSuite != null) {
+			if (Validator.isNull(testSuite) ||
+				!testSuite.matches(allowedExecuteAttributeValuesRegex)) {
 
-			if (attributes.size() != 2) {
-				throwValidationException(0, fileName);
+				throwValidationException(
+					1006, fileName, executeElement, "test-suite");
+			}
+
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
+
+				if (!attributeName.equals("line-number") &&
+					!attributeName.equals("test-suite")) {
+
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
+				}
 			}
 		}
 		else {
@@ -922,6 +949,35 @@ public class SeleniumBuilderFileUtil {
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
+			}
+			else {
+				throwValidationException(
+					1002, fileName, rootElement, elementName);
+			}
+		}
+	}
+
+	protected void validateTestSuiteDocument(
+		String fileName, Element rootElement) {
+
+		if (!Validator.equals(rootElement.getName(), "definition")) {
+			throwValidationException(1000, fileName, rootElement);
+		}
+
+		List<Element> elements = rootElement.elements();
+
+		if (elements.isEmpty()) {
+			throwValidationException(
+				1001, fileName, rootElement, new String[] {"execute"});
+		}
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (elementName.equals("execute")) {
+				validateExecuteElement(
+					fileName, element, new String[] {"test-case", "test-suite"},
+					".+", new String[0]);
 			}
 			else {
 				throwValidationException(

@@ -23,19 +23,19 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view_add_cont
 String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60);
 %>
 
-<div class="content-preview">
+<div class="asset-preview">
 
 	<%
 	String imagePreviewURL = assetRenderer.getURLImagePreview(liferayPortletRequest);
 	%>
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
-		<div class="image-preview">
+		<div class="asset-image-preview">
 			<img alt="<%= shortTitle %>" src="<%= imagePreviewURL %>" />
 		</div>
 	</c:if>
 
-	<div class="title">
+	<div class="asset-title">
 		<%= shortTitle %>
 	</div>
 
@@ -53,11 +53,11 @@ String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLo
 		<span class="user-name"><%= assetRenderer.getUserName() %></span>&nbsp; <span class="display-date"><%= displayDate %></span>
 	</div>
 
-	<div class="summary">
+	<div class="asset-summary">
 		<%= assetRenderer.getSummary(themeDisplay.getLocale()) %>
 	</div>
 
-	<div class="metadata">
+	<div class="asset-metadata">
 		<div class="categories">
 			<liferay-ui:asset-categories-summary
 				className="<%= assetEntry.getClassName() %>"

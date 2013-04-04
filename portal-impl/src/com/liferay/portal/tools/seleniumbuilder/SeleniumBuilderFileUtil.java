@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
@@ -215,13 +216,20 @@ public class SeleniumBuilderFileUtil {
 	public Element getRootElement(String fileName) throws Exception {
 		String content = getNormalizedContent(fileName);
 
-		Document document = SAXReaderUtil.read(content, true);
+		try {
+			Document document = SAXReaderUtil.read(content, true);
 
-		Element rootElement = document.getRootElement();
+			Element rootElement = document.getRootElement();
 
-		validate(fileName, rootElement);
+			validate(fileName, rootElement);
 
-		return rootElement;
+			return rootElement;
+		}
+		catch (DocumentException e) {
+			throwValidationException(1007, fileName, e);
+		}
+
+		return null;
 	}
 
 	public String getSimpleClassName(String fileName) {
@@ -263,30 +271,33 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	protected void throwValidationException(int errorCode, String fileName) {
-		throwValidationException(errorCode, fileName, null, null, null);
+		throwValidationException(errorCode, fileName, null, null, null, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element) {
 
-		throwValidationException(errorCode, fileName, element, null, null);
+		throwValidationException(
+			errorCode, fileName, element, null, null, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String string) {
 
-		throwValidationException(errorCode, fileName, element, null, string);
+		throwValidationException(
+			errorCode, fileName, element, null, string, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String[] array) {
 
-		throwValidationException(errorCode, fileName, element, array, null);
+		throwValidationException(
+			errorCode, fileName, element, array, null, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String[] array,
-		String string) {
+		String string, Exception e) {
 
 		String prefix = "Error " + errorCode + ": ";
 		String suffix = fileName;
@@ -325,6 +336,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid " + string + " attribute value in " + suffix);
 		}
+		else if (errorCode == 1007) {
+			throw new IllegalArgumentException(
+				prefix + "Poorly formed XML in " + suffix, e);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string +
@@ -333,6 +348,12 @@ public class SeleniumBuilderFileUtil {
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}
+	}
+
+	protected void throwValidationException(
+		int errorCode, String fileName, Exception e) {
+
+		throwValidationException(errorCode, fileName, null, null, null, e);
 	}
 
 	protected void validate(String fileName, Element rootElement)

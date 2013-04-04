@@ -18,21 +18,14 @@ import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.File;
-
-import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,43 +36,6 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Juan Fernández
  */
 public class BasePortletExportImportTestCase extends PowerMockito {
-
-	public String addPortletToLayout(
-			long userId, Layout layout, String portletId, String columnId,
-			Map<String, String[]> preferenceMap)
-		throws Exception {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		String newPortletId = layoutTypePortlet.addPortletId(
-			userId, portletId, columnId, -1);
-
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		PortletPreferences portletPreferences = getPortletPreferences(
-			layout.getCompanyId(), layout.getPlid(), newPortletId);
-
-		for (String key : preferenceMap.keySet()) {
-			portletPreferences.setValues(key, preferenceMap.get(key));
-		}
-
-		updatePortletPreferences(
-			layout.getPlid(), newPortletId, portletPreferences);
-
-		return newPortletId;
-	}
-
-	public PortletPreferences getPortletPreferences(
-			long companyId, long plid, String portletId)
-		throws Exception {
-
-		return PortletPreferencesLocalServiceUtil.getPreferences(
-			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -113,16 +69,6 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 		if ((_larFile != null) && _larFile.exists()) {
 			FileUtil.delete(_larFile);
 		}
-	}
-
-	public void updatePortletPreferences(
-			long plid, String portletId, PortletPreferences portletPreferences)
-		throws Exception {
-
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-			portletPreferences);
 	}
 
 	public Group _group;

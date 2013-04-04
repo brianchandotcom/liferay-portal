@@ -18,18 +18,27 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Manuel de la Peña
@@ -105,6 +114,117 @@ public class LayoutTestUtil {
 		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			nameMap, null, true, true, ServiceTestUtil.getServiceContext());
+	}
+
+	public static String addPortletToLayout(
+			long userId, Layout layout, String portletId, String columnId,
+			Map<String, String[]> preferenceMap)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		String newPortletId = layoutTypePortlet.addPortletId(
+			userId, portletId, columnId, -1);
+
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+
+		PortletPreferences portletPreferences = getPortletPreferences(
+			layout.getCompanyId(), layout.getPlid(), newPortletId);
+
+		for (String key : preferenceMap.keySet()) {
+			portletPreferences.setValues(key, preferenceMap.get(key));
+		}
+
+		updatePortletPreferences(
+			layout.getPlid(), newPortletId, portletPreferences);
+
+		return newPortletId;
+	}
+
+	public static String getLayoutTemplateId(Layout layout) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getLayoutTemplateId();
+	}
+
+	public static PortletPreferences getPortletPreferences(
+			Layout layout, String portletId)
+		throws Exception {
+
+		return getPortletPreferences(
+				layout.getCompanyId(), layout.getPlid(), portletId);
+	}
+
+	public static PortletPreferences getPortletPreferences(
+			long companyId, long plid, String portletId)
+		throws Exception {
+
+		return PortletPreferencesLocalServiceUtil.getPreferences(
+			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+	}
+
+	public static List<Portlet> getPortlets(Layout layout) throws Exception {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getPortlets();
+	}
+
+	public static boolean isLayoutColumnCustomizable(
+		Layout layout, String columnId) {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.isColumnCustomizable(columnId);
+	}
+
+	public static Layout updateLayoutColumnCustomizable(
+			Layout layout, String columnId, boolean customizable)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setTypeSettingsProperty(
+			CustomizedPages.namespaceColumnId(columnId),
+			String.valueOf(customizable));
+
+		layoutTypePortlet.setUpdatePermission(customizable);
+
+		return LayoutServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+	}
+
+	public static Layout updateLayoutTemplateId(
+			Layout layout, String layoutTemplateId)
+		throws Exception {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(
+			TestPropsValues.getUserId(), layoutTemplateId);
+
+		return LayoutServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+	}
+
+	public static void updatePortletPreferences(
+			long plid, String portletId, PortletPreferences portletPreferences)
+		throws Exception {
+
+		PortletPreferencesLocalServiceUtil.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+			portletPreferences);
 	}
 
 }

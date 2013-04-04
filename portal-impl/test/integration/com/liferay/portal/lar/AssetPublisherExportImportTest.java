@@ -252,7 +252,7 @@ public class AssetPublisherExportImportTest
 
 		// Export site LAR
 
-		String assetPublisherPortletId = addPortletToLayout(
+		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout, PortletKeys.ASSET_PUBLISHER,
 			"column-1", preferenceMap);
 
@@ -280,7 +280,7 @@ public class AssetPublisherExportImportTest
 
 		Assert.assertNotNull(_importedLayout);
 
-		return getPortletPreferences(
+		return LayoutTestUtil.getPortletPreferences(
 			_importedLayout.getCompanyId(), _importedLayout.getPlid(),
 			assetPublisherPortletId);
 	}

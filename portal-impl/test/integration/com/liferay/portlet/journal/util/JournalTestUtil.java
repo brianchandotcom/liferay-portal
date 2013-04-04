@@ -449,8 +449,9 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
-			article.getDescriptionMap(), content, article.getLayoutUuid(),
-			serviceContext);
+			article.getDescriptionMap(),
+			createLocalizedContent(content, LocaleUtil.getDefault()),
+			article.getLayoutUuid(), serviceContext);
 	}
 
 	private static Locale[] _locales = {

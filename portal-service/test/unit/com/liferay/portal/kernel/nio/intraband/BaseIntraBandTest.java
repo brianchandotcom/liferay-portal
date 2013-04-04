@@ -41,6 +41,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -1117,6 +1118,169 @@ public class BaseIntraBandTest {
 		// Clean up timeout, miss
 
 		_mockIntraBand.cleanUpTimeoutResponseWaitingDatagrams();
+	}
+
+	@Test
+	public void testSendDatagramWithCallback() {
+
+		// RegistrationReference is null
+
+		try {
+			_mockIntraBand.sendDatagram(null, null, null, null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Registration reference is null", npe.getMessage());
+		}
+
+		// RegistrationReference is cancelled
+
+		try {
+			RegistrationReference registrationReference =
+				new MockRegistrationReference(_mockIntraBand);
+
+			registrationReference.cancelRegistration();
+
+			_mockIntraBand.sendDatagram(
+				registrationReference, null, null, null, null);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Registration reference is invalid", iae.getMessage());
+		}
+
+		// Datagram is null
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand), null, null, null,
+				null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Datagram is null", npe.getMessage());
+		}
+
+		// Completion type set is null
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand),
+				Datagram.createRequestDatagram(_type, _data), null, null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Completion type set is null", npe.getMessage());
+		}
+
+		// Completion type set is empty
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand),
+				Datagram.createRequestDatagram(_type, _data), null,
+				EnumSet.noneOf(CompletionHandler.CompletionType.class), null);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Completion type set is empty", iae.getMessage());
+		}
+
+		// Complete handler is null
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand),
+				Datagram.createRequestDatagram(_type, _data), null,
+				EnumSet.of(CompletionHandler.CompletionType.SUBMITTED), null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Complete handler is null", npe.getMessage());
+		}
+
+		// TimeUnit is null
+
+		try {
+			_mockIntraBand.sendDatagram(
+				new MockRegistrationReference(_mockIntraBand),
+				Datagram.createRequestDatagram(_type, _data), null,
+				EnumSet.of(CompletionHandler.CompletionType.SUBMITTED),
+				new RecordCompletionHandler<Object>(), 1000, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Time unit is null", npe.getMessage());
+		}
+
+		// None positive timeout
+
+		Datagram requestDatagram = Datagram.createRequestDatagram(_type, _data);
+
+		_mockIntraBand.sendDatagram(
+			new MockRegistrationReference(_mockIntraBand), requestDatagram,
+			null, EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
+			new RecordCompletionHandler<Object>(), 0, TimeUnit.MILLISECONDS);
+
+		Datagram sentDatagram = _mockIntraBand.getDatagram();
+
+		Assert.assertEquals(_DEFAULT_TIMEOUT, sentDatagram.timeout);
+
+		Map<Long, Datagram> responseWaitingMap =
+			_mockIntraBand.responseWaitingMap;
+
+		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertSame(
+			requestDatagram,
+			responseWaitingMap.remove(requestDatagram.getSequenceId()));
+
+		Map<Long, Long> timeoutMap = _mockIntraBand.timeoutMap;
+
+		Collection<Long> timeoutSequenceIds = timeoutMap.values();
+
+		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertTrue(
+			timeoutSequenceIds.remove(requestDatagram.getSequenceId()));
+
+		// Covert timeout
+
+		_mockIntraBand.sendDatagram(
+			new MockRegistrationReference(_mockIntraBand), requestDatagram,
+			null, EnumSet.of(CompletionHandler.CompletionType.REPLIED),
+			new RecordCompletionHandler<Object>(), 2, TimeUnit.SECONDS);
+
+		sentDatagram = _mockIntraBand.getDatagram();
+
+		Assert.assertEquals(2000, sentDatagram.timeout);
+		Assert.assertEquals(1, responseWaitingMap.size());
+		Assert.assertSame(
+			requestDatagram,
+			responseWaitingMap.remove(requestDatagram.getSequenceId()));
+		Assert.assertEquals(1, timeoutSequenceIds.size());
+		Assert.assertTrue(
+			timeoutSequenceIds.remove(requestDatagram.getSequenceId()));
+
+		// Default timeout
+
+		_mockIntraBand.sendDatagram(
+			new MockRegistrationReference(_mockIntraBand), requestDatagram,
+			null, EnumSet.of(CompletionHandler.CompletionType.SUBMITTED),
+			new RecordCompletionHandler<Object>());
+
+		sentDatagram = _mockIntraBand.getDatagram();
+
+		Assert.assertEquals(_DEFAULT_TIMEOUT, sentDatagram.timeout);
 	}
 
 	protected void assertMessageStartWith(

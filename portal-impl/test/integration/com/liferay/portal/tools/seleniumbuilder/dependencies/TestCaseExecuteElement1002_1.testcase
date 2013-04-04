@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<execute action="Action#action">
+			<fail />
+		</execute>
+	</command>
+</definition>

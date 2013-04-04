@@ -350,6 +350,9 @@ public class SeleniumBuilderFileUtil {
 		else if (fileName.endsWith(".path")) {
 			validatePathDocument(fileName, rootElement);
 		}
+		else if (fileName.endsWith(".testcase")) {
+			validateTestCaseDocument(fileName, rootElement);
+		}
 	}
 
 	protected void validateActionCommandElement(
@@ -865,6 +868,65 @@ public class SeleniumBuilderFileUtil {
 
 		if ((tdText == null) || !shortFileName.equals(tdText)) {
 			throwValidationException(0, fileName);
+		}
+	}
+
+	protected void validateTestCaseDocument(
+		String fileName, Element rootElement) {
+
+		if (!Validator.equals(rootElement.getName(), "definition")) {
+			throwValidationException(1000, fileName, rootElement);
+		}
+
+		List<Element> elements = rootElement.elements();
+
+		if (elements.isEmpty()) {
+			throwValidationException(
+				1001, fileName, rootElement, new String[] {"command"});
+		}
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (elementName.equals("command")) {
+				String attributeValue = element.attributeValue("name");
+
+				if (attributeValue == null) {
+					throwValidationException(1003, fileName, element, "name");
+				}
+				else if (Validator.isNull(attributeValue)) {
+					throwValidationException(1006, fileName, element, "name");
+				}
+
+				validateBlockElement(
+					fileName, element, new String[] {"execute", "var"},
+					new String[] {"action", "macro"}, new String[] {"var"});
+			}
+			else if (elementName.equals("set-up") ||
+					 elementName.equals("tear-down")) {
+
+				List<Attribute> attributes = element.attributes();
+
+				for (Attribute attribute : attributes) {
+					String attributeName = attribute.getName();
+
+					if (!attributeName.equals("line-number")) {
+						throwValidationException(
+							1005, fileName, element, attributeName);
+					}
+				}
+
+				validateBlockElement(
+					fileName, element, new String[] {"execute", "var"},
+					new String[] {"action", "macro"}, new String[] {"var"});
+			}
+			else if (elementName.equals("var")) {
+				validateVarElement(fileName, element);
+			}
+			else {
+				throwValidationException(
+					1002, fileName, rootElement, elementName);
+			}
 		}
 	}
 

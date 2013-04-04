@@ -1,0 +1,5 @@
+<definition>
+	<var name="name" value="value">
+		<fail />
+	</var>
+</definition>

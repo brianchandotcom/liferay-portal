@@ -577,8 +577,13 @@ public class SeleniumBuilderFileUtil {
 		String testCase = executeElement.attributeValue("test-case");
 		String testSuite = executeElement.attributeValue("test-suite");
 
-		if (Validator.isNotNull(action) &&
-			action.matches(allowedExecuteAttributeValuesRegex)) {
+		if (action != null) {
+			if (Validator.isNull(action) ||
+				!action.matches(allowedExecuteAttributeValuesRegex)) {
+
+				throwValidationException(
+					1006, fileName, executeElement, "action");
+			}
 
 			for (Attribute attribute : attributes) {
 				String attributeName = attribute.getName();
@@ -589,14 +594,16 @@ public class SeleniumBuilderFileUtil {
 					!attributeName.startsWith("locator-key") &&
 					!attributeName.startsWith("value")) {
 
-					throwValidationException(0, fileName);
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
 				}
 
 				if (attributeName.equals("locator") ||
 					attributeName.equals("locator-key") ||
 					attributeName.equals("value")) {
 
-					throwValidationException(0, fileName);
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
 				}
 			}
 		}
@@ -628,11 +635,23 @@ public class SeleniumBuilderFileUtil {
 				}
 			}
 		}
-		else if (Validator.isNotNull(macro) &&
-				 macro.matches(allowedExecuteAttributeValuesRegex)) {
+		else if (macro != null) {
+			if (Validator.isNull(macro) ||
+				!macro.matches(allowedExecuteAttributeValuesRegex)) {
 
-			if (attributes.size() != 2) {
-				throwValidationException(0, fileName);
+				throwValidationException(
+					1006, fileName, executeElement, "macro");
+			}
+
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
+
+				if (!attributeName.equals("macro") &&
+					!attributeName.equals("line-number")) {
+
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
+				}
 			}
 		}
 		else if (selenium != null) {
@@ -792,8 +811,13 @@ public class SeleniumBuilderFileUtil {
 			String elementName = element.getName();
 
 			if (elementName.equals("command")) {
-				if (Validator.isNull(element.attributeValue("name"))) {
+				String attributeValue = element.attributeValue("name");
+
+				if (attributeValue == null) {
 					throwValidationException(1003, fileName, element, "name");
+				}
+				else if (Validator.isNull(attributeValue)) {
+					throwValidationException(1006, fileName, element, "name");
 				}
 
 				validateBlockElement(
@@ -847,25 +871,47 @@ public class SeleniumBuilderFileUtil {
 	protected void validateVarElement(String fileName, Element varElement) {
 		List<Attribute> attributes = varElement.attributes();
 
-		if (attributes.isEmpty()) {
-			throwValidationException(0, fileName);
-		}
+		boolean hasNeededNameAttribute = false;
+		boolean hasNeededValueAttribute = false;
 
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
+			String attributeValue = attribute.getValue();
+
+			if (Validator.isNull(attributeValue)) {
+				throwValidationException(
+					1006, fileName, varElement, attributeName);
+			}
+
+			if (attributeName.equals("name")) {
+				hasNeededNameAttribute = true;
+			}
+			else if (attributeName.equals("value")) {
+				hasNeededValueAttribute = true;
+			}
 
 			if (!attributeName.equals("line-number") &&
 				!attributeName.equals("name") &&
 				!attributeName.equals("value")) {
 
-				throwValidationException(0, fileName);
+				throwValidationException(
+					1005, fileName, varElement, attributeName);
 			}
+		}
+
+		if (!hasNeededNameAttribute || !hasNeededValueAttribute) {
+			throwValidationException(
+				1004, fileName, varElement, new String[] {"name", "value"});
 		}
 
 		List<Element> elements = varElement.elements();
 
 		if (!elements.isEmpty()) {
-			throwValidationException(0, fileName);
+			Element element = elements.get(0);
+
+			String elementName = element.getName();
+
+			throwValidationException(1002, fileName, element, elementName);
 		}
 	}
 

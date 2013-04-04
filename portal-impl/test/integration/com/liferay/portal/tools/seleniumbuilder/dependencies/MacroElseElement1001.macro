@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition action="Action#isAction" />
+			<then>
+				<execute action="action" />
+			</then>
+			<else>
+			</else>
+		</if>
+	</command>
+</definition>

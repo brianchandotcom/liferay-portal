@@ -11,5 +11,27 @@
 		<execute macro="macro">
 			<var name="name" value="value" />
 		</execute>
+
+		<if>
+			<condition action="isAction" />
+			<then>
+				<var name="name" value="value" />
+
+				<execute action="action" />
+			</then>
+		</if>
+
+		<if>
+			<condition macro="isMacro" />
+			<then>
+				<var name="name" value="value" />
+
+				<execute macro="macro" />
+
+				<execute macro="macro">
+					<var name="name" value="value" />
+				</execute>
+			</then>
+		</if>
 	</command>
 </definition>

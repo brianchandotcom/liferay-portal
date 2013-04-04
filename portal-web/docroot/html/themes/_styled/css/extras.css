@@ -90,24 +90,26 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 	@include border-bottom-right-radius(8px);
 }
 
-.lfr-add-panel .lfr-panel-content .app-view-entry-taglib.entry-display-style {
-	&:hover, &.hover, &.over {
-		@include border-radius(0);
+.lfr-add-panel {
+	.lfr-panel-content .app-view-entry-taglib.entry-display-style {
+		&:hover, &.hover, &.over {
+			@include border-radius(0);
+		}
 	}
-}
 
-.lfr-add-panel .lfr-panel.lfr-extended {
-	@include border-radius(0);
-	@include box-shadow(none);
-}
+	.lfr-panel.lfr-extended {
+		@include border-radius(0);
+		@include box-shadow(none);
+	}
 
-.lfr-add-panel .search-panel .add-content-search .aui-field-input {
-	@include border-radius(4px);
+	.search-panel .add-content-search .aui-field-input {
+		@include border-radius(4px);
+	}
 }
 
 .lfr-content-preview-popup .lfr-content-preview-popup-content {
 	@include border-radius(0);
-	@include box-shadow(9px 4px 12px #777777);
+	@include box-shadow(9px 4px 12px #777);
 }
 
 .lfr-hudcrumbs ul {

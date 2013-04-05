@@ -657,6 +657,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			classPK, increment);
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
+		long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.incrementViewCounter(userId, className,
+			classPK);
+	}
+
 	public void reindex(
 		java.util.List<com.liferay.portlet.asset.model.AssetEntry> entries)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -204,9 +204,10 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			localRepositoryImpl = new LiferayLocalRepository(
 				repositoryLocalService, repositoryService,
 				dlAppHelperLocalService, dlFileEntryLocalService,
-				dlFileEntryService, dlFileVersionLocalService,
-				dlFileVersionService, dlFolderLocalService, dlFolderService,
-				resourceLocalService, repositoryId);
+				dlFileEntryService, dlFileEntryTypeLocalService,
+				dlFileVersionLocalService, dlFileVersionService,
+				dlFolderLocalService, dlFolderService, resourceLocalService,
+				repositoryId);
 		}
 		else {
 			BaseRepository baseRepository = createRepositoryImpl(
@@ -239,9 +240,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		localRepositoryImpl = new LiferayLocalRepository(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
 			dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
-			dlFolderLocalService, dlFolderService, resourceLocalService,
-			folderId, fileEntryId, fileVersionId);
+			dlFileEntryTypeLocalService, dlFileVersionLocalService,
+			dlFileVersionService, dlFolderLocalService, dlFolderService,
+			resourceLocalService, folderId, fileEntryId, fileVersionId);
 
 		if (localRepositoryImpl.getRepositoryId() == 0) {
 			localRepositoryImpl = null;
@@ -282,9 +283,10 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryImpl = new LiferayRepository(
 				repositoryLocalService, repositoryService,
 				dlAppHelperLocalService, dlFileEntryLocalService,
-				dlFileEntryService, dlFileVersionLocalService,
-				dlFileVersionService, dlFolderLocalService, dlFolderService,
-				resourceLocalService, repositoryId);
+				dlFileEntryService, dlFileEntryTypeLocalService,
+				dlFileVersionLocalService, dlFileVersionService,
+				dlFolderLocalService, dlFolderService, resourceLocalService,
+				repositoryId);
 		}
 		else {
 			repositoryImpl = createRepositoryImpl(repositoryId, classNameId);
@@ -314,9 +316,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		repositoryImpl = new LiferayRepository(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
 			dlFileEntryLocalService, dlFileEntryService,
-			dlFileVersionLocalService, dlFileVersionService,
-			dlFolderLocalService, dlFolderService, resourceLocalService,
-			folderId, fileEntryId, fileVersionId);
+			dlFileEntryTypeLocalService, dlFileVersionLocalService,
+			dlFileVersionService, dlFolderLocalService, dlFolderService,
+			resourceLocalService, folderId, fileEntryId, fileVersionId);
 
 		if (repositoryImpl.getRepositoryId() == 0) {
 			repositoryImpl = null;

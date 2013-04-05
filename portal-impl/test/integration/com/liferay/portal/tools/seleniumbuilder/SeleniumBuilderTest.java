@@ -110,6 +110,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionCaseElement1007() throws Exception {
+		test(
+			"ActionCaseElement1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/ActionCaseElement1007.action");
+	}
+
+	@Test
 	public void testActionCaseElement2000() throws Exception {
 		test(
 			"ActionCaseElement2000.action",
@@ -158,6 +166,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionCommandElement1007() throws Exception {
+		test(
+			"ActionCommandElement1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/ActionCommandElement1007.action");
+	}
+
+	@Test
 	public void testActionDefaultElement1001() throws Exception {
 		test(
 			"ActionDefaultElement1001.action",
@@ -179,6 +195,14 @@ public class SeleniumBuilderTest {
 			"ActionDefaultElement1005.action",
 			"Error 1005: Invalid locator1 attribute in " + _DIR_NAME +
 				"/ActionDefaultElement1005.action:3");
+	}
+
+	@Test
+	public void testActionDefaultElement1007() throws Exception {
+		test(
+			"ActionDefaultElement1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/ActionDefaultElement1007.action");
 	}
 
 	@Test
@@ -211,6 +235,14 @@ public class SeleniumBuilderTest {
 			"ActionDefinitionElement1002.action",
 			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
 				"/ActionDefinitionElement1002.action:2");
+	}
+
+	@Test
+	public void testActionDefinitionElement1007() throws Exception {
+		test(
+			"ActionDefinitionElement1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/ActionDefinitionElement1007.action");
 	}
 
 	@Test
@@ -278,6 +310,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testActionExecuteElement1007() throws Exception {
+		test(
+			"ActionExecuteElement1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/ActionExecuteElement1007.action");
+	}
+
+	@Test
 	public void testFunction() throws Exception {
 		test("Function.function");
 	}
@@ -320,6 +360,14 @@ public class SeleniumBuilderTest {
 			"FunctionCommandElement1006.function",
 			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
 				"/FunctionCommandElement1006.function:2");
+	}
+
+	@Test
+	public void testFunctionCommandElement1007() throws Exception {
+		test(
+			"FunctionCommandElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionCommandElement1007.function");
 	}
 
 	@Test
@@ -435,6 +483,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionConditionElement1007() throws Exception {
+		test(
+			"FunctionConditionElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionConditionElement1007.function");
+	}
+
+	@Test
 	public void testFunctionDefinitionElement1000() throws Exception {
 		test(
 			"FunctionDefinitionElement1000.function",
@@ -459,6 +515,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionDefinitionElement1007() throws Exception {
+		test(
+			"FunctionDefinitionElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionDefinitionElement1007.function");
+	}
+
+	@Test
 	public void testFunctionElseElement1001() throws Exception {
 		test(
 			"FunctionElseElement1001.function",
@@ -472,6 +536,14 @@ public class SeleniumBuilderTest {
 			"FunctionElseElement1002.function",
 			"Error 1002: Invalid var element in " + _DIR_NAME +
 				"/FunctionElseElement1002.function:9");
+	}
+
+	@Test
+	public void testFunctionElseElement1007() throws Exception {
+		test(
+			"FunctionElseElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionElseElement1007.function");
 	}
 
 	@Test
@@ -563,6 +635,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionExecuteElement1007() throws Exception {
+		test(
+			"FunctionExecuteElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionExecuteElement1007.function");
+	}
+
+	@Test
 	public void testFunctionIfElement1001_1() throws Exception {
 		test(
 			"FunctionIfElement1001_1.function",
@@ -595,6 +675,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testFunctionIfElement1007() throws Exception {
+		test(
+			"FunctionIfElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionIfElement1007.function");
+	}
+
+	@Test
 	public void testFunctionThenElement1001() throws Exception {
 		test(
 			"FunctionThenElement1001.function",
@@ -608,6 +696,14 @@ public class SeleniumBuilderTest {
 			"FunctionThenElement1002.function",
 			"Error 1002: Invalid var element in " + _DIR_NAME +
 				"/FunctionThenElement1002.function:6");
+	}
+
+	@Test
+	public void testFunctionThenElement1007() throws Exception {
+		test(
+			"FunctionThenElement1007.function",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/FunctionThenElement1007.function");
 	}
 
 	@Test
@@ -653,6 +749,14 @@ public class SeleniumBuilderTest {
 			"MacroCommandElement1006.macro",
 			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
 				"/MacroCommandElement1006.macro:2");
+	}
+
+	@Test
+	public void testMacroCommandElement1007() throws Exception {
+		test(
+			"MacroCommandElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroCommandElement1007.macro");
 	}
 
 	@Test
@@ -776,6 +880,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroConditionElement1007() throws Exception {
+		test(
+			"MacroConditionElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroConditionElement1007.macro");
+	}
+
+	@Test
 	public void testMacroDefinitionElement1000() throws Exception {
 		test(
 			"MacroDefinitionElement1000.macro",
@@ -800,6 +912,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroDefinitionElement1007() throws Exception {
+		test(
+			"MacroDefinitionElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroDefinitionElement1007.macro");
+	}
+
+	@Test
 	public void testMacroElseElement1001() throws Exception {
 		test(
 			"MacroElseElement1001.macro",
@@ -813,6 +933,14 @@ public class SeleniumBuilderTest {
 			"MacroElseElement1002.macro",
 			"Error 1002: Invalid fail element in " + _DIR_NAME +
 				"/MacroElseElement1002.macro:9");
+	}
+
+	@Test
+	public void testMacroElseElement1007() throws Exception {
+		test(
+			"MacroElseElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroElseElement1007.macro");
 	}
 
 	@Test
@@ -912,6 +1040,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroExecuteElement1007() throws Exception {
+		test(
+			"MacroExecuteElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroExecuteElement1007.macro");
+	}
+
+	@Test
 	public void testMacroIfElement1001_1() throws Exception {
 		test(
 			"MacroIfElement1001_1.macro",
@@ -944,6 +1080,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroIfElement1007() throws Exception {
+		test(
+			"MacroIfElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroIfElement1007.macro");
+	}
+
+	@Test
 	public void testMacroThenElement1001() throws Exception {
 		test(
 			"MacroThenElement1001.macro",
@@ -957,6 +1101,14 @@ public class SeleniumBuilderTest {
 			"MacroThenElement1002.macro",
 			"Error 1002: Invalid fail element in " + _DIR_NAME +
 				"/MacroThenElement1002.macro:6");
+	}
+
+	@Test
+	public void testMacroThenElement1007() throws Exception {
+		test(
+			"MacroThenElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroThenElement1007.macro");
 	}
 
 	@Test
@@ -1016,6 +1168,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroVarElement1007() throws Exception {
+		test(
+			"MacroVarElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroVarElement1007.macro");
+	}
+
+	@Test
 	public void testMacroWhileElement1001_1() throws Exception {
 		test(
 			"MacroWhileElement1001_1.macro",
@@ -1045,6 +1205,14 @@ public class SeleniumBuilderTest {
 			"MacroWhileElement1002.macro",
 			"Error 1002: Invalid else element in " + _DIR_NAME +
 				"/MacroWhileElement1002.macro:8");
+	}
+
+	@Test
+	public void testMacroWhileElement1007() throws Exception {
+		test(
+			"MacroWhileElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroWhileElement1007.macro");
 	}
 
 	@Test
@@ -1085,6 +1253,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testPathTdElement1007() throws Exception {
+		test(
+			"PathTdElement1007.path",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/PathTdElement1007.path");
+	}
+
+	@Test
 	public void testPathTrElement1001() throws Exception {
 		test(
 			"PathTrElement1001.path",
@@ -1106,6 +1282,14 @@ public class SeleniumBuilderTest {
 			"PathTrElement1002_2.path",
 			"Error 1002: Invalid td element in " + _DIR_NAME +
 				"/PathTrElement1002_2.path:15");
+	}
+
+	@Test
+	public void testPathTrElement1007() throws Exception {
+		test(
+			"PathTrElement1007.path",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/PathTrElement1007.path");
 	}
 
 	@Test
@@ -1170,6 +1354,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseCommandElement1007() throws Exception {
+		test(
+			"TestCaseCommandElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseCommandElement1007.testcase");
+	}
+
+	@Test
 	public void testTestCaseDefinitionElement1000() throws Exception {
 		test(
 			"TestCaseDefinitionElement1000.testcase",
@@ -1191,6 +1383,14 @@ public class SeleniumBuilderTest {
 			"TestCaseDefinitionElement1002.testcase",
 			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
 				"/TestCaseDefinitionElement1002.testcase:2");
+	}
+
+	@Test
+	public void testTestCaseDefinitionElement1007() throws Exception {
+		test(
+			"TestCaseDefinitionElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseDefinitionElement1007.testcase");
 	}
 
 	@Test
@@ -1290,6 +1490,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseExecuteElement1007() throws Exception {
+		test(
+			"TestCaseExecuteElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseExecuteElement1007.testcase");
+	}
+
+	@Test
 	public void testTestCaseSetUpElement1001() throws Exception {
 		test(
 			"TestCaseSetUpElement1001.testcase",
@@ -1314,6 +1522,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseSetUpElement1007() throws Exception {
+		test(
+			"TestCaseSetUpElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseSetUpElement1007.testcase");
+	}
+
+	@Test
 	public void testTestCaseTearDownElement1001() throws Exception {
 		test(
 			"TestCaseTearDownElement1001.testcase",
@@ -1335,6 +1551,14 @@ public class SeleniumBuilderTest {
 			"TestCaseTearDownElement1005.testcase",
 			"Error 1005: Invalid name attribute in " + _DIR_NAME +
 				"/TestCaseTearDownElement1005.testcase:6");
+	}
+
+	@Test
+	public void testTestCaseTearDownElement1007() throws Exception {
+		test(
+			"TestCaseTearDownElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseTearDownElement1007.testcase");
 	}
 
 	@Test
@@ -1394,6 +1618,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseVarElement1007() throws Exception {
+		test(
+			"TestCaseVarElement1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseVarElement1007.testcase");
+	}
+
+	@Test
 	public void testTestSuite() throws Exception {
 		test("TestSuite.testsuite");
 	}
@@ -1420,6 +1652,14 @@ public class SeleniumBuilderTest {
 			"TestSuiteDefinitionElement1002.testsuite",
 			"Error 1002: Invalid command element in " + _DIR_NAME +
 				"/TestSuiteDefinitionElement1002.testsuite:2");
+	}
+
+	@Test
+	public void testTestSuiteDefinitionElement1007() throws Exception {
+		test(
+			"TestSuiteDefinitionElement1007.testsuite",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestSuiteDefinitionElement1007.testsuite");
 	}
 
 	@Test
@@ -1492,6 +1732,14 @@ public class SeleniumBuilderTest {
 			"TestSuiteExecuteElement1006_2.testsuite",
 			"Error 1006: Invalid test-suite attribute value in " + _DIR_NAME +
 				"/TestSuiteExecuteElement1006_2.testsuite:2");
+	}
+
+	@Test
+	public void testTestSuiteExecuteElement1007() throws Exception {
+		test(
+			"TestSuiteExecuteElement1007.testsuite",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestSuiteExecuteElement1007.testsuite");
 	}
 
 	protected void test(String fileName) throws Exception {

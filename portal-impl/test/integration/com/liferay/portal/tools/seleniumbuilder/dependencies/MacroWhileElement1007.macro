@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<while>
+			<condition macro="isMacro" />
+			<then>
+				<execute macro="macro" />
+			</then>
+		<while>
+	</command>
+</definition>

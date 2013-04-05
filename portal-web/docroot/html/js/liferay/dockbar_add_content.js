@@ -149,6 +149,8 @@ AUI.add(
 								hideOn: 'mouseleave',
 								on: {
 									show: function() {
+										this.set('bodyContent', '<div class="loading-animation" />');
+
 										var currentNode = this.get('currentNode');
 
 										if (instance._previousNode && (instance._previousNode != currentNode)) {
@@ -162,19 +164,29 @@ AUI.add(
 
 										var uri = instance._addContentForm.getAttribute('action');
 
-										instance._ioPreview = A.io.request(
-											uri,
-											{
-												after: {
-													failure: A.bind(instance._afterPreviewFailure, instance),
-													success: A.bind(instance._afterPreviewSuccess, instance)
-												},
-												data: {
-													classPK: classPK,
-													className: className,
-													viewEntries: false,
-													viewPreview: true
-												}
+										if (instance._ioPreviewHandle) {
+											instance._ioPreviewHandle.cancel();
+										}
+
+										instance._ioPreviewHandle = A.later(
+											100,
+											instance,
+											function() {
+												A.io.request(
+													uri,
+													{
+														after: {
+															failure: A.bind(instance._afterPreviewFailure, instance),
+															success: A.bind(instance._afterPreviewSuccess, instance)
+														},
+														data: {
+															classPK: classPK,
+															className: className,
+															viewEntries: false,
+															viewPreview: true
+														}
+													}
+												);
 											}
 										);
 

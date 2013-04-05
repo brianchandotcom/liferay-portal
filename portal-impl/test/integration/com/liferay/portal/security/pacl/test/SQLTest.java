@@ -38,7 +38,53 @@ import org.junit.runner.RunWith;
 public class SQLTest {
 
 	@Test
-	public void testCreate() throws Exception {
+	public void testCreateInde1() throws Exception {
+		try {
+			executePreparedStatement(
+				"create index index1 ON TestPACL_CreateFailure (userId)");
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testCreateIndex2() throws Exception {
+		try {
+			executeStatement(
+				"create index index1 ON TestPACL_CreateFailure (userId)");
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testCreateIndex3() throws Exception {
+		try {
+			executePreparedStatement(
+				"create index index1 ON TestPACL_CreateSuccess (userId)");
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testCreateIndex4() throws Exception {
+		try {
+			executeStatement(
+				"create index index1 ON TestPACL_CreateSuccess (userId)");
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testCreateTable1() throws Exception {
 		try {
 			executePreparedStatement(
 				"create table TestPACL_CreateFailure (userId bigint)");
@@ -47,7 +93,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testCreateTable2() throws Exception {
 		try {
 			executeStatement(
 				"create table TestPACL_CreateFailure (userId bigint)");
@@ -56,7 +105,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testCreateTable3() throws Exception {
 		try {
 			executePreparedStatement(
 				"create table TestPACL_CreateSuccess (userId bigint)");
@@ -66,7 +118,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testCreateTable4() throws Exception {
 		try {
 			executeStatement(
 				"create table TestPACL_CreateSuccess (userId bigint)");
@@ -79,7 +134,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testDrop() throws Exception {
+	public void testDrop1() throws Exception {
 		try {
 			executePreparedStatement("drop table TestPACL_DropFailure");
 
@@ -87,7 +142,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testDrop2() throws Exception {
 		try {
 			executeStatement("drop table TestPACL_DropFailure");
 
@@ -95,7 +153,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testDrop3() throws Exception {
 		try {
 			executePreparedStatement(
 				"create table TestPACL_DropSuccess (userId bigint)");
@@ -105,7 +166,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testDrop4() throws Exception {
 		try {
 			executeStatement(
 				"create table TestPACL_DropSuccess (userId bigint)");
@@ -118,7 +182,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testInsert() throws Exception {
+	public void testInsert1() throws Exception {
 		try {
 			executePreparedStatement(
 				"insert into TestPACL_InsertFailure values (1)");
@@ -127,7 +191,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testInsert2() throws Exception {
 		try {
 			executeStatement("insert into TestPACL_InsertFailure values (1)");
 
@@ -135,7 +202,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testInsert3() throws Exception {
 		try {
 			executePreparedStatement(
 				"create table TestPACL_InsertSuccess (userId bigint)");
@@ -148,7 +218,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testInsert4() throws Exception {
 		try {
 			executeStatement(
 				"create table TestPACL_InsertSuccess (userId bigint)");
@@ -163,7 +236,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testReplace() throws Exception {
+	public void testReplace1() throws Exception {
 		if (!isMySQL()) {
 			return;
 		}
@@ -176,6 +249,13 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
+
+	@Test
+	public void testReplace2() throws Exception {
+		if (!isMySQL()) {
+			return;
+		}
 
 		try {
 			executeStatement(
@@ -184,6 +264,13 @@ public class SQLTest {
 			Assert.fail();
 		}
 		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testReplace3() throws Exception {
+		if (!isMySQL()) {
+			return;
 		}
 
 		try {
@@ -197,6 +284,13 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testReplace4() throws Exception {
+		if (!isMySQL()) {
+			return;
 		}
 
 		try {
@@ -214,7 +308,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testSelect() throws Exception {
+	public void testSelect1() throws Exception {
 		try {
 			executePreparedStatement(
 				"select * from Counter inner join User_ on User_.userId = " +
@@ -224,7 +318,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testSelect2() throws Exception {
 		try {
 			executeStatement(
 				"select * from Counter inner join User_ on User_.userId = " +
@@ -234,35 +331,50 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testSelect3() throws Exception {
 		try {
 			executePreparedStatement("select * from Counter");
 		}
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testSelect4() throws Exception {
 		try {
 			executeStatement("select * from Counter");
 		}
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testSelect5() throws Exception {
 		try {
 			executePreparedStatement("select * from TestPACL_Bar");
 		}
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testSelect6() throws Exception {
 		try {
 			executeStatement("select * from TestPACL_Bar");
 		}
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testSelect7() throws Exception {
 		try {
 			executePreparedStatement("select * from User_");
 
@@ -270,7 +382,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testSelect8() throws Exception {
 		try {
 			executeStatement("select * from User_");
 
@@ -281,7 +396,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testTruncate() throws Exception {
+	public void testTruncate1() throws Exception {
 		if (!isMySQL()) {
 			return;
 		}
@@ -293,6 +408,13 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
+
+	@Test
+	public void testTruncate2() throws Exception {
+		if (!isMySQL()) {
+			return;
+		}
 
 		try {
 			executeStatement("truncate table TestPACL_TruncateFailure");
@@ -300,6 +422,13 @@ public class SQLTest {
 			Assert.fail();
 		}
 		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testTruncate3() throws Exception {
+		if (!isMySQL()) {
+			return;
 		}
 
 		try {
@@ -312,6 +441,13 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testTruncate4() throws Exception {
+		if (!isMySQL()) {
+			return;
 		}
 
 		try {
@@ -328,7 +464,7 @@ public class SQLTest {
 	}
 
 	@Test
-	public void testUpdate() throws Exception {
+	public void testUpdate1() throws Exception {
 		try {
 			executeDB(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -337,7 +473,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testUpdate2() throws Exception {
 		try {
 			executePreparedStatement(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -346,7 +485,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testUpdate3() throws Exception {
 		try {
 			executeStatement(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -355,7 +497,10 @@ public class SQLTest {
 		catch (SecurityException se) {
 			Assert.fail();
 		}
+	}
 
+	@Test
+	public void testUpdate4() throws Exception {
 		try {
 			executeDB(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -365,7 +510,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testUpdate5() throws Exception {
 		try {
 			executePreparedStatement(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -375,7 +523,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testUpdate6() throws Exception {
 		try {
 			executeStatement(
 				"update ListType set name = 'Test PACL' where listTypeId = " +
@@ -385,7 +536,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testUpdate7() throws Exception {
 		try {
 			executeDB(
 				"update User_ set firstName = 'Test PACL' where userId = -123");
@@ -394,7 +548,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testUpdate8() throws Exception {
 		try {
 			executePreparedStatement(
 				"update User_ set firstName = 'Test PACL' where userId = -123");
@@ -403,7 +560,10 @@ public class SQLTest {
 		}
 		catch (SecurityException se) {
 		}
+	}
 
+	@Test
+	public void testUpdate9() throws Exception {
 		try {
 			executeStatement(
 				"update User_ set firstName = 'Test PACL' where userId = -123");

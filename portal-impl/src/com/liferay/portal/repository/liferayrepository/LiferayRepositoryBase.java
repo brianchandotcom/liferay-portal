@@ -31,6 +31,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
@@ -55,6 +56,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
@@ -66,6 +68,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 		this.dlFileEntryService = dlFileEntryService;
+		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
 		this.dlFileVersionService = dlFileVersionService;
 		this.dlFolderLocalService = dlFolderLocalService;
@@ -81,6 +84,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLAppHelperLocalService dlAppHelperLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
@@ -93,6 +97,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 		this.dlFileEntryService = dlFileEntryService;
+		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
 		this.dlFileVersionService = dlFileVersionService;
 		this.dlFolderLocalService = dlFolderLocalService;
@@ -142,6 +147,16 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 				serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
+	}
+
+	protected long getDefaultFileEntryTypeId(
+			ServiceContext serviceContext, long folderId)
+		throws PortalException, SystemException {
+
+		folderId = dlFolderLocalService.getFolderId(
+			serviceContext.getCompanyId(), folderId);
+
+		return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 	}
 
 	protected HashMap<String, Fields> getFieldsMap(
@@ -251,6 +266,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 	protected DLFileEntryService dlFileEntryService;
+	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 	protected DLFileVersionLocalService dlFileVersionLocalService;
 	protected DLFileVersionService dlFileVersionService;
 	protected DLFolderLocalService dlFolderLocalService;

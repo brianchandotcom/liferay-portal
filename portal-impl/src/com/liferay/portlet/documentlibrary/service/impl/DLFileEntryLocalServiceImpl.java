@@ -82,7 +82,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
@@ -165,7 +164,7 @@ public class DLFileEntryLocalServiceImpl
 			fileEntryTypeId);
 
 		if (fileEntryTypeId == -1) {
-			fieldsMap = getFieldsMap(serviceContext, newFileEntryTypeId);
+			fieldsMap = getFieldsMap(newFileEntryTypeId, serviceContext);
 		}
 
 		fileEntryTypeId = newFileEntryTypeId;
@@ -929,9 +928,9 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryFinder.findByExtraSettings(start, end);
 	}
-	
-	public HashMap<String, Fields> getFieldsMap(
-			ServiceContext serviceContext, long fileEntryTypeId)
+
+	protected HashMap<String, Fields> getFieldsMap(
+			long fileEntryTypeId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
@@ -941,17 +940,18 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		DLFileEntryType fileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			String namespace = String.valueOf(ddmStructure.getStructureId());
-
 			Fields fields = (Fields)serviceContext.getAttribute(
 				Fields.class.getName() + ddmStructure.getStructureId());
 
 			if (fields == null) {
+				String namespace = String.valueOf(
+					ddmStructure.getStructureId());
+
 				fields = DDMUtil.getFields(
 					ddmStructure.getStructureId(), namespace, serviceContext);
 			}

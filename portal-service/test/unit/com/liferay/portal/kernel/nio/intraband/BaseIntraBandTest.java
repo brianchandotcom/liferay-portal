@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.nio.intraband;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.nio.intraband.BaseIntraBand.SendSyncDatagramCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.Time;
 
@@ -31,6 +32,7 @@ import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedList;
@@ -50,12 +52,31 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class BaseIntraBandTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(ChannelContext.class);
+				assertClasses.add(ClosedIntraBandException.class);
+				assertClasses.add(CompletionHandler.class);
+				assertClasses.addAll(
+					Arrays.asList(
+						CompletionHandler.class.getDeclaredClasses()));
+				assertClasses.add(Datagram.class);
+				assertClasses.add(DatagramReceiveHandler.class);
+			}
+
+		};
 
 	@Test
 	public void testDatagramReceiveHandlerRegister() throws Exception {

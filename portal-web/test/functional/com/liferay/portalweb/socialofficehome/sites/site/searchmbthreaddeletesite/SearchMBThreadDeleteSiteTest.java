@@ -28,7 +28,7 @@ public class SearchMBThreadDeleteSiteTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Search Test Page')]/a/span",
 			RuntimeVariables.replace("Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//div[@class='portlet-body']/form/input[@title='Search']",
+		selenium.type("//div[@class='portlet-body']/form/input[contains(@name,'keywords')]",
 			RuntimeVariables.replace("MB Thread Message"));
 		selenium.clickAt("//div[@class='portlet-body']/form/input[contains(@src,'search')]",
 			RuntimeVariables.replace("Search"));

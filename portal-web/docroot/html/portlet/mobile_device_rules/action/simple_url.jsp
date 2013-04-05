@@ -20,4 +20,6 @@
 String url = GetterUtil.getString(typeSettingsProperties.get("url"));
 %>
 
-<aui:input inputCssClass="lfr-input-text" name="url" type="text" value="<%= url %>" />
+<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
+
+<aui:input name="url" value="<%= url %>" />

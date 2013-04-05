@@ -110,7 +110,8 @@ public class PasswordPolicyServiceHttp {
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -123,7 +124,8 @@ public class PasswordPolicyServiceHttp {
 					minLength, minLowerCase, minNumbers, minSymbols,
 					minUpperCase, regex, history, historyCount, expireable,
 					maxAge, warningTime, graceLimit, lockout, maxFailure,
-					lockoutDuration, resetFailureCount, resetTicketMaxAge);
+					lockoutDuration, resetFailureCount, resetTicketMaxAge,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -244,7 +246,8 @@ public class PasswordPolicyServiceHttp {
 		int minUpperCase, java.lang.String regex, boolean history,
 		int historyCount, boolean expireable, long maxAge, long warningTime,
 		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -258,7 +261,7 @@ public class PasswordPolicyServiceHttp {
 					minSymbols, minUpperCase, regex, history, historyCount,
 					expireable, maxAge, warningTime, graceLimit, lockout,
 					maxFailure, lockoutDuration, resetFailureCount,
-					resetTicketMaxAge);
+					resetTicketMaxAge, serviceContext);
 
 			Object returnObj = null;
 
@@ -300,7 +303,8 @@ public class PasswordPolicyServiceHttp {
 			int.class, int.class, int.class, int.class, int.class,
 			java.lang.String.class, boolean.class, int.class, boolean.class,
 			long.class, long.class, int.class, boolean.class, int.class,
-			long.class, long.class, long.class
+			long.class, long.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deletePasswordPolicyParameterTypes2 = new Class[] {
 			long.class
@@ -319,6 +323,7 @@ public class PasswordPolicyServiceHttp {
 			boolean.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, java.lang.String.class, boolean.class, int.class,
 			boolean.class, long.class, long.class, int.class, boolean.class,
-			int.class, long.class, long.class, long.class
+			int.class, long.class, long.class, long.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 }

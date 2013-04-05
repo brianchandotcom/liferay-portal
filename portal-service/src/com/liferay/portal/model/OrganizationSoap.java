@@ -30,6 +30,7 @@ public class OrganizationSoap implements Serializable {
 	public static OrganizationSoap toSoapModel(Organization model) {
 		OrganizationSoap soapModel = new OrganizationSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setOrganizationId(model.getOrganizationId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setParentOrganizationId(model.getParentOrganizationId());
@@ -91,6 +92,14 @@ public class OrganizationSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setOrganizationId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getOrganizationId() {
@@ -185,6 +194,7 @@ public class OrganizationSoap implements Serializable {
 		_comments = comments;
 	}
 
+	private String _uuid;
 	private long _organizationId;
 	private long _companyId;
 	private long _parentOrganizationId;

@@ -280,7 +280,8 @@ public class PasswordPolicyLocalServiceWrapper
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _passwordPolicyLocalService.addPasswordPolicy(userId,
@@ -289,13 +290,20 @@ public class PasswordPolicyLocalServiceWrapper
 			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
 			regex, history, historyCount, expireable, maxAge, warningTime,
 			graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge);
+			resetFailureCount, resetTicketMaxAge, serviceContext);
 	}
 
 	public void checkDefaultPasswordPolicy(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
+	}
+
+	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.fetchPasswordPolicyByUuidAndCompanyId(uuid,
+			companyId);
 	}
 
 	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
@@ -375,7 +383,8 @@ public class PasswordPolicyLocalServiceWrapper
 		java.lang.String regex, boolean history, int historyCount,
 		boolean expireable, long maxAge, long warningTime, int graceLimit,
 		boolean lockout, int maxFailure, long lockoutDuration,
-		long resetFailureCount, long resetTicketMaxAge)
+		long resetFailureCount, long resetTicketMaxAge,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _passwordPolicyLocalService.updatePasswordPolicy(passwordPolicyId,
@@ -383,7 +392,8 @@ public class PasswordPolicyLocalServiceWrapper
 			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
 			minNumbers, minSymbols, minUpperCase, regex, history, historyCount,
 			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
+			lockoutDuration, resetFailureCount, resetTicketMaxAge,
+			serviceContext);
 	}
 
 	/**

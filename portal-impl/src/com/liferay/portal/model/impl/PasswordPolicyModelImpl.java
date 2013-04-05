@@ -64,6 +64,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	 */
 	public static final String TABLE_NAME = "PasswordPolicy";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "passwordPolicyId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -98,7 +99,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "resetFailureCount", Types.BIGINT },
 			{ "resetTicketMaxAge", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicy";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicy.passwordPolicyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicy.passwordPolicyId ASC";
@@ -117,7 +118,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long DEFAULTPOLICY_COLUMN_BITMASK = 2L;
 	public static long NAME_COLUMN_BITMASK = 4L;
-	public static long PASSWORDPOLICYID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long PASSWORDPOLICYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -132,6 +134,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		PasswordPolicy model = new PasswordPolicyImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setPasswordPolicyId(soapModel.getPasswordPolicyId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -223,6 +226,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -262,6 +266,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
 
 		if (passwordPolicyId != null) {
@@ -460,6 +470,28 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
 		}
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -888,6 +920,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public Object clone() {
 		PasswordPolicyImpl passwordPolicyImpl = new PasswordPolicyImpl();
 
+		passwordPolicyImpl.setUuid(getUuid());
 		passwordPolicyImpl.setPasswordPolicyId(getPasswordPolicyId());
 		passwordPolicyImpl.setCompanyId(getCompanyId());
 		passwordPolicyImpl.setUserId(getUserId());
@@ -975,6 +1008,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	public void resetOriginalValues() {
 		PasswordPolicyModelImpl passwordPolicyModelImpl = this;
 
+		passwordPolicyModelImpl._originalUuid = passwordPolicyModelImpl._uuid;
+
 		passwordPolicyModelImpl._originalCompanyId = passwordPolicyModelImpl._companyId;
 
 		passwordPolicyModelImpl._setOriginalCompanyId = false;
@@ -991,6 +1026,14 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	@Override
 	public CacheModel<PasswordPolicy> toCacheModel() {
 		PasswordPolicyCacheModel passwordPolicyCacheModel = new PasswordPolicyCacheModel();
+
+		passwordPolicyCacheModel.uuid = getUuid();
+
+		String uuid = passwordPolicyCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			passwordPolicyCacheModel.uuid = null;
+		}
 
 		passwordPolicyCacheModel.passwordPolicyId = getPasswordPolicyId();
 
@@ -1101,9 +1144,11 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
-		sb.append("{passwordPolicyId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", passwordPolicyId=");
 		sb.append(getPasswordPolicyId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -1175,12 +1220,16 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(103);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordPolicy");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>passwordPolicyId</column-name><column-value><![CDATA[");
 		sb.append(getPasswordPolicyId());
@@ -1323,6 +1372,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			PasswordPolicy.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _passwordPolicyId;
 	private long _companyId;
 	private long _originalCompanyId;

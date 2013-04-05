@@ -129,7 +129,7 @@ public class OrganizationLocalServiceImpl
 			userId, parentOrganizationId, name,
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			site, null);
+			site, new ServiceContext());
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class OrganizationLocalServiceImpl
 	 * @param      comments the comments about the organization
 	 * @param      site whether the organization is to be associated with a main
 	 *             site
-	 * @param      serviceContext the service context to be applied (optionally
-	 *             <code>null</code>). Can set asset category IDs, asset tag
-	 *             names, and expando bridge attributes for the organization.
+	 * @param      serviceContext the service context to be applied.  Can set
+	 *             asset category IDs, asset tag names, and expando bridge
+	 *             attributes for the organization.
 	 * @return     the organization
 	 * @throws     PortalException if a creator or parent organization with the
 	 *             primary key could not be found or if the organization's
@@ -200,9 +200,9 @@ public class OrganizationLocalServiceImpl
 	 * @param  comments the comments about the organization
 	 * @param  site whether the organization is to be associated with a main
 	 *         site
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs, asset tag names,
-	 *         and expando bridge attributes for the organization.
+	 * @param  serviceContext the service context to be applied. Can set asset
+	 *         category IDs, asset tag names, and expando bridge attributes for
+	 *         the organization.
 	 * @return the organization
 	 * @throws PortalException if a creator or parent organization with the
 	 *         primary key could not be found or if the organization's
@@ -230,6 +230,7 @@ public class OrganizationLocalServiceImpl
 		Organization organization = organizationPersistence.create(
 			organizationId);
 
+		organization.setUuid(serviceContext.getUuid());
 		organization.setCompanyId(user.getCompanyId());
 		organization.setParentOrganizationId(parentOrganizationId);
 
@@ -500,6 +501,14 @@ public class OrganizationLocalServiceImpl
 		PermissionCacheUtil.clearCache();
 
 		return organization;
+	}
+
+	public Organization fetchOrganizationByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws SystemException {
+
+		return organizationPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

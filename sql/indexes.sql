@@ -599,9 +599,13 @@ create index IX_6AF0D434 on OrgLabor (organizationId);
 create index IX_834BCEB6 on Organization_ (companyId);
 create unique index IX_E301BDF5 on Organization_ (companyId, name);
 create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
+create index IX_396D6B42 on Organization_ (uuid_);
+create index IX_A9D85BA6 on Organization_ (uuid_, companyId);
 
 create index IX_2C1142E on PasswordPolicy (companyId, defaultPolicy);
 create unique index IX_3FBFA9F4 on PasswordPolicy (companyId, name);
+create index IX_51437A01 on PasswordPolicy (uuid_);
+create index IX_E4D7EF87 on PasswordPolicy (uuid_, companyId);
 
 create unique index IX_C3A17327 on PasswordPolicyRel (classNameId, classPK);
 create index IX_CD25266E on PasswordPolicyRel (passwordPolicyId);
@@ -707,6 +711,8 @@ create index IX_F436EC8E on Role_ (name);
 create index IX_5EB4E2FB on Role_ (subtype);
 create index IX_F92B66E6 on Role_ (type_);
 create index IX_CBE204 on Role_ (type_, subtype);
+create index IX_26DB26C5 on Role_ (uuid_);
+create index IX_B9FF6043 on Role_ (uuid_, companyId);
 
 create index IX_3BB93ECA on SCFrameworkVersi_SCProductVers (frameworkVersionId);
 create index IX_E8D33FF9 on SCFrameworkVersi_SCProductVers (productVersionId);
@@ -847,6 +853,8 @@ create index IX_55D44577 on TrashVersion (entryId);
 create index IX_524FEFCE on UserGroup (companyId);
 create unique index IX_23EAD0D on UserGroup (companyId, name);
 create index IX_69771487 on UserGroup (companyId, parentUserGroupId);
+create index IX_5F1DD85A on UserGroup (uuid_);
+create index IX_72394F8E on UserGroup (uuid_, companyId);
 
 create index IX_CCBE4063 on UserGroupGroupRole (groupId);
 create index IX_CAB0CCC8 on UserGroupGroupRole (groupId, roleId);

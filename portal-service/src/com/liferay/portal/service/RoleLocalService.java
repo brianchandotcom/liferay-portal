@@ -583,6 +583,11 @@ public interface RoleLocalService extends BaseLocalService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Role fetchRoleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the default role for the group with the primary key.
 	*

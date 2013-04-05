@@ -56,6 +56,21 @@ public interface UserGroupModel extends BaseModel<UserGroup> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this user group.
+	 *
+	 * @return the uuid of this user group
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this user group.
+	 *
+	 * @param uuid the uuid of this user group
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the user group ID of this user group.
 	 *
 	 * @return the user group ID of this user group

@@ -66,6 +66,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	 */
 	public static final String TABLE_NAME = "Role_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "roleId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
@@ -76,7 +77,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			{ "type_", Types.INTEGER },
 			{ "subtype", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Role_ (roleId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Role_ (uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 	public static final String ORDER_BY_JPQL = " ORDER BY role.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Role_.name ASC";
@@ -98,6 +99,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static long NAME_COLUMN_BITMASK = 8L;
 	public static long SUBTYPE_COLUMN_BITMASK = 16L;
 	public static long TYPE_COLUMN_BITMASK = 32L;
+	public static long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -112,6 +114,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		Role model = new RoleImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setRoleId(soapModel.getRoleId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setClassNameId(soapModel.getClassNameId());
@@ -195,6 +198,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("roleId", getRoleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -210,6 +214,12 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long roleId = (Long)attributes.get("roleId");
 
 		if (roleId != null) {
@@ -263,6 +273,28 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		if (subtype != null) {
 			setSubtype(subtype);
 		}
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -638,6 +670,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public Object clone() {
 		RoleImpl roleImpl = new RoleImpl();
 
+		roleImpl.setUuid(getUuid());
 		roleImpl.setRoleId(getRoleId());
 		roleImpl.setCompanyId(getCompanyId());
 		roleImpl.setClassNameId(getClassNameId());
@@ -699,6 +732,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public void resetOriginalValues() {
 		RoleModelImpl roleModelImpl = this;
 
+		roleModelImpl._originalUuid = roleModelImpl._uuid;
+
 		roleModelImpl._originalCompanyId = roleModelImpl._companyId;
 
 		roleModelImpl._setOriginalCompanyId = false;
@@ -725,6 +760,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	@Override
 	public CacheModel<Role> toCacheModel() {
 		RoleCacheModel roleCacheModel = new RoleCacheModel();
+
+		roleCacheModel.uuid = getUuid();
+
+		String uuid = roleCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			roleCacheModel.uuid = null;
+		}
 
 		roleCacheModel.roleId = getRoleId();
 
@@ -773,9 +816,11 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{roleId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", roleId=");
 		sb.append(getRoleId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -799,12 +844,16 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Role");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
@@ -849,6 +898,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	private static ClassLoader _classLoader = Role.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Role.class };
+	private String _uuid;
+	private String _originalUuid;
 	private long _roleId;
 	private long _companyId;
 	private long _originalCompanyId;

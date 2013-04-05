@@ -117,7 +117,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			long userId, long companyId, String name, String description)
 		throws PortalException, SystemException {
 
-		return addUserGroup(userId, companyId, name, description, null);
+		return addUserGroup(
+			userId, companyId, name, description, new ServiceContext());
 	}
 
 	/**
@@ -134,9 +135,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
 	 * @param  description the user group's description
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set expando bridge attributes for the
-	 *         user group.
+	 * @param  serviceContext the service context to be applied. Can set expando
+	 *         bridge attributes for the user group.
 	 * @return the user group
 	 * @throws PortalException if the user group's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -154,6 +154,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		UserGroup userGroup = userGroupPersistence.create(userGroupId);
 
+		userGroup.setUuid(serviceContext.getUuid());
 		userGroup.setCompanyId(companyId);
 		userGroup.setParentUserGroupId(
 			UserGroupConstants.DEFAULT_PARENT_USER_GROUP_ID);
@@ -368,6 +369,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 
 		return userGroup;
+	}
+
+	public UserGroup fetchUserGroupByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws SystemException {
+
+		return userGroupPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

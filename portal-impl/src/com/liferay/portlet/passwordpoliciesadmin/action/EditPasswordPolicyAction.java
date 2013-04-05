@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PasswordPolicyServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 
@@ -166,6 +169,9 @@ public class EditPasswordPolicyAction extends PortletAction {
 		long resetTicketMaxAge = ParamUtil.getLong(
 			actionRequest, "resetTicketMaxAge");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			PasswordPolicy.class.getName(), actionRequest);
+
 		if (passwordPolicyId <= 0) {
 
 			// Add password policy
@@ -176,7 +182,7 @@ public class EditPasswordPolicyAction extends PortletAction {
 				minLowerCase, minNumbers, minSymbols, minUpperCase, regex,
 				history, historyCount, expireable, maxAge, warningTime,
 				graceLimit, lockout, maxFailure, lockoutDuration,
-				resetFailureCount, resetTicketMaxAge);
+				resetFailureCount, resetTicketMaxAge, serviceContext);
 		}
 		else {
 
@@ -188,7 +194,7 @@ public class EditPasswordPolicyAction extends PortletAction {
 				minLength, minLowerCase, minNumbers, minSymbols, minUpperCase,
 				regex, history, historyCount, expireable, maxAge, warningTime,
 				graceLimit, lockout, maxFailure, lockoutDuration,
-				resetFailureCount, resetTicketMaxAge);
+				resetFailureCount, resetTicketMaxAge, serviceContext);
 		}
 	}
 

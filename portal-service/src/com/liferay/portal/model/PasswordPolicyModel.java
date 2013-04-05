@@ -60,6 +60,21 @@ public interface PasswordPolicyModel extends AuditedModel,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this password policy.
+	 *
+	 * @return the uuid of this password policy
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this password policy.
+	 *
+	 * @param uuid the uuid of this password policy
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the password policy ID of this password policy.
 	 *
 	 * @return the password policy ID of this password policy

@@ -265,6 +265,13 @@ public class LayoutPrototypeLocalServiceUtil {
 			active);
 	}
 
+	public static com.liferay.portal.model.LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutPrototypeByUuidAndCompanyId(String, long)}

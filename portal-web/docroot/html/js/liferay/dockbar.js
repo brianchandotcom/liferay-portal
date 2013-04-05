@@ -9,6 +9,8 @@ AUI.add(
 
 		var BODY = A.getBody();
 
+		var CSS_ADD_CONTENT = 'lfr-has-add-content';
+
 		var BODY_CONTENT = 'bodyContent';
 
 		var BOUNDING_BOX = 'boundingBox';
@@ -349,50 +351,43 @@ AUI.add(
 			_getPanelNode: function() {
 				var instance = this;
 
-				if (!instance._addPanelNode) {
-					instance._addPanelNode = A.one('#' + instance._namespace + 'addPanelSidebar');
+				var addPanelNode = instance._addPanelNode;
+
+				if (!addPanelNode) {
+					addPanelNode = A.one('#' + instance._namespace + 'addPanelSidebar');
+
+					if (!addPanelNode) {
+						addPanelNode = A.Node.create(TPL_ADD_CONTENT);
+
+						addPanelNode.plug(A.Plugin.ParseContent);
+
+						BODY.appendChild(addPanelNode);
+
+						addPanelNode.set('id', instance._namespace + 'addPanelSidebar');
+
+						instance._addPanelNode = addPanelNode;
+					}
 				}
 
-				return instance._addPanelNode;
+				return addPanelNode;
 			},
 
 			_loadAddPanel: function() {
 				var instance = this;
 
-				var bodyNode = A.one(A.config.doc.body);
+				BODY.toggleClass(CSS_ADD_CONTENT);
 
-				bodyNode.toggleClass('lfr-has-add-content');
+				var addPanelNode = instance._getPanelNode();
 
-				var addContentNode = instance._getPanelNode();
+				if (BODY.hasClass(CSS_ADD_CONTENT)) {
+					instance._setPanelOffset();
 
-				if (bodyNode.hasClass('lfr-has-add-content')) {
-					if (!addContentNode) {
-						addContentNode = A.Node.create(TPL_ADD_CONTENT);
+					instance._addPanel();
 
-						addContentNode.plug(A.Plugin.ParseContent);
-
-						bodyNode.appendChild(addContentNode);
-
-						addContentNode.set('id', instance._namespace + 'addPanelSidebar');
-
-						instance._setPanelOffset();
-
-						instance._addPanel();
-
-						bodyNode.show();
-
-						instance._addPanelNode = addContentNode;
-					}
-					else {
-						instance._setPanelOffset();
-
-						instance._addPanel();
-
-						addContentNode.show();
-					}
+					addPanelNode.show();
 				}
 				else {
-					addContentNode.hide();
+					addPanelNode.hide();
 				}
 			},
 

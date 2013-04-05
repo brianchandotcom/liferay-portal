@@ -1411,6 +1411,8 @@
 
 		<!-- My Workflow Tasks -->
 
+		<action path="/my_workflow_tasks/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />
+
 		<action path="/my_workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
 			<forward name="portlet.workflow_tasks.edit_workflow_task" path="portlet.workflow_tasks.edit_workflow_task" />
 			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_tasks.error" />

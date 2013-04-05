@@ -594,9 +594,9 @@ create table DLFileEntryType (
 );
 
 create table DLFileEntryTypes_DDMStructures (
-	structureId LONG not null,
 	fileEntryTypeId LONG not null,
-	primary key (structureId, fileEntryTypeId)
+	structureId LONG not null,
+	primary key (fileEntryTypeId, structureId)
 );
 
 create table DLFileEntryTypes_DLFolders (

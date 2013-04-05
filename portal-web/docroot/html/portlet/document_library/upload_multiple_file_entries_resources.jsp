@@ -28,8 +28,6 @@ if (repositoryId <= 0) {
 	repositoryId = BeanParamUtil.getLong(fileEntry, request, "groupId");
 }
 
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay));
-
 long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 Folder folder = null;
@@ -37,6 +35,8 @@ Folder folder = null;
 if (folderId > 0) {
 	folder = DLAppLocalServiceUtil.getFolder(folderId);
 }
+
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
 
 FileVersion fileVersion = null;
 
@@ -57,6 +57,12 @@ if (fileEntry != null) {
 }
 
 DLFileEntryType fileEntryType = null;
+
+if ((fileEntryTypeId == -1) && !fileEntryTypes.isEmpty()) {
+	fileEntryType = fileEntryTypes.get(0);
+
+	fileEntryTypeId = fileEntryType.getFileEntryTypeId();
+}
 
 if (fileEntryTypeId > 0) {
 	fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
@@ -88,27 +94,13 @@ long assetClassPK = 0;
 		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 			<aui:input name="description" />
 
-			<c:if test="<%= fileEntryTypes.size() > 0 %>">
+			<c:if test="<%= !fileEntryTypes.isEmpty() %>">
 				<liferay-ui:panel collapsible="<%= true %>" cssClass="document-type" persistState="<%= true %>" title="document-type">
 					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 
 					<div class="document-type-selector">
-						<liferay-ui:icon-menu align="left" direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>'>
-							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewBasicFileEntryTypeURL">
-								<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-								<portlet:param name="fileEntryTypeId" value="0" />
-							</liferay-portlet:resourceURL>
 
-							<liferay-ui:icon
-								cssClass="upload-multiple-document-types"
-								id='<%= "fileEntryType_0" %>'
-								image="copy"
-								message="basic-document"
-								method="get"
-								url="<%= viewBasicFileEntryTypeURL %>"
-							/>
+						<liferay-ui:icon-menu align="left" direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							for (DLFileEntryType curFileEntryType : fileEntryTypes) {

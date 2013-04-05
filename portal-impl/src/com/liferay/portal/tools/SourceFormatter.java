@@ -585,8 +585,8 @@ public class SourceFormatter {
 				lastCriteriumLineLeadingWhiteSpace = line.indexOf(
 					StringPool.OPEN_PARENTHESIS);
 			}
-			else if (previousLine.endsWith("||") ||
-					 previousLine.endsWith("&&")) {
+			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
+					 previousLine.endsWith("^")) {
 
 				int expectedLeadingWhiteSpace =
 					lastCriteriumLineLeadingWhiteSpace +

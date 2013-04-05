@@ -1916,11 +1916,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -2239,11 +2239,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4251,11 +4251,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4594,11 +4594,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6579,11 +6579,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -8377,6 +8377,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the d d m structure persistence.
 	 */
@@ -8613,6 +8618,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructure exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DDMStructurePersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid", "type"
+			});
 	private static DDMStructure _nullDDMStructure = new DDMStructureImpl() {
 			@Override
 			public Object clone() {

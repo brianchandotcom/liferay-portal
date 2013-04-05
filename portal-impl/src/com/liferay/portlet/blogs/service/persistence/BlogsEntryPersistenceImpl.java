@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the blogs entry service.
@@ -1913,11 +1915,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -5601,11 +5603,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6509,11 +6511,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -7401,11 +7403,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -11115,11 +11117,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -12084,11 +12086,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -13034,11 +13036,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -14003,11 +14005,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -15004,11 +15006,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -16041,11 +16043,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -17097,11 +17099,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -18396,6 +18398,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the blogs entry persistence.
 	 */
@@ -18447,6 +18454,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BlogsEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(BlogsEntryPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid"
+			});
 	private static BlogsEntry _nullBlogsEntry = new BlogsEntryImpl() {
 			@Override
 			public Object clone() {

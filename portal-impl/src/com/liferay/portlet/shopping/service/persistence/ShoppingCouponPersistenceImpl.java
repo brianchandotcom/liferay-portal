@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the shopping coupon service.
@@ -1392,6 +1394,11 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the shopping coupon persistence.
 	 */
@@ -1433,6 +1440,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"code", "active"
+			});
 	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
 			@Override
 			public Object clone() {

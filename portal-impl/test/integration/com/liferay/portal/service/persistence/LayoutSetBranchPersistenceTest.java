@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -222,6 +225,40 @@ public class LayoutSetBranchPersistenceTest {
 		}
 		catch (NoSuchLayoutSetBranchException nsee) {
 		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	protected OrderByComparator getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("LayoutSetBranch",
+			"layoutSetBranchId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "privateLayout", true, "name", true,
+			"description", true, "master", true, "logo", true, "logoId", true,
+			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
+			"wapColorSchemeId", true, "css", true, "settings", true,
+			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
+			true);
 	}
 
 	@Test

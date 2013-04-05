@@ -1922,11 +1922,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3773,11 +3773,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4116,11 +4116,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6861,11 +6861,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -7844,11 +7844,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -8231,11 +8231,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -9824,11 +9824,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -11678,6 +11678,11 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Rebuilds the asset categories tree for the scope using the modified pre-order tree traversal algorithm.
 	 *
@@ -12294,6 +12299,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid"
+			});
 	private static AssetCategory _nullAssetCategory = new AssetCategoryImpl() {
 			@Override
 			public Object clone() {

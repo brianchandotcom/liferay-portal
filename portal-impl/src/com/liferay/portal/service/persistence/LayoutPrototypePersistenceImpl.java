@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +50,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the layout prototype service.
@@ -593,15 +595,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -611,11 +613,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -730,15 +732,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -959,15 +961,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -1005,6 +1007,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "layoutPrototype.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPrototype.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "layoutPrototype.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "layoutPrototype.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPrototypeModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPrototypeImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1550,15 +1555,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1570,11 +1575,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -1693,15 +1698,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1936,15 +1941,15 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1986,6 +1991,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "layoutPrototype.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPrototype.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPrototype.uuid IS NULL OR layoutPrototype.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "layoutPrototype.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "layoutPrototype.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(layoutPrototype.uuid_ IS NULL OR layoutPrototype.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPrototype.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
@@ -2480,11 +2488,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3344,7 +3352,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
@@ -3353,11 +3361,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3473,7 +3481,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTPROTOTYPE_NO_INLINE_DISTINCT_WHERE_2);
@@ -3688,7 +3696,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		query.append(_FINDER_COLUMN_C_A_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_A_ACTIVE_2);
+		query.append(_FINDER_COLUMN_C_A_ACTIVE_2_SQL);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				LayoutPrototype.class.getName(),
@@ -3724,6 +3732,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 = "layoutPrototype.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutPrototype.active = ?";
+	private static final String _FINDER_COLUMN_C_A_ACTIVE_2_SQL = "layoutPrototype.active_ = ?";
 
 	/**
 	 * Caches the layout prototype in the entity cache if it is enabled.
@@ -4328,6 +4337,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the layout prototype persistence.
 	 */
@@ -4379,6 +4393,9 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutPrototype exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(LayoutPrototypePersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid", "settings", "active"
+			});
 	private static LayoutPrototype _nullLayoutPrototype = new LayoutPrototypeImpl() {
 			@Override
 			public Object clone() {

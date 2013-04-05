@@ -1912,11 +1912,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3473,11 +3473,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -5275,7 +5275,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_DLFOLDER_NO_INLINE_DISTINCT_WHERE_2);
@@ -5284,11 +5284,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -5416,7 +5416,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_DLFOLDER_NO_INLINE_DISTINCT_WHERE_2);
@@ -5656,7 +5656,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_HIDDEN_2_SQL);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				DLFolder.class.getName(),
@@ -5698,6 +5698,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_M_P_H_MOUNTPOINT_2 = "dlFolder.mountPoint = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_PARENTFOLDERID_2 = "dlFolder.parentFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_HIDDEN_2 = "dlFolder.hidden = ?";
+	private static final String _FINDER_COLUMN_G_M_P_H_HIDDEN_2_SQL = "dlFolder.hidden_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_H_S = new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderModelImpl.FINDER_CACHE_ENABLED, DLFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_H_S",
@@ -6285,7 +6286,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_P_H_S_STATUS_2);
 
@@ -6296,11 +6297,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6425,7 +6426,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_P_H_S_STATUS_2);
 
@@ -6664,7 +6665,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_P_H_S_STATUS_2);
 
@@ -6707,6 +6708,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_P_H_S_GROUPID_2 = "dlFolder.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_H_S_PARENTFOLDERID_2 = "dlFolder.parentFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_H_S_HIDDEN_2 = "dlFolder.hidden = ? AND ";
+	private static final String _FINDER_COLUMN_G_P_H_S_HIDDEN_2_SQL = "dlFolder.hidden_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_H_S_STATUS_2 = "dlFolder.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_M_P_H_S =
 		new FinderPath(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
@@ -7339,7 +7341,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_STATUS_2);
 
@@ -7350,11 +7352,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -7485,7 +7487,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_STATUS_2);
 
@@ -7740,7 +7742,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_PARENTFOLDERID_2);
 
-		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2);
+		query.append(_FINDER_COLUMN_G_M_P_H_S_HIDDEN_2_SQL);
 
 		query.append(_FINDER_COLUMN_G_M_P_H_S_STATUS_2);
 
@@ -7786,6 +7788,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _FINDER_COLUMN_G_M_P_H_S_MOUNTPOINT_2 = "dlFolder.mountPoint = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_S_PARENTFOLDERID_2 = "dlFolder.parentFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_S_HIDDEN_2 = "dlFolder.hidden = ? AND ";
+	private static final String _FINDER_COLUMN_G_M_P_H_S_HIDDEN_2_SQL = "dlFolder.hidden_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_M_P_H_S_STATUS_2 = "dlFolder.status = ?";
 
 	/**
@@ -9167,6 +9170,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the document library folder persistence.
 	 */
@@ -9403,6 +9411,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DLFolderPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid", "hidden"
+			});
 	private static DLFolder _nullDLFolder = new DLFolderImpl() {
 			@Override
 			public Object clone() {

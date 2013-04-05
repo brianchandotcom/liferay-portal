@@ -592,9 +592,9 @@ public class OrganizationLocalServiceUtil {
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the service context to be applied.  Can set
-	asset category IDs, asset tag names, and expando bridge
-	attributes for the organization.
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs, asset tag
+	names, and expando bridge attributes for the organization.
 	* @return the organization
 	* @throws PortalException if a creator or parent organization with the
 	primary key could not be found or if the organization's
@@ -638,9 +638,9 @@ public class OrganizationLocalServiceUtil {
 	* @param comments the comments about the organization
 	* @param site whether the organization is to be associated with a main
 	site
-	* @param serviceContext the service context to be applied. Can set asset
-	category IDs, asset tag names, and expando bridge attributes for
-	the organization.
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs, asset tag names,
+	and expando bridge attributes for the organization.
 	* @return the organization
 	* @throws PortalException if a creator or parent organization with the
 	primary key could not be found or if the organization's

@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -243,6 +246,42 @@ public class LayoutPersistenceTest {
 		}
 		catch (NoSuchLayoutException nsee) {
 		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	protected OrderByComparator getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("Layout", "uuid", true,
+			"plid", true, "groupId", true, "companyId", true, "createDate",
+			true, "modifiedDate", true, "privateLayout", true, "layoutId",
+			true, "parentLayoutId", true, "name", true, "title", true,
+			"description", true, "keywords", true, "robots", true, "type",
+			true, "typeSettings", true, "hidden", true, "friendlyURL", true,
+			"iconImage", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+			true, "css", true, "priority", true, "layoutPrototypeUuid", true,
+			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
+			true);
 	}
 
 	@Test

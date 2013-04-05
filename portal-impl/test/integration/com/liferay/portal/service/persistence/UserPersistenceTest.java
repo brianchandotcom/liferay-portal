@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -285,6 +288,36 @@ public class UserPersistenceTest {
 		}
 		catch (NoSuchUserException nsee) {
 		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	protected OrderByComparator getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("User_", "uuid", true,
+			"userId", true, "companyId", true, "createDate", true,
+			"modifiedDate", true, "defaultUser", true, "contactId", true,
+			"password", true, "passwordEncrypted", true, "passwordReset", true,
+			"passwordModifiedDate", true, "digest", true,
+			"reminderQueryQuestion", true, "reminderQueryAnswer", true,
+			"graceLoginCount", true, "screenName", true, "emailAddress", true,
+			"facebookId", true, "ldapServerId", true, "openId", true,
+			"portraitId", true, "languageId", true, "timeZoneId", true,
+			"greeting", true, "comments", true, "firstName", true,
+			"middleName", true, "lastName", true, "jobTitle", true,
+			"loginDate", true, "loginIP", true, "lastLoginDate", true,
+			"lastLoginIP", true, "lastFailedLoginDate", true,
+			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
+			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
+			true);
 	}
 
 	@Test

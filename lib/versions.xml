@@ -2319,17 +2319,18 @@
 	</library>
 	<library>
 		<file-name>lib/portal/jsqlparser.jar</file-name>
-		<version>0.7.0</version>
+		<version>0.8.2-SNAPSHOT</version>
 		<project-name>JSqlParser</project-name>
-		<project-url>http://sourceforge.net/projects/jsqlparser</project-url>
+		<project-url>https://github.com/wumpz/JSqlParser</project-url>
 		<licenses>
 			<license>
 				<license-name>LGPL 2.1</license-name>
 			</license>
 		</licenses>
 		<comments>
-			This was recompiled for compatibility with JDK 5 and repackaged to
-			include net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder.
+			The following pull requests were added:
+			    https://github.com/wumpz/JSqlParser/pull/15
+			    https://github.com/wumpz/JSqlParser/pull/16
 		</comments>
 	</library>
 	<library>

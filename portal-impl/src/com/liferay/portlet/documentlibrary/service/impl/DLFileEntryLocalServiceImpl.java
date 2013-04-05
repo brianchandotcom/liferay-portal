@@ -91,7 +91,6 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.NoSuchRowException;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -158,18 +157,16 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 		String extension = DLAppUtil.getExtension(title, sourceFileName);
-
-		long newFileEntryTypeId = getFileEntryTypeId(
-			PortalUtil.getSiteAndCompanyGroupIds(groupId), folderId,
-			fileEntryTypeId);
+		Date now = new Date();
 
 		if (fileEntryTypeId == -1) {
-			fieldsMap = getFieldsMap(newFileEntryTypeId, serviceContext);
+			fileEntryTypeId =
+				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 		}
 
-		fileEntryTypeId = newFileEntryTypeId;
-
-		Date now = new Date();
+		validateFileEntryTypeId(
+			PortalUtil.getSiteAndCompanyGroupIds(groupId), folderId,
+			fileEntryTypeId);
 
 		validateFile(
 			groupId, folderId, 0, title, extension, sourceFileName, file, is);
@@ -1354,7 +1351,7 @@ public class DLFileEntryLocalServiceImpl
 			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
-		fileEntryTypeId = getFileEntryTypeId(
+		validateFileEntryTypeId(
 			PortalUtil.getSiteAndCompanyGroupIds(dlFileEntry.getGroupId()),
 			dlFileEntry.getFolderId(), fileEntryTypeId);
 
@@ -1813,70 +1810,23 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersionStatusOVPs;
 	}
 
-	protected HashMap<String, Fields> getFieldsMap(
-			long fileEntryTypeId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
-
-		if (fileEntryTypeId <= 0) {
-			return fieldsMap;
-		}
-
-		DLFileEntryType fileEntryType =
-			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-
-		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId());
-
-			if (fields == null) {
-				String namespace = String.valueOf(
-					ddmStructure.getStructureId());
-
-				fields = DDMUtil.getFields(
-					ddmStructure.getStructureId(), namespace, serviceContext);
-			}
-
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
-		}
-
-		return fieldsMap;
-	}
-
-	protected Long getFileEntryTypeId(
+	protected void validateFileEntryTypeId(
 			long[] groupIds, long folderId, long fileEntryTypeId)
 		throws PortalException, SystemException {
 
-		if (fileEntryTypeId == -1) {
-			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
-		}
-		else {
-			List<DLFileEntryType> dlFileEntryTypes =
-				dlFileEntryTypeLocalService.getFolderFileEntryTypes(
-					groupIds, folderId, true);
+		List<DLFileEntryType> dlFileEntryTypes =
+			dlFileEntryTypeLocalService.getFolderFileEntryTypes(
+				groupIds, folderId, true);
 
-			boolean found = false;
-
-			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-				if (dlFileEntryType.getFileEntryTypeId() == fileEntryTypeId) {
-					found = true;
-
-					break;
-				}
-			}
-
-			if (!found) {
-				throw new InvalidFileEntryTypeException(
-					"Invalid file entry type " + fileEntryTypeId +
-						" for folder " + folderId);
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			if (dlFileEntryType.getFileEntryTypeId() == fileEntryTypeId) {
+				return;
 			}
 		}
 
-		return fileEntryTypeId;
+		throw new InvalidFileEntryTypeException(
+			"Invalid file entry type " + fileEntryTypeId + " for folder " +
+				folderId);
 	}
 
 	protected String getNextVersion(

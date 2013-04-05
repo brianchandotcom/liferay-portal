@@ -110,9 +110,12 @@ public class LiferayLocalRepository
 		throws PortalException, SystemException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
-			serviceContext, "fileEntryTypeId", -1L);
+			serviceContext, "fileEntryTypeId",
+			getDefaultFileEntryTypeId(serviceContext, folderId));
+
 		Map<String, Fields> fieldsMap = getFieldsMap(
 			serviceContext, fileEntryTypeId);
+
 		long size = 0;
 
 		if (file != null) {
@@ -136,7 +139,9 @@ public class LiferayLocalRepository
 		throws PortalException, SystemException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
-			serviceContext, "fileEntryTypeId", -1L);
+			serviceContext, "fileEntryTypeId",
+			getDefaultFileEntryTypeId(serviceContext, folderId));
+
 		Map<String, Fields> fieldsMap = getFieldsMap(
 			serviceContext, fileEntryTypeId);
 
@@ -270,8 +275,10 @@ public class LiferayLocalRepository
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId", -1L);
+
 		Map<String, Fields> fieldsMap = getFieldsMap(
 			serviceContext, fileEntryTypeId);
+
 		long size = 0;
 
 		if (file != null) {
@@ -295,6 +302,7 @@ public class LiferayLocalRepository
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId", -1L);
+
 		Map<String, Fields> fieldsMap = getFieldsMap(
 			serviceContext, fileEntryTypeId);
 

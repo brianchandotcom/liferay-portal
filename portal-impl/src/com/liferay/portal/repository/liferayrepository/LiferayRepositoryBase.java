@@ -149,6 +149,16 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		}
 	}
 
+	protected long getDefaultFileEntryTypeId(
+			ServiceContext serviceContext, long folderId)
+		throws PortalException, SystemException {
+
+		folderId = dlFolderLocalService.getFolderId(
+			serviceContext.getCompanyId(), folderId);
+
+		return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
+	}
+
 	protected HashMap<String, Fields> getFieldsMap(
 			ServiceContext serviceContext, long fileEntryTypeId)
 		throws PortalException, SystemException {

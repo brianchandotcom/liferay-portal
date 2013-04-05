@@ -114,7 +114,7 @@ public class AddPageTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Manage Pages Test Page"),
 					selenium.getText(
-						"//nav[@id='breadcrumbs']/ul/li[@class='last']/span/a"));
+						"//nav[@id='breadcrumbs']/ul/li[@class='only']/span/a"));
 
 			case 100:
 				label = -1;

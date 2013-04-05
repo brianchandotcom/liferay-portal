@@ -116,11 +116,11 @@ public class ViewUserScreenNameNumberTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Change"),
 					selenium.getText("//span[@class='edit-logo-link']/a/span"));
 				assertEquals("0",
-					selenium.getValue("//select[@id='_125_birthdayMonth']"));
+					selenium.getValue("//select[@id='_125_birthdaymonth']"));
 				assertEquals("1",
-					selenium.getValue("//select[@id='_125_birthdayDay']"));
+					selenium.getValue("//select[@id='_125_birthdayday']"));
 				assertEquals("1970",
-					selenium.getValue("//select[@id='_125_birthdayYear']"));
+					selenium.getValue("//select[@id='_125_birthdayyear']"));
 				assertEquals("true",
 					selenium.getValue("//select[@id='_125_male']"));
 				assertEquals("",

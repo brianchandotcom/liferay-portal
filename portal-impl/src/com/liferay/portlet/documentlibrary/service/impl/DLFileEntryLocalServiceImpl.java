@@ -929,39 +929,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryFinder.findByExtraSettings(start, end);
 	}
 
-	protected HashMap<String, Fields> getFieldsMap(
-			long fileEntryTypeId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
-
-		if (fileEntryTypeId <= 0) {
-			return fieldsMap;
-		}
-
-		DLFileEntryType fileEntryType =
-			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-
-		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId());
-
-			if (fields == null) {
-				String namespace = String.valueOf(
-					ddmStructure.getStructureId());
-
-				fields = DDMUtil.getFields(
-					ddmStructure.getStructureId(), namespace, serviceContext);
-			}
-
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
-		}
-
-		return fieldsMap;
-	}
-
 	public File getFile(
 			long userId, long fileEntryId, String version,
 			boolean incrementCounter)
@@ -1844,6 +1811,39 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileVersionStatusOVPs;
+	}
+
+	protected HashMap<String, Fields> getFieldsMap(
+			long fileEntryTypeId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
+
+		if (fileEntryTypeId <= 0) {
+			return fieldsMap;
+		}
+
+		DLFileEntryType fileEntryType =
+			dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+
+		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + ddmStructure.getStructureId());
+
+			if (fields == null) {
+				String namespace = String.valueOf(
+					ddmStructure.getStructureId());
+
+				fields = DDMUtil.getFields(
+					ddmStructure.getStructureId(), namespace, serviceContext);
+			}
+
+			fieldsMap.put(ddmStructure.getStructureKey(), fields);
+		}
+
+		return fieldsMap;
 	}
 
 	protected Long getFileEntryTypeId(

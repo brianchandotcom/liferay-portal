@@ -63,7 +63,7 @@ public class PasswordPolicyLocalServiceImpl
 			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
 			minUpperCase, null, history, historyCount, expireable, maxAge,
 			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge, new ServiceContext());
+			resetFailureCount, resetTicketMaxAge, null);
 	}
 
 	public PasswordPolicy addPasswordPolicy(
@@ -90,7 +90,10 @@ public class PasswordPolicyLocalServiceImpl
 		PasswordPolicy passwordPolicy = passwordPolicyPersistence.create(
 			passwordPolicyId);
 
-		passwordPolicy.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			passwordPolicy.setUuid(serviceContext.getUuid());
+		}
+
 		passwordPolicy.setUserId(userId);
 		passwordPolicy.setCompanyId(user.getCompanyId());
 		passwordPolicy.setUserName(user.getFullName());
@@ -123,6 +126,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setRequireUnlock(lockoutDuration == 0);
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+		passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 
 		passwordPolicyPersistence.update(passwordPolicy);
 
@@ -176,7 +180,7 @@ public class PasswordPolicyLocalServiceImpl
 				PropsValues.PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE,
-				new ServiceContext());
+				null);
 		}
 	}
 
@@ -349,7 +353,7 @@ public class PasswordPolicyLocalServiceImpl
 			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase, null,
 			history, historyCount, expireable, maxAge, warningTime, graceLimit,
 			lockout, maxFailure, lockoutDuration, resetFailureCount,
-			resetTicketMaxAge, new ServiceContext());
+			resetTicketMaxAge, null);
 	}
 
 	public PasswordPolicy updatePasswordPolicy(
@@ -401,6 +405,7 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setRequireUnlock(lockoutDuration == 0);
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+		passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 
 		passwordPolicyPersistence.update(passwordPolicy);
 

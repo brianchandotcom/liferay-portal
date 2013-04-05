@@ -155,7 +155,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		UserGroup userGroup = userGroupPersistence.create(userGroupId);
 
-		userGroup.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			userGroup.setUuid(serviceContext.getUuid());
+		}
+
 		userGroup.setCompanyId(companyId);
 		userGroup.setParentUserGroupId(
 			UserGroupConstants.DEFAULT_PARENT_USER_GROUP_ID);

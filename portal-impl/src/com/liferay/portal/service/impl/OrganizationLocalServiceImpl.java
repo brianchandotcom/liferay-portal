@@ -129,7 +129,7 @@ public class OrganizationLocalServiceImpl
 			userId, parentOrganizationId, name,
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			site, new ServiceContext());
+			site, null);
 	}
 
 	/**
@@ -230,7 +230,10 @@ public class OrganizationLocalServiceImpl
 		Organization organization = organizationPersistence.create(
 			organizationId);
 
-		organization.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			organization.setUuid(serviceContext.getUuid());
+		}
+
 		organization.setCompanyId(user.getCompanyId());
 		organization.setParentOrganizationId(parentOrganizationId);
 

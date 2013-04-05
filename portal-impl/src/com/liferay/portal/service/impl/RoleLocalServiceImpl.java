@@ -137,7 +137,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		return addRole(
 			userId, className, classPK, name, titleMap, descriptionMap, type,
-			null, new ServiceContext());
+			null, null);
 	}
 
 	/**
@@ -188,7 +188,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Role role = rolePersistence.create(roleId);
 
-		role.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			role.setUuid(serviceContext.getUuid());
+		}
+
 		role.setCompanyId(user.getCompanyId());
 		role.setClassNameId(classNameId);
 		role.setClassPK(classPK);
@@ -1302,7 +1305,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			role = roleLocalService.addRole(
 				user.getUserId(), null, 0, name, null, descriptionMap, type,
-				null, new ServiceContext());
+				null, null);
 
 			if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);

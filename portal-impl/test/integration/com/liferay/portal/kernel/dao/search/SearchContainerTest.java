@@ -41,94 +41,52 @@ public class SearchContainerTest {
 	}
 
 	@Test
-	public void
-		testCalculateCurWhenTotalSmallerThanCurLessOneMultiplyByDelta() {
+	public void testCalculateCurWhenEmptyResultsPage() {
+		createSearchContainer(2);
 
-		int cur = 341;
-		int delta = 20;
-		int total = 1001;
-
-		createSearchContainer(cur, delta);
-
-		_searchContainer.setTotal(total);
-
-		Assert.assertEquals(51, _searchContainer.getCur());
-	}
-
-	@Test
-	public void testCalculateCurWhenTotalBiggerThanCurLessOneMultiplyByDelta() {
-		int cur = 35;
-		int delta = 20;
-		int total = 999;
-
-		createSearchContainer(cur, delta);
-
-		_searchContainer.setTotal(total);
-
-		Assert.assertEquals(35, _searchContainer.getCur());
-	}
-
-	@Test
-	public void testCalculateCurWhenTotalEqualsDelta() {
-		int cur = 2;
-		int delta = 5;
-		int total = 5;
-
-		createSearchContainer(cur, delta);
-
-		_searchContainer.setTotal(total);
+		_searchContainer.setTotal(10);
 
 		Assert.assertEquals(1, _searchContainer.getCur());
 	}
 
 	@Test
-	public void testCalculateCurWhenTotalEqualsZero() {
-		int cur = 2;
-		int delta = 5;
-		int total = 0;
+	public void testCalculateCurWhenFullResultsPage() {
+		createSearchContainer(2);
 
-		createSearchContainer(cur, delta);
-
-		_searchContainer.setTotal(total);
+		_searchContainer.setTotal(20);
 
 		Assert.assertEquals(1, _searchContainer.getCur());
 	}
 
 	@Test
-	public void testCalculateCurWhenTotalLessThanDelta() {
-		int cur = 2;
-		int delta = 5;
-		int total = 1;
+	public void testCalculateCurWhenNoResults() {
+		createSearchContainer(2);
 
-		createSearchContainer(cur, delta);
-
-		_searchContainer.setTotal(total);
+		_searchContainer.setTotal(0);
 
 		Assert.assertEquals(1, _searchContainer.getCur());
 	}
 
 	@Test
-	public void testCalculateCurWhenTotalMoreThanDelta() {
-		int cur = 5;
-		int delta = 5;
-		int total = 16;
+	public void testCalculateCurWhenResultsPage() {
+		createSearchContainer(2);
 
-		createSearchContainer(cur, delta);
+		_searchContainer.setTotal(80);
 
-		_searchContainer.setTotal(total);
-
-		Assert.assertEquals(4, _searchContainer.getCur());
+		Assert.assertEquals(2, _searchContainer.getCur());
 	}
 
-	protected void createSearchContainer(int cur, int delta) {
+	protected void createSearchContainer(int cur) {
 		PortletRequest portletRequest= PowerMockito.mock(PortletRequest.class);
 
 		PortletURL portletURL = PowerMockito.mock(PortletURL.class);
 
 		_searchContainer = new SearchContainer(
-			portletRequest, null, null, "cur2", cur, delta, portletURL, null,
-			null);
+			portletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, cur,
+			_DEFAULT_DELTA, portletURL, null, null);
 	}
+
+	private final static int _DEFAULT_DELTA = 20;
 
 	private SearchContainer _searchContainer;
 

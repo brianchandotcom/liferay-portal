@@ -129,6 +129,8 @@ public class AnnouncementsUtil {
 		}
 		else {
 			roles = RoleLocalServiceUtil.getUserRoles(userId);
+
+			roles = ListUtil.copy(roles);
 		}
 
 		if (PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED) {

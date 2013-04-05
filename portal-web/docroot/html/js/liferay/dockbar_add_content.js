@@ -18,12 +18,6 @@ AUI.add(
 
 		var AddContent = A.Component.create(
 			{
-				ATTRS: {
-					namespace: {
-						validator: isString
-					}
-				},
-
 				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
@@ -54,25 +48,13 @@ AUI.add(
 
 						instance._entriesContainer = instance.byId('entriesContainer');
 
-						instance._entriesContainer.delegate(
-							'click',
-							function(event) {
-								instance._addPortlet(event);
-							},
-							'.content-shortcut'
-						);
+						instance._entriesContainer.delegate('click', instance._addPortlet, '.content-shortcut');
 
 						instance._createToolTip();
 
 						LayoutConfiguration._loadContent();
 
 						Liferay.on('showTab', instance._onShowTab, instance);
-					},
-
-					destructor: function() {
-						var instance = this;
-
-
 					},
 
 					_addPortlet: function(event) {
@@ -96,10 +78,6 @@ AUI.add(
 						var instance = this;
 
 						instance._tooltip.set('bodyContent', TPL_ERROR);
-					},
-
-					_afterFailure: function(event) {
-
 					},
 
 					_afterPreviewSuccess: function(event) {
@@ -162,7 +140,6 @@ AUI.add(
 									points: ['lc', 'rc']
 								},
 								cssClass: 'lfr-content-preview-popup',
-								showArrow: false,
 								on: {
 									show: function() {
 										var currentNode = this.get('currentNode');
@@ -182,8 +159,8 @@ AUI.add(
 											uri,
 											{
 												after: {
-													failure: A.rbind(instance._afterPreviewFailure, instance),
-													success: A.rbind(instance._afterPreviewSuccess, instance)
+													failure: A.bind(instance._afterPreviewFailure, instance),
+													success: A.bind(instance._afterPreviewSuccess, instance)
 												},
 												data: {
 													classPK: classPK,
@@ -202,6 +179,7 @@ AUI.add(
 										currentNode.removeClass('over');
 									}
 								},
+								showArrow: false,
 								trigger: '.has-preview'
 							}
 						).render();
@@ -260,8 +238,7 @@ AUI.add(
 							uri,
 							{
 								after: {
-									failure: A.rbind(instance._afterFailure, instance),
-									success: A.rbind(instance._afterSuccess, instance)
+									success: A.bind(instance._afterSuccess, instance)
 								},
 								data: {
 									delta: instance._numItems.val(),

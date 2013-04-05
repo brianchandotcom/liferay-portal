@@ -22,26 +22,23 @@ import java.io.StringReader;
 
 import java.security.Permission;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.JSqlParser;
 import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.create.index.CreateIndex;
 import net.sf.jsqlparser.statement.create.table.CreateTable;
 import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.drop.Drop;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.replace.Replace;
 import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.statement.select.SelectBody;
 import net.sf.jsqlparser.statement.truncate.Truncate;
 import net.sf.jsqlparser.statement.update.Update;
-import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
+import net.sf.jsqlparser.util.TablesNamesFinder;
 
 /**
  * @author Brian Wing Shun Chan
@@ -79,7 +76,16 @@ public class SQLChecker extends BaseChecker {
 		String key = null;
 		String value = null;
 
-		if (statement instanceof CreateTable) {
+		if (statement instanceof CreateIndex) {
+			key = "security-manager-sql-tables-index-create";
+
+			CreateIndex createIndex = (CreateIndex)statement;
+
+			Table table = createIndex.getTable();
+
+			value = table.getName();
+		}
+		else if (statement instanceof CreateTable) {
 			key = "security-manager-sql-tables-create";
 
 			CreateTable createTable = (CreateTable)statement;
@@ -91,11 +97,13 @@ public class SQLChecker extends BaseChecker {
 		else if (statement instanceof Delete) {
 			key = "security-manager-sql-tables-delete";
 
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+
 			Delete delete = (Delete)statement;
 
-			Table table = delete.getTable();
+			List<String> tableNames = tablesNamesFinder.getTableList(delete);
 
-			value = table.getName();
+			value = StringUtil.merge(tableNames);
 		}
 		else if (statement instanceof Drop) {
 			key = "security-manager-sql-tables-drop";
@@ -107,29 +115,33 @@ public class SQLChecker extends BaseChecker {
 		else if (statement instanceof Insert) {
 			key = "security-manager-sql-tables-insert";
 
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+
 			Insert insert = (Insert)statement;
 
-			Table table = insert.getTable();
+			List<String> tableNames = tablesNamesFinder.getTableList(insert);
 
-			value = table.getName();
+			value = StringUtil.merge(tableNames);
 		}
 		else if (statement instanceof Replace) {
 			key = "security-manager-sql-tables-replace";
 
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+
 			Replace replace = (Replace)statement;
 
-			Table table = replace.getTable();
+			List<String> tableNames = tablesNamesFinder.getTableList(replace);
 
-			value = table.getName();
+			value = StringUtil.merge(tableNames);
 		}
 		else if (statement instanceof Select) {
 			key = "security-manager-sql-tables-select";
 
-			TableNamesFinder tableNamesFinder = new TableNamesFinder();
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
 			Select select = (Select)statement;
 
-			List<String> tableNames = tableNamesFinder.getTableNames(select);
+			List<String> tableNames = tablesNamesFinder.getTableList(select);
 
 			value = StringUtil.merge(tableNames);
 		}
@@ -145,11 +157,13 @@ public class SQLChecker extends BaseChecker {
 		else if (statement instanceof Update) {
 			key = "security-manager-sql-tables-update";
 
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+
 			Update update = (Update)statement;
 
-			Table table = update.getTable();
+			List<String> tableNames = tablesNamesFinder.getTableList(update);
 
-			value = table.getName();
+			value = StringUtil.merge(tableNames);
 		}
 		else {
 			return null;
@@ -176,7 +190,12 @@ public class SQLChecker extends BaseChecker {
 			return false;
 		}
 
-		if (statement instanceof CreateTable) {
+		if (statement instanceof CreateIndex) {
+			CreateIndex createIndex = (CreateIndex)statement;
+
+			return hasSQL(createIndex);
+		}
+		else if (statement instanceof CreateTable) {
 			CreateTable createTable = (CreateTable)statement;
 
 			return hasSQL(createTable);
@@ -229,14 +248,18 @@ public class SQLChecker extends BaseChecker {
 		throw new UnsupportedOperationException();
 	}
 
+	protected boolean hasSQL(CreateIndex createIndex) {
+		return isAllowedTable(createIndex.getTable(), _createIndexTableNames);
+	}
+
 	protected boolean hasSQL(CreateTable createTable) {
 		return isAllowedTable(createTable.getTable(), _createTableNames);
 	}
 
 	protected boolean hasSQL(Delete delete) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
+		TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
-		List<String> tableNames = tableNamesFinder.getTableNames(delete);
+		List<String> tableNames = tablesNamesFinder.getTableList(delete);
 
 		return isAllowedTables(tableNames, _deleteTableNames);
 	}
@@ -246,25 +269,25 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected boolean hasSQL(Insert insert) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
+		TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
-		List<String> tableNames = tableNamesFinder.getTableNames(insert);
+		List<String> tableNames = tablesNamesFinder.getTableList(insert);
 
 		return isAllowedTables(tableNames, _insertTableNames);
 	}
 
 	protected boolean hasSQL(Replace replace) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
+		TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
-		List<String> tableNames = tableNamesFinder.getTableNames(replace);
+		List<String> tableNames = tablesNamesFinder.getTableList(replace);
 
 		return isAllowedTables(tableNames, _replaceTableNames);
 	}
 
 	protected boolean hasSQL(Select select) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
+		TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
-		List<String> tableNames = tableNamesFinder.getTableNames(select);
+		List<String> tableNames = tablesNamesFinder.getTableList(select);
 
 		return isAllowedTables(tableNames, _selectTableNames);
 	}
@@ -274,15 +297,17 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	protected boolean hasSQL(Update update) {
-		TableNamesFinder tableNamesFinder = new TableNamesFinder();
+		TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
 
-		List<String> tableNames = tableNamesFinder.getTableNames(update);
+		List<String> tableNames = tablesNamesFinder.getTableList(update);
 
 		return isAllowedTables(tableNames, _updateTableNames);
 	}
 
 	protected void initTableNames() {
 		_allTableNames = getPropertySet("security-manager-sql-tables-all");
+		_createIndexTableNames = getPropertySet(
+			"security-manager-sql-tables-index-create");
 		_createTableNames = getPropertySet(
 			"security-manager-sql-tables-create");
 		_deleteTableNames = getPropertySet(
@@ -335,6 +360,7 @@ public class SQLChecker extends BaseChecker {
 	private static Log _log = LogFactoryUtil.getLog(SQLChecker.class);
 
 	private Set<String> _allTableNames;
+	private Set<String> _createIndexTableNames;
 	private Set<String> _createTableNames;
 	private Set<String> _deleteTableNames;
 	private Set<String> _dropTableNames;
@@ -344,69 +370,5 @@ public class SQLChecker extends BaseChecker {
 	private Set<String> _selectTableNames;
 	private Set<String> _truncateTableNames;
 	private Set<String> _updateTableNames;
-
-	private class TableNamesFinder extends TablesNamesFinder {
-
-		public TableNamesFinder() {
-			tables = new ArrayList<String>();
-		}
-
-		public List<String> getTableNames(Delete delete) {
-			Table table = delete.getTable();
-
-			tables.add(table.getName());
-
-			Expression where = delete.getWhere();
-
-			where.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Insert insert) {
-			Table table = insert.getTable();
-
-			tables.add(table.getName());
-
-			ItemsList itemsList = insert.getItemsList();
-
-			itemsList.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Replace replace) {
-			Table table = replace.getTable();
-
-			tables.add(table.getName());
-
-			ItemsList itemsList = replace.getItemsList();
-
-			itemsList.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Select select) {
-			SelectBody selectBody = select.getSelectBody();
-
-			selectBody.accept(this);
-
-			return tables;
-		}
-
-		public List<String> getTableNames(Update update) {
-			Table table = update.getTable();
-
-			tables.add(table.getName());
-
-			Expression where = update.getWhere();
-
-			where.accept(this);
-
-			return tables;
-		}
-
-	}
 
 }

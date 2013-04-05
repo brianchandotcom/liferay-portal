@@ -45,6 +45,11 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedExceptionAction;
+import java.security.ProtectionDomain;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,14 +185,34 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	public void upgradeDB(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
-			String tablesSQL, String sequencesSQL, String indexesSQL)
+			final ClassLoader classLoader, final String buildNamespace,
+			final long buildNumber, final boolean buildAutoUpgrade,
+			final ServiceComponent previousServiceComponent,
+			final String tablesSQL, final String sequencesSQL,
+			final String indexesSQL)
 		throws Exception {
 
-		doUpgradeDB(
-			classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
-			previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL);
+		ProtectionDomain protectionDomain = new ProtectionDomain(
+			null, null, classLoader, null);
+
+		AccessControlContext accessControlContext = new AccessControlContext(
+			new ProtectionDomain[] {protectionDomain});
+
+		AccessController.doPrivileged(
+			new PrivilegedExceptionAction<Void>() {
+
+				public Void run() throws Exception {
+					doUpgradeDB(
+						classLoader, buildNamespace, buildNumber,
+						buildAutoUpgrade, previousServiceComponent, tablesSQL,
+						sequencesSQL, indexesSQL);
+
+					return null;
+				}
+
+			},
+			accessControlContext
+		);
 	}
 
 	public void verifyDB() throws SystemException {

@@ -331,6 +331,45 @@ public class DLFileEntryTypeServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
+		HttpPrincipal httpPrincipal, long[] groupIds, long folderId,
+		boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DLFileEntryTypeServiceUtil.class,
+					"getFolderFileEntryTypes",
+					_getFolderFileEntryTypesParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					groupIds, folderId, inherited);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryTypeServiceHttp.class);
 	private static final Class<?>[] _addFileEntryTypeParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
@@ -359,5 +398,8 @@ public class DLFileEntryTypeServiceHttp {
 	private static final Class<?>[] _updateFileEntryTypeParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long[].class, com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _getFolderFileEntryTypesParameterTypes8 = new Class[] {
+			long[].class, long.class, boolean.class
 		};
 }

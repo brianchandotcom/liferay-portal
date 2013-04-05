@@ -110,6 +110,14 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 			description, ddmStructureIds, serviceContext);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
+		long[] groupIds, long folderId, boolean inherited)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryTypeService.getFolderFileEntryTypes(groupIds,
+			folderId, inherited);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

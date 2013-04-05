@@ -150,6 +150,42 @@ public class SeleniumBuilderFileUtil {
 	public String getNormalizedContent(String fileName) throws Exception {
 		String content = readFile(fileName);
 
+		if (fileName.endsWith(".path")) {
+			StringBundler header = new StringBundler();
+
+			header.append("<html>\n");
+			header.append("<head>\n");
+			header.append("<title>" + getName(fileName) + "</title>\n");
+			header.append("</head>\n");
+			header.append("<body>\n");
+			header.append(
+				"<table cellpadding=\"1\" cellspacing=\"1\" border=\"1\">\n");
+			header.append("<thead>\n");
+			header.append(
+				"<tr><td rowspan=\"1\" colspan=\"3\">" + getName(fileName) +
+					"</td></tr>\n");
+			header.append("</thead>\n");
+
+			StringBundler footer = new StringBundler();
+
+			footer.append("\n</table>\n");
+			footer.append("</body>\n");
+			footer.append("</html>");
+
+			int x = content.indexOf("<tbody>");
+			int y = content.indexOf("</tbody>");
+
+			String newContent =
+				header.toString() + content.substring(x, y + 8) +
+					footer.toString();
+
+			if (!content.equals(newContent)) {
+				content = newContent;
+
+				writeFile(fileName, newContent, false, getBaseDir());
+			}
+		}
+
 		StringBundler sb = new StringBundler();
 
 		int lineNumber = 1;
@@ -258,7 +294,14 @@ public class SeleniumBuilderFileUtil {
 	public void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		File file = new File(getBaseDir() + "-generated/" + fileName);
+		writeFile(fileName, content, format, getBaseDir() + "-generated");
+	}
+
+	public void writeFile(
+		String fileName, String content, boolean format, String baseDir)
+			throws Exception {
+
+		File file = new File(baseDir + "/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);

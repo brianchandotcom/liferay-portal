@@ -58,6 +58,12 @@ if (fileEntry != null) {
 
 DLFileEntryType fileEntryType = null;
 
+if ((fileEntryTypeId == -1) && !fileEntryTypes.isEmpty()) {
+	fileEntryType = fileEntryTypes.get(0);
+
+	fileEntryTypeId = fileEntryType.getFileEntryTypeId();
+}
+
 if (fileEntryTypeId > 0) {
 	fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }

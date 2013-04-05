@@ -17,9 +17,9 @@ package com.liferay.portalweb.asset.webcontent.wcwebcontent.viewwcwebcontentscop
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.asset.assetpublisher.portlet.addportletap.AddPortletAPTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeglobal.AddWCWebContentScopeGlobalTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontentscopeglobal.TearDownWCWebContentScopeGlobalTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl.AddWCWebContentScopeGlobalCPTest;
-import com.liferay.portalweb.portlet.webcontentlist.wcwebcontent.viewwcwebcontentscopeglobalwcl.TearDownWCWebContentScopeGlobalCPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,12 +30,12 @@ import junit.framework.TestSuite;
 public class ViewWCWebContentScopeGlobalAPTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddWCWebContentScopeGlobalCPTest.class);
+		testSuite.addTestSuite(AddWCWebContentScopeGlobalTest.class);
 		testSuite.addTestSuite(AddPageAPTest.class);
 		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(ConfigurePortletAPScopeSourceGlobalTest.class);
 		testSuite.addTestSuite(ViewWCWebContentScopeGlobalAPTest.class);
-		testSuite.addTestSuite(TearDownWCWebContentScopeGlobalCPTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentScopeGlobalTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

@@ -28,23 +28,23 @@ public class ViewWCWebContentScopeGlobalAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Global Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Global Content"),
 			selenium.getText("//div[@class='asset-summary']"));
 		assertEquals(RuntimeVariables.replace(
-				"Read More About WC WebContent Title \u00bb"),
+				"Read More About WC WebContent Global Title \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace(
-				"Read More About WC WebContent Title \u00bb"));
+				"Read More About WC WebContent Global Title \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Global Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//span[@class='header-back-to']/a"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//div[@class='journal-content-article']/p"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Global Content"),
+			selenium.getText("//div[@class='journal-content-article']"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='lfr-meta-actions asset-actions']/span/a/span[contains(.,'Edit')]",
 				"Edit"));

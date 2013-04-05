@@ -56,11 +56,14 @@ public class ConfigurePortletWCLFilterStructureTest extends BaseTestCase {
 		selenium.selectFrame("//iframe[contains(@src,'_86_selectStructure')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
+		Thread.sleep(1000);
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
-			RuntimeVariables.replace("WC Structure Name"));
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]"));
+		assertEquals(RuntimeVariables.replace("WC Structure Description"),
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");

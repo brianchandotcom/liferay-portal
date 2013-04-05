@@ -47,16 +47,40 @@ public class ConfigurePortletAPScopeSourceGlobalTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//select[@id='_86_defaultScope']");
-		selenium.select("//select[@id='_86_defaultScope']",
+		selenium.waitForVisible("//span[@title='Select']/ul/li/strong/a/span");
+		assertEquals(RuntimeVariables.replace("Select"),
+			selenium.getText("//span[@title='Select']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Select']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Select"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]",
 			RuntimeVariables.replace("Global"));
+		selenium.waitForVisible("//tr[contains(.,'Global')]/td[1]/span/span");
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText("//tr[contains(.,'Global')]/td[1]/span/span"));
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText("//tr[contains(.,'Global')]/td[2]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Global')]/td[3]/span/a[contains(@href,'remove-scope')]"));
+		Thread.sleep(1000);
+		selenium.clickAt("//tr[contains(.,'Current Site (Liferay)')]/td[3]/span/a[contains(@href,'remove-scope')]",
+			RuntimeVariables.replace("Remove Current Site (Liferay) Scope"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForTextNotPresent("Current Site (Liferay) Scope");
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Global",
-			selenium.getSelectedLabel("//select[@id='_86_defaultScope']"));
-		selenium.selectFrame("relative=top");
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText("//tr[contains(.,'Global')]/td[1]/span/span"));
+		assertEquals(RuntimeVariables.replace("Global"),
+			selenium.getText("//tr[contains(.,'Global')]/td[2]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Global')]/td[3]/span/a[contains(@href,'remove-scope')]"));
+		assertFalse(selenium.isTextPresent("Current Site (Liferay) Scope"));
 	}
 }

@@ -29,11 +29,15 @@ public class ViewWCWebContentWCLTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content List Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[1]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/a"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[1]/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//div[@class='journal-content-article']/p"));
+			selenium.getText("//div[@class='journal-content-article']"));
 	}
 }

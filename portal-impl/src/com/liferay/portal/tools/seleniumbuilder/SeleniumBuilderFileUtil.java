@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,8 +34,10 @@ import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.File;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -150,6 +153,26 @@ public class SeleniumBuilderFileUtil {
 	public String getNormalizedContent(String fileName) throws Exception {
 		String content = readFile(fileName);
 
+		if (fileName.endsWith(".path")) {
+			int x = content.indexOf("<tbody>");
+			int y = content.indexOf("</tbody>");
+
+			String pathTbody = content.substring(x, y + 8);
+
+			Map<String, Object> context = new HashMap<String, Object>();
+
+			context.put("pathName", getName(fileName));
+			context.put("pathTbody", pathTbody);
+
+			String newContent = processTemplate("path_xml.ftl", context);
+
+			if (!content.equals(newContent)) {
+				content = newContent;
+
+				writeFile(fileName, newContent, false, getBaseDir());
+			}
+		}
+
 		StringBundler sb = new StringBundler();
 
 		int lineNumber = 1;
@@ -258,7 +281,14 @@ public class SeleniumBuilderFileUtil {
 	public void writeFile(String fileName, String content, boolean format)
 		throws Exception {
 
-		File file = new File(getBaseDir() + "-generated/" + fileName);
+		writeFile(fileName, content, format, getBaseDir() + "-generated");
+	}
+
+	public void writeFile(
+		String fileName, String content, boolean format, String baseDir)
+			throws Exception {
+
+		File file = new File(baseDir + "/" + fileName);
 
 		if (format) {
 			ServiceBuilder.writeFile(file, content);
@@ -268,6 +298,13 @@ public class SeleniumBuilderFileUtil {
 
 			FileUtil.write(file, content);
 		}
+	}
+
+	protected String processTemplate(String name, Map<String, Object> context)
+		throws Exception {
+
+		return StringUtil.strip(
+			FreeMarkerUtil.process(_TPL_ROOT + name, context), '\r');
 	}
 
 	protected void throwValidationException(int errorCode, String fileName) {
@@ -1093,6 +1130,9 @@ public class SeleniumBuilderFileUtil {
 				new String[] {"condition", "then"});
 		}
 	}
+
+	private static final String _TPL_ROOT =
+		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
 	private String _baseDir;
 

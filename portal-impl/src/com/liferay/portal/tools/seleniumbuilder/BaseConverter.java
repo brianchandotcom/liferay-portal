@@ -14,9 +14,6 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
-import com.liferay.portal.freemarker.FreeMarkerUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,14 +45,10 @@ public class BaseConverter {
 	protected String processTemplate(String name, Map<String, Object> context)
 		throws Exception {
 
-		return StringUtil.strip(
-			FreeMarkerUtil.process(_TPL_ROOT + name, context), '\r');
+		return seleniumBuilderFileUtil.processTemplate(name, context);
 	}
 
 	protected SeleniumBuilderContext seleniumBuilderContext;
 	protected SeleniumBuilderFileUtil seleniumBuilderFileUtil;
-
-	private static final String _TPL_ROOT =
-		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
 }

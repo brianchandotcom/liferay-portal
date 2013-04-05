@@ -101,7 +101,7 @@ public class ServiceTestUtil {
 		catch (NoSuchRoleException nsre) {
 			role = RoleLocalServiceUtil.addRole(
 				TestPropsValues.getUserId(), null, 0, roleName, null, null,
-				roleType, null, null);
+				roleType, null, getServiceContext());
 		}
 
 		return role;

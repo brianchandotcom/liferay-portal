@@ -1302,7 +1302,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			role = roleLocalService.addRole(
 				user.getUserId(), null, 0, name, null, descriptionMap, type,
-				null, null);
+				null, new ServiceContext());
 
 			if (name.equals(RoleConstants.USER)) {
 				initPersonalControlPanelPortletsPermissions(role);

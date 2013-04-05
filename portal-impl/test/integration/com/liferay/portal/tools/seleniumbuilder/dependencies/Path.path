@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Path</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Path</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Path</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PATH_1</td>
+	<td>//xpath</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

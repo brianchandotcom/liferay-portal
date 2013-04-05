@@ -1810,25 +1810,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersionStatusOVPs;
 	}
 
-	protected void validateFileEntryTypeId(
-			long[] groupIds, long folderId, long fileEntryTypeId)
-		throws PortalException, SystemException {
-
-		List<DLFileEntryType> dlFileEntryTypes =
-			dlFileEntryTypeLocalService.getFolderFileEntryTypes(
-				groupIds, folderId, true);
-
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			if (dlFileEntryType.getFileEntryTypeId() == fileEntryTypeId) {
-				return;
-			}
-		}
-
-		throw new InvalidFileEntryTypeException(
-			"Invalid file entry type " + fileEntryTypeId + " for folder " +
-				folderId);
-	}
-
 	protected String getNextVersion(
 			DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction)
 		throws PortalException, SystemException {
@@ -2444,6 +2425,25 @@ public class DLFileEntryLocalServiceImpl
 		DLStoreUtil.validate(title, false);
 
 		validateFile(groupId, folderId, fileEntryId, title, extension);
+	}
+
+	protected void validateFileEntryTypeId(
+			long[] groupIds, long folderId, long fileEntryTypeId)
+		throws PortalException, SystemException {
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			dlFileEntryTypeLocalService.getFolderFileEntryTypes(
+				groupIds, folderId, true);
+
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			if (dlFileEntryType.getFileEntryTypeId() == fileEntryTypeId) {
+				return;
+			}
+		}
+
+		throw new InvalidFileEntryTypeException(
+			"Invalid file entry type " + fileEntryTypeId + " for folder " +
+				folderId);
 	}
 
 	protected void validateFileExtension(String extension)

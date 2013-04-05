@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>PathTbodyElement1002_4</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PathTbodyElement1002_4</td></tr>
+</thead>
+<tbody>
+<fail />
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PathTbodyElement1002_4</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PATH_1</td>
+	<td>//xpath</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

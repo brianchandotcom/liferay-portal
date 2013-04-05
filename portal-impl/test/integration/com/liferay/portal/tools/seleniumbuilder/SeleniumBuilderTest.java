@@ -796,7 +796,7 @@ public class SeleniumBuilderTest {
 		test(
 			"MacroDefinitionElement1002.macro",
 			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
-				"/MacroDefinitionElement1002.macro:1");
+				"/MacroDefinitionElement1002.macro:2");
 	}
 
 	@Test
@@ -1048,6 +1048,67 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testPath() throws Exception {
+		test("Path.path");
+	}
+
+	@Test
+	public void testPathTbodyElement1002_1() throws Exception {
+		test(
+			"PathTbodyElement1002_1.path",
+			"Error 1002: Invalid tbody element in " + _DIR_NAME +
+				"/PathTbodyElement1002_1.path");
+	}
+
+	@Test
+	public void testPathTbodyElement1002_2() throws Exception {
+		test(
+			"PathTbodyElement1002_2.path",
+			"Error 1002: Invalid tbody element in " + _DIR_NAME +
+				"/PathTbodyElement1002_2.path");
+	}
+
+	@Test
+	public void testPathTbodyElement1002_3() throws Exception {
+		test(
+			"PathTbodyElement1002_3.path",
+			"Error 1002: Invalid tbody element in " + _DIR_NAME +
+				"/PathTbodyElement1002_3.path");
+	}
+
+	@Test
+	public void testPathTbodyElement1002_4() throws Exception {
+		test(
+			"PathTbodyElement1002_4.path",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/PathTbodyElement1002_4.path:11");
+	}
+
+	@Test
+	public void testPathTrElement1001() throws Exception {
+		test(
+			"PathTrElement1001.path",
+			"Error 1001: Missing (td) child element in " + _DIR_NAME +
+				"/PathTrElement1001.path:11");
+	}
+
+	@Test
+	public void testPathTrElement1002_1() throws Exception {
+		test(
+			"PathTrElement1002_1.path",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/PathTrElement1002_1.path:15");
+	}
+
+	@Test
+	public void testPathTrElement1002_2() throws Exception {
+		test(
+			"PathTrElement1002_2.path",
+			"Error 1002: Invalid td element in " + _DIR_NAME +
+				"/PathTrElement1002_2.path:15");
+	}
+
+	@Test
 	public void testTestCase() throws Exception {
 		test("TestCase.testcase");
 	}
@@ -1129,7 +1190,7 @@ public class SeleniumBuilderTest {
 		test(
 			"TestCaseDefinitionElement1002.testcase",
 			"Error 1002: Invalid command-fail element in " + _DIR_NAME +
-				"/TestCaseDefinitionElement1002.testcase:1");
+				"/TestCaseDefinitionElement1002.testcase:2");
 	}
 
 	@Test
@@ -1358,7 +1419,7 @@ public class SeleniumBuilderTest {
 		test(
 			"TestSuiteDefinitionElement1002.testsuite",
 			"Error 1002: Invalid command element in " + _DIR_NAME +
-				"/TestSuiteDefinitionElement1002.testsuite:1");
+				"/TestSuiteDefinitionElement1002.testsuite:2");
 	}
 
 	@Test

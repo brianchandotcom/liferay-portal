@@ -157,6 +157,10 @@ public class SeleniumBuilderFileUtil {
 			int x = content.indexOf("<tbody>");
 			int y = content.indexOf("</tbody>");
 
+			if ((x == -1) || (y == -1)) {
+				throwValidationException(1002, fileName, null, "tbody");
+			}
+
 			String pathTbody = content.substring(x, y + 8);
 
 			Map<String, Object> context = new HashMap<String, Object>();
@@ -917,8 +921,7 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(
-					1002, fileName, rootElement, elementName);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}
@@ -953,6 +956,46 @@ public class SeleniumBuilderFileUtil {
 
 		if ((tdText == null) || !shortFileName.equals(tdText)) {
 			throwValidationException(0, fileName);
+		}
+
+		Element tbodyElement = tableElement.element("tbody");
+
+		List<Element> elements = tbodyElement.elements();
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (elementName.equals("tr")) {
+				validatePathTrElement(fileName, element);
+			}
+			else {
+				throwValidationException(1002, fileName, element, elementName);
+			}
+		}
+	}
+
+	protected void validatePathTrElement(String fileName, Element trElement) {
+		List<Element> elements = trElement.elements();
+
+		for (Element element : elements) {
+			String elementName = element.getName();
+
+			if (!elementName.equals("td")) {
+				throwValidationException(1002, fileName, element, elementName);
+			}
+		}
+
+		if (elements.size() < 3) {
+			throwValidationException(
+				1001, fileName, trElement, new String[] {"td"});
+		}
+
+		if (elements.size() > 3) {
+			Element element = elements.get(3);
+
+			String elementName = element.getName();
+
+			throwValidationException(1002, fileName, element, elementName);
 		}
 	}
 
@@ -1009,8 +1052,7 @@ public class SeleniumBuilderFileUtil {
 				validateVarElement(fileName, element);
 			}
 			else {
-				throwValidationException(
-					1002, fileName, rootElement, elementName);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}
@@ -1038,8 +1080,7 @@ public class SeleniumBuilderFileUtil {
 					".+", new String[0]);
 			}
 			else {
-				throwValidationException(
-					1002, fileName, rootElement, elementName);
+				throwValidationException(1002, fileName, element, elementName);
 			}
 		}
 	}

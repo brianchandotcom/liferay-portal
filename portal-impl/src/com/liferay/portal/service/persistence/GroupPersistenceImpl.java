@@ -7688,6 +7688,11 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return SetUtil.fromArray(new String[] { "type", "active" });
+	}
+
 	/**
 	 * Initializes the group persistence.
 	 */

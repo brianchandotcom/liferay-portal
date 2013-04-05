@@ -8,6 +8,8 @@
 	<#assign pkColumn = entity.getPKList()?first>
 </#if>
 
+<#assign finderFieldSQLSuffix = "_SQL">
+
 package ${packagePath}.service.persistence;
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
@@ -139,7 +141,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#include "persistence_impl_finder_count.ftl">
 
-		<#include "persistence_impl_finder_field.ftl">
+		<#include "persistence_impl_finder_fields.ftl">
 	</#list>
 
 	/**
@@ -1462,6 +1464,23 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 	</#list>
 
+	<#if entity.getBadNamedColumns()?size != 0>
+		@Override
+	    protected Set<String> getBadColumnNames() {
+			return SetUtil.fromArray(new String[] {
+
+			<#list entity.getBadNamedColumns() as column>
+				"${column.name}"
+
+				<#if column_has_next>
+					,
+				</#if>
+			</#list>
+
+			});
+		}
+	</#if>
+
 	<#if entity.isHierarchicalTree()>
 		/**
 		 * Rebuilds the ${entity.humanNames} tree for the scope using the modified pre-order tree traversal algorithm.
@@ -1498,7 +1517,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				SQLQuery q = session.createSQLQuery("SELECT COUNT(*) AS COUNT_VALUE FROM ${entity.table} WHERE ${scopeColumn.name} = ? AND (left${pkColumn.methodName} = 0 OR left${pkColumn.methodName} IS NULL OR right${pkColumn.methodName} = 0 OR right${pkColumn.methodName} IS NULL)");
+				SQLQuery q = session.createSQLQuery("SELECT COUNT(*) AS COUNT_VALUE FROM ${entity.table} WHERE ${scopeColumn.DBName} = ? AND (left${pkColumn.methodName} = 0 OR left${pkColumn.methodName} IS NULL OR right${pkColumn.methodName} = 0 OR right${pkColumn.methodName} IS NULL)");
 
 				q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
@@ -1652,7 +1671,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				SQLQuery q = session.createSQLQuery("SELECT ${pkColumn.name} FROM ${entity.table} WHERE ${scopeColumn.name} = ? AND parent${pkColumn.methodName} = ? ORDER BY ${pkColumn.name} ASC");
+				SQLQuery q = session.createSQLQuery("SELECT ${pkColumn.DBName} FROM ${entity.table} WHERE ${scopeColumn.DBName} = ? AND parent${pkColumn.methodName} = ? ORDER BY ${pkColumn.name} ASC");
 
 				q.addScalar("${pkColumn.name}", com.liferay.portal.kernel.dao.orm.Type.LONG);
 

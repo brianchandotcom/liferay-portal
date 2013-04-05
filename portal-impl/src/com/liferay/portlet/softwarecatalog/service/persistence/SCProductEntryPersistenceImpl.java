@@ -584,11 +584,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -1939,11 +1939,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3766,6 +3766,11 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		finally {
 			FinderCacheUtil.clearCache(SCProductEntryModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
 		}
+	}
+
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return SetUtil.fromArray(new String[] { "type" });
 	}
 
 	/**

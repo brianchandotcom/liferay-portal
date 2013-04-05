@@ -102,6 +102,7 @@ goto
 grant
 group
 having
+hidden
 high_priority
 hour_microsecond
 hour_minute

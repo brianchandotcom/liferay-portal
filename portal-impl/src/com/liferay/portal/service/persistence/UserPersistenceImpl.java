@@ -9773,6 +9773,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return SetUtil.fromArray(new String[] { "uuid", "password" });
+	}
+
 	/**
 	 * Initializes the user persistence.
 	 */

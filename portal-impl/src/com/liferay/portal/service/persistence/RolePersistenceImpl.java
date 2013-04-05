@@ -575,11 +575,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -1435,11 +1435,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -2291,7 +2291,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+		query.append(_FINDER_COLUMN_TYPE_TYPE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
@@ -2300,11 +2300,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -2410,7 +2410,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+		query.append(_FINDER_COLUMN_TYPE_TYPE_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_2);
@@ -2610,7 +2610,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
-		query.append(_FINDER_COLUMN_TYPE_TYPE_2);
+		query.append(_FINDER_COLUMN_TYPE_TYPE_2_SQL);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				Role.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
@@ -2642,6 +2642,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "role.type = ?";
+	private static final String _FINDER_COLUMN_TYPE_TYPE_2_SQL = "role.type_ = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SUBTYPE = new FinderPath(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleModelImpl.FINDER_CACHE_ENABLED, RoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySubtype",
@@ -3165,11 +3166,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4345,7 +4346,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_T_S_TYPE_2);
+		query.append(_FINDER_COLUMN_T_S_TYPE_2_SQL);
 
 		boolean bindSubtype = false;
 
@@ -4368,11 +4369,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -4485,7 +4486,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			query.append(_FILTER_SQL_SELECT_ROLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_T_S_TYPE_2);
+		query.append(_FINDER_COLUMN_T_S_TYPE_2_SQL);
 
 		boolean bindSubtype = false;
 
@@ -4725,7 +4726,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
-		query.append(_FINDER_COLUMN_T_S_TYPE_2);
+		query.append(_FINDER_COLUMN_T_S_TYPE_2_SQL);
 
 		boolean bindSubtype = false;
 
@@ -4775,6 +4776,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	private static final String _FINDER_COLUMN_T_S_TYPE_2 = "role.type = ? AND ";
+	private static final String _FINDER_COLUMN_T_S_TYPE_2_SQL = "role.type_ = ? AND ";
 	private static final String _FINDER_COLUMN_T_S_SUBTYPE_1 = "role.subtype IS NULL";
 	private static final String _FINDER_COLUMN_T_S_SUBTYPE_2 = "role.subtype = ?";
 	private static final String _FINDER_COLUMN_T_S_SUBTYPE_3 = "(role.subtype IS NULL OR role.subtype = '')";
@@ -6703,6 +6705,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		finally {
 			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
 		}
+	}
+
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return SetUtil.fromArray(new String[] { "type" });
 	}
 
 	/**

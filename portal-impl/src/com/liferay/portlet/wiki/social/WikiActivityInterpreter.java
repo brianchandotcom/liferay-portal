@@ -161,36 +161,36 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-add-comment";
+				return "activity-wiki-page-add-comment";
 			}
 			else {
-				return "activity-wiki-add-comment-in";
+				return "activity-wiki-page-add-comment-in";
 			}
 		}
 		else if (activityType == WikiActivityKeys.ADD_PAGE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-add-page";
+				return "activity-wiki-page-add-page";
 			}
 			else {
-				return "activity-wiki-add-page-in";
+				return "activity-wiki-page-add-page-in";
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_ADD_ATTACHMENT) {
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-add-attachment";
+				return "activity-wiki-page-add-attachment";
 			}
 			else {
-				return "activity-wiki-add-attachment-in";
+				return "activity-wiki-page-add-attachment-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-remove-attachment";
+				return "activity-wiki-page-remove-attachment";
 			}
 			else {
-				return "activity-wiki-remove-attachment-in";
+				return "activity-wiki-page-remove-attachment-in";
 			}
 		}
 		else if (activityType ==
@@ -198,36 +198,36 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 						TYPE_RESTORE_ATTACHMENT_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-restore-attachment";
+				return "activity-wiki-page-restore-attachment";
 			}
 			else {
-				return "activity-wiki-restore-attachment-in";
+				return "activity-wiki-page-restore-attachment-in";
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-move-to-trash";
+				return "activity-wiki-page-move-to-trash";
 			}
 			else {
-				return "activity-wiki-move-to-trash-in";
+				return "activity-wiki-page-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-restore-from-trash";
+				return "activity-wiki-page-restore-from-trash";
 			}
 			else {
-				return "activity-wiki-restore-from-trash-in";
+				return "activity-wiki-page-restore-from-trash-in";
 			}
 		}
 		else if (activityType == WikiActivityKeys.UPDATE_PAGE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-wiki-update-page";
+				return "activity-wiki-page-update-page";
 			}
 			else {
-				return "activity-wiki-update-page-in";
+				return "activity-wiki-page-update-page-in";
 			}
 		}
 

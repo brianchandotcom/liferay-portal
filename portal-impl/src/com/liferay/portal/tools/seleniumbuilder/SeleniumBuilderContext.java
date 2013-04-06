@@ -55,12 +55,12 @@ public class SeleniumBuilderContext {
 			if (fileName.endsWith(".action")) {
 				String actionName = _getName(fileName);
 
-				_actionFileNames.put(actionName, fileName);
-
-				if (_actionNames.contains(actionName)) {
-					throw new Exception(
-						"Duplicate name " + actionName + " at " + fileName);
+				if (_actionFileNames.containsKey(actionName)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, actionName);
 				}
+
+				_actionFileNames.put(actionName, fileName);
 
 				_actionRootElements.put(actionName, _getRootElement(fileName));
 			}
@@ -80,8 +80,8 @@ public class SeleniumBuilderContext {
 					functionName, _getLocatorCount(rootElement));
 
 				if (_functionNames.contains(functionName)) {
-					throw new Exception(
-						"Duplicate name " + functionName + " at " + fileName);
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, functionName);
 				}
 
 				_functionNames.add(functionName);
@@ -107,8 +107,8 @@ public class SeleniumBuilderContext {
 				_macroJavaFileNames.put(macroName, _getJavaFileName(fileName));
 
 				if (_macroNames.contains(macroName)) {
-					throw new Exception(
-						"Duplicate name " + macroName + " at " + fileName);
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, macroName);
 				}
 
 				_macroNames.add(macroName);
@@ -143,8 +143,8 @@ public class SeleniumBuilderContext {
 				_pathJavaFileNames.put(pathName, _getJavaFileName(fileName));
 
 				if (_pathNames.contains(pathName)) {
-					throw new Exception(
-						"Duplicate name " + pathName + " at " + fileName);
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, pathName);
 				}
 
 				_pathNames.add(pathName);
@@ -167,8 +167,8 @@ public class SeleniumBuilderContext {
 					testCaseName, _getJavaFileName(fileName));
 
 				if (_testCaseNames.contains(testCaseName)) {
-					throw new Exception(
-						"Duplicate name " + testCaseName + " at " + fileName);
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, testCaseName);
 				}
 
 				_testCaseNames.add(testCaseName);
@@ -194,8 +194,8 @@ public class SeleniumBuilderContext {
 					testSuiteName, _getJavaFileName(fileName));
 
 				if (_testSuiteNames.contains(testSuiteName)) {
-					throw new Exception(
-						"Duplicate name " + testSuiteName + " at " + fileName);
+					_seleniumBuilderFileUtil.throwValidationException(
+						1008, fileName, testSuiteName);
 				}
 
 				_testSuiteNames.add(testSuiteName);

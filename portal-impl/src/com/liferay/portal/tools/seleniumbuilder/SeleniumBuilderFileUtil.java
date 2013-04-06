@@ -158,7 +158,7 @@ public class SeleniumBuilderFileUtil {
 			int y = content.indexOf("</tbody>");
 
 			if ((x == -1) || (y == -1)) {
-				throwValidationException(1002, fileName, null, "tbody");
+				throwValidationException(1002, fileName, "tbody");
 			}
 
 			String pathTbody = content.substring(x, y + 8);
@@ -381,6 +381,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Poorly formed XML in " + suffix, e);
 		}
+		else if (errorCode == 1008) {
+			throw new IllegalArgumentException(
+				prefix + "Duplicate name " + string + " at " + suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string +
@@ -395,6 +399,12 @@ public class SeleniumBuilderFileUtil {
 		int errorCode, String fileName, Exception e) {
 
 		throwValidationException(errorCode, fileName, null, null, null, e);
+	}
+
+	protected void throwValidationException(
+		int errorCode, String fileName, String string) {
+
+		throwValidationException(errorCode, fileName, null, null, string, null);
 	}
 
 	protected void validate(String fileName, Element rootElement)

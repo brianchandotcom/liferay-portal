@@ -595,15 +595,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -613,11 +613,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -729,15 +729,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -957,15 +957,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -1002,6 +1002,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "userGroup.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "userGroup.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(userGroup.uuid IS NULL OR userGroup.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "userGroup.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "userGroup.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(userGroup.uuid_ IS NULL OR userGroup.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupModelImpl.FINDER_CACHE_ENABLED, UserGroupImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -1545,15 +1548,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1565,11 +1568,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -1685,15 +1688,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1927,15 +1930,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1976,6 +1979,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "userGroup.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "userGroup.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(userGroup.uuid IS NULL OR userGroup.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "userGroup.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "userGroup.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(userGroup.uuid_ IS NULL OR userGroup.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "userGroup.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
@@ -2466,11 +2472,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -3334,11 +3340,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -6109,6 +6115,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the user group persistence.
 	 */
@@ -6683,6 +6694,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserGroup exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserGroupPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid"
+			});
 	private static UserGroup _nullUserGroup = new UserGroupImpl() {
 			@Override
 			public Object clone() {

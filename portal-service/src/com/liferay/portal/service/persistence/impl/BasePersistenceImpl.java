@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ModelWrapper;
@@ -42,6 +43,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -372,13 +374,27 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		StringBundler query, String entityAlias,
 		OrderByComparator orderByComparator) {
 
+		appendOrderByComparator(query, entityAlias, orderByComparator, false);
+	}
+
+	protected void appendOrderByComparator(
+		StringBundler query, String entityAlias,
+		OrderByComparator orderByComparator, boolean sqlQuery) {
+
 		query.append(ORDER_BY_CLAUSE);
 
+		Set<String> badColumnNames = getBadColumnNames();
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
 		for (int i = 0; i < orderByFields.length; i++) {
 			query.append(entityAlias);
 			query.append(orderByFields[i]);
+
+			if (sqlQuery && (badColumnNames != null) &&
+				badColumnNames.contains(orderByFields[i])) {
+
+				query.append(StringPool.UNDERLINE);
+			}
 
 			if ((i + 1) < orderByFields.length) {
 				if (orderByComparator.isAscending(orderByFields[i])) {
@@ -397,6 +413,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 		}
+	}
+
+	protected Set<String> getBadColumnNames() {
+		return null;
 	}
 
 	protected ClassLoader getClassLoader() {

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +50,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the password policy service.
@@ -592,15 +594,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -610,11 +612,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -729,15 +731,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -958,15 +960,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -1004,6 +1006,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "passwordPolicy.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "passwordPolicy.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(passwordPolicy.uuid IS NULL OR passwordPolicy.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1_SQL = "passwordPolicy.uuid_ IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL = "passwordPolicy.uuid_ = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL = "(passwordPolicy.uuid_ IS NULL OR passwordPolicy.uuid_ = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyModelImpl.FINDER_CACHE_ENABLED,
 			PasswordPolicyImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1549,15 +1554,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1569,11 +1574,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+					orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator);
+					orderByComparator, true);
 			}
 		}
 		else {
@@ -1692,15 +1697,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1935,15 +1940,15 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		boolean bindUuid = false;
 
 		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
 		}
 		else if (uuid.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
 			bindUuid = true;
 
-			query.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			query.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
 		}
 
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
@@ -1985,6 +1990,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "passwordPolicy.uuid IS NULL AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "passwordPolicy.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(passwordPolicy.uuid IS NULL OR passwordPolicy.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1_SQL = "passwordPolicy.uuid_ IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL = "passwordPolicy.uuid_ = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL = "(passwordPolicy.uuid_ IS NULL OR passwordPolicy.uuid_ = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "passwordPolicy.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_DP = new FinderPath(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyModelImpl.FINDER_CACHE_ENABLED,
@@ -3175,6 +3183,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the password policy persistence.
 	 */
@@ -3226,6 +3239,9 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PasswordPolicy exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid"
+			});
 	private static PasswordPolicy _nullPasswordPolicy = new PasswordPolicyImpl() {
 			@Override
 			public Object clone() {

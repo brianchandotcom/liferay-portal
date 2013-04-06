@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
@@ -44,6 +45,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the social activity set service.
@@ -596,6 +598,11 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the social activity set persistence.
 	 */
@@ -634,6 +641,9 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivitySet exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(SocialActivitySetPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"type"
+			});
 	private static SocialActivitySet _nullSocialActivitySet = new SocialActivitySetImpl() {
 			@Override
 			public Object clone() {

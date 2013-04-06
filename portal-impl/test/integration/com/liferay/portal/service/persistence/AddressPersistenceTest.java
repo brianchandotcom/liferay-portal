@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -202,6 +205,26 @@ public class AddressPersistenceTest {
 		}
 		catch (NoSuchAddressException nsee) {
 		}
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	protected OrderByComparator getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("Address", "addressId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "street1", true, "street2", true, "street3", true,
+			"city", true, "zip", true, "regionId", true, "countryId", true,
+			"typeId", true, "mailing", true, "primary", true);
 	}
 
 	@Test

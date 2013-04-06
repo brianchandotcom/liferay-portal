@@ -9773,6 +9773,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the user persistence.
 	 */
@@ -10696,6 +10701,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"uuid", "password"
+			});
 	private static User _nullUser = new UserImpl() {
 			@Override
 			public Object clone() {

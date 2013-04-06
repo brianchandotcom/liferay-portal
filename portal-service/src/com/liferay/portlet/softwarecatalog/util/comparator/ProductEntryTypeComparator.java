@@ -22,9 +22,9 @@ import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
  */
 public class ProductEntryTypeComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "SCProductEntry.type_ ASC";
+	public static final String ORDER_BY_ASC = "SCProductEntry.type ASC";
 
-	public static final String ORDER_BY_DESC = "SCProductEntry.type_ DESC";
+	public static final String ORDER_BY_DESC = "SCProductEntry.type DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"type"};
 

@@ -145,7 +145,7 @@ public class SeleniumBuilderFileUtil {
 
 	public String getName(String fileName) {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
-		int y = fileName.indexOf(CharPool.PERIOD);
+		int y = fileName.lastIndexOf(CharPool.PERIOD);
 
 		return fileName.substring(x + 1, y);
 	}

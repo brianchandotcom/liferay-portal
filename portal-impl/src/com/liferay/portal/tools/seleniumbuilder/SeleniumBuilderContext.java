@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -36,6 +37,216 @@ public class SeleniumBuilderContext {
 
 		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
 
+		_initSeleniumBuilderContext(_getFileNames());
+	}
+
+	public SeleniumBuilderContext(String baseDir, String fileName)
+		throws Exception {
+
+		_baseDir = baseDir;
+
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
+
+		Set<String> fileNames = _getFileNames();
+
+		fileNames.add(fileName);
+
+		_initSeleniumBuilderContext(fileNames);
+	}
+
+	public String getActionClassName(String actionName) {
+		return _actionClassNames.get(actionName);
+	}
+
+	public String getActionFileName(String actionName) {
+		return _actionFileNames.get(actionName);
+	}
+
+	public String getActionJavaFileName(String actionName) {
+		return _actionJavaFileNames.get(actionName);
+	}
+
+	public Set<String> getActionNames() {
+		return _actionNames;
+	}
+
+	public String getActionPackageName(String actionName) {
+		return _actionPackageNames.get(actionName);
+	}
+
+	public Element getActionRootElement(String actionName) {
+		return _actionRootElements.get(actionName);
+	}
+
+	public String getActionSimpleClassName(String actionName) {
+		return _actionSimpleClassNames.get(actionName);
+	}
+
+	public String getBaseDir() {
+		return _baseDir;
+	}
+
+	public String getFunctionClassName(String functionName) {
+		return _functionClassNames.get(functionName);
+	}
+
+	public String getFunctionFileName(String functionName) {
+		return _functionFileNames.get(functionName);
+	}
+
+	public String getFunctionJavaFileName(String functionName) {
+		return _functionJavaFileNames.get(functionName);
+	}
+
+	public int getFunctionLocatorCount(String functionName) {
+		return _functionLocatorCounts.get(functionName);
+	}
+
+	public Set<String> getFunctionNames() {
+		return _functionNames;
+	}
+
+	public String getFunctionPackageName(String functionName) {
+		return _functionPackageNames.get(functionName);
+	}
+
+	public String getFunctionReturnType(String functionName) {
+		return _functionReturnTypes.get(functionName);
+	}
+
+	public Element getFunctionRootElement(String functionName) {
+		return _functionRootElements.get(functionName);
+	}
+
+	public String getFunctionSimpleClassName(String functionName) {
+		return _functionSimpleClassNames.get(functionName);
+	}
+
+	public String getMacroClassName(String macroName) {
+		return _macroClassNames.get(macroName);
+	}
+
+	public String getMacroFileName(String macroName) {
+		return _macroFileNames.get(macroName);
+	}
+
+	public String getMacroJavaFileName(String macroName) {
+		return _macroJavaFileNames.get(macroName);
+	}
+
+	public Set<String> getMacroNames() {
+		return _macroNames;
+	}
+
+	public String getMacroPackageName(String macroName) {
+		return _macroPackageNames.get(macroName);
+	}
+
+	public Element getMacroRootElement(String macroName) {
+		return _macroRootElements.get(macroName);
+	}
+
+	public String getMacroSimpleClassName(String macroName) {
+		return _macroSimpleClassNames.get(macroName);
+	}
+
+	public String getPathClassName(String pathName) {
+		return _pathClassNames.get(pathName);
+	}
+
+	public String getPathFileName(String pathName) {
+		return _pathFileNames.get(pathName);
+	}
+
+	public String getPathJavaFileName(String pathName) {
+		return _pathJavaFileNames.get(pathName);
+	}
+
+	public Set<String> getPathNames() {
+		return _pathNames;
+	}
+
+	public String getPathPackageName(String pathName) {
+		return _pathPackageNames.get(pathName);
+	}
+
+	public Element getPathRootElement(String pathName) {
+		return _pathRootElements.get(pathName);
+	}
+
+	public String getPathSimpleClassName(String pathName) {
+		return _pathSimpleClassNames.get(pathName);
+	}
+
+	public int getSeleniumParameterCount(String seleniumCommandName) {
+		return _seleniumParameterCounts.get(seleniumCommandName);
+	}
+
+	public String getTestCaseClassName(String testCaseName) {
+		return _testCaseClassNames.get(testCaseName);
+	}
+
+	public String getTestCaseFileName(String testCaseName) {
+		return _testCaseFileNames.get(testCaseName);
+	}
+
+	public String getTestCaseJavaFileName(String testCaseName) {
+		return _testCaseJavaFileNames.get(testCaseName);
+	}
+
+	public Set<String> getTestCaseNames() {
+		return _testCaseNames;
+	}
+
+	public String getTestCasePackageName(String testCaseName) {
+		return _testCasePackageNames.get(testCaseName);
+	}
+
+	public Element getTestCaseRootElement(String testCaseName) {
+		return _testCaseRootElements.get(testCaseName);
+	}
+
+	public String getTestCaseSimpleClassName(String testCaseName) {
+		return _testCaseSimpleClassNames.get(testCaseName);
+	}
+
+	public String getTestSuiteClassName(String testSuiteName) {
+		return _testSuiteClassNames.get(testSuiteName);
+	}
+
+	public String getTestSuiteFileName(String testSuiteName) {
+		return _testSuiteFileNames.get(testSuiteName);
+	}
+
+	public String getTestSuiteJavaFileName(String testSuiteName) {
+		return _testSuiteJavaFileNames.get(testSuiteName);
+	}
+
+	public Set<String> getTestSuiteNames() {
+		return _testSuiteNames;
+	}
+
+	public String getTestSuitePackageName(String testSuiteName) {
+		return _testSuitePackageNames.get(testSuiteName);
+	}
+
+	public Element getTestSuiteRootElement(String testSuiteName) {
+		return _testSuiteRootElements.get(testSuiteName);
+	}
+
+	public String getTestSuiteSimpleClassName(String testCaseName) {
+		return _testSuiteSimpleClassNames.get(testCaseName);
+	}
+
+	private String _getClassName(String fileName) {
+		return _seleniumBuilderFileUtil.getClassName(fileName);
+	}
+
+	private String _getClassName(String fileName, String classSuffix) {
+		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
+	}
+
+	private Set<String> _getFileNames() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(_baseDir);
@@ -48,6 +259,49 @@ public class SeleniumBuilderContext {
 		directoryScanner.scan();
 
 		String[] fileNames = directoryScanner.getIncludedFiles();
+
+		return SetUtil.fromArray(fileNames);
+	}
+
+	private String _getJavaFileName(String fileName) {
+		return _seleniumBuilderFileUtil.getJavaFileName(fileName);
+	}
+
+	private String _getJavaFileName(String fileName, String classSuffix) {
+		return _seleniumBuilderFileUtil.getJavaFileName(fileName, classSuffix);
+	}
+
+	private int _getLocatorCount(Element rootElement) throws Exception {
+		return _seleniumBuilderFileUtil.getLocatorCount(rootElement);
+	}
+
+	private String _getName(String fileName) {
+		return _seleniumBuilderFileUtil.getName(fileName);
+	}
+
+	private String _getPackageName(String fileName) {
+		return _seleniumBuilderFileUtil.getPackageName(fileName);
+	}
+
+	private String _getReturnType(String name) throws Exception {
+		return _seleniumBuilderFileUtil.getReturnType(name);
+	}
+
+	private Element _getRootElement(String fileName) throws Exception {
+		return _seleniumBuilderFileUtil.getRootElement(fileName);
+	}
+
+	private String _getSimpleClassName(String fileName) {
+		return _seleniumBuilderFileUtil.getSimpleClassName(fileName);
+	}
+
+	private String _getSimpleClassName(String fileName, String classSuffix) {
+		return _seleniumBuilderFileUtil.getSimpleClassName(
+			fileName, classSuffix);
+	}
+
+	private void _initSeleniumBuilderContext(Set<String> fileNames)
+		throws Exception {
 
 		for (String fileName : fileNames) {
 			fileName = _normalizeFileName(fileName);
@@ -254,235 +508,6 @@ public class SeleniumBuilderContext {
 		}
 
 		_seleniumParameterCounts.put("open", 1);
-	}
-
-	public String getActionClassName(String actionName) {
-		return _actionClassNames.get(actionName);
-	}
-
-	public String getActionFileName(String actionName) {
-		return _actionFileNames.get(actionName);
-	}
-
-	public String getActionJavaFileName(String actionName) {
-		return _actionJavaFileNames.get(actionName);
-	}
-
-	public Set<String> getActionNames() {
-		return _actionNames;
-	}
-
-	public String getActionPackageName(String actionName) {
-		return _actionPackageNames.get(actionName);
-	}
-
-	public Element getActionRootElement(String actionName) {
-		return _actionRootElements.get(actionName);
-	}
-
-	public String getActionSimpleClassName(String actionName) {
-		return _actionSimpleClassNames.get(actionName);
-	}
-
-	public String getBaseDir() {
-		return _baseDir;
-	}
-
-	public String getFunctionClassName(String functionName) {
-		return _functionClassNames.get(functionName);
-	}
-
-	public String getFunctionFileName(String functionName) {
-		return _functionFileNames.get(functionName);
-	}
-
-	public String getFunctionJavaFileName(String functionName) {
-		return _functionJavaFileNames.get(functionName);
-	}
-
-	public int getFunctionLocatorCount(String functionName) {
-		return _functionLocatorCounts.get(functionName);
-	}
-
-	public Set<String> getFunctionNames() {
-		return _functionNames;
-	}
-
-	public String getFunctionPackageName(String functionName) {
-		return _functionPackageNames.get(functionName);
-	}
-
-	public String getFunctionReturnType(String functionName) {
-		return _functionReturnTypes.get(functionName);
-	}
-
-	public Element getFunctionRootElement(String functionName) {
-		return _functionRootElements.get(functionName);
-	}
-
-	public String getFunctionSimpleClassName(String functionName) {
-		return _functionSimpleClassNames.get(functionName);
-	}
-
-	public String getMacroClassName(String macroName) {
-		return _macroClassNames.get(macroName);
-	}
-
-	public String getMacroFileName(String macroName) {
-		return _macroFileNames.get(macroName);
-	}
-
-	public String getMacroJavaFileName(String macroName) {
-		return _macroJavaFileNames.get(macroName);
-	}
-
-	public Set<String> getMacroNames() {
-		return _macroNames;
-	}
-
-	public String getMacroPackageName(String macroName) {
-		return _macroPackageNames.get(macroName);
-	}
-
-	public Element getMacroRootElement(String macroName) {
-		return _macroRootElements.get(macroName);
-	}
-
-	public String getMacroSimpleClassName(String macroName) {
-		return _macroSimpleClassNames.get(macroName);
-	}
-
-	public String getPathClassName(String pathName) {
-		return _pathClassNames.get(pathName);
-	}
-
-	public String getPathFileName(String pathName) {
-		return _pathFileNames.get(pathName);
-	}
-
-	public String getPathJavaFileName(String pathName) {
-		return _pathJavaFileNames.get(pathName);
-	}
-
-	public Set<String> getPathNames() {
-		return _pathNames;
-	}
-
-	public String getPathPackageName(String pathName) {
-		return _pathPackageNames.get(pathName);
-	}
-
-	public Element getPathRootElement(String pathName) {
-		return _pathRootElements.get(pathName);
-	}
-
-	public String getPathSimpleClassName(String pathName) {
-		return _pathSimpleClassNames.get(pathName);
-	}
-
-	public int getSeleniumParameterCount(String seleniumCommandName) {
-		return _seleniumParameterCounts.get(seleniumCommandName);
-	}
-
-	public String getTestCaseClassName(String testCaseName) {
-		return _testCaseClassNames.get(testCaseName);
-	}
-
-	public String getTestCaseFileName(String testCaseName) {
-		return _testCaseFileNames.get(testCaseName);
-	}
-
-	public String getTestCaseJavaFileName(String testCaseName) {
-		return _testCaseJavaFileNames.get(testCaseName);
-	}
-
-	public Set<String> getTestCaseNames() {
-		return _testCaseNames;
-	}
-
-	public String getTestCasePackageName(String testCaseName) {
-		return _testCasePackageNames.get(testCaseName);
-	}
-
-	public Element getTestCaseRootElement(String testCaseName) {
-		return _testCaseRootElements.get(testCaseName);
-	}
-
-	public String getTestCaseSimpleClassName(String testCaseName) {
-		return _testCaseSimpleClassNames.get(testCaseName);
-	}
-
-	public String getTestSuiteClassName(String testSuiteName) {
-		return _testSuiteClassNames.get(testSuiteName);
-	}
-
-	public String getTestSuiteFileName(String testSuiteName) {
-		return _testSuiteFileNames.get(testSuiteName);
-	}
-
-	public String getTestSuiteJavaFileName(String testSuiteName) {
-		return _testSuiteJavaFileNames.get(testSuiteName);
-	}
-
-	public Set<String> getTestSuiteNames() {
-		return _testSuiteNames;
-	}
-
-	public String getTestSuitePackageName(String testSuiteName) {
-		return _testSuitePackageNames.get(testSuiteName);
-	}
-
-	public Element getTestSuiteRootElement(String testSuiteName) {
-		return _testSuiteRootElements.get(testSuiteName);
-	}
-
-	public String getTestSuiteSimpleClassName(String testCaseName) {
-		return _testSuiteSimpleClassNames.get(testCaseName);
-	}
-
-	private String _getClassName(String fileName) {
-		return _seleniumBuilderFileUtil.getClassName(fileName);
-	}
-
-	private String _getClassName(String fileName, String classSuffix) {
-		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
-	}
-
-	private String _getJavaFileName(String fileName) {
-		return _seleniumBuilderFileUtil.getJavaFileName(fileName);
-	}
-
-	private String _getJavaFileName(String fileName, String classSuffix) {
-		return _seleniumBuilderFileUtil.getJavaFileName(fileName, classSuffix);
-	}
-
-	private int _getLocatorCount(Element rootElement) throws Exception {
-		return _seleniumBuilderFileUtil.getLocatorCount(rootElement);
-	}
-
-	private String _getName(String fileName) {
-		return _seleniumBuilderFileUtil.getName(fileName);
-	}
-
-	private String _getPackageName(String fileName) {
-		return _seleniumBuilderFileUtil.getPackageName(fileName);
-	}
-
-	private String _getReturnType(String name) throws Exception {
-		return _seleniumBuilderFileUtil.getReturnType(name);
-	}
-
-	private Element _getRootElement(String fileName) throws Exception {
-		return _seleniumBuilderFileUtil.getRootElement(fileName);
-	}
-
-	private String _getSimpleClassName(String fileName) {
-		return _seleniumBuilderFileUtil.getSimpleClassName(fileName);
-	}
-
-	private String _getSimpleClassName(String fileName, String classSuffix) {
-		return _seleniumBuilderFileUtil.getSimpleClassName(
-			fileName, classSuffix);
 	}
 
 	private String _normalizeFileName(String fileName) {

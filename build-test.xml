@@ -2620,21 +2620,21 @@
 
 	<target name="generate-test-properties">
 		<xmlproperty
-			file="portal-web/test-data/db-data.xml"
+			file="portal-web/test-data/database-data.xml"
 			keeproot="true"
 		/>
 
 		<echoproperties destfile="${basedir}/test.run.properties">
 			<propertyset>
-				<propertyref prefix="db.${db.type}" />
+				<propertyref prefix="database.${database}" />
 			</propertyset>
 		</echoproperties>
 
 		<replaceregexp
 			file="${basedir}/test.run.properties"
 			flags="g"
-			match="db\.${db.type}"
-			replace="db"
+			match="database\.${database}"
+			replace="database"
 		/>
 
 		<property file="${basedir}/test.run.properties" />

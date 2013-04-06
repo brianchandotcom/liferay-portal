@@ -333,12 +333,12 @@
 			</create-schema-secondary>
 			<drop-schema>
 				<token>use master</token>
-				<value><![CDATA[use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${database.schema}&quot;)${line.separator}begin${line.separator}drop database ${database.schema}${line.separator}end${line.separator}go${line.separator}create database ${database.schema} on ${database.device-name} = &quot;250m&quot;${line.separator}go]]></value>
+				<value><![CDATA[use master$${line.separator}dump transaction master with no_log$${line.separator}go$${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${database.schema}&quot;)$${line.separator}begin$${line.separator}drop database ${database.schema}$${line.separator}end$${line.separator}go$${line.separator}create database ${database.schema} on ${database.device-name} = &quot;250m&quot;$${line.separator}go]]></value>
 			</drop-schema>
 			<rebuild-remote-schema>-pw ${vm.password} ${vm.username}@${database.host} isql -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
 			<use-schema>
 				<token>use lportal</token>
-				<value>use ${database.schema}${line.separator}go</value>
+				<value>use ${database.schema}$${line.separator}go</value>
 			</use-schema>
 		</arg>
 		<device-name>lportal</device-name>

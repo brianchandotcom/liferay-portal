@@ -400,6 +400,10 @@ alter table MBThreadFlag add userName VARCHAR(75) null;
 alter table MBThreadFlag add createDate DATE null;
 
 alter table Organization_ add uuid_ VARCHAR(75) null;
+alter table Organization_ add userId LONG;
+alter table Organization_ add userName VARCHAR(75) null;
+alter table Organization_ add createDate DATE null;
+alter table Organization_ add modifiedDate DATE null;
 
 drop table OrgGroupPermission;
 
@@ -439,6 +443,10 @@ drop index IX_4A1F4402 on ResourcePermission;
 drop index IX_8DB864A9 on ResourcePermission;
 
 alter table Role_ add uuid_ VARCHAR(75) null;
+alter table Role_ add userId LONG;
+alter table Role_ add userName VARCHAR(75) null;
+alter table Role_ add createDate DATE null;
+alter table Role_ add modifiedDate DATE null;
 
 drop table Roles_Permissions;
 
@@ -491,6 +499,10 @@ COMMIT_TRANSACTION;
 update User_ set ldapServerId = -1;
 
 alter table UserGroup add uuid_ VARCHAR(75) null;
+alter table UserGroup add userId LONG;
+alter table UserGroup add userName VARCHAR(75) null;
+alter table UserGroup add createDate DATE null;
+alter table UserGroup add modifiedDate DATE null;
 
 drop table Users_Permissions;
 

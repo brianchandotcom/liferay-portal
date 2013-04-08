@@ -18,27 +18,37 @@ import com.liferay.portal.cache.CacheRegistryImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBFactoryImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.util.SpringUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -194,6 +204,52 @@ public class InitUtil {
 		List<String> extraConfigLocations) {
 
 		initWithSpring(false, extraConfigLocations);
+	}
+
+	public synchronized static void reloadSpringDatasources(
+		Properties jdbcProperties) {
+
+		try {
+
+			// Data sources
+
+			jdbcProperties = PropertiesUtil.getProperties(
+				jdbcProperties, "jdbc.default.", true);
+
+			DataSourceSwapper.swapCounterDataSource(jdbcProperties);
+			DataSourceSwapper.swapLiferayDataSource(jdbcProperties);
+
+			// Caches
+
+			CacheRegistryUtil.clear();
+			MultiVMPoolUtil.clear();
+			WebCachePoolUtil.clear();
+			CentralizedThreadLocal.clearShortLivedThreadLocals();
+
+			// Persistence beans
+
+			_reconfigurePersistenceBeans();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void _reconfigurePersistenceBeans() throws Exception {
+		@SuppressWarnings("rawtypes")
+		Map<String, BasePersistenceImpl> beanPersistenceImpls =
+			PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
+
+		SessionFactory sessionFactory =
+			(SessionFactory)PortalBeanLocatorUtil.locate(
+				"liferaySessionFactory");
+
+		for (String name : beanPersistenceImpls.keySet()) {
+			BasePersistenceImpl<?> beanPersistenceImpl =
+				beanPersistenceImpls.get(name);
+
+			beanPersistenceImpl.setSessionFactory(sessionFactory);
+		}
 	}
 
 	private static final boolean _PRINT_TIME = false;

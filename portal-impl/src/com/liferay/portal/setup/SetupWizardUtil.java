@@ -15,20 +15,14 @@
 package com.liferay.portal.setup;
 
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,13 +30,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
@@ -57,8 +49,8 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.QuartzLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -71,7 +63,6 @@ import java.sql.Connection;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -265,23 +256,6 @@ public class SetupWizardUtil {
 		}
 	}
 
-	private static void _reconfigurePersistenceBeans() throws Exception {
-		@SuppressWarnings("rawtypes")
-		Map<String, BasePersistenceImpl> beanPersistenceImpls =
-			PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
-
-		SessionFactory sessionFactory =
-			(SessionFactory)PortalBeanLocatorUtil.locate(
-				"liferaySessionFactory");
-
-		for (String name : beanPersistenceImpls.keySet()) {
-			BasePersistenceImpl<?> beanPersistenceImpl =
-				beanPersistenceImpls.get(name);
-
-			beanPersistenceImpl.setSessionFactory(sessionFactory);
-		}
-	}
-
 	private static void _reloadServletContext(
 			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
@@ -292,22 +266,7 @@ public class SetupWizardUtil {
 
 		jdbcProperties.putAll(unicodeProperties);
 
-		jdbcProperties = PropertiesUtil.getProperties(
-			jdbcProperties,"jdbc.default.",true);
-
-		DataSourceSwapper.swapCounterDataSource(jdbcProperties);
-		DataSourceSwapper.swapLiferayDataSource(jdbcProperties);
-
-		// Caches
-
-		CacheRegistryUtil.clear();
-		MultiVMPoolUtil.clear();
-		WebCachePoolUtil.clear();
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
-
-		// Persistence beans
-
-		_reconfigurePersistenceBeans();
+		InitUtil.reloadSpringDatasources(jdbcProperties);
 
 		// Quartz
 

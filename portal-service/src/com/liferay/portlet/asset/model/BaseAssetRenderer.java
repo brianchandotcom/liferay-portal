@@ -262,7 +262,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		preferences.setValue(
+			"emailAssetEntryAddedEnabled", Boolean.FALSE.toString());
+		preferences.setValue("displayStyle", "full-content");
 		preferences.setValue("selectionStyle", "manual");
+		preferences.setValue("showAddContentButton", Boolean.FALSE.toString());
 
 		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(
 			getClassName(), getClassPK());

@@ -51,10 +51,12 @@ public class UpgradeCompany extends UpgradeProcess {
 
 		Key key = company.getKeyObj();
 
-		String algorithm = key.getAlgorithm();
+		if (key != null) {
+			String algorithm = key.getAlgorithm();
 
-		if (!algorithm.equals("DES")) {
-			return;
+			if (!algorithm.equals("DES")) {
+				return;
+			}
 		}
 
 		Key newKey = Encryptor.generateKey();

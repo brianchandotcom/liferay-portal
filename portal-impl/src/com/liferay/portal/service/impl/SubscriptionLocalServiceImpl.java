@@ -164,10 +164,12 @@ public class SubscriptionLocalServiceImpl
 					extraDataJSONObject.toString(), 0);
 			}
 			else {
-				socialActivityLocalService.addActivity(
-					userId, groupId, className, classPK,
-					SocialActivityConstants.TYPE_SUBSCRIBE, StringPool.BLANK,
-					0);
+				if (classPK != groupId) {
+					socialActivityLocalService.addActivity(
+						userId, groupId, className, classPK,
+						SocialActivityConstants.TYPE_SUBSCRIBE,
+						StringPool.BLANK, 0);
+				}
 			}
 		}
 

@@ -1837,8 +1837,8 @@ public class JournalArticleLocalServiceImpl
 
 		socialActivityLocalService.addActivity(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			StringPool.BLANK, 0);
+			article.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
 
 		return article;
 	}
@@ -1956,8 +1956,9 @@ public class JournalArticleLocalServiceImpl
 
 		socialActivityLocalService.addActivity(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getId(), SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
-			StringPool.BLANK, 0);
+			article.getResourcePrimKey(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
+			0);
 	}
 
 	public List<JournalArticle> search(
@@ -2882,14 +2883,16 @@ public class JournalArticleLocalServiceImpl
 				if (serviceContext.isCommandUpdate()) {
 					socialActivityLocalService.addActivity(
 						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(), article.getId(),
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(),
 						JournalActivityKeys.UPDATE_ARTICLE,
 						getExtraDataJSON(article, serviceContext), 0);
 				}
 				else {
 					socialActivityLocalService.addUniqueActivity(
 						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(), article.getId(),
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(),
 						JournalActivityKeys.ADD_ARTICLE,
 						getExtraDataJSON(article, serviceContext), 0);
 				}

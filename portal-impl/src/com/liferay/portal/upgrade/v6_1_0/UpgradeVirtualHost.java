@@ -32,6 +32,10 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 			String hostname)
 		throws Exception {
 
+		if (hostname == null) {
+			return;
+		}
+
 		runSQL(
 			"insert into VirtualHost (virtualHostId, companyId, layoutSetId, " +
 				"hostname) values (" + virtualHostId + ", " + companyId +
@@ -54,7 +58,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select companyId, virtualHost from Company where " +
-					"virtualHost != ? and virtualHost is not null");
+					"virtualHost != ?");
 
 			ps.setString(1, StringPool.BLANK);
 
@@ -86,7 +90,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
-					"where virtualHost != ? and virtualHost is not null");
+					"where virtualHost != ?");
 
 			ps.setString(1, StringPool.BLANK);
 

@@ -205,15 +205,10 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 						classHoverName = "portlet-section-alternate-hover results-row alt hover";
 					}
 
-					Date startDate = null;
+					Date startDate = event.getStartDate();
 
-					if (event.isTimeZoneSensitive()) {
-						if (event.isRepeating()) {
-							startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, cal, event.getStartDate());
-						}
-						else {
-							startDate = event.getStartDate();
-						}
+					if (event.isTimeZoneSensitive() && event.isRepeating()) {
+						startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, cal, startDate);
 					}
 				%>
 
@@ -229,7 +224,7 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 											<%= dateFormatTime.format(Time.getDate(startDate, timeZone)) %>
 										</c:when>
 										<c:otherwise>
-											<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>
+											<%= dateFormatTime.format(Time.getDate(startDate, TimeZoneUtil.getDefault())) %>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>

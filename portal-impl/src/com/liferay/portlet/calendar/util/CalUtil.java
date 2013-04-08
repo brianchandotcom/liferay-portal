@@ -42,8 +42,8 @@ import javax.portlet.PortletPreferences;
  */
 public class CalUtil {
 
-	public static Date getDaylightSavingTimeOffsetDate(CalEvent event,
-		TimeZone userTimeZone, Calendar cal, Date date) {
+	public static Date getDaylightSavingTimeOffsetDate(
+		CalEvent event, TimeZone userTimeZone, Calendar cal, Date date) {
 
 		int daylightSavingTimeOffset = 0;
 
@@ -57,15 +57,17 @@ public class CalUtil {
 			daylightSavingTimeOffset = -1;
 		}
 		else if (!eventTimeZone.inDaylightTime(cal.getTime()) &&
-			userTimeZone.inDaylightTime(cal.getTime())) {
+				 userTimeZone.inDaylightTime(cal.getTime())) {
 
 			daylightSavingTimeOffset = 1;
 		}
 
 		if (daylightSavingTimeOffset != 0) {
 			Calendar calendar = Calendar.getInstance();
+
 			calendar.setTime(date);
 			calendar.add(Calendar.HOUR_OF_DAY, daylightSavingTimeOffset);
+
 			date = calendar.getTime();
 		}
 

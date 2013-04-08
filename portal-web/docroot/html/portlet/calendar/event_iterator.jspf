@@ -57,21 +57,21 @@ for (int i = 0; i < results.size(); i++) {
 		row.addText(LanguageUtil.get(pageContext, "all-day"), rowURL);
 	}
 	else {
+		Date startDate = event.getStartDate();
+		Date endDate = CalUtil.getEndTime(event);
+
 		if (event.isTimeZoneSensitive()) {
 			if (event.isRepeating()) {
 				Calendar calendar = (Calendar)selCal.clone();
 
-				Date startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, event.getStartDate());
-				Date endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, CalUtil.getEndTime(event));
+				startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, startDate);
+				endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, endDate);
+			}
 
-				row.addText(dateFormatTime.format(Time.getDate(startDate, timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, timeZone)), rowURL);
-			}
-			else {
-				row.addText(dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), timeZone)), rowURL);
-			}
+			row.addText(dateFormatTime.format(Time.getDate(startDate, timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, timeZone)), rowURL);
 		}
 		else {
-			row.addText(dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) + " &#150; " + dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), TimeZoneUtil.getDefault())), rowURL);
+			row.addText(dateFormatTime.format(Time.getDate(startDate, TimeZoneUtil.getDefault())) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, TimeZoneUtil.getDefault())), rowURL);
 		}
 	}
 

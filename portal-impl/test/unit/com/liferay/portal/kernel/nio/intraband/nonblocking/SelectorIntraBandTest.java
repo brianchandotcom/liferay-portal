@@ -68,6 +68,73 @@ public class SelectorIntraBandTest {
 		_selectorIntraBand.close();
 	}
 
+	@Test
+	public void testCreationAndDestroy() throws Exception {
+
+		// Close selector, with log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			SelectorIntraBand.class.getName(), Level.INFO);
+
+		Thread wakeupThread = new Thread(
+			new WakeupRunnable(_selectorIntraBand));
+
+		wakeupThread.start();
+
+		Thread pollingThread = _selectorIntraBand.pollingThread;
+
+		Selector selector = _selectorIntraBand.selector;
+
+		synchronized (selector) {
+			wakeupThread.interrupt();
+			wakeupThread.join();
+
+			while (pollingThread.getState() != Thread.State.BLOCKED);
+
+			selector.close();
+		}
+
+		pollingThread.join();
+
+		Assert.assertEquals(1, logRecords.size());
+
+		String pollingThreadName = pollingThread.getName();
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Assert.assertEquals(
+			pollingThreadName.concat(" exiting gracefully on selector closure"),
+			logRecord.getMessage());
+
+		// Close selector, without log
+
+		_selectorIntraBand = new SelectorIntraBand(1000);
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			SelectorIntraBand.class.getName(), Level.OFF);
+
+		wakeupThread = new Thread(new WakeupRunnable(_selectorIntraBand));
+
+		wakeupThread.start();
+
+		pollingThread = _selectorIntraBand.pollingThread;
+
+		selector = _selectorIntraBand.selector;
+
+		synchronized (selector) {
+			wakeupThread.interrupt();
+			wakeupThread.join();
+
+			while (pollingThread.getState() != Thread.State.BLOCKED);
+
+			selector.close();
+		}
+
+		pollingThread.join();
+
+		Assert.assertTrue(logRecords.isEmpty());
+	}
+
 	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
 	@Test
 	public void testReceiveDatagram() throws Exception {
@@ -514,5 +581,21 @@ public class SelectorIntraBandTest {
 	private SelectorIntraBand _selectorIntraBand;
 
 	private byte _type = 1;
+
+	private static class WakeupRunnable implements Runnable {
+
+		public WakeupRunnable(SelectorIntraBand selectorIntraBand) {
+			_selectorIntraBand = selectorIntraBand;
+		}
+
+		public void run() {
+			while (!Thread.currentThread().isInterrupted()) {
+				_selectorIntraBand.selector.wakeup();
+			}
+		}
+
+		private final SelectorIntraBand _selectorIntraBand;
+
+	}
 
 }

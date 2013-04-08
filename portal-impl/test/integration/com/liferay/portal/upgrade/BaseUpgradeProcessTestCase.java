@@ -33,6 +33,8 @@ public abstract class BaseUpgradeProcessTestCase {
 		String createSql = readOriginDatabaseFile();
 
 		UpgradeProcessTestUtil.setUpOriginDatabase(createSql);
+
+		preConditions();
 	}
 
 	@After
@@ -40,11 +42,19 @@ public abstract class BaseUpgradeProcessTestCase {
 		try {
 			UpgradeProcessTestUtil.verifyUpgradedDatabase();
 
+			postConditions();
+
 			UpgradeProcessTestUtil.tearDownOriginDatabase();
 		}
 		finally {
 			UpgradeProcessTestUtil.reloadCurrentSpringDatasources();
 		}
+	}
+
+	protected void postConditions() {
+	}
+
+	protected void preConditions() {
 	}
 
 	protected String readOriginDatabaseFile() throws Exception {

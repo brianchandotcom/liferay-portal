@@ -219,6 +219,15 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 					if (MathUtil.isEven(j)) {
 						className = "portlet-section-alternate results-row alt";
 					}
+
+					Date startDate = null;
+
+					if (event.isTimeZoneSensitive() && event.isRepeating()) {
+						startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, tempCal, startDate);
+					}
+					else {
+						startDate = event.getStartDate();
+					}
 				%>
 
 					<tr class="<%= className %>">
@@ -226,10 +235,10 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 							<c:if test="<%= !allDay %>">
 								<c:choose>
 									<c:when test="<%= event.isTimeZoneSensitive() %>">
-										<%= dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) %>
+										<%= dateFormatTime.format(Time.getDate(startDate, timeZone)) %>
 									</c:when>
 									<c:otherwise>
-										<%= dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) %>
+										<%= dateFormatTime.format(Time.getDate(startDate, TimeZoneUtil.getDefault())) %>
 									</c:otherwise>
 								</c:choose>
 							</c:if>

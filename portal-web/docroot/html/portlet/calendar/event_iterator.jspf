@@ -56,13 +56,23 @@ for (int i = 0; i < results.size(); i++) {
 	if (allDay) {
 		row.addText(LanguageUtil.get(pageContext, "all-day"), rowURL);
 	}
-	else {
-		if (event.isTimeZoneSensitive()) {
-			row.addText(dateFormatTime.format(Time.getDate(event.getStartDate(), timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), timeZone)), rowURL);
+	else if (event.isTimeZoneSensitive()) {
+		Date endDate = null;
+		Date startDate = null;
+
+		if (event.isRepeating()) {
+			endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, endDate);
+			startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, startDate);
 		}
 		else {
-			row.addText(dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) + " &#150; " + dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), TimeZoneUtil.getDefault())), rowURL);
+			endDate = CalUtil.getEndTime(event);
+			startDate = event.getStartDate();
 		}
+
+		row.addText(dateFormatTime.format(Time.getDate(startDate, timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, timeZone)), rowURL);
+	}
+	else {
+		row.addText(dateFormatTime.format(Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault())) + " &#150; " + dateFormatTime.format(Time.getDate(CalUtil.getEndTime(event), TimeZoneUtil.getDefault())), rowURL);
 	}
 
 	// Title and type

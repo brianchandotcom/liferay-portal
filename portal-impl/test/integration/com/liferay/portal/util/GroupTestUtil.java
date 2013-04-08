@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -23,6 +25,8 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+
+import java.util.Map;
 
 /**
  * @author Manuel de la Peña
@@ -104,6 +108,31 @@ public class GroupTestUtil {
 		return GroupServiceUtil.addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 			description, type, friendlyURL, site, active, serviceContext);
+	}
+
+	public static void enableLocalStaging(Group group) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		Map<String, String[]> parameters = StagingUtil.getStagingParameters();
+
+		parameters.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {String.valueOf(false)});
+
+		for (String parameterName : parameters.keySet()) {
+			serviceContext.setAttribute(
+				parameterName, parameters.get(parameterName)[0]);
+		}
+
+		// Enable staging: group has been promoted to live
+
+		StagingUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, group, false, false,
+			serviceContext);
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.GroupParentException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -178,29 +179,54 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectableParentSites() throws Exception {
+		testSelectableParentSites(false);
+	}
+
+	@Test
+	public void testSelectableParentSitesStaging() throws Exception {
+		testSelectableParentSites(true);
+	}
+
+	@Test
+	public void testSelectLiveGroupAsParentSite() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Assert.assertTrue(group.isRoot());
+		GroupTestUtil.enableLocalStaging(group);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		Assert.assertTrue(group.hasStagingGroup());
 
-		groupParams.put("site", Boolean.TRUE);
+		try {
+			Group stagingGroup = group.getStagingGroup();
 
-		List<Long> excludedGroupIds = new ArrayList<Long>();
+			GroupLocalServiceUtil.updateGroup(
+				stagingGroup.getGroupId(), group.getGroupId(),
+				stagingGroup.getName(), stagingGroup.getDescription(),
+				stagingGroup.getType(), stagingGroup.getFriendlyURL(),
+				stagingGroup.isActive(), ServiceTestUtil.getServiceContext());
 
-		excludedGroupIds.add(group.getGroupId());
+			Assert.fail("A group cannot have its live group as parent");
+		}
+		catch (GroupParentException gpe) {
+			Assert.assertEquals(
+				GroupParentException.STAGING_DESCENDANT, gpe.getType());
+		}
+	}
 
-		groupParams.put("excludedGroupIds", excludedGroupIds);
+	@Test
+	public void testSelectOwnGroupAsParentSite() throws Exception {
+		Group group = GroupTestUtil.addGroup();
 
-		List<Group> selectableGroups = GroupLocalServiceUtil.search(
-			group.getCompanyId(), null, StringPool.BLANK, groupParams,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		try {
+			GroupLocalServiceUtil.updateGroup(
+				group.getGroupId(), group.getGroupId(), group.getName(),
+				group.getDescription(), group.getType(), group.getFriendlyURL(),
+				group.isActive(), ServiceTestUtil.getServiceContext());
 
-		for (Group selectableGroup : selectableGroups) {
-			if (selectableGroup.getGroupId() == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
+			Assert.fail("A group cannot be its own parent");
+		}
+		catch (GroupParentException gpe) {
+			Assert.assertEquals(
+				GroupParentException.SELF_DESCENDANT, gpe.getType());
 		}
 	}
 
@@ -440,6 +466,49 @@ public class GroupServiceTest {
 			catch (PrincipalException pe) {
 				if (hasManageSubsitePermisionOnGroup1 || hasManageSite1) {
 					Assert.fail("The user should be able to update this site");
+				}
+			}
+		}
+	}
+
+	protected void testSelectableParentSites(boolean staging) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(group.isRoot());
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("site", Boolean.TRUE);
+
+		List<Long> excludedGroupIds = new ArrayList<Long>();
+
+		if (staging) {
+			GroupTestUtil.enableLocalStaging(group);
+
+			Assert.assertTrue(group.hasStagingGroup());
+
+			excludedGroupIds.add(group.getStagingGroup().getGroupId());
+		}
+		else {
+			excludedGroupIds.add(group.getGroupId());
+		}
+
+		groupParams.put("excludedGroupIds", excludedGroupIds);
+
+		List<Group> selectableGroups = GroupLocalServiceUtil.search(
+			group.getCompanyId(), null, StringPool.BLANK, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Group selectableGroup : selectableGroups) {
+			long selectableGroupId = selectableGroup.getGroupId();
+
+			if (selectableGroupId == group.getGroupId()) {
+				Assert.fail("A group cannot be its own parent");
+			}
+			else if (staging) {
+				if (selectableGroupId == group.getLiveGroupId()) {
+					Assert.fail("A group cannot have its live group as parent");
 				}
 			}
 		}

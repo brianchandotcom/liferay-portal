@@ -34,6 +34,7 @@ if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
 
+portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 portletURL.setParameter("callback", callback);
@@ -66,7 +67,14 @@ portletURL.setParameter("target", target);
 			if (groupId > 0) {
 				List<Long> excludedGroupIds = new ArrayList<Long>();
 
-				excludedGroupIds.add(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if (group.isStagingGroup()) {
+					excludedGroupIds.add(group.getLiveGroupId());
+				}
+				else {
+					excludedGroupIds.add(groupId);
+				}
 
 				groupParams.put("excludedGroupIds", excludedGroupIds);
 			}

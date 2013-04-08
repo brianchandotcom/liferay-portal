@@ -1615,7 +1615,7 @@ public class GroupFinderImpl
 	private String _getCacheKey(
 		String sql, LinkedHashMap<String, Object> params) {
 
-		StringBundler sb = new StringBundler(params.size() + 1);
+		StringBundler sb = new StringBundler();
 
 		sb.append(sql);
 
@@ -1633,6 +1633,21 @@ public class GroupFinderImpl
 				}
 				else {
 					key = "rolePermissions_6";
+				}
+			}
+			else {
+				Object value = entry.getValue();
+
+				if (value instanceof List<?>) {
+					List<Object> values = (List<Object>)value;
+
+					if (!values.isEmpty()) {
+						for (int i = 0; i < values.size(); i++) {
+							sb.append(key);
+							sb.append(StringPool.DASH);
+							sb.append(i);
+						}
+					}
 				}
 			}
 

@@ -3657,7 +3657,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected void validateParentGroup(long groupId, long parentGroupId)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			return;
@@ -3666,6 +3666,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (groupId == parentGroupId) {
 			throw new GroupParentException(
 				GroupParentException.SELF_DESCENDANT);
+		}
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return;
+		}
+
+		Group parentGroup = groupLocalService.getGroup(parentGroupId);
+
+		if (group.isStagingGroup()) {
+			Group stagingGroup = parentGroup.getStagingGroup();
+
+			if (groupId == stagingGroup.getGroupId()) {
+				throw new GroupParentException(
+					GroupParentException.STAGING_DESCENDANT);
+			}
 		}
 	}
 

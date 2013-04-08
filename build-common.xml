@@ -843,9 +843,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							<exclude name="**/UserServiceHttpTest.class" />
 							<exclude name="**/UserServiceSoapTest.class" />
 							<exclude name="${test.excludes}" />
-							<not>
-								<containsregexp expression="${junit.test.excludes}" />
-							</not>
+							<filename regex="${junit.test.excludes}" negate="true" />
 						</fileset>
 					</batchtest>
 				</junit>

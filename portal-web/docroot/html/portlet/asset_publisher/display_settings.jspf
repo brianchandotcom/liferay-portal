@@ -38,6 +38,8 @@
 		<aui:option label="500" selected="<%= abstractLength == 500 %>" />
 	</aui:select>
 
+	<aui:input cssClass="hidden-field show-add-content-button" name="preferences--showAddContentButton--" type="checkbox" value="<%= showAddContentButton %>" />
+
 	<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="checkbox" value="<%= showAssetTitle %>" />
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= showContextLink %>" />

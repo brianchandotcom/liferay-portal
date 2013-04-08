@@ -81,7 +81,7 @@ if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQ
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+<c:if test="<%= showAddContentButton && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 
 	<%
 	for (long groupId : groupIds) {

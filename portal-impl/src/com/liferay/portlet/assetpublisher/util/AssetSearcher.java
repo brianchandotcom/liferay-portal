@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
@@ -97,6 +98,13 @@ public class AssetSearcher extends BaseIndexer {
 			searchContext);
 
 		for (long allCategoryId : allCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(allCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -155,6 +163,13 @@ public class AssetSearcher extends BaseIndexer {
 			searchContext);
 
 		for (long anyCategoryId : anyCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(anyCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -230,6 +245,14 @@ public class AssetSearcher extends BaseIndexer {
 			searchContext);
 
 		for (long notAllCategoryId : notAllCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					notAllCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -288,6 +311,14 @@ public class AssetSearcher extends BaseIndexer {
 			searchContext);
 
 		for (long notAnyCategoryId : notAnyCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					notAnyCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {

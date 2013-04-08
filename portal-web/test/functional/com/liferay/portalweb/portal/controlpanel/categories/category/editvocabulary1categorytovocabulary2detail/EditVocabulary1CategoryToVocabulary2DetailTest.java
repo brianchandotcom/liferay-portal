@@ -40,10 +40,12 @@ public class EditVocabulary1CategoryToVocabulary2DetailTest extends BaseTestCase
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]",
 			RuntimeVariables.replace("Vocabulary1 Category Name"));
 		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
@@ -51,7 +53,7 @@ public class EditVocabulary1CategoryToVocabulary2DetailTest extends BaseTestCase
 		selenium.clickAt("//input[@value='Edit']",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//select[@id='_147_vocabularyId']");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.select("//select[@id='_147_vocabularyId']",
 			RuntimeVariables.replace("Vocabulary2 Name"));
 		selenium.clickAt("//input[@value='Save']",

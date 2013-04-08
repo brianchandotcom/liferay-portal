@@ -44,7 +44,6 @@ public class AddCategoryPropertyTest extends BaseTestCase {
 				selenium.clickAt("link=Categories",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Add Category']",
 					RuntimeVariables.replace("Add Category"));
 				selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -52,7 +51,6 @@ public class AddCategoryPropertyTest extends BaseTestCase {
 					RuntimeVariables.replace("Category Name"));
 				selenium.type("//textarea[@id='_147_description_en_US']",
 					RuntimeVariables.replace("Category Description"));
-				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Properties"),
 					selenium.getText(
 						"//div[@id='assetCategoryPropertiesPanel']/div/div/span"));
@@ -82,9 +80,11 @@ public class AddCategoryPropertyTest extends BaseTestCase {
 						"Your request processed successfully."),
 					selenium.getText(
 						"//div[@class='lfr-message-response portlet-msg-success']"));
-				selenium.waitForVisible("//li/div/div[4]");
+				selenium.waitForVisible(
+					"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 				assertEquals(RuntimeVariables.replace("Category Name"),
-					selenium.getText("//li/div/div[4]"));
+					selenium.getText(
+						"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 
 			case 100:
 				label = -1;

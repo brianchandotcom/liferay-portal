@@ -58,8 +58,8 @@ public class DeleteCategoryMultipleTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
 			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete the selected categories[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete the selected categories?");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(

@@ -39,18 +39,20 @@ public class DeleteCategoryDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]",
 			RuntimeVariables.replace("Category Name"));
 		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//div[@class='view-category']/div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this category[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this category?");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(

@@ -39,16 +39,20 @@ public class DeleteSubcategoryDetailsTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
 		selenium.clickAt("//div[@class='aui-tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
-		selenium.waitForVisible("//li/ul/li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]");
 		assertEquals(RuntimeVariables.replace("Subcategory Name"),
-			selenium.getText("//li/ul/li/div/div[4]"));
-		selenium.clickAt("//li/ul/li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]",
 			RuntimeVariables.replace("Subcategory Name"));
 		selenium.waitForText("//div[@class='view-category']/div/h1/span",
 			"Subcategory Name");
@@ -56,8 +60,8 @@ public class DeleteSubcategoryDetailsTest extends BaseTestCase {
 			selenium.getText("//div[@class='view-category']/div/h1/span"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this category[\\s\\S]$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this category?");
 		selenium.waitForVisible(
 			"//div[@class='lfr-message-response portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
@@ -66,6 +70,7 @@ public class DeleteSubcategoryDetailsTest extends BaseTestCase {
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='aui-tree-hitarea']"));
-		assertTrue(selenium.isElementNotPresent("//li/ul/li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]"));
 	}
 }

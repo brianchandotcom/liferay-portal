@@ -40,20 +40,31 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]",
 			RuntimeVariables.replace("Vocabulary1 Category Name"));
 		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
 			selenium.getText("//div[@class='view-category']/div/h1/span"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
+		selenium.mouseDown(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]");
+		Thread.sleep(1000);
+		selenium.waitForElementPresent(
+			"//div[contains(@class,'yui3-dd-draggable')]");
+		selenium.mouseMoveAt("xPath=(//span[@class='vocabulary-item']/a)[2]",
+			RuntimeVariables.replace("100,30"));
+		selenium.mouseUp("xPath=(//span[@class='vocabulary-item']/a)[2]");
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]"));
 		assertEquals(RuntimeVariables.replace("Vocabulary2 Name"),
 			selenium.getText("xPath=(//span[@class='vocabulary-item']/a)[2]"));
-		selenium.dragAndDropToObject("//li/div/div[4]",
+		selenium.dragAndDropToObject("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]",
 			"xPath=(//span[@class='vocabulary-item']/a)[2]");
 		selenium.waitForText("//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a",
 			"Vocabulary2 Name");
@@ -61,6 +72,7 @@ public class EditVocabulary1CategoryToVocabulary2DADTest extends BaseTestCase {
 			selenium.getText(
 				"//li[contains(@class,'selected')]/div/span[@class='vocabulary-item']/a"));
 		assertEquals(RuntimeVariables.replace("Vocabulary1 Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Vocabulary1 Category Name')]"));
 	}
 }

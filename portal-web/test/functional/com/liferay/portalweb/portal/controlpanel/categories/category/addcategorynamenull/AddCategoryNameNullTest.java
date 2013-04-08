@@ -39,7 +39,6 @@ public class AddCategoryNameNullTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");

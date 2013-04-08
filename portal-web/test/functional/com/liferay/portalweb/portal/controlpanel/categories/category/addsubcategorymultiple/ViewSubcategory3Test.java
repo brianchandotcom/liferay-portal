@@ -39,16 +39,20 @@ public class ViewSubcategory3Test extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
 		selenium.clickAt("//div[@class='aui-tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
-		selenium.waitForVisible("//li/ul/li[3]/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory3 Name')]");
 		assertEquals(RuntimeVariables.replace("Subcategory3 Name"),
-			selenium.getText("//li/ul/li[3]/div/div[4]"));
-		selenium.clickAt("//li/ul/li[3]/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory3 Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory3 Name')]",
 			RuntimeVariables.replace("Subcategory3 Name"));
 		selenium.waitForText("//div[@class='view-category']/div/h1/span",
 			"Subcategory3 Name");

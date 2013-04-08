@@ -39,7 +39,6 @@ public class AddCategoryViewableByAnyoneTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -47,7 +46,6 @@ public class AddCategoryViewableByAnyoneTest extends BaseTestCase {
 			RuntimeVariables.replace("Category Name"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Category Description"));
-		Thread.sleep(1000);
 		selenium.select("//select[@id='_147_inputPermissionsViewRole']",
 			RuntimeVariables.replace("Anyone (Guest Role)"));
 		selenium.clickAt("//input[@value='Save']",

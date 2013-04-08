@@ -117,13 +117,13 @@ String htmlAttributes =
 
 				<div id="<portlet:namespace />displaySettings">
 					<aui:input name="preferences--heightMaximized--" type="text" value="<%= heightMaximized %>">
-						<aui:validator name="required" />
 						<aui:validator name="digits" />
+						<aui:validator name="required" />
 					</aui:input>
 
 					<aui:input name="preferences--heightNormal--" type="text" value="<%= heightNormal %>">
-						<aui:validator name="required" />
 						<aui:validator name="digits" />
+						<aui:validator name="required" />
 					</aui:input>
 
 					<aui:input name="preferences--width--" type="text" value="<%= width %>" />

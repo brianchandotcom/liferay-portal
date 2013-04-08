@@ -54,7 +54,7 @@ import javax.portlet.WindowState;
  */
 public abstract class BaseAssetRenderer implements AssetRenderer {
 
-	public String getAddContentPortletId() throws Exception {
+	public String getAddToPagePortletId() throws Exception {
 		return PortletKeys.ASSET_PUBLISHER;
 	}
 
@@ -257,12 +257,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return null;
 	}
 
-	public void setAddContentPreferences(
+	public void setAddToPagePreferences(
 			PortletPreferences preferences, String portletId,
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		preferences.setValue(
+			"emailAssetEntryAddedEnabled", Boolean.FALSE.toString());
+		preferences.setValue("displayStyle", "full-content");
 		preferences.setValue("selectionStyle", "manual");
+		preferences.setValue("showAddContentButton", Boolean.FALSE.toString());
 
 		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(
 			getClassName(), getClassPK());

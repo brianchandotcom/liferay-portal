@@ -77,7 +77,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String getAddContentPortletId() throws Exception {
+	public String getAddToPagePortletId() throws Exception {
 		return PortletKeys.JOURNAL_CONTENT;
 	}
 
@@ -334,7 +334,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public void setAddContentPreferences(
+	public void setAddToPagePreferences(
 			PortletPreferences preferences, String portletId,
 			ThemeDisplay themeDisplay)
 		throws Exception {

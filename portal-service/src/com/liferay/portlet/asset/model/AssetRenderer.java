@@ -42,7 +42,7 @@ public interface AssetRenderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
-	public String getAddContentPortletId() throws Exception;
+	public String getAddToPagePortletId() throws Exception;
 
 	public String[] getAvailableLocales() throws Exception;
 
@@ -134,7 +134,7 @@ public interface AssetRenderer {
 			String template)
 		throws Exception;
 
-	public void setAddContentPreferences(
+	public void setAddToPagePreferences(
 			PortletPreferences preferences, String portletId,
 			ThemeDisplay themeDisplay)
 		throws Exception;

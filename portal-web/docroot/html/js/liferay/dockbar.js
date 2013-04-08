@@ -773,6 +773,14 @@ AUI.add(
 							instance._loadAddPanel();
 						}
 					);
+
+					BODY.delegate(
+						EVENT_CLICK,
+						function() {
+							instance._loadAddPanel();
+						},
+						'.close-add-panel'
+					);
 				}
 
 				if (manageContent) {

@@ -16,28 +16,30 @@
 
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-<%
-int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
-String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
-String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
-
-Group group = null;
-
-if (layout != null) {
-	group = layout.getGroup();
-}
-
-boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
-boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
-%>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
+
+		<%
+		Group group = null;
+
+		if (layout != null) {
+			group = layout.getGroup();
+		}
+
+		boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
+		boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
+		%>
+
 		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<div class="add-content-menu" id="portal_add_panel">
 				<span class="close-add-panel" id="<portlet:namespace />closePanel"><liferay-ui:message key="close" /></span>
+
+				<%
+				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
+				%>
+
 				<liferay-ui:tabs
 					names="content,applications"
 					refresh="<%= false %>"
@@ -46,6 +48,8 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 					<liferay-ui:section>
 
 						<%
+						int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
+
 						int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 						%>
 
@@ -57,6 +61,12 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 						<aui:form action="<%= updateContentListURL %>" cssClass="add-content-tab" name="addContentForm" onSubmit="event.preventDefault();">
 							<div class="search-panel">
 								<aui:input cssClass="add-content-search lfr-auto-focus" label="" name="searchInput" type="text" />
+
+								<%
+								String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
+
+								String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
+								%>
 
 								<span class="buttons" id="<portlet:namespace />styleButtons">
 									<span class='descriptive button <%= displayStyle.equals("descriptive") ? "selected" : "" %>' data-style="descriptive" title='<%= LanguageUtil.get(pageContext, "descriptive-view") %>'>

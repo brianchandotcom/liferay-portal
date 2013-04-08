@@ -106,20 +106,17 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					data.put("class-name", assetEntry.getClassName());
 					data.put("class-pk", assetEntry.getClassPK());
 					data.put("portlet-id", assetRenderer.getAddToPagePortletId());
-
-					String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60);
-					String shortSummary = StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120);
 				%>
 
 					<liferay-ui:app-view-entry
 						cssClass='<%= !displayStyle.equals("icon") ? "has-preview content-shortcut" : "content-shortcut" %>'
 						data="<%= data %>"
-						description="<%= shortSummary %>"
+						description="<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>"
 						displayStyle="<%= displayStyle %>"
 						showCheckbox="<%= false %>"
 						showLinkTitle="<%= false %>"
 						thumbnailSrc='<%= displayStyle.equals("list") ? assetRenderer.getIconPath(liferayPortletRequest) : assetRenderer.getThumbnailPath(liferayPortletRequest) %>'
-						title="<%= HtmlUtil.escape(shortTitle) %>"
+						title="<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60)) %>"
 						url="javascript:;"
 					/>
 

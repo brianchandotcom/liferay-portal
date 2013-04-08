@@ -46,7 +46,7 @@ AUI.add(
 
 						instance._numItems = instance.byId('numItems');
 
-						instance._numItems.on('change', instance._refreshContentList, instance);
+						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
 						instance._searchInput = instance.byId('searchInput');
 
@@ -64,15 +64,9 @@ AUI.add(
 
 						instance._createToolTip();
 
-						A.one('.lfr-content-preview-popup').delegate(
-							'click',
-							function(event) {
-								instance._addPortlet(event);
-							},
-							'.add-button-preview input'
-						);
-
 						LayoutConfiguration._loadContent();
+
+						Liferay.on('showTab', instance._onShowTab, instance);
 					},
 
 					destructor: function() {
@@ -211,6 +205,8 @@ AUI.add(
 								trigger: '.has-preview'
 							}
 						).render();
+
+						A.one('.lfr-content-preview-popup').delegate('click', instance._addPortlet, '.add-button-preview input');
 					},
 
 					_onChangeDisplayStyle: function(event) {
@@ -220,6 +216,20 @@ AUI.add(
 
 						event.currentTarget.addClass('selected');
 
+						var styleButton = instance._styleButtonsList.one('.selected');
+
+						var displayStyle = styleButton.attr('data-style');
+
+						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
+
+						instance._refreshContentList(event);
+					},
+
+					_onChangeNumItems: function(event) {
+						var instance = this;
+
+						Liferay.Store('liferay_addpanel_numitems', instance._numItems.val());
+
 						instance._refreshContentList(event);
 					},
 
@@ -227,6 +237,14 @@ AUI.add(
 						if (event.isKey('ENTER')) {
 							event.halt();
 						}
+					},
+
+					_onShowTab: function(event) {
+						var instance = this;
+
+						var index = event.selectedIndex;
+
+						Liferay.Store('liferay_addpanel_tab', event.names[index]);
 					},
 
 					_refreshContentList: function(event) {

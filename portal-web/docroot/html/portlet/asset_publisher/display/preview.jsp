@@ -19,8 +19,6 @@
 <%
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("add_panel.jsp-assetEntry");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp-assetRenderer");
-
-String shortSummary = StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320);
 %>
 
 <div class="asset-preview">
@@ -54,7 +52,7 @@ String shortSummary = StringUtil.shorten(assetRenderer.getSummary(themeDisplay.g
 	</div>
 
 	<div class="asset-summary">
-		<%= shortSummary %>
+		<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320) %>
 	</div>
 
 	<div class="asset-metadata">

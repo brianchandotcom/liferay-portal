@@ -53,15 +53,13 @@ PortletURL viewPageURL = renderResponse.createRenderURL();
 
 if (portletName.equals(PortletKeys.WIKI)) {
 	viewPageURL.setParameter("struts_action", "/wiki/view");
-	viewPageURL.setParameter("nodeName", node.getName());
-	viewPageURL.setParameter("title", title);
-
 }
 else {
 	viewPageURL.setParameter("struts_action", "/wiki/view_page");
-	viewPageURL.setParameter("nodeName", node.getName());
-	viewPageURL.setParameter("title", title);
 }
+
+viewPageURL.setParameter("nodeName", node.getName());
+viewPageURL.setParameter("title", title);
 
 PortletURL viewParentPageURL = null;
 

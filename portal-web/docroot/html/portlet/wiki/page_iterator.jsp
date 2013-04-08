@@ -251,13 +251,14 @@ for (int i = 0; i < results.size(); i++) {
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
-	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages") && portletName.equals(PortletKeys.WIKI)) {
-		rowURL.setParameter("struts_action", "/wiki/view");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
-	}
-	else if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages") && portletName.equals(PortletKeys.WIKI_DISPLAY)) {
-		rowURL.setParameter("struts_action", "/wiki/view_page");
+	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
+		if (portletName.equals(PortletKeys.WIKI)) {
+			rowURL.setParameter("struts_action", "/wiki/view");
+		}
+		else {
+			rowURL.setParameter("struts_action", "/wiki/view_page");
+		}
+
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
 	}

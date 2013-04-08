@@ -50,6 +50,8 @@ AUI.add(
 											if (Browser.isIe() && Browser.getMajorVersion() == 6) {
 												window.location.reload(true);
 											}
+
+											instance._destroyColorPickers();
 										}
 									},
 									title: Liferay.Language.get('look-and-feel'),
@@ -601,6 +603,24 @@ AUI.add(
 						instance._insertCustomCSSValue(customCSS, instance._getCSSClasses(portletBoundary, portlet));
 					}
 				);
+			},
+
+			_destroyColorPickers: function() {
+				var instance = this;
+
+				for (var i = 0; i < 4; i++) {
+					var borderLocation = '_borderColorPicker' + i;
+
+					instance[borderLocation].destroy();
+
+					instance[borderLocation] = null;
+				}
+
+				instance._backgroundColorPicker.destroy();
+				instance._fontColorPicker.destroy();
+
+				instance._backgroundColorPicker = null;
+				instance._fontColorPicker = null;
 			},
 
 			_getCombo: function(input, selectBox) {

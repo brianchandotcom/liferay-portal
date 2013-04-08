@@ -38,19 +38,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY-->
+<!--ENTRY_TABLE-->
 <tr>
-	<td>ENTRY_TITLE_1</td>
+	<td>ENTRY_TABLE_TITLE_1</td>
 	<td>xpath=(//td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TYPE_1</td>
+	<td>ENTRY_TABLE_TYPE_1</td>
 	<td>xpath=(//td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ACTIONS_1</td>
+	<td>ENTRY_TABLE_ACTIONS_1</td>
 	<td>xpath=(//td[6]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>

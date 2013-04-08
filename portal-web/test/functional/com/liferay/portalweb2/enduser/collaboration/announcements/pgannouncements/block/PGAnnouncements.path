@@ -19,18 +19,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRIES</td>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_ENTRIES</td>
 	<td>link=Entries</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_ENTRIES</td>
+	<td>NAVIGATION_MANAGE_ENTRIES</td>
 	<td>link=Manage Entries</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

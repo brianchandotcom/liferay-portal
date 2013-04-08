@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
 
@@ -30,6 +31,7 @@ import java.sql.Timestamp;
 
 /**
  * @author Sergio Sanchez
+ * @author Zsolt Berentey
  */
 public class UpgradeSocial extends UpgradeProcess {
 
@@ -77,7 +79,23 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateJournalActivities();
 		updateWikiPageActivities();
+	}
+
+	protected void updateJournalActivities() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
+		runSQL(
+			"update SocialActivity set classPK = (select resourcePrimKey " +
+				"from JournalArticle where id_ = SocialActivity.classPK) " +
+					"where classNameId = " + classNameId);
+
+		runSQL(
+			"update SocialActivityCounter set classPK = (select " +
+				"resourcePrimKey from JournalArticle where id_ = " +
+					"SocialActivityCounter.classPK) where classNameId = " +
+						classNameId);
 	}
 
 	protected void updateWikiPageActivities() throws Exception {

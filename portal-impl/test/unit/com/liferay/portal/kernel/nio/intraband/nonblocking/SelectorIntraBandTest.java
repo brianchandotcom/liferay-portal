@@ -16,9 +16,11 @@ package com.liferay.portal.kernel.nio.intraband.nonblocking;
 
 import com.liferay.portal.kernel.nio.intraband.BaseIntraBand;
 import com.liferay.portal.kernel.nio.intraband.BaseIntraBandHelper;
+import com.liferay.portal.kernel.nio.intraband.ClosedIntraBandException;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
+import com.liferay.portal.kernel.nio.intraband.IntraBandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -29,12 +31,15 @@ import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import java.io.IOException;
 
 import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+import java.nio.channels.spi.SelectorProvider;
 import java.nio.charset.Charset;
 
 import java.util.EnumSet;
@@ -463,6 +468,176 @@ public class SelectorIntraBandTest {
 		scatteringByteChannel.close();
 	}
 
+	@Test
+	public void testRegisterChannelDuplex() throws Exception {
+
+		// Channel is null
+
+		try {
+			_selectorIntraBand.registerChannel(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Channel is null", npe.getMessage());
+		}
+
+		// Channel is not type of ScatteringByteChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<Channel>createProxy(Channel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not type of ScatteringByteChannel",
+				iae.getMessage());
+		}
+
+		// Channel is not type of GatheringByteChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<Channel>createProxy(
+					ScatteringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not type of GatheringByteChannel",
+				iae.getMessage());
+		}
+
+		// Channel is not type of SelectableChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<Channel>createProxy(
+					ScatteringByteChannel.class, GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not type of SelectableChannel", iae.getMessage());
+		}
+
+		// Channel is not valid for reading
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(false, true));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not valid for reading", iae.getMessage());
+		}
+
+		// Channel is not valid for writing
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(true, false));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not valid for writing", iae.getMessage());
+		}
+
+		SocketChannel[] socketChannelPeers =
+			IntraBandTestUtil.createSocketChannelPeers();
+
+		try {
+			SocketChannel socketChannel = socketChannelPeers[0];
+
+			// Interruptted on register
+
+			final Thread mainThread = Thread.currentThread();
+
+			Thread wakeUpThread = new Thread(
+				new WakeUpRunnable(_selectorIntraBand));
+
+			Thread interruptThread = new Thread() {
+
+				@Override
+				public void run() {
+					while (mainThread.getState() != Thread.State.WAITING);
+
+					mainThread.interrupt();
+				}
+
+			};
+
+			wakeUpThread.start();
+
+			Selector selector = _selectorIntraBand.selector;
+
+			synchronized (selector) {
+				wakeUpThread.interrupt();
+				wakeUpThread.join();
+
+				interruptThread.start();
+
+				try {
+					_selectorIntraBand.registerChannel(socketChannel);
+
+					Assert.fail();
+				}
+				catch (IOException ioe) {
+					Throwable cause = ioe.getCause();
+
+					Assert.assertTrue(cause instanceof InterruptedException);
+				}
+
+				interruptThread.join();
+			}
+
+			// Normal register
+
+			SelectionKeyRegistrationReference
+				selectionKeyRegistrationReference =
+					(SelectionKeyRegistrationReference)
+						_selectorIntraBand.registerChannel(socketChannel);
+
+			Assert.assertNotNull(selectionKeyRegistrationReference);
+			Assert.assertSame(
+				selectionKeyRegistrationReference.readSelectionKey,
+				selectionKeyRegistrationReference.writeSelectionKey);
+
+			SelectionKey selectionKey =
+				selectionKeyRegistrationReference.readSelectionKey;
+
+			Assert.assertTrue(selectionKey.isValid());
+			Assert.assertEquals(
+				SelectionKey.OP_READ | SelectionKey.OP_WRITE,
+				selectionKey.interestOps());
+			Assert.assertNotNull(selectionKey.attachment());
+
+			// Register after close
+
+			_selectorIntraBand.close();
+
+			try {
+				_selectorIntraBand.registerChannel(socketChannel);
+
+				Assert.fail();
+			}
+			catch (ClosedIntraBandException cibe) {
+			}
+		}
+		finally {
+			socketChannelPeers[0].close();
+			socketChannelPeers[1].close();
+		}
+	}
+
 	@Aspect
 	public static class Jdk14LogImplAdvice {
 
@@ -583,6 +758,101 @@ public class SelectorIntraBandTest {
 	private SelectorIntraBand _selectorIntraBand;
 
 	private byte _type = 1;
+
+	private static class MockDuplexSelectableChannel
+		extends SelectableChannel
+		implements ScatteringByteChannel, GatheringByteChannel {
+
+		public MockDuplexSelectableChannel(boolean readable, boolean writable) {
+			_readable = readable;
+			_writable = writable;
+		}
+
+		@Override
+		public SelectorProvider provider() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int validOps() {
+			int ops = 0;
+
+			if (_readable) {
+				ops |= SelectionKey.OP_READ;
+			}
+
+			if (_writable) {
+				ops |= SelectionKey.OP_WRITE;
+			}
+
+			return ops;
+		}
+
+		@Override
+		public boolean isRegistered() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectionKey keyFor(Selector selector) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectionKey register(
+			Selector selector, int ops, Object attachment) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public SelectableChannel configureBlocking(boolean block) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isBlocking() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object blockingLock() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		protected void implCloseChannel() {
+			throw new UnsupportedOperationException();
+		}
+
+		public long read(ByteBuffer[] byteBuffers, int offset, int length) {
+			throw new UnsupportedOperationException();
+		}
+
+		public long read(ByteBuffer[] byteBuffers) {
+			throw new UnsupportedOperationException();
+		}
+
+		public int read(ByteBuffer byteBuffer) {
+			throw new UnsupportedOperationException();
+		}
+
+		public long write(ByteBuffer[] byteBuffers, int offset, int length) {
+			throw new UnsupportedOperationException();
+		}
+
+		public long write(ByteBuffer[] byteBuffers) {
+			throw new UnsupportedOperationException();
+		}
+
+		public int write(ByteBuffer byteBuffer) {
+			throw new UnsupportedOperationException();
+		}
+
+		private boolean _readable;
+		private boolean _writable;
+
+	}
 
 	private class WakeUpRunnable implements Runnable {
 

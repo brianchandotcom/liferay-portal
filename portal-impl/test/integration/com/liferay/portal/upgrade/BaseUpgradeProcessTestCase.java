@@ -40,11 +40,16 @@ public abstract class BaseUpgradeProcessTestCase {
 		try {
 			UpgradeProcessTestUtil.verifyUpgradedDatabase();
 
+			additionalChecks();
+
 			UpgradeProcessTestUtil.tearDownOriginDatabase();
 		}
 		finally {
 			UpgradeProcessTestUtil.reloadCurrentSpringDatasources();
 		}
+	}
+
+	protected void additionalChecks() {
 	}
 
 	protected String readOriginDatabaseFile() throws Exception {

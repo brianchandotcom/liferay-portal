@@ -101,6 +101,10 @@ public class UpgradePermission extends UpgradeProcess {
 	protected void addUserGroupRole(long userId, long groupId, long roleId)
 		throws Exception {
 
+		if (hasUserGroupRole(userId, groupId, roleId)) {
+			return;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -123,6 +127,10 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void addUserRole(long userId, long roleId) throws Exception {
+		if (hasUserRole(userId, roleId)) {
+			return;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -193,23 +201,14 @@ public class UpgradePermission extends UpgradeProcess {
 			while (rs.next()) {
 				long userId = rs.getLong("userId");
 
-				if (className.equals(Company.class.getName()) &&
-					!hasUserRole(userId, portalContentReviewerRoleId)) {
-
+				if (className.equals(Company.class.getName())) {
 					addUserRole(userId, portalContentReviewerRoleId);
 				}
-				else if (className.equals(Group.class.getName()) &&
-						 !hasUserGroupRole(
-							 userId, groupId, communityContentReviewerRoleId)) {
-
+				else if (className.equals(Group.class.getName())) {
 					addUserGroupRole(
 						userId, groupId, communityContentReviewerRoleId);
 				}
-				else if (className.equals(Organization.class.getName()) &&
-						 !hasUserGroupRole(
-							 userId, groupId,
-							 organizationContentReviewerRoleId)) {
-
+				else if (className.equals(Organization.class.getName())) {
 					addUserGroupRole(
 						userId, groupId, organizationContentReviewerRoleId);
 				}

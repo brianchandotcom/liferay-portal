@@ -34,33 +34,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WIKI_1</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_NODE_TABLE-->
+<tr>
+	<td>WIKI_NODE_TABLE_WIKI_1</td>
 	<td>xpath=(//tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WIKI_2</td>
+	<td>WIKI_NODE_TABLE_WIKI_2</td>
 	<td>xpath=(//tr/td[1]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NUMBER_OF_PAGES_1</td>
+	<td>WIKI_NODE_TABLE_NUMBER_OF_PAGES_1</td>
 	<td>xpath=(//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NUMBER_OF_PAGES_2</td>
+	<td>WIKI_NODE_TABLE_NUMBER_OF_PAGES_2</td>
 	<td>xpath=(//tr/td[2]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_1</td>
-	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>WIKI_NODE_TABLE_ACTIONS_1</td>
+	<td>xPath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_2</td>
-	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
+	<td>WIKI_NODE_TABLE_ACTIONS_2</td>
+	<td>xPath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,39 +74,39 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ACTIONS-->
+<!--WIKI_NODE_ACTIONS-->
 <tr>
-	<td>ACTIONS_EDIT</td>
+	<td>WIKI_NODE_ACTIONS_EDIT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_PERMISSIONS</td>
+	<td>WIKI_NODE_ACTIONS_PERMISSIONS</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_IMPORT_PAGES</td>
+	<td>WIKI_NODE_ACTIONS_IMPORT_PAGES</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Import Pages')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_RSS</td>
+	<td>WIKI_NODE_ACTIONS_RSS</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_SUBSCRIBE</td>
+	<td>WIKI_NODE_ACTIONS_SUBSCRIBE</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>WIKI_NODE_ACTIONS_RECYCLE_BIN</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_VIEW_REMOVED_ATTACHMENTS</td>
+	<td>WIKI_NODE_ACTIONS_VIEW_REMOVED_ATTACHMENTS</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View Removed Attachments')]</td>
 	<td></td>
 </tr>

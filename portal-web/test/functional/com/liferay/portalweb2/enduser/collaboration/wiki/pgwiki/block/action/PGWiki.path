@@ -33,30 +33,32 @@
 	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>TITLE</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY</td>
-	<td>//div[@class='wiki-body']/p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHILD_PAGE_1</td>
-	<td>//div[@class='child-pages']/ul/li[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
+<!---->
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ALL_PAGES</td>
 	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_CHILD_PAGE_1</td>
+	<td>//div[@class='child-pages']/ul/li[1]/a</td>
 	<td></td>
 </tr>
 </tbody>

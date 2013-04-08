@@ -560,7 +560,7 @@ public class UpdateLayoutAction extends JSONAction {
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
-		assetRenderer.setAddContentPreferences(
+		assetRenderer.setAddToPagePreferences(
 			portletSetup, portletId, themeDisplay);
 
 		portletSetup.store();

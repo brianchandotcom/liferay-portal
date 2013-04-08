@@ -78,7 +78,7 @@ String shortTitle = StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLo
 
 	data.put("class-name", assetEntry.getClassName());
 	data.put("class-pk", assetEntry.getClassPK());
-	data.put("portlet-id", assetRenderer.getAddContentPortletId());
+	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 	%>
 
 	<aui:button cssClass="add-button-preview" data="<%= data %>" value="add" />

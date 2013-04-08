@@ -25,10 +25,10 @@ public class AddMailAccountTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-		selenium.waitForVisible("link=Mail Test Page");
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//input[@value='Add Mail Account']");
 		selenium.clickAt("//input[@value='Add Mail Account']",
 			RuntimeVariables.replace("Add Mail Account"));
 		selenium.waitForVisible("//input[@id='_1_WAR_mailportlet_address']");

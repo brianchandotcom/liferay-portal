@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.mail.message.sendmessagesubjectnull;
 
+import com.liferay.portalweb.plugins.mail.portlet.addportlet.AddPageMailTest;
+import com.liferay.portalweb.plugins.mail.portlet.addportlet.AddPortletMailTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

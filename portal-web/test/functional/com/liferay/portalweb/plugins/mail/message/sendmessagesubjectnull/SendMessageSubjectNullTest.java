@@ -25,22 +25,21 @@ public class SendMessageSubjectNullTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Mail Test Page");
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//a[@class='folders-link']");
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
-			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
-		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span/a",
+			selenium.getText("//a[@class='folders-link']"));
+		selenium.clickAt("//a[@class='folders-link']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
-		Thread.sleep(5000);
 		selenium.waitForText("//a[@class='compose-message']", "Compose Email");
 		assertEquals(RuntimeVariables.replace("Compose Email"),
 			selenium.getText("//a[@class='compose-message']"));
 		selenium.clickAt("//a[@class='compose-message']",
 			RuntimeVariables.replace("Compose Email"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@id='_1_WAR_mailportlet_to']");
 		selenium.type("//input[@id='_1_WAR_mailportlet_to']",
 			RuntimeVariables.replace("liferay.qa2@gmail.com"));

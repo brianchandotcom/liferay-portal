@@ -2073,6 +2073,10 @@
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+			<validator name="url" />
+		</field>
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRule">
 		<field name="uuid" type="String" />

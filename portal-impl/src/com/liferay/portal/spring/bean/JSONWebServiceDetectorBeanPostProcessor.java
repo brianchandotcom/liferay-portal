@@ -57,14 +57,14 @@ public class JSONWebServiceDetectorBeanPostProcessor
 			return bean;
 		}
 
-		Class<?> type = bean.getClass();
+		Class<?> clazz = bean.getClass();
 
-		JSONWebService jsonWebServiceAnnotation = type.getAnnotation(
+		JSONWebService jsonWebServiceAnnotation = clazz.getAnnotation(
 			JSONWebService.class);
 
 		if (jsonWebServiceAnnotation == null) {
-			while (type != Object.class) {
-				Class<?>[] interfaces = type.getInterfaces();
+			while (clazz != Object.class) {
+				Class<?>[] interfaces = clazz.getInterfaces();
 
 				for (Class<?> interfaceClass : interfaces) {
 					if (!interfaceClass.getName().endsWith("Service")) {
@@ -79,7 +79,7 @@ public class JSONWebServiceDetectorBeanPostProcessor
 					}
 				}
 
-				type = type.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 

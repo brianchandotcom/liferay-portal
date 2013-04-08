@@ -34,12 +34,15 @@ public class ViewPortletTableMBCategoryThreadMessageAPTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Title"),
-			selenium.getText("//th[1]"));
+			selenium.getText(
+				"//tr[@class='portlet-section-header results-header']/th"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
-			selenium.getText("//tr[2]/td[1]/a"));
-		assertTrue(selenium.isVisible("//tr[2]/td[2]/div/span/a/img"));
-		selenium.clickAt("//tr[2]/td[1]/a",
+			selenium.getText(
+				"//tr[contains(.,'MB Category Thread Message Subject')]/td[1]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'MB Category Thread Message Subject')]/td[2]/div/span/a"));
+		selenium.clickAt("//tr[contains(.,'MB Category Thread Message Subject')]/td[1]/a",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

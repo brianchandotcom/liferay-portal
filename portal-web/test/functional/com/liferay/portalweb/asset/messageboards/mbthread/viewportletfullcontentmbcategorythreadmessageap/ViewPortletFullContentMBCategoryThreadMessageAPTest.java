@@ -33,8 +33,6 @@ public class ViewPortletFullContentMBCategoryThreadMessageAPTest
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertEquals(RuntimeVariables.replace("\u00ab Back"),
-			selenium.getText("//span[@class='header-back-to']/a"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='lfr-meta-actions asset-actions']/span/a[contains(.,Edit)]/span",
 				"Edit"));

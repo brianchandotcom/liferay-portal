@@ -28,10 +28,12 @@ public class PostNewMBCategoryThread2Test extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//td[1]/a/strong", "MB Category Name");
+		selenium.waitForText("//tr[contains(.,'MB Category Name')]/td[1]/a/strong",
+			"MB Category Name");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[1]/a/strong"));
-		selenium.clickAt("//td[1]/a/strong",
+			selenium.getText(
+				"//tr[contains(.,'MB Category Name')]/td[1]/a/strong"));
+		selenium.clickAt("//tr[contains(.,'MB Category Name')]/td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),

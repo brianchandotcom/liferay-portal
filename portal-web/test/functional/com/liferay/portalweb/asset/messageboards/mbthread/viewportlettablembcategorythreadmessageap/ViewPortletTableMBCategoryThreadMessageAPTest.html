@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//th[1]</td>
+	<td>//tr[@class='portlet-section-header results-header']/th</td>
 	<td>Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[2]/td[1]/a</td>
+	<td>//tr[contains(.,'MB Category Thread Message Subject')]/td[1]/a</td>
 	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[2]/td[2]/div/span/a/img</td>
+	<td>//tr[contains(.,'MB Category Thread Message Subject')]/td[2]/div/span/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[2]/td[1]/a</td>
+	<td>//tr[contains(.,'MB Category Thread Message Subject')]/td[1]/a</td>
 	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>

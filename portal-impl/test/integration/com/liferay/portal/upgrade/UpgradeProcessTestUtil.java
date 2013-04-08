@@ -15,23 +15,15 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.dao.db.DBFactoryImpl;
-import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -39,7 +31,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -60,36 +51,7 @@ public class UpgradeProcessTestUtil {
 	public static void reloadCurrentSpringDatasources() {
 		Properties jdbcProperties = getDefaultDatabaseProperties();
 
-		reloadSpringDatasources(jdbcProperties);
-	}
-
-	public synchronized static void reloadSpringDatasources(
-		Properties jdbcProperties) {
-
-		try {
-
-			// Data sources
-
-			jdbcProperties = PropertiesUtil.getProperties(
-				jdbcProperties, "jdbc.default.", true);
-
-			DataSourceSwapper.swapCounterDataSource(jdbcProperties);
-			DataSourceSwapper.swapLiferayDataSource(jdbcProperties);
-
-			// Caches
-
-			CacheRegistryUtil.clear();
-			MultiVMPoolUtil.clear();
-			WebCachePoolUtil.clear();
-			CentralizedThreadLocal.clearShortLivedThreadLocals();
-
-			// Persistence beans
-
-			_reconfigurePersistenceBeans();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		InitUtil.reloadSpringDatasources(jdbcProperties);
 	}
 
 	public static void setUpOriginDatabase(String sql) throws Exception {
@@ -105,7 +67,7 @@ public class UpgradeProcessTestUtil {
 
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 
-		reloadSpringDatasources(jdbcProperties);
+		InitUtil.reloadSpringDatasources(jdbcProperties);
 	}
 
 	public static void tearDownOriginDatabase() throws Exception {
@@ -150,23 +112,6 @@ public class UpgradeProcessTestUtil {
 		}
 		finally {
 			DataAccess.cleanUp(con);
-		}
-	}
-
-	private static void _reconfigurePersistenceBeans() throws Exception {
-		@SuppressWarnings("rawtypes")
-		Map<String, BasePersistenceImpl> beanPersistenceImpls =
-			PortalBeanLocatorUtil.locate(BasePersistenceImpl.class);
-
-		SessionFactory sessionFactory =
-			(SessionFactory)PortalBeanLocatorUtil.locate(
-				"liferaySessionFactory");
-
-		for (String name : beanPersistenceImpls.keySet()) {
-			BasePersistenceImpl<?> beanPersistenceImpl =
-				beanPersistenceImpls.get(name);
-
-			beanPersistenceImpl.setSessionFactory(sessionFactory);
 		}
 	}
 

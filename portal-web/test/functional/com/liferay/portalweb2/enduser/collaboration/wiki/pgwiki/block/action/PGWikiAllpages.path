@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>PGWikiAllpages</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikiAllpages</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikiAllpages</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_TABLE-->
+<tr>
+	<td>WIKI_PAGE_TABLE_PAGE_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[6]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_ACTIONS-->
+<tr>
+	<td>WIKI_PAGE_ACTIONS_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_COPY</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_MOVE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_SUBSCRIBE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_RECYCLE_BIN</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

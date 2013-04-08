@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>PGWiki</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWiki</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWiki</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FRONTPAGE</td>
+	<td>//div[@class='wiki-body']/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHILD_PAGE</td>
+	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
+	<td></td>
+</tr>
+<!---->
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_ALL_PAGES</td>
+	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE_TITLE</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_CHILD_PAGE_1</td>
+	<td>//div[@class='child-pages']/ul/li[1]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice.spring;
 
+import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
@@ -57,35 +58,12 @@ public class JSONWebServiceDetectorBeanPostProcessor
 			return bean;
 		}
 
-		Class<?> clazz = bean.getClass();
+		JSONWebService jsonWebService = AnnotationLocator.locate(
+			bean.getClass(), JSONWebService.class);
 
-		JSONWebService jsonWebServiceAnnotation = clazz.getAnnotation(
-			JSONWebService.class);
-
-		if (jsonWebServiceAnnotation == null) {
-			while (clazz != Object.class) {
-				Class<?>[] interfaces = clazz.getInterfaces();
-
-				for (Class<?> interfaceClass : interfaces) {
-					if (!interfaceClass.getName().endsWith("Service")) {
-						continue;
-					}
-
-					jsonWebServiceAnnotation = interfaceClass.getAnnotation(
-						JSONWebService.class);
-
-					if (jsonWebServiceAnnotation != null) {
-						break;
-					}
-				}
-
-				clazz = clazz.getSuperclass();
-			}
-		}
-
-		if (jsonWebServiceAnnotation != null) {
+		if (jsonWebService != null) {
 			try {
-				onJSONWebServiceBean(bean, jsonWebServiceAnnotation);
+				onJSONWebServiceBean(bean, jsonWebService);
 			}
 			catch (Exception e) {
 				e.printStackTrace();

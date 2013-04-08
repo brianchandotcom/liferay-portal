@@ -181,12 +181,6 @@ public class EditFileEntryAction extends PortletAction {
 				revertFileEntry(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			int workflowAction = ParamUtil.getInteger(
-				actionRequest, "workflowAction",
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
@@ -198,6 +192,13 @@ public class EditFileEntryAction extends PortletAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				int workflowAction = ParamUtil.getInteger(
+					actionRequest, "workflowAction",
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
 				if ((fileEntry != null) &&
 					(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
@@ -642,11 +643,6 @@ public class EditFileEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String referringPortletResource = ParamUtil.getString(
-			actionRequest, "referringPortletResource");
-
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -657,14 +653,22 @@ public class EditFileEntryAction extends PortletAction {
 			"struts_action", "/document_library/edit_file_entry");
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
+
+		String referringPortletResource = ParamUtil.getString(
+			actionRequest, "referringPortletResource");
+
 		portletURL.setParameter(
 			"referringPortletResource", referringPortletResource, false);
+
 		portletURL.setParameter(
 			"groupId", String.valueOf(fileEntry.getGroupId()), false);
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()), false);
 		portletURL.setParameter(
 			"version", String.valueOf(fileEntry.getVersion()), false);
+
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
 		portletURL.setParameter("languageId", languageId, false);
 
 		return portletURL.toString();

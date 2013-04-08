@@ -49,10 +49,15 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(1000);
 		selenium.selectFrame("relative=top");
-		selenium.waitForVisible("//iframe");
-		selenium.selectFrame("//iframe");
-		selenium.waitForVisible("//input[@value='Choose']");
-		selenium.click("//input[@value='Choose']");
+		selenium.waitForVisible("//iframe[contains(@id,'selectFolder')]");
+		selenium.selectFrame("//iframe[contains(@id,'selectFolder')]");
+		selenium.waitForVisible("//tr[contains(.,'BM Folder Name')]/td[1]/a");
+		assertEquals(RuntimeVariables.replace("BM Folder Name"),
+			selenium.getText("//tr[contains(.,'BM Folder Name')]/td[1]/a"));
+		selenium.waitForVisible(
+			"//tr[contains(.,'BM Folder Name')]/td[4]/span/span/input[@value='Choose']");
+		selenium.click(
+			"//tr[contains(.,'BM Folder Name')]/td[4]/span/span/input[@value='Choose']");
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
@@ -77,5 +82,13 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.waitForVisible("//h3[@class='asset-title']/a");
 		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
+		selenium.clickAt("//h3[@class='asset-title']/a",
+			RuntimeVariables.replace("BM Folder Bookmark Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("BM Folder Bookmark Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace(
+				"BM Folder Bookmark Name (http://www.liferay.com)(Opens New Window)"),
+			selenium.getText("//div[@class='asset-content']/a"));
 	}
 }

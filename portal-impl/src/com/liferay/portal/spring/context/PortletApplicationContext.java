@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.context;
 
+import com.liferay.portal.jsonwebservice.spring.JSONWebServiceDetectorBeanPostProcessor;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
-import com.liferay.portal.spring.bean.JSONWebServiceDetectorBeanPostProcessor;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
 

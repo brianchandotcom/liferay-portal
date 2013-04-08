@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.bean;
+package com.liferay.portal.jsonwebservice.spring;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;

@@ -101,6 +101,10 @@ public class UpgradePermission extends UpgradeProcess {
 	protected void addUserGroupRole(long userId, long groupId, long roleId)
 		throws Exception {
 
+		if (hasUserGroupRole(userId, groupId, roleId)) {
+			return;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -123,6 +127,10 @@ public class UpgradePermission extends UpgradeProcess {
 	}
 
 	protected void addUserRole(long userId, long roleId) throws Exception {
+		if (hasUserRole(userId, roleId)) {
+			return;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -239,6 +247,73 @@ public class UpgradePermission extends UpgradeProcess {
 			}
 
 			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected boolean hasUserGroupRole(long userId, long groupId, long roleId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select count(*) from UserGroupRole where userId = ? and " +
+					"groupId = ? and roleId = ?");
+
+			ps.setLong(1, userId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, roleId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected boolean hasUserRole(long userId, long roleId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select count(*) from Users_Roles where userId = ? and " +
+					"roleId = ?");
+
+			ps.setLong(1, userId);
+			ps.setLong(2, roleId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

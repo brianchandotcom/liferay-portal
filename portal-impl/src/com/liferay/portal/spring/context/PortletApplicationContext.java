@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
+import com.liferay.portal.spring.bean.JSONWebServiceDetectorBeanPostProcessor;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -99,6 +100,9 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		BeanDefinitionRegistry beanDefinitionRegistry) {
 
 		injectExplicitBean(DoPrivilegedFactory.class, beanDefinitionRegistry);
+		injectExplicitBean(
+			JSONWebServiceDetectorBeanPostProcessor.class,
+			beanDefinitionRegistry);
 	}
 
 	@Override

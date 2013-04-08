@@ -244,8 +244,6 @@ if (!partDayResults.isEmpty()) {
 		for (CalEvent event : displayResults) {
 			event = event.toEscapedModel();
 
-			Calendar calendar = (Calendar)selCal.clone();
-
 			Date startDate = Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault());
 			Date endDate = CalUtil.getEndTime(event);
 
@@ -253,8 +251,8 @@ if (!partDayResults.isEmpty()) {
 
 			if (event.isTimeZoneSensitive()) {
 				if (event.isRepeating()) {
-					startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, event.getStartDate());
-					endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, CalUtil.getEndTime(event));
+					startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, event.getStartDate());
+					endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, CalUtil.getEndTime(event));
 				}
 
 				Date timeZoneSensitiveStartDate = Time.getDate(startDate, timeZone);

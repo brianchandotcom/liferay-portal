@@ -62,10 +62,8 @@ for (int i = 0; i < results.size(); i++) {
 
 		if (event.isTimeZoneSensitive()) {
 			if (event.isRepeating()) {
-				Calendar calendar = (Calendar)selCal.clone();
-
-				startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, startDate);
-				endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, calendar, endDate);
+				startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, startDate);
+				endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, endDate);
 			}
 
 			row.addText(dateFormatTime.format(Time.getDate(startDate, timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, timeZone)), rowURL);

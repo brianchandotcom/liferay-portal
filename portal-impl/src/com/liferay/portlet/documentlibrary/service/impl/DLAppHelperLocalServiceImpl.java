@@ -279,7 +279,11 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			if (!isStagingGroup(fileEntry.getGroupId())) {
+			boolean isStagingGroup = isStagingGroup(fileEntry.getGroupId());
+
+			boolean isApproved = fileEntry.getFileVersion().isApproved();
+
+			if (!isStagingGroup && isApproved) {
 				dlSyncLocalService.updateSync(
 					fileEntry.getFileEntryId(), fileEntry.getFolderId(),
 					fileEntry.getTitle(), fileEntry.getDescription(),
@@ -420,7 +424,11 @@ public class DLAppHelperLocalServiceImpl
 	public void moveFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
-		if (!isStagingGroup(fileEntry.getGroupId())) {
+		boolean isStagingGroup = isStagingGroup(fileEntry.getGroupId());
+
+		boolean isApproved = fileEntry.getFileVersion().isApproved();
+
+		if (!isStagingGroup && isApproved) {
 			dlSyncLocalService.updateSync(
 				fileEntry.getFileEntryId(), fileEntry.getFolderId(),
 				fileEntry.getTitle(), fileEntry.getDescription(),

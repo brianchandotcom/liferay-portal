@@ -393,7 +393,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			if (sqlQuery) {
 				Set<String> badColumnNames = getBadColumnNames();
 
-				if (badColumnNames.contains(orderByFields[i])) {	
+				if (badColumnNames.contains(orderByFields[i])) {
 					query.append(StringPool.UNDERLINE);
 				}
 			}

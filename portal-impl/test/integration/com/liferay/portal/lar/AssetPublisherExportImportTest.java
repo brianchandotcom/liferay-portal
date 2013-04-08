@@ -67,7 +67,7 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
 		Group childGroup = GroupTestUtil.addGroup(
-			_group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), ServiceTestUtil.randomString());
 
 		preferenceMap.put(
 			"scopeIds",
@@ -77,7 +77,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 		Assert.assertTrue(
@@ -90,7 +90,7 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
-			_layout.getCompanyId());
+			layout.getCompanyId());
 
 		Group companyGroup = company.getGroup();
 
@@ -101,7 +101,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroup.getGroupId(),
@@ -113,20 +113,20 @@ public class AssetPublisherExportImportTest
 	public void testLayoutScopeId() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), layout);
 
 		preferenceMap.put(
 			"scopeIds",
 			new String[] {
-				AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX + _layout.getUuid()
+				AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX + layout.getUuid()
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
-			_importedLayout.getUuid(),
+			importedLayout.getUuid(),
 			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 	}
@@ -135,19 +135,19 @@ public class AssetPublisherExportImportTest
 	public void testLegacyLayoutScopeId() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), layout);
 
 		preferenceMap.put(
 			"scopeIds", new String[] {
-				AssetPublisher.SCOPE_ID_LAYOUT_PREFIX + _layout.getLayoutId()
+				AssetPublisher.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId()
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
-				_importedLayout.getUuid(),
+				importedLayout.getUuid(),
 			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 	}
@@ -155,16 +155,16 @@ public class AssetPublisherExportImportTest
 	@Test
 	public void testSeveralLayoutScopeIds() throws Exception {
 		Company company = CompanyLocalServiceUtil.getCompany(
-			_layout.getCompanyId());
+			layout.getCompanyId());
 
 		Layout secondLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), ServiceTestUtil.randomString());
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), layout);
 
 		Group companyGroup = company.getGroup();
 
@@ -173,18 +173,18 @@ public class AssetPublisherExportImportTest
 			new String[] {
 				AssetPublisher.SCOPE_ID_GROUP_PREFIX +
 					companyGroup.getGroupId(),
-				AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX + _layout.getUuid(),
+				AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX + layout.getUuid(),
 				AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
 					secondLayout.getUuid()
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				secondLayout.getUuid(), _importedGroup.getGroupId(),
-				_importedLayout.isPrivateLayout());
+				secondLayout.getUuid(), importedGroup.getGroupId(),
+				importedLayout.isPrivateLayout());
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
@@ -194,7 +194,7 @@ public class AssetPublisherExportImportTest
 		sb.append(companyGroup.getGroupId());
 		sb.append(StringPool.COMMA);
 		sb.append(AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX);
-		sb.append(_importedLayout.getUuid());
+		sb.append(importedLayout.getUuid());
 		sb.append(StringPool.COMMA);
 		sb.append(AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX);
 		sb.append(importedSecondLayout.getUuid());
@@ -207,36 +207,36 @@ public class AssetPublisherExportImportTest
 	@Test
 	public void testSeveralLegacyLayoutScopeIds() throws Exception {
 		Layout secondLayout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
+			group.getGroupId(), ServiceTestUtil.randomString());
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), _layout);
+		GroupTestUtil.addGroup(TestPropsValues.getUserId(), layout);
 
 		preferenceMap.put(
 			"scopeIds",
 			new String[] {
-				AssetPublisher.SCOPE_ID_LAYOUT_PREFIX + _layout.getLayoutId(),
+				AssetPublisher.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId(),
 				AssetPublisher.SCOPE_ID_LAYOUT_PREFIX +
 					secondLayout.getLayoutId()
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			_layout, preferenceMap);
+			layout, preferenceMap);
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				secondLayout.getUuid(), _importedGroup.getGroupId(),
-				_importedLayout.isPrivateLayout());
+				secondLayout.getUuid(), importedGroup.getGroupId(),
+				importedLayout.isPrivateLayout());
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX);
-		sb.append(_importedLayout.getUuid());
+		sb.append(importedLayout.getUuid());
 		sb.append(StringPool.COMMA);
 		sb.append(AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX);
 		sb.append(importedSecondLayout.getUuid());
@@ -253,8 +253,8 @@ public class AssetPublisherExportImportTest
 		// Export site LAR
 
 		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout, PortletKeys.ASSET_PUBLISHER,
-			"column-1", preferenceMap);
+			TestPropsValues.getUserId(), this.layout,
+			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
 
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
@@ -262,26 +262,26 @@ public class AssetPublisherExportImportTest
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
 
-		_larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			layout.getGroupId(), layout.isPrivateLayout(), null, parameterMap,
 			null, null);
 
-		_importedGroup = GroupTestUtil.addGroup();
+		importedGroup = GroupTestUtil.addGroup();
 
 		// Import site LAR
 
 		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), _importedGroup.getGroupId(),
-			layout.isPrivateLayout(), parameterMap, _larFile);
+			TestPropsValues.getUserId(), importedGroup.getGroupId(),
+			layout.isPrivateLayout(), parameterMap, larFile);
 
-		_importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layout.getUuid(), _importedGroup.getGroupId(),
+		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), importedGroup.getGroupId(),
 			layout.isPrivateLayout());
 
-		Assert.assertNotNull(_importedLayout);
+		Assert.assertNotNull(importedLayout);
 
 		return LayoutTestUtil.getPortletPreferences(
-			_importedLayout.getCompanyId(), _importedLayout.getPlid(),
+			importedLayout.getCompanyId(), importedLayout.getPlid(),
 			assetPublisherPortletId);
 	}
 

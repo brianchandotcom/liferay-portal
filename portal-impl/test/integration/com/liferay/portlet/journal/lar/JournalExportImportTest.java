@@ -83,72 +83,72 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		if (structuredContent) {
 			ddmStructure = DDMStructureTestUtil.addStructure(
-				_group.getGroupId(), JournalArticle.class.getName());
+				group.getGroupId(), JournalArticle.class.getName());
 
 			ddmTemplate = DDMTemplateTestUtil.addTemplate(
-				_group.getGroupId(), ddmStructure.getStructureId());
+				group.getGroupId(), ddmStructure.getStructureId());
 
 			String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 			article = JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(), content, ddmStructure.getStructureKey(),
+				group.getGroupId(), content, ddmStructure.getStructureKey(),
 				ddmTemplate.getTemplateKey());
 		}
 		else {
 			article = JournalTestUtil.addArticle(
-				_group.getGroupId(), ServiceTestUtil.randomString(),
+				group.getGroupId(), ServiceTestUtil.randomString(),
 				ServiceTestUtil.randomString());
 		}
 
 		String exportedResourceUuid = article.getArticleResourceUuid();
 
 		Map<String, String[]> parameterMap = getExportParameterMap(
-			_group.getGroupId(), _layout.getPlid());
+			group.getGroupId(), layout.getPlid());
 
 		_larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			_layout.getPlid(), _group.getGroupId(), PortletKeys.JOURNAL,
+			layout.getPlid(), group.getGroupId(), PortletKeys.JOURNAL,
 			parameterMap, null, null);
 
-		_importedGroup = GroupTestUtil.addGroup();
+		importedGroup = GroupTestUtil.addGroup();
 
-		_importedLayout = LayoutTestUtil.addLayout(
-			_importedGroup.getGroupId(), ServiceTestUtil.randomString());
+		importedLayout = LayoutTestUtil.addLayout(
+			importedGroup.getGroupId(), ServiceTestUtil.randomString());
 
 		int initialArticlesCount =
 			JournalArticleLocalServiceUtil.getArticlesCount(
-				_importedGroup.getGroupId());
+				importedGroup.getGroupId());
 
 		PortletImporter portletImporter = new PortletImporter();
 
 		parameterMap = getImportParameterMap(
-			_importedGroup.getGroupId(), _importedLayout.getPlid());
+			importedGroup.getGroupId(), importedLayout.getPlid());
 
 		portletImporter.importPortletInfo(
-			TestPropsValues.getUserId(), _importedLayout.getPlid(),
-			_importedGroup.getGroupId(), PortletKeys.JOURNAL, parameterMap,
+			TestPropsValues.getUserId(), importedLayout.getPlid(),
+			importedGroup.getGroupId(), PortletKeys.JOURNAL, parameterMap,
 			_larFile);
 
 		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			_importedGroup.getGroupId());
+			importedGroup.getGroupId());
 
 		Assert.assertEquals(initialArticlesCount + 1, articlesCount);
 
 		JournalArticleResource importedJournalArticleResource =
 			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				exportedResourceUuid, _importedGroup.getGroupId());
+				exportedResourceUuid, importedGroup.getGroupId());
 
 		Assert.assertNotNull(importedJournalArticleResource);
 
 		if (structuredContent) {
 			DDMStructure importedDDMStructure =
 				DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructure.getUuid(), _importedGroup.getGroupId());
+					ddmStructure.getUuid(), importedGroup.getGroupId());
 
 			Assert.assertNotNull(importedDDMStructure);
 
 			DDMTemplate importedDDMTemplate =
 				DDMTemplateLocalServiceUtil.fetchTemplate(
-					ddmTemplate.getUuid(), _importedGroup.getGroupId());
+					ddmTemplate.getUuid(), importedGroup.getGroupId());
 
 			Assert.assertNotNull(importedDDMTemplate);
 			Assert.assertEquals(

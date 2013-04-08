@@ -39,42 +39,41 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
+		layout = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
 		// See LPS-32132.
 
-		LayoutLocalServiceUtil.deleteLayout(
-			_layout, true, new ServiceContext());
+		LayoutLocalServiceUtil.deleteLayout(layout, true, new ServiceContext());
 
-		_layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), ServiceTestUtil.randomString());
+		layout = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		try {
-			GroupLocalServiceUtil.deleteGroup(_group);
-			GroupLocalServiceUtil.deleteGroup(_importedGroup);
+			GroupLocalServiceUtil.deleteGroup(group);
+			GroupLocalServiceUtil.deleteGroup(importedGroup);
 		}
 		catch (RequiredGroupException rge) {
 		}
 
-		LayoutLocalServiceUtil.deleteLayout(_layout);
-		LayoutLocalServiceUtil.deleteLayout(_importedLayout);
+		LayoutLocalServiceUtil.deleteLayout(layout);
+		LayoutLocalServiceUtil.deleteLayout(importedLayout);
 
-		if ((_larFile != null) && _larFile.exists()) {
-			FileUtil.delete(_larFile);
+		if ((larFile != null) && larFile.exists()) {
+			FileUtil.delete(larFile);
 		}
 	}
 
-	public Group _group;
-	public Group _importedGroup;
-	public Layout _importedLayout;
-	public File _larFile;
-	public Layout _layout;
+	protected Group group;
+	protected Group importedGroup;
+	protected Layout importedLayout;
+	protected File larFile;
+	protected Layout layout;
 
 }

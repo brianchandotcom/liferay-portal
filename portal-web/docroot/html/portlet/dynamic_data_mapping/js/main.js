@@ -191,7 +191,7 @@ AUI.add(
 
 						var field = LiferayFormBuilder.superclass.createField.apply(instance, arguments);
 
-						field.set('readOnlyAttributes', instance._getFieldReadOnlyAttributes(field));
+						field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
 						field.set('strings', instance.get('strings'));
 
 						return field;
@@ -261,9 +261,7 @@ AUI.add(
 						var editingField = instance.editingField;
 
 						if (editingField) {
-							var readOnlyAttributes = instance._getFieldReadOnlyAttributes(editingField);
-
-							editingField.set('readOnlyAttributes', readOnlyAttributes);
+							editingField.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(editingField));
 						}
 
 						instance._updateFieldsLocalizationMap(event.prevVal);
@@ -462,7 +460,7 @@ AUI.add(
 						};
 					},
 
-					_getFieldReadOnlyAttributes: function(field) {
+					_getReadOnlyFieldAttributes: function(field) {
 						var instance = this;
 
 						var translationManager = instance.translationManager;

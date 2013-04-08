@@ -197,27 +197,28 @@ public class EditFileEntryAction extends PortletAction {
 			else if (!cmd.equals(Constants.MOVE_FROM_TRASH)) {
 				sendRedirect(actionRequest, actionResponse);
 			}
-
-			if ((fileEntry != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				redirect = getSaveAndContinueRedirect(
-					portletConfig, actionRequest, fileEntry, redirect);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
 			else {
-				WindowState windowState = actionRequest.getWindowState();
+				if ((fileEntry != null) &&
+					(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
-				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					sendRedirect(actionRequest, actionResponse);
+					redirect = getSaveAndContinueRedirect(
+						portletConfig, actionRequest, fileEntry, redirect);
+
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
-					redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
+					WindowState windowState = actionRequest.getWindowState();
 
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
+					if (!windowState.equals(LiferayWindowState.POP_UP)) {
+						sendRedirect(actionRequest, actionResponse);
+					}
+					else {
+						redirect = PortalUtil.escapeRedirect(
+							ParamUtil.getString(actionRequest, "redirect"));
+
+						if (Validator.isNotNull(redirect)) {
+							actionResponse.sendRedirect(redirect);
+						}
 					}
 				}
 			}

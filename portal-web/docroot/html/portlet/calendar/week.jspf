@@ -205,10 +205,13 @@ Format dateFormatDayOfWeek = FastDateFormatFactoryUtil.getSimpleDateFormat("EEE"
 						classHoverName = "portlet-section-alternate-hover results-row alt hover";
 					}
 
-					Date startDate = event.getStartDate();
+					Date startDate = null;
 
 					if (event.isTimeZoneSensitive() && event.isRepeating()) {
 						startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, cal, startDate);
+					}
+					else {
+						startDate = event.getStartDate();
 					}
 				%>
 

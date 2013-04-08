@@ -220,10 +220,13 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 						className = "portlet-section-alternate results-row alt";
 					}
 
-					Date startDate = event.getStartDate();
+					Date startDate = null;
 
 					if (event.isTimeZoneSensitive() && event.isRepeating()) {
-							startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, tempCal, startDate);
+						startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, tempCal, startDate);
+					}
+					else {
+						startDate = event.getStartDate();
 					}
 				%>
 

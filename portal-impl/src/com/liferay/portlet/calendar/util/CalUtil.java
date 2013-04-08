@@ -45,33 +45,29 @@ public class CalUtil {
 	public static Date getDaylightSavingTimeOffsetDate(
 		CalEvent event, TimeZone userTimeZone, Calendar cal, Date date) {
 
-		int daylightSavingTimeOffset = 0;
-
 		TZSRecurrence recurrence = event.getRecurrenceObj();
 
 		TimeZone eventTimeZone = recurrence.getTimeZone();
 
-		if (eventTimeZone.inDaylightTime(cal.getTime()) &&
-			!userTimeZone.inDaylightTime(cal.getTime())) {
+		if (Validator.equals(
+				eventTimeZone.inDaylightTime(cal.getTime()),
+				userTimeZone.inDaylightTime(cal.getTime()))) {
 
-			daylightSavingTimeOffset = -1;
-		}
-		else if (!eventTimeZone.inDaylightTime(cal.getTime()) &&
-				 userTimeZone.inDaylightTime(cal.getTime())) {
-
-			daylightSavingTimeOffset = 1;
+			return date;
 		}
 
-		if (daylightSavingTimeOffset != 0) {
-			Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 
-			calendar.setTime(date);
-			calendar.add(Calendar.HOUR_OF_DAY, daylightSavingTimeOffset);
+		calendar.setTime(date);
 
-			date = calendar.getTime();
+		if (eventTimeZone.inDaylightTime(cal.getTime())) {
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
+		}
+		else {
+			calendar.add(Calendar.HOUR_OF_DAY, 1);
 		}
 
-		return date;
+		return calendar.getTime();
 	}
 
 	public static String getEmailEventReminderBody(

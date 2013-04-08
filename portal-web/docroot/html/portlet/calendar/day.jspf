@@ -244,15 +244,15 @@ if (!partDayResults.isEmpty()) {
 		for (CalEvent event : displayResults) {
 			event = event.toEscapedModel();
 
-			Date startDate = Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault());
 			Date endDate = CalUtil.getEndTime(event);
+			Date startDate = Time.getDate(event.getStartDate(), TimeZoneUtil.getDefault());
 
 			int eventStartPos = 0;
 
 			if (event.isTimeZoneSensitive()) {
 				if (event.isRepeating()) {
-					startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, event.getStartDate());
 					endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, CalUtil.getEndTime(event));
+					startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, event.getStartDate());
 				}
 
 				Date timeZoneSensitiveStartDate = Time.getDate(startDate, timeZone);

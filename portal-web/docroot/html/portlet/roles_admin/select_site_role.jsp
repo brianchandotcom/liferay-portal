@@ -219,11 +219,11 @@ if (step == 1) {
 						sb.append("('");
 						sb.append(role.getRoleId());
 						sb.append("', '");
-						sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+						sb.append(HtmlUtil.escapeJS(role.getTitle(locale)));
 						sb.append("', '");
 						sb.append("siteRoles");
 						sb.append("', '");
-						sb.append(UnicodeFormatter.toString(group.getDescriptiveName(locale)));
+						sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
 						sb.append("', '");
 						sb.append(group.getGroupId());
 						sb.append("'); window.close();");

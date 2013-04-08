@@ -36,8 +36,9 @@ if (group.isOrganization()) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= group.getDescriptiveName(locale) + ": " + ((team == null) ? LanguageUtil.get(pageContext, "new-team") : team.getName()) %>'
+	title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + ": " + ((team == null) ? LanguageUtil.get(pageContext, "new-team") : HtmlUtil.escape(team.getName())) %>'
 />
 
 <portlet:actionURL var="editTeamURL">

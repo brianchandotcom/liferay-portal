@@ -235,7 +235,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 			var rowColumns = [];
 
-			rowColumns.push(name);
+			rowColumns.push(A.Escape.html(name));
 
 			if (groupId) {
 				rowColumns.push('<a class="modify-link" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
@@ -251,7 +251,7 @@ for (long defaultTeamId : defaultTeamIds) {
 			searchContainer.addRow(rowColumns, roleId);
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container']
+		['liferay-search-container', 'escape']
 	);
 
 	Liferay.provide(

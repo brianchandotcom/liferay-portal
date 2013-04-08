@@ -110,7 +110,6 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Group"
-			escapedModel="<%= true %>"
 			keyProperty="groupId"
 			modelVar="group"
 			rowIdProperty="friendlyURL"
@@ -163,7 +162,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 			if (!tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription())) {
 				buffer.append("<br /><em>");
-				buffer.append(group.getDescription());
+				buffer.append(HtmlUtil.escape(group.getDescription()));
 				buffer.append("</em>");
 			}
 			%>

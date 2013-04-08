@@ -32,7 +32,7 @@ if ((group != null) && !group.isRoot()) {
 
 	parentGroupId = parentGroup.getGroupId();
 
-	parentGroupName = parentGroup.getDescriptiveName();
+	parentGroupName = HtmlUtil.escape(parentGroup.getDescriptiveName());
 }
 %>
 
@@ -45,8 +45,9 @@ if ((group != null) && !group.isRoot()) {
 	<liferay-ui:header
 		backLabel="<%= parentGroupName %>"
 		backURL="<%= headerBackURL.toString() %>"
+		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
-		title="<%= group.getDescriptiveName() %>"
+		title="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
 	/>
 </c:if>
 

@@ -157,7 +157,7 @@ List<Group> mySites = user.getMySites(true, max);
 											if (showPublicSiteStaging) {
 												StringBundler sb = new StringBundler(5);
 
-												sb.append(siteName);
+												sb.append(HtmlUtil.escape(siteName));
 												sb.append(StringPool.SPACE);
 												sb.append(StringPool.OPEN_PARENTHESIS);
 												sb.append(LanguageUtil.get(pageContext, "staging"));

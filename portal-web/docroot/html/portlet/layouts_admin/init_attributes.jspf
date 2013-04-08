@@ -217,8 +217,6 @@ request.setAttribute("edit_pages.jsp-selLayoutSet", selLayoutSet);
 
 request.setAttribute("edit_pages.jsp-rootNodeName", rootNodeName);
 
-request.setAttribute("edit_pages.jsp-layoutList", layoutList);
-
 request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 request.setAttribute("edit_pages.jsp-redirectURL", redirectURL);
 %>

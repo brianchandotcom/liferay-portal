@@ -74,7 +74,7 @@
 			sb.append("selectGroup('");
 			sb.append(group.getGroupId());
 			sb.append("', '");
-			sb.append(UnicodeFormatter.toString(groupName));
+			sb.append(HtmlUtil.escapeJS(groupName));
 			sb.append("'); window.close();");
 
 			String rowHREF = sb.toString();

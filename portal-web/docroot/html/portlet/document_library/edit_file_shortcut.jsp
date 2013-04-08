@@ -193,7 +193,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 			var nameEl = document.getElementById("<portlet:namespace />toGroupName");
 
-			nameEl.innerHTML = groupName + "&nbsp;";
+			nameEl.innerHTML = A.Escape.html(groupName) + "&nbsp;";
 
 			var button = A.one('#<portlet:namespace />selectToFileEntryButton');
 
@@ -202,7 +202,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 				button.ancestor('.aui-button').removeClass('aui-button-disabled');
 			}
 		},
-		['aui-base']
+		['aui-base', 'escape']
 	);
 </aui:script>
 

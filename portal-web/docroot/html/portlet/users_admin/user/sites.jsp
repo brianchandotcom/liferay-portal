@@ -116,14 +116,14 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 			var rowColumns = [];
 
-			rowColumns.push(name);
+			rowColumns.push(A.Escape.html(name));
 			rowColumns.push('');
 			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
 			searchContainer.addRow(rowColumns, groupId);
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container']
+		['liferay-search-container', 'escape']
 	);
 </aui:script>
 

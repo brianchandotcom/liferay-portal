@@ -95,7 +95,7 @@ Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
 	%>
 
 	<c:if test="<%= (groupPortletDDMTemplates != null) && !groupPortletDDMTemplates.isEmpty() %>">
-		<optgroup label="<%= ddmTemplateGroup.getDescriptiveName(locale) %>">
+		<optgroup label="<%= HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)) %>">
 
 		<%
 		for (DDMTemplate groupPortletDDMTemplate : groupPortletDDMTemplates) {
@@ -119,7 +119,7 @@ Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
 	id="selectDDMTemplate"
 	image="<%= icon %>"
 	label="<%= true %>"
-	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", ddmTemplateGroup.getDescriptiveName(locale), false) %>'
+	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
 	url="javascript:;"
 />
 

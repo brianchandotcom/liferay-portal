@@ -92,7 +92,7 @@ portletURL.setParameter("callback", callback);
 				sb.append("('");
 				sb.append(role.getRoleId());
 				sb.append("', '");
-				sb.append(UnicodeFormatter.toString(role.getTitle(locale)));
+				sb.append(HtmlUtil.escapeJS(role.getTitle(locale)));
 				sb.append("', 'roles'); window.close();");
 
 				rowHREF = sb.toString();

@@ -1733,7 +1733,16 @@ AUI.add(
 											item[STR_SELECTED] = STR_SELECTED;
 										}
 
-										buffer.push(Lang.sub(TPL_VOCABULARY_OPTION, item));
+										buffer.push(
+											Lang.sub(
+											    TPL_VOCABULARY_OPTION,
+											    {
+											        selected: item.selected,
+											        vocabularyId: item.vocabularyId,
+											        titleCurrentValue: A.Escape.html(item.titleCurrentValue)
+											    }
+											)
+										);
 									}
 								);
 
@@ -2886,6 +2895,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-live-search', 'aui-dialog', 'aui-dialog-iframe', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'json', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-live-search', 'aui-dialog', 'aui-dialog-iframe', 'aui-paginator', 'autocomplete-base', 'aui-tree-view', 'dd', 'escape', 'json', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

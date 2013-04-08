@@ -82,8 +82,9 @@ request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title="<%= group.getDescriptiveName(locale) %>"
+	title="<%= HtmlUtil.escape(groupName) %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

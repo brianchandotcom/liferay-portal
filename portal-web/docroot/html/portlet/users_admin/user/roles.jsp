@@ -372,10 +372,10 @@ userGroupRoles.addAll(siteRoles);
 
 			var rowColumns = [];
 
-			rowColumns.push(name);
+			rowColumns.push(A.Escape.html(name));
 
 			if (groupName) {
-				rowColumns.push(groupName);
+				rowColumns.push(A.Escape.html(groupName));
 			}
 
 			if (groupId) {
@@ -394,7 +394,7 @@ userGroupRoles.addAll(siteRoles);
 			searchContainer.addRow(rowColumns, roleId);
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container']
+		['liferay-search-container', 'escape']
 	);
 </aui:script>
 

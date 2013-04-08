@@ -44,7 +44,6 @@ else {
 		List<String> headerNames = new ArrayList<String>();
 
 		headerNames.add("user");
-		//headerNames.add("place");
 		headerNames.add("posts");
 		headerNames.add("date");
 
@@ -60,12 +59,6 @@ else {
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
 				User user2 = UserLocalServiceUtil.getUserById(statsUser.getUserId());
-
-				String blogType = LanguageUtil.get(pageContext, "personal");
-
-				if (group.isOrganization() || group.isRegularSite()) {
-					blogType = group.getDescriptiveName(locale);// + " " + LanguageUtil.get(pageContext, "site");
-				}
 
 				Date now = new Date();
 
@@ -92,10 +85,6 @@ else {
 						// User
 
 						row.addText(HtmlUtil.escape(user2.getFullName()), rowHREF);
-
-						// Type
-
-						//row.addText(blogType, rowHREF);
 
 						// Number of posts
 

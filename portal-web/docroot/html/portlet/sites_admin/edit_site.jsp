@@ -128,9 +128,10 @@ else if (layoutSetPrototype != null) {
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= localizeTitle %>"
 	showBackURL="<%= showBackURL %>"
-	title="<%= title %>"
+	title="<%= HtmlUtil.escape(title) %>"
 />
 
 <portlet:actionURL var="editSiteURL">

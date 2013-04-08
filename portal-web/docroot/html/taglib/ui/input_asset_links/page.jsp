@@ -145,7 +145,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 
 		<liferay-ui:search-container-column-text
 			name="scope"
-			value="<%= assetLinkEntryGroup.getDescriptiveName(locale) %>"
+			value="<%= HtmlUtil.escape(assetLinkEntryGroup.getDescriptiveName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

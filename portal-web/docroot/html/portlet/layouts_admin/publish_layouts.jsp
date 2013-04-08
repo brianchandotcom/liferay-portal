@@ -163,12 +163,6 @@ else if (liveGroup.isUser()) {
 	rootNodeName = user2.getFullName();
 }
 
-LayoutLister layoutLister = new LayoutLister();
-
-LayoutView layoutView = layoutLister.getLayoutView(stagingGroupId, privateLayout, rootNodeName, locale);
-
-List layoutList = layoutView.getList();
-
 PortletURL portletURL = renderResponse.createActionURL();
 
 if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
@@ -198,8 +192,6 @@ request.setAttribute("edit_pages.jsp-selPlid", new Long(selPlid));
 request.setAttribute("edit_pages.jsp-privateLayout", new Boolean(privateLayout));
 
 request.setAttribute("edit_pages.jsp-rootNodeName", rootNodeName);
-
-request.setAttribute("edit_pages.jsp-layoutList", layoutList);
 
 request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 

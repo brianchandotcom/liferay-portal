@@ -103,7 +103,7 @@ if (showPrototypes && (group != null)) {
 		</c:when>
 		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
 			<aui:field-wrapper helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" label="name">
-				<%= liveGroup.getDescriptiveName(locale) %>
+				<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -440,7 +440,7 @@ if (parentGroup != null) {
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="name"
-			value="<%= curGroup.getDescriptiveName(locale) %>"
+			value="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -496,14 +496,14 @@ if (parentGroup != null) {
 
 			var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_group" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + groupId;
 
-			rowColumns.push(<portlet:namespace />createURL(href, name));
+			rowColumns.push(<portlet:namespace />createURL(href, A.Escape.html(name)));
 			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
 			searchContainer.deleteRow(1, searchContainer.getData());
 			searchContainer.addRow(rowColumns, groupId);
 			searchContainer.updateDataStore(groupId);
 		},
-		['liferay-search-container']
+		['liferay-search-container', 'escape']
 	);
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />publicLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />publicLayoutSetPrototypeMergeAlert');

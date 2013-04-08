@@ -82,7 +82,14 @@ public class TextSearchEntry extends SearchEntry {
 			}
 
 			sb.append(" href=\"");
-			sb.append(HtmlUtil.escape(_href));
+
+			if (_href.startsWith("javascript:")) {
+				sb.append(_href);
+			}
+			else {
+				sb.append(HtmlUtil.escapeURL(_href));
+			}
+
 			sb.append("\"");
 
 			if (Validator.isNotNull(_target)) {

@@ -111,7 +111,7 @@ for (int i = 0; i < results.size(); i++) {
 
 			groupIdsArray[j] = group.getGroupId();
 
-			groupNames.add(group.getDescriptiveName(locale));
+			groupNames.add(HtmlUtil.escape(group.getDescriptiveName(locale)));
 		}
 
 		if (!groups.isEmpty()) {

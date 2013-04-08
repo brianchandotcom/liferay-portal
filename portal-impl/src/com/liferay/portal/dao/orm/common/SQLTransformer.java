@@ -35,27 +35,19 @@ import java.util.regex.Pattern;
 public class SQLTransformer {
 
 	public static void reloadSQLTransformer() {
-		_getInstance()._reloadSQLTransformer();
+		_instance._reloadSQLTransformer();
 	}
 
 	public static String transform(String sql) {
-		return _getInstance()._transform(sql);
+		return _instance._transform(sql);
 	}
 
 	public static String transformFromHqlToJpql(String sql) {
-		return _getInstance()._transformFromHqlToJpql(sql);
+		return _instance._transformFromHqlToJpql(sql);
 	}
 
 	public static String transformFromJpqlToHql(String sql) {
-		return _getInstance()._transformFromJpqlToHql(sql);
-	}
-
-	private static SQLTransformer _getInstance() {
-		if (_instance == null) {
-			_instance = new SQLTransformer();
-		}
-
-		return _instance;
+		return _instance._transformFromJpqlToHql(sql);
 	}
 
 	private SQLTransformer() {
@@ -257,28 +249,6 @@ public class SQLTransformer {
 		}
 	}
 
-	private String _replaceIsEmptyCheck(String sql) {
-		Matcher matcher = _isEmptyCheckPattern.matcher(sql);
-
-		if (_vendorOracle) {
-			return matcher.replaceAll("$1 IS NULL");
-		}
-		else {
-			return matcher.replaceAll("($1 IS NOT NULL AND $1 = '')");
-		}
-	}
-
-	private String _replaceIsNotEmptyCheck(String sql) {
-		Matcher matcher = _isNotEmptyCheckPattern.matcher(sql);
-
-		if (_vendorOracle) {
-			return matcher.replaceAll("$1 IS NOT NULL");
-		}
-		else {
-			return matcher.replaceAll("($1 IS NOT NULL AND $1 != '')");
-		}
-	}
-
 	private String _replaceLike(String sql) {
 		Matcher matcher = _likePattern.matcher(sql);
 
@@ -325,8 +295,6 @@ public class SQLTransformer {
 		newSQL = _replaceCastText(newSQL);
 		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
-		newSQL = _replaceIsEmptyCheck(newSQL);
-		newSQL = _replaceIsNotEmptyCheck(newSQL);
 
 		if (_vendorDB2) {
 			newSQL = _replaceLike(newSQL);
@@ -448,7 +416,7 @@ public class SQLTransformer {
 
 	private static Log _log = LogFactoryUtil.getLog(SQLTransformer.class);
 
-	private static SQLTransformer _instance;
+	private static SQLTransformer _instance = new SQLTransformer();
 
 	private static Pattern _bitwiseCheckPattern = Pattern.compile(
 		"BITAND\\((.+?),(.+?)\\)");
@@ -458,10 +426,6 @@ public class SQLTransformer {
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static Pattern _isEmptyCheckPattern = Pattern.compile(
-		"(\\S+) IS EMPTY", Pattern.CASE_INSENSITIVE);
-	private static Pattern _isNotEmptyCheckPattern = Pattern.compile(
-		"(\\S+) IS NOT EMPTY", Pattern.CASE_INSENSITIVE);
 	private static Pattern _jpqlCountPattern = Pattern.compile(
 		"SELECT COUNT\\((\\S+)\\) FROM (\\S+) (\\S+)");
 	private static Pattern _likePattern = Pattern.compile(

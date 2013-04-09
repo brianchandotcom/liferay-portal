@@ -1,4 +1,6 @@
 <definition>
+	<execute test-case="PGAnnouncementsAcceptance" />
+
 	<execute test-case="PGBlogsAcceptance" />
 
 	<execute test-case="PGMessageboardsAcceptance" />

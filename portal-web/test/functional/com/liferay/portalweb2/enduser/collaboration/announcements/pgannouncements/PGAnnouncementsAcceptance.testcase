@@ -1,0 +1,40 @@
+<definition>
+	<var name="pageName" value="Announcements Page" />
+	<var name="portletName" value="Announcements" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+	</set-up>
+
+	<command name="AddAnnouncementsEntry">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="AnnouncementsEntry#pgAdd" />
+	</command>
+
+	<command name="DeleteAnnoucementsEntry">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="AnnouncementsEntry#pgAdd" />
+
+		<execute macro="AnnouncementsEntry#pgDelete" />
+	</command>
+
+	<tear-down>
+		<execute macro="AnnouncementsEntry#pgTearDown" />
+
+		<execute macro="Page#pgTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

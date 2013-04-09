@@ -34,7 +34,7 @@
 
 		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<div class="add-content-menu" id="portal_add_panel">
-				<span class="close-add-panel" id="<portlet:namespace />closePanel"><liferay-ui:message key="close" /></span>
+				<span class="close-add-panel" id="<portlet:namespace />closePanel" onclick="Liferay.Dockbar.loadPanel();"><liferay-ui:message key="close" /></span>
 
 				<%
 				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));

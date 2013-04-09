@@ -81,9 +81,10 @@ public class PasswordPolicyLocalServiceImpl
 		// Password policy
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(0, user.getCompanyId(), name);
+
+		Date now = new Date();
 
 		long passwordPolicyId = counterLocalService.increment();
 

@@ -483,15 +483,14 @@ public class GroupServiceTest {
 
 		List<Long> excludedGroupIds = new ArrayList<Long>();
 
+		excludedGroupIds.add(group.getGroupId());
+
 		if (staging) {
 			GroupTestUtil.enableLocalStaging(group);
 
 			Assert.assertTrue(group.hasStagingGroup());
 
 			excludedGroupIds.add(group.getStagingGroup().getGroupId());
-		}
-		else {
-			excludedGroupIds.add(group.getGroupId());
 		}
 
 		params.put("excludedGroupIds", excludedGroupIds);

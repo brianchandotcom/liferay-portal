@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.User;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -105,11 +106,21 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
+		String guestLanguageId = null;
+
+		User user = (User)request.getAttribute(WebKeys.USER);
+
+		if (user != null) {
+			guestLanguageId = user.getLanguageId();
+		}
+
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = CookieKeys.getCookie(
+				request, CookieKeys.GUEST_LANGUAGE_ID, false);
+		}
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
-
-		String guestLanguageId = CookieKeys.getCookie(
-			request, CookieKeys.GUEST_LANGUAGE_ID, false);
 
 		if (Validator.isNull(guestLanguageId)) {
 			guestLanguageId = defaultLanguageId;

@@ -25,6 +25,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetPrototypeLocalServiceBaseImpl;
@@ -49,6 +50,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 		// Layout set prototype
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		Date now = new Date();
 
 		long layoutSetPrototypeId = counterLocalService.increment();
@@ -56,10 +59,24 @@ public class LayoutSetPrototypeLocalServiceImpl
 		LayoutSetPrototype layoutSetPrototype =
 			layoutSetPrototypePersistence.create(layoutSetPrototypeId);
 
-		layoutSetPrototype.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			layoutSetPrototype.setUuid(serviceContext.getUuid());
+		}
+
 		layoutSetPrototype.setCompanyId(companyId);
-		layoutSetPrototype.setCreateDate(serviceContext.getCreateDate(now));
-		layoutSetPrototype.setModifiedDate(serviceContext.getModifiedDate(now));
+		layoutSetPrototype.setUserId(userId);
+		layoutSetPrototype.setUserName(user.getFullName());
+
+		if (serviceContext != null) {
+			layoutSetPrototype.setCreateDate(serviceContext.getCreateDate(now));
+			layoutSetPrototype.setModifiedDate(
+				serviceContext.getModifiedDate(now));
+		}
+		else {
+			layoutSetPrototype.setCreateDate(now);
+			layoutSetPrototype.setModifiedDate(now);
+		}
+
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);

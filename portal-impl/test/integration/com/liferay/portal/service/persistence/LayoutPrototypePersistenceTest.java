@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -114,6 +115,14 @@ public class LayoutPrototypePersistenceTest {
 
 		newLayoutPrototype.setCompanyId(ServiceTestUtil.nextLong());
 
+		newLayoutPrototype.setUserId(ServiceTestUtil.nextLong());
+
+		newLayoutPrototype.setUserName(ServiceTestUtil.randomString());
+
+		newLayoutPrototype.setCreateDate(ServiceTestUtil.nextDate());
+
+		newLayoutPrototype.setModifiedDate(ServiceTestUtil.nextDate());
+
 		newLayoutPrototype.setName(ServiceTestUtil.randomString());
 
 		newLayoutPrototype.setDescription(ServiceTestUtil.randomString());
@@ -132,6 +141,16 @@ public class LayoutPrototypePersistenceTest {
 			newLayoutPrototype.getLayoutPrototypeId());
 		Assert.assertEquals(existingLayoutPrototype.getCompanyId(),
 			newLayoutPrototype.getCompanyId());
+		Assert.assertEquals(existingLayoutPrototype.getUserId(),
+			newLayoutPrototype.getUserId());
+		Assert.assertEquals(existingLayoutPrototype.getUserName(),
+			newLayoutPrototype.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+			existingLayoutPrototype.getCreateDate()),
+			Time.getShortTimestamp(newLayoutPrototype.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+			existingLayoutPrototype.getModifiedDate()),
+			Time.getShortTimestamp(newLayoutPrototype.getModifiedDate()));
 		Assert.assertEquals(existingLayoutPrototype.getName(),
 			newLayoutPrototype.getName());
 		Assert.assertEquals(existingLayoutPrototype.getDescription(),
@@ -302,6 +321,14 @@ public class LayoutPrototypePersistenceTest {
 		layoutPrototype.setUuid(ServiceTestUtil.randomString());
 
 		layoutPrototype.setCompanyId(ServiceTestUtil.nextLong());
+
+		layoutPrototype.setUserId(ServiceTestUtil.nextLong());
+
+		layoutPrototype.setUserName(ServiceTestUtil.randomString());
+
+		layoutPrototype.setCreateDate(ServiceTestUtil.nextDate());
+
+		layoutPrototype.setModifiedDate(ServiceTestUtil.nextDate());
 
 		layoutPrototype.setName(ServiceTestUtil.randomString());
 

@@ -4068,6 +4068,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		layoutSetPrototypeImpl.setUuid(layoutSetPrototype.getUuid());
 		layoutSetPrototypeImpl.setLayoutSetPrototypeId(layoutSetPrototype.getLayoutSetPrototypeId());
 		layoutSetPrototypeImpl.setCompanyId(layoutSetPrototype.getCompanyId());
+		layoutSetPrototypeImpl.setUserId(layoutSetPrototype.getUserId());
+		layoutSetPrototypeImpl.setUserName(layoutSetPrototype.getUserName());
 		layoutSetPrototypeImpl.setCreateDate(layoutSetPrototype.getCreateDate());
 		layoutSetPrototypeImpl.setModifiedDate(layoutSetPrototype.getModifiedDate());
 		layoutSetPrototypeImpl.setName(layoutSetPrototype.getName());

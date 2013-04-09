@@ -215,17 +215,6 @@ public class SampleSQLBuilder {
 		processTemplate(_tplDLFileEntry, context);
 	}
 
-	public void insertResourcePermission(String name, String primKey)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "resourceName", name);
-		put(context, "resourcePrimkey", primKey);
-
-		processTemplate(_tplResourcePermission, context);
-	}
-
 	public void insertUser(List<Long> groupIds, List<Role> roleIds, User user)
 		throws Exception {
 
@@ -563,8 +552,6 @@ public class SampleSQLBuilder {
 	private File _tempDir;
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
-	private String _tplResourcePermission =
-		_TPL_ROOT + "resource_permission.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private String _tplUser = _TPL_ROOT + "user.ftl";
 	private Writer _writerBlogsCSV;

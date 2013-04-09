@@ -195,11 +195,11 @@ if (Validator.isNotNull(historyKey)) {
 
 	<%
 	String errorSection = (String)request.getAttribute("errorSection");
+
+	curSection = Validator.isNotNull(errorSection) ? namespace + errorSection : curSection;
 	%>
 
-	<c:if test="<%= Validator.isNotNull(errorSection) %>">
-		<portlet:namespace />formNavigator._revealSection('#<%= namespace + errorSection %>', '');
-	</c:if>
+	<portlet:namespace />formNavigator._revealSection('#<%= curSection %>', '');
 </aui:script>
 
 <aui:script use="aui-base">

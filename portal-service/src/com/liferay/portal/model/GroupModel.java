@@ -57,6 +57,21 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this group.
+	 *
+	 * @return the uuid of this group
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this group.
+	 *
+	 * @param uuid the uuid of this group
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the group ID of this group.
 	 *
 	 * @return the group ID of this group

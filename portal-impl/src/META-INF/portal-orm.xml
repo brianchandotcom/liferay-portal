@@ -234,6 +234,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.GroupModelImpl">
 		<attributes>
 			<id name="groupId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="creatorUserId" />
 			<basic name="classNameId" />

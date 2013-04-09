@@ -325,6 +325,9 @@ create index IX_6C499099 on Group_ (companyId, parentGroupId, site);
 create index IX_63A2AABD on Group_ (companyId, site);
 create index IX_16218A38 on Group_ (liveGroupId);
 create index IX_7B590A7A on Group_ (type_, active_);
+create index IX_F981514E on Group_ (uuid_);
+create index IX_26CC761A on Group_ (uuid_, companyId);
+create unique index IX_754FBB1C on Group_ (uuid_, groupId);
 
 create index IX_75267DCA on Groups_Orgs (groupId);
 create index IX_6BBB7682 on Groups_Orgs (organizationId);

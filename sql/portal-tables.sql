@@ -756,6 +756,7 @@ create table ExpandoValue (
 );
 
 create table Group_ (
+	uuid_ VARCHAR(75) null,
 	groupId LONG not null primary key,
 	companyId LONG,
 	creatorUserId LONG,

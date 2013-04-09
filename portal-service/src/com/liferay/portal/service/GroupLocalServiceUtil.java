@@ -191,6 +191,22 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
+	* Returns the group matching the UUID and group.
+	*
+	* @param uuid the group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching group
+	* @throws PortalException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group getGroupByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the groups.
 	*
 	* <p>

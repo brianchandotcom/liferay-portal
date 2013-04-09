@@ -200,7 +200,6 @@ if (Validator.isNotNull(historyKey)) {
 	%>
 
 	<portlet:namespace />formNavigator._revealSection('#<%= curSection %>', '');
-
 </aui:script>
 
 <aui:script use="aui-base">

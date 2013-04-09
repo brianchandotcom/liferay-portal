@@ -106,22 +106,24 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
-
-		String guestLanguageId = CookieKeys.getCookie(
-			request, CookieKeys.GUEST_LANGUAGE_ID, false);
-
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = defaultLanguageId;
-		}
+		String guestLanguageId = null;
 
 		User user = (User)request.getAttribute(WebKeys.USER);
 
 		if (user != null) {
-			String userLanguageId = user.getLanguageId();
+			guestLanguageId = user.getLanguageId();
+		}
 
-			guestLanguageId = userLanguageId;
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = CookieKeys.getCookie(
+				request, CookieKeys.GUEST_LANGUAGE_ID, false);
+		}
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = defaultLanguageId;
 		}
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) {

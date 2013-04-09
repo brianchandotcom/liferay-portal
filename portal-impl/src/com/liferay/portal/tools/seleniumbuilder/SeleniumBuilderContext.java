@@ -40,20 +40,6 @@ public class SeleniumBuilderContext {
 		_initSeleniumBuilderContext(_getFileNames());
 	}
 
-	public SeleniumBuilderContext(String baseDir, String fileName)
-		throws Exception {
-
-		_baseDir = baseDir;
-
-		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
-
-		Set<String> fileNames = _getFileNames();
-
-		fileNames.add(fileName);
-
-		_initSeleniumBuilderContext(fileNames);
-	}
-
 	public void addFile(String fileName) throws Exception {
 		fileName = _normalizeFileName(fileName);
 

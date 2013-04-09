@@ -1,7 +1,7 @@
 <definition>
 	<command name="click">
 		<case locator1="locator1">
-			<function name="Click#clickAt" />
+			<function name="name" />
 		</case>
 	</command>
 </definition>

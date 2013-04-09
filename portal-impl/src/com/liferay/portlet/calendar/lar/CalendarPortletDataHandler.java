@@ -17,6 +17,7 @@ package com.liferay.portlet.calendar.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -164,7 +165,9 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.CALENDAR));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.CALENDAR));
 		sb.append("/events/");
 		sb.append(event.getEventId());
 		sb.append(".xml");

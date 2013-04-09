@@ -48,12 +48,6 @@ import java.util.Set;
  */
 public interface PortletDataContext extends Serializable {
 
-	public static final String ROOT_PATH_GROUPS = "/groups/";
-
-	public static final String ROOT_PATH_LAYOUTS = "/layouts/";
-
-	public static final String ROOT_PATH_PORTLETS = "/portlets/";
-
 	public void addAssetCategories(Class<?> clazz, long classPK)
 		throws SystemException;
 
@@ -180,8 +174,6 @@ public interface PortletDataContext extends Serializable {
 	public Element getImportDataStagedModelElement(
 		String name, String attribute, String value);
 
-	public String getLayoutPath(long layoutId);
-
 	public Map<String, Lock> getLocks();
 
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz);
@@ -196,16 +188,12 @@ public interface PortletDataContext extends Serializable {
 
 	public long getPlid();
 
-	public String getPortletPath(String portletId);
-
 	public Set<String> getPrimaryKeys();
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
 
 	public List<Element> getReferencedDataElements(
 		StagedModel parentStagedModel, Class<? extends StagedModel> clazz);
-
-	public String getRootPath();
 
 	public long getScopeGroupId();
 
@@ -214,12 +202,6 @@ public interface PortletDataContext extends Serializable {
 	public String getScopeType();
 
 	public long getSourceGroupId();
-
-	public String getSourceLayoutPath(long layoutId);
-
-	public String getSourcePortletPath(String portletId);
-
-	public String getSourceRootPath();
 
 	public Date getStartDate();
 

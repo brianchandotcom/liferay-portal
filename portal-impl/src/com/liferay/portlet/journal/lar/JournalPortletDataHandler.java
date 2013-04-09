@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -291,7 +292,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(8);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append(StringPool.SLASH);
@@ -1167,7 +1170,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append(StringPool.SLASH);
@@ -1184,7 +1189,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(12);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append(StringPool.SLASH);
@@ -1210,7 +1217,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/articles/");
 		sb.append(article.getArticleResourceUuid());
 		sb.append("/thumbnail");
@@ -1225,7 +1234,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/ddm-structures/");
 		sb.append(uuid);
 		sb.append(".xml");
@@ -1238,7 +1249,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/ddm-templates/");
 		sb.append(ddmTemplate.getUuid());
 		sb.append(".xml");
@@ -1251,7 +1264,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/feeds/");
 		sb.append(feed.getUuid());
 		sb.append(".xml");
@@ -1264,7 +1279,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/folders/");
 		sb.append(folder.getFolderId());
 		sb.append(".xml");
@@ -1277,7 +1294,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getSourcePortletPath(PortletKeys.JOURNAL));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.JOURNAL));
 		sb.append("/folders/");
 		sb.append(folderId);
 		sb.append(".xml");

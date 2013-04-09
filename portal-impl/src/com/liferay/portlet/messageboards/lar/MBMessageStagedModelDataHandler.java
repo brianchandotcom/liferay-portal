@@ -15,9 +15,9 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -92,7 +92,8 @@ public class MBMessageStagedModelDataHandler
 
 			for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
 				String name = fileEntry.getTitle();
-				String binPath = StagedModelPathUtil.getPath(message, name);
+				String binPath = ExportImportPathUtil.getModelPath(
+					message, name);
 
 				Element attachmentElement = messageElement.addElement(
 					"attachment");
@@ -108,7 +109,7 @@ public class MBMessageStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			messageElement, StagedModelPathUtil.getPath(message), message,
+			messageElement, ExportImportPathUtil.getModelPath(message), message,
 			MBPortletDataHandler.NAMESPACE);
 	}
 
@@ -164,7 +165,7 @@ public class MBMessageStagedModelDataHandler
 					MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
 				(parentCategoryId == message.getCategoryId())) {
 
-				String categoryPath = StagedModelPathUtil.getPath(
+				String categoryPath = ExportImportPathUtil.getModelPath(
 					portletDataContext, MBCategory.class.getName(),
 					parentCategoryId);
 

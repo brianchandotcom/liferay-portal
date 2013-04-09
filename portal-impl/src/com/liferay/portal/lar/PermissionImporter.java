@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.NoSuchTeamException;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -185,7 +186,7 @@ public class PermissionImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() +
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
 				"/portlet-data-permissions.xml");
 
 		if (xml == null) {

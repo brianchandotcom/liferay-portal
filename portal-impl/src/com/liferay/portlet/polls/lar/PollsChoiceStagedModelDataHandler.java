@@ -15,9 +15,9 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -55,7 +55,7 @@ public class PollsChoiceStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(choice);
 
 		portletDataContext.addClassedModel(
-			choiceElement, StagedModelPathUtil.getPath(choice), choice,
+			choiceElement, ExportImportPathUtil.getModelPath(choice), choice,
 			PollsPortletDataHandler.NAMESPACE);
 	}
 
@@ -66,7 +66,7 @@ public class PollsChoiceStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(choice.getUserUuid());
 
-		String questionPath = StagedModelPathUtil.getPath(
+		String questionPath = ExportImportPathUtil.getModelPath(
 			portletDataContext, PollsQuestion.class.getName(),
 			choice.getQuestionId());
 

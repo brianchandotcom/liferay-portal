@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -259,7 +260,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.BLOGS));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.BLOGS));
 		sb.append("/entry/");
 		sb.append(entry.getUuid());
 		sb.append(StringPool.SLASH);
@@ -272,7 +275,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.BLOGS));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.BLOGS));
 		sb.append("/entries/");
 		sb.append(entry.getEntryId());
 		sb.append(".xml");
@@ -286,7 +291,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.BLOGS));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.BLOGS));
 		sb.append("/entries/");
 		sb.append(entry.getUuid());
 		sb.append("/thumbnail");

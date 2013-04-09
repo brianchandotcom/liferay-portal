@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -441,7 +441,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			expandoBridge.getAttributes();
 
 		if (!expandoBridgeAttributes.isEmpty()) {
-			String expandoPath = getExpandoPath(path);
+			String expandoPath = ExportImportPathUtil.getExpandoPath(path);
 
 			element.addAttribute("expando-path", expandoPath);
 
@@ -684,7 +684,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModel stagedModel, String namespace) {
 
 		return createServiceContext(
-			StagedModelPathUtil.getPath(stagedModel), stagedModel, namespace);
+			ExportImportPathUtil.getModelPath(stagedModel), stagedModel,
+			namespace);
 	}
 
 	public ServiceContext createServiceContext(
@@ -805,7 +806,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public Element getImportDataStagedModelElement(StagedModel stagedModel) {
-		String path = StagedModelPathUtil.getPath(stagedModel);
+		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
 		Class<?> clazz = stagedModel.getModelClass();
 
@@ -832,10 +833,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
 
 		return (Element)xPath.selectSingleNode(groupElement);
-	}
-
-	public String getLayoutPath(long layoutId) {
-		return getRootPath() + ROOT_PATH_LAYOUTS + layoutId;
 	}
 
 	public Map<String, Lock> getLocks() {
@@ -874,10 +871,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _plid;
 	}
 
-	public String getPortletPath(String portletId) {
-		return getRootPath() + ROOT_PATH_PORTLETS + portletId;
-	}
-
 	public Set<String> getPrimaryKeys() {
 		return _primaryKeys;
 	}
@@ -898,7 +891,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
-			String path = StagedModelPathUtil.getPath(
+			String path = ExportImportPathUtil.getModelPath(
 				this, clazz.getName(), classPK);
 
 			Element referencedElement = getImportDataStagedModelElement(
@@ -908,10 +901,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return referencedElements;
-	}
-
-	public String getRootPath() {
-		return ROOT_PATH_GROUPS + getScopeGroupId();
 	}
 
 	public long getScopeGroupId() {
@@ -928,18 +917,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public long getSourceGroupId() {
 		return _sourceGroupId;
-	}
-
-	public String getSourceLayoutPath(long layoutId) {
-		return getSourceRootPath() + ROOT_PATH_LAYOUTS + layoutId;
-	}
-
-	public String getSourcePortletPath(String portletId) {
-		return getSourceRootPath() + ROOT_PATH_PORTLETS + portletId;
-	}
-
-	public String getSourceRootPath() {
-		return ROOT_PATH_GROUPS + getSourceGroupId();
 	}
 
 	public Date getStartDate() {
@@ -1514,7 +1491,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			expandoPath = element.attributeValue("expando-path");
 		}
 		else {
-			expandoPath = getExpandoPath(path);
+			expandoPath = ExportImportPathUtil.getExpandoPath(path);
 		}
 
 		if (Validator.isNotNull(expandoPath)) {
@@ -1562,23 +1539,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		else {
 			return (Long)classedModel.getPrimaryKeyObj();
 		}
-	}
-
-	protected String getExpandoPath(String path) {
-		if (!Validator.isFilePath(path, false)) {
-			throw new IllegalArgumentException(
-				path + " is located outside of the lar");
-		}
-
-		int pos = path.lastIndexOf(".xml");
-
-		if (pos == -1) {
-			throw new IllegalArgumentException(
-				path + " does not end with .xml");
-		}
-
-		return path.substring(0, pos).concat("-expando").concat(
-			path.substring(pos));
 	}
 
 	protected Element getExportDataGroupElement(String name) {

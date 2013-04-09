@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -918,7 +919,7 @@ public class LayoutImporter {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append(portletDataContext.getSourceRootPath());
+		sb.append(ExportImportPathUtil.getSourceRootPath(portletDataContext));
 		sb.append("/layout-set-prototype/");
 		sb.append(layoutSetPrototypeUuid);
 

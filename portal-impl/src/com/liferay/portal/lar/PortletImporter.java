@@ -24,6 +24,7 @@ import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -522,7 +523,7 @@ public class PortletImporter {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getSourceRootPath());
+		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
 		sb.append("/categories/");
 		sb.append(assetCategoryId);
 		sb.append(".xml");
@@ -1241,7 +1242,7 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() +
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
 				"/categories-hierarchy.xml");
 
 		if (xml == null) {
@@ -1349,7 +1350,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/links.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/links.xml");
 
 		if (xml == null) {
 			return;
@@ -1407,7 +1409,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/tags.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/tags.xml");
 
 		if (xml == null) {
 			return;
@@ -1456,7 +1459,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/comments.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/comments.xml");
 
 		if (xml == null) {
 			return;
@@ -1497,7 +1501,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/expando-tables.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/expando-tables.xml");
 
 		if (xml == null) {
 			return;
@@ -1570,7 +1575,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/locks.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/locks.xml");
 
 		if (xml == null) {
 			return;
@@ -1599,7 +1605,8 @@ public class PortletImporter {
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(
-			portletDataContext.getSourceRootPath() + "/ratings.xml");
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/ratings.xml");
 
 		if (xml == null) {
 			return;

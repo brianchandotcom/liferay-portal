@@ -15,9 +15,9 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -54,7 +54,7 @@ public class PollsVoteStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(vote);
 
 		portletDataContext.addClassedModel(
-			voteElement, StagedModelPathUtil.getPath(vote), vote,
+			voteElement, ExportImportPathUtil.getModelPath(vote), vote,
 			PollsPortletDataHandler.NAMESPACE);
 	}
 
@@ -63,7 +63,7 @@ public class PollsVoteStagedModelDataHandler
 			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
-		String choicePath = StagedModelPathUtil.getPath(
+		String choicePath = ExportImportPathUtil.getModelPath(
 			portletDataContext, PollsChoice.class.getName(),
 			vote.getChoiceId());
 

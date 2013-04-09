@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -221,7 +222,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/file-entries/");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append(StringPool.SLASH);
@@ -237,7 +239,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/repository-entries/");
 		sb.append(repositoryEntryId);
 		sb.append(".xml");
@@ -1171,7 +1174,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/bin/");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append(StringPool.SLASH);
@@ -1233,7 +1237,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/entry-types/");
 		sb.append(dlFileEntryType.getFileEntryTypeId());
 		sb.append(".xml");
@@ -1247,7 +1252,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/ranks/");
 		sb.append(fileRank.getFileRankId());
 		sb.append(".xml");
@@ -1261,7 +1267,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/shortcuts/");
 		sb.append(fileShortcut.getFileShortcutId());
 		sb.append(".xml");
@@ -1301,7 +1308,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/folders/");
 		sb.append(folder.getFolderId());
 		sb.append(".xml");
@@ -1315,8 +1323,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getSourcePortletPath(
-				PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/folders/");
 		sb.append(folderId);
 		sb.append(".xml");
@@ -1331,7 +1339,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/repository-entries/");
 		sb.append(repositoryEntry.getRepositoryEntryId());
 		sb.append(".xml");
@@ -1345,7 +1354,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/repositories/");
 		sb.append(repository.getRepositoryId());
 		sb.append(".xml");

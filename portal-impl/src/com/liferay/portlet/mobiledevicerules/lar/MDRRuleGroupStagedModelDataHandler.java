@@ -15,8 +15,8 @@
 package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -43,8 +43,8 @@ public class MDRRuleGroupStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(ruleGroup);
 
 		portletDataContext.addClassedModel(
-			ruleGroupElement, StagedModelPathUtil.getPath(ruleGroup), ruleGroup,
-			MDRPortletDataHandler.NAMESPACE);
+			ruleGroupElement, ExportImportPathUtil.getModelPath(ruleGroup),
+			ruleGroup, MDRPortletDataHandler.NAMESPACE);
 	}
 
 	@Override

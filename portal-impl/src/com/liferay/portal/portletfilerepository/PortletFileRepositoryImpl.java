@@ -218,7 +218,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 

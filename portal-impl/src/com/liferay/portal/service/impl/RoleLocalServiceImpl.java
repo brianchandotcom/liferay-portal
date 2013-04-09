@@ -185,9 +185,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			classPK = roleId;
 		}
 
-		Date now = new Date();
-
 		validate(0, user.getCompanyId(), classNameId, name);
+
+		Date now = new Date();
 
 		Role role = rolePersistence.create(roleId);
 

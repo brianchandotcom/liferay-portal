@@ -63,7 +63,7 @@ public class PasswordPolicyLocalServiceImpl
 			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
 			minUpperCase, null, history, historyCount, expireable, maxAge,
 			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge, null);
+			resetFailureCount, resetTicketMaxAge, new ServiceContext());
 	}
 
 	public PasswordPolicy addPasswordPolicy(
@@ -81,24 +81,23 @@ public class PasswordPolicyLocalServiceImpl
 		// Password policy
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(0, user.getCompanyId(), name);
+
+		Date now = new Date();
 
 		long passwordPolicyId = counterLocalService.increment();
 
 		PasswordPolicy passwordPolicy = passwordPolicyPersistence.create(
 			passwordPolicyId);
 
-		if (serviceContext != null) {
-			passwordPolicy.setUuid(serviceContext.getUuid());
-		}
+		passwordPolicy.setUuid(serviceContext.getUuid());
 
 		passwordPolicy.setCompanyId(user.getCompanyId());
 		passwordPolicy.setUserId(userId);
 		passwordPolicy.setUserName(user.getFullName());
-		passwordPolicy.setCreateDate(now);
-		passwordPolicy.setModifiedDate(now);
+		passwordPolicy.setCreateDate(serviceContext.getCreateDate(now));
+		passwordPolicy.setModifiedDate(serviceContext.getModifiedDate(now));
 		passwordPolicy.setDefaultPolicy(defaultPolicy);
 		passwordPolicy.setName(name);
 		passwordPolicy.setDescription(description);
@@ -180,7 +179,7 @@ public class PasswordPolicyLocalServiceImpl
 				PropsValues.PASSWORDS_DEFAULT_POLICY_LOCKOUT_DURATION,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_FAILURE_COUNT,
 				PropsValues.PASSWORDS_DEFAULT_POLICY_RESET_TICKET_MAX_AGE,
-				null);
+				new ServiceContext());
 		}
 	}
 
@@ -353,7 +352,7 @@ public class PasswordPolicyLocalServiceImpl
 			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase, null,
 			history, historyCount, expireable, maxAge, warningTime, graceLimit,
 			lockout, maxFailure, lockoutDuration, resetFailureCount,
-			resetTicketMaxAge, null);
+			resetTicketMaxAge, new ServiceContext());
 	}
 
 	public PasswordPolicy updatePasswordPolicy(
@@ -379,7 +378,7 @@ public class PasswordPolicyLocalServiceImpl
 			passwordPolicy.setName(name);
 		}
 
-		passwordPolicy.setModifiedDate(now);
+		passwordPolicy.setModifiedDate(serviceContext.getModifiedDate(now));
 		passwordPolicy.setDescription(description);
 		passwordPolicy.setChangeable(changeable);
 		passwordPolicy.setChangeRequired(changeRequired);

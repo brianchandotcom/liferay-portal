@@ -110,6 +110,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Sergio González
  * @author Manuel de la Peña
  * @author Levente Hudák
+ * @author Kenneth Chang
  */
 public class EditFileEntryAction extends PortletAction {
 
@@ -194,7 +195,6 @@ public class EditFileEntryAction extends PortletAction {
 			else {
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
-
 				int workflowAction = ParamUtil.getInteger(
 					actionRequest, "workflowAction",
 					WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -840,6 +840,7 @@ public class EditFileEntryAction extends PortletAction {
 		}
 
 		FileEntry fileEntry = null;
+
 		InputStream inputStream = null;
 
 		try {

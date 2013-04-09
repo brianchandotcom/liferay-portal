@@ -73,7 +73,20 @@ if (showPrototypes && (group != null)) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
-<liferay-ui:error exception="<%= GroupParentException.class %>" message="the-site-cannot-be-its-own-parent-site" />
+
+<liferay-ui:error exception="<%= GroupParentException.class %>">
+	<%
+		GroupParentException gpe = (GroupParentException)errorException;
+	%>
+
+	<c:if test="<%= gpe.getType() == GroupParentException.SELF_DESCENDANT %>">
+		<liferay-ui:message key="the-site-cannot-be-its-own-parent-site" />
+	</c:if>
+
+	<c:if test="<%= gpe.getType() == GroupParentException.CHILD_DESCENDANT %>">
+		<liferay-ui:message key="the-site-cannot-have-a-child-as-its-parent-site" />
+	</c:if>
+</liferay-ui:error>
 
 <liferay-ui:error exception="<%= RequiredGroupException.class %>">
 

@@ -4268,7 +4268,10 @@ file.
 		</if>
 
 		<if>
-			<equals arg1="${test.browser}" arg2="iehta" />
+			<or>
+				<equals arg1="${test.browser}" arg2="iehta" />
+				<equals arg1="${test.browser}" arg2="iexplore" />
+			</or>
 			<then>
 				<antcall target="start-ie-driver" />
 			</then>
@@ -4325,11 +4328,14 @@ file.
 		</if>
 
 		<if>
-			<equals arg1="${test.browser}" arg2="iexplore" />
+			<or>
+				<equals arg1="${test.browser}" arg2="iehta" />
+				<equals arg1="${test.browser}" arg2="iexplore" />
+			</or>
 			<then>
 				<antcall target="stop-ie-driver" />
 			</then>
-		</if>		
+		</if>
 	</target>
 
 	<target name="start-chrome-driver">
@@ -4375,7 +4381,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 				<unzip src="${ie.driver.zip}" dest="tools/selenium" />
 			</else>
 		</if>
-	</target>	
+	</target>
 
 	<target name="start-selenium">
 		<!--<java

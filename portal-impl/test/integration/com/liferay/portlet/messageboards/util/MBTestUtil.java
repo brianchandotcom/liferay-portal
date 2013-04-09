@@ -105,6 +105,12 @@ public class MBTestUtil {
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 	}
 
+	public static MBMessage addMessage(long groupId, long categoryId)
+		throws Exception {
+
+		return addMessage(groupId, categoryId, 0, 0);
+	}
+
 	public static MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId)
 		throws Exception {
@@ -130,48 +136,36 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
+			long categoryId, ServiceContext serviceContext)
+		throws Exception {
+
+		return addMessage(categoryId, StringPool.BLANK, false, serviceContext);
+	}
+
+	public static MBMessage addMessage(
 			long categoryId, String keywords, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
+		String subject = "subject";
+		String body = "body";
+
 		if (!Validator.isBlank(keywords)) {
-			return MBMessageLocalServiceUtil.addMessage(
-				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-				categoryId, keywords, keywords, serviceContext);
+			subject = keywords;
+			body = keywords;
 		}
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			categoryId, "subject", "body", serviceContext);
+			categoryId, subject, body, serviceContext);
 
 		if (!approved) {
 			return MBMessageLocalServiceUtil.updateStatus(
 				message.getStatusByUserId(), message.getMessageId(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
-
 		}
 
 		return message;
-	}
-
-	public static MBMessage addMessage(MBCategory category) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			category.getGroupId());
-
-		return addMessage(
-			category.getCategoryId(), StringPool.BLANK, false, serviceContext);
-	} public static MBMessage addMessage(long groupId, long categoryId)
-		throws Exception {
-
-		return addMessage(groupId, categoryId, 0, 0);
-	}
-
-	public static MBMessage addMessage(MBMessage parentMesssage)
-		throws Exception {
-
-		return addMessage(
-			parentMesssage.getGroupId(), parentMesssage.getCategoryId(),
-			parentMesssage.getThreadId(), parentMesssage.getParentMessageId());
 	}
 
 	public static MBMessage addMessageWithWorkflow(
@@ -211,12 +205,8 @@ public class MBTestUtil {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(1);
 
-		StringBuffer sb = new StringBuffer(2);
-
-		sb.append("dependencies/");
-		sb.append(fileName);
-
-		InputStream inputStream = clazz.getResourceAsStream(sb.toString());
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
 
 		ObjectValuePair<String, InputStream> inputStreamOVP = null;
 

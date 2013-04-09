@@ -149,10 +149,11 @@ public class JournalFolderAssetRenderer
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
+		portletURL.setWindowState(windowState);
+
 		portletURL.setParameter("struts_action", "/journal/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
-		portletURL.setWindowState(windowState);
 
 		return portletURL;
 	}

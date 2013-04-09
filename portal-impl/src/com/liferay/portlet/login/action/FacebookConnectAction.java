@@ -201,14 +201,14 @@ public class FacebookConnectAction extends PortletAction {
 		redirectURL.setPortletMode(PortletMode.VIEW);
 		redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
-		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
+		portletURL.setParameter("redirect", redirectURL.toString());
 		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
 		portletURL.setParameter("emailAddress", user.getEmailAddress());
 		portletURL.setParameter("firstName", user.getFirstName());
 		portletURL.setParameter("lastName", user.getLastName());
 		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		response.sendRedirect(portletURL.toString());
 	}

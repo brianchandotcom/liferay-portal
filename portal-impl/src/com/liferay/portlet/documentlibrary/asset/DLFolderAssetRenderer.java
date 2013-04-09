@@ -152,10 +152,11 @@ public class DLFolderAssetRenderer
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
 
+		portletURL.setWindowState(windowState);
+
 		portletURL.setParameter("struts_action", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
-		portletURL.setWindowState(windowState);
 
 		return portletURL;
 	}

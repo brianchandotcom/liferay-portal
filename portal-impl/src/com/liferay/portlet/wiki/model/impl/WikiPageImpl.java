@@ -85,7 +85,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
-		List<FileEntry> fileEntries = Collections.emptyList();
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 
@@ -178,7 +178,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
-		List<FileEntry> fileEntries = Collections.emptyList();
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 

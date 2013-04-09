@@ -37,7 +37,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,7 +92,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
-		List<FileEntry> fileEntries = Collections.EMPTY_LIST;
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 
@@ -150,7 +150,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 
 		try {
-			Folder folder = PortletFileRepositoryUtil. getPortletFolder(
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 				getUserId(), repository.getRepositoryId(),
 				threadAttachmetsFolderId, String.valueOf(getMessageId()),
 				serviceContext);
@@ -190,7 +190,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
-		List<FileEntry> fileEntries = Collections.EMPTY_LIST;
+		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 

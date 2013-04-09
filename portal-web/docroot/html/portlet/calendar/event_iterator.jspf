@@ -57,16 +57,12 @@ for (int i = 0; i < results.size(); i++) {
 		row.addText(LanguageUtil.get(pageContext, "all-day"), rowURL);
 	}
 	else if (event.isTimeZoneSensitive()) {
-		Date endDate = null;
-		Date startDate = null;
+		Date startDate = event.getStartDate();
+		Date endDate = CalUtil.getEndTime(event);
 
 		if (event.isRepeating()) {
 			endDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, endDate);
 			startDate = CalUtil.getDaylightSavingTimeOffsetDate(event, timeZone, selCal, startDate);
-		}
-		else {
-			endDate = CalUtil.getEndTime(event);
-			startDate = event.getStartDate();
 		}
 
 		row.addText(dateFormatTime.format(Time.getDate(startDate, timeZone)) + " &#150; " + dateFormatTime.format(Time.getDate(endDate, timeZone)), rowURL);

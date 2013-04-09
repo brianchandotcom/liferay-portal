@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -213,18 +211,6 @@ public class SampleSQLBuilder {
 		put(context, "dlFileEntry", dlFileEntry);
 
 		processTemplate(_tplDLFileEntry, context);
-	}
-
-	public void insertUser(List<Long> groupIds, List<Role> roleIds, User user)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "groupIds", groupIds);
-		put(context, "roleIds", roleIds);
-		put(context, "user", user);
-
-		processTemplate(_tplUser, context);
 	}
 
 	protected void compressInsertSQL(String insertSQL) throws IOException {
@@ -553,7 +539,6 @@ public class SampleSQLBuilder {
 	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
-	private String _tplUser = _TPL_ROOT + "user.ftl";
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;

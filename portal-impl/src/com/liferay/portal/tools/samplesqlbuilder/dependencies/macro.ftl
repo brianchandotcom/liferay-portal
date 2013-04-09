@@ -129,3 +129,19 @@
 
 	insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
 </#macro>
+
+<#macro insertUser _user _groupIds = [] _roleIds = []>
+	insert into User_ values ('${_user.uuid}', ${_user.userId}, ${_user.companyId}, '${dataFactory.getDateString(_user.createDate)}', '${dataFactory.getDateString(_user.modifiedDate)}', ${_user.defaultUser?string}, ${_user.contactId}, '${_user.password}', ${_user.passwordEncrypted?string}, ${_user.passwordReset?string}, '${dataFactory.getDateString(_user.passwordModifiedDate)}', '${_user.digest}', '${_user.reminderQueryQuestion}', '${_user.reminderQueryAnswer}', ${_user.graceLoginCount}, '${_user.screenName}', '${_user.emailAddress}', ${_user.facebookId}, ${_user.ldapServerId}, '${_user.openId}', ${_user.portraitId}, '${_user.languageId}', '${_user.timeZoneId}', '${_user.greeting}', '${_user.comments}', '${_user.firstName}', '${_user.middleName}', '${_user.lastName}', '${_user.jobTitle}', '${dataFactory.getDateString(_user.loginDate)}', '${_user.loginIP}', '${dataFactory.getDateString(_user.lastLoginDate)}', '${_user.lastLoginIP}', '${dataFactory.getDateString(_user.lastFailedLoginDate)}', ${_user.failedLoginAttempts}, ${_user.lockout?string}, '${dataFactory.getDateString(_user.lockoutDate)}', ${_user.agreedToTermsOfUse?string}, ${_user.emailAddressVerified?string}, '${_user.status}');
+
+	<#local contact = dataFactory.newContact(_user)>
+
+	insert into Contact_ values (${contact.contactId}, ${contact.companyId}, ${contact.userId}, '${contact.userName}', '${dataFactory.getDateString(contact.createDate)}', '${dataFactory.getDateString(contact.modifiedDate)}', ${contact.classNameId}, ${contact.classPK}, ${contact.accountId}, ${contact.parentContactId}, '${contact.emailAddress}', '${contact.firstName}', '${contact.middleName}', '${contact.lastName}', ${contact.prefixId}, ${contact.suffixId}, ${contact.male?string}, '${dataFactory.getDateString(contact.birthday)}', '${contact.smsSn}', '${contact.aimSn}', '${contact.facebookSn}', '${contact.icqSn}', '${contact.jabberSn}', '${contact.msnSn}', '${contact.mySpaceSn}', '${contact.skypeSn}', '${contact.twitterSn}', '${contact.ymSn}', '${contact.employeeStatusId}', '${contact.employeeNumber}', '${contact.jobTitle}', '${contact.jobClass}', '${contact.hoursOfOperation}');
+
+	<#list _roleIds as roleId>
+		insert into Users_Roles values (${_user.userId}, ${roleId});
+	</#list>
+
+	<#list _groupIds as groupId>
+		insert into Users_Groups values (${_user.userId}, ${groupId});
+	</#list>
+</#macro>

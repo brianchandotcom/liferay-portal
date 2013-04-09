@@ -234,6 +234,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.GroupModelImpl">
 		<attributes>
 			<id name="groupId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="creatorUserId" />
 			<basic name="classNameId" />
@@ -359,6 +362,14 @@
 				<column name="UUID_" />
 			</basic>
 			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="settings">
@@ -372,6 +383,7 @@
 			<transient name="nameMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.LayoutRevisionModelImpl">
@@ -503,6 +515,8 @@
 				<column name="UUID_" />
 			</basic>
 			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -522,6 +536,7 @@
 			<transient name="nameMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.ListTypeModelImpl">

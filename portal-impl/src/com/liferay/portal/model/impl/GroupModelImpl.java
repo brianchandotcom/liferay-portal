@@ -63,6 +63,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	public static final String TABLE_NAME = "Group_";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "creatorUserId", Types.BIGINT },
@@ -79,7 +80,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			{ "site", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Group_ (groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 	public static final String ORDER_BY_JPQL = " ORDER BY group_.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Group_.name ASC";
@@ -100,11 +101,13 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static long CLASSPK_COLUMN_BITMASK = 4L;
 	public static long COMPANYID_COLUMN_BITMASK = 8L;
 	public static long FRIENDLYURL_COLUMN_BITMASK = 16L;
-	public static long LIVEGROUPID_COLUMN_BITMASK = 32L;
-	public static long NAME_COLUMN_BITMASK = 64L;
-	public static long PARENTGROUPID_COLUMN_BITMASK = 128L;
-	public static long SITE_COLUMN_BITMASK = 256L;
-	public static long TYPE_COLUMN_BITMASK = 512L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long LIVEGROUPID_COLUMN_BITMASK = 64L;
+	public static long NAME_COLUMN_BITMASK = 128L;
+	public static long PARENTGROUPID_COLUMN_BITMASK = 256L;
+	public static long SITE_COLUMN_BITMASK = 512L;
+	public static long TYPE_COLUMN_BITMASK = 1024L;
+	public static long UUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -119,6 +122,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		Group model = new GroupImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreatorUserId(soapModel.getCreatorUserId());
@@ -224,6 +228,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("creatorUserId", getCreatorUserId());
@@ -245,6 +250,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
@@ -337,12 +348,46 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
 
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -678,6 +723,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public Object clone() {
 		GroupImpl groupImpl = new GroupImpl();
 
+		groupImpl.setUuid(getUuid());
 		groupImpl.setGroupId(getGroupId());
 		groupImpl.setCompanyId(getCompanyId());
 		groupImpl.setCreatorUserId(getCreatorUserId());
@@ -745,6 +791,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public void resetOriginalValues() {
 		GroupModelImpl groupModelImpl = this;
 
+		groupModelImpl._originalUuid = groupModelImpl._uuid;
+
+		groupModelImpl._originalGroupId = groupModelImpl._groupId;
+
+		groupModelImpl._setOriginalGroupId = false;
+
 		groupModelImpl._originalCompanyId = groupModelImpl._companyId;
 
 		groupModelImpl._setOriginalCompanyId = false;
@@ -787,6 +839,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	@Override
 	public CacheModel<Group> toCacheModel() {
 		GroupCacheModel groupCacheModel = new GroupCacheModel();
+
+		groupCacheModel.uuid = getUuid();
+
+		String uuid = groupCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			groupCacheModel.uuid = null;
+		}
 
 		groupCacheModel.groupId = getGroupId();
 
@@ -853,9 +913,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
-		sb.append("{groupId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -891,12 +953,16 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Group");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
@@ -965,7 +1031,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	private static ClassLoader _classLoader = Group.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Group.class };
+	private String _uuid;
+	private String _originalUuid;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

@@ -259,6 +259,17 @@ public class LayoutPrototypeLocalServiceWrapper
 			companyId, nameMap, description, active);
 	}
 
+	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
+			companyId, nameMap, description, active, serviceContext);
+	}
+
 	public com.liferay.portal.model.LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -306,6 +317,17 @@ public class LayoutPrototypeLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, description, active);
+	}
+
+	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
+		long layoutPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
+			nameMap, description, active, serviceContext);
 	}
 
 	/**

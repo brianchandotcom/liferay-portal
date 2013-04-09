@@ -42,6 +42,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("creatorUserId", getCreatorUserId());
@@ -62,6 +63,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
@@ -169,6 +176,24 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_group.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this group.
+	*
+	* @return the uuid of this group
+	*/
+	public java.lang.String getUuid() {
+		return _group.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this group.
+	*
+	* @param uuid the uuid of this group
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_group.setUuid(uuid);
 	}
 
 	/**

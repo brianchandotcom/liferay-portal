@@ -756,6 +756,7 @@ create table ExpandoValue (
 );
 
 create table Group_ (
+	uuid_ VARCHAR(75) null,
 	groupId LONG not null primary key,
 	companyId LONG,
 	creatorUserId LONG,
@@ -994,6 +995,10 @@ create table LayoutPrototype (
 	uuid_ VARCHAR(75) null,
 	layoutPrototypeId LONG not null primary key,
 	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
@@ -1082,6 +1087,8 @@ create table LayoutSetPrototype (
 	uuid_ VARCHAR(75) null,
 	layoutSetPrototypeId LONG not null primary key,
 	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,

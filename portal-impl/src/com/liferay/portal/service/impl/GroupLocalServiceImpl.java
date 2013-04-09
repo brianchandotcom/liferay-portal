@@ -300,6 +300,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.create(groupId);
 
+		group.setUuid(serviceContext.getUuid());
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
 		group.setClassNameId(classNameId);
@@ -818,6 +819,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadFetchGroup(companyId, name);
+	}
+
+	/**
+	 * Returns the group with the UUID.
+	 *
+	 * @param  uuid the group's UUID
+	 * @param  companyId the primary key of the group's company
+	 * @return the group with the UUID, or <code>null</code> if a group
+	 *         with the UUID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group fetchGroupByUuidandCompanyId(String uuid, long companyId)
+		throws SystemException {
+
+		return groupPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

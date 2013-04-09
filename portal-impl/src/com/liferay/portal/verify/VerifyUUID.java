@@ -83,6 +83,9 @@ public class VerifyUUID extends VerifyProcess {
 			"DLFileVersion", "fileVersionId"
 		},
 		new String[] {
+			"Group_", "groupId"
+		},
+		new String[] {
 			"JournalArticleResource", "resourcePrimKey"
 		},
 		new String[] {

@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing LayoutPrototype in entity cache.
  *
@@ -35,7 +37,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -43,6 +45,14 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		sb.append(layoutPrototypeId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -68,6 +78,28 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 
 		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPrototypeImpl.setCompanyId(companyId);
+		layoutPrototypeImpl.setUserId(userId);
+
+		if (userName == null) {
+			layoutPrototypeImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			layoutPrototypeImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			layoutPrototypeImpl.setCreateDate(null);
+		}
+		else {
+			layoutPrototypeImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			layoutPrototypeImpl.setModifiedDate(null);
+		}
+		else {
+			layoutPrototypeImpl.setModifiedDate(new Date(modifiedDate));
+		}
 
 		if (name == null) {
 			layoutPrototypeImpl.setName(StringPool.BLANK);
@@ -101,6 +133,10 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		uuid = objectInput.readUTF();
 		layoutPrototypeId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
@@ -118,6 +154,17 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 
 		objectOutput.writeLong(layoutPrototypeId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -146,6 +193,10 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	public String uuid;
 	public long layoutPrototypeId;
 	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
 	public String name;
 	public String description;
 	public String settings;

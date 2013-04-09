@@ -180,6 +180,7 @@
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.Group">
+		<field name="uuid" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="creatorUserId" type="long" />
@@ -289,6 +290,10 @@
 		<field name="uuid" type="String" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>
@@ -403,6 +408,8 @@
 		<field name="uuid" type="String" />
 		<field name="layoutSetPrototypeId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true">

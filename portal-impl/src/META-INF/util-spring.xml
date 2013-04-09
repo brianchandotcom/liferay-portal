@@ -29,6 +29,11 @@
 			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.bean.ConstantsBeanUtil" class="com.liferay.portal.kernel.bean.ConstantsBeanUtil">
+		<property name="constantsBean">
+			<bean class="com.liferay.portal.bean.ConstantsBeanImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.bean.Renderer" class="com.liferay.portal.bean.RendererImpl" />
 	<bean id="com.liferay.portal.kernel.bean.RendererUtil" class="com.liferay.portal.kernel.bean.RendererUtil">
 		<property name="renderer" ref="com.liferay.portal.kernel.bean.Renderer" />

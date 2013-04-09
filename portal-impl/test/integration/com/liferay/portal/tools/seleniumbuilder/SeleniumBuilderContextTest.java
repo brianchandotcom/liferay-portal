@@ -39,6 +39,58 @@ public class SeleniumBuilderContextTest {
 				"/BaseLiferay.action");
 	}
 
+	@Test
+	public void testFunction() throws Exception {
+		test("Function.function");
+	}
+
+	@Test
+	public void testFunctionName1008() throws Exception {
+		test(
+			"Click.function",
+			"Error 1008: Duplicate name Click at " + _DIR_NAME +
+				"/Click.function");
+	}
+
+	@Test
+	public void testMacro() throws Exception {
+		test("Macro.macro");
+	}
+
+	@Test
+	public void testMacroName1008() throws Exception {
+		test(
+			"BlogsEntry.macro",
+			"Error 1008: Duplicate name BlogsEntry at " + _DIR_NAME +
+				"/BlogsEntry.macro");
+	}
+
+	@Test
+	public void testTestCase() throws Exception {
+		test("TestCase.testcase");
+	}
+
+	@Test
+	public void testTestCaseName1008() throws Exception {
+		test(
+			"CPBlogsAcceptance.testcase",
+			"Error 1008: Duplicate name CPBlogsAcceptance at " + _DIR_NAME +
+				"/CPBlogsAcceptance.testcase");
+	}
+
+	@Test
+	public void testTestSuite() throws Exception {
+		test("TestSuite.testsuite");
+	}
+
+	@Test
+	public void testTestSuiteName1008() throws Exception {
+		test(
+			"CollaborationAcceptance.testsuite",
+			"Error 1008: Duplicate name CollaborationAcceptance at " +
+				_DIR_NAME + "/CollaborationAcceptance.testsuite");
+	}
+
 	protected void test(String fileName) throws Exception {
 		test(fileName, null, false);
 	}
@@ -57,7 +109,10 @@ public class SeleniumBuilderContextTest {
 		String actualErrorMessage = null;
 
 		try {
-			new SeleniumBuilderContext(_BASE_DIR, _DIR_NAME + "/" + fileName);
+			SeleniumBuilderContext seleniumBuilderContext =
+				new SeleniumBuilderContext(_BASE_DIR);
+
+			seleniumBuilderContext.addFile(_DIR_NAME + "/" + fileName);
 		}
 		catch (IllegalArgumentException iae) {
 			actualErrorMessage = iae.getMessage();

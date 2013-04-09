@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>CPMyaccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMyaccount</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMyaccount</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS</td>
+	<td>//a[@id='_2_displaySettingsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>DISPLAY_SETTINGS_TIME_ZONE</td>
+	<td>//select[@name='_2_timeZoneId']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

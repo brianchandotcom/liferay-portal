@@ -31,8 +31,6 @@ public class ViewPortletTableMBCategoryThreadMessageAPTest extends BaseTestCase 
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
-		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Title"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th"));

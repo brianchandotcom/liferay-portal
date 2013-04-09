@@ -34,8 +34,6 @@ public class ViewPortletAvailableMBCategoryThreadMessageAPTest
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("There are no results."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertFalse(selenium.isTextPresent("MB Category Thread Message Subject"));
 		assertFalse(selenium.isTextPresent("MB Category Thread Message Body"));
 	}

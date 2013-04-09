@@ -32,8 +32,6 @@ public class ViewPortletMaximumItems5MBCategoryMessage6APTest
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
-		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread6 Message Subject"),
 			selenium.getText("xPath=(//h3[@class='asset-title'])[1]/a"));

@@ -32,8 +32,6 @@ public class ViewPortletTitleListMBCategoryThreadMessageAPTest
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
-		assertEquals(RuntimeVariables.replace("Subscribe"),
-			selenium.getText("//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//ul[@class='title-list']/li/span/a/span"));

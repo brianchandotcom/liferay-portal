@@ -28,6 +28,8 @@ public class PostNewMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible(
+			"//tr[contains(.,'MB Category Name')]/td[1]/a/strong");
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText(
 				"//tr[contains(.,'MB Category Name')]/td[1]/a/strong"));
@@ -49,6 +51,7 @@ public class PostNewMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

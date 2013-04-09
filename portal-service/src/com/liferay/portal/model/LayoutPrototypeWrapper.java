@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,10 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 		attributes.put("uuid", getUuid());
 		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
@@ -71,6 +76,30 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		String name = (String)attributes.get("name");
@@ -168,6 +197,98 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	*/
 	public void setCompanyId(long companyId) {
 		_layoutPrototype.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this layout prototype.
+	*
+	* @return the user ID of this layout prototype
+	*/
+	public long getUserId() {
+		return _layoutPrototype.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this layout prototype.
+	*
+	* @param userId the user ID of this layout prototype
+	*/
+	public void setUserId(long userId) {
+		_layoutPrototype.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this layout prototype.
+	*
+	* @return the user uuid of this layout prototype
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutPrototype.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this layout prototype.
+	*
+	* @param userUuid the user uuid of this layout prototype
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_layoutPrototype.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this layout prototype.
+	*
+	* @return the user name of this layout prototype
+	*/
+	public java.lang.String getUserName() {
+		return _layoutPrototype.getUserName();
+	}
+
+	/**
+	* Sets the user name of this layout prototype.
+	*
+	* @param userName the user name of this layout prototype
+	*/
+	public void setUserName(java.lang.String userName) {
+		_layoutPrototype.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this layout prototype.
+	*
+	* @return the create date of this layout prototype
+	*/
+	public java.util.Date getCreateDate() {
+		return _layoutPrototype.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this layout prototype.
+	*
+	* @param createDate the create date of this layout prototype
+	*/
+	public void setCreateDate(java.util.Date createDate) {
+		_layoutPrototype.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this layout prototype.
+	*
+	* @return the modified date of this layout prototype
+	*/
+	public java.util.Date getModifiedDate() {
+		return _layoutPrototype.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this layout prototype.
+	*
+	* @param modifiedDate the modified date of this layout prototype
+	*/
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_layoutPrototype.setModifiedDate(modifiedDate);
 	}
 
 	/**

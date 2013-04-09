@@ -37,7 +37,7 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -45,6 +45,10 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 		sb.append(layoutSetPrototypeId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -74,6 +78,14 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 
 		layoutSetPrototypeImpl.setLayoutSetPrototypeId(layoutSetPrototypeId);
 		layoutSetPrototypeImpl.setCompanyId(companyId);
+		layoutSetPrototypeImpl.setUserId(userId);
+
+		if (userName == null) {
+			layoutSetPrototypeImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			layoutSetPrototypeImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			layoutSetPrototypeImpl.setCreateDate(null);
@@ -121,6 +133,8 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 		uuid = objectInput.readUTF();
 		layoutSetPrototypeId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -140,6 +154,15 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 
 		objectOutput.writeLong(layoutSetPrototypeId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -170,6 +193,8 @@ public class LayoutSetPrototypeCacheModel implements CacheModel<LayoutSetPrototy
 	public String uuid;
 	public long layoutSetPrototypeId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public String name;

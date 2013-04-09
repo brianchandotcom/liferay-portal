@@ -1342,6 +1342,23 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
+	* Returns the parent groups in order by closest ancestor. The list
+	* starts with the group itself.
+	*
+	* @param groupId the primary key of the group
+	* @return the parent groups in order by closest ancestor
+	* @throws PortalException if a group with the primary key could not
+	be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getParentGroups(groupId);
+	}
+
+	/**
 	* Returns the staging group.
 	*
 	* @param liveGroupId the primary key of the live group

@@ -87,7 +87,7 @@ public class TextSearchEntry extends SearchEntry {
 				sb.append(_href);
 			}
 			else {
-				sb.append(HtmlUtil.escapeURL(_href));
+				sb.append(HtmlUtil.escape(_href));
 			}
 
 			sb.append("\"");

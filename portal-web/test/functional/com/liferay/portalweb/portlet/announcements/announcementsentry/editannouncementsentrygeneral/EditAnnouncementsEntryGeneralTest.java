@@ -32,9 +32,9 @@ public class EditAnnouncementsEntryGeneralTest extends BaseTestCase {
 			selenium.getText("//h3[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace("Announcements Entry Content"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
+				"Announcements Entry Content"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//td[@class='edit-entry']/span/a/span"));
 		selenium.clickAt("//td[@class='edit-entry']/span/a/span",
@@ -56,9 +56,8 @@ public class EditAnnouncementsEntryGeneralTest extends BaseTestCase {
 			selenium.getText("//h3[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Edit"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
+				"Announcements Entry Content Edit"));
 	}
 }

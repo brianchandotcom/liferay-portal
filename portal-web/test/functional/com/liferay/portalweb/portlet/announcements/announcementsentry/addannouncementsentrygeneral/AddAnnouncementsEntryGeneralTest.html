@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'Announcements Entry Title')]/td[1]/a</td>
 	<td>Announcements Entry Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'Announcements Entry Title')]/td[2]/a</td>
 	<td>General</td>
 </tr>
 <tr>
@@ -94,8 +94,8 @@
 	<td>General</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class=' entry-content entry-type-general']/p</td>
+	<td>assertPartialText</td>
+	<td>//div[@class=' entry-content entry-type-general']</td>
 	<td>Announcements Entry Content</td>
 </tr>
 </tbody></table>

@@ -41,10 +41,9 @@ public class ViewEditAnnouncementsEntryGeneralTest extends BaseTestCase {
 			selenium.getText("//td[@class='control-entry']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Edit"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
+				"Announcements Entry Content Edit"));
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
@@ -53,15 +52,20 @@ public class ViewEditAnnouncementsEntryGeneralTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@value='Add Entry']"));
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title Edit"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText("//td[2]/a"));
-		assertTrue(selenium.isVisible("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'Announcements Entry Title Edit')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

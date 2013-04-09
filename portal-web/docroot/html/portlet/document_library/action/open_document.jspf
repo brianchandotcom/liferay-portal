@@ -20,7 +20,7 @@
 	if (DLUtil.isOfficeExtension(fileEntry.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
 		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED, true);
 
-		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openDocument', {webDavUrl: '" + webDavUrl + "'});";
+		String taglibOnClick = "javascript:" + liferayPortletResponse.getNamespace() + "openDocument('" + webDavUrl + "');";
 	%>
 
 		<liferay-ui:icon
@@ -34,4 +34,30 @@
 	}
 	%>
 
+	<aui:script>
+		Liferay.provide(
+			window,
+			'<portlet:namespace />openDocument',
+			function(webDavUrl) {
+				var A = AUI();
+
+				Liferay.Util.openDocument(
+					webDavUrl,
+					null,
+					function(exception) {
+						var errorMessage = A.Lang.sub(
+							'<%= UnicodeLanguageUtil.get(pageContext, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
+							[exception.message]
+						);
+
+						var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
+
+						openMSOfficeError.html(errorMessage);
+						openMSOfficeError.show();
+					}
+				);
+			},
+			['aui-base']
+		);
+	</aui:script>
 </c:if>

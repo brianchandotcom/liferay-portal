@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -187,19 +186,6 @@ public class SampleSQLBuilder {
 		FileUtil.write(
 			new File(_outputDir, "benchmarks-actual.properties"),
 			sb.toString());
-	}
-
-	public void insertDDLRecord(
-			DDLRecord ddlRecord, int ddlRecordCount, long ddmStructureId)
-		throws Exception {
-
-		Map<String, Object> context = getContext();
-
-		put(context, "ddlRecord", ddlRecord);
-		put(context, "ddlRecordCount", ddlRecordCount);
-		put(context, "ddmStructureId", ddmStructureId);
-
-		processTemplate(_tplDDLRecord, context);
 	}
 
 	public void insertDLFileEntry(DLFileEntry dlFileEntry, long ddmStructureId)
@@ -536,7 +522,6 @@ public class SampleSQLBuilder {
 	private String _outputDir;
 	private boolean _outputMerge;
 	private File _tempDir;
-	private String _tplDDLRecord = _TPL_ROOT + "ddl_record.ftl";
 	private String _tplDLFileEntry = _TPL_ROOT + "dl_file_entry.ftl";
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
 	private Writer _writerBlogsCSV;

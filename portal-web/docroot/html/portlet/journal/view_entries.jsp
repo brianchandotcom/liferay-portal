@@ -194,7 +194,7 @@ int total = 0;
 			userId = themeDisplay.getUserId();
 		}
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId);
 
 		searchContainer.setResults(results);

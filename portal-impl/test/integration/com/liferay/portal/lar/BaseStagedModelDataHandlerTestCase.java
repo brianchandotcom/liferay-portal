@@ -136,12 +136,17 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		Map<String, List<StagedModel>> dependentStagedModelsMap, Class<?> clazz,
 		StagedModel dependentStagedModel) {
 
-		List<StagedModel> dependentStagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			clazz.getSimpleName());
+
+		if (dependentStagedModels == null) {
+			dependentStagedModels = new ArrayList<StagedModel>();
+
+			dependentStagedModelsMap.put(
+				clazz.getSimpleName(), dependentStagedModels);
+		}
 
 		dependentStagedModels.add(dependentStagedModel);
-
-		dependentStagedModelsMap.put(
-			clazz.getSimpleName(), dependentStagedModels);
 
 		return dependentStagedModels;
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.lar;
+package com.liferay.portlet.dynamicdatalists.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
@@ -21,11 +21,15 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.util.MDRTestUtil;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.util.DDLTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +39,7 @@ import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -43,7 +47,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class MDRRuleStagedModelDataHandlerTest
+public class DDLRecordSetStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Override
@@ -54,10 +58,23 @@ public class MDRRuleStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<String, List<StagedModel>>();
 
-		MDRRuleGroup ruleGroup = MDRTestUtil.addRuleGroup(group.getGroupId());
+		DDMStructure structure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DDLRecordSet.class.getName());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, MDRRuleGroup.class, ruleGroup);
+			dependentStagedModelsMap, DDMStructure.class, structure);
+
+		DDMTemplate template1 = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), structure.getStructureId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMTemplate.class, template1);
+
+		DDMTemplate template2 = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), structure.getStructureId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMTemplate.class, template2);
 
 		return dependentStagedModelsMap;
 	}
@@ -69,17 +86,18 @@ public class MDRRuleStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getSimpleName());
+			DDMStructure.class.getSimpleName());
 
-		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 
-		return MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
+		return DDLTestUtil.addRecordSet(
+			group.getGroupId(), ddmStructure.getStructureId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(
+			return DDLRecordSetLocalServiceUtil.getDDLRecordSetByUuidAndGroupId(
 				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
@@ -89,7 +107,7 @@ public class MDRRuleStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MDRRule.class;
+		return DDLRecordSet.class;
 	}
 
 	@Override
@@ -99,14 +117,24 @@ public class MDRRuleStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MDRRuleGroup.class.getSimpleName());
+			DDMStructure.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
-		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+		DDMStructure structure = (DDMStructure)dependentStagedModels.get(0);
 
-		MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
-			ruleGroup.getUuid(), group.getGroupId());
+		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+			structure.getUuid(), group.getGroupId());
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMTemplate.class.getSimpleName());
+
+		Assert.assertEquals(2, dependentStagedModels.size());
+
+		for (StagedModel template : dependentStagedModels) {
+			DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(
+				template.getUuid(), group.getGroupId());
+		}
 	}
 
 }

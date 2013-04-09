@@ -156,7 +156,7 @@ public class MDRActionStagedModelDataHandlerTest
 
 		MDRRuleGroupInstanceLocalServiceUtil.
 			getMDRRuleGroupInstanceByUuidAndGroupId(
-				ruleGroupInstance.getUuid(), ruleGroupInstance.getGroupId());
+				ruleGroupInstance.getUuid(), group.getGroupId());
 	}
 
 	private Layout _layout;

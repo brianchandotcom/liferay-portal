@@ -47,6 +47,8 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		attributes.put("uuid", getUuid());
 		attributes.put("layoutSetPrototypeId", getLayoutSetPrototypeId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
@@ -74,6 +76,18 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -183,6 +197,62 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	public void setCompanyId(long companyId) {
 		_layoutSetPrototype.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this layout set prototype.
+	*
+	* @return the user ID of this layout set prototype
+	*/
+	public long getUserId() {
+		return _layoutSetPrototype.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this layout set prototype.
+	*
+	* @param userId the user ID of this layout set prototype
+	*/
+	public void setUserId(long userId) {
+		_layoutSetPrototype.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this layout set prototype.
+	*
+	* @return the user uuid of this layout set prototype
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetPrototype.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this layout set prototype.
+	*
+	* @param userUuid the user uuid of this layout set prototype
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_layoutSetPrototype.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this layout set prototype.
+	*
+	* @return the user name of this layout set prototype
+	*/
+	public java.lang.String getUserName() {
+		return _layoutSetPrototype.getUserName();
+	}
+
+	/**
+	* Sets the user name of this layout set prototype.
+	*
+	* @param userName the user name of this layout set prototype
+	*/
+	public void setUserName(java.lang.String userName) {
+		_layoutSetPrototype.setUserName(userName);
 	}
 
 	/**

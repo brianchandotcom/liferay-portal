@@ -300,6 +300,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.create(groupId);
 
+		group.setUuid(serviceContext.getUuid());
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
 		group.setClassNameId(classNameId);
@@ -818,6 +819,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadFetchGroup(companyId, name);
+	}
+
+	public Group fetchGroupByUuidandCompanyId(String uuid, long companyId)
+		throws SystemException {
+
+		return groupPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

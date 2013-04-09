@@ -330,6 +330,7 @@ COMMIT_TRANSACTION;
 
 update ExpandoRow set modifiedDate = CURRENT_TIMESTAMP;
 
+alter table Group_ add uuid_ VARCHAR(75) null;
 alter table Group_ add treePath STRING null;
 
 update Group_ set site = FALSE where name = 'Control Panel';

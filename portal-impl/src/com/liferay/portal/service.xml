@@ -323,7 +323,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
-	<entity name="Group" local-service="true" remote-service="true">
+	<entity name="Group" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

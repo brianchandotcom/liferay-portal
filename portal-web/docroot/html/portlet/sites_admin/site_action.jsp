@@ -185,7 +185,7 @@ if (row == null) {
 			image="site_icon"
 			message='<%= LanguageUtil.format(pageContext, "add-x", "blank-site") %>'
 			method="get"
-			url='<%= addSiteURL.toString() %>'
+			url="<%= addSiteURL.toString() %>"
 		/>
 
 		<%
@@ -199,7 +199,7 @@ if (row == null) {
 				image="site_icon"
 				message='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(layoutSetPrototype.getName(locale))) %>'
 				method="get"
-				url='<%= addSiteURL.toString() %>'
+				url="<%= addSiteURL.toString() %>"
 			/>
 
 		<%

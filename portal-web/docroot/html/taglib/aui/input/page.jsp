@@ -68,7 +68,7 @@
 			defaultValue="<%= value %>"
 			disabled="<%= disabled %>"
 			field="<%= field %>"
-			fieldParam='<%= fieldParam %>'
+			fieldParam="<%= fieldParam %>"
 			formName="<%= formName %>"
 			format='<%= (Format)dynamicAttributes.get("format") %>'
 			id="<%= id %>"

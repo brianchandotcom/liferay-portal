@@ -78,7 +78,7 @@ assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
 		%>
 
 			<liferay-ui:icon
-				message='<%= assetRendererFactory.getTypeName(locale, false) %>'
+				message="<%= assetRendererFactory.getTypeName(locale, false) %>"
 				src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
 				url="<%= href %>"
 			/>

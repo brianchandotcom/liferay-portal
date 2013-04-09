@@ -1735,12 +1735,12 @@ AUI.add(
 
 										buffer.push(
 											Lang.sub(
-											    TPL_VOCABULARY_OPTION,
-											    {
-											        selected: item.selected,
-											        vocabularyId: item.vocabularyId,
-											        titleCurrentValue: A.Escape.html(item.titleCurrentValue)
-											    }
+												TPL_VOCABULARY_OPTION,
+												{
+													selected: item.selected,
+													vocabularyId: item.vocabularyId,
+													titleCurrentValue: A.Escape.html(item.titleCurrentValue)
+												}
 											)
 										);
 									}

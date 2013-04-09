@@ -38,6 +38,10 @@ public class FolderProxyBean
 		_folder = folder;
 	}
 
+	public Object clone() {
+		return _folder.clone();
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -232,6 +236,10 @@ public class FolderProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_folder.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_folder.setUuid(uuid);
 	}
 
 	public Folder toEscapedModel() {

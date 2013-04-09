@@ -42,6 +42,31 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		_escapedModel = escapedModel;
 	}
 
+	public Object clone() {
+		LiferayFolder folder = new LiferayFolder(_dlFolder, _escapedModel);
+
+		folder.setCompanyId(getCompanyId());
+		folder.setCreateDate(getCreateDate());
+		folder.setGroupId(getGroupId());
+		folder.setModifiedDate(getModifiedDate());
+		folder.setPrimaryKey(getPrimaryKey());
+		folder.setPrimaryKeyObj(getPrimaryKeyObj());
+		folder.setUserId(getUserId());
+		folder.setUserName(getUserName());
+
+		String userUuid = null;
+
+		try {
+			userUuid = getUserUuid();
+		}
+		catch (SystemException se) {
+		}
+
+		folder.setUserUuid(userUuid);
+
+		return folder;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -282,6 +307,10 @@ public class LiferayFolder extends LiferayModel implements Folder {
 
 	public void setUserUuid(String userUuid) {
 		_dlFolder.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_dlFolder.setUuid(uuid);
 	}
 
 	public Folder toEscapedModel() {

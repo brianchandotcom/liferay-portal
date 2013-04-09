@@ -42,6 +42,10 @@ public class FileEntryProxyBean
 		_fileEntry = fileEntry;
 	}
 
+	public Object clone() {
+		return _fileEntry.clone();
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -290,6 +294,10 @@ public class FileEntryProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_fileEntry.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_fileEntry.setUuid(uuid);
 	}
 
 	public FileEntry toEscapedModel() {

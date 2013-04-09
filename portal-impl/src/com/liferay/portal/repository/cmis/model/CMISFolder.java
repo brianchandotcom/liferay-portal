@@ -59,6 +59,34 @@ public class CMISFolder extends CMISModel implements Folder {
 		_cmisFolder = cmisFolder;
 	}
 
+	public Object clone() {
+		CMISFolder folder = new CMISFolder(
+			_cmisRepository, _uuid, _folderId, _cmisFolder);
+
+		folder.setCompanyId(getCompanyId());
+		folder.setCreateDate(getCreateDate());
+		folder.setGroupId(getGroupId());
+		folder.setModifiedDate(getModifiedDate());
+
+		Folder parentFolder = null;
+
+		try {
+			parentFolder = getParentFolder();
+		}
+		catch (Exception e) {
+		}
+
+		folder.setParentFolder(parentFolder);
+
+		folder.setPrimaryKey(getPrimaryKey());
+		folder.setPrimaryKeyObj(getPrimaryKeyObj());
+		folder.setUserId(getUserId());
+		folder.setUserName(getUserName());
+		folder.setUserUuid(getUserUuid());
+
+		return folder;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws SystemException {
@@ -388,6 +416,9 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	public void setUserUuid(String userUuid) {
+	}
+
+	public void setUuid(String uuid) {
 	}
 
 	public Folder toEscapedModel() {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -62,6 +63,33 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		_uuid = uuid;
 		_fileVersionId = fileVersionId;
 		_document = document;
+	}
+
+	public Object clone() {
+		CMISFileVersion fileVersion = new CMISFileVersion(
+			_cmisRepository, _uuid, _fileVersionId, _document);
+
+		fileVersion.setCompanyId(getCompanyId());
+		fileVersion.setCreateDate(getCreateDate());
+		fileVersion.setGroupId(getGroupId());
+		fileVersion.setModifiedDate(getModifiedDate());
+
+		Folder parentFolder = null;
+
+		try {
+			parentFolder = getParentFolder();
+		}
+		catch (Exception e) {
+		}
+
+		fileVersion.setParentFolder(parentFolder);
+
+		fileVersion.setPrimaryKey(getPrimaryKey());
+		fileVersion.setPrimaryKeyObj(getPrimaryKeyObj());
+		fileVersion.setUserId(getUserId());
+		fileVersion.setUserName(getUserName());
+
+		return fileVersion;
 	}
 
 	public Map<String, Serializable> getAttributes() {
@@ -324,6 +352,9 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public void setUserUuid(String userUuid) {
+	}
+
+	public void setUuid(String uuid) {
 	}
 
 	public FileVersion toEscapedModel() {

@@ -113,7 +113,7 @@ else {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("categoryId", curCategory.getCategoryId());
-				data.put("name", HtmlUtil.escape(curCategory.getName()));
+				data.put("name", HtmlUtil.escapeAttribute(curCategory.getName()));
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -126,7 +126,7 @@ else {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("categoryId", categoryId);
-			data.put("name", HtmlUtil.escape(categoryName));
+			data.put("name", HtmlUtil.escapeAttribute(categoryName));
 			%>
 
 			<aui:button cssClass="selector-button"  data="<%= data %>" value="choose-this-category" />

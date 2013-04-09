@@ -110,7 +110,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 
 					data.put("ddmtemplateid", template.getTemplateId());
 					data.put("ddmtemplatekey", template.getTemplateKey());
-					data.put("name", HtmlUtil.escapeJS(template.getName(locale)));
+					data.put("name", HtmlUtil.escapeAttribute(template.getName(locale)));
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

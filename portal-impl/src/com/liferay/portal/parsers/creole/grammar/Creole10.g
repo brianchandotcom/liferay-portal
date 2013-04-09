@@ -988,9 +988,11 @@ extension returns [ASTNode node = null]
 	:	extension_markup  extension_handler  blanks  extension_statement
 		extension_markup
 	;
+
 extension_handler
 	:	(~( EXTENSION  |  BLANKS  |  ESCAPE  |  NEWLINE  |  EOF ) | escaped )+
 	;
+
 extension_statement
 	:	(~( EXTENSION  |  ESCAPE  |  EOF ) | escaped )*
 	;
@@ -998,10 +1000,24 @@ extension_statement
 
 /////////////////////////////  TABLE OF CONTENTS EXTENSION  /////////////////////////////
 
-table_of_contents returns [ASTNode tableOfContents = new TableOfContentsNode()]
-	:	/*TABLE_OF_CONTENTS_OPEN_MARKUP*/ TABLE_OF_CONTENTS_TEXT  /*TABLE_OF_CONTENTS_CLOSE_MARKUP*/
+table_of_contents returns [TableOfContentsNode tableOfContents = new TableOfContentsNode()]
+	:
+		(
+			TABLE_OF_CONTENTS_OPEN 'TableOfContents' TABLE_OF_CONTENTS_CLOSE
+			|
+			TABLE_OF_CONTENTS_OPEN 'TableOfContents title='
+			'\"'
+			t = table_of_contents_title_text {
+			tableOfContents.setTitle($t.text.toString());
+			}
+			'\"'
+			TABLE_OF_CONTENTS_CLOSE
+		)
 	;
 
+table_of_contents_title_text returns [StringBundler text = new StringBundler()]
+	:	( c = ~(LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN |EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE )  {$text.append($c.text);} )+
+	;
 
 onestar
 	:	( { input.LA(2) != STAR }?  ( STAR )?)
@@ -1129,13 +1145,8 @@ DASH					: '-';
 STAR					: '*';
 SLASH					: '/';
 EXTENSION				: '@@';
-TABLE_OF_CONTENTS_OPEN_MARKUP
-	:	'<<'
-	;
-TABLE_OF_CONTENTS_CLOSE_MARKUP
-	:	'>>'
-	;
-TABLE_OF_CONTENTS_TEXT
-	:	'<<TableOfContents>>'
-	;
+
+TABLE_OF_CONTENTS_OPEN	: '<<';
+TABLE_OF_CONTENTS_CLOSE	: '>>';
+
 INSIGNIFICANT_CHAR		: .;

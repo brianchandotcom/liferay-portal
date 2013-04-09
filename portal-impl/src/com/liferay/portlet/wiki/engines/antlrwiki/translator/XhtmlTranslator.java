@@ -35,9 +35,8 @@ import com.liferay.portlet.wiki.engines.antlrwiki.translator.internal.Unformatte
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
+import java.util.List;
 
 /**
  * @author Miguel Pastor
@@ -142,7 +141,16 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append("<div class=\"toc\">");
 		append("<div class=\"collapsebox\">");
-		append("<h4>Table of Contents");
+
+		append("<h4>");
+
+		if (tableOfContentsNode.getTitle() != null) {
+			append(tableOfContentsNode.getTitle());
+		}
+		else {
+			append("Table of Contents");
+		}
+
 		append(StringPool.NBSP);
 		append("<a class=\"toc-trigger\" href=\"javascript:;\">[-]</a></h4>");
 		append("<div class=\"toc-index\">");

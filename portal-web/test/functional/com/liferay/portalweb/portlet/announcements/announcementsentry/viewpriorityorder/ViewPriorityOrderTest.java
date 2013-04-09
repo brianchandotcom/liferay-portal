@@ -42,10 +42,9 @@ public class ViewPriorityOrderTest extends BaseTestCase {
 			selenium.getText("xPath=(//td[@class='control-entry']/a)[1]"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("xpath=(//span[@class='entry-scope'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Important"),
-			selenium.getText(
-				"xpath=(//div[@class=' entry-content entry-type-general']/p)[1]"));
+		assertTrue(selenium.isPartialText(
+				"xpath=(//div[@class=' entry-content entry-type-general'])[1]",
+				"Announcements Entry Content Priority Important"));
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Normal"),
 			selenium.getText("xPath=(//h3[@class='entry-title']/a)[2]"));
@@ -58,9 +57,8 @@ public class ViewPriorityOrderTest extends BaseTestCase {
 			selenium.getText("xPath=(//td[@class='control-entry']/a)[2]"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("xpath=(//span[@class='entry-scope'])[2]"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Normal"),
-			selenium.getText(
-				"xpath=(//div[@class=' entry-content entry-type-general']/p)[2]"));
+		assertTrue(selenium.isPartialText(
+				"xpath=(//div[@class=' entry-content entry-type-general'])[2]",
+				"Announcements Entry Content Priority Normal"));
 	}
 }

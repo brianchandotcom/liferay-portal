@@ -32,16 +32,16 @@ public class DeleteAnnouncementsEntryGeneralTest extends BaseTestCase {
 			selenium.getText("//h3[@class='entry-title']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace("Announcements Entry Content"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
+				"Announcements Entry Content"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//td[@class='delete-entry']/span/a/span"));
 		selenium.click(RuntimeVariables.replace(
 				"//td[@class='delete-entry']/span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));

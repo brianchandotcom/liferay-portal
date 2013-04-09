@@ -64,10 +64,9 @@ public class ViewAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText(
 				"//div[contains(.,'Important')]/div/span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Important"),
-			selenium.getText(
-				"//div[contains(.,'Important')]/div[contains(@class,'entry-content')]/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[contains(.,'Important')]/div[contains(@class,'entry-content')]",
+				"Announcements Entry Content Priority Important"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//td[@class='edit-entry']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Delete"),
@@ -76,10 +75,9 @@ public class ViewAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 			selenium.getText("//td[@class='control-entry']/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//span[@class='entry-scope']"));
-		assertEquals(RuntimeVariables.replace(
-				"Announcements Entry Content Priority Important"),
-			selenium.getText(
-				"//div[@class=' entry-content entry-type-general']/p"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class=' entry-content entry-type-general']",
+				"Announcements Entry Content Priority Important"));
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
@@ -89,15 +87,20 @@ public class ViewAnnouncementsEntryPriorityImportantTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Add Entry']"));
 		assertEquals(RuntimeVariables.replace(
 				"Announcements Entry Title Priority Important"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
-			selenium.getText("//td[2]/a"));
-		assertTrue(selenium.isVisible("//td[3]/a"));
-		assertTrue(selenium.isVisible("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
+			selenium.getText(
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'Announcements Entry Title Priority Important')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

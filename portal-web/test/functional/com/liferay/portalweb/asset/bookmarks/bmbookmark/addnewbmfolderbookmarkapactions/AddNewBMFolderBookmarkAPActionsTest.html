@@ -79,23 +79,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Bookmarks</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Choose']</td>
+	<td>//iframe[contains(@id,'selectFolder')]</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'selectFolder')]</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'BM Folder Name')]/td[1]/a</td>
+	<td>BM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'BM Folder Name')]/td[1]/a</td>
+	<td>BM Folder Name</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'BM Folder Name')]/td[4]/span/span/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='Choose']</td>
+	<td>//tr[contains(.,'BM Folder Name')]/td[4]/span/span/input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
@@ -167,6 +187,21 @@
 	<td>assertText</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>BM Folder Bookmark Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//h3[@class='asset-title']/a</td>
+	<td>BM Folder Bookmark Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>BM Folder Bookmark Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='asset-content']/a</td>
+	<td>BM Folder Bookmark Name (http://www.liferay.com)(Opens New Window)</td>
 </tr>
 </tbody></table>
 </body>

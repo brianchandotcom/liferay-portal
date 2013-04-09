@@ -15,6 +15,8 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 
@@ -31,7 +33,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		for (String[] model : _MODELS) {
-			verifyModel(model[0], model[1]);
+			verifyModel(model[0], model[1],
+				GetterUtil.getBoolean(model[2], true));
 		}
 	}
 
@@ -77,7 +80,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	protected void verifyModel(String modelName, String pkColumnName)
+	protected void verifyModel(
+			String modelName, String pkColumnName,
+			boolean updateCreateModifiedDate)
 		throws Exception {
 
 		Connection con = null;
@@ -110,16 +115,32 @@ public class VerifyAuditedModel extends VerifyProcess {
 					defaultUserArray = getDefaultUserArray(con, companyId);
 				}
 
-				ps = con.prepareStatement(
-					"update " + modelName + " set userId = ?, userName = ?, " +
-						"createDate = ?, modifiedDate = ? where " +
-						pkColumnName + " = ?");
+				StringBundler sb = new StringBundler(7);
+				sb.append("update ");
+				sb.append(modelName);
+				sb.append(" set userId = ?, userName = ?");
+
+				if (updateCreateModifiedDate) {
+					sb.append(", createDate = ?, modifiedDate = ?");
+				}
+
+				sb.append(" where ");
+				sb.append(pkColumnName);
+				sb.append(" = ?");
+
+				ps = con.prepareStatement(sb.toString());
 
 				ps.setLong(1, (Long)defaultUserArray[0]);
 				ps.setString(2, (String)defaultUserArray[1]);
-				ps.setTimestamp(3, createDate);
-				ps.setTimestamp(4, createDate);
-				ps.setLong(5, tablePrimaryKey);
+
+				if (updateCreateModifiedDate) {
+					ps.setTimestamp(3, createDate);
+					ps.setTimestamp(4, createDate);
+					ps.setLong(5, tablePrimaryKey);
+				}
+				else {
+					ps.setLong(3, tablePrimaryKey);
+				}
 
 				ps.executeUpdate();
 
@@ -133,19 +154,19 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
-			"LayoutPrototype", "layoutPrototypeId"
+			"LayoutPrototype", "layoutPrototypeId", "true"
 		},
 		new String[] {
-			"LayoutSetPrototype", "layoutSetPrototypeId"
+			"LayoutSetPrototype", "layoutSetPrototypeId", "false"
 		},
 		new String[] {
-			"Organization_", "organizationId"
+			"Organization_", "organizationId", "true"
 		},
 		new String[] {
-			"Role_", "roleId"
+			"Role_", "roleId", "true"
 		},
 		new String[] {
-			"UserGroup", "userGroupId"
+			"UserGroup", "userGroupId", "true"
 		},
 	};
 

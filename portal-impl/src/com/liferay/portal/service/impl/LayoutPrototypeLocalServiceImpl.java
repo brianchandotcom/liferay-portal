@@ -47,60 +47,20 @@ public class LayoutPrototypeLocalServiceImpl
 			String description, boolean active)
 		throws PortalException, SystemException {
 
-		// Layout prototype
-
-		long layoutPrototypeId = counterLocalService.increment();
-
-		LayoutPrototype layoutPrototype = layoutPrototypePersistence.create(
-			layoutPrototypeId);
-
-		layoutPrototype.setCompanyId(companyId);
-		layoutPrototype.setNameMap(nameMap);
-		layoutPrototype.setDescription(description);
-		layoutPrototype.setActive(active);
-
-		layoutPrototypePersistence.update(layoutPrototype);
-
-		// Resources
-
-		if (userId > 0) {
-			resourceLocalService.addResources(
-				companyId, 0, userId, LayoutPrototype.class.getName(),
-				layoutPrototype.getLayoutPrototypeId(), false, false, false);
-		}
-
-		// Group
-
-		String friendlyURL =
-			"/template-" + layoutPrototype.getLayoutPrototypeId();
-
-		Group group = groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			LayoutPrototype.class.getName(),
-			layoutPrototype.getLayoutPrototypeId(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			layoutPrototype.getName(LocaleUtil.getDefault()), null, 0,
-			friendlyURL, false, true, null);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		layoutLocalService.addLayout(
-			userId, group.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			layoutPrototype.getName(LocaleUtil.getDefault()), null, null,
-			LayoutConstants.TYPE_PORTLET, false, "/layout", serviceContext);
-
-		return layoutPrototype;
+		return addLayoutPrototype(
+			userId, companyId, nameMap, description, active,
+			new ServiceContext());
 	}
 
 	public LayoutPrototype addLayoutPrototype(
-		long userId, long companyId, Map<Locale, String> nameMap,
-		String description, boolean active, ServiceContext serviceContext)
+			long userId, long companyId, Map<Locale, String> nameMap,
+			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout prototype
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		Date now = new Date();
 
 		long layoutPrototypeId = counterLocalService.increment();
@@ -108,19 +68,16 @@ public class LayoutPrototypeLocalServiceImpl
 		LayoutPrototype layoutPrototype = layoutPrototypePersistence.create(
 			layoutPrototypeId);
 
-		if (serviceContext != null) {
-			layoutPrototype.setUuid(serviceContext.getUuid());
-			layoutPrototype.setCreateDate(serviceContext.getCreateDate(now));
-			layoutPrototype.setModifiedDate(
-				serviceContext.getModifiedDate(now));
-		}
-		else {
-			layoutPrototype.setCreateDate(now);
-			layoutPrototype.setModifiedDate(now);
-		}
+		layoutPrototype.setUuid(serviceContext.getUuid());
+
 		layoutPrototype.setCompanyId(companyId);
 		layoutPrototype.setUserId(userId);
 		layoutPrototype.setUserName(user.getFullName());
+
+		layoutPrototype.setCreateDate(serviceContext.getCreateDate(now));
+		layoutPrototype.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+
 		layoutPrototype.setNameMap(nameMap);
 		layoutPrototype.setDescription(description);
 		layoutPrototype.setActive(active);
@@ -261,30 +218,13 @@ public class LayoutPrototypeLocalServiceImpl
 
 		// Layout prototype
 
-		LayoutPrototype layoutPrototype =
-			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
-
-		layoutPrototype.setNameMap(nameMap);
-		layoutPrototype.setDescription(description);
-		layoutPrototype.setActive(active);
-
-		layoutPrototypePersistence.update(layoutPrototype);
-
-		// Group
-
-		Group group = groupLocalService.getLayoutPrototypeGroup(
-			layoutPrototype.getCompanyId(), layoutPrototypeId);
-
-		group.setName(layoutPrototype.getName(LocaleUtil.getDefault()));
-
-		groupPersistence.update(group);
-
-		return layoutPrototype;
+		return updateLayoutPrototype(
+			layoutPrototypeId, nameMap, description, active, null);
 	}
 
 	public LayoutPrototype updateLayoutPrototype(
-		long layoutPrototypeId, Map<Locale, String> nameMap,
-		String description, boolean active, ServiceContext serviceContext)
+			long layoutPrototypeId, Map<Locale, String> nameMap,
+			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Layout prototype
@@ -292,7 +232,9 @@ public class LayoutPrototypeLocalServiceImpl
 		LayoutPrototype layoutPrototype =
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 
-		layoutPrototype.setModifiedDate(new Date());
+		layoutPrototype.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+
 		layoutPrototype.setNameMap(nameMap);
 		layoutPrototype.setDescription(description);
 		layoutPrototype.setActive(active);

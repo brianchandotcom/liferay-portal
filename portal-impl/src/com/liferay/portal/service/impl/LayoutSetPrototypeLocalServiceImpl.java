@@ -50,7 +50,12 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 		// Layout set prototype
 
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		Date now = new Date();
 
 		long layoutSetPrototypeId = counterLocalService.increment();
@@ -59,11 +64,15 @@ public class LayoutSetPrototypeLocalServiceImpl
 			layoutSetPrototypePersistence.create(layoutSetPrototypeId);
 
 		layoutSetPrototype.setUuid(serviceContext.getUuid());
+
 		layoutSetPrototype.setCompanyId(companyId);
 		layoutSetPrototype.setUserId(userId);
 		layoutSetPrototype.setUserName(user.getFullName());
+
 		layoutSetPrototype.setCreateDate(serviceContext.getCreateDate(now));
-		layoutSetPrototype.setModifiedDate(serviceContext.getModifiedDate(now));
+		layoutSetPrototype.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+
 		layoutSetPrototype.setNameMap(nameMap);
 		layoutSetPrototype.setDescription(description);
 		layoutSetPrototype.setActive(active);

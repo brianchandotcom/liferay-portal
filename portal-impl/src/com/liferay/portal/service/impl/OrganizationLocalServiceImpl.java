@@ -226,6 +226,8 @@ public class OrganizationLocalServiceImpl
 			user.getCompanyId(), parentOrganizationId, name, type, countryId,
 			statusId);
 
+		Date now = new Date();
+
 		long organizationId = counterLocalService.increment();
 
 		Organization organization = organizationPersistence.create(
@@ -236,12 +238,23 @@ public class OrganizationLocalServiceImpl
 		}
 
 		organization.setCompanyId(user.getCompanyId());
+		organization.setUserId(user.getUserId());
+		organization.setUserName(user.getFullName());
+
+		if (serviceContext != null) {
+			organization.setCreateDate(serviceContext.getCreateDate(now));
+			organization.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			organization.setCreateDate(now);
+			organization.setModifiedDate(now);
+		}
+
 		organization.setParentOrganizationId(parentOrganizationId);
 
 		String treePath = organization.buildTreePath();
 
 		organization.setTreePath(treePath);
-
 		organization.setName(name);
 		organization.setType(type);
 		organization.setRecursable(true);

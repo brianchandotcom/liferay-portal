@@ -14,12 +14,16 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
+import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -38,6 +42,21 @@ public class PortletPreferencesFinderImpl
 
 	public static final String FIND_BY_C_G_O_O_P_P =
 		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
+
+	public static final FinderPath
+		FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_O_O_P_P =
+			new FinderPath(
+				PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+				PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
+				PortletPreferencesImpl.class, PortletPreferencesPersistenceImpl
+					.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByC_G_O_O_P_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName(), Boolean.class.getName()
+				}
+			);
 
 	public List<PortletPreferences> findByPortletId(String portletId)
 		throws SystemException {
@@ -72,35 +91,95 @@ public class PortletPreferencesFinderImpl
 			String portletId, boolean privateLayout)
 		throws SystemException {
 
-		Session session = null;
+		Object[] finderArgs = new Object[] {
+			companyId, groupId, ownerId, ownerType, portletId, privateLayout};
 
-		try {
-			session = openSession();
+		List<PortletPreferences> list =
+			(List<PortletPreferences>)FinderCacheUtil.getResult(
+				FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_O_O_P_P, finderArgs,
+				this);
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P_P);
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletPreferences portletPreferences : list) {
+				if ((ownerId != portletPreferences.getOwnerId()) ||
+					(ownerType != portletPreferences.getOwnerType()) ||
+					!matchPortletId(
+							portletPreferences.getPortletId(), portletId)) {
 
-			SQLQuery q = session.createSQLQuery(sql);
+					list = null;
 
-			q.addEntity("PortletPreferences", PortletPreferencesImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(groupId);
-			qPos.add(ownerId);
-			qPos.add(ownerType);
-			qPos.add(portletId);
-			qPos.add(portletId.concat("_INSTANCE_%"));
-			qPos.add(privateLayout);
-
-			return q.list(true);
+					break;
+				}
+			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P_P);
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("PortletPreferences", PortletPreferencesImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+				qPos.add(groupId);
+				qPos.add(ownerId);
+				qPos.add(ownerType);
+				qPos.add(portletId);
+				qPos.add(portletId.concat("_INSTANCE_%"));
+				qPos.add(privateLayout);
+
+				list = q.list(true);
+
+				PortletPreferencesUtil.cacheResult(list);
+
+				FinderCacheUtil.putResult(
+					FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_O_O_P_P, finderArgs,
+					list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(
+					FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_O_O_P_P,
+					finderArgs);
+
+				throw new SystemException(e);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
-		finally {
-			closeSession(session);
+
+		return list;
+	}
+
+	protected boolean matchPortletId(
+		String portletPreferencesPortletId, String portletId) {
+
+		if (portletPreferencesPortletId == null) {
+			portletPreferencesPortletId = StringPool.BLANK;
 		}
+
+		if (portletId == null) {
+			portletId = StringPool.BLANK;
+		}
+
+		if (portletPreferencesPortletId.equals(portletId)) {
+			return true;
+		}
+
+		if (portletPreferencesPortletId.startsWith(
+				portletId.concat("_INSTANCE_"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

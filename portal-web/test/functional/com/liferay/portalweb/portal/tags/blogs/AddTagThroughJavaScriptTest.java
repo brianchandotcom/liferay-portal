@@ -85,10 +85,10 @@ public class AddTagThroughJavaScriptTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertEquals(RuntimeVariables.replace("test"),
+				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 					selenium.getText(
 						"//span[@class='taglib-asset-tags-summary']/a[2]"));
-				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
+				assertEquals(RuntimeVariables.replace("test"),
 					selenium.getText(
 						"//span[@class='taglib-asset-tags-summary']/a[3]"));
 

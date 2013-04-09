@@ -1312,7 +1312,8 @@ public class DataFactory {
 
 		return newSocialActivity(
 			journalArticle.getGroupId(), getJournalArticleClassNameId(),
-			journalArticle.getId(), type, journalArticle.getUrlTitle());
+			journalArticle.getResourcePrimKey(), type,
+			journalArticle.getUrlTitle());
 	}
 
 	public User newUser(int index) {

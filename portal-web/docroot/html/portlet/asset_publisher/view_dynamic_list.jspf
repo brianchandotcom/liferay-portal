@@ -121,6 +121,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			total = hits.getLength();
 
+			searchContainer.setTotal(total);
+
 			results = AssetUtil.getAssetEntries(hits);
 		}
 		else {

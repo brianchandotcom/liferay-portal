@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
 import java.nio.channels.GatheringByteChannel;
+import java.nio.channels.Pipe.SinkChannel;
+import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.Pipe;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SelectableChannel;
@@ -636,6 +638,189 @@ public class SelectorIntraBandTest {
 			peerSocketChannels[0].close();
 			peerSocketChannels[1].close();
 		}
+	}
+
+	@Test
+	public void testRegisterChannelReadWrite() throws Exception {
+
+		// Scattering byte channel is null
+
+		try {
+			_selectorIntraBand.registerChannel(null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Scattering byte channel is null", npe.getMessage());
+		}
+
+		// Gathering byte channel is null
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<ScatteringByteChannel>createProxy(
+					ScatteringByteChannel.class), null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Gathering byte channel is null", npe.getMessage());
+		}
+
+		// Scattering byte channel is not of type SelectableChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				IntraBandTestUtil.<ScatteringByteChannel>createProxy(
+					ScatteringByteChannel.class),
+				IntraBandTestUtil.<GatheringByteChannel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Scattering byte channel is not of type SelectableChannel",
+				iae.getMessage());
+		}
+
+		// Gathering byte channel is not of type SelectableChannel
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(false, false),
+				IntraBandTestUtil.<GatheringByteChannel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Gathering byte channel is not of type SelectableChannel",
+				iae.getMessage());
+		}
+
+		// Scattering byte channel is not valid for reading
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(false, true),
+				new MockDuplexSelectableChannel(true, true));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Scattering byte channel is not valid for reading",
+				iae.getMessage());
+		}
+
+		// Gathering byte channel is not valid for writing
+
+		try {
+			_selectorIntraBand.registerChannel(
+				new MockDuplexSelectableChannel(true, true),
+				new MockDuplexSelectableChannel(true, false));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Gathering byte channel is not valid for writing",
+				iae.getMessage());
+		}
+
+		// Interruptted on register
+
+		Pipe pipe = Pipe.open();
+
+		SourceChannel sourceChannel = pipe.source();
+		SinkChannel sinkChannel = pipe.sink();
+
+		final Thread mainThread = Thread.currentThread();
+
+		Thread wakeUpThread = new Thread(
+			new WakeUpRunnable(_selectorIntraBand));
+
+		Thread interruptThread = new Thread() {
+
+			@Override
+			public void run() {
+				while (mainThread.getState() != Thread.State.WAITING);
+
+				mainThread.interrupt();
+			}
+
+		};
+
+		wakeUpThread.start();
+
+		Selector selector = _selectorIntraBand.selector;
+
+		synchronized (selector) {
+			wakeUpThread.interrupt();
+			wakeUpThread.join();
+
+			interruptThread.start();
+
+			try {
+				_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+				Assert.fail();
+			}
+			catch (IOException ioe) {
+				Throwable cause = ioe.getCause();
+
+				Assert.assertTrue(cause instanceof InterruptedException);
+			}
+
+			interruptThread.join();
+		}
+
+		// Normal register
+
+		SelectionKeyRegistrationReference selectionKeyRegistrationReference =
+			(SelectionKeyRegistrationReference)
+				_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+		Assert.assertNotNull(selectionKeyRegistrationReference);
+
+		SelectionKey readSelectionKey =
+			selectionKeyRegistrationReference.readSelectionKey;
+
+		Assert.assertTrue(readSelectionKey.isValid());
+		Assert.assertEquals(
+			SelectionKey.OP_READ, readSelectionKey.interestOps());
+		Assert.assertNotNull(readSelectionKey.attachment());
+
+		SelectionKey writeSelectionKey =
+			selectionKeyRegistrationReference.writeSelectionKey;
+
+		Assert.assertTrue(writeSelectionKey.isValid());
+		Assert.assertEquals(
+			SelectionKey.OP_WRITE, writeSelectionKey.interestOps());
+		Assert.assertNotNull(writeSelectionKey.attachment());
+		Assert.assertSame(
+			readSelectionKey.attachment(), writeSelectionKey.attachment());
+
+		unregisterChannels(selectionKeyRegistrationReference);
+
+		// Register after close
+
+		_selectorIntraBand.close();
+
+		try {
+			_selectorIntraBand.registerChannel(sourceChannel, sinkChannel);
+
+			Assert.fail();
+		}
+		catch (ClosedIntraBandException cibe) {
+		}
+
+		sourceChannel.close();
+		sinkChannel.close();
 	}
 
 	@Aspect

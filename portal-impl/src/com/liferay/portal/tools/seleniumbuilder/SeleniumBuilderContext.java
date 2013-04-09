@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -381,6 +382,34 @@ public class SeleniumBuilderContext {
 
 	public String getTestSuiteSimpleClassName(String testCaseName) {
 		return _testSuiteSimpleClassNames.get(testCaseName);
+	}
+
+	public void validateActionElements(String actionName) {
+		Element rootElement = getActionRootElement(actionName);
+
+		if (rootElement == null) {
+			return;
+		}
+
+		List<Element> commandElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		Set<String> commandElementNames = new HashSet<String>();
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			if (commandElementNames.contains(commandName)) {
+				String actionFileName = getActionFileName(actionName);
+
+				_seleniumBuilderFileUtil.throwValidationException(
+					1009, actionFileName, commandElement, commandName);
+			}
+			else {
+				commandElementNames.add(commandName);
+			}
+		}
 	}
 
 	private String _getClassName(String fileName) {

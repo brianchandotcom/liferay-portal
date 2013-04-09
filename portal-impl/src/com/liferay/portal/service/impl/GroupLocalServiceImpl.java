@@ -1377,6 +1377,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return organizationGroups;
 	}
 
+	/**
+	 * Returns the parent groups in order by closest ancestor. The list
+	 * starts with the group itself.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the parent groups in order by closest ancestor
+	 * @throws PortalException if a group with the primary key could not
+	 *         be found
+	 * @throws SystemException if a system exception occurred
+	 */
 	public List<Group> getParentGroups(long groupId)
 		throws PortalException, SystemException {
 

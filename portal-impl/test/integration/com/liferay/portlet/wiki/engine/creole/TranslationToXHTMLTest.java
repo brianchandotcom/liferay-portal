@@ -21,17 +21,15 @@ import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Miguel Pastor
@@ -473,6 +471,23 @@ public class TranslationToXHTMLTest {
 						"<td>C9</td><td>C10</td><td>C11</td><td>C12</td>" +
 							"</tr></table>",
 			translate("table-2.creole"));
+	}
+
+	@Test
+	public void testParseTableOfContents() {
+		Assert.assertEquals(
+				"<h2> Level 1  </h2><h2> Level 2 </h2>",
+				translate("tableofcontents-1.creole"));
+	}
+
+	@Test
+	public void testParseTableOfContentsWithTitle() {
+		Assert.assertEquals(
+				"<h2> Level 1 (largest) </h2>" +
+					"<p><strong>L1 text</strong> </p>"  +
+					"<h2> Level 2 </h2>" +
+					"<h3> Level 3 </h3>",
+				translate("tableofcontents-2.creole"));
 	}
 
 	@Test

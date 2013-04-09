@@ -39,7 +39,6 @@ public class AddCategory2Test extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForVisible("//input[@id='_147_title_en_US']");
@@ -47,7 +46,6 @@ public class AddCategory2Test extends BaseTestCase {
 			RuntimeVariables.replace("Category2 Name"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Category2 Description"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
@@ -56,10 +54,13 @@ public class AddCategory2Test extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		selenium.waitForVisible("//li[2]/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category2 Name')]");
 		assertEquals(RuntimeVariables.replace("Category1 Name"),
-			selenium.getText("//li[1]/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category1 Name')]"));
 		assertEquals(RuntimeVariables.replace("Category2 Name"),
-			selenium.getText("//li[2]/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category2 Name')]"));
 	}
 }

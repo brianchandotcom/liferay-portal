@@ -80,14 +80,15 @@ public class TearDownVocabularyTest extends BaseTestCase {
 						"//input[@name='vocabulary-item-check']"));
 
 			case 2:
+				Thread.sleep(1000);
 				assertEquals(RuntimeVariables.replace(
 						"There are no vocabularies."),
 					selenium.getText(
-						"xpath=(//div[@class='lfr-message-response portlet-msg-info'])[1]"));
+						"xPath=(//div[@class='lfr-message-response portlet-msg-info'])[1]"));
 				assertEquals(RuntimeVariables.replace(
 						"There are no categories."),
 					selenium.getText(
-						"xpath=(//div[@class='lfr-message-response portlet-msg-info'])[2]"));
+						"xPath=(//div[@class='lfr-message-response portlet-msg-info'])[2]"));
 
 			case 100:
 				label = -1;

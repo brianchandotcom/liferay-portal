@@ -39,16 +39,20 @@ public class EditSubcategoryTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
 		selenium.clickAt("//div[@class='aui-tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
-		selenium.waitForVisible("//li/ul/li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]");
 		assertEquals(RuntimeVariables.replace("Subcategory Name"),
-			selenium.getText("//li/ul/li/div/div[4]"));
-		selenium.clickAt("//li/ul/li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]",
 			RuntimeVariables.replace("Subcategory Name"));
 		selenium.waitForText("//div[@class='view-category']/div/h1/span",
 			"Subcategory Name");
@@ -61,7 +65,6 @@ public class EditSubcategoryTest extends BaseTestCase {
 			RuntimeVariables.replace("Subcategory Name Edit"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Subcategory Description Edit"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
@@ -73,8 +76,10 @@ public class EditSubcategoryTest extends BaseTestCase {
 		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
 		selenium.clickAt("//div[@class='aui-tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
-		selenium.waitForVisible("//li/ul/li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name Edit')]");
 		assertEquals(RuntimeVariables.replace("Subcategory Name Edit"),
-			selenium.getText("//li/ul/li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name Edit')]"));
 	}
 }

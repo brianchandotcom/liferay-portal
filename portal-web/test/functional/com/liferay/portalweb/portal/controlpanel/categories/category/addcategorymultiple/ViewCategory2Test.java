@@ -39,10 +39,12 @@ public class ViewCategory2Test extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li[2]/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category2 Name')]");
 		assertEquals(RuntimeVariables.replace("Category2 Name"),
-			selenium.getText("//li[2]/div/div[4]"));
-		selenium.clickAt("//li[2]/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category2 Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category2 Name')]",
 			RuntimeVariables.replace("Category2 Name"));
 		selenium.waitForVisible("//div[@class='view-category']/div/h1/span");
 		assertEquals(RuntimeVariables.replace("Category2 Name"),

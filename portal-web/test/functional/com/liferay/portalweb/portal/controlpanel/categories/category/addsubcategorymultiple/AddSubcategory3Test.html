@@ -50,17 +50,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]</td>
 	<td>Category Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]</td>
 	<td>Category Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]</td>
 	<td>Category Name</td>
 </tr>
 <tr>
@@ -89,11 +89,6 @@
 	<td>Subcategory3 Description</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -120,22 +115,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li/ul/li[1]/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory1 Name')]</td>
 	<td>Subcategory1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/ul/li[1]/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory1 Name')]</td>
 	<td>Subcategory1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/ul/li[2]/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory2 Name')]</td>
 	<td>Subcategory2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/ul/li[3]/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory3 Name')]</td>
 	<td>Subcategory3 Name</td>
 </tr>
 </tbody></table>

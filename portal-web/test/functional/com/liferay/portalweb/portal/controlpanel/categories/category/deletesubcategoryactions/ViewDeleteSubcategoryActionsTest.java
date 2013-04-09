@@ -39,12 +39,15 @@ public class ViewDeleteSubcategoryActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='aui-tree-hitarea']"));
-		assertTrue(selenium.isElementNotPresent("//li/ul/li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]"));
 		assertFalse(selenium.isTextPresent("Subcategory Name"));
 	}
 }

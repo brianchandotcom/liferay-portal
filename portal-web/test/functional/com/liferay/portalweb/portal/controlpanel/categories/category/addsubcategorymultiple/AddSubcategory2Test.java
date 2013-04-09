@@ -39,10 +39,12 @@ public class AddSubcategory2Test extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//li/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
-			selenium.getText("//li/div/div[4]"));
-		selenium.clickAt("//li/div/div[4]",
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
+		selenium.clickAt("//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]",
 			RuntimeVariables.replace("Category Name"));
 		selenium.waitForVisible("//input[@value='Add Subcategory']");
 		selenium.clickAt("//input[@value='Add Subcategory']",
@@ -52,7 +54,6 @@ public class AddSubcategory2Test extends BaseTestCase {
 			RuntimeVariables.replace("Subcategory2 Name"));
 		selenium.type("//textarea[@id='_147_description_en_US']",
 			RuntimeVariables.replace("Subcategory2 Description"));
-		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
@@ -64,10 +65,13 @@ public class AddSubcategory2Test extends BaseTestCase {
 		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
 		selenium.clickAt("//div[@class='aui-tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
-		selenium.waitForVisible("//li/ul/li[1]/div/div[4]");
+		selenium.waitForVisible(
+			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory1 Name')]");
 		assertEquals(RuntimeVariables.replace("Subcategory1 Name"),
-			selenium.getText("//li/ul/li[1]/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory1 Name')]"));
 		assertEquals(RuntimeVariables.replace("Subcategory2 Name"),
-			selenium.getText("//li/ul/li[2]/div/div[4]"));
+			selenium.getText(
+				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory2 Name')]"));
 	}
 }

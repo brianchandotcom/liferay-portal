@@ -44,7 +44,8 @@ public class ViewCategoryNameNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("There are no categories."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-info']"));
-		assertTrue(selenium.isElementNotPresent("//li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 		assertFalse(selenium.isTextPresent("Category Name"));
 	}
 }

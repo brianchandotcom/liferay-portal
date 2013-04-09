@@ -55,9 +55,9 @@ public class AddCategoryTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
 		selenium.waitForVisible(
-			"//div[@class='vocabulary-categories']/div/ul/li[contains(.,'Category Name')]");
+			"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]");
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText(
-				"//div[@class='vocabulary-categories']/div/ul/li[contains(.,'Category Name')]"));
+				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
 	}
 }

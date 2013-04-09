@@ -49,11 +49,6 @@
 	<td>Categories</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Add Category']</td>
 	<td>Add Category</td>
@@ -74,11 +69,6 @@
 	<td>Category1 Description</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
@@ -95,12 +85,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category1 Name')]</td>
 	<td>Category1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//li/div/div[4]</td>
+	<td>//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category1 Name')]</td>
 	<td>Category1 Name</td>
 </tr>
 </tbody></table>

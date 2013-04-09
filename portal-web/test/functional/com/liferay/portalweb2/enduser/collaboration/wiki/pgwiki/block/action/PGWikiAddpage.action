@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<case locator-key1="PUBLISH">
+			<execute function="Click#valueClickAtAndWait" value1="Publish" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="BODY">
+			<execute function="Type#typeFrame" />
+		</case>
+	</command>
+</definition>

@@ -1,0 +1,10 @@
+<definition>
+	<command name="click">
+		<case locator-key1="WIKI_PAGE_ACTIONS_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+		<case comparator="startsWith" locator-key1="WIKI_PAGE_TABLE_ACTIONS_">
+			<execute function="Click#pauseTextClickAt" value1="Actions" />
+		</case>
+	</command>
+</definition>

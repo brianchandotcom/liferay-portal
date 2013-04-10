@@ -409,11 +409,11 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1008) {
 			throw new IllegalArgumentException(
-				prefix + "Duplicate name " + string + " at " + suffix);
+				prefix + "Duplicate file name " + string + " at " + suffix);
 		}
 		else if (errorCode == 1009) {
 			throw new IllegalArgumentException(
-				prefix + "Duplicate command name " + string + " in " + suffix);
+				prefix + "Duplicate command name " + string + " at " + suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(

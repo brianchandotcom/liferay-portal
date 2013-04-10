@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2013-04-09 11:37:12
+// $ANTLR 3.0.1 Creole10.g 2013-04-10 07:46:28
 
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -15420,9 +15420,7 @@ public class Creole10Parser extends Parser {
                     _fsp--;
                     if (failed) return tableOfContents;
                     if ( backtracking==0 ) {
-
-                      			tableOfContents.setTitle(t.toString());
-                      			
+                       tableOfContents.setTitle(t.toString()); 
                     }
                     match(input,81,FOLLOW_81_in_table_of_contents4760); if (failed) return tableOfContents;
                     match(input,TABLE_OF_CONTENTS_CLOSE,FOLLOW_TABLE_OF_CONTENTS_CLOSE_in_table_of_contents4765); if (failed) return tableOfContents;
@@ -15448,17 +15446,17 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start table_of_contents_title_text
-    // Creole10.g:1018:1: table_of_contents_title_text returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+ ;
+    // Creole10.g:1016:1: table_of_contents_title_text returns [StringBundler text = new StringBundler()] : (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+ ;
     public final StringBundler table_of_contents_title_text() throws RecognitionException {
         StringBundler text =  new StringBundler();
 
         Token c=null;
 
         try {
-            // Creole10.g:1019:2: ( (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+ )
-            // Creole10.g:1019:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+
+            // Creole10.g:1017:2: ( (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+ )
+            // Creole10.g:1017:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+
             {
-            // Creole10.g:1019:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+
+            // Creole10.g:1017:4: (c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE ) )+
             int cnt149=0;
             loop149:
             do {
@@ -15481,7 +15479,7 @@ public class Creole10Parser extends Parser {
 
                 switch (alt149) {
             	case 1 :
-            	    // Creole10.g:1019:6: c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE )
+            	    // Creole10.g:1017:6: c=~ ( LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN | EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE )
             	    {
             	    c=(Token)input.LT(1);
             	    if ( (input.LA(1)>=FORCED_END_OF_LINE && input.LA(1)<=WIKI)||(input.LA(1)>=POUND && input.LA(1)<=STAR)||(input.LA(1)>=PIPE && input.LA(1)<=ITAL)||(input.LA(1)>=EXTENSION && input.LA(1)<=FORCED_LINEBREAK)||(input.LA(1)>=NOWIKI_BLOCK_CLOSE && input.LA(1)<=TABLE_OF_CONTENTS_OPEN)||(input.LA(1)>=DASH && input.LA(1)<=81) ) {
@@ -15528,10 +15526,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start onestar
-    // Creole10.g:1022:1: onestar : ( ({...}? ( STAR )? ) | );
+    // Creole10.g:1020:1: onestar : ( ({...}? ( STAR )? ) | );
     public final void onestar() throws RecognitionException {
         try {
-            // Creole10.g:1023:2: ( ({...}? ( STAR )? ) | )
+            // Creole10.g:1021:2: ( ({...}? ( STAR )? ) | )
             int alt151=2;
             switch ( input.LA(1) ) {
             case STAR:
@@ -15547,7 +15545,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 1, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 1, input);
 
                     throw nvae;
                 }
@@ -15566,7 +15564,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 2, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 2, input);
 
                     throw nvae;
                 }
@@ -15585,7 +15583,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 3, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 3, input);
 
                     throw nvae;
                 }
@@ -15604,7 +15602,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 4, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 4, input);
 
                     throw nvae;
                 }
@@ -15623,7 +15621,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 5, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 5, input);
 
                     throw nvae;
                 }
@@ -15642,7 +15640,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 6, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 6, input);
 
                     throw nvae;
                 }
@@ -15661,7 +15659,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 7, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 7, input);
 
                     throw nvae;
                 }
@@ -15680,7 +15678,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 8, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 8, input);
 
                     throw nvae;
                 }
@@ -15690,8 +15688,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_9 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15700,7 +15698,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 9, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 9, input);
 
                     throw nvae;
                 }
@@ -15710,8 +15708,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_10 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15720,7 +15718,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 10, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 10, input);
 
                     throw nvae;
                 }
@@ -15739,7 +15737,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 11, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 11, input);
 
                     throw nvae;
                 }
@@ -15758,7 +15756,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 12, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 12, input);
 
                     throw nvae;
                 }
@@ -15840,7 +15838,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 13, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 13, input);
 
                     throw nvae;
                 }
@@ -15859,7 +15857,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 14, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 14, input);
 
                     throw nvae;
                 }
@@ -15878,7 +15876,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 15, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 15, input);
 
                     throw nvae;
                 }
@@ -15897,7 +15895,7 @@ public class Creole10Parser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 16, input);
+                        new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 16, input);
 
                     throw nvae;
                 }
@@ -15906,23 +15904,23 @@ public class Creole10Parser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1022:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 0, input);
+                    new NoViableAltException("1020:1: onestar : ( ({...}? ( STAR )? ) | );", 151, 0, input);
 
                 throw nvae;
             }
 
             switch (alt151) {
                 case 1 :
-                    // Creole10.g:1023:4: ({...}? ( STAR )? )
+                    // Creole10.g:1021:4: ({...}? ( STAR )? )
                     {
-                    // Creole10.g:1023:4: ({...}? ( STAR )? )
-                    // Creole10.g:1023:6: {...}? ( STAR )?
+                    // Creole10.g:1021:4: ({...}? ( STAR )? )
+                    // Creole10.g:1021:6: {...}? ( STAR )?
                     {
                     if ( !( input.LA(2) != STAR ) ) {
                         if (backtracking>0) {failed=true; return ;}
                         throw new FailedPredicateException(input, "onestar", " input.LA(2) != STAR ");
                     }
-                    // Creole10.g:1023:32: ( STAR )?
+                    // Creole10.g:1021:32: ( STAR )?
                     int alt150=2;
                     int LA150_0 = input.LA(1);
 
@@ -15931,7 +15929,7 @@ public class Creole10Parser extends Parser {
                     }
                     switch (alt150) {
                         case 1 :
-                            // Creole10.g:1023:34: STAR
+                            // Creole10.g:1021:34: STAR
                             {
                             match(input,STAR,FOLLOW_STAR_in_onestar4845); if (failed) return ;
 
@@ -15947,7 +15945,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1025:2: 
+                    // Creole10.g:1023:2: 
                     {
                     }
                     break;
@@ -15966,15 +15964,15 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start escaped
-    // Creole10.g:1026:1: escaped returns [ScapedNode scaped = new ScapedNode()] : ESCAPE c= . ;
+    // Creole10.g:1024:1: escaped returns [ScapedNode scaped = new ScapedNode()] : ESCAPE c= . ;
     public final ScapedNode escaped() throws RecognitionException {
         ScapedNode scaped =  new ScapedNode();
 
         Token c=null;
 
         try {
-            // Creole10.g:1027:2: ( ESCAPE c= . )
-            // Creole10.g:1027:4: ESCAPE c= .
+            // Creole10.g:1025:2: ( ESCAPE c= . )
+            // Creole10.g:1025:4: ESCAPE c= .
             {
             match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4866); if (failed) return scaped;
             c=(Token)input.LT(1);
@@ -15998,10 +15996,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start paragraph_separator
-    // Creole10.g:1030:1: paragraph_separator : ( ( newline )+ | EOF );
+    // Creole10.g:1028:1: paragraph_separator : ( ( newline )+ | EOF );
     public final void paragraph_separator() throws RecognitionException {
         try {
-            // Creole10.g:1031:2: ( ( newline )+ | EOF )
+            // Creole10.g:1029:2: ( ( newline )+ | EOF )
             int alt153=2;
             int LA153_0 = input.LA(1);
 
@@ -16014,15 +16012,15 @@ public class Creole10Parser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1030:1: paragraph_separator : ( ( newline )+ | EOF );", 153, 0, input);
+                    new NoViableAltException("1028:1: paragraph_separator : ( ( newline )+ | EOF );", 153, 0, input);
 
                 throw nvae;
             }
             switch (alt153) {
                 case 1 :
-                    // Creole10.g:1031:4: ( newline )+
+                    // Creole10.g:1029:4: ( newline )+
                     {
-                    // Creole10.g:1031:4: ( newline )+
+                    // Creole10.g:1029:4: ( newline )+
                     int cnt152=0;
                     loop152:
                     do {
@@ -16036,7 +16034,7 @@ public class Creole10Parser extends Parser {
 
                         switch (alt152) {
                     	case 1 :
-                    	    // Creole10.g:1031:6: newline
+                    	    // Creole10.g:1029:6: newline
                     	    {
                     	    pushFollow(FOLLOW_newline_in_paragraph_separator4890);
                     	    newline();
@@ -16060,7 +16058,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1032:4: EOF
+                    // Creole10.g:1030:4: EOF
                     {
                     match(input,EOF,FOLLOW_EOF_in_paragraph_separator4898); if (failed) return ;
 
@@ -16081,13 +16079,13 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start whitespaces
-    // Creole10.g:1034:1: whitespaces : ( blanks | newline )+ ;
+    // Creole10.g:1032:1: whitespaces : ( blanks | newline )+ ;
     public final void whitespaces() throws RecognitionException {
         try {
-            // Creole10.g:1035:2: ( ( blanks | newline )+ )
-            // Creole10.g:1035:4: ( blanks | newline )+
+            // Creole10.g:1033:2: ( ( blanks | newline )+ )
+            // Creole10.g:1033:4: ( blanks | newline )+
             {
-            // Creole10.g:1035:4: ( blanks | newline )+
+            // Creole10.g:1033:4: ( blanks | newline )+
             int cnt154=0;
             loop154:
             do {
@@ -16104,7 +16102,7 @@ public class Creole10Parser extends Parser {
 
                 switch (alt154) {
             	case 1 :
-            	    // Creole10.g:1035:6: blanks
+            	    // Creole10.g:1033:6: blanks
             	    {
             	    pushFollow(FOLLOW_blanks_in_whitespaces4910);
             	    blanks();
@@ -16114,7 +16112,7 @@ public class Creole10Parser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // Creole10.g:1035:15: newline
+            	    // Creole10.g:1033:15: newline
             	    {
             	    pushFollow(FOLLOW_newline_in_whitespaces4914);
             	    newline();
@@ -16150,11 +16148,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start blanks
-    // Creole10.g:1037:1: blanks : BLANKS ;
+    // Creole10.g:1035:1: blanks : BLANKS ;
     public final void blanks() throws RecognitionException {
         try {
-            // Creole10.g:1038:2: ( BLANKS )
-            // Creole10.g:1038:4: BLANKS
+            // Creole10.g:1036:2: ( BLANKS )
+            // Creole10.g:1036:4: BLANKS
             {
             match(input,BLANKS,FOLLOW_BLANKS_in_blanks4927); if (failed) return ;
 
@@ -16173,10 +16171,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start text_lineseparator
-    // Creole10.g:1040:1: text_lineseparator : ( newline ( blanks )? | EOF );
+    // Creole10.g:1038:1: text_lineseparator : ( newline ( blanks )? | EOF );
     public final void text_lineseparator() throws RecognitionException {
         try {
-            // Creole10.g:1041:2: ( newline ( blanks )? | EOF )
+            // Creole10.g:1039:2: ( newline ( blanks )? | EOF )
             int alt156=2;
             int LA156_0 = input.LA(1);
 
@@ -16189,19 +16187,19 @@ public class Creole10Parser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1040:1: text_lineseparator : ( newline ( blanks )? | EOF );", 156, 0, input);
+                    new NoViableAltException("1038:1: text_lineseparator : ( newline ( blanks )? | EOF );", 156, 0, input);
 
                 throw nvae;
             }
             switch (alt156) {
                 case 1 :
-                    // Creole10.g:1041:4: newline ( blanks )?
+                    // Creole10.g:1039:4: newline ( blanks )?
                     {
                     pushFollow(FOLLOW_newline_in_text_lineseparator4937);
                     newline();
                     _fsp--;
                     if (failed) return ;
-                    // Creole10.g:1041:13: ( blanks )?
+                    // Creole10.g:1039:13: ( blanks )?
                     int alt155=2;
                     int LA155_0 = input.LA(1);
 
@@ -16210,7 +16208,7 @@ public class Creole10Parser extends Parser {
                     }
                     switch (alt155) {
                         case 1 :
-                            // Creole10.g:1041:15: blanks
+                            // Creole10.g:1039:15: blanks
                             {
                             pushFollow(FOLLOW_blanks_in_text_lineseparator4942);
                             blanks();
@@ -16226,7 +16224,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1042:4: EOF
+                    // Creole10.g:1040:4: EOF
                     {
                     match(input,EOF,FOLLOW_EOF_in_text_lineseparator4950); if (failed) return ;
 
@@ -16247,11 +16245,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start newline
-    // Creole10.g:1044:1: newline : NEWLINE ;
+    // Creole10.g:1042:1: newline : NEWLINE ;
     public final void newline() throws RecognitionException {
         try {
-            // Creole10.g:1045:2: ( NEWLINE )
-            // Creole10.g:1045:4: NEWLINE
+            // Creole10.g:1043:2: ( NEWLINE )
+            // Creole10.g:1043:4: NEWLINE
             {
             match(input,NEWLINE,FOLLOW_NEWLINE_in_newline4960); if (failed) return ;
 
@@ -16270,11 +16268,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start bold_markup
-    // Creole10.g:1047:1: bold_markup : STAR STAR ;
+    // Creole10.g:1045:1: bold_markup : STAR STAR ;
     public final void bold_markup() throws RecognitionException {
         try {
-            // Creole10.g:1048:2: ( STAR STAR )
-            // Creole10.g:1048:4: STAR STAR
+            // Creole10.g:1046:2: ( STAR STAR )
+            // Creole10.g:1046:4: STAR STAR
             {
             match(input,STAR,FOLLOW_STAR_in_bold_markup4970); if (failed) return ;
             match(input,STAR,FOLLOW_STAR_in_bold_markup4973); if (failed) return ;
@@ -16294,11 +16292,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start ital_markup
-    // Creole10.g:1050:1: ital_markup : ITAL ;
+    // Creole10.g:1048:1: ital_markup : ITAL ;
     public final void ital_markup() throws RecognitionException {
         try {
-            // Creole10.g:1051:2: ( ITAL )
-            // Creole10.g:1051:4: ITAL
+            // Creole10.g:1049:2: ( ITAL )
+            // Creole10.g:1049:4: ITAL
             {
             match(input,ITAL,FOLLOW_ITAL_in_ital_markup4983); if (failed) return ;
 
@@ -16317,11 +16315,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start heading_markup
-    // Creole10.g:1053:1: heading_markup : EQUAL ;
+    // Creole10.g:1051:1: heading_markup : EQUAL ;
     public final void heading_markup() throws RecognitionException {
         try {
-            // Creole10.g:1054:2: ( EQUAL )
-            // Creole10.g:1054:4: EQUAL
+            // Creole10.g:1052:2: ( EQUAL )
+            // Creole10.g:1052:4: EQUAL
             {
             match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup4993); if (failed) return ;
 
@@ -16342,14 +16340,14 @@ public class Creole10Parser extends Parser {
     };
 
     // $ANTLR start list_ordelem_markup
-    // Creole10.g:1056:1: list_ordelem_markup : POUND ;
+    // Creole10.g:1054:1: list_ordelem_markup : POUND ;
     public final list_ordelem_markup_return list_ordelem_markup() throws RecognitionException {
         list_ordelem_markup_return retval = new list_ordelem_markup_return();
         retval.start = input.LT(1);
 
         try {
-            // Creole10.g:1057:2: ( POUND )
-            // Creole10.g:1057:4: POUND
+            // Creole10.g:1055:2: ( POUND )
+            // Creole10.g:1055:4: POUND
             {
             match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup5003); if (failed) return retval;
 
@@ -16372,14 +16370,14 @@ public class Creole10Parser extends Parser {
     };
 
     // $ANTLR start list_unordelem_markup
-    // Creole10.g:1059:1: list_unordelem_markup : STAR ;
+    // Creole10.g:1057:1: list_unordelem_markup : STAR ;
     public final list_unordelem_markup_return list_unordelem_markup() throws RecognitionException {
         list_unordelem_markup_return retval = new list_unordelem_markup_return();
         retval.start = input.LT(1);
 
         try {
-            // Creole10.g:1060:2: ( STAR )
-            // Creole10.g:1060:4: STAR
+            // Creole10.g:1058:2: ( STAR )
+            // Creole10.g:1058:4: STAR
             {
             match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup5013); if (failed) return retval;
 
@@ -16400,10 +16398,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start list_elemseparator
-    // Creole10.g:1062:1: list_elemseparator : ( newline ( blanks )? | EOF );
+    // Creole10.g:1060:1: list_elemseparator : ( newline ( blanks )? | EOF );
     public final void list_elemseparator() throws RecognitionException {
         try {
-            // Creole10.g:1063:2: ( newline ( blanks )? | EOF )
+            // Creole10.g:1061:2: ( newline ( blanks )? | EOF )
             int alt158=2;
             int LA158_0 = input.LA(1);
 
@@ -16416,19 +16414,19 @@ public class Creole10Parser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1062:1: list_elemseparator : ( newline ( blanks )? | EOF );", 158, 0, input);
+                    new NoViableAltException("1060:1: list_elemseparator : ( newline ( blanks )? | EOF );", 158, 0, input);
 
                 throw nvae;
             }
             switch (alt158) {
                 case 1 :
-                    // Creole10.g:1063:4: newline ( blanks )?
+                    // Creole10.g:1061:4: newline ( blanks )?
                     {
                     pushFollow(FOLLOW_newline_in_list_elemseparator5023);
                     newline();
                     _fsp--;
                     if (failed) return ;
-                    // Creole10.g:1063:13: ( blanks )?
+                    // Creole10.g:1061:13: ( blanks )?
                     int alt157=2;
                     int LA157_0 = input.LA(1);
 
@@ -16437,7 +16435,7 @@ public class Creole10Parser extends Parser {
                     }
                     switch (alt157) {
                         case 1 :
-                            // Creole10.g:1063:15: blanks
+                            // Creole10.g:1061:15: blanks
                             {
                             pushFollow(FOLLOW_blanks_in_list_elemseparator5028);
                             blanks();
@@ -16453,7 +16451,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1064:4: EOF
+                    // Creole10.g:1062:4: EOF
                     {
                     match(input,EOF,FOLLOW_EOF_in_list_elemseparator5036); if (failed) return ;
 
@@ -16474,10 +16472,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start end_of_list
-    // Creole10.g:1066:1: end_of_list : ( newline | EOF );
+    // Creole10.g:1064:1: end_of_list : ( newline | EOF );
     public final void end_of_list() throws RecognitionException {
         try {
-            // Creole10.g:1067:2: ( newline | EOF )
+            // Creole10.g:1065:2: ( newline | EOF )
             int alt159=2;
             int LA159_0 = input.LA(1);
 
@@ -16490,13 +16488,13 @@ public class Creole10Parser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1066:1: end_of_list : ( newline | EOF );", 159, 0, input);
+                    new NoViableAltException("1064:1: end_of_list : ( newline | EOF );", 159, 0, input);
 
                 throw nvae;
             }
             switch (alt159) {
                 case 1 :
-                    // Creole10.g:1067:4: newline
+                    // Creole10.g:1065:4: newline
                     {
                     pushFollow(FOLLOW_newline_in_end_of_list5046);
                     newline();
@@ -16506,7 +16504,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1068:4: EOF
+                    // Creole10.g:1066:4: EOF
                     {
                     match(input,EOF,FOLLOW_EOF_in_end_of_list5051); if (failed) return ;
 
@@ -16527,11 +16525,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start table_cell_markup
-    // Creole10.g:1070:1: table_cell_markup : PIPE ;
+    // Creole10.g:1068:1: table_cell_markup : PIPE ;
     public final void table_cell_markup() throws RecognitionException {
         try {
-            // Creole10.g:1071:2: ( PIPE )
-            // Creole10.g:1071:4: PIPE
+            // Creole10.g:1069:2: ( PIPE )
+            // Creole10.g:1069:4: PIPE
             {
             match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5061); if (failed) return ;
 
@@ -16550,11 +16548,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start table_headercell_markup
-    // Creole10.g:1073:1: table_headercell_markup : PIPE EQUAL ;
+    // Creole10.g:1071:1: table_headercell_markup : PIPE EQUAL ;
     public final void table_headercell_markup() throws RecognitionException {
         try {
-            // Creole10.g:1074:2: ( PIPE EQUAL )
-            // Creole10.g:1074:4: PIPE EQUAL
+            // Creole10.g:1072:2: ( PIPE EQUAL )
+            // Creole10.g:1072:4: PIPE EQUAL
             {
             match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5071); if (failed) return ;
             match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5074); if (failed) return ;
@@ -16574,10 +16572,10 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start table_rowseparator
-    // Creole10.g:1076:1: table_rowseparator : ( newline | EOF );
+    // Creole10.g:1074:1: table_rowseparator : ( newline | EOF );
     public final void table_rowseparator() throws RecognitionException {
         try {
-            // Creole10.g:1077:2: ( newline | EOF )
+            // Creole10.g:1075:2: ( newline | EOF )
             int alt160=2;
             int LA160_0 = input.LA(1);
 
@@ -16590,13 +16588,13 @@ public class Creole10Parser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("1076:1: table_rowseparator : ( newline | EOF );", 160, 0, input);
+                    new NoViableAltException("1074:1: table_rowseparator : ( newline | EOF );", 160, 0, input);
 
                 throw nvae;
             }
             switch (alt160) {
                 case 1 :
-                    // Creole10.g:1077:4: newline
+                    // Creole10.g:1075:4: newline
                     {
                     pushFollow(FOLLOW_newline_in_table_rowseparator5084);
                     newline();
@@ -16606,7 +16604,7 @@ public class Creole10Parser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Creole10.g:1078:4: EOF
+                    // Creole10.g:1076:4: EOF
                     {
                     match(input,EOF,FOLLOW_EOF_in_table_rowseparator5089); if (failed) return ;
 
@@ -16627,11 +16625,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start nowiki_open_markup
-    // Creole10.g:1080:1: nowiki_open_markup : NOWIKI_OPEN ;
+    // Creole10.g:1078:1: nowiki_open_markup : NOWIKI_OPEN ;
     public final void nowiki_open_markup() throws RecognitionException {
         try {
-            // Creole10.g:1081:2: ( NOWIKI_OPEN )
-            // Creole10.g:1081:4: NOWIKI_OPEN
+            // Creole10.g:1079:2: ( NOWIKI_OPEN )
+            // Creole10.g:1079:4: NOWIKI_OPEN
             {
             match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5099); if (failed) return ;
 
@@ -16650,11 +16648,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start nowiki_close_markup
-    // Creole10.g:1083:1: nowiki_close_markup : NOWIKI_CLOSE ;
+    // Creole10.g:1081:1: nowiki_close_markup : NOWIKI_CLOSE ;
     public final void nowiki_close_markup() throws RecognitionException {
         try {
-            // Creole10.g:1084:2: ( NOWIKI_CLOSE )
-            // Creole10.g:1084:4: NOWIKI_CLOSE
+            // Creole10.g:1082:2: ( NOWIKI_CLOSE )
+            // Creole10.g:1082:4: NOWIKI_CLOSE
             {
             match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5109); if (failed) return ;
 
@@ -16673,11 +16671,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start horizontalrule_markup
-    // Creole10.g:1086:1: horizontalrule_markup : DASH DASH DASH DASH ;
+    // Creole10.g:1084:1: horizontalrule_markup : DASH DASH DASH DASH ;
     public final void horizontalrule_markup() throws RecognitionException {
         try {
-            // Creole10.g:1087:2: ( DASH DASH DASH DASH )
-            // Creole10.g:1087:4: DASH DASH DASH DASH
+            // Creole10.g:1085:2: ( DASH DASH DASH DASH )
+            // Creole10.g:1085:4: DASH DASH DASH DASH
             {
             match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5119); if (failed) return ;
             match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5122); if (failed) return ;
@@ -16699,11 +16697,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start link_open_markup
-    // Creole10.g:1089:1: link_open_markup : LINK_OPEN ;
+    // Creole10.g:1087:1: link_open_markup : LINK_OPEN ;
     public final void link_open_markup() throws RecognitionException {
         try {
-            // Creole10.g:1090:2: ( LINK_OPEN )
-            // Creole10.g:1090:4: LINK_OPEN
+            // Creole10.g:1088:2: ( LINK_OPEN )
+            // Creole10.g:1088:4: LINK_OPEN
             {
             match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5138); if (failed) return ;
 
@@ -16722,11 +16720,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start link_close_markup
-    // Creole10.g:1092:1: link_close_markup : LINK_CLOSE ;
+    // Creole10.g:1090:1: link_close_markup : LINK_CLOSE ;
     public final void link_close_markup() throws RecognitionException {
         try {
-            // Creole10.g:1093:2: ( LINK_CLOSE )
-            // Creole10.g:1093:4: LINK_CLOSE
+            // Creole10.g:1091:2: ( LINK_CLOSE )
+            // Creole10.g:1091:4: LINK_CLOSE
             {
             match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5148); if (failed) return ;
 
@@ -16745,11 +16743,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start link_description_markup
-    // Creole10.g:1095:1: link_description_markup : PIPE ;
+    // Creole10.g:1093:1: link_description_markup : PIPE ;
     public final void link_description_markup() throws RecognitionException {
         try {
-            // Creole10.g:1096:2: ( PIPE )
-            // Creole10.g:1096:4: PIPE
+            // Creole10.g:1094:2: ( PIPE )
+            // Creole10.g:1094:4: PIPE
             {
             match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5158); if (failed) return ;
 
@@ -16768,11 +16766,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start image_open_markup
-    // Creole10.g:1098:1: image_open_markup : IMAGE_OPEN ;
+    // Creole10.g:1096:1: image_open_markup : IMAGE_OPEN ;
     public final void image_open_markup() throws RecognitionException {
         try {
-            // Creole10.g:1099:2: ( IMAGE_OPEN )
-            // Creole10.g:1099:4: IMAGE_OPEN
+            // Creole10.g:1097:2: ( IMAGE_OPEN )
+            // Creole10.g:1097:4: IMAGE_OPEN
             {
             match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5168); if (failed) return ;
 
@@ -16791,11 +16789,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start image_close_markup
-    // Creole10.g:1101:1: image_close_markup : IMAGE_CLOSE ;
+    // Creole10.g:1099:1: image_close_markup : IMAGE_CLOSE ;
     public final void image_close_markup() throws RecognitionException {
         try {
-            // Creole10.g:1102:2: ( IMAGE_CLOSE )
-            // Creole10.g:1102:4: IMAGE_CLOSE
+            // Creole10.g:1100:2: ( IMAGE_CLOSE )
+            // Creole10.g:1100:4: IMAGE_CLOSE
             {
             match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5178); if (failed) return ;
 
@@ -16814,11 +16812,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start image_alternative_markup
-    // Creole10.g:1104:1: image_alternative_markup : PIPE ;
+    // Creole10.g:1102:1: image_alternative_markup : PIPE ;
     public final void image_alternative_markup() throws RecognitionException {
         try {
-            // Creole10.g:1105:2: ( PIPE )
-            // Creole10.g:1105:4: PIPE
+            // Creole10.g:1103:2: ( PIPE )
+            // Creole10.g:1103:4: PIPE
             {
             match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5188); if (failed) return ;
 
@@ -16837,11 +16835,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start extension_markup
-    // Creole10.g:1107:1: extension_markup : EXTENSION ;
+    // Creole10.g:1105:1: extension_markup : EXTENSION ;
     public final void extension_markup() throws RecognitionException {
         try {
-            // Creole10.g:1108:2: ( EXTENSION )
-            // Creole10.g:1108:4: EXTENSION
+            // Creole10.g:1106:2: ( EXTENSION )
+            // Creole10.g:1106:4: EXTENSION
             {
             match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5198); if (failed) return ;
 
@@ -16860,11 +16858,11 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start forced_linebreak
-    // Creole10.g:1110:1: forced_linebreak : FORCED_LINEBREAK ;
+    // Creole10.g:1108:1: forced_linebreak : FORCED_LINEBREAK ;
     public final void forced_linebreak() throws RecognitionException {
         try {
-            // Creole10.g:1111:2: ( FORCED_LINEBREAK )
-            // Creole10.g:1111:4: FORCED_LINEBREAK
+            // Creole10.g:1109:2: ( FORCED_LINEBREAK )
+            // Creole10.g:1109:4: FORCED_LINEBREAK
             {
             match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5208); if (failed) return ;
 

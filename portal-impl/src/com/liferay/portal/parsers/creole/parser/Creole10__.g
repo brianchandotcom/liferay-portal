@@ -61,64 +61,64 @@ T79 : 'TableOfContents' ;
 T80 : 'TableOfContents title=' ;
 T81 : '\"' ;
 
-// $ANTLR src "Creole10.g" 1120
+// $ANTLR src "Creole10.g" 1118
 ESCAPE					: '~';
-// $ANTLR src "Creole10.g" 1121
+// $ANTLR src "Creole10.g" 1119
 NOWIKI_BLOCK_CLOSE		: NEWLINE  '}}}';
-// $ANTLR src "Creole10.g" 1122
+// $ANTLR src "Creole10.g" 1120
 NEWLINE					: ( CR )?  LF
 						| CR;
-// $ANTLR src "Creole10.g" 1124
+// $ANTLR src "Creole10.g" 1122
 fragment CR				: '\r';
-// $ANTLR src "Creole10.g" 1125
+// $ANTLR src "Creole10.g" 1123
 fragment LF				: '\n';
 
-// $ANTLR src "Creole10.g" 1127
+// $ANTLR src "Creole10.g" 1125
 BLANKS					: ( SPACE | TABULATOR )+;
-// $ANTLR src "Creole10.g" 1128
+// $ANTLR src "Creole10.g" 1126
 fragment SPACE			: ' ';
-// $ANTLR src "Creole10.g" 1129
+// $ANTLR src "Creole10.g" 1127
 fragment TABULATOR		: '\t';
 
-// $ANTLR src "Creole10.g" 1131
+// $ANTLR src "Creole10.g" 1129
 BRACE_CLOSE				: NEWLINE '}';
-// $ANTLR src "Creole10.g" 1132
+// $ANTLR src "Creole10.g" 1130
 COLON_SLASH				: ':'  '/';
-// $ANTLR src "Creole10.g" 1133
+// $ANTLR src "Creole10.g" 1131
 ITAL					: '//';
-// $ANTLR src "Creole10.g" 1134
+// $ANTLR src "Creole10.g" 1132
 NOWIKI_OPEN				: '{{{';
-// $ANTLR src "Creole10.g" 1135
+// $ANTLR src "Creole10.g" 1133
 NOWIKI_CLOSE			: '}}}';
-// $ANTLR src "Creole10.g" 1136
+// $ANTLR src "Creole10.g" 1134
 LINK_OPEN				: '[[';
-// $ANTLR src "Creole10.g" 1137
+// $ANTLR src "Creole10.g" 1135
 LINK_CLOSE				: ']]';
-// $ANTLR src "Creole10.g" 1138
+// $ANTLR src "Creole10.g" 1136
 IMAGE_OPEN				: '{{';
-// $ANTLR src "Creole10.g" 1139
+// $ANTLR src "Creole10.g" 1137
 IMAGE_CLOSE				: '}}';
-// $ANTLR src "Creole10.g" 1140
+// $ANTLR src "Creole10.g" 1138
 FORCED_LINEBREAK		: '\\\\';
-// $ANTLR src "Creole10.g" 1141
+// $ANTLR src "Creole10.g" 1139
 EQUAL					: '=';
-// $ANTLR src "Creole10.g" 1142
+// $ANTLR src "Creole10.g" 1140
 PIPE					: '|';
-// $ANTLR src "Creole10.g" 1143
+// $ANTLR src "Creole10.g" 1141
 POUND					: '#';
-// $ANTLR src "Creole10.g" 1144
+// $ANTLR src "Creole10.g" 1142
 DASH					: '-';
-// $ANTLR src "Creole10.g" 1145
+// $ANTLR src "Creole10.g" 1143
 STAR					: '*';
-// $ANTLR src "Creole10.g" 1146
+// $ANTLR src "Creole10.g" 1144
 SLASH					: '/';
-// $ANTLR src "Creole10.g" 1147
+// $ANTLR src "Creole10.g" 1145
 EXTENSION				: '@@';
 
-// $ANTLR src "Creole10.g" 1149
+// $ANTLR src "Creole10.g" 1147
 TABLE_OF_CONTENTS_OPEN	: '<<';
-// $ANTLR src "Creole10.g" 1150
+// $ANTLR src "Creole10.g" 1148
 TABLE_OF_CONTENTS_CLOSE	: '>>';
 
-// $ANTLR src "Creole10.g" 1152
+// $ANTLR src "Creole10.g" 1150
 INSIGNIFICANT_CHAR		: .;

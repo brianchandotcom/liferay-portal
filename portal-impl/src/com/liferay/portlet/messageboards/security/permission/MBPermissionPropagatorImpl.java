@@ -53,8 +53,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		List<MBMessage> messages = null;
 
 		if (className.equals(_mbModelResource)) {
-			categories = MBCategoryLocalServiceUtil.getMBCategories(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			categories = MBCategoryLocalServiceUtil.getCategories(
+				parentPrimKey);
 
 			messages = MBMessageLocalServiceUtil.getGroupMessages(
 				parentPrimKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,

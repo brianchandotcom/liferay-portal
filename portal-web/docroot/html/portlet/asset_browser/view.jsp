@@ -90,8 +90,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				continue;
 			}
 
-			assetEntry = assetEntry.toEscapedModel();
-
 			String rowHREF = null;
 
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
@@ -108,9 +106,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				sb.append("', '");
 				sb.append(assetRendererFactory.getTypeName(locale, true));
 				sb.append("', '");
-				sb.append(assetEntry.getTitle(locale));
+				sb.append(HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
 				sb.append("', '");
-				sb.append(HtmlUtil.escape(group.getDescriptiveName(locale)));
+				sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
 				sb.append("');Liferay.Util.getWindow().close();");
 
 				rowHREF = sb.toString();
@@ -118,11 +116,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			// Title
 
-			row.addText(assetEntry.getTitle(locale), rowHREF);
+			row.addText(HtmlUtil.escape(assetEntry.getTitle(locale)), rowHREF);
 
 			// Description
 
-			row.addText(HtmlUtil.stripHtml(HtmlUtil.unescape(assetEntry.getDescription(locale))), rowHREF);
+			row.addText(HtmlUtil.stripHtml(assetEntry.getDescription(locale)), rowHREF);
 
 			// User name
 

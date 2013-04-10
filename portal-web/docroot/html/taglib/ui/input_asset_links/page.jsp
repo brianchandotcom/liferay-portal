@@ -184,11 +184,11 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			var entryLink = '<a class="modify-link" data-rowId="' + entryId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
 
-			searchContainer.addRow([entryType, entryTitle, entryScope, entryLink], entryId);
+			searchContainer.addRow([entryType, A.Escape.html(entryTitle), A.Escape.html(entryScope), entryLink], entryId);
 
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container']
+		['liferay-search-container','escape']
 	);
 
 </aui:script>

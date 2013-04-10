@@ -4567,8 +4567,8 @@ public class PortalImpl implements Portal {
 					request, PortletKeys.DIRECTORY, layout.getPlid(),
 					PortletRequest.RENDER_PHASE);
 
-				portletURL.setWindowState(WindowState.MAXIMIZED);
 				portletURL.setPortletMode(PortletMode.VIEW);
+				portletURL.setWindowState(WindowState.MAXIMIZED);
 
 				portletURL.setParameter(
 					"struts_action", "/directory/view_user");

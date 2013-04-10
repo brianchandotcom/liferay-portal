@@ -160,11 +160,12 @@ public class CopyTemplateAction extends PortletAction {
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
+		portletURL.setWindowState(actionRequest.getWindowState());
+
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_mapping/copy_template");
 		portletURL.setParameter(
 			"templateId", String.valueOf(template.getTemplateId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
 	}

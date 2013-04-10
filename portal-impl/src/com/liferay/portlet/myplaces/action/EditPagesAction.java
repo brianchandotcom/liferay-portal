@@ -99,8 +99,8 @@ public class EditPagesAction extends PortletAction {
 				request, PortletKeys.LAYOUTS_ADMIN, layout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setWindowState(WindowState.MAXIMIZED);
 			portletURL.setPortletMode(PortletMode.VIEW);
+			portletURL.setWindowState(WindowState.MAXIMIZED);
 
 			portletURL.setParameter(
 				"struts_action", "/layouts_admin/edit_layouts");

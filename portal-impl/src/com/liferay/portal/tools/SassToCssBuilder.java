@@ -194,12 +194,12 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				if (_parseSassFile(fileName)) {
-					long end = System.currentTimeMillis();
+				_parseSassFile(fileName);
 
-					System.out.println(
-						"Parsed " + fileName + " in " + (end - start) + " ms");
-				}
+				long end = System.currentTimeMillis();
+
+				System.out.println(
+					"Parsed " + fileName + " in " + (end - start) + " ms");
 			}
 			catch (Exception e) {
 				System.out.println("Unable to parse " + fileName);
@@ -209,13 +209,9 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private boolean _parseSassFile(String fileName) throws Exception {
+	private void _parseSassFile(String fileName) throws Exception {
 		File file = new File(fileName);
 		File cacheFile = getCacheFile(fileName);
-
-		if (file.lastModified() == cacheFile.lastModified()) {
-			return false;
-		}
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
@@ -241,8 +237,6 @@ public class SassToCssBuilder {
 		FileUtil.write(cacheFile, parsedContent);
 
 		cacheFile.setLastModified(file.lastModified());
-
-		return true;
 	}
 
 	private RubyExecutor _rubyExecutor;

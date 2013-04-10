@@ -248,7 +248,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
 					}
 					else {
-						hasSavePermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
+						hasSavePermission = JournalPermission.contains(permissionChecker, groupId, ActionKeys.ADD_ARTICLE);
 					}
 
 					String saveButtonLabel = "save";
@@ -259,7 +259,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 					String publishButtonLabel = "publish";
 
-					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalArticle.class.getName())) {
 						publishButtonLabel = "submit-for-publication";
 					}
 

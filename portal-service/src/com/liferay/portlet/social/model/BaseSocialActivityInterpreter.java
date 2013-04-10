@@ -139,6 +139,10 @@ public abstract class BaseSocialActivityInterpreter
 
 		String body = getBody(activity, serviceContext);
 
+		if (Validator.isNull(title)) {
+			return null;
+		}
+
 		return new SocialActivityFeedEntry(link, title, body);
 	}
 

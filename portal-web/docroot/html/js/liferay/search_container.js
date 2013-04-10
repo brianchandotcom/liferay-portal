@@ -158,13 +158,13 @@ AUI.add(
 					addRow: function(arr, id) {
 						var instance = this;
 
-						var row;
+						var row, template;
 
 						if (id) {
-							row = instance._table.one('.' + CSS_TEMPLATE);
+							template = instance._table.one('.' + CSS_TEMPLATE);
 
-							if (row) {
-								row = row.clone();
+							if (template) {
+								row = template.clone();
 
 								var cells = row.all('> td');
 
@@ -181,7 +181,7 @@ AUI.add(
 									}
 								);
 
-								instance._table.append(row);
+								instance._table.insertBefore(row, template);
 
 								row.removeClass(CSS_TEMPLATE);
 

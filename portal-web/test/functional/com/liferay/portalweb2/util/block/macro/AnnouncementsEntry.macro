@@ -59,6 +59,44 @@
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="{entryContent}" />
 	</command>
 
+	<command name="pgEdit">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${distributionScope} ${entryContent}" />
+
+		<execute action="PGAnnouncements#click" locator-key1="ENTRY_EDIT_1" />
+
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE" value1="${entryTitleNew}" />
+
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL" value1="${entryURLNew}" />
+
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT" value1="${entryContentNew}" />
+
+		<execute action="PGAnnouncementsAddentry#click" locator-key1="SAVE" />
+
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleNew}" />
+
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE_1" value1="${distributionScope}" />
+
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${distributionScope} ${entryContentNew}" />
+
+		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
+
+		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE" value1="${distributionScope}" />
+
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${entryTitleNew}" />
+
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE_1" value1="${distributionScope}" />
+	</command>
+
 	<command name="pgTearDown">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

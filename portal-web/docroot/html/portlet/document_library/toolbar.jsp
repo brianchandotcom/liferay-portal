@@ -73,31 +73,27 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		/>
 	</c:if>
 
-	<c:choose>
-		<c:when test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
-			<%
-			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
-			%>
+	<%
+	String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
+	%>
 
-			<liferay-ui:icon-delete
-				confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
-				trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
-				url="<%= taglibURL %>"
-			/>
-		</c:when>
-		<c:otherwise>
+	<liferay-ui:icon-delete
+		confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+		id="moveToTrashAction"
+		trash="<%= true %>"
+		url="<%= taglibURL %>"
+	/>
 
-			<%
-			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
-			%>
+	<%
+	taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
+	%>
 
-			<liferay-ui:icon-delete
-				confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
-				url="<%= taglibURL %>"
-			/>
-		</c:otherwise>
-	</c:choose>
+	<liferay-ui:icon-delete
+		confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
+		id="deleteAction"
+		url="<%= taglibURL %>"
+	/>
 </liferay-ui:icon-menu>
 
 <span class="add-button" id="<portlet:namespace />addButtonContainer">

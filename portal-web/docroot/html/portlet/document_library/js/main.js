@@ -31,6 +31,8 @@ AUI.add(
 
 		var STR_PAGINATOR_DATA = 'paginatorData';
 
+		var STR_PARENT_NODE = 'parentNode';
+
 		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcutCheckbox';
 
 		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolderCheckbox';
@@ -190,6 +192,8 @@ AUI.add(
 						}
 
 						instance._toggleSyncNotification();
+
+						instance._toggleTrashAction();
 					},
 
 					destructor: function() {
@@ -318,6 +322,10 @@ AUI.add(
 						Liferay.fire(instance._eventDataProcessed);
 
 						WIN[instance.ns('toggleActionsButton')]();
+
+						if (event.data[instance.ns('viewEntries')] == true) {
+							instance._toggleTrashAction();
+						}
 					},
 
 					_onPageLoaded: function(event) {
@@ -562,6 +570,26 @@ AUI.add(
 							var syncMessageBoundingBox = instance._syncMessage.get('boundingBox');
 
 							syncMessageBoundingBox.toggleClass(CSS_SYNC_MESSAGE_HIDDEN, entriesPaginatorState.total <= 0);
+						}
+					},
+
+					_toggleTrashAction: function() {
+						var instance = this;
+
+						var isTrashEnabled = instance._config.isTrashEnabled;
+						var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
+						var scopeGroupId = themeDisplay.getScopeGroupId();
+
+						var deleteAction = A.one('#' + instance.NS + 'deleteAction');
+						var moveToTrashAction = A.one('#' + instance.NS + 'moveToTrashAction');
+
+						if ((scopeGroupId == repositoryId) && isTrashEnabled) {
+							deleteAction.get(STR_PARENT_NODE).hide();
+							moveToTrashAction.get(STR_PARENT_NODE).show();
+						}
+						else {
+							deleteAction.get(STR_PARENT_NODE).show();
+							moveToTrashAction.get(STR_PARENT_NODE).hide();
 						}
 					}
 				}

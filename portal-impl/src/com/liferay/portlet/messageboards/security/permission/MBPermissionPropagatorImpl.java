@@ -34,74 +34,83 @@ import javax.portlet.ActionRequest;
  */
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
-	public void propagateRolePermissions(
+	public void propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)
 		throws Exception {
 
-		if (!className.equals(MBCategory.class.getName()) &&
-			!className.equals(_mbModelResource)) {
+		long categoryId = GetterUtil.getLong(primKey);
 
-			return;
-		}
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+			categoryId);
 
-		long primaryKey = GetterUtil.getLong(primKey);
+		List<Object> categoriesAndThreads =
+			MBCategoryLocalServiceUtil.getCategoriesAndThreads(
+				category.getGroupId(), categoryId);
 
-		List<MBCategory> categories = null;
+		List<MBCategory> categories = new ArrayList<MBCategory>();
 		List<MBMessage> messages = null;
 
-		if (className.equals(_mbModelResource)) {
-			categories = MBCategoryLocalServiceUtil.getCategories(
-				primaryKey);
+		for (Object categoryOrThread : categoriesAndThreads) {
+			if (categoryOrThread instanceof MBThread) {
+				MBThread thread = (MBThread)categoryOrThread;
 
-			messages = MBMessageLocalServiceUtil.getGroupMessages(
-				primaryKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-		}
-		else {
-			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-				primaryKey);
+				messages = MBMessageLocalServiceUtil.getThreadMessages(
+					thread.getThreadId(), WorkflowConstants.STATUS_ANY);
+			}
+			else {
+				category = (MBCategory)categoryOrThread;
 
-			List<Object> categoriesAndThreads =
-				MBCategoryLocalServiceUtil.getCategoriesAndThreads(
-					category.getGroupId(), primaryKey);
+				List<Long> categoryIds = new ArrayList<Long>();
 
-			categories = new ArrayList<MBCategory>();
+				categoryIds.add(category.getCategoryId());
 
-			for (Object categoryOrThread : categoriesAndThreads) {
-				if (categoryOrThread instanceof MBThread) {
-					MBThread thread = (MBThread)categoryOrThread;
+				categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
+					categoryIds, category.getGroupId(),
+					category.getCategoryId());
 
-					messages = MBMessageLocalServiceUtil.getThreadMessages(
-						thread.getThreadId(), WorkflowConstants.STATUS_ANY);
-				}
-				else {
-					category = (MBCategory)categoryOrThread;
+				messages = new ArrayList<MBMessage>();
 
-					List<Long> categoryIds = new ArrayList<Long>();
+				for (Long addCategoryId : categoryIds) {
+					categories.add(
+						MBCategoryLocalServiceUtil.getCategory(addCategoryId));
 
-					categoryIds.add(category.getCategoryId());
-
-					categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
-						categoryIds, category.getGroupId(),
-						category.getCategoryId());
-
-					messages = new ArrayList<MBMessage>();
-
-					for (Long addCategoryId : categoryIds) {
-						categories.add(
-							MBCategoryLocalServiceUtil.getCategory(
-								addCategoryId));
-
-						messages.addAll(
-							MBMessageLocalServiceUtil.getCategoryMessages(
-								category.getGroupId(), addCategoryId,
-								WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-								QueryUtil.ALL_POS));
-					}
+					messages.addAll(
+						MBMessageLocalServiceUtil.getCategoryMessages(
+							category.getGroupId(), addCategoryId,
+							WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS));
 				}
 			}
 		}
+
+		propagateRolePermissions(
+			actionRequest, className, categoryId, roleIds, categories,
+			messages);
+	}
+
+	public void propagateMBRolePermissions(
+			ActionRequest actionRequest, String className, String primKey,
+			long[] roleIds)
+		throws Exception {
+
+		long groupId = GetterUtil.getLong(primKey);
+
+		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+			groupId);
+		List<MBMessage> messages = MBMessageLocalServiceUtil.getGroupMessages(
+			groupId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		propagateRolePermissions(
+			actionRequest, className, groupId, roleIds, categories, messages);
+	}
+
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, long primaryKey,
+			long[] roleIds, List<MBCategory> categories,
+			List<MBMessage> messages)
+		throws Exception {
 
 		for (long roleId : roleIds) {
 			for (MBCategory category : categories) {
@@ -118,6 +127,19 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	private final String _mbModelResource = "com.liferay.portlet.messageboards";
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, String primKey,
+			long[] roleIds)
+		throws Exception {
+
+		if (className.equals(MBCategory.class.getName())) {
+			propagateCategoryRolePermissions(
+				actionRequest, className, primKey, roleIds);
+		}
+		else if (className.equals("com.liferay.portlet.messageboards")) {
+			propagateMBRolePermissions(
+				actionRequest, className, primKey, roleIds);
+		}
+	}
 
 }

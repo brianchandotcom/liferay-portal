@@ -16,8 +16,6 @@ package com.liferay.portlet.messageboards.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -47,61 +45,57 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			return;
 		}
 
-		long parentPrimKey = GetterUtil.getLong(primKey);
+		long primaryKey = GetterUtil.getLong(primKey);
 
 		List<MBCategory> categories = null;
 		List<MBMessage> messages = null;
 
 		if (className.equals(_mbModelResource)) {
 			categories = MBCategoryLocalServiceUtil.getCategories(
-				parentPrimKey);
+				primaryKey);
 
 			messages = MBMessageLocalServiceUtil.getGroupMessages(
-				parentPrimKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				primaryKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
 		else {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-				parentPrimKey);
-
-			long groupId = category.getGroupId();
+				primaryKey);
 
 			List<Object> categoriesAndThreads =
 				MBCategoryLocalServiceUtil.getCategoriesAndThreads(
-					groupId, parentPrimKey);
+					category.getGroupId(), primaryKey);
 
 			categories = new ArrayList<MBCategory>();
-			messages = new ArrayList<MBMessage>();
 
 			for (Object categoryOrThread : categoriesAndThreads) {
 				if (categoryOrThread instanceof MBThread) {
-					long threadId = ((MBThread)categoryOrThread).getThreadId();
+					MBThread thread = (MBThread)categoryOrThread;
 
-					List<MBMessage> threadMessages =
-						MBMessageLocalServiceUtil.getThreadMessages(
-							threadId, WorkflowConstants.STATUS_ANY);
-
-					messages.addAll(threadMessages);
+					messages = MBMessageLocalServiceUtil.getThreadMessages(
+						thread.getThreadId(), WorkflowConstants.STATUS_ANY);
 				}
 				else {
-					long categoryId =
-						((MBCategory)categoryOrThread).getCategoryId();
+					category = (MBCategory)categoryOrThread;
 
-					List<Long> categoryIds = ListUtil.toList(
-						new long[]{categoryId});
+					List<Long> categoryIds = new ArrayList<Long>();
 
-					List<Long> addCategoryIds =
-						MBCategoryLocalServiceUtil.getSubcategoryIds(
-							categoryIds, groupId, categoryId);
+					categoryIds.add(category.getCategoryId());
 
-					for (Long addCategoryId : addCategoryIds) {
+					categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
+						categoryIds, category.getGroupId(),
+						category.getCategoryId());
+
+					messages = new ArrayList<MBMessage>();
+
+					for (Long addCategoryId : categoryIds) {
 						categories.add(
 							MBCategoryLocalServiceUtil.getCategory(
 								addCategoryId));
 
 						messages.addAll(
 							MBMessageLocalServiceUtil.getCategoryMessages(
-								groupId, addCategoryId,
+								category.getGroupId(), addCategoryId,
 								WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 								QueryUtil.ALL_POS));
 					}
@@ -112,13 +106,13 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		for (long roleId : roleIds) {
 			for (MBCategory category : categories) {
 				propagateRolePermissions(
-					actionRequest, roleId, className, parentPrimKey,
+					actionRequest, roleId, className, primaryKey,
 					MBCategory.class.getName(), category.getPrimaryKey());
 			}
 
 			for (MBMessage message : messages) {
 				propagateRolePermissions(
-					actionRequest, roleId, className, parentPrimKey,
+					actionRequest, roleId, className, primaryKey,
 					MBMessage.class.getName(), message.getPrimaryKey());
 			}
 		}

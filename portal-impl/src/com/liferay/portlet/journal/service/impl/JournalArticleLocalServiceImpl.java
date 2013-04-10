@@ -200,10 +200,11 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  layoutUuid the unique string identifying the web content
-	 *         article's page
+	 *         article's display page
 	 * @param  displayDateMonth the month the web content article is set to
 	 *         display
 	 * @param  displayDateDay the calendar day the web content article is set to
@@ -478,8 +479,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         UUID, creation date, modification date, expando bridge
 	 *         attributes, guest permissions, group permissions, asset category
@@ -908,7 +910,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the web content article and resources.
+	 * Deletes the web content article and its resources.
 	 *
 	 * @param  article the web content article
 	 * @throws PortalException if a portal exception occurred
@@ -921,8 +923,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the web content article and resources, optionally sending email
-	 * notifying denial of the article if it had not yet been approved.
+	 * Deletes the web content article and its resources, optionally sending
+	 * email notifying denial of the article if it had not yet been approved.
 	 *
 	 * @param  article the web content article
 	 * @param  articleURL the web content article's accessible URL to include in
@@ -1050,9 +1052,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the web content article and resources matching the group, article
-	 * ID, and version, optionally sending email notifying denial of the web
-	 * content article if it had not yet been approved.
+	 * Deletes the web content article and its resources matching the group,
+	 * article ID, and version, optionally sending email notifying denial of the
+	 * web content article if it had not yet been approved.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1077,9 +1079,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes all web content articles and resources matching the group and
-	 * article ID, optionally sending email notifying denial of article if it
-	 * had not yet been approved.
+	 * Deletes all web content articles and their resources matching the group
+	 * and article ID, optionally sending email notifying denial of article if
+	 * it had not yet been approved.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1141,7 +1143,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  includeTrashedEntries whether to include recycled web content
-	 *         article
+	 *         articles
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1159,11 +1161,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Deletes the layout's association with web content article for the group.
+	 * Deletes the layout's association with the web content articles for the
+	 * group.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  layoutUuid the unique string identifying the web content
-	 *         article's page
+	 *         article's display page
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteLayoutArticleReferences(long groupId, String layoutUuid)
@@ -1276,6 +1279,7 @@ public class JournalArticleLocalServiceImpl
 	/**
 	 * Returns the web content article with the ID.
 	 *
+	 * @param  id the primary key of the web content article
 	 * @return the web content article with the ID
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -1406,8 +1410,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  article the web content article
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  themeDisplay the theme display
@@ -1442,8 +1447,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  version the web content article's version
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  themeDisplay the theme display
 	 * @return the matching web content
@@ -1500,8 +1506,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  themeDisplay the theme display
 	 * @return the matching web content
@@ -1552,8 +1559,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  article the web content article
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  page the web content's page number. Page numbers start at
@@ -1780,8 +1788,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  version the web content article's version
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  page the web content's page number
@@ -1834,8 +1843,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  version the web content article's version
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  themeDisplay the theme display
@@ -1900,8 +1910,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  page the web content's page number
@@ -1938,8 +1949,9 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  viewMode the mode in which the web content is being viewed
 	 * @param  languageId the primary key of the language translation to get
 	 * @param  themeDisplay the theme display
@@ -2359,7 +2371,7 @@ public class JournalArticleLocalServiceImpl
 	 *         one to be displayed if no version of the article is currently
 	 *         displayed
 	 * @throws PortalException if no approved matching web content articles
-	 *         could not be found
+	 *         could be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getDisplayArticle(long groupId, String articleId)
@@ -2402,7 +2414,7 @@ public class JournalArticleLocalServiceImpl
 	 *         displayed, or next one to be displayed if no version of the
 	 *         article is currently displayed
 	 * @throws PortalException if no approved matching web content articles
-	 *         could not be found
+	 *         could be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getDisplayArticleByUrlTitle(
@@ -2812,8 +2824,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @return the matching web content articles
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2840,8 +2853,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
 	 * @param  end the upper bound of the range of web content articles to
@@ -2866,8 +2880,9 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @return the number of matching web content articles
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -3105,8 +3120,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Moves the latest version of web content article matching the group and
-	 * article ID to the recycle bin.
+	 * Moves the latest version of the web content article matching the group
+	 * and article ID to the recycle bin.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article
@@ -3302,8 +3317,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3384,8 +3400,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3471,8 +3488,9 @@ public class JournalArticleLocalServiceImpl
 	 *         DDM structures, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKeys the primary keys of the web content article's DDM
-	 *         templates, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         templates (originally <code>null</code>). If the articles are
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3547,8 +3565,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -3645,8 +3664,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  params the finder parameters (optionally <code>null</code>). Can
 	 *         set parameter <code>"includeDiscussions"</code> to
 	 *         <code>true</code> to search for the keywords in the web content
@@ -3758,8 +3778,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3819,8 +3840,9 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3886,8 +3908,9 @@ public class JournalArticleLocalServiceImpl
 	 *         DDM structures, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKeys the primary keys of the web content article's DDM
-	 *         templates, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         templates (originally <code>null</code>). If the articles are
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  displayDateGT the date after which a matching web content
 	 *         article's display date must be after (optionally
 	 *         <code>null</code>)
@@ -3974,7 +3997,7 @@ public class JournalArticleLocalServiceImpl
 	 *         see the content example in the class description for {@link
 	 *         JournalArticleLocalServiceImpl}.
 	 * @param  layoutUuid the unique string identifying the web content
-	 *         article's page
+	 *         article's display page
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, workflow actions, the
@@ -4117,10 +4140,11 @@ public class JournalArticleLocalServiceImpl
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
+	 *         template (optionally <code>null</code>). If the article is
+	 *         related to a DDM structure, the template's structure must match
+	 *         it.
 	 * @param  layoutUuid the unique string identifying the web content
-	 *         article's page
+	 *         article's display page
 	 * @param  displayDateMonth the month the web content article is set to
 	 *         display
 	 * @param  displayDateDay the calendar day the web content article is set to
@@ -4622,8 +4646,8 @@ public class JournalArticleLocalServiceImpl
 	 * Updates the web content article's asset with the new asset categories,
 	 * tag names, and link entries, removing and adding them as necessary.
 	 *
-	 * @param  userId the primary key of the user updating web content article's
-	 *         asset
+	 * @param  userId the primary key of the user updating the web content
+	 *         article's asset
 	 * @param  article the web content article
 	 * @param  assetCategoryIds the primary keys of the new asset categories
 	 * @param  assetTagNames the new asset tag names
@@ -5030,7 +5054,7 @@ public class JournalArticleLocalServiceImpl
 	 *         add the default command update for the web content article.
 	 * @return the updated web content article
 	 * @throws PortalException if a matching web content article could not be
-	 *         found, or if a portal exception occurred
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateStatus(
@@ -5065,7 +5089,7 @@ public class JournalArticleLocalServiceImpl
 	 *         add the default command update for the web content article.
 	 * @return the updated web content article
 	 * @throws PortalException if a matching web content article could not be
-	 *         found, or if a portal exception occurred
+	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle updateStatus(

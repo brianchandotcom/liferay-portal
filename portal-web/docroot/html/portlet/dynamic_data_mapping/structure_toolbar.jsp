@@ -17,12 +17,16 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
+String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+long classPK = ParamUtil.getLong(request, "classPK");
 %>
 
 <div class="lfr-portlet-toolbar">
 	<portlet:renderURL var="viewStructureURL">
 		<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
+		<portlet:param name="eventName" value="<%= eventName %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	</portlet:renderURL>
 
 	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">

@@ -729,7 +729,7 @@ public class OrganizationLocalServiceImpl
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		return getParentOrganizations(organization, true);
+		return organization.getAncestors();
 	}
 
 	/**
@@ -1819,35 +1819,6 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return parentOrganizationId;
-	}
-
-	protected List<Organization> getParentOrganizations(
-			Organization organization, boolean lastOrganization)
-		throws PortalException, SystemException {
-
-		List<Organization> organizations = new ArrayList<Organization>();
-
-		if (!lastOrganization) {
-			organizations.add(organization);
-		}
-
-		long parentOrganizationId = organization.getParentOrganizationId();
-
-		if (parentOrganizationId ==
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
-
-			return organizations;
-		}
-
-		Organization parentOrganization =
-			organizationPersistence.findByPrimaryKey(parentOrganizationId);
-
-		List<Organization> parentOrganizatons = getParentOrganizations(
-			parentOrganization, false);
-
-		organizations.addAll(parentOrganizatons);
-
-		return organizations;
 	}
 
 	protected long[] getReindexOrganizationIds(Organization organization)

@@ -1396,7 +1396,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		return getParentGroups(group, true);
+		return group.getAncestors();
 	}
 
 	/**
@@ -3355,30 +3355,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return name + ORGANIZATION_NAME_SUFFIX;
 	}
 
-	protected List<Group> getParentGroups(Group group, boolean lastGroup)
-		throws PortalException, SystemException {
-
-		List<Group> groups = new ArrayList<Group>();
-
-		if (!lastGroup) {
-			groups.add(group);
-		}
-
-		long parentGroupId = group.getParentGroupId();
-
-		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			return groups;
-		}
-
-		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
-
-		List<Group> parentGroups = getParentGroups(parentGroup, false);
-
-		groups.addAll(parentGroups);
-
-		return groups;
-	}
-
 	protected String getRealName(long companyId, String name)
 		throws SystemException {
 
@@ -3748,7 +3724,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if ((groupId > 0) &&
 			(parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID)) {
 
-			// Prevent circular references
+			// Prevent circular groupal references
 
 			if (isParentGroup(groupId, parentGroupId)) {
 				throw new GroupParentException(

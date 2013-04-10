@@ -2,14 +2,11 @@
 
 <database>
 	<db2>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\${sql.file} -td;</rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
 		<family>db2</family>
 		<password>password</password>
+		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\create.sql -td;</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -38,14 +35,11 @@
 		<vm-vmdk-suffix>db2-9.7</vm-vmdk-suffix>
 	</db2>
 	<hsql>
-		<command>
-			<copy-remote-file></copy-remote-file>
-			<rebuild-remote-schema></rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
 		<family>hsql</family>
 		<password></password>
+		<remote-schema-command></remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -74,14 +68,11 @@
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 	</hsql>
 	<mysql>
-		<command>
-			<copy-remote-file></copy-remote-file>
-			<rebuild-remote-schema></rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>com.mysql.jdbc.Driver</driver>
 		<family>mysql</family>
 		<password></password>
+		<remote-schema-command></remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -89,7 +80,7 @@
 				<value>create database ${database.schema} character set utf8;</value>
 			</create-schema>
 			<create-schema-collate>
-				<token>${database.arg.create-schema.token}</token>
+				<token>${database.sql-replacement.create-schema.token}</token>
 				<value>create database ${database.schema} character set utf8 collate utf8_bin;</value>
 			</create-schema-collate>
 			<create-schema-secondary>
@@ -110,14 +101,11 @@
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 	</mysql>
 	<oracle-10>
-		<command>
-			<copy-remote-file></copy-remote-file>
-			<rebuild-remote-schema></rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
 		<family>oracle</family>
 		<password>lportal</password>
+		<remote-schema-command>sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -138,7 +126,7 @@
 			</drop-schema>
 			<use-schema>
 				<token>-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\${tstamp.value}</token>
-				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\${sql.file} ${database.username} ${database.password}</value>
+				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</value>
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:xe</url>
@@ -146,14 +134,11 @@
 		<vm-vmdk-suffix>oracle-10.2.0.1.0</vm-vmdk-suffix>
 	</oracle-10>
 	<oracle-11>
-		<command>
-			<copy-remote-file></copy-remote-file>
-			<rebuild-remote-schema></rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
 		<family>oracle</family>
 		<password>lportal</password>
+		<remote-schema-command>sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -175,7 +160,7 @@
 			<rebuild-remote-schema></rebuild-remote-schema>
 			<use-schema>
 				<token>-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\${tstamp.value}</token>
-				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\${sql.file} ${database.username} ${database.password}</value>
+				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</value>
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:orcl</url>
@@ -183,14 +168,11 @@
 		<vm-vmdk-suffix>oracle-11.2.0.1.0</vm-vmdk-suffix>
 	</oracle-11>
 	<postgresql-8.4>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>-pw ${vm.password} ${vm.username}@${database.host} C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
 		<password></password>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -219,14 +201,11 @@
 		<vm-vmdk-suffix>postgresql-8.4.2-1</vm-vmdk-suffix>
 	</postgresql-8.4>
 	<postgresql-9.0>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>-pw ${vm.password} ${vm.username}@${database.host} C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
 		<password></password>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -255,14 +234,11 @@
 		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
 	</postgresql-9.0>
 	<sql-server-2005>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>--pw ${vm.password} ${vm.username}@${database.host} osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
 		<password>password</password>
+		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -291,14 +267,11 @@
 		<vm-vmdk-suffix>sql-server-2005-sp2</vm-vmdk-suffix>
 	</sql-server-2005>
 	<sql-server-2008>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>--pw ${vm.password} ${vm.username}@${database.host} osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
-		</command>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
 		<password>password1</password>
+		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -327,14 +300,11 @@
 		<vm-vmdk-suffix>sql-server-2008-r2</vm-vmdk-suffix>
 	</sql-server-2008>
 	<sybase>
-		<command>
-			<copy-remote-file>-pw ${vm.password} ${sql.file} ${vm.username}@${database.host}:\${tstamp.value}</copy-remote-file>
-			<rebuild-remote-schema>-pw ${vm.password} ${vm.username}@${database.host} isql -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\${sql.file}</rebuild-remote-schema>
-		</command>
-		<device-name>lportal</device-name>
+		<device-name>master</device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sybase</family>
 		<password></password>
+		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>

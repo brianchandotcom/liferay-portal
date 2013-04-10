@@ -160,25 +160,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() %>">
 								<li class='<%= "settings" + useDialogFullDialog %>'>
-									<aui:a href="<%= themeDisplay.getURLSiteSettings().toString() %>" label="site-settings" title="edit-site-settings" />
-								</li>
-							</c:if>
-
-							<c:if test="<%= themeDisplay.isShowSiteMapSettingsIcon() %>">
-								<li class='<%= "sitemap" + useDialogFullDialog %>'>
-									<aui:a href="<%= themeDisplay.getURLSiteMapSettings().toString() %>" label="site-pages" title="manage-site-pages" />
-								</li>
-							</c:if>
-
-							<c:if test="<%= themeDisplay.isShowManageSiteMembershipsIcon() %>">
-								<li class='<%= "manage-site-memberships" + useDialogFullDialog %>'>
-									<aui:a href="<%= themeDisplay.getURLManageSiteMemberships().toString() %>" label="site-memberships" title="manage-site-memberships" />
-								</li>
-							</c:if>
-
-							<c:if test="<%= themeDisplay.isShowSiteContentIcon() %>">
-								<li class='<%= "manage-site-content" + useDialogFullDialog %>'>
-									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site-content" title="manage-site-content" />
+									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site" title="manage-site" />
 								</li>
 							</c:if>
 						</ul>

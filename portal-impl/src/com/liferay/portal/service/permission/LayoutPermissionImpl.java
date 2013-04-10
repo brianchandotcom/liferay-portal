@@ -501,8 +501,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		for (Layout curLayout : layouts) {
-			if (!curLayout.isHidden() &&
-				containsWithoutViewableGroup(
+			if (containsWithoutViewableGroup(
 					permissionChecker, curLayout, controlPanelCategory,
 					ActionKeys.VIEW)) {
 

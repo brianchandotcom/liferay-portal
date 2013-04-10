@@ -181,10 +181,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							headerNames="category,categories,threads,posts"
 							iteratorURL="<%= portletURL %>"
 							rowChecker="<%= new RowChecker(renderResponse) %>"
+							total="<%= categoriesCount %>"
 						>
 							<liferay-ui:search-container-results
 								results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-								total="<%= categoriesCount %>"
 							/>
 
 							<liferay-ui:search-container-row
@@ -225,10 +225,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						headerNames="thread,flag,started-by,posts,views,last-post"
 						iteratorURL="<%= portletURL %>"
 						rowChecker="<%= new RowChecker(renderResponse) %>"
+						total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 					>
 						<liferay-ui:search-container-results
 							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-							total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 						/>
 
 						<liferay-ui:search-container-row

@@ -24,6 +24,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/social_activity/view");
 %>
 
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
 <portlet:actionURL var="saveActivitySettingsURL">
 	<portlet:param name="struts_action" value="/social_activity/view" />
 </portlet:actionURL>
@@ -49,7 +51,7 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 
 				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">
 					<div class="social-activity-item-content">
-						<aui:input inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="" type="checkbox" value="<%= enabled %>" />
+						<aui:input disabled="<%= !SocialActivityPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="" type="checkbox" value="<%= enabled %>" />
 
 						<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
 					</div>

@@ -14,10 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/portlet/social_activity/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
-page import="com.liferay.portlet.social.service.permission.SocialActivityPermission" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+<liferay-ui:header
+	backURL="javascript:history.go(-1);"
+	title="error"
+/>
 
-<%@ include file="/html/portlet/social_activity/init-ext.jsp" %>
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

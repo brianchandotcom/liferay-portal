@@ -189,17 +189,18 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectFirstChildGroupAsParentSite() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup("Test 1");
 
-		Group group1 = GroupTestUtil.addGroup(group.getGroupId(),"Child 1");
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId(),"Test 1.1");
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), group1.getGroupId(), group.getName(),
-				group.getDescription(), group.getType(), group.getFriendlyURL(),
-				group.isActive(), ServiceTestUtil.getServiceContext());
+				group1.getGroupId(), group11.getGroupId(), group1.getName(),
+				group1.getDescription(), group1.getType(),
+				group1.getFriendlyURL(), group1.isActive(),
+				ServiceTestUtil.getServiceContext());
 
-			Assert.fail("A child group cannot be its parent parent");
+			Assert.fail("A child group cannot be its parent group");
 		}
 		catch (GroupParentException gpe) {
 			Assert.assertEquals(
@@ -209,22 +210,24 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectLastChildGroupAsParentSite() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup("Test 1");
 
-		Group group1 = GroupTestUtil.addGroup(group.getGroupId(),"Child 1");
-
-		Group group11 = GroupTestUtil.addGroup(group1.getGroupId(),"Child 1.1");
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId(), "Test 1.1");
 
 		Group group111 = GroupTestUtil.addGroup(
-			group11.getGroupId(),"Child 1.1.1");
+			group11.getGroupId(), "Test 1.1.1");
+
+		Group group1111 = GroupTestUtil.addGroup(
+			group111.getGroupId(), "Test 1.1.1.1");
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), group111.getGroupId(), group.getName(),
-				group.getDescription(), group.getType(), group.getFriendlyURL(),
-				group.isActive(), ServiceTestUtil.getServiceContext());
+				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
+				group1.getDescription(), group1.getType(),
+				group1.getFriendlyURL(), group1.isActive(),
+				ServiceTestUtil.getServiceContext());
 
-			Assert.fail("A child group cannot be its parent parent");
+			Assert.fail("A child group cannot be its parent group");
 		}
 		catch (GroupParentException gpe) {
 			Assert.assertEquals(

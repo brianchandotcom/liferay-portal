@@ -1007,9 +1007,7 @@ table_of_contents returns [TableOfContentsNode tableOfContents = new TableOfCont
 			|
 			TABLE_OF_CONTENTS_OPEN 'TableOfContents title='
 			'\"'
-			t = table_of_contents_title_text {
-			tableOfContents.setTitle($t.text.toString());
-			}
+			t = table_of_contents_title_text { tableOfContents.setTitle($t.text.toString()); }
 			'\"'
 			TABLE_OF_CONTENTS_CLOSE
 		)

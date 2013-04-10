@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.nio.intraband.IntraBandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.AdviseWith;
@@ -60,6 +61,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -68,6 +70,17 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
 public class SelectorIntraBandTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(SelectionKeyRegistrationReference.class);
+			}
+
+		};
 
 	@Before
 	public void setUp() throws Exception {

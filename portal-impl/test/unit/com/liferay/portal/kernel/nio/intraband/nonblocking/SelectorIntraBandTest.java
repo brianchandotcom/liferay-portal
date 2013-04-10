@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.nio.intraband.nonblocking;
 
 import com.liferay.portal.kernel.nio.intraband.BaseIntraBand;
 import com.liferay.portal.kernel.nio.intraband.BaseIntraBandHelper;
+import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.ClosedIntraBandException;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
@@ -47,6 +48,7 @@ import java.nio.charset.Charset;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -938,6 +940,209 @@ public class SelectorIntraBandTest {
 		assertMessageStartWith(
 			logRecords.get(0),
 			SelectorIntraBand.class + ".threadFactory-1 exiting exceptionally");
+
+		gatheringByteChannel.close();
+		scatteringByteChannel.close();
+	}
+
+	@Test
+	public void testSendDatagramWithoutCallback() throws Exception {
+
+		// Single datagram sending
+
+		Pipe readPipe = Pipe.open();
+		Pipe writePipe = Pipe.open();
+
+		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+
+		SelectionKeyRegistrationReference registrationReference =
+			(SelectionKeyRegistrationReference)
+				_selectorIntraBand.registerChannel(
+					writePipe.source(), readPipe.sink());
+
+		Thread wakeUpThread = new Thread(
+			new WakeUpRunnable(_selectorIntraBand));
+
+		wakeUpThread.start();
+
+		Selector selector = _selectorIntraBand.selector;
+
+		synchronized (selector) {
+			wakeUpThread.interrupt();
+			wakeUpThread.join();
+
+			Datagram requestDatagram = Datagram.createRequestDatagram(
+				_type, _data);
+
+			_selectorIntraBand.sendDatagram(
+				registrationReference, requestDatagram);
+
+			SelectionKey writeSelectionKey =
+				registrationReference.writeSelectionKey;
+
+			ChannelContext channelContext =
+				(ChannelContext)writeSelectionKey.attachment();
+
+			Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+			Assert.assertEquals(1, sendingQueue.size());
+			Assert.assertSame(requestDatagram, sendingQueue.peek());
+		}
+
+		Datagram receiveDatagram = readDatagramFully(scatteringByteChannel);
+
+		Assert.assertEquals(_type, receiveDatagram.getType());
+
+		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Two datagrams continuous sending
+
+		Datagram requestDatagram1 = Datagram.createRequestDatagram(
+			_type, _data);
+		Datagram requestDatagram2 = Datagram.createRequestDatagram(
+			_type, _data);
+
+		wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraBand));
+
+		wakeUpThread.start();
+
+		synchronized (selector) {
+			wakeUpThread.interrupt();
+			wakeUpThread.join();
+
+			_selectorIntraBand.sendDatagram(
+				registrationReference, requestDatagram1);
+			_selectorIntraBand.sendDatagram(
+				registrationReference, requestDatagram2);
+
+			SelectionKey writeSelectionKey =
+				registrationReference.writeSelectionKey;
+
+			ChannelContext channelContext =
+				(ChannelContext)writeSelectionKey.attachment();
+
+			Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+			Assert.assertEquals(2, sendingQueue.size());
+
+			Datagram[] datagrams = sendingQueue.toArray(new Datagram[2]);
+
+			Assert.assertSame(requestDatagram1, datagrams[0]);
+			Assert.assertSame(requestDatagram2, datagrams[1]);
+		}
+
+		Datagram receiveDatagram1 = readDatagramFully(scatteringByteChannel);
+
+		Assert.assertEquals(_type, receiveDatagram1.getType());
+
+		dataByteBuffer= receiveDatagram1.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		Datagram receiveDatagram2 = readDatagramFully(scatteringByteChannel);
+
+		Assert.assertEquals(_type, receiveDatagram2.getType());
+
+		dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Two datagrams delay sending
+
+		requestDatagram1 = Datagram.createRequestDatagram(_type, _data);
+		requestDatagram2 = Datagram.createRequestDatagram(_type, _data);
+
+		wakeUpThread = new Thread(new WakeUpRunnable(_selectorIntraBand));
+
+		wakeUpThread.start();
+
+		SelectionKey writeSelectionKey =
+			registrationReference.writeSelectionKey;
+
+		ChannelContext channelContext =
+			(ChannelContext)writeSelectionKey.attachment();
+
+		Queue<Datagram> sendingQueue = channelContext.getSendingQueue();
+
+		synchronized (writeSelectionKey) {
+			synchronized (selector) {
+				wakeUpThread.interrupt();
+				wakeUpThread.join();
+
+				_selectorIntraBand.sendDatagram(
+					registrationReference, requestDatagram1);
+
+				Assert.assertEquals(1, sendingQueue.size());
+				Assert.assertSame(requestDatagram1, sendingQueue.peek());
+			}
+
+			receiveDatagram1 = readDatagramFully(scatteringByteChannel);
+
+			Assert.assertEquals(_type, receiveDatagram1.getType());
+
+			dataByteBuffer = receiveDatagram1.getDataByteBuffer();
+
+			Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+			Thread pollingThread = _selectorIntraBand.pollingThread;
+
+			while (pollingThread.getState() == Thread.State.RUNNABLE);
+
+			_selectorIntraBand.sendDatagram(
+				registrationReference, requestDatagram2);
+
+			Assert.assertEquals(1, sendingQueue.size());
+			Assert.assertSame(requestDatagram2, sendingQueue.peek());
+		}
+
+		receiveDatagram2 = readDatagramFully(scatteringByteChannel);
+
+		Assert.assertEquals(_type, receiveDatagram2.getType());
+
+		dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Huge datagram sending
+
+		int hugeBufferSize = 1024 * 1024 * 10;
+
+		ByteBuffer hugeBuffer = ByteBuffer.allocate(hugeBufferSize);
+
+		for (int i = 0; i < hugeBufferSize; i++) {
+			hugeBuffer.put(i, (byte)i);
+		}
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference,
+			Datagram.createRequestDatagram(_type, hugeBuffer));
+
+		receiveDatagram = DatagramHelper.createReceiveDatagram();
+
+		channelContext = (ChannelContext)writeSelectionKey.attachment();
+
+		int count = 0;
+
+		while (!DatagramHelper.readFrom(
+					receiveDatagram, scatteringByteChannel)) {
+
+			count++;
+		}
+
+		Assert.assertTrue(count > 0);
+
+		sendingQueue = channelContext.getSendingQueue();
+
+		Assert.assertTrue(sendingQueue.isEmpty());
+
+		dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(hugeBuffer.array(), dataByteBuffer.array());
+
+		unregisterChannels(registrationReference);
 
 		gatheringByteChannel.close();
 		scatteringByteChannel.close();

@@ -1350,6 +1350,17 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getOrganizationsRelatedGroups(organizations);
 	}
 
+	/**
+	* Returns the group followed by all its parent groups ordered by closest
+	* ancestor.
+	*
+	* @param groupId the primary key of the group
+	* @return the group followed by all its parent groups ordered by closest
+	ancestor
+	* @throws PortalException if a group with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

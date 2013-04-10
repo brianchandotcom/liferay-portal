@@ -96,6 +96,9 @@ public class TearDownMailAccountTest extends BaseTestCase {
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertTrue(selenium.isElementNotPresent(
+						"//a[@class='folders-link']"));
 				assertFalse(selenium.isTextPresent(
 						"liferay.qa.testing.trunk@gmail.com"));
 

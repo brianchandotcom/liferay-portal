@@ -46,5 +46,8 @@ public class AddMailAccountTest extends BaseTestCase {
 		selenium.waitForVisible("//span[@class='message portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace("Account has been created."),
 			selenium.getText("//span[@class='message portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace(
+				"liferay.qa.testing.trunk@gmail.com"),
+			selenium.getText("//a[@class='folders-link']"));
 	}
 }

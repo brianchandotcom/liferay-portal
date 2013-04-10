@@ -19,7 +19,7 @@
 <%
 String currentURL = PortalUtil.getCurrentURL(request);
 
-String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
+String referer = ParamUtil.getString(request, WebKeys.REFERER);
 
 if (referer.equals(themeDisplay.getPathMain() + "/portal/update_password")) {
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();

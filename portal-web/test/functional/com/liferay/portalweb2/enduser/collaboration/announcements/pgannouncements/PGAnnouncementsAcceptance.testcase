@@ -30,6 +30,20 @@
 		<execute macro="AnnouncementsEntry#pgDelete" />
 	</command>
 
+	<command name="EditAnnouncementsEntry">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentNew" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleNew" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="entryURLNew" value="http://www.alloyui.com" />
+
+		<execute macro="AnnouncementsEntry#pgAdd" />
+
+		<execute macro="AnnouncementsEntry#pgEdit" />
+	</command>
+
 	<tear-down>
 		<execute macro="AnnouncementsEntry#pgTearDown" />
 

@@ -188,6 +188,54 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testSelectFirstChildGroupAsParentSite() throws Exception {
+		Group group1 = GroupTestUtil.addGroup("Test 1");
+
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId(),"Test 1.1");
+
+		try {
+			GroupLocalServiceUtil.updateGroup(
+				group1.getGroupId(), group11.getGroupId(), group1.getName(),
+				group1.getDescription(), group1.getType(),
+				group1.getFriendlyURL(), group1.isActive(),
+				ServiceTestUtil.getServiceContext());
+
+			Assert.fail("A child group cannot be its parent group");
+		}
+		catch (GroupParentException gpe) {
+			Assert.assertEquals(
+				GroupParentException.CHILD_DESCENDANT, gpe.getType());
+		}
+	}
+
+	@Test
+	public void testSelectLastChildGroupAsParentSite() throws Exception {
+		Group group1 = GroupTestUtil.addGroup("Test 1");
+
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId(), "Test 1.1");
+
+		Group group111 = GroupTestUtil.addGroup(
+			group11.getGroupId(), "Test 1.1.1");
+
+		Group group1111 = GroupTestUtil.addGroup(
+			group111.getGroupId(), "Test 1.1.1.1");
+
+		try {
+			GroupLocalServiceUtil.updateGroup(
+				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
+				group1.getDescription(), group1.getType(),
+				group1.getFriendlyURL(), group1.isActive(),
+				ServiceTestUtil.getServiceContext());
+
+			Assert.fail("A child group cannot be its parent group");
+		}
+		catch (GroupParentException gpe) {
+			Assert.assertEquals(
+				GroupParentException.CHILD_DESCENDANT, gpe.getType());
+		}
+	}
+
+	@Test
 	public void testSelectLiveGroupAsParentSite() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

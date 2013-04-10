@@ -729,7 +729,7 @@ public class OrganizationLocalServiceImpl
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		return getParentOrganizations(organization, true);
+		return organization.getAncestors();
 	}
 
 	/**
@@ -1821,35 +1821,6 @@ public class OrganizationLocalServiceImpl
 		return parentOrganizationId;
 	}
 
-	protected List<Organization> getParentOrganizations(
-			Organization organization, boolean lastOrganization)
-		throws PortalException, SystemException {
-
-		List<Organization> organizations = new ArrayList<Organization>();
-
-		if (!lastOrganization) {
-			organizations.add(organization);
-		}
-
-		long parentOrganizationId = organization.getParentOrganizationId();
-
-		if (parentOrganizationId ==
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
-
-			return organizations;
-		}
-
-		Organization parentOrganization =
-			organizationPersistence.findByPrimaryKey(parentOrganizationId);
-
-		List<Organization> parentOrganizatons = getParentOrganizations(
-			parentOrganization, false);
-
-		organizations.addAll(parentOrganizatons);
-
-		return organizations;
-	}
-
 	protected long[] getReindexOrganizationIds(Organization organization)
 		throws PortalException, SystemException {
 
@@ -1919,13 +1890,20 @@ public class OrganizationLocalServiceImpl
 		// Return true if parentOrganizationId is among the parent organizatons
 		// of organizationId
 
-		Organization parentOrganization =
-			organizationPersistence.findByPrimaryKey(parentOrganizationId);
+		if (organizationId ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
-		List<Organization> parentOrganizations = getParentOrganizations(
+			return false;
+		}
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		if (parentOrganizations.contains(parentOrganization)) {
+		String treePath = organization.getTreePath();
+
+		if (treePath.contains(
+				StringPool.SLASH + parentOrganizationId + StringPool.SLASH)) {
+
 			return true;
 		}
 		else {

@@ -1170,6 +1170,22 @@ public interface GroupLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the parent groups in order by closest ancestor. The list
+	* starts with the group itself.
+	*
+	* @param groupId the primary key of the group
+	* @return the parent groups in order by closest ancestor
+	* @throws PortalException if a group with the primary key could not
+	be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the staging group.
 	*
 	* @param liveGroupId the primary key of the live group

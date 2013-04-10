@@ -21,6 +21,7 @@ import com.liferay.portalweb.portal.controlpanel.roles.role.addsiterole.AddSiteR
 import com.liferay.portalweb.portal.controlpanel.roles.role.assignmembersorgadminroleuser.AssignMembersOrgAdminRoleUserTests;
 import com.liferay.portalweb.portal.controlpanel.roles.role.assignmembersorgroleuser.AssignMembersOrgRoleUserTests;
 import com.liferay.portalweb.portal.controlpanel.roles.role.assignmembersregroleuser.AssignMembersRegRoleUserTests;
+import com.liferay.portalweb.portal.controlpanel.roles.role.assignmemberssiteadminroleuser.AssignMembersSiteAdminRoleUserTests;
 import com.liferay.portalweb.portal.controlpanel.roles.role.assignmemberssiteroleuser.AssignMembersSiteRoleUserTests;
 import com.liferay.portalweb.portal.controlpanel.roles.role.removepoweruserroleuser.RemovePowerUserRoleUserTests;
 
@@ -41,6 +42,7 @@ public class RoleTestPlan extends BaseTestSuite {
 		testSuite.addTest(AssignMembersOrgAdminRoleUserTests.suite());
 		testSuite.addTest(AssignMembersOrgRoleUserTests.suite());
 		testSuite.addTest(AssignMembersRegRoleUserTests.suite());
+		testSuite.addTest(AssignMembersSiteAdminRoleUserTests.suite());
 		testSuite.addTest(AssignMembersSiteRoleUserTests.suite());
 		testSuite.addTest(RemovePowerUserRoleUserTests.suite());
 

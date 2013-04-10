@@ -41,8 +41,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			long[] roleIds)
 		throws Exception {
 
-		if (!Validator.equals(className, MBCategory.class.getName()) &&
-			!Validator.equals(className, _mbModelResource)) {
+		if (!className.equals(MBCategory.class.getName()) &&
+			!className.equals(_mbModelResource)) {
 
 			return;
 		}

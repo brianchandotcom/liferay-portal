@@ -1387,13 +1387,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the parent groups in order by closest ancestor. The list
-	 * starts with the group itself.
+	 * Returns the group followed by all its parent groups ordered by closest
+	 * ancestor.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return the parent groups in order by closest ancestor
-	 * @throws PortalException if a group with the primary key could not
-	 *         be found
+	 * @return the group followed by all its parent groups ordered by closest
+	 *         ancestor
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<Group> getParentGroups(long groupId)

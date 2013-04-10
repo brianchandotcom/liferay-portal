@@ -35,8 +35,8 @@ public class SeleniumBuilderContextTest {
 	public void testActionCommandElement1009() throws Exception {
 		test(
 			"ActionCommandElement1009.action",
-			"Error 1009: Duplicate command name name at " +
-				_DIR_NAME + "/ActionCommandElement1009.action:8");
+			"Error 1009: Duplicate command name name at " + _DIR_NAME +
+				"/ActionCommandElement1009.action:8");
 	}
 
 	@Test
@@ -53,6 +53,14 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testFunctionCommandElement1009() throws Exception {
+		test(
+			"FunctionCommandElement1009.function",
+			"Error 1009: Duplicate command name name at " + _DIR_NAME +
+				"/FunctionCommandElement1009.function:6");
+	}
+
+	@Test
 	public void testFunctionFileName1008() throws Exception {
 		test(
 			"Click.function",
@@ -66,6 +74,14 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testMacroCommandElement1009() throws Exception {
+		test(
+			"MacroCommandElement1009.macro",
+			"Error 1009: Duplicate command name name at " + _DIR_NAME +
+				"/MacroCommandElement1009.macro:6");
+	}
+
+	@Test
 	public void testMacroFileName1008() throws Exception {
 		test(
 			"BlogsEntry.macro",
@@ -76,6 +92,14 @@ public class SeleniumBuilderContextTest {
 	@Test
 	public void testTestCase() throws Exception {
 		test("TestCase.testcase");
+	}
+
+	@Test
+	public void testTestCaseCommandElement1009() throws Exception {
+		test(
+			"TestCaseCommandElement1009.testcase",
+			"Error 1009: Duplicate command name name at " + _DIR_NAME +
+				"/TestCaseCommandElement1009.testcase:6");
 	}
 
 	@Test

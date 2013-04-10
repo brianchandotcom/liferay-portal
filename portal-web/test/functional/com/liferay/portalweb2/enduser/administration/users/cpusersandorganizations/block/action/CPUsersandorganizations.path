@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_ALL_ORGANIZATIONS</td>
+	<td>link=Search All Organizations</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ALL_USERS</td>
 	<td>link=Search All Users</td>
 	<td></td>
@@ -41,6 +46,33 @@
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_USER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_REGULAR_ORGANIZATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,22 +94,6 @@
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS_1</td>
 	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD-->
-<tr>
-	<td>ADD_USER</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_REGULAR_ORGANIZATION</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,6 +137,13 @@
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TABLE-->
+<!--USER_ACTIONS-->
 <tr>
 	<td></td>
 	<td></td>

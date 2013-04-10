@@ -90,6 +90,29 @@
 	<td>//input[@id='_125_password2']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATIONS-->
+<!--SITES-->
+<!--USER_GROUPS-->
+<!--ROLES-->
+<!--PERSONAL_SITE-->
+<!--CATEGORIZATION-->
+<!--ADDRESSES-->
+<!--PHONE_NUMBERS-->
+<!--ADDITIONAL_EMAIL_ADDRESSES-->
+<!--WEBSITES-->
+<!--INSTANT_MESSENGER-->
+<!--SOCIAL_NETWORK-->
+<!--SMS-->
+<!--OPENID-->
+<!--ANNOUNCEMENTS-->
+<!--DISPLAY_SETTINGS-->
+<!--COMMENTS-->
+<!--CUSTOM_FIELDS-->
 </tbody>
 </table>
 </body>

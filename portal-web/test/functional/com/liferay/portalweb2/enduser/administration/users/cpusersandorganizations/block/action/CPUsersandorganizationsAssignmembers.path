@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPUsersandorganizationsOrganizationAssignmembers</title>
+<title>CPUsersandorganizationsAssignmembers</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPUsersandorganizationsOrganizationAssignmembers</td></tr>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizationsAssignmembers</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPUsersandorganizaitonsOrganizationAssignmembers</td>
+	<td>CPUsersandorganizaitonsAssignmembers</td>
 </tr>
 <tr>
 	<td></td>
@@ -93,6 +93,11 @@
 <tr>
 	<td>ADVANCED_SEARCH_STATUS</td>
 	<td>//select[@id='_125_status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_BUTTON</td>
+	<td>xpath=(//input[@value='Search'])[2]</td>
 	<td></td>
 </tr>
 <tr>

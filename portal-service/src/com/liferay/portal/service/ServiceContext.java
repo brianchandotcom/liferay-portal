@@ -822,7 +822,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	public void merge(ServiceContext serviceContext) {
-
 		setAddGroupPermissions(serviceContext.isAddGroupPermissions());
 		setAddGuestPermissions(serviceContext.isAddGuestPermissions());
 

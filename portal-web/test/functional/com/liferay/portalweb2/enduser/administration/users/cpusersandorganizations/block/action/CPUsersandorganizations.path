@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>CPUsersandorganizations</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizations</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPUsersandorganizaitons</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ALL_USERS</td>
+	<td>link=Search All Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_NAME_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[2]/a/strong)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_TYPE_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD-->
+<tr>
+	<td>ADD_USER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_REGULAR_ORGANIZATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_ACTIONS-->
+<tr>
+	<td>ORGANIZATION_ACTIONS_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_ASSIGN_ORGANIZATION_ROLES</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_ASSIGN_USERS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_ADD_USER</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_ADD_REGULAR_ORGANIZATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_ADD_LOCATION</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Location')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ACTIONS_DELETE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

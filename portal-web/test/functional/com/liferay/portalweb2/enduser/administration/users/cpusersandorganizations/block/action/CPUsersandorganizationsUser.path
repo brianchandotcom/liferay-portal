@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>CPUsersandorganizationsUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizationsUser</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPUsersandorganizaitonsUser</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD</td>
+	<td>//a[@id='_125_passwordLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS</td>
+	<td>//a[@id='_125_organizationsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE</td>
+	<td>//a[@id='_125_personalSiteLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_SCREEN_NAME</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_EMAIL_ADDRESS</td>
+	<td>//input[@id='_125_emailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FIRST_NAME</td>
+	<td>//input[@id='_125_firstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LAST_NAME</td>
+	<td>//input[@id='_125_lastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PASSWORD-->
+<tr>
+	<td>PASSWORD_NEW_PASSWORD</td>
+	<td>//input[@id='_125_password1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_ENTER_AGAIN</td>
+	<td>//input[@id='_125_password2']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

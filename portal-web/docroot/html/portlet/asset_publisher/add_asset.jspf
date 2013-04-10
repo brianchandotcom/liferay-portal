@@ -51,7 +51,7 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 	<liferay-ui:icon-menu
 		align="left"
 		icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
-		id='<%= taglibId %>'
+		id="<%= taglibId %>"
 		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
 	>
 

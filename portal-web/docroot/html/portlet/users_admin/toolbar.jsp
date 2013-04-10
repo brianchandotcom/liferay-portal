@@ -95,7 +95,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 
 					<liferay-ui:icon
 						image="add_location"
-						message='<%= LanguageUtil.get(pageContext, organizationType) %>'
+						message="<%= LanguageUtil.get(pageContext, organizationType) %>"
 						url="<%= addOrganizationURL %>"
 					/>
 

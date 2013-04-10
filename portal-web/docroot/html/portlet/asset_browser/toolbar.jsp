@@ -79,7 +79,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 						message="<%= assetRendererFactory.getTypeName(locale, true) %>"
 						method="get"
 						src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
-						url='<%= addPortletURLString %>'
+						url="<%= addPortletURLString %>"
 					/>
 				</c:if>
 
@@ -103,7 +103,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 						message="<%= HtmlUtil.escape(classTypes.get(classTypeId)) %>"
 						method="get"
 						src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
-						url='<%= addPortletURLString %>'
+						url="<%= addPortletURLString %>"
 					/>
 
 				<%

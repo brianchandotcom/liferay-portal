@@ -2633,6 +2633,14 @@ public class SourceFormatter {
 
 							readAttributes = false;
 						}
+						else if (trimmedLine.endsWith(StringPool.APOSTROPHE) &&
+								 !trimmedLine.contains(StringPool.QUOTE)) {
+
+							line = StringUtil.replace(
+								line, StringPool.APOSTROPHE, StringPool.QUOTE);
+
+							readAttributes = false;
+						}
 						else if (Validator.isNotNull(previousAttribute)) {
 							if (!_isJSPAttributName(attribute)) {
 								_processErrorMessage(

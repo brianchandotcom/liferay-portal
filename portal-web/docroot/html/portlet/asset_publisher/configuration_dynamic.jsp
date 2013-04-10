@@ -291,9 +291,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					</aui:fieldset>
 				</div>
 
-				<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
-					<aui:input label='<%= LanguageUtil.format(pageContext, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= showOnlyLayoutAssets %>" />
-				</c:if>
+				<aui:input label='<%= LanguageUtil.format(pageContext, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= showOnlyLayoutAssets %>" />
 
 				<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= mergeUrlTags %>" />
 

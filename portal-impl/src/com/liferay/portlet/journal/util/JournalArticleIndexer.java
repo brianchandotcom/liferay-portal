@@ -326,6 +326,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addLocalizedText(
 			Field.DESCRIPTION, article.getDescriptionMap());
 		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
+		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
 		document.addLocalizedText(Field.TITLE, article.getTitleMap());
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
@@ -340,7 +341,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmStructureKey", article.getStructureId());
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
-		document.addKeyword("layoutUuid", article.getLayoutUuid());
 
 		addDDMStructureAttributes(document, article);
 

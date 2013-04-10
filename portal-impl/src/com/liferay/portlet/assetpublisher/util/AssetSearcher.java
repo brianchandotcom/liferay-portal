@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -229,6 +230,19 @@ public class AssetSearcher extends BaseIndexer {
 		addSearchAnyTags(contextQuery, searchContext);
 		addSearchNotAllTags(contextQuery, searchContext);
 		addSearchNotAnyTags(contextQuery, searchContext);
+	}
+
+	@Override
+	protected void addSearchLayout(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		String layoutUuid = (String)searchContext.getAttribute(
+			Field.LAYOUT_UUID);
+
+		if (Validator.isNotNull(layoutUuid)) {
+			contextQuery.addRequiredTerm(Field.LAYOUT_UUID, layoutUuid);
+		}
 	}
 
 	protected void addSearchNotAllCategories(

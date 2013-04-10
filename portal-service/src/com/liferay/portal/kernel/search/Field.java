@@ -80,6 +80,8 @@ public class Field implements Serializable {
 		Field.URL, Field.USER_NAME
 	};
 
+	public static final String LAYOUT_UUID = "layoutUuid";
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #MODIFIED_DATE}
 	 */

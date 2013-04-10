@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -375,6 +376,12 @@ public class AssetUtil {
 				"ddmStructureFieldName", ddmStructureFieldName);
 			searchContext.setAttribute(
 				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		Layout layout = assetEntryQuery.getLayout();
+
+		if (layout != null) {
+			searchContext.setAttribute(Field.LAYOUT_UUID, layout.getUuid());
 		}
 
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());

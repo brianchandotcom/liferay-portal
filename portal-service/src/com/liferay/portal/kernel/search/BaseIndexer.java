@@ -236,6 +236,7 @@ public abstract class BaseIndexer implements Indexer {
 			addSearchEntryClassNames(contextQuery, searchContext);
 			addSearchFolderId(contextQuery, searchContext);
 			addSearchGroupId(contextQuery, searchContext);
+			addSearchLayout(contextQuery, searchContext);
 			addSearchUserId(contextQuery, searchContext);
 
 			BooleanQuery fullQuery = createFullQuery(
@@ -890,6 +891,18 @@ public abstract class BaseIndexer implements Indexer {
 		searchQuery.addTerms(Field.KEYWORDS, keywords);
 
 		addSearchExpando(searchQuery, searchContext, keywords);
+	}
+
+	protected void addSearchLayout(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+
+		multiValueFacet.setFieldName(Field.LAYOUT_UUID);
+		multiValueFacet.setStatic(true);
+
+		searchContext.addFacet(multiValueFacet);
 	}
 
 	protected void addSearchLocalizedDDMStructure(

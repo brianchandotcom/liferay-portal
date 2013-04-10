@@ -1506,6 +1506,7 @@ public class DataFactory {
 
 		Group group = new GroupImpl();
 
+		group.setUuid(SequentialUUID.generate());
 		group.setGroupId(groupId);
 		group.setCompanyId(_companyId);
 		group.setCreatorUserId(_sampleUserId);

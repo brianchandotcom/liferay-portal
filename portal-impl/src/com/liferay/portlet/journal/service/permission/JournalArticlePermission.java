@@ -115,8 +115,9 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if (article.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if ((article.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+			!actionId.equals(ActionKeys.EXPIRE)) {
 
 			try {
 				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(

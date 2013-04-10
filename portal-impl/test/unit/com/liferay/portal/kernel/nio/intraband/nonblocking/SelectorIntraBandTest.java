@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.IntraBandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.RecordDatagramReceiveHandler;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.AdviseWith;
@@ -48,6 +49,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -821,6 +823,124 @@ public class SelectorIntraBandTest {
 
 		sourceChannel.close();
 		sinkChannel.close();
+	}
+
+	@AdviseWith(adviceClasses={Jdk14LogImplAdvice.class})
+	@Test
+	public void testSendDatagramWithCallback() throws Exception {
+
+		// Submitted callback
+
+		Pipe readPipe = Pipe.open();
+		Pipe writePipe = Pipe.open();
+
+		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+
+		RegistrationReference registrationReference =
+			_selectorIntraBand.registerChannel(
+				writePipe.source(), readPipe.sink());
+
+		Object attachment = new Object();
+
+		RecordCompletionHandler<Object> recordCompletionHandler =
+			new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.SUBMITTED),
+			recordCompletionHandler);
+
+		Datagram receiveDatagram = readDatagramFully(scatteringByteChannel);
+
+		recordCompletionHandler.waitUntilSubmitted();
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertEquals(_type, receiveDatagram.getType());
+
+		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Callback timeout, with log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.WARNING);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.DELIVERED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		Selector selector = _selectorIntraBand.selector;
+
+		recordCompletionHandler.waitUntilTimeouted(selector);
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertEquals(1, logRecords.size());
+
+		assertMessageStartWith(
+			logRecords.get(0), "Removed timeout response waiting datagram");
+
+		// Callback timeout, without log
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraBand.class.getName(), Level.OFF);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		_selectorIntraBand.sendDatagram(
+			registrationReference, Datagram.createRequestDatagram(_type, _data),
+			attachment, EnumSet.of(CompletionType.DELIVERED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		recordCompletionHandler.waitUntilTimeouted(selector);
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertTrue(logRecords.isEmpty());
+
+		// Callback timeout, completion handler causes NPE
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			SelectorIntraBand.class.getName(), Level.SEVERE);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>() {
+
+			@Override
+			public void timeouted(Object attachment) {
+				super.timeouted(attachment);
+
+				throw new NullPointerException();
+			}
+
+		};
+
+		Jdk14LogImplAdvice.reset();
+
+		try {
+			_selectorIntraBand.sendDatagram(
+				registrationReference,
+				Datagram.createRequestDatagram(_type, _data), attachment,
+				EnumSet.of(CompletionType.DELIVERED), recordCompletionHandler,
+				10, TimeUnit.MILLISECONDS);
+		}
+		finally {
+			recordCompletionHandler.waitUntilTimeouted(selector);
+
+			Jdk14LogImplAdvice.waitUntilErrorCalled();
+		}
+
+		Assert.assertFalse(selector.isOpen());
+		Assert.assertEquals(1, logRecords.size());
+
+		assertMessageStartWith(
+			logRecords.get(0),
+			SelectorIntraBand.class + ".threadFactory-1 exiting exceptionally");
+
+		gatheringByteChannel.close();
+		scatteringByteChannel.close();
 	}
 
 	@Aspect

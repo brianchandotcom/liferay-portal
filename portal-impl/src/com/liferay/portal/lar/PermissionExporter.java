@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -252,8 +253,10 @@ public class PermissionExporter {
 			}
 		}
 
+		String rootPath = ExportImportPathUtil.getRootPath(portletDataContext);
+
 		portletDataContext.addZipEntry(
-			portletDataContext.getRootPath() + "/portlet-data-permissions.xml",
+			rootPath.concat("/portlet-data-permissions.xml"),
 			document.formattedString());
 	}
 

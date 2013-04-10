@@ -48,10 +48,22 @@ import java.util.Set;
  */
 public interface PortletDataContext extends Serializable {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#_PATH_PREFIX_GROUP}
+	 */
 	public static final String ROOT_PATH_GROUPS = "/groups/";
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#_PATH_PREFIX_LAYOUT}
+	 */
 	public static final String ROOT_PATH_LAYOUTS = "/layouts/";
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#_PATH_PREFIX_PORTLET}
+	 */
 	public static final String ROOT_PATH_PORTLETS = "/portlets/";
 
 	public void addAssetCategories(Class<?> clazz, long classPK)
@@ -180,6 +192,10 @@ public interface PortletDataContext extends Serializable {
 	public Element getImportDataStagedModelElement(
 		String name, String attribute, String value);
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getLayoutPath(PortletDataContext, long)}
+	 */
 	public String getLayoutPath(long layoutId);
 
 	public Map<String, Lock> getLocks();
@@ -196,6 +212,11 @@ public interface PortletDataContext extends Serializable {
 
 	public long getPlid();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
+	 *             String)}
+	 */
 	public String getPortletPath(String portletId);
 
 	public Set<String> getPrimaryKeys();
@@ -205,6 +226,10 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferencedDataElements(
 		StagedModel parentStagedModel, Class<? extends StagedModel> clazz);
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}
+	 */
 	public String getRootPath();
 
 	public long getScopeGroupId();
@@ -215,10 +240,24 @@ public interface PortletDataContext extends Serializable {
 
 	public long getSourceGroupId();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getSourceLayoutPath(PortletDataContext,
+	 *             long)}
+	 */
 	public String getSourceLayoutPath(long layoutId);
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getSourcePortletPath(
+	 *             PortletDataContext, String)}
+	 */
 	public String getSourcePortletPath(String portletId);
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             ExportImportPathUtil#getSourceRootPath(PortletDataContext)}
+	 */
 	public String getSourceRootPath();
 
 	public Date getStartDate();

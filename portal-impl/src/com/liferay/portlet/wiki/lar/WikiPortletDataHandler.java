@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -414,7 +415,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.WIKI));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.WIKI));
 		sb.append("/nodes/");
 		sb.append(node.getNodeId());
 		sb.append(".xml");
@@ -427,7 +430,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.WIKI));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.WIKI));
 		sb.append("/bin/");
 		sb.append(page.getPageId());
 		sb.append(StringPool.SLASH);
@@ -443,7 +448,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.WIKI));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.WIKI));
 		sb.append("/page/");
 		sb.append(page.getUuid());
 		sb.append(StringPool.SLASH);
@@ -458,7 +465,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(portletDataContext.getPortletPath(PortletKeys.WIKI));
+		sb.append(
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.WIKI));
 		sb.append("/pages/");
 		sb.append(page.getPageId());
 		sb.append(".xml");

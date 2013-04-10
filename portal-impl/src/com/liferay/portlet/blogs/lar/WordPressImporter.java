@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,8 +102,10 @@ public class WordPressImporter {
 	protected static String getWordPressPath(
 		PortletDataContext context, String fileName) {
 
-		return context.getSourcePortletPath(PortletKeys.BLOGS).concat(
-			StringPool.SLASH).concat(fileName);
+		String portletPath = ExportImportPathUtil.getSourcePortletPath(
+			context, PortletKeys.BLOGS);
+
+		return portletPath.concat(StringPool.SLASH).concat(fileName);
 	}
 
 	protected static Map<String, Long> getWordPressUserMap(

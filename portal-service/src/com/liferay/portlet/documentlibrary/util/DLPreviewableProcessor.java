@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.FileFilter;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -624,7 +625,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		StringBundler sb = new StringBundler(8);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/bin/");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append(StringPool.SLASH);
@@ -643,7 +645,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		StringBundler sb = new StringBundler(8);
 
 		sb.append(
-			portletDataContext.getPortletPath(PortletKeys.DOCUMENT_LIBRARY));
+			ExportImportPathUtil.getPortletPath(
+				portletDataContext, PortletKeys.DOCUMENT_LIBRARY));
 		sb.append("/bin/");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append(StringPool.SLASH);

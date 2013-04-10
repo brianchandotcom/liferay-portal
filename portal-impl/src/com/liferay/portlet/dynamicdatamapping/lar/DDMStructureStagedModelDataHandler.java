@@ -16,8 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -58,8 +58,8 @@ public class DDMStructureStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			structureElement, StagedModelPathUtil.getPath(structure), structure,
-			DDMPortletDataHandler.NAMESPACE);
+			structureElement, ExportImportPathUtil.getModelPath(structure),
+			structure, DDMPortletDataHandler.NAMESPACE);
 	}
 
 	@Override

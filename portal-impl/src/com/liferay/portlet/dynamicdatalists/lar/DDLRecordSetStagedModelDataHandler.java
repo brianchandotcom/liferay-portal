@@ -15,9 +15,9 @@
 package com.liferay.portlet.dynamicdatalists.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -65,8 +65,8 @@ public class DDLRecordSetStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			recordSetElement, StagedModelPathUtil.getPath(recordSet), recordSet,
-			DDLPortletDataHandler.NAMESPACE);
+			recordSetElement, ExportImportPathUtil.getModelPath(recordSet),
+			recordSet, DDLPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class DDLRecordSetStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class);
 
-		String structurePath = StagedModelPathUtil.getPath(
+		String structurePath = ExportImportPathUtil.getModelPath(
 			portletDataContext, DDMStructure.class.getName(),
 			recordSet.getDDMStructureId());
 

@@ -15,8 +15,8 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -47,8 +47,8 @@ public class PollsQuestionStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(question);
 
 		portletDataContext.addClassedModel(
-			questionElement, StagedModelPathUtil.getPath(question), question,
-			PollsPortletDataHandler.NAMESPACE);
+			questionElement, ExportImportPathUtil.getModelPath(question),
+			question, PollsPortletDataHandler.NAMESPACE);
 	}
 
 	@Override

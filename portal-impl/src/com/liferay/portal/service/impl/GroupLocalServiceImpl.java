@@ -3489,11 +3489,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Return true if parentGroupId is among the parent groups of groupId
 
-		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
+		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			return false;
+		}
 
-		List<Group> parentGroups = getParentGroups(groupId);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		if (parentGroups.contains(parentGroup)) {
+		String treePath = group.getTreePath();
+
+		if (treePath.contains(
+				StringPool.SLASH + parentGroupId + StringPool.SLASH)) {
+
 			return true;
 		}
 		else {

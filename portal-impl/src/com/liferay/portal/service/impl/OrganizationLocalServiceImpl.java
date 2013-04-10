@@ -1890,13 +1890,20 @@ public class OrganizationLocalServiceImpl
 		// Return true if parentOrganizationId is among the parent organizatons
 		// of organizationId
 
-		Organization parentOrganization =
-			organizationPersistence.findByPrimaryKey(parentOrganizationId);
+		if (organizationId ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
-		List<Organization> parentOrganizations = getParentOrganizations(
+			return false;
+		}
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		if (parentOrganizations.contains(parentOrganization)) {
+		String treePath = organization.getTreePath();
+
+		if (treePath.contains(
+				StringPool.SLASH + parentOrganizationId + StringPool.SLASH)) {
+
 			return true;
 		}
 		else {

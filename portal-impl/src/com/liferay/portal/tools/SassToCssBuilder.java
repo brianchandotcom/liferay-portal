@@ -170,25 +170,6 @@ public class SassToCssBuilder {
 		PropsUtil.setProps(new PropsImpl());
 	}
 
-	private boolean _noFilesModified(
-		String CSSFilesDirName, String[] CSSFileNames) throws Exception {
-
-		for (String fileName : CSSFileNames) {
-			String fileURL = StringUtil.replace(
-				CSSFilesDirName + StringPool.SLASH + fileName,
-				StringPool.BACK_SLASH, StringPool.SLASH);
-
-			long lastModifiedFile = (new File(fileURL)).lastModified();
-			long lastModifiedCacheFile = getCacheFile(fileURL).lastModified();
-
-			if (lastModifiedFile != lastModifiedCacheFile) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	private void _parseSassDirectory(String dirName) throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -205,7 +186,7 @@ public class SassToCssBuilder {
 
 		String[] fileNames = directoryScanner.getIncludedFiles();
 
-		if (_noFilesModified(dirName, fileNames)) {
+		if (!_sassFilesModified(dirName, fileNames)) {
 			return;
 		}
 
@@ -260,6 +241,25 @@ public class SassToCssBuilder {
 		FileUtil.write(cacheFile, parsedContent);
 
 		cacheFile.setLastModified(file.lastModified());
+	}
+
+	private boolean _sassFilesModified(String dirName, String[] fileNames)
+		throws Exception {
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				dirName + StringPool.SLASH + fileName, StringPool.BACK_SLASH,
+				StringPool.SLASH);
+
+			File file = new File(fileName);
+			File cacheFile = getCacheFile(fileName);
+
+			if (file.lastModified() != cacheFile.lastModified()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private RubyExecutor _rubyExecutor;

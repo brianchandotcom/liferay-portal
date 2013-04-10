@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -36,6 +37,7 @@ import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -134,16 +136,31 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
+			long categoryId, ServiceContext serviceContext)
+		throws Exception {
+
+		return addMessage(categoryId, StringPool.BLANK, false, serviceContext);
+	}
+
+	public static MBMessage addMessage(
 			long categoryId, String keywords, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
+		String subject = "subject";
+		String body = "body";
+
+		if (!Validator.isBlank(keywords)) {
+			subject = keywords;
+			body = keywords;
+		}
+
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			categoryId, keywords, keywords, serviceContext);
+			categoryId, subject, body, serviceContext);
 
 		if (!approved) {
-			message = MBMessageLocalServiceUtil.updateStatus(
+			return MBMessageLocalServiceUtil.updateStatus(
 				message.getStatusByUserId(), message.getMessageId(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
@@ -180,6 +197,31 @@ public class MBTestUtil {
 
 		return MBThreadFlagLocalServiceUtil.getThreadFlag(
 			TestPropsValues.getUserId(), thread);
+	}
+
+	public static List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(
+		String fileName, Class<?> clazz, String keywords) {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			new ArrayList<ObjectValuePair<String, InputStream>>(1);
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		ObjectValuePair<String, InputStream> inputStreamOVP = null;
+
+		if (Validator.isBlank(keywords)) {
+			inputStreamOVP = new ObjectValuePair<String, InputStream>(
+				fileName, inputStream);
+		}
+		else {
+			inputStreamOVP = new ObjectValuePair<String, InputStream>(
+				keywords, inputStream);
+		}
+
+		inputStreamOVPs.add(inputStreamOVP);
+
+		return inputStreamOVPs;
 	}
 
 	protected static MBMessage addMessage(

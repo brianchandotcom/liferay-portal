@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -62,6 +63,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -326,10 +328,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Attachments
 
 		if (!inputStreamOVPs.isEmpty()) {
+			Folder folder = message.addAttachmentsFolder();
+
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				folder.getFolderId(), inputStreamOVPs);
 		}
 
 		// Resources
@@ -503,8 +507,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deleteFolder(
-			message.getAttachmentsFolderId());
+		long folderId = message.getAttachmentsFolderId();
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			PortletFileRepositoryUtil.deleteFolder(folderId);
+		}
 
 		// Thread
 
@@ -514,8 +521,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Attachments
 
-			PortletFileRepositoryUtil.deleteFolder(
-				message.getThreadAttachmentsFolderId());
+			long threadAttachmentsFolderId =
+				message.getThreadAttachmentsFolderId();
+
+			if (threadAttachmentsFolderId !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				PortletFileRepositoryUtil.deleteFolder(
+					threadAttachmentsFolderId);
+			}
 
 			// Subscriptions
 
@@ -691,8 +705,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		long folderId = message.getAttachmentsFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntry(
-			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+			message.getGroupId(), folderId, fileName);
 	}
 
 	public void deleteMessageAttachments(long messageId)
@@ -700,8 +720,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		long folderId = message.getAttachmentsFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
 		PortletFileRepositoryUtil.deletePortletFileEntries(
-			message.getGroupId(), message.getAttachmentsFolderId());
+			message.getGroupId(), folderId);
 	}
 
 	public List<MBMessage> getCategoryMessages(
@@ -1230,8 +1256,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		long folderId = message.getAttachmentsFolderId();
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			message.getGroupId(), message.getAttachmentsFolderId(), fileName);
+			message.getGroupId(), folderId, fileName);
 
 		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
@@ -1245,8 +1273,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = getMessage(messageId);
 
+		Folder folder = message.addAttachmentsFolder();
+
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
-			message.getGroupId(), userId, message.getAttachmentsFolderId(),
+			message.getGroupId(), userId, folder.getFolderId(),
 			deletedFileName);
 	}
 
@@ -1425,10 +1455,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 
+			Folder folder = message.addAttachmentsFolder();
+
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
 				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				message.getAttachmentsFolderId(), inputStreamOVPs);
+				folder.getFolderId(), inputStreamOVPs);
 		}
 		else {
 			if (TrashUtil.isTrashEnabled(message.getGroupId())) {

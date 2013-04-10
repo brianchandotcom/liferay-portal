@@ -60,8 +60,8 @@ public interface RepositoryService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public long addRepository(long groupId, long classNameId,
-		long parentFolderId, java.lang.String name,
+	public com.liferay.portal.model.Repository addRepository(long groupId,
+		long classNameId, long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)

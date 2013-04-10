@@ -52,8 +52,9 @@ import com.liferay.portal.service.RepositoryServiceUtil;
  * @generated
  */
 public class RepositoryServiceHttp {
-	public static long addRepository(HttpPrincipal httpPrincipal, long groupId,
-		long classNameId, long parentFolderId, java.lang.String name,
+	public static com.liferay.portal.model.Repository addRepository(
+		HttpPrincipal httpPrincipal, long groupId, long classNameId,
+		long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -84,7 +85,7 @@ public class RepositoryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Long)returnObj).longValue();
+			return (com.liferay.portal.model.Repository)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

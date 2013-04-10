@@ -49,6 +49,30 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		_escapedModel = escapedModel;
 	}
 
+	public Object clone() {
+		LiferayFileEntry fileEntry = new LiferayFileEntry(
+			_dlFileEntry, _escapedModel);
+
+		fileEntry.setCachedFileVersion(getCachedFileVersion());
+		fileEntry.setCompanyId(getCompanyId());
+		fileEntry.setCreateDate(getCreateDate());
+		fileEntry.setGroupId(getGroupId());
+		fileEntry.setModifiedDate(getModifiedDate());
+		fileEntry.setPrimaryKey(getPrimaryKey());
+		fileEntry.setUserId(getUserId());
+		fileEntry.setUserName(getUserName());
+
+		try {
+			fileEntry.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		fileEntry.setUuid(getUuid());
+
+		return fileEntry;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -330,6 +354,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	public void setUserUuid(String userUuid) {
 		_dlFileEntry.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_dlFileEntry.setUuid(uuid);
 	}
 
 	public FileEntry toEscapedModel() {

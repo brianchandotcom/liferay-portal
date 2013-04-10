@@ -38,6 +38,28 @@ public class FolderProxyBean
 		_folder = folder;
 	}
 
+	public Object clone() {
+		FolderProxyBean folderProxyBean = newFolderProxyBean(_folder);
+
+		folderProxyBean.setCompanyId(getCompanyId());
+		folderProxyBean.setCreateDate(getCreateDate());
+		folderProxyBean.setGroupId(getGroupId());
+		folderProxyBean.setModifiedDate(getModifiedDate());
+		folderProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
+		folderProxyBean.setUserId(getUserId());
+		folderProxyBean.setUserName(getUserName());
+
+		try {
+			folderProxyBean.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		folderProxyBean.setUuid(getUuid());
+
+		return folderProxyBean;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -232,6 +254,10 @@ public class FolderProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_folder.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_folder.setUuid(uuid);
 	}
 
 	public Folder toEscapedModel() {

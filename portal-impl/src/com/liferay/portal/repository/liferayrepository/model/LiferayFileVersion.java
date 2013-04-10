@@ -47,6 +47,28 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		_escapedModel = escapedModel;
 	}
 
+	public Object clone() {
+		LiferayFileVersion fileVersion = new LiferayFileVersion(
+			_dlFileVersion, _escapedModel);
+
+		fileVersion.setCompanyId(getCompanyId());
+		fileVersion.setCreateDate(getCreateDate());
+		fileVersion.setGroupId(getGroupId());
+		fileVersion.setPrimaryKey(getPrimaryKey());
+		fileVersion.setUserId(getUserId());
+		fileVersion.setUserName(getUserName());
+
+		try {
+			fileVersion.setUserUuid(getUserUuid());
+		}
+		catch (Exception e) {
+		}
+
+		fileVersion.setUuid(getUuid());
+
+		return fileVersion;
+	}
+
 	public Map<String, Serializable> getAttributes() {
 		ExpandoBridge expandoBridge = _dlFileVersion.getExpandoBridge();
 
@@ -273,6 +295,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public void setUserUuid(String userUuid) {
 		_dlFileVersion.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_dlFileVersion.setUuid(uuid);
 	}
 
 	public FileVersion toEscapedModel() {

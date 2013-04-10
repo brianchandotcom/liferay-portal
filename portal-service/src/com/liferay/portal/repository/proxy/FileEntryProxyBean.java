@@ -42,6 +42,29 @@ public class FileEntryProxyBean
 		_fileEntry = fileEntry;
 	}
 
+	public Object clone() {
+		FileEntryProxyBean fileEntryProxyBean = newFileEntryProxyBean(
+			_fileEntry);
+
+		fileEntryProxyBean.setCompanyId(getCompanyId());
+		fileEntryProxyBean.setCreateDate(getCreateDate());
+		fileEntryProxyBean.setGroupId(getGroupId());
+		fileEntryProxyBean.setModifiedDate(getModifiedDate());
+		fileEntryProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
+		fileEntryProxyBean.setUserId(getUserId());
+		fileEntryProxyBean.setUserName(getUserName());
+
+		try {
+			fileEntryProxyBean.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		fileEntryProxyBean.setUuid(getUuid());
+
+		return fileEntryProxyBean;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -290,6 +313,10 @@ public class FileEntryProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_fileEntry.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_fileEntry.setUuid(uuid);
 	}
 
 	public FileEntry toEscapedModel() {

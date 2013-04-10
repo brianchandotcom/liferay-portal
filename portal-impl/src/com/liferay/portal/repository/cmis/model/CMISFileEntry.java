@@ -75,6 +75,25 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		_document = document;
 	}
 
+	public Object clone() {
+		CMISFileEntry fileEntry = new CMISFileEntry(
+			_cmisRepository, _uuid, _fileEntryId, _document);
+
+		fileEntry.setCompanyId(getCompanyId());
+		fileEntry.setFileEntryId(getFileEntryId());
+		fileEntry.setGroupId(getGroupId());
+
+		try {
+			fileEntry.setParentFolder(getParentFolder());
+		}
+		catch (Exception e) {
+		}
+
+		fileEntry.setPrimaryKey(getPrimaryKey());
+
+		return fileEntry;
+	}
+
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws SystemException {
@@ -524,6 +543,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	public void setUserUuid(String userUuid) {
+	}
+
+	public void setUuid(String uuid) {
 	}
 
 	public FileEntry toEscapedModel() {

@@ -64,6 +64,25 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		_document = document;
 	}
 
+	public Object clone() {
+		CMISFileVersion fileVersion = new CMISFileVersion(
+			_cmisRepository, _uuid, _fileVersionId, _document);
+
+		fileVersion.setCompanyId(getCompanyId());
+		setFileVersionId(getFileVersionId());
+		fileVersion.setGroupId(getGroupId());
+
+		try {
+			fileVersion.setParentFolder(getParentFolder());
+		}
+		catch (Exception e) {
+		}
+
+		fileVersion.setPrimaryKey(getPrimaryKey());
+
+		return fileVersion;
+	}
+
 	public Map<String, Serializable> getAttributes() {
 		return new HashMap<String, Serializable>();
 	}
@@ -324,6 +343,9 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public void setUserUuid(String userUuid) {
+	}
+
+	public void setUuid(String uuid) {
 	}
 
 	public FileVersion toEscapedModel() {

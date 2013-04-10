@@ -40,6 +40,29 @@ public class FileVersionProxyBean
 		_fileVersion = fileVersion;
 	}
 
+	public Object clone() {
+		FileVersionProxyBean fileVersionProxyBean = newFileVersionProxyBean(
+			_fileVersion);
+
+		fileVersionProxyBean.setCompanyId(getCompanyId());
+		fileVersionProxyBean.setCreateDate(getCreateDate());
+		fileVersionProxyBean.setGroupId(getGroupId());
+		fileVersionProxyBean.setModifiedDate(getModifiedDate());
+		fileVersionProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
+		fileVersionProxyBean.setUserId(getUserId());
+		fileVersionProxyBean.setUserName(getUserName());
+
+		try {
+			fileVersionProxyBean.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		fileVersionProxyBean.setUuid(getUuid());
+
+		return fileVersionProxyBean;
+	}
+
 	public Map<String, Serializable> getAttributes() {
 		return _fileVersion.getAttributes();
 	}
@@ -245,6 +268,10 @@ public class FileVersionProxyBean
 
 	public void setUserUuid(String userUuid) {
 		_fileVersion.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_fileVersion.setUuid(uuid);
 	}
 
 	public FileVersion toEscapedModel() {

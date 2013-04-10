@@ -407,6 +407,28 @@ public class LayoutServiceUtil {
 	}
 
 	/**
+	* Returns the primary key of the default layout for the group. First it
+	* tries to search for a public layout, if there isn't any it falls back and
+	* searches among private layouts.
+	*
+	* @param groupId the primary key of the group
+	* @param scopeGroupId the primary key of the scope group. See {@link
+	com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
+	* @param portletId the primary key of the portlet
+	* @return Returns the primary key of the default layout group; {@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
+	* @throws PortalException if a group, layout, or portlet with the primary
+	key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static long getDefaultPlid(long groupId, long scopeGroupId,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getDefaultPlid(groupId, scopeGroupId, portletId);
+	}
+
+	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*
 	* @param uuid the layout's UUID

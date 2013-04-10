@@ -153,11 +153,7 @@ private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDispl
 		scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
-	long plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, false, portletId);
-
-	if (plid == 0) {
-		plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, true, portletId);
-	}
+	long plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, portletId);
 
 	if (plid == 0) {
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);

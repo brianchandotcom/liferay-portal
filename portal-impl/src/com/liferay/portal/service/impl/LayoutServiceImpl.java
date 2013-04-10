@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -537,6 +538,35 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return LayoutConstants.DEFAULT_PLID;
+	}
+
+	/**
+	 * Returns the primary key of the default layout for the group. First it
+	 * tries to search for a public layout, if there isn't any it falls back and
+	 * searches among private layouts.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  scopeGroupId the primary key of the scope group. See {@link
+	 *         com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
+	 * @param  portletId the primary key of the portlet
+	 * @return Returns the primary key of the default layout group; {@link
+	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
+	 * @throws PortalException if a group, layout, or portlet with the primary
+	 *         key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@ThreadLocalCachable
+	public long getDefaultPlid(
+			long groupId, long scopeGroupId, String portletId)
+		throws PortalException, SystemException {
+
+		long plid = getDefaultPlid(groupId, scopeGroupId, false, portletId);
+
+		if (plid == 0) {
+			plid = getDefaultPlid(groupId, scopeGroupId, true, portletId);
+		}
+
+		return plid;
 	}
 
 	/**

@@ -22,6 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Object[] objArray = (Object[])row.getObject();
 
 String target = (String)objArray[3];
+String targetId = target.replace(".", "");
+
 Boolean supportsFilterByGroup = (Boolean)objArray[5];
 %>
 
@@ -33,14 +35,33 @@ Boolean supportsFilterByGroup = (Boolean)objArray[5];
 		<portlet:param name="target" value="<%= target %>" />
 	</portlet:renderURL>
 
-	<%
-	String limitScopeURL = "javascript:var groupWindow = window.open('" + selectCommunityURL + "', 'site', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); groupWindow.focus();";
-	%>
-
 	<liferay-ui:icon
+		id="<%= targetId %>"
 		image="add"
 		label="<%= true %>"
 		message="limit-scope"
-		url="<%= limitScopeURL %>"
+		url="javascript:;"
 	/>
+
+	<aui:script use="aui-base">
+		A.one('#<portlet:namespace /><%= targetId %>').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
+							constrain: true,
+							modal: true,
+							stack: true,
+							width: 600
+						},
+						id: '<portlet:namespace />selectGroup<%= targetId %>',
+						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "site") %>',
+						uri: '<%= selectCommunityURL.toString() %>'
+					}
+				);
+			}
+		);
+	</aui:script>
 </c:if>

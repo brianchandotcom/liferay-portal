@@ -161,6 +161,7 @@ portletURL.setParameter("target", target);
 
 					data.put("groupid", group.getGroupId());
 					data.put("groupname", HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+					data.put("grouptarget", target);
 					data.put("grouptype", LanguageUtil.get(pageContext, group.getTypeLabel()));
 					%>
 

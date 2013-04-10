@@ -206,28 +206,30 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
 	}
 
-	function <portlet:namespace />selectGroup(groupId, name, target) {
-		var selectedGroupIds = [];
-		var selectedGroupIdsField = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value;
+	Liferay.on('<portlet:namespace />selectGroup', 
+		function(event) {
+			var selectedGroupIds = [];
+			var selectedGroupIdsField = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + event.grouptarget].value;
 
-		if (selectedGroupIdsField != "") {
-			selectedGroupIds = selectedGroupIdsField.split(",");
+			if (selectedGroupIdsField != "") {
+				selectedGroupIds = selectedGroupIdsField.split(",");
+			}
+
+			var selectedGroupNames = [];
+			var selectedGroupNamesField = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + event.grouptarget].value;
+
+			if (selectedGroupNamesField != "") {
+				selectedGroupNames = selectedGroupNamesField.split("@@");
+			}
+
+			if (AUI().Array.indexOf(selectedGroupIds, event.groupid) == -1) {
+				selectedGroupIds.push(event.groupid);
+				selectedGroupNames.push(event.groupname);
+			}
+
+			<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, event.grouptarget);
 		}
-
-		var selectedGroupNames = [];
-		var selectedGroupNamesField = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value;
-
-		if (selectedGroupNamesField != "") {
-			selectedGroupNames = selectedGroupNamesField.split("@@");
-		}
-
-		if (AUI().Array.indexOf(selectedGroupIds, groupId) == -1) {
-			selectedGroupIds.push(groupId);
-			selectedGroupNames.push(name);
-		}
-
-		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
-	}
+	);
 
 	function <portlet:namespace />selectOrganization(organizationId, groupId, name, type, target) {
 		<portlet:namespace />selectGroup(groupId, name, target);

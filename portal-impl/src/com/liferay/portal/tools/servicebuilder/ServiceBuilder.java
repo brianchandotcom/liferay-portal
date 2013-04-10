@@ -1626,6 +1626,7 @@ public class ServiceBuilder {
 				parameterTypeName.equals(
 					"com.liferay.portlet.dynamicdatamapping.storage.Fields") ||
 				parameterTypeName.startsWith("java.io") ||
+				parameterTypeName.startsWith("java.util.LinkedHashMap") ||
 				//parameterTypeName.startsWith("java.util.List") ||
 				//parameterTypeName.startsWith("java.util.Locale") ||
 				(parameterTypeName.startsWith("java.util.Map") &&

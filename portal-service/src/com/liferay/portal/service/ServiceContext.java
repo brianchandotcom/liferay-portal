@@ -821,6 +821,123 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _signedIn;
 	}
 
+	public void merge(ServiceContext serviceContext) {
+
+		setAddGroupPermissions(serviceContext.isAddGroupPermissions());
+		setAddGuestPermissions(serviceContext.isAddGuestPermissions());
+
+		if (serviceContext.getAssetCategoryIds() != null) {
+			setAssetCategoryIds(serviceContext.getAssetCategoryIds());
+		}
+
+		if (serviceContext.getAssetLinkEntryIds() != null) {
+			setAssetLinkEntryIds(serviceContext.getAssetLinkEntryIds());
+		}
+
+		if (serviceContext.getAssetTagNames() != null) {
+			setAssetTagNames(serviceContext.getAssetTagNames());
+		}
+
+		if (serviceContext.getAttributes() != null) {
+			setAttributes(serviceContext.getAttributes());
+		}
+
+		if (Validator.isNotNull(serviceContext.getCommand())) {
+			setCommand(serviceContext.getCommand());
+		}
+
+		if (serviceContext.getCompanyId() > 0) {
+			setCompanyId(serviceContext.getCompanyId());
+		}
+
+		if (serviceContext.getCreateDate() != null) {
+			setCreateDate(serviceContext.getCreateDate());
+		}
+
+		if (Validator.isNotNull(serviceContext.getCurrentURL())) {
+			setCurrentURL(serviceContext.getCurrentURL());
+		}
+
+		if (serviceContext.getExpandoBridgeAttributes() != null) {
+			setExpandoBridgeAttributes(
+				serviceContext.getExpandoBridgeAttributes());
+		}
+
+		if (serviceContext.getGroupPermissions() != null) {
+			setGroupPermissions(serviceContext.getGroupPermissions());
+		}
+
+		if (serviceContext.getGuestPermissions() != null) {
+			setGuestPermissions(serviceContext.getGuestPermissions());
+		}
+
+		if (serviceContext.getHeaders() != null) {
+			setHeaders(serviceContext.getHeaders());
+		}
+
+		setFailOnPortalException(serviceContext.isFailOnPortalException());
+		setLanguageId(serviceContext.getLanguageId());
+
+		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
+			setLayoutFullURL(serviceContext.getLayoutFullURL());
+		}
+
+		if (Validator.isNotNull(serviceContext.getLayoutURL())) {
+			setLayoutURL(serviceContext.getLayoutURL());
+		}
+
+		if (serviceContext.getModifiedDate() != null) {
+			setModifiedDate(serviceContext.getModifiedDate());
+		}
+
+		if (Validator.isNotNull(serviceContext.getPathMain())) {
+			setPathMain(serviceContext.getPathMain());
+		}
+
+		if (serviceContext.getPlid() > 0) {
+			setPlid(serviceContext.getPlid());
+		}
+
+		if (Validator.isNotNull(serviceContext.getPortalURL())) {
+			setPortalURL(serviceContext.getPortalURL());
+		}
+
+		if (serviceContext.getPortletPreferencesIds() != null) {
+			setPortletPreferencesIds(serviceContext.getPortletPreferencesIds());
+		}
+
+		if (Validator.isNotNull(serviceContext.getRemoteAddr())) {
+			setRemoteAddr(serviceContext.getRemoteAddr());
+		}
+
+		if (Validator.isNotNull(serviceContext.getRemoteHost())) {
+			setRemoteHost(serviceContext.getRemoteHost());
+		}
+
+		if (serviceContext.getScopeGroupId() > 0) {
+			setScopeGroupId(serviceContext.getScopeGroupId());
+		}
+
+		setSignedIn(serviceContext.isSignedIn());
+
+		if (Validator.isNotNull(serviceContext.getUserDisplayURL())) {
+
+			setUserDisplayURL(serviceContext.getUserDisplayURL());
+		}
+
+		if (serviceContext.getUserId() > 0) {
+			setUserId(serviceContext.getUserId());
+		}
+
+		if (Validator.isNotNull(serviceContext.getUuid())) {
+			setUuid(serviceContext.getUuid());
+		}
+
+		if (serviceContext.getWorkflowAction() > 0) {
+			setWorkflowAction(serviceContext.getWorkflowAction());
+		}
+	}
+
 	/**
 	 * Removes the mapping of the serializable object to the name of the
 	 * standard parameter of this service context.

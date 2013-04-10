@@ -32,10 +32,18 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testActionName1008() throws Exception {
+	public void testActionCommandElement1009() throws Exception {
+		test(
+			"ActionCommandElement1009.action",
+			"Error 1009: Duplicate command name name at " +
+				_DIR_NAME + "/ActionCommandElement1009.action:8");
+	}
+
+	@Test
+	public void testActionFileName1008() throws Exception {
 		test(
 			"BaseLiferay.action",
-			"Error 1008: Duplicate name BaseLiferay at " + _DIR_NAME +
+			"Error 1008: Duplicate file name BaseLiferay at " + _DIR_NAME +
 				"/BaseLiferay.action");
 	}
 
@@ -45,10 +53,10 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testFunctionName1008() throws Exception {
+	public void testFunctionFileName1008() throws Exception {
 		test(
 			"Click.function",
-			"Error 1008: Duplicate name Click at " + _DIR_NAME +
+			"Error 1008: Duplicate file name Click at " + _DIR_NAME +
 				"/Click.function");
 	}
 
@@ -58,10 +66,10 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testMacroName1008() throws Exception {
+	public void testMacroFileName1008() throws Exception {
 		test(
 			"BlogsEntry.macro",
-			"Error 1008: Duplicate name BlogsEntry at " + _DIR_NAME +
+			"Error 1008: Duplicate file name BlogsEntry at " + _DIR_NAME +
 				"/BlogsEntry.macro");
 	}
 
@@ -71,10 +79,10 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testTestCaseName1008() throws Exception {
+	public void testTestCaseFileName1008() throws Exception {
 		test(
 			"CPBlogsAcceptance.testcase",
-			"Error 1008: Duplicate name CPBlogsAcceptance at " + _DIR_NAME +
+			"Error 1008: Duplicate file name CPBlogsAcceptance at " + _DIR_NAME +
 				"/CPBlogsAcceptance.testcase");
 	}
 
@@ -84,10 +92,10 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testTestSuiteName1008() throws Exception {
+	public void testTestSuiteFileName1008() throws Exception {
 		test(
 			"CollaborationAcceptance.testsuite",
-			"Error 1008: Duplicate name CollaborationAcceptance at " +
+			"Error 1008: Duplicate file name CollaborationAcceptance at " +
 				_DIR_NAME + "/CollaborationAcceptance.testsuite");
 	}
 
@@ -113,6 +121,8 @@ public class SeleniumBuilderContextTest {
 				new SeleniumBuilderContext(_BASE_DIR);
 
 			seleniumBuilderContext.addFile(_DIR_NAME + "/" + fileName);
+
+			seleniumBuilderContext.validateElements(_DIR_NAME + "/" + fileName);
 		}
 		catch (IllegalArgumentException iae) {
 			actualErrorMessage = iae.getMessage();

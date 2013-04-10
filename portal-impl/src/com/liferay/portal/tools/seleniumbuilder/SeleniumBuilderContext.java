@@ -412,6 +412,14 @@ public class SeleniumBuilderContext {
 		}
 	}
 
+	public void validateElements(String fileName) {
+		String name = _getName(fileName);
+
+		if (fileName.endsWith(".action")) {
+			validateActionElements(name);
+		}
+	}
+
 	private String _getClassName(String fileName) {
 		return _seleniumBuilderFileUtil.getClassName(fileName);
 	}

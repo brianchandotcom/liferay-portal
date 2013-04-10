@@ -70,7 +70,7 @@ CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.entities = false;
 
-CKEDITOR.config.extraPlugins = 'ajaxsave,restore';
+CKEDITOR.config.extraPlugins = 'ajaxsave,restore,scayt,wsc';
 
 CKEDITOR.config.height = 265;
 
@@ -151,7 +151,7 @@ CKEDITOR.on(
 
 		dialogDefinition.onShow = function() {
 			if (typeof onShow === 'function') {
-				onShow.apply(this);
+				onShow.apply(this, arguments);
 			}
 
 			if (window.top != window.self) {

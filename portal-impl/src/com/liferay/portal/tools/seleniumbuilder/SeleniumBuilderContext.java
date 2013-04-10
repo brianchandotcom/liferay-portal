@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -38,7 +37,63 @@ public class SeleniumBuilderContext {
 
 		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
 
-		_initSeleniumBuilderContext(_getFileNames());
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(_baseDir);
+		directoryScanner.setIncludes(
+			new String[] {
+				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
+				"**\\*.testcase", "**\\*.testsuite"
+			});
+
+		directoryScanner.scan();
+
+		String[] fileNames = directoryScanner.getIncludedFiles();
+
+		for (String fileName : fileNames) {
+			addFile(fileName);
+		}
+
+		String[] seleniumFileNames = {
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"LiferaySelenium.java",
+			"com/liferay/portalweb/portal/util/liferayselenium/" +
+				"SeleniumWrapper.java"
+		};
+
+		for (String seleniumFileName : seleniumFileNames) {
+			String content = _seleniumBuilderFileUtil.getNormalizedContent(
+				seleniumFileName);
+
+			Pattern pattern = Pattern.compile(
+				"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				String methodSignature = matcher.group();
+
+				int x = methodSignature.indexOf(" ", 7);
+				int y = methodSignature.indexOf("(");
+
+				String seleniumCommandName = methodSignature.substring(
+					x + 1, y);
+
+				int count = 0;
+
+				int z = methodSignature.indexOf(")");
+
+				String parameters = methodSignature.substring(y + 1, z);
+
+				if (!parameters.equals("")) {
+					count = StringUtil.count(parameters, ",") + 1;
+				}
+
+				_seleniumParameterCounts.put(seleniumCommandName, count);
+			}
+		}
+
+		_seleniumParameterCounts.put("open", 1);
 	}
 
 	public void addFile(String fileName) throws Exception {
@@ -418,6 +473,99 @@ public class SeleniumBuilderContext {
 		if (fileName.endsWith(".action")) {
 			validateActionElements(name);
 		}
+		else if (fileName.endsWith(".function")) {
+			validateFunctionElements(name);
+		}
+		else if (fileName.endsWith(".macro")) {
+			validateMacroElements(name);
+		}
+		else if (fileName.endsWith(".testcase")) {
+			validateTestCaseElements(name);
+		}
+	}
+
+	public void validateFunctionElements(String functionName) {
+		Element rootElement = getFunctionRootElement(functionName);
+
+		if (rootElement == null) {
+			return;
+		}
+
+		List<Element> commandElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		Set<String> commandElementNames = new HashSet<String>();
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			if (commandElementNames.contains(commandName)) {
+				String functionFileName = getFunctionFileName(functionName);
+
+				_seleniumBuilderFileUtil.throwValidationException(
+					1009, functionFileName, commandElement, commandName);
+			}
+			else {
+				commandElementNames.add(commandName);
+			}
+		}
+	}
+
+	public void validateMacroElements(String macroName) {
+		Element rootElement = getMacroRootElement(macroName);
+
+		if (rootElement == null) {
+			return;
+		}
+
+		List<Element> commandElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		Set<String> commandElementNames = new HashSet<String>();
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			if (commandElementNames.contains(commandName)) {
+				String macroFileName = getMacroFileName(macroName);
+
+				_seleniumBuilderFileUtil.throwValidationException(
+					1009, macroFileName, commandElement, commandName);
+			}
+			else {
+				commandElementNames.add(commandName);
+			}
+		}
+	}
+
+	public void validateTestCaseElements(String testCaseName) {
+		Element rootElement = getTestCaseRootElement(testCaseName);
+
+		if (rootElement == null) {
+			return;
+		}
+
+		List<Element> commandElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		Set<String> commandElementNames = new HashSet<String>();
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			if (commandElementNames.contains(commandName)) {
+				String testCaseFileName = getTestCaseFileName(testCaseName);
+
+				_seleniumBuilderFileUtil.throwValidationException(
+					1009, testCaseFileName, commandElement, commandName);
+			}
+			else {
+				commandElementNames.add(commandName);
+			}
+		}
 	}
 
 	private String _getClassName(String fileName) {
@@ -426,23 +574,6 @@ public class SeleniumBuilderContext {
 
 	private String _getClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
-	}
-
-	private Set<String> _getFileNames() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(_baseDir);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
-				"**\\*.testcase", "**\\*.testsuite"
-			});
-
-		directoryScanner.scan();
-
-		String[] fileNames = directoryScanner.getIncludedFiles();
-
-		return SetUtil.fromArray(fileNames);
 	}
 
 	private String _getJavaFileName(String fileName) {
@@ -480,55 +611,6 @@ public class SeleniumBuilderContext {
 	private String _getSimpleClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
-	}
-
-	private void _initSeleniumBuilderContext(Set<String> fileNames)
-		throws Exception {
-
-		for (String fileName : fileNames) {
-			addFile(fileName);
-		}
-
-		String[] seleniumFileNames = {
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"LiferaySelenium.java",
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"SeleniumWrapper.java"
-		};
-
-		for (String seleniumFileName : seleniumFileNames) {
-			String content = _seleniumBuilderFileUtil.getNormalizedContent(
-				seleniumFileName);
-
-			Pattern pattern = Pattern.compile(
-				"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
-
-			Matcher matcher = pattern.matcher(content);
-
-			while (matcher.find()) {
-				String methodSignature = matcher.group();
-
-				int x = methodSignature.indexOf(" ", 7);
-				int y = methodSignature.indexOf("(");
-
-				String seleniumCommandName = methodSignature.substring(
-					x + 1, y);
-
-				int count = 0;
-
-				int z = methodSignature.indexOf(")");
-
-				String parameters = methodSignature.substring(y + 1, z);
-
-				if (!parameters.equals("")) {
-					count = StringUtil.count(parameters, ",") + 1;
-				}
-
-				_seleniumParameterCounts.put(seleniumCommandName, count);
-			}
-		}
-
-		_seleniumParameterCounts.put("open", 1);
 	}
 
 	private String _normalizeFileName(String fileName) {

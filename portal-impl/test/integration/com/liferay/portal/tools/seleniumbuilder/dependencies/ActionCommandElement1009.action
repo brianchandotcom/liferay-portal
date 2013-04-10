@@ -1,0 +1,13 @@
+<definition>
+	<command name="name">
+		<case locator1="locator1">
+			<execute function="Function#function" />
+		</case>
+	</command>
+
+	<command name="name">
+		<case locator1="locator1">
+			<execute function="Function#function" />
+		</case>
+	</command>
+</definition>

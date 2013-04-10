@@ -42,7 +42,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		throws Exception {
 
 		if (!Validator.equals(className, MBCategory.class.getName()) &&
-			!Validator.equals(className, _mbModelResource))
+			!Validator.equals(className, _mbModelResource)) {
 
 			return;
 		}

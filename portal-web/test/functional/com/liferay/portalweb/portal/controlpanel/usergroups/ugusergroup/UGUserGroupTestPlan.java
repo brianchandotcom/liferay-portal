@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroup.AddUGUserGroupTests;
+import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupcommunitysite.AddUGUserGroupCommunitySiteTests;
 import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupnameasterisk.AddUGUserGroupNameAsteriskTests;
 import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupnamecomma.AddUGUserGroupNameCommaTests;
 import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupnameduplicate.AddUGUserGroupNameDuplicateTests;
@@ -39,6 +40,7 @@ public class UGUserGroupTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddUGUserGroupTests.suite());
+		testSuite.addTest(AddUGUserGroupCommunitySiteTests.suite());
 		testSuite.addTest(AddUGUserGroupNameAsteriskTests.suite());
 		testSuite.addTest(AddUGUserGroupNameCommaTests.suite());
 		testSuite.addTest(AddUGUserGroupNameDuplicateTests.suite());

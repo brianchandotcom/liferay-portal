@@ -515,11 +515,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	<%
 	PortletURL loginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-	loginURL.setWindowState(LiferayWindowState.POP_UP);
-	loginURL.setPortletMode(PortletMode.VIEW);
-
 	loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 	loginURL.setParameter("struts_action", "/login/login");
+	loginURL.setPortletMode(PortletMode.VIEW);
+	loginURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
 	<aui:script>

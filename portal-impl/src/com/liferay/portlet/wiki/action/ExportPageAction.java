@@ -82,21 +82,21 @@ public class ExportPageAction extends PortletAction {
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			viewPageURL.setPortletMode(PortletMode.VIEW);
-			viewPageURL.setWindowState(WindowState.MAXIMIZED);
 			viewPageURL.setParameter("struts_action", "/wiki/view");
 			viewPageURL.setParameter("nodeName", nodeName);
 			viewPageURL.setParameter("title", title);
+			viewPageURL.setPortletMode(PortletMode.VIEW);
+			viewPageURL.setWindowState(WindowState.MAXIMIZED);
 
 			PortletURL editPageURL = new PortletURLImpl(
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			editPageURL.setPortletMode(PortletMode.VIEW);
-			editPageURL.setWindowState(WindowState.MAXIMIZED);
 			editPageURL.setParameter("struts_action", "/wiki/edit_page");
 			editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 			editPageURL.setParameter("title", title);
+			editPageURL.setPortletMode(PortletMode.VIEW);
+			editPageURL.setWindowState(WindowState.MAXIMIZED);
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);

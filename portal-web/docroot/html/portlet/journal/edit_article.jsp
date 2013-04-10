@@ -29,8 +29,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 	if (layoutTypePortlet.hasPortletId(PortletKeys.JOURNAL)) {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setWindowState(WindowState.NORMAL);
 		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(WindowState.NORMAL);
 
 		redirect = portletURL.toString();
 	}

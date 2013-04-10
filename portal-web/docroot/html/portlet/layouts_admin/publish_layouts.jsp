@@ -176,7 +176,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 PortletURL selectURL = renderResponse.createRenderURL();
 
-selectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 selectURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 selectURL.setParameter(Constants.CMD, cmd);
 selectURL.setParameter("pagesRedirect", pagesRedirect);
@@ -186,6 +185,7 @@ selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setParameter("schedule", String.valueOf(schedule));
+selectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));
 request.setAttribute("edit_pages.jsp-selPlid", new Long(selPlid));

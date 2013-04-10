@@ -35,12 +35,11 @@ if (Validator.isNull(formAction)) {
 		liferayPortletURL = new PortletURLImpl(request, PortletKeys.LANGUAGE, plid, PortletRequest.ACTION_PHASE);
 	}
 
-	liferayPortletURL.setWindowState(WindowState.NORMAL);
-	liferayPortletURL.setPortletMode(PortletMode.VIEW);
 	liferayPortletURL.setAnchor(false);
-
 	liferayPortletURL.setParameter("struts_action", "/language/view");
 	liferayPortletURL.setParameter("redirect", currentURL);
+	liferayPortletURL.setPortletMode(PortletMode.VIEW);
+	liferayPortletURL.setWindowState(WindowState.NORMAL);
 
 	formAction = liferayPortletURL.toString();
 }

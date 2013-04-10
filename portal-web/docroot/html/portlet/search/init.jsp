@@ -169,8 +169,8 @@ private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDispl
 
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
 
-	portletURL.setWindowState(WindowState.MAXIMIZED);
 	portletURL.setPortletMode(PortletMode.VIEW);
+	portletURL.setWindowState(WindowState.MAXIMIZED);
 
 	return portletURL;
 }

@@ -249,9 +249,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.js
 <%
 PortletURL embeddedPlayerURL = renderResponse.createRenderURL();
 
-embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
-
 embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded_player");
+embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <aui:script use="aui-image-viewer-gallery,aui-media-viewer-plugin">

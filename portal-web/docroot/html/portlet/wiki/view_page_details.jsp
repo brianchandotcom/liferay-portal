@@ -117,13 +117,12 @@ int count = 0;
 
 	PortletURL exportPageURL = renderResponse.createActionURL();
 
-	exportPageURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
 	exportPageURL.setParameter("struts_action", "/wiki/export_page");
 	exportPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 	exportPageURL.setParameter("nodeName", node.getName());
 	exportPageURL.setParameter("title", wikiPage.getTitle());
 	exportPageURL.setParameter("version", String.valueOf(wikiPage.getVersion()));
+	exportPageURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	%>
 
 	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">

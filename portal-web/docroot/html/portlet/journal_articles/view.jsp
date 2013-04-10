@@ -35,14 +35,14 @@ double version = ParamUtil.getDouble(request, "version");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
+		portletURL.setParameter("struts_action", "/journal_articles/view");
+
 		if (pageUrl.equals("normal")) {
 			portletURL.setWindowState(WindowState.NORMAL);
 		}
 		else {
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
-
-		portletURL.setParameter("struts_action", "/journal_articles/view");
 
 		PortletURL articleURL = PortletURLUtil.clone(portletURL, renderResponse);
 

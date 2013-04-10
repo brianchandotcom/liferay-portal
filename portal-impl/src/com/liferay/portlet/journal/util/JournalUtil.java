@@ -288,9 +288,8 @@ public class JournalUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		if (strutsAction.equals("/journal/select_folder")) {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 			portletURL.setParameter("struts_action", "/journal/select_folder");
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());

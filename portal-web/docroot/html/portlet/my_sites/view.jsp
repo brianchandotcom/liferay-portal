@@ -121,22 +121,20 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			if (group.getPublicLayoutsPageCount() > 0) {
 				rowURL = renderResponse.createActionURL();
 
-				rowURL.setWindowState(WindowState.NORMAL);
-
 				rowURL.setParameter("struts_action", "/sites_admin/page");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 				rowURL.setParameter("privateLayout", Boolean.FALSE.toString());
+				rowURL.setWindowState(WindowState.NORMAL);
 			}
 			else if (tabs1.equals("my-sites") && (group.getPrivateLayoutsPageCount() > 0)) {
 				rowURL = renderResponse.createActionURL();
-
-				rowURL.setWindowState(WindowState.NORMAL);
 
 				rowURL.setParameter("struts_action", "/sites_admin/page");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 				rowURL.setParameter("privateLayout", Boolean.TRUE.toString());
+				rowURL.setWindowState(WindowState.NORMAL);
 			}
 			%>
 

@@ -199,8 +199,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							<c:if test="<%= editPortletURL != null %>">
 
 								<%
-								editPortletURL.setWindowState(LiferayWindowState.POP_UP);
 								editPortletURL.setPortletMode(PortletMode.VIEW);
+								editPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
 								String editPortletURLString = editPortletURL.toString();
 

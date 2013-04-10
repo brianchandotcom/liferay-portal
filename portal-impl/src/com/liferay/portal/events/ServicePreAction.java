@@ -1055,9 +1055,9 @@ public class ServicePreAction extends Action {
 					pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 				}
 				else {
-					pageSettingsURL.setPlid(plid);
 					pageSettingsURL.setParameter(
 						"redirect", themeDisplay.getURLHome());
+					pageSettingsURL.setPlid(plid);
 					pageSettingsURL.setWindowState(WindowState.MAXIMIZED);
 				}
 
@@ -1102,11 +1102,11 @@ public class ServicePreAction extends Action {
 							LiferayWindowState.POP_UP);
 					}
 					else {
-						manageSiteMembershipsURL.setPlid(plid);
 						manageSiteMembershipsURL.setParameter(
 							"redirect", themeDisplay.getURLHome());
 						manageSiteMembershipsURL.setParameter(
 							"showBackURL", Boolean.FALSE.toString());
+						manageSiteMembershipsURL.setPlid(plid);
 						manageSiteMembershipsURL.setWindowState(
 							WindowState.MAXIMIZED);
 					}
@@ -1162,9 +1162,9 @@ public class ServicePreAction extends Action {
 					siteSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 				}
 				else {
-					siteSettingsURL.setPlid(plid);
 					siteSettingsURL.setParameter(
 						"redirect", themeDisplay.getURLHome());
+					siteSettingsURL.setPlid(plid);
 					siteSettingsURL.setWindowState(
 						LiferayWindowState.MAXIMIZED);
 				}
@@ -1207,9 +1207,9 @@ public class ServicePreAction extends Action {
 						LiferayWindowState.POP_UP);
 				}
 				else {
-					siteMapSettingsURL.setPlid(plid);
 					siteMapSettingsURL.setParameter(
 						"redirect", themeDisplay.getURLHome());
+					siteMapSettingsURL.setPlid(plid);
 					siteMapSettingsURL.setWindowState(
 						LiferayWindowState.MAXIMIZED);
 				}

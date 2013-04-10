@@ -300,7 +300,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.create(groupId);
 
-		group.setUuid(serviceContext.getUuid());
+		if (serviceContext != null) {
+			group.setUuid(serviceContext.getUuid());
+		}
+
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
 		group.setClassNameId(classNameId);

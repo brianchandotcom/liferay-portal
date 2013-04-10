@@ -136,12 +136,11 @@ public class MBMessageAssetRenderer
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setWindowState(windowState);
-
 		portletURL.setParameter(
 			"struts_action", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(_message.getMessageId()));
+		portletURL.setWindowState(windowState);
 
 		return portletURL;
 	}

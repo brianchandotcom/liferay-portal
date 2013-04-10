@@ -37,9 +37,6 @@ else {
 	portletURL = new PortletURLImpl(request, PortletKeys.JOURNAL_CONTENT_SEARCH, plid, PortletRequest.RENDER_PHASE);
 }
 
-portletURL.setWindowState(WindowState.MAXIMIZED);
-portletURL.setPortletMode(PortletMode.VIEW);
-
 portletURL.setParameter("struts_action", "/journal_content_search/search");
 portletURL.setParameter("showListed", String.valueOf(showListed));
 
@@ -50,6 +47,9 @@ if (Validator.isNotNull(targetPortletId)) {
 if (Validator.isNotNull(type)) {
 	portletURL.setParameter("type", type);
 }
+
+portletURL.setPortletMode(PortletMode.VIEW);
+portletURL.setWindowState(WindowState.MAXIMIZED);
 %>
 
 <form action="<%= HtmlUtil.escape(portletURL.toString()) %>" class="aui-form" method="post" name="<%= namespace %>fm" onSubmit="submitForm(this); return false;">

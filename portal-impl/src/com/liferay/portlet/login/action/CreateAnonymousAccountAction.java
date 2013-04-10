@@ -100,11 +100,10 @@ public class CreateAnonymousAccountAction extends PortletAction {
 			actionRequest, PortletKeys.LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 		portletURL.setParameter("struts_action", "/login/login_redirect");
 		portletURL.setParameter("emailAddress", emailAddress);
 		portletURL.setParameter("anonymousUser", Boolean.TRUE.toString());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

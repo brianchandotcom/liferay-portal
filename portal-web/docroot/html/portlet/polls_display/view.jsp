@@ -116,9 +116,8 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 
 	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
 	redirectURL.setParameter("struts_action", "/polls_display/add_question_redirect");
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
 	<div class="lfr-meta-actions icons-container">

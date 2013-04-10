@@ -49,9 +49,8 @@ public class IGUtil {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 			portletURL.setParameter("struts_action", strutsAction);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());

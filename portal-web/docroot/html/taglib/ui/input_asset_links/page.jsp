@@ -55,11 +55,10 @@ long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
-assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-assetBrowserURL.setPortletMode(PortletMode.VIEW);
-
 assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
 assetBrowserURL.setParameter("groupId", scopeGroupId.toString());
+assetBrowserURL.setPortletMode(PortletMode.VIEW);
+assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">

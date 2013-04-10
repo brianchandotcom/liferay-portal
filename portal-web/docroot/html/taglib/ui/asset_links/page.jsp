@@ -58,8 +58,6 @@ if (assetEntryId > 0) {
 
 					LiferayPortletURL assetPublisherURL = new PortletURLImpl(request, PortletKeys.ASSET_PUBLISHER, plid, PortletRequest.RENDER_PHASE);
 
-					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
-
 					assetPublisherURL.setParameter("struts_action", "/asset_publisher/view_content");
 					assetPublisherURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
 					assetPublisherURL.setParameter("type", assetRendererFactory.getType());
@@ -71,6 +69,8 @@ if (assetEntryId > 0) {
 
 						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
+
+					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
 
 					String viewFullContentURLString = assetPublisherURL.toString();
 

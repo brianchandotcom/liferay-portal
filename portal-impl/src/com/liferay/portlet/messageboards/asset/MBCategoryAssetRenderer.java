@@ -95,11 +95,10 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setWindowState(windowState);
-
 		portletURL.setParameter("struts_action", "/message_boards/view");
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(_category.getCategoryId()));
+		portletURL.setWindowState(windowState);
 
 		return portletURL;
 	}

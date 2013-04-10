@@ -299,9 +299,8 @@ public class EditServerAction extends PortletAction {
 		if (path != null) {
 			PortletURL portletURL = actionResponseImpl.createRenderURL();
 
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
 			portletURL.setParameter("struts_action", path);
+			portletURL.setWindowState(WindowState.MAXIMIZED);
 
 			return portletURL.toString();
 		}

@@ -264,10 +264,9 @@ public class DLImpl implements DL {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
 			portletURL.setParameter("struts_action", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, themeDisplay.translate("home"), portletURL.toString());

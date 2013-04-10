@@ -41,8 +41,8 @@ String selResourceName = modelResourceName;
 if (Validator.isNull(modelResource)) {
 	PortletURL portletURL = new PortletURLImpl(request, portletResource, plid, PortletRequest.ACTION_PHASE);
 
-	portletURL.setWindowState(WindowState.NORMAL);
 	portletURL.setPortletMode(PortletMode.VIEW);
+	portletURL.setWindowState(WindowState.NORMAL);
 
 	redirect = portletURL.toString();
 
@@ -132,12 +132,10 @@ long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 PortletURLImpl definePermissionsURL = new PortletURLImpl(request, PortletKeys.ROLES_ADMIN, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
-definePermissionsURL.setPortletMode(PortletMode.VIEW);
-
-definePermissionsURL.setRefererPlid(plid);
-
 definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
+definePermissionsURL.setPortletMode(PortletMode.VIEW);
+definePermissionsURL.setRefererPlid(plid);
 %>
 
 <div class="edit-permissions">

@@ -92,9 +92,8 @@ editPageURL.setParameter("title", title);
 
 PortletURL printPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-printPageURL.setWindowState(LiferayWindowState.POP_UP);
-
 printPageURL.setParameter("viewMode", Constants.PRINT);
+printPageURL.setWindowState(LiferayWindowState.POP_UP);
 
 PortletURL categorizedPagesURL = renderResponse.createRenderURL();
 

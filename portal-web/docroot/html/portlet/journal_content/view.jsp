@@ -107,12 +107,11 @@ boolean expired = true;
 									<%
 									PortletURL printPageURL = renderResponse.createRenderURL();
 
-									printPageURL.setWindowState(LiferayWindowState.POP_UP);
-
 									printPageURL.setParameter("struts_action", "/journal_content/view");
 									printPageURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
 									printPageURL.setParameter("articleId", articleDisplay.getArticleId());
 									printPageURL.setParameter("viewMode", Constants.PRINT);
+									printPageURL.setWindowState(LiferayWindowState.POP_UP);
 									%>
 
 									<div class="print-action">
@@ -138,11 +137,10 @@ boolean expired = true;
 							<%
 							PortletURL exportArticleURL = renderResponse.createActionURL();
 
-							exportArticleURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
 							exportArticleURL.setParameter("struts_action", "/journal_content/export_article");
 							exportArticleURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
 							exportArticleURL.setParameter("articleId", articleDisplay.getArticleId());
+							exportArticleURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							%>
 
 							<div class="export-actions">

@@ -38,10 +38,9 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 
 				PortletURL rowURL = renderResponse.createActionURL();
 
-				rowURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
 				rowURL.setParameter("struts_action", "/recent_documents/get_file");
 				rowURL.setParameter("fileEntryId", String.valueOf(fileRank.getFileEntryId()));
+				rowURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		%>
 
 				<tr>

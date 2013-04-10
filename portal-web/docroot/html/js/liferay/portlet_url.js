@@ -225,12 +225,7 @@ AUI.add(
 
 					var portletURL = PortletURL.createRenderURL();
 
-					portletURL.setPortletId(86);
-
-					portletURL.setWindowState('MAXIMIZED');
-
 					portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-
 					portletURL.setParameter('struts_action', '/portlet_configuration/edit_permissions');
 					portletURL.setParameter('redirect', redirect);
 
@@ -242,6 +237,8 @@ AUI.add(
 					portletURL.setParameter('modelResource', modelResource);
 					portletURL.setParameter('modelResourceDescription', modelResourceDescription);
 					portletURL.setParameter('resourcePrimKey', resourcePrimKey);
+					portletURL.setPortletId(86);
+					portletURL.setWindowState('MAXIMIZED');
 
 					return portletURL;
 				},

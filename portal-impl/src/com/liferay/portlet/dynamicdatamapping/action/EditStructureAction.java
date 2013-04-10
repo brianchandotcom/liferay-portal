@@ -199,8 +199,6 @@ public class EditStructureAction extends PortletAction {
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setWindowState(actionRequest.getWindowState());
-
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_mapping/edit_structure");
@@ -217,6 +215,7 @@ public class EditStructureAction extends PortletAction {
 			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter("availableFields", availableFields, false);
 		portletURL.setParameter("eventName", eventName, false);
+		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
 	}

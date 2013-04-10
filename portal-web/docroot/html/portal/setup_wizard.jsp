@@ -360,11 +360,10 @@
 							<%
 							PortletURL loginURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
 
-							loginURL.setWindowState(WindowState.NORMAL);
-							loginURL.setPortletMode(PortletMode.VIEW);
-
 							loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 							loginURL.setParameter("struts_action", "/login/login");
+							loginURL.setPortletMode(PortletMode.VIEW);
+							loginURL.setWindowState(WindowState.NORMAL);
 							%>
 
 							<aui:form action="<%= loginURL %>" method="post" name="fm">

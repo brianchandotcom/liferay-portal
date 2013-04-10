@@ -43,27 +43,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ROLE_TABLE-->
-<tr>
-	<td>ROLE_TABLE_TITLE_1</td>
-	<td>xpath=(//tr/td[1]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLE_TABLE_TYPE_1</td>
-	<td>xpath=(//tr/td[2]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADD-->
 <tr>
 	<td>ADD_REGULAR_ROLE</td>
@@ -85,9 +64,40 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ACTIONS-->
+<!--ROLE_TABLE-->
 <tr>
-	<td>ACTIONS_DELETE</td>
+	<td>ROLE_TABLE_TITLE_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_TYPE_1</td>
+	<td>xpath=(//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLE_ACTIONS-->
+<tr>
+	<td>ROLE_ACTIONS_DEFINE_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_ACTIONS_ASSIGN_MEMBERS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_ACTIONS_DELETE</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>

@@ -28,6 +28,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael C. Han
  * @author Shinn Lok
@@ -36,10 +39,34 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		List<String> pendingModels = new ArrayList<String>();
+
 		for (String[] model : _MODELS) {
-			verifyModel(
-				model[0], model[1], model[2], model[3], model[4],
-				GetterUtil.getBoolean(model[5]));
+			pendingModels.add(model[0]);
+		}
+
+		while (!pendingModels.isEmpty()) {
+			int count = pendingModels.size();
+
+			for (String[] model : _MODELS) {
+				if (pendingModels.contains(model[3]) ||
+					!pendingModels.contains(model[0])) {
+
+					continue;
+				}
+
+				verifyModel(
+					model[0], model[1], model[2], model[3], model[4],
+					GetterUtil.getBoolean(model[5]));
+
+				pendingModels.remove(model[0]);
+			}
+
+			if (pendingModels.size() == count) {
+				_log.error("Circular dependency detected " + pendingModels);
+
+				break;
+			}
 		}
 	}
 

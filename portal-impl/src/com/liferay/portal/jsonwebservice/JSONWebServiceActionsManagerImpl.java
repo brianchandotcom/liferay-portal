@@ -212,6 +212,23 @@ public class JSONWebServiceActionsManagerImpl
 		return jsonWebServiceActionMappings;
 	}
 
+	public int getJSONWebServiceActionsCount(String contextPath) {
+		int count = 0;
+
+		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
+				_jsonWebServiceActionConfigs) {
+
+			String actionContextPath =
+				jsonWebServiceActionConfig.getContextPath();
+
+			if (contextPath.equals(actionContextPath)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	public void registerJSONWebServiceAction(
 		String servletContextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method) {

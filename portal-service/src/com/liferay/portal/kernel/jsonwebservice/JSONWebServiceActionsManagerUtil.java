@@ -71,6 +71,11 @@ public class JSONWebServiceActionsManagerUtil {
 		return _jsonWebServiceActionsManager;
 	}
 
+	public static int getJSONWebServiceActionsCount(String contextPath) {
+		return getJSONWebServiceActionsManager().getJSONWebServiceActionsCount(
+			contextPath);
+	}
+
 	public static void registerJSONWebServiceAction(
 		String servletContextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method) {

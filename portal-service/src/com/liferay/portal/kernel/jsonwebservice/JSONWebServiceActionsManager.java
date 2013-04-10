@@ -42,6 +42,8 @@ public interface JSONWebServiceActionsManager {
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
 		String servletContextPath);
 
+	public int getJSONWebServiceActionsCount(String contextPath);
+
 	public void registerJSONWebServiceAction(
 		String servletContextPath, Class<?> actionClass, Method actionMethod,
 		String path, String method);

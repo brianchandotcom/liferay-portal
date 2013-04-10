@@ -11,6 +11,7 @@
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
 		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
+	<bean class="com.liferay.portal.jsonwebservice.spring.JSONWebServiceDetectorBeanPostProcessor" />
 	<bean class="com.liferay.portal.security.lang.DoPrivilegedFactory" />
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean id="basePersistence" abstract="true">

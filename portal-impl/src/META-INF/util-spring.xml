@@ -299,6 +299,7 @@
 				<entry key="com.liferay.portal.dao.shard.advice.ShardAdvice" value="" />
 				<entry key="com.liferay.portal.dao.shard.advice.ShardPersistenceAdvice" value="shardAdvice" />
 				<entry key="com.liferay.portal.increment.BufferedIncrementAdvice" value="nextMethodInterceptor" />
+				<entry key="com.liferay.portal.jsonwebservice.spring.JSONWebServiceDetectorBeanPostProcessor" value="" />
 				<entry key="com.liferay.portal.messaging.async.AsyncAdvice" value="defaultDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" value="monitoringDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />

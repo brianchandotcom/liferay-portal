@@ -513,7 +513,7 @@ if (parentGroup != null) {
 						width: 600
 					},
 					id: '<portlet:namespace />selectGroup',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "site")) %>',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "site") %>',
 					uri: '<%= groupSelectorURL.toString() %>'
 				},
 				function(event) {

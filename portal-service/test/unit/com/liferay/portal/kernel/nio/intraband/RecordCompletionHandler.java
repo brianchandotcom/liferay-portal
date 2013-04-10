@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.nio.intraband;
 
 import java.io.IOException;
 
+import java.nio.channels.Selector;
+
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -80,6 +83,14 @@ public class RecordCompletionHandler<A> implements CompletionHandler<A> {
 
 	public void waitUntilTimeouted() throws InterruptedException {
 		_timeoutedCountDownLatch.await();
+	}
+
+	public void waitUntilTimeouted(Selector selector)
+		throws InterruptedException {
+
+		while (!_timeoutedCountDownLatch.await(10, TimeUnit.MILLISECONDS)) {
+			selector.wakeup();
+		}
 	}
 
 	private volatile A _attachment;

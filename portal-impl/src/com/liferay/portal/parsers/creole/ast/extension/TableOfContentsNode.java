@@ -29,9 +29,24 @@ public class TableOfContentsNode extends ASTNode {
 		super(token);
 	}
 
+	public TableOfContentsNode(int token, String title) {
+		super(token);
+		_title = title;
+	}
+
 	@Override
 	public void accept(ASTVisitor astVisitor) {
 		astVisitor.visit(this);
 	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String _title) {
+		this._title = _title;
+	}
+
+	private String _title;
 
 }

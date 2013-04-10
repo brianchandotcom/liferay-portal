@@ -21,7 +21,7 @@ String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
-String callback = ParamUtil.getString(request, "callback", "selectGroup");
+String eventName = ParamUtil.getString(request, "eventName", "selectGroup");
 String target = ParamUtil.getString(request, "target");
 
 User selUser = PortalUtil.getSelectedUser(request);
@@ -37,11 +37,11 @@ if (selUser != null) {
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
-portletURL.setParameter("callback", callback);
+portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("target", target);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectGroupFm">
 	<liferay-ui:header
 		title="sites"
 	/>
@@ -143,38 +143,30 @@ portletURL.setParameter("target", target);
 			rowIdProperty="friendlyURL"
 		>
 
-			<%
-			String rowHREF = null;
-
-			if (Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId())) {
-				StringBundler sb = new StringBundler(10);
-
-				sb.append("javascript:opener.");
-				sb.append(renderResponse.getNamespace());
-				sb.append(callback);
-				sb.append("('");
-				sb.append(group.getGroupId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
-				sb.append("', '");
-				sb.append(target);
-				sb.append("'); window.close();");
-
-				rowHREF = sb.toString();
-			}
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="type"
 				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
 			/>
+
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= (Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId())) %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("groupid", group.getGroupId());
+					data.put("groupname", HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+					data.put("grouptype", LanguageUtil.get(pageContext, group.getTypeLabel()));
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
@@ -182,5 +174,21 @@ portletURL.setParameter("target", target);
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
+	Liferay.Util.focusFormField(document.<portlet:namespace />selectGroupFm.<portlet:namespace />name);
+</aui:script>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectGroupFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
 </aui:script>

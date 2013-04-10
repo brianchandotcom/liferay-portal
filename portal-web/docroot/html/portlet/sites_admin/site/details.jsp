@@ -458,7 +458,6 @@ if (parentGroup != null) {
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
 			name="type"
 			value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
 		/>
@@ -475,53 +474,66 @@ if (parentGroup != null) {
 
 <liferay-ui:icon
 	cssClass="modify-link"
+	id="selectParentSiteLink"
 	image="add"
 	label="<%= true %>"
 	message="select"
-	url='<%= "javascript:" + renderResponse.getNamespace() + "openGroupSelector();" %>'
+	url="javascript:;"
 />
 
-<aui:script>
-	function <portlet:namespace />createURL(href, value, onclick) {
-		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
-	};
+<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/users_admin/select_site" />
+	<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
+</portlet:renderURL>
 
+<aui:script>
 	function <portlet:namespace />isVisible(currentValue, value) {
 		return currentValue != '';
 	}
 
-	function <portlet:namespace />openGroupSelector() {
-		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /><portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' /></portlet:renderURL>';
-
-		var groupWindow = window.open(url, 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
-
-		groupWindow.focus();
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectGroup',
-		function(groupId, name) {
-			var A = AUI();
-
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentGroupSearchContainer');
-
-			var rowColumns = [];
-
-			var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_group" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + groupId;
-
-			rowColumns.push(<portlet:namespace />createURL(href, A.Escape.html(name)));
-			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
-
-			searchContainer.deleteRow(1, searchContainer.getData());
-			searchContainer.addRow(rowColumns, groupId);
-			searchContainer.updateDataStore(groupId);
-		},
-		['liferay-search-container', 'escape']
-	);
-
 	Liferay.Util.toggleBoxes('<portlet:namespace />publicLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />publicLayoutSetPrototypeMergeAlert');
 	Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
+</aui:script>
+
+<aui:script use="liferay-search-container,escape">
+	function <portlet:namespace />createURL(href, value, onclick) {
+		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
+	};
+
+	A.one('#<portlet:namespace />selectParentSiteLink').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						stack: true,
+						width: 600
+					},
+					id: '<portlet:namespace />selectGroup',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "site")) %>',
+					uri: '<%= groupSelectorURL.toString() %>'
+				},
+				function(event) {
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentGroupSearchContainer');
+
+					var rowColumns = [];
+
+					var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_group" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + event.groupid;
+
+					rowColumns.push(<portlet:namespace />createURL(href, A.Escape.html(event.groupname)));
+					rowColumns.push(event.grouptype);
+					rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
+
+					searchContainer.deleteRow(1, searchContainer.getData());
+					searchContainer.addRow(rowColumns, event.groupid);
+					searchContainer.updateDataStore(event.groupid);
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script use="liferay-search-container">

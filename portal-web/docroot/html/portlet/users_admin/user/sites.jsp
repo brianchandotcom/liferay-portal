@@ -92,38 +92,50 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 
 	<liferay-ui:icon
 		cssClass="modify-link"
+		id="selectSiteLink"
 		image="add"
 		label="<%= true %>"
 		message="select"
-		url='<%= "javascript:" + renderResponse.getNamespace() + "openGroupSelector();" %>'
+		url="javascript:;"
 	/>
 </c:if>
 
-<aui:script>
-	function <portlet:namespace />openGroupSelector() {
-		var groupWindow = window.open('<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /><portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:renderURL>', 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
+<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/users_admin/select_site" />
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+</portlet:renderURL>
 
-		groupWindow.focus();
-	}
+<aui:script use="liferay-search-container,escape">
+	A.one('#<portlet:namespace />selectSiteLink').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						stack: true,
+						width: 600
+					},
+					id: '<portlet:namespace />selectGroup',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "select").concat(" ").concat(UnicodeLanguageUtil.get(pageContext, "site")) %>',
+					uri: '<%= groupSelectorURL.toString() %>'
+				},
+				function(event) {
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectGroup',
-		function(groupId, name) {
-			var A = AUI();
+					var rowColumns = [];
 
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+					rowColumns.push(A.Escape.html(event.groupname));
+					rowColumns.push('');
+					rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
-			var rowColumns = [];
-
-			rowColumns.push(A.Escape.html(name));
-			rowColumns.push('');
-			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
-
-			searchContainer.addRow(rowColumns, groupId);
-			searchContainer.updateDataStore();
-		},
-		['liferay-search-container', 'escape']
+					searchContainer.addRow(rowColumns, event.groupid);
+					searchContainer.updateDataStore();
+				}
+			);
+		}
 	);
 </aui:script>
 

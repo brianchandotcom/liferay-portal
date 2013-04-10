@@ -239,7 +239,9 @@ public class EditArticleAction extends PortletAction {
 			}
 
 			if ((article != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
+				!cmd.equals(Constants.DELETE_TRANSLATION) &&
+				!cmd.equals(Constants.TRANSLATE)) {
 
 				redirect = getSaveAndContinueRedirect(
 					portletConfig, actionRequest, article, redirect);

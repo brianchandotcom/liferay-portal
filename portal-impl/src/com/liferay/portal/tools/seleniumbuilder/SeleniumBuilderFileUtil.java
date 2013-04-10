@@ -34,6 +34,7 @@ import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,31 @@ public class SeleniumBuilderFileUtil {
 
 	public SeleniumBuilderFileUtil(String baseDir) {
 		_baseDir = baseDir;
+	}
+
+	public List<Element> getAllChildElements(
+		Element element, String elementName) {
+
+		List<Element> allChildElements = new ArrayList<Element>();
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return allChildElements;
+		}
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (childElementName.equals(elementName)) {
+				allChildElements.add(childElement);
+			}
+
+			allChildElements.addAll(
+				getAllChildElements(childElement, elementName));
+		}
+
+		return allChildElements;
 	}
 
 	public String getBaseDir() {
@@ -384,6 +410,10 @@ public class SeleniumBuilderFileUtil {
 		else if (errorCode == 1008) {
 			throw new IllegalArgumentException(
 				prefix + "Duplicate name " + string + " at " + suffix);
+		}
+		else if (errorCode == 1009) {
+			throw new IllegalArgumentException(
+				prefix + "Duplicate command name " + string + " in " + suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(

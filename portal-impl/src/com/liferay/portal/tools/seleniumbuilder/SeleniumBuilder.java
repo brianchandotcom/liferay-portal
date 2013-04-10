@@ -51,6 +51,8 @@ public class SeleniumBuilder {
 			Set<String> actionNames = seleniumBuilderContext.getActionNames();
 
 			for (String actionName : actionNames) {
+				seleniumBuilderContext.validateActionElements(actionName);
+
 				actionConverter.convert(actionName);
 			}
 		}

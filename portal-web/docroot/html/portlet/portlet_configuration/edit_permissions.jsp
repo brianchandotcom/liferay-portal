@@ -191,7 +191,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 
 			String name = modelResourceRole.getName();
 
-			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
+			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.USER)) {
 				actions = new ArrayList<String>(actions);
 
 				actions.remove(ActionKeys.ASSIGN_MEMBERS);

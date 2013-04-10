@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.security.permission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -40,8 +41,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			long[] roleIds)
 		throws Exception {
 
-		if (!className.equals(MBCategory.class.getName()) &&
-			!className.equals(_mbModelResource)) {
+		if (!Validator.equals(className, MBCategory.class.getName()) &&
+			!Validator.equals(className, _mbModelResource))
 
 			return;
 		}
@@ -49,10 +50,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		long parentPrimKey = GetterUtil.getLong(primKey);
 
 		List<MBCategory> categories = null;
-
 		List<MBMessage> messages = null;
-
-		String parentClassName = null;
 
 		if (className.equals(_mbModelResource)) {
 			categories = MBCategoryLocalServiceUtil.getMBCategories(
@@ -61,8 +59,6 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			messages = MBMessageLocalServiceUtil.getGroupMessages(
 				parentPrimKey, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
-
-			parentClassName = _mbModelResource;
 		}
 		else {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
@@ -111,20 +107,18 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 					}
 				}
 			}
-
-			parentClassName = MBCategory.class.getName();
 		}
 
 		for (long roleId : roleIds) {
 			for (MBCategory category : categories) {
 				propagateRolePermissions(
-					actionRequest, roleId, parentClassName, parentPrimKey,
+					actionRequest, roleId, className, parentPrimKey,
 					MBCategory.class.getName(), category.getPrimaryKey());
 			}
 
 			for (MBMessage message : messages) {
 				propagateRolePermissions(
-					actionRequest, roleId, parentClassName, parentPrimKey,
+					actionRequest, roleId, className, parentPrimKey,
 					MBMessage.class.getName(), message.getPrimaryKey());
 			}
 		}

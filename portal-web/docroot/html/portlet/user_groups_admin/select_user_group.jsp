@@ -108,7 +108,7 @@ portletURL.setParameter("callback", callback);
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="description"
-				value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(userGroup.getDescription())) %>"
+				value="<%= HtmlUtil.escape(userGroup.getDescription()) %>"
 			/>
 		</liferay-ui:search-container-row>
 

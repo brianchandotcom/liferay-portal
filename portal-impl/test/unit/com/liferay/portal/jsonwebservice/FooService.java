@@ -136,6 +136,10 @@ public class FooService {
 		return clazz.getName();
 	}
 
+	public static ServiceContext srvcctx2(ServiceContext serviceContext) {
+		return serviceContext;
+	}
+
 	public static String use1(FooDataImpl fooData) {
 		return "using #1: " + fooData.toString();
 	}

@@ -361,6 +361,23 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = _convertValueToParameterValue(
 						value, parameterType,
 						methodParameters[i].getGenericTypes());
+
+					ServiceContext serviceContext =
+						_jsonWebServiceActionParameters.getServiceContext();
+
+					if ((serviceContext != null) &&
+						parameterName.equals("serviceContext")) {
+
+						if ((parameterValue != null) &&
+							ServiceContext.class.isAssignableFrom(
+								parameterValue.getClass())) {
+
+							serviceContext.merge(
+								(ServiceContext)parameterValue);
+						}
+
+						parameterValue = serviceContext;
+					}
 				}
 			}
 

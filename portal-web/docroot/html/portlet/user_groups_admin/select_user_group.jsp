@@ -73,7 +73,7 @@ portletURL.setParameter("callback", callback);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.UserGroup"
-			escapedModel="<%= true %>"
+			escapedModel="<%= false %>"
 			keyProperty="userGroupId"
 			modelVar="userGroup"
 		>
@@ -90,7 +90,7 @@ portletURL.setParameter("callback", callback);
 				sb.append("('");
 				sb.append(userGroup.getUserGroupId());
 				sb.append("', '");
-				sb.append(UnicodeFormatter.toString(userGroup.getName()));
+				sb.append(HtmlUtil.escapeJS(userGroup.getName()));
 				sb.append("', '");
 				sb.append(target);
 				sb.append("'); window.close();");
@@ -102,13 +102,13 @@ portletURL.setParameter("callback", callback);
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				property="name"
+				value="<%= HtmlUtil.escape(userGroup.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="description"
-				value="<%= LanguageUtil.get(pageContext, userGroup.getDescription()) %>"
+				value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(userGroup.getDescription())) %>"
 			/>
 		</liferay-ui:search-container-row>
 

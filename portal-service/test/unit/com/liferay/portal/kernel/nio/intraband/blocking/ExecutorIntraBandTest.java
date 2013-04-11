@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraBand.Readin
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 
 import java.nio.channels.Channel;
@@ -270,6 +272,142 @@ public class ExecutorIntraBandTest {
 		finally {
 			fileChannel.close();
 			tempFile.delete();
+		}
+	}
+
+	@Test
+	public void testRegisterChannelReadWrite() throws Exception {
+
+		// Gathering byte channel is null
+
+		try {
+			_executorIntraBand.registerChannel(null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Gathering byte channel is null", npe.getMessage());
+		}
+
+		// Scattering byte channel is null
+
+		try {
+			_executorIntraBand.registerChannel(
+				null, IntraBandTestUtil.<GatheringByteChannel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals(
+				"Scattering byte channel is null", npe.getMessage());
+		}
+
+		// Scattering byte channel is of type SelectableChannel and configured
+		// in nonblocking mode
+
+		Pipe pipe = Pipe.open();
+
+		SourceChannel sourceChannel = pipe.source();
+		SinkChannel sinkChannel = pipe.sink();
+
+		sourceChannel.configureBlocking(false);
+
+		try {
+			_executorIntraBand.registerChannel(sourceChannel, sinkChannel);
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Scattering byte channel is of type SelectableChannel and " +
+					"configured in nonblocking mode", iae.getMessage());
+		}
+
+		// Gathering byte channel is of type SelectableChannel and configured in
+		// nonblocking mode
+
+		sourceChannel.configureBlocking(true);
+		sinkChannel.configureBlocking(false);
+
+		try {
+			_executorIntraBand.registerChannel(sourceChannel, sinkChannel);
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Gathering byte channel is of type SelectableChannel and " +
+					"configured in nonblocking mode", iae.getMessage());
+		}
+
+		// Normal register, with SelectableChannel
+
+		sourceChannel.configureBlocking(true);
+		sinkChannel.configureBlocking(true);
+
+		try {
+			FutureRegistrationReference futureRegistrationReference =
+				(FutureRegistrationReference)_executorIntraBand.registerChannel(
+					sourceChannel, sinkChannel);
+
+			Assert.assertSame(
+				_executorIntraBand, futureRegistrationReference.getIntraBand());
+			Assert.assertTrue(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.writeFuture.cancel(true);
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.cancelRegistration();
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			ThreadPoolExecutor threadPoolExecutor =
+				(ThreadPoolExecutor)_executorIntraBand.executorService;
+
+			while (threadPoolExecutor.getActiveCount() != 0);
+		}
+		finally {
+			sourceChannel.close();
+			sinkChannel.close();
+		}
+
+		// Normal register, with non-SelectableChannel
+
+		File tempFile = new File("tempFile");
+
+		tempFile.createNewFile();
+		tempFile.deleteOnExit();
+
+		FileInputStream fileInputStream = new FileInputStream(tempFile);
+		FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+
+		FileChannel readFileChannel = fileInputStream.getChannel();
+		FileChannel writeFileChannel = fileOutputStream.getChannel();
+
+		try {
+			FutureRegistrationReference futureRegistrationReference =
+				(FutureRegistrationReference)_executorIntraBand.registerChannel(
+					readFileChannel, writeFileChannel);
+
+			Assert.assertSame(
+				_executorIntraBand, futureRegistrationReference.getIntraBand());
+			Assert.assertTrue(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.writeFuture.cancel(true);
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.cancelRegistration();
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			ThreadPoolExecutor threadPoolExecutor =
+				(ThreadPoolExecutor)_executorIntraBand.executorService;
+
+			while (threadPoolExecutor.getActiveCount() != 0);
+		}
+		finally {
+			readFileChannel.close();
+			writeFileChannel.close();
 		}
 	}
 

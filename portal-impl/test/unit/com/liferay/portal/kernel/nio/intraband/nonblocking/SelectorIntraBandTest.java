@@ -501,7 +501,7 @@ public class SelectorIntraBandTest {
 			Assert.assertEquals("Channel is null", npe.getMessage());
 		}
 
-		// Channel is not of type ScatteringByteChannel
+		// Channel is not of type GatheringByteChannel
 
 		try {
 			_selectorIntraBand.registerChannel(
@@ -511,22 +511,22 @@ public class SelectorIntraBandTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Channel is not of type ScatteringByteChannel",
+				"Channel is not of type GatheringByteChannel",
 				iae.getMessage());
 		}
 
-		// Channel is not of type GatheringByteChannel
+		// Channel is not of type ScatteringByteChannel
 
 		try {
 			_selectorIntraBand.registerChannel(
 				IntraBandTestUtil.<Channel>createProxy(
-					ScatteringByteChannel.class));
+					GatheringByteChannel.class));
 
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Channel is not of type GatheringByteChannel",
+				"Channel is not of type ScatteringByteChannel",
 				iae.getMessage());
 		}
 

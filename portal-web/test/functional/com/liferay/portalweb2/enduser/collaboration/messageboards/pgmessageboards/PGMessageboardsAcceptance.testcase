@@ -27,6 +27,18 @@
 		<execute macro="MessageboardsThread#pgAdd" />
 	</command>
 
+	<command name="DeleteMBCategory">
+		<var name="categoryName" value="MB Category Name" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+
+		<execute macro="MessageboardsCategory#pgAdd" />
+
+		<execute macro="MessageboardsCategory#pgDelete" />
+	</command>
+
 	<command name="DeleteMBThread">
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -38,6 +50,33 @@
 		<execute macro="MessageboardsThread#pgAdd" />
 
 		<execute macro="MessageboardsThread#pgDelete" />
+	</command>
+
+	<command name="EditMBCategory">
+		<var name="categoryName" value="MB Category Name" />
+		<var name="categoryNameNew" value="MB Category Name Edit" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+
+		<execute macro="MessageboardsCategory#pgAdd" />
+
+		<execute macro="MessageboardsCategory#pgEdit" />
+	</command>
+
+	<command name="EditMBThreadBody">
+		<var name="threadSubject" value="MB Thread Message Subject" />
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadBodyNew" value="MB Thread Message Body Edit" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+
+		<execute macro="MessageboardsThread#pgAdd" />
+
+		<execute macro="MessageboardsThread#pgEdit" />
 	</command>
 
 	<command name="ReplyMBThread">

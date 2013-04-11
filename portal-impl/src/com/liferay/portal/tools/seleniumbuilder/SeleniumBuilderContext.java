@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.seleniumbuilder;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
@@ -501,6 +502,35 @@ public class SeleniumBuilderContext {
 					2001, actionFileName, commandElement, commandName);
 			}
 		}
+
+		List<Element> executeElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "execute");
+
+		for (Element executeElement : executeElements) {
+			String function = executeElement.attributeValue("function");
+
+			int x = function.indexOf(StringPool.POUND);
+
+			if (x == -1) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, actionFileName, executeElement, "function");
+			}
+
+			String functionName = function.substring(0, x);
+
+			if (!_isFunctionName(functionName)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					2003, actionFileName, executeElement, functionName);
+			}
+
+			String functionCommand = function.substring(x + 1);
+
+			if (!_isFunctionCommand(functionName, functionCommand)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					2004, actionFileName, executeElement, functionCommand);
+			}
+		}
 	}
 
 	public void validateElements(String fileName) {
@@ -647,6 +677,26 @@ public class SeleniumBuilderContext {
 	private String _getSimpleClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
+	}
+
+	private boolean _isFunctionCommand(String name, String command) {
+		if (_isFunctionName(name)) {
+			Element rootElement = getFunctionRootElement(name);
+
+			List<Element> commandElements =
+				_seleniumBuilderFileUtil.getAllChildElements(
+					rootElement, "command");
+
+			for (Element commandElement : commandElements) {
+				String commandName = commandElement.attributeValue("name");
+
+				if (commandName.equals(command)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isFunctionName(String name) {

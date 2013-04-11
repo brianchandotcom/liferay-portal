@@ -101,6 +101,38 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testActionExecuteElement1006_1() throws Exception {
+		test(
+			"ActionExecuteElement1006_1.action",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/ActionExecuteElement1006_1.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement1006_2() throws Exception {
+		test(
+			"ActionExecuteElement1006_2.action",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/ActionExecuteElement1006_2.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement2003() throws Exception {
+		test(
+			"ActionExecuteElement2003.action",
+			"Error 2003: Invalid function name ClickX at " + _DIR_NAME +
+				"/ActionExecuteElement2003.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElement2004() throws Exception {
+		test(
+			"ActionExecuteElement2004.action",
+			"Error 2004: Invalid function command clickAtX at " + _DIR_NAME +
+				"/ActionExecuteElement2004.action:4");
+	}
+
+	@Test
 	public void testActionFileName1008() throws Exception {
 		test(
 			"BaseLiferay.action",

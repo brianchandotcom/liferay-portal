@@ -1,7 +1,7 @@
 <definition>
 	<command name="click">
 		<case comparator="contains" locator-key1="FAIL">
-			<execute function="Function#function" />
+			<execute function="Click#clickAt" />
 		</case>
 	</command>
 </definition>

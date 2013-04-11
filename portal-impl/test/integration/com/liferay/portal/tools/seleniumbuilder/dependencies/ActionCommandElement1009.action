@@ -1,13 +1,13 @@
 <definition>
 	<command name="click">
 		<case locator1="locator1">
-			<execute function="Function#function" />
+			<execute function="Click#clickAt" />
 		</case>
 	</command>
 
 	<command name="click">
 		<case locator1="locator1">
-			<execute function="Function#function" />
+			<execute function="Click#clickAt" />
 		</case>
 	</command>
 </definition>

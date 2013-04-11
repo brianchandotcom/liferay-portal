@@ -453,6 +453,15 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Missing matching " + string + ".path for " + suffix);
 		}
+		else if (errorCode == 2003) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid function name " + string + " at " + suffix);
+		}
+		else if (errorCode == 2004) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid function command " + string + " at " +
+					suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}

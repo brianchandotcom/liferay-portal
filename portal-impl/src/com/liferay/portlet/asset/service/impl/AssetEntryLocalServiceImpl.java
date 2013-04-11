@@ -124,6 +124,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return assetEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
+	public AssetEntry fetchEntry(long groupId, String classUuid)
+		throws SystemException {
+
+		return assetEntryPersistence.fetchByG_CU(groupId, classUuid);
+	}
+
 	public AssetEntry fetchEntry(String className, long classPK)
 		throws SystemException {
 

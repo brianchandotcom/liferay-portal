@@ -385,9 +385,20 @@ public class TrashImpl implements Trash {
 				paramName,
 				String.valueOf(containerModel.getContainerModelId()));
 
+			String name = containerModel.getContainerModelName();
+
+			TrashHandler containerTrashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					containerModel.getModelClassName());
+
+			if (containerTrashHandler.isInTrash(
+					containerModel.getContainerModelId())) {
+
+				name = TrashUtil.getOriginalTitle(name);
+			}
+
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, containerModel.getContainerModelName(),
-				containerModelURL.toString());
+				request, name, containerModelURL.toString());
 		}
 
 		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);

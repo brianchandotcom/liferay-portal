@@ -1,7 +1,10 @@
 <definition>
 	<command name="click">
-		<case comparator="startsWith" locator-key1="REPLY_">
-			<execute function="Click#clickAtAndWait" value1="Reply" />
+		<case comparator="startsWith" locator-key1="MESSAGE_EDIT_">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
+		</case>
+		<case comparator="startsWith" locator-key1="MESSAGE_REPLY_">
+			<execute function="Click#textClickAtAndWait" value1="Reply" />
 		</case>
 	</command>
 </definition>

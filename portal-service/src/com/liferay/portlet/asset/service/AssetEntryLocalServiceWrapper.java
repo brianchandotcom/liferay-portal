@@ -553,6 +553,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		return _assetEntryLocalService.fetchEntry(entryId);
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long groupId,
+		java.lang.String classUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.fetchEntry(groupId, classUuid);
+	}
+
 	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -466,6 +466,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long groupId,
+		java.lang.String classUuid)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -420,6 +420,11 @@ public class SeleniumBuilderFileUtil {
 				prefix + "Too many child elements in the " + string +
 					" element in " + suffix);
 		}
+		else if (errorCode == 2001) {
+			throw new IllegalArgumentException(
+				prefix + "Action command " + string +
+					" does not match a function name at " + suffix);
+		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
 		}

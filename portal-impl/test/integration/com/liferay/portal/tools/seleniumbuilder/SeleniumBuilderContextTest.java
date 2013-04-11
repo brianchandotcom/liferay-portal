@@ -47,8 +47,16 @@ public class SeleniumBuilderContextTest {
 	public void testActionCommandElement1009() throws Exception {
 		test(
 			"ActionCommandElement1009.action",
-			"Error 1009: Duplicate command name name at " + _DIR_NAME +
+			"Error 1009: Duplicate command name click at " + _DIR_NAME +
 				"/ActionCommandElement1009.action:8");
+	}
+
+	@Test
+	public void testActionCommandElement2001() throws Exception {
+		test(
+			"ActionCommandElement2001.action",
+			"Error 2001: Action command nameFail does not match a function " +
+				"name at " + _DIR_NAME + "/ActionCommandElement2001.action:2");
 	}
 
 	@Test

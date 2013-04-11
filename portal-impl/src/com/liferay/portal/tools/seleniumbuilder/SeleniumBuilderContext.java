@@ -440,6 +440,8 @@ public class SeleniumBuilderContext {
 	}
 
 	public void validateActionElements(String actionName) {
+		String actionFileName = getActionFileName(actionName);
+
 		Element rootElement = getActionRootElement(actionName);
 
 		if (rootElement == null) {
@@ -456,13 +458,28 @@ public class SeleniumBuilderContext {
 			String commandName = commandElement.attributeValue("name");
 
 			if (commandElementNames.contains(commandName)) {
-				String actionFileName = getActionFileName(actionName);
-
 				_seleniumBuilderFileUtil.throwValidationException(
 					1009, actionFileName, commandElement, commandName);
 			}
-			else {
-				commandElementNames.add(commandName);
+
+			commandElementNames.add(commandName);
+
+			boolean isFunctionName = false;
+
+			for (String functionName : _functionNames) {
+				String upperCaseCommandName = StringUtil.upperCaseFirstLetter(
+					commandName);
+
+				if (upperCaseCommandName.equals(functionName)) {
+					isFunctionName = true;
+
+					break;
+				}
+			}
+
+			if (!isFunctionName) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					2001, actionFileName, commandElement, commandName);
 			}
 		}
 	}

@@ -186,6 +186,10 @@ public class SassToCssBuilder {
 
 		String[] fileNames = directoryScanner.getIncludedFiles();
 
+		if (!_sassFilesModified(dirName, fileNames)) {
+			return;
+		}
+
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
 				dirName + StringPool.SLASH + fileName, StringPool.BACK_SLASH,
@@ -194,12 +198,12 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				if (_parseSassFile(fileName)) {
-					long end = System.currentTimeMillis();
+				_parseSassFile(fileName);
 
-					System.out.println(
-						"Parsed " + fileName + " in " + (end - start) + " ms");
-				}
+				long end = System.currentTimeMillis();
+
+				System.out.println(
+					"Parsed " + fileName + " in " + (end - start) + " ms");
 			}
 			catch (Exception e) {
 				System.out.println("Unable to parse " + fileName);
@@ -209,13 +213,9 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private boolean _parseSassFile(String fileName) throws Exception {
+	private void _parseSassFile(String fileName) throws Exception {
 		File file = new File(fileName);
 		File cacheFile = getCacheFile(fileName);
-
-		if (file.lastModified() == cacheFile.lastModified()) {
-			return false;
-		}
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
@@ -241,8 +241,25 @@ public class SassToCssBuilder {
 		FileUtil.write(cacheFile, parsedContent);
 
 		cacheFile.setLastModified(file.lastModified());
+	}
 
-		return true;
+	private boolean _sassFilesModified(String dirName, String[] fileNames)
+		throws Exception {
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				dirName + StringPool.SLASH + fileName, StringPool.BACK_SLASH,
+				StringPool.SLASH);
+
+			File file = new File(fileName);
+			File cacheFile = getCacheFile(fileName);
+
+			if (file.lastModified() != cacheFile.lastModified()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private RubyExecutor _rubyExecutor;

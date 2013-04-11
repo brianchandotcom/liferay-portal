@@ -772,6 +772,13 @@ public class UserGroupLocalServiceUtil {
 		getService().copyUserGroupLayouts(userGroupIds, userId);
 	}
 
+	public static com.liferay.portal.model.UserGroup fetchUserGroup(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchUserGroup(companyId, name);
+	}
+
 	public static com.liferay.portal.model.UserGroup fetchUserGroupByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -516,6 +516,12 @@ public class OrganizationLocalServiceImpl
 		return organization;
 	}
 
+	public Organization fetchOrganization(long companyId, String name)
+		throws SystemException {
+
+		return organizationPersistence.fetchByC_N(companyId, name);
+	}
+
 	public Organization fetchOrganizationByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws SystemException {

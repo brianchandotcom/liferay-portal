@@ -391,6 +391,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
+	public UserGroup fetchUserGroup(long companyId, String name)
+		throws PortalException, SystemException {
+
+		return userGroupPersistence.fetchByC_N(companyId, name);
+	}
+
 	public UserGroup fetchUserGroupByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws SystemException {

@@ -109,6 +109,7 @@ public class ViewWCSubfolderTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Subfolder Name"));
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),

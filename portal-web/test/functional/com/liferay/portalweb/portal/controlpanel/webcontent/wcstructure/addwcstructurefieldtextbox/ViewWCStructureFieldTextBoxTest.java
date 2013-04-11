@@ -67,11 +67,15 @@ public class ViewWCStructureFieldTextBoxTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure TextBox Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Structure TextBox Name')]/td[3]/a"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure TextBox Description"),
+			selenium.getText(
 				"//tr[contains(.,'WC Structure TextBox Name')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure TextBox Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure TextBox Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure TextBox Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure TextBox Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure TextBox Name"));
 		selenium.waitForPageToLoad("30000");
@@ -160,7 +164,7 @@ public class ViewWCStructureFieldTextBoxTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Not Indexable"),
+		assertEquals(RuntimeVariables.replace("Indexable - Keyword"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),

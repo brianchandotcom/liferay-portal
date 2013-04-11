@@ -66,11 +66,13 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure DM Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure DM Name"),
 			selenium.getText("//tr[contains(.,'WC Structure DM Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure DM Description"),
+			selenium.getText("//tr[contains(.,'WC Structure DM Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure DM Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure DM Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure DM Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure DM Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure DM Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure DM Name"));
 		selenium.waitForPageToLoad("30000");
@@ -159,7 +161,7 @@ public class ViewWCStructureFieldDMTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("No"),
+		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),

@@ -52,6 +52,8 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC Folder1 Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder1 Name"));
 		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img");
 		assertTrue(selenium.isVisible(
 				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
@@ -109,6 +111,8 @@ public class MoveWCSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'WC Folder2 Name')]",
 			RuntimeVariables.replace("WC Folder2 Name"));
 		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img");
 		assertTrue(selenium.isVisible(
 				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),

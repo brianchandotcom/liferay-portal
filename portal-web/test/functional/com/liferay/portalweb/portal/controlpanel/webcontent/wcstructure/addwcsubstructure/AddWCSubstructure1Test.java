@@ -76,8 +76,9 @@ public class AddWCSubstructure1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]"));
 		Thread.sleep(1000);
-		assertTrue(selenium.isVisible("//input[@value='Choose']"));
-		selenium.clickAt("//input[@value='Choose']",
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
 			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(

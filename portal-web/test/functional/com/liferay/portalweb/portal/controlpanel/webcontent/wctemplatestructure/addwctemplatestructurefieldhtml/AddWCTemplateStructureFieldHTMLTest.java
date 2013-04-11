@@ -138,11 +138,10 @@ public class AddWCTemplateStructureFieldHTMLTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure HTML Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Structure HTML Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure HTML Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");

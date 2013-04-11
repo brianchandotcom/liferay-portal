@@ -50,6 +50,8 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("WC Folder Name"));
 				Thread.sleep(1000);
+				selenium.waitForVisible(
+					"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img");
 				assertTrue(selenium.isVisible(
 						"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
 				assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
@@ -72,7 +74,7 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_15_rowIdsJournalFolderCheckbox']"));
 				selenium.waitForElementPresent(
-					"//div[contains(@class,'display-icon selectable null hover selected') and @data-title='WC Subfolder Name']");
+					"//div[contains(@class,'display-icon selectable hover selected') and @data-title='WC Subfolder Name']");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -85,10 +87,10 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 				assertEquals(RuntimeVariables.replace(
 						"No Web Content was found."),
 					selenium.getText(

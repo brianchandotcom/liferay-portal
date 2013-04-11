@@ -67,11 +67,14 @@ public class ViewWCStructureFieldImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure Image Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Structure Image Name')]/td[3]/a"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace("WC Structure Image Description"),
+			selenium.getText(
 				"//tr[contains(.,'WC Structure Image Name')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure Image Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Image Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure Image Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Image Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Image Name"));
 		selenium.waitForPageToLoad("30000");
@@ -161,7 +164,7 @@ public class ViewWCStructureFieldImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("No"),
+		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),

@@ -104,12 +104,7 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertVisible</td>
+	<td>waitForVisible</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
@@ -119,13 +114,18 @@
 	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[4]/a</td>
+	<td>WC Structure Description</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//h1[@class='header-title']</td>
-	<td>Header Title</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -241,62 +241,62 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Image Field</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
-	<td>Image</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
 	<td>Date Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label</td>
 	<td>Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]</td>
 	<td>Decimal Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label</td>
 	<td>Decimal</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]</td>
 	<td>Documents and Media Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label</td>
 	<td>Documents and Media</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
 	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label</td>
 	<td>File Upload</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]</td>
 	<td>HTML Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label</td>
 	<td>HTML</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]</td>
+	<td>Image Field</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label</td>
+	<td>Image</td>
 </tr>
 <tr>
 	<td>assertVisible</td>

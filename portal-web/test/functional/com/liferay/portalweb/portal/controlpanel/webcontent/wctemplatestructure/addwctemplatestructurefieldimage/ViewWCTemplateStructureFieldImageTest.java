@@ -61,7 +61,6 @@ public class ViewWCTemplateStructureFieldImageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Structure Image Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Image Name"),
@@ -69,8 +68,8 @@ public class ViewWCTemplateStructureFieldImageTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure Image Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Image Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Image Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure Image Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Image Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");

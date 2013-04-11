@@ -18,7 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.AddWCFolder1Test;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.AddWCFolder2Test;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.AddWCFolder3Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcfolder.addwcfolder.TearDownWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

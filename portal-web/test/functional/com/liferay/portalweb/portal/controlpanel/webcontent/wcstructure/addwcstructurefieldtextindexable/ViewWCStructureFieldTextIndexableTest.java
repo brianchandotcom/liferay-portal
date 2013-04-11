@@ -69,11 +69,15 @@ public class ViewWCStructureFieldTextIndexableTest extends BaseTestCase {
 				"WC Structure Text Indexable Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Structure Text Indexable Name')]/td[3]/a"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace(
+				"WC Structure Text Indexable Description"),
+			selenium.getText(
 				"//tr[contains(.,'WC Structure Text Indexable Name')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Structure Text Indexable Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Text Indexable Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure Text Indexable Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Text Indexable Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Text Indexable Name"));
 		selenium.waitForPageToLoad("30000");

@@ -42,9 +42,8 @@ public class ViewWCWebContentTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//a[contains(@title,'WC WebContent Title')]/div/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]"));
-		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]",
+			selenium.getText("//a[@class='entry-link']/span"));
+		selenium.clickAt("//a[@class='entry-link']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content"),
@@ -78,8 +77,8 @@ public class ViewWCWebContentTest extends BaseTestCase {
 			selenium.getText("//a[@id='_15_changeLanguageId']"));
 		assertEquals("WC WebContent Title",
 			selenium.getValue("//input[@id='_15_title_en_US']"));
-		selenium.waitForVisible("//div[@id='cke_1_contents']/iframe");
-		selenium.selectFrame("//div[@id='cke_1_contents']/iframe");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body[contains(.,'WC WebContent Content')]",
 			"WC WebContent Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),

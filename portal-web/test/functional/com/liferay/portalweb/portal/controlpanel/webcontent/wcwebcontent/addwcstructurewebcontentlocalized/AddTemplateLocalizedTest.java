@@ -63,11 +63,10 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span",
+				"//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");

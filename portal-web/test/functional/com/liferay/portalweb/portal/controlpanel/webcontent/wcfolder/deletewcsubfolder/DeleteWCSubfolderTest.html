@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Thumbnail</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
 	<td>WC Subfolder Name Thumbnail</td>
@@ -100,7 +105,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[contains(@class,'display-icon selectable null hover selected') and @data-title='WC Subfolder Name']</td>
+	<td>//div[contains(@class,'display-icon selectable hover selected') and @data-title='WC Subfolder Name']</td>
 	<td>WC Subfolder Selected</td>
 </tr>
 <tr>
@@ -129,14 +134,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>assertText</td>

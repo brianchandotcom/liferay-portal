@@ -66,11 +66,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure1 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure1 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure1 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure1 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure1 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure1 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure1 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure1 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -191,11 +193,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure2 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure2 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure2 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure2 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -314,11 +318,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure3 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure3 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure3 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure3 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure3 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure3 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure3 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure3 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure3 Name"));
 		selenium.waitForPageToLoad("30000");

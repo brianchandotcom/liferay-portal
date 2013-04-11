@@ -45,6 +45,7 @@ public class AddWCSubfolder1Test extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder Name"));
 		Thread.sleep(1000);
+		selenium.waitForVisible("//span[@title='Add']/ul/li/strong/a");
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",

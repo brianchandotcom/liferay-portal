@@ -1869,9 +1869,7 @@ public class PortletImporter {
 
 		List<String> newValues = new ArrayList<String>(oldValues.length);
 
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
+		for (String oldValue : oldValues) {
 			String newValue = StringUtil.replace(
 				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
 

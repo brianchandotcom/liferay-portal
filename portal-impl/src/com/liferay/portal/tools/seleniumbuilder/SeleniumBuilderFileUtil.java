@@ -258,6 +258,26 @@ public class SeleniumBuilderFileUtil {
 		return fileName.substring(0, x);
 	}
 
+	public Set<String> getPathLocatorKeys(Element rootElement) {
+		Set<String> pathLocatorKeys = new HashSet<String>();
+
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tbodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tbodyElement.elements();
+
+		for (Element trElement : trElements) {
+			Element tdElement = trElement.element("td");
+
+			pathLocatorKeys.add(tdElement.getText());
+		}
+
+		return pathLocatorKeys;
+	}
+
 	public String getReturnType(String name) {
 		if (name.startsWith("Is")) {
 			return "boolean";
@@ -415,6 +435,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Duplicate command name " + string + " at " + suffix);
 		}
+		else if (errorCode == 1010) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid locator-key " + string + " at " + suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string +
@@ -424,6 +448,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Action command " + string +
 					" does not match a function name at " + suffix);
+		}
+		else if (errorCode == 2002) {
+			throw new IllegalArgumentException(
+				prefix + "Missing matching " + string + ".path for " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -979,7 +1007,7 @@ public class SeleniumBuilderFileUtil {
 		String title = titleElement.getText();
 
 		int x = fileName.lastIndexOf(StringPool.SLASH);
-		int y = fileName.indexOf(CharPool.PERIOD);
+		int y = fileName.lastIndexOf(CharPool.PERIOD);
 
 		String shortFileName = fileName.substring(x + 1, y);
 

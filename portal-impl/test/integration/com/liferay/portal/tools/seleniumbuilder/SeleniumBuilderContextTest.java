@@ -16,6 +16,8 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
@@ -30,8 +32,7 @@ public class SeleniumBuilderContextTest {
 
 	public SeleniumBuilderContextTest() {
 		try {
-			_seleniumBuilderContext = new SeleniumBuilderContext(
-				"./portal-web/test/functional/");
+			_seleniumBuilderContext = new SeleniumBuilderContext(_BASE_DIR);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -41,6 +42,38 @@ public class SeleniumBuilderContextTest {
 	@Test
 	public void testAction() throws Exception {
 		test("Action.action");
+	}
+
+	@Test
+	public void testActionCaseElement1010_1() throws Exception {
+		test(
+			"ActionCaseElement1010_1.action",
+			"Error 1010: Invalid locator-key LOCATOR_KEY_1 at " + _DIR_NAME +
+				"/ActionCaseElement1010_1.action:3");
+	}
+
+	@Test
+	public void testActionCaseElement1010_2() throws Exception {
+		test(
+			"ActionCaseElement1010_2.action",
+			"Error 1010: Invalid locator-key FAIL at " + _DIR_NAME +
+				"/ActionCaseElement1010_2.action:3");
+	}
+
+	@Test
+	public void testActionCaseElement1010_3() throws Exception {
+		test(
+			"ActionCaseElement1010_3.action",
+			"Error 1010: Invalid locator-key LOCATOR_ at " + _DIR_NAME +
+				"/ActionCaseElement1010_3.action:3");
+	}
+
+	@Test
+	public void testActionCaseElement1010_4() throws Exception {
+		test(
+			"ActionCaseElement1010_4.action",
+			"Error 1010: Invalid locator-key _KEY at " + _DIR_NAME +
+				"/ActionCaseElement1010_4.action:3");
 	}
 
 	@Test
@@ -57,6 +90,14 @@ public class SeleniumBuilderContextTest {
 			"ActionCommandElement2001.action",
 			"Error 2001: Action command nameFail does not match a function " +
 				"name at " + _DIR_NAME + "/ActionCommandElement2001.action:2");
+	}
+
+	@Test
+	public void testActionCommandElement2002() throws Exception {
+		test(
+			"ActionCommandElement2002.action",
+			"Error 2002: Missing matching ActionCommandElement2002.path for " +
+				_DIR_NAME + "/ActionCommandElement2002.action");
 	}
 
 	@Test
@@ -161,6 +202,18 @@ public class SeleniumBuilderContextTest {
 		String actualErrorMessage = null;
 
 		try {
+			if (fileName.endsWith(".action")) {
+				String pathFileName = StringUtil.replace(
+					fileName, ".action", ".path");
+
+				if (FileUtil.exists(
+						_BASE_DIR + _DIR_NAME + "/" + pathFileName)) {
+
+					_seleniumBuilderContext.addFile(
+						_DIR_NAME + "/" + pathFileName);
+				}
+			}
+
 			_seleniumBuilderContext.addFile(_DIR_NAME + "/" + fileName);
 
 			_seleniumBuilderContext.validateElements(
@@ -178,6 +231,8 @@ public class SeleniumBuilderContextTest {
 			}
 		}
 	}
+
+	private static final String _BASE_DIR = "./portal-web/test/functional/";
 
 	private static final String _DIR_NAME =
 		"/../../../portal-impl/test/integration/com/liferay/portal/tools/" +

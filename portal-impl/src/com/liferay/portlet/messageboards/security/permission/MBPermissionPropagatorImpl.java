@@ -49,14 +49,14 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 				category.getGroupId(), categoryId);
 
 		List<MBCategory> categories = new ArrayList<MBCategory>();
-		List<MBMessage> messages = null;
+		List<MBMessage> messages = new ArrayList<MBMessage>();
 
 		for (Object categoryOrThread : categoriesAndThreads) {
 			if (categoryOrThread instanceof MBThread) {
 				MBThread thread = (MBThread)categoryOrThread;
 
-				messages = MBMessageLocalServiceUtil.getThreadMessages(
-					thread.getThreadId(), WorkflowConstants.STATUS_ANY);
+				messages.addAll(MBMessageLocalServiceUtil.getThreadMessages(
+					thread.getThreadId(), WorkflowConstants.STATUS_ANY));
 			}
 			else {
 				category = (MBCategory)categoryOrThread;
@@ -68,8 +68,6 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 				categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
 					categoryIds, category.getGroupId(),
 					category.getCategoryId());
-
-				messages = new ArrayList<MBMessage>();
 
 				for (long addCategoryId : categoryIds) {
 					categories.add(

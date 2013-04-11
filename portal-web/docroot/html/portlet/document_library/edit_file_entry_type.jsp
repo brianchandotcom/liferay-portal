@@ -143,6 +143,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
+				classPK: '<%= ddmStructureId %>',
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					width:680
@@ -162,7 +163,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-				var ddmStructureLink = '<a class="modify-link" data-rowId="' + ddmStructureId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
+				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 				searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
 

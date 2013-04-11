@@ -303,6 +303,12 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
 	}
 
+	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.fetchPasswordPolicy(companyId, name);
+	}
+
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {

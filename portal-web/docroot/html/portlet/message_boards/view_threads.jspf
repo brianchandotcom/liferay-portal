@@ -46,16 +46,27 @@
 
 			assetEntryQuery.setExcludeZeroViewCount(false);
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			if (searchContainer.recalculateCur(total)) {
+				assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), searchContainer);
+			}
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else if (topLink.equals("my-posts")) {
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
+
+			searchContainer.setTotal(total);
+
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 		}
 		else if (topLink.equals("my-subscriptions")) {
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
 			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
+
+			searchContainer.setTotal(total);
+
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
 		}
 		else if (topLink.equals("recent-posts")) {
 			Calendar calendar = Calendar.getInstance();
@@ -64,8 +75,11 @@
 
 			calendar.add(Calendar.DATE, -offset);
 
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+
+			searchContainer.setTotal(total);
+
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 		}
 
 		pageContext.setAttribute("results", results);

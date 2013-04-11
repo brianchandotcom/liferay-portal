@@ -181,10 +181,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							headerNames="category,categories,threads,posts"
 							iteratorURL="<%= portletURL %>"
 							rowChecker="<%= new RowChecker(renderResponse) %>"
+							total="<%= categoriesCount %>"
 						>
 							<liferay-ui:search-container-results
 								results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-								total="<%= categoriesCount %>"
 							/>
 
 							<liferay-ui:search-container-row
@@ -225,10 +225,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						headerNames="thread,flag,started-by,posts,views,last-post"
 						iteratorURL="<%= portletURL %>"
 						rowChecker="<%= new RowChecker(renderResponse) %>"
+						total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 					>
 						<liferay-ui:search-container-results
 							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-							total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 						/>
 
 						<liferay-ui:search-container-row
@@ -428,8 +428,11 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 					calendar.add(Calendar.DATE, -offset);
 
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+
+					searchContainer.setTotal(total);
+
+					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 
 					pageContext.setAttribute("results", results);
 					pageContext.setAttribute("total", total);
@@ -592,10 +595,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 				<liferay-ui:search-container
 					emptyResultsMessage="there-are-no-top-posters"
 					iteratorURL="<%= portletURL %>"
+					total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
 				>
 					<liferay-ui:search-container-results
 						results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-						total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
 					/>
 
 					<liferay-ui:search-container-row
@@ -624,10 +627,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 			emptyResultsMessage="there-are-no-banned-users"
 			headerNames="banned-user,banned-by,ban-date"
 			iteratorURL="<%= portletURL %>"
+			total="<%= MBBanLocalServiceUtil.getBansCount(scopeGroupId) %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= MBBanLocalServiceUtil.getBansCount(scopeGroupId) %>"
 			/>
 
 			<liferay-ui:search-container-row

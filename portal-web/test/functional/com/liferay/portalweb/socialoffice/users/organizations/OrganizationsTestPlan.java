@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialoffice.users.organizations;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.organizations.assignmemberssouserorganization.AssignMembersSOUserOrganizationTests;
 import com.liferay.portalweb.socialoffice.users.organizations.assignorganizationsosites.AssignOrganizationSOSitesTests;
 import com.liferay.portalweb.socialoffice.users.organizations.assignsoroleorganizationsoconfiguration.AssignSORoleOrganizationSOConfigurationTests;
 
@@ -29,6 +30,7 @@ public class OrganizationsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AssignMembersSOUserOrganizationTests.suite());
 		testSuite.addTest(AssignOrganizationSOSitesTests.suite());
 		testSuite.addTest(AssignSORoleOrganizationSOConfigurationTests.suite());
 

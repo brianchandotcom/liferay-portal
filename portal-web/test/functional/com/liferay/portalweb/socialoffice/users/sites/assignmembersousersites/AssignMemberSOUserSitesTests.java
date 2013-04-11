@@ -12,24 +12,22 @@
  * details.
  */
 
-package com.liferay.portalweb.socialoffice.users.usergroups.assignsoroleugusergroupsoconfiguration;
+package com.liferay.portalweb.socialoffice.users.sites.assignmembersousersites;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroup.AddUGUserGroupTest;
-import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroup.TearDownUGUserGroupTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.socialoffice.users.sites.assignrolesosites.AssignRoleSOSitesTest;
+import com.liferay.portalweb.socialoffice.users.sites.assignrolesosites.RemoveRoleSOSitesTest;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
-import com.liferay.portalweb.socialoffice.users.user.removeregularrolessouser.SOUs_ViewMyPrivatePagesNoSORoleTest;
-import com.liferay.portalweb.socialoffice.users.user.removeregularrolessouser.SOUs_ViewMyPublicPagesNoSORoleTest;
-import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SOUs_ViewMyProfileTest;
-import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SOUs_ViewSitesDirectoryTest;
-import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SOUs_ViewWelcomePageTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
-import com.liferay.portalweb.socialoffice.users.usergroups.assignmemberugsousergroupuser.AssignMemberUGSOUserGroupUserTest;
+import com.liferay.portalweb.socialoffice.users.usergroups.assignrolesousergroup.SOUs_ViewSODashboardNoTest;
+import com.liferay.portalweb.socialoffice.users.usergroups.assignrolesousergroup.SOUs_ViewSODashboardTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,36 +35,38 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssignSORoleUGUserGroupSOConfigurationTests extends BaseTestSuite {
+public class AssignMemberSOUserSitesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
+		testSuite.addTestSuite(AssignMemberSOUserSitesTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ViewMyPublicPagesNoSORoleTest.class);
-		testSuite.addTestSuite(SOUs_ViewMyPrivatePagesNoSORoleTest.class);
+		testSuite.addTestSuite(SOUs_ViewSODashboardNoTest.class);
 		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
-		testSuite.addTestSuite(AddUGUserGroupTest.class);
-		testSuite.addTestSuite(AssignSORoleUGUserGroupSOConfigurationTest.class);
-		testSuite.addTestSuite(AssignMemberUGSOUserGroupUserTest.class);
+		testSuite.addTestSuite(AssignRoleSOSitesTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ViewWelcomePageTest.class);
-		testSuite.addTestSuite(SOUs_ViewSitesDirectoryTest.class);
-		testSuite.addTestSuite(SOUs_ViewMyProfileTest.class);
+		testSuite.addTestSuite(SOUs_ViewSODashboardTest.class);
 		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
-		testSuite.addTestSuite(RemoveSORoleUGUserGroupSOConfigurationTest.class);
+		testSuite.addTestSuite(RemoveRoleSOSitesTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ViewMyPrivatePagesNoSORoleTest.class);
-		testSuite.addTestSuite(SOUs_ViewMyPublicPagesNoSORoleTest.class);
+		testSuite.addTestSuite(SOUs_ViewSODashboardNoTest.class);
 		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(AssignRoleSOSitesTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_ViewSODashboardTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
-		testSuite.addTestSuite(TearDownUGUserGroupTest.class);
 
 		return testSuite;
 	}

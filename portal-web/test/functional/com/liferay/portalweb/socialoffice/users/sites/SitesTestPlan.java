@@ -15,6 +15,7 @@
 package com.liferay.portalweb.socialoffice.users.sites;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.socialoffice.users.sites.assignmembersousersites.AssignMemberSOUserSitesTests;
 import com.liferay.portalweb.socialoffice.users.sites.assignrolesosites.AssignRoleSOSitesTests;
 
 import junit.framework.Test;
@@ -28,6 +29,7 @@ public class SitesTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AssignMemberSOUserSitesTests.suite());
 		testSuite.addTest(AssignRoleSOSitesTests.suite());
 
 		return testSuite;

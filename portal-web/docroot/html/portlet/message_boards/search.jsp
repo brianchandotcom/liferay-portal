@@ -79,33 +79,48 @@ String keywords = ParamUtil.getString(request, "keywords");
 	>
 
 		<%
-		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("paginationType", "more");
-		searchContext.setCategoryIds(categoryIdsArray);
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setIncludeAttachments(true);
-		searchContext.setKeywords(keywords);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(true);
-
-		searchContext.setQueryConfig(queryConfig);
-
-		searchContext.setStart(searchContainer.getStart());
-
-		Hits hits = indexer.search(searchContext);
-
-		PortletURL hitURL = renderResponse.createRenderURL();
+		Hits hits = null;
 		%>
 
-		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
-			total="<%= hits.getLength() %>"
-		/>
+		<liferay-ui:search-container-results>
+
+			<%
+			Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setCategoryIds(categoryIdsArray);
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setIncludeAttachments(true);
+			searchContext.setKeywords(keywords);
+
+			QueryConfig queryConfig = new QueryConfig();
+
+			queryConfig.setHighlightEnabled(true);
+
+			searchContext.setQueryConfig(queryConfig);
+
+			searchContext.setStart(searchContainer.getStart());
+
+			hits = indexer.search(searchContext);
+
+			total = hits.getLength();
+
+			if (searchContainer.recalculateCur(total)) {
+				searchContext.setStart(searchContainer.getStart());
+				searchContext.setEnd(searchContainer.getEnd());
+
+				hits = indexer.search(searchContext);
+			}
+
+			PortletURL hitURL = renderResponse.createRenderURL();
+
+			pageContext.setAttribute("results", SearchResultUtil.getSearchResults(hits, locale, hitURL));
+			pageContext.setAttribute("total", total);
+			%>
+
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.search.SearchResult"

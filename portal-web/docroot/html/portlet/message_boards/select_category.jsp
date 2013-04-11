@@ -54,10 +54,10 @@ else {
 	<liferay-ui:search-container
 		headerNames="category,num-of-categories,num-of-threads,num-of-posts,"
 		iteratorURL="<%= portletURL %>"
+		total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 		/>
 
 		<liferay-ui:search-container-row

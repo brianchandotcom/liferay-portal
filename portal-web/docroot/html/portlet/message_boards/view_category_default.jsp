@@ -42,10 +42,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				deltaConfigurable="<%= false %>"
 				headerNames="category,categories,threads,posts"
 				iteratorURL="<%= portletURL %>"
+				total="<%= categoriesCount %>"
 			>
 				<liferay-ui:search-container-results
 					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					total="<%= categoriesCount %>"
 				/>
 
 				<liferay-ui:search-container-row
@@ -75,10 +75,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 			emptyResultsMessage="there-are-no-threads-in-this-category"
 			headerNames="thread,flag,started-by,posts,views,last-post"
 			iteratorURL="<%= portletURL %>"
+			total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 			/>
 
 			<liferay-ui:search-container-row

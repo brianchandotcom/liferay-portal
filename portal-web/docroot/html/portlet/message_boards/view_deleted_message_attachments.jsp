@@ -64,11 +64,11 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 <liferay-ui:search-container
 	emptyResultsMessage="this-message-does-not-have-file-attachments-in-the-recycle-bin"
 	iteratorURL="<%= iteratorURL %>"
+	total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 >
 
 	<liferay-ui:search-container-results
 		results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 	/>
 
 	<liferay-ui:search-container-row

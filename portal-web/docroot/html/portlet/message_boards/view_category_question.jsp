@@ -48,10 +48,10 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 				deltaConfigurable="<%= false %>"
 				headerNames="category,categories,threads,posts"
 				iteratorURL="<%= portletURL %>"
+				total="<%= categoriesCount %>"
 			>
 				<liferay-ui:search-container-results
 					results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					total="<%= categoriesCount %>"
 				/>
 
 				<liferay-ui:search-container-row
@@ -81,10 +81,10 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 	emptyResultsMessage="there-are-no-questions-in-this-category"
 	headerNames="stats,question,last-post"
 	iteratorURL="<%= portletURL %>"
+	total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 	/>
 
 	<liferay-ui:search-container-row

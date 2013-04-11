@@ -16,8 +16,13 @@ package com.liferay.portal.kernel.nio.intraband.blocking;
 
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraBand.ReadingCallable;
 import com.liferay.portal.kernel.util.Time;
 
+import java.nio.channels.Pipe.SinkChannel;
+import java.nio.channels.Pipe.SourceChannel;
+import java.nio.channels.Pipe;
 import java.nio.charset.Charset;
 
 import java.util.LinkedList;
@@ -75,6 +80,62 @@ public class ExecutorIntraBandTest {
 		Assert.assertSame(datagram1, sendingQueue.poll());
 		Assert.assertSame(datagram2, sendingQueue.poll());
 		Assert.assertSame(datagram3, sendingQueue.poll());
+	}
+
+	@Test
+	public void testReadingCallable() throws Exception {
+
+		// Exit gracefully on close
+
+		Pipe pipe = Pipe.open();
+
+		final SourceChannel sourceChannel = pipe.source();
+		SinkChannel sinkChannel = pipe.sink();
+
+		try {
+			MockRegistrationReference mockRegistrationReference =
+				new MockRegistrationReference(_executorIntraBand);
+
+			ChannelContext channelContext = new ChannelContext(
+				new LinkedList<Datagram>());
+
+			channelContext.setRegistrationReference(mockRegistrationReference);
+
+			ReadingCallable readingCallable =
+				_executorIntraBand.new ReadingCallable(
+					sourceChannel, channelContext);
+
+			Thread closeThread = new Thread() {
+
+				@Override
+				public void run() {
+					try {
+						sleep(100);
+
+						sourceChannel.close();
+					}
+					catch (Exception e) {
+						Assert.fail(e.getMessage());
+					}
+				}
+
+			};
+
+			closeThread.start();
+
+			readingCallable.openLatch();
+
+			Void result = readingCallable.call();
+
+			closeThread.join();
+
+			Assert.assertNull(result);
+			Assert.assertFalse(mockRegistrationReference.isValid());
+		}
+		finally {
+			sourceChannel.close();
+			sinkChannel.close();
+		}
 	}
 
 	private static final String _DATA_STRING =

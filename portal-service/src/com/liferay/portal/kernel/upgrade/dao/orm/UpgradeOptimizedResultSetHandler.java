@@ -206,6 +206,9 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		if (t == Types.BIGINT) {
 			value = GetterUtil.getLong(_resultSet.getLong(name));
 		}
+		else if (t == Types.BINARY) {
+			value = _resultSet.getBytes(name);
+		}
 		else if (t == Types.BIT) {
 			value = GetterUtil.getBoolean(_resultSet.getBoolean(name));
 		}
@@ -215,8 +218,17 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(_resultSet.getBoolean(name));
 		}
+		else if (t == Types.CHAR) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
 		else if (t == Types.CLOB) {
 			value = GetterUtil.getString(_resultSet.getString(name));
+		}
+		else if (t == Types.DATE) {
+			value = _resultSet.getDate(name);
+		}
+		else if (t == Types.DECIMAL) {
+			value = _resultSet.getBigDecimal(name);
 		}
 		else if (t == Types.DOUBLE) {
 			value = GetterUtil.getDouble(_resultSet.getDouble(name));
@@ -227,14 +239,47 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(_resultSet.getInt(name));
 		}
+		else if (t == Types.LONGNVARCHAR) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
 		else if (t == Types.NUMERIC) {
 			value = GetterUtil.getLong(_resultSet.getLong(name));
+		}
+		else if (t == Types.NCHAR) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
+		else if (t == Types.NCLOB) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
+		else if (t == Types.NVARCHAR) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
+		else if (t == Types.REAL) {
+			value = GetterUtil.getFloat(_resultSet.getFloat(name));
+		}
+		else if (t == Types.ROWID) {
+			value = GetterUtil.getFloat(_resultSet.getFloat(name));
 		}
 		else if (t == Types.SMALLINT) {
 			value = GetterUtil.getShort(_resultSet.getShort(name));
 		}
+		else if (t == Types.TIME) {
+			value = _resultSet.getTime(name);
+		}
 		else if (t == Types.TIMESTAMP) {
 			value = _resultSet.getTimestamp(name);
+		}
+		else if (t == Types.TINYINT) {
+			value = GetterUtil.getShort(_resultSet.getShort(name));
+		}
+		else if (t == Types.VARBINARY) {
+			value = _resultSet.getBytes(name);
+		}
+		else if (t == Types.LONGVARBINARY) {
+			value = _resultSet.getBytes(name);
+		}
+		else if (t == Types.SQLXML) {
+			value = GetterUtil.getString(_resultSet.getString(name));
 		}
 		else if (t == Types.VARCHAR) {
 			value = GetterUtil.getString(_resultSet.getString(name));

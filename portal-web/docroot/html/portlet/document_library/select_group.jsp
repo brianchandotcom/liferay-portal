@@ -88,7 +88,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectGroup");
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("groupid", group.getGroupId());
-				data.put("groupname", HtmlUtil.escapeJS(groupName));
+				data.put("groupname", HtmlUtil.escape(groupName));
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

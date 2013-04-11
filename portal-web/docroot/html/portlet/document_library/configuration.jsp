@@ -104,7 +104,7 @@ String editorContent = emailBody;
 
 							<aui:a href="<%= viewFolderURL %>" id="rootFolderName"><%= rootFolderName %></aui:a>
 
-							<aui:button name="selectFolderLink" value="select" />
+							<aui:button name="selectFolderButton" value="select" />
 
 							<%
 							String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
@@ -220,6 +220,42 @@ String editorContent = emailBody;
 					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
+
+			<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>" portletName="<%= portletResource %>">
+				<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
+			</liferay-portlet:renderURL>
+
+			<aui:script use="aui-base">
+				A.one('#<portlet:namespace />selectFolderButton').on(
+					'click',
+					function(event) {
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									constrain: true,
+									modal: true,
+									stack: true,
+									width: 600
+								},
+								id: '_<%= portletResource %>_selectFolder',
+								title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+								uri: '<%= selectFolderURL.toString() %>'
+							},
+							function(event) {
+								var folderData = {
+									idString: 'rootFolderId',
+									idValue: event.folderid,
+									nameString: 'rootFolderName',
+									nameValue: event.foldername
+								};
+
+								Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= strutsAction + "/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
+							}
+						);
+					}
+				);
+			</aui:script>
 		</c:when>
 		<c:when test='<%= tabs2.equals("email-from") %>'>
 			<aui:fieldset>
@@ -428,42 +464,6 @@ String editorContent = emailBody;
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>" portletName="<%= portletResource %>">
-	<portlet:param name="struts_action" value='<%= strutsAction + "/select_folder" %>' />
-</liferay-portlet:renderURL>
-
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderLink').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						constrain: true,
-						modal: true,
-						stack: true,
-						width: 600
-					},
-					id: '_<%= portletResource %>_selectFolder',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
-					uri: '<%= selectFolderURL.toString() %>'
-				},
-				function(event) {
-					var folderData = {
-						idString: 'rootFolderId',
-						idValue: event.folderid,
-						nameString: 'rootFolderName',
-						nameValue: event.foldername
-					};
-
-					Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= strutsAction + "/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
-				}
-			);
-		}
-	);
-</aui:script>
 
 <aui:script>
 	function <portlet:namespace />initEditor() {

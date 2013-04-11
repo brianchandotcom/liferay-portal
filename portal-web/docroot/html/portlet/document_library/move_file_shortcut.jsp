@@ -96,7 +96,7 @@ long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 		<aui:field-wrapper label="new-folder">
 			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
 
-			<aui:button name="selectFolderLink" value="select" />
+			<aui:button name="selectFolderButton" value="select" />
 		</aui:field-wrapper>
 
 		<aui:button-row>
@@ -113,7 +113,7 @@ long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 </portlet:renderURL>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderLink').on(
+	A.one('#<portlet:namespace />selectFolderButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

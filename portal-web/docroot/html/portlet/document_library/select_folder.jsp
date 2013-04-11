@@ -61,7 +61,7 @@ if (folder != null) {
 		data.put("foldername", HtmlUtil.escapeAttribute(folderName));
 		%>
 
-		<aui:button cssClass="selector-button" data="<%= data %>" name="selectFolderLink" value="choose-this-folder" />
+		<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
 	</aui:button-row>
 
 	<%

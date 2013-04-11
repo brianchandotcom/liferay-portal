@@ -268,13 +268,49 @@ else if (dlFileEntryType != null) {
 			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
 
 			<c:if test="<%= referringPortletResourceRootPortletId.equals(PortletKeys.ASSET_PUBLISHER) && (fileEntryId == 0) %>">
-				<aui:button name="selectFolderLink" value="select" />
+				<aui:button name="selectFolderButton" value="select" />
 
 				<%
 				String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('folderId', 'folderName', '" + renderResponse.getNamespace() + "');";
 				%>
 
 				<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+
+				<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value='<%= "/document_library/select_folder" %>' />
+				</liferay-portlet:renderURL>
+
+				<aui:script use="aui-base">
+					A.one('#<portlet:namespace />selectFolderButton').on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										align: Liferay.Util.Window.ALIGN_CENTER,
+										constrain: true,
+										modal: true,
+										stack: true,
+										width: 680
+									},
+									id: '<portlet:namespace />selectFolder',
+									title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+									uri: '<%= selectFolderURL.toString() %>'
+								},
+								function(event) {
+									var folderData = {
+										idString: 'folderId',
+										idValue: event.folderid,
+										nameString: 'folderName',
+										nameValue: event.foldername
+									};
+
+									Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/document_library/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
+								}
+							);
+						}
+					);
+				</aui:script>
 			</c:if>
 		</aui:field-wrapper>
 
@@ -466,42 +502,6 @@ else if (dlFileEntryType != null) {
 	message="uploading"
 	redirect="<%= redirect %>"
 />
-
-<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value='<%= "/document_library/select_folder" %>' />
-</liferay-portlet:renderURL>
-
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderLink').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						constrain: true,
-						modal: true,
-						stack: true,
-						width: 680
-					},
-					id: '<portlet:namespace />selectFolder',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
-					uri: '<%= selectFolderURL.toString() %>'
-				},
-				function(event) {
-					var folderData = {
-						idString: 'folderId',
-						idValue: event.folderid,
-						nameString: 'folderName',
-						nameValue: event.foldername
-					};
-
-					Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= "/document_library/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
-				}
-			);
-		}
-	);
-</aui:script>
 
 <aui:script>
 	function <portlet:namespace />changeFileEntryType() {

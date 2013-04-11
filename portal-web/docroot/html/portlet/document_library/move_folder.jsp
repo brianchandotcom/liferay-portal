@@ -82,7 +82,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 
 			<aui:a href="<%= viewFolderURL %>" id="parentFolderName"><%= parentFolderName %></aui:a>
 
-			<aui:button name="selectFolderLink" value="select" />
+			<aui:button name="selectFolderButton" value="select" />
 
 			<%
 			String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('parentFolderId', 'parentFolderName', '" + renderResponse.getNamespace() + "');";
@@ -114,7 +114,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 </portlet:renderURL>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderLink').on(
+	A.one('#<portlet:namespace />selectFolderButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

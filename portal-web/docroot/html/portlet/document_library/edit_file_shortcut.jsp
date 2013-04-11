@@ -105,7 +105,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			<%= toGroupName %>
 			</span>
 
-			<aui:button name="selectGroupLink" value="select" />
+			<aui:button name="selectGroupButton" value="select" />
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="document">
@@ -145,8 +145,8 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	<portlet:param name="struts_action" value="/document_library/select_file_entry" />
 </portlet:renderURL>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectGroupLink').on(
+<aui:script use="aui-base,escape">
+	A.one('#<portlet:namespace />selectGroupButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

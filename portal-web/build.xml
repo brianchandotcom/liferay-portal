@@ -304,13 +304,13 @@
 					tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
 				/>
 
-				<antcall target="build-ckeditor-plugins-scayt" />
-
-				<antcall target="build-ckeditor-plugins-wsc" />
-
 				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
 				</copy>
+
+				<antcall target="build-ckeditor-plugins-scayt" />
+
+				<antcall target="build-ckeditor-plugins-wsc" />
 			</then>
 			<else>
 				<copy todir="docroot/html/js/editor/ckeditor">
@@ -433,7 +433,7 @@
 		/>
 
 		<unzip
-			dest="docroot/html/js/editor/ckeditor_diffs/plugins"
+			dest="docroot/html/js/editor/ckeditor/plugins"
 			src="${scayt.file}"
 		/>
 
@@ -447,7 +447,7 @@
 		/>
 
 		<unzip
-			dest="docroot/html/js/editor/ckeditor_diffs/plugins"
+			dest="docroot/html/js/editor/ckeditor/plugins"
 			src="${wsc.file}"
 		/>
 

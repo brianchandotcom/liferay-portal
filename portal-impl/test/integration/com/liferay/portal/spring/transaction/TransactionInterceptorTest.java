@@ -51,7 +51,7 @@ public class TransactionInterceptorTest {
 	public void testFailOnCommit() throws SystemException {
 		CaptureAppender captureAppender =
 			Log4JLoggerTestUtil.configureJDKLogger(
-				TransactionInterceptor.class.getName(), Level.ERROR);
+				DefaultTransactionExecutor.class.getName(), Level.ERROR);
 
 		long classNameId = CounterLocalServiceUtil.increment();
 

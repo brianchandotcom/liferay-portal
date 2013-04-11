@@ -320,7 +320,40 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			</#list>-->
 
 			{
-				throw new UnsupportedOperationException();
+				try {
+					Class<?> clazz = _${entity.varName}RemoteModel.getClass();
+
+					java.lang.reflect.Method method = clazz.getMethod("${method.name}"
+
+					<#list parameters as parameter>
+						,
+						${parameter.type.getValue()}.class
+					</#list>
+
+					);
+
+					<#if serviceBuilder.getTypeGenericsName(method.returns) != "void">
+						<#assign returnTypeObj = serviceBuilder.getPrimitiveObj(serviceBuilder.getTypeGenericsName(method.returns))>
+
+						${returnTypeObj} returnObj = (${returnTypeObj})
+					</#if>
+
+					method.invoke(_${entity.varName}RemoteModel
+
+					<#list parameters as parameter>
+						,
+						${parameter.name}
+					</#list>
+
+					);
+
+					<#if serviceBuilder.getTypeGenericsName(method.returns) != "void">
+						return returnObj;
+					</#if>
+				}
+				catch (Exception e) {
+					throw new UnsupportedOperationException(e);
+				}
 			}
 		</#if>
 	</#list>

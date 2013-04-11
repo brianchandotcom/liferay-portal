@@ -158,10 +158,10 @@ AUI.add(
 					addRow: function(arr, id) {
 						var instance = this;
 
-						var row, template;
+						var row;
 
 						if (id) {
-							template = instance._table.one('.' + CSS_TEMPLATE);
+							var template = instance._table.one('.' + CSS_TEMPLATE);
 
 							if (template) {
 								row = template.clone();

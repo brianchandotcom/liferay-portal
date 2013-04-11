@@ -206,20 +206,22 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
 	}
 
-	Liferay.on('<portlet:namespace />selectGroup', 
+	Liferay.on(
+		'<portlet:namespace />selectGroup', 
 		function(event) {
 			var selectedGroupIds = [];
+
 			var selectedGroupIdsField = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + event.grouptarget].value;
 
-			if (selectedGroupIdsField != "") {
-				selectedGroupIds = selectedGroupIdsField.split(",");
+			if (selectedGroupIdsField) {
+				selectedGroupIds = selectedGroupIdsField.split(',');
 			}
 
 			var selectedGroupNames = [];
 			var selectedGroupNamesField = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + event.grouptarget].value;
 
-			if (selectedGroupNamesField != "") {
-				selectedGroupNames = selectedGroupNamesField.split("@@");
+			if (selectedGroupNamesField) {
+				selectedGroupNames = selectedGroupNamesField.split('@@');
 			}
 
 			if (AUI().Array.indexOf(selectedGroupIds, event.groupid) == -1) {

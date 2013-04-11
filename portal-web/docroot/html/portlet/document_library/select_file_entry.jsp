@@ -20,6 +20,7 @@
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+String eventName = ParamUtil.getString(request, "eventName", "selectFileEntry");
 
 long groupId = BeanParamUtil.getLong(folder, request, "groupId");
 
@@ -28,7 +29,7 @@ if (folder != null) {
 }
 %>
 
-<aui:form method="post" name="fm">
+<aui:form method="post" name="selectFileEntryFm">
 	<liferay-ui:header
 		title="home"
 	/>
@@ -41,160 +42,166 @@ if (folder != null) {
 	portletURL.setParameter("struts_action", "/document_library/select_file_entry");
 	portletURL.setParameter("groupId", String.valueOf(groupId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));
-
-	List<String> headerNames = new ArrayList<String>();
-
-	headerNames.add("folder");
-	headerNames.add("num-of-folders");
-	headerNames.add("num-of-documents");
-
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
-
-	int total = DLAppServiceUtil.getFoldersCount(groupId, folderId);
-
-	searchContainer.setTotal(total);
-
-	List results = DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
-
-	searchContainer.setResults(results);
-
-	List resultRows = searchContainer.getResultRows();
-
-	for (int i = 0; i < results.size(); i++) {
-		Folder curFolder = (Folder)results.get(i);
-
-		curFolder = curFolder.toEscapedModel();
-
-		ResultRow row = new ResultRow(curFolder, curFolder.getFolderId(), i);
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("struts_action", "/document_library/select_file_entry");
-		rowURL.setParameter("groupId", String.valueOf(groupId));
-		rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-		// Name
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<img align=\"left\" border=\"0\" src=\"");
-		sb.append(themeDisplay.getPathThemeImages());
-
-		List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(groupId, curFolder.getFolderId(), false);
-
-		int foldersCount = subfolderIds.size();
-
-		subfolderIds.clear();
-		subfolderIds.add(curFolder.getFolderId());
-
-		int fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(groupId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
-
-		if ((foldersCount + fileEntriesCount) > 0) {
-			sb.append("/common/folder_full_document.png\">");
-		}
-		else {
-			sb.append("/common/folder_empty.png\">");
-		}
-
-		sb.append(curFolder.getName());
-
-		row.addText(sb.toString(), rowURL);
-
-		// Statistics
-
-		row.addText(String.valueOf(foldersCount), rowURL);
-		row.addText(String.valueOf(fileEntriesCount), rowURL);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+	>
 
-	<c:if test="<%= !results.isEmpty() %>">
-		<br />
-	</c:if>
+		<liferay-ui:search-container-results
+			results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.repository.model.Folder"
+			keyProperty="folderId"
+			modelVar="curFolder"
+			rowVar="row"
+		>
+			<liferay-portlet:renderURL varImpl="rowURL">
+				<portlet:param name="struts_action" value="/document_library/select_file_entry" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+			</liferay-portlet:renderURL>
+
+			<%
+			int fileEntriesCount = 0;
+			int foldersCount = 0;
+
+			try{
+				List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(groupId, curFolder.getFolderId(), false);
+
+				foldersCount = subfolderIds.size();
+
+				subfolderIds.clear();
+				subfolderIds.add(curFolder.getFolderId());
+
+				fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(groupId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
+			}
+			catch (com.liferay.portal.kernel.repository.RepositoryException re) {
+				rowURL = null;
+			}
+			catch (com.liferay.portal.security.auth.PrincipalException pe) {
+				rowURL = null;
+			}
+
+			String image = null;
+
+			if ((foldersCount + fileEntriesCount) > 0) {
+				image = "folder_full_document";
+			}
+			else {
+				image = "folder_empty";
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="folder"
+			>
+				<liferay-ui:icon image="<%= image %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= rowURL.toString() %>" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="num-of-folders"
+				value="<%= String.valueOf(foldersCount) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="num-of-documents"
+				value="<%= String.valueOf(fileEntriesCount) %>"
+			/>
+
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+
+	<br />
 
 	<liferay-ui:header
 		title="documents"
 	/>
 
-	<%
-	headerNames.clear();
+	<liferay-ui:search-container
+		iteratorURL="<%= portletURL %>"
+	>
 
-	headerNames.add("document");
-	headerNames.add("size");
+		<liferay-ui:search-container-results
+			results="<%= DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			total="<%= DLAppServiceUtil.getFileEntriesCount(groupId, folderId) %>"
+		/>
 
-	if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-		headerNames.add("downloads");
-	}
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.repository.model.FileEntry"
+			keyProperty="fileEntryId"
+			modelVar="curFile"
+			rowVar="row"
+		>
 
-	headerNames.add("locked");
+			<%
+			String icon = "../file_system/small/" + curFile.getIcon();
+			%>
 
-	searchContainer = new SearchContainer(renderRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+			<liferay-ui:search-container-column-text
+				name="document"
+			>
+				<liferay-ui:icon image="<%= icon %>" label="<%= true %>" message="<%= HtmlUtil.escape(curFile.getTitle()) %>" />
 
-	total = DLAppServiceUtil.getFileEntriesCount(groupId, folderId);
+				<c:if test="<%= Validator.isNotNull(curFile.getDescription()) %>">
+					<br />
+					<%= curFile.getDescription() %>
+				</c:if>
+			</liferay-ui:search-container-column-text>
 
-	searchContainer.setTotal(total);
+			<liferay-ui:search-container-column-text
+				name="size"
+				value="<%= TextFormatter.formatStorageSize(curFile.getSize(), locale) %>"
+			/>
 
-	results = DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd());
+			<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
+				<liferay-ui:search-container-column-text
+					name="downloads"
+					value="<%= String.valueOf(curFile.getReadCount()) %>"
+				/>
+			</c:if>
 
-	searchContainer.setResults(results);
+			<liferay-ui:search-container-column-text
+				name="locked"
+				value='<%= LanguageUtil.get(pageContext, curFile.isCheckedOut() ? "yes" : "no") %>'
+			/>
 
-	resultRows = searchContainer.getResultRows();
+			<liferay-ui:search-container-column-text>
 
-	for (int i = 0; i < results.size(); i++) {
-		FileEntry fileEntry = (FileEntry)results.get(i);
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-		fileEntry = fileEntry.toEscapedModel();
+				data.put("entryid", curFile.getFileEntryId());
+				data.put("entryname", curFile.getTitle());
+				%>
 
-		ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
 
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("javascript:opener.");
-		sb.append(renderResponse.getNamespace());
-		sb.append("selectFileEntry('");
-		sb.append(fileEntry.getFileEntryId());
-		sb.append("', '");
-		sb.append(UnicodeFormatter.toString(fileEntry.getTitle()));
-		sb.append("'); window.close();");
-
-		String rowHREF = sb.toString();
-
-		// Title and description
-
-		sb.setIndex(0);
-
-		sb.append(DLUtil.getFileEntryImage(fileEntry, themeDisplay));
-		sb.append(fileEntry.getTitle());
-
-		if (Validator.isNotNull(fileEntry.getDescription())) {
-			sb.append("<br />");
-			sb.append(fileEntry.getDescription());
-		}
-
-		row.addText(sb.toString(), rowHREF);
-
-		// Statistics
-
-		row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale), rowHREF);
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			row.addText(String.valueOf(fileEntry.getReadCount()), rowHREF);
-		}
-
-		// Checked out
-
-		row.addText(LanguageUtil.get(pageContext, fileEntry.isCheckedOut() ? "yes" : "no"), rowHREF);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectFileEntryFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
+</aui:script>

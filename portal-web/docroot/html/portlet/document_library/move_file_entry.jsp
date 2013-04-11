@@ -138,16 +138,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 		<aui:field-wrapper label="new-folder">
 			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
 
-			<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/document_library/select_folder" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			</portlet:renderURL>
-
-			<%
-			String taglibOpenFolderWindow = "var folderWindow = window.open('" + selectFolderURL + "','folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); folderWindow.focus();";
-			%>
-
-			<aui:button onClick="<%= taglibOpenFolderWindow %>" value="select" />
+			<aui:button name="selectFolderButton" value="select" />
 		</aui:field-wrapper>
 
 		<aui:button-row>
@@ -158,20 +149,46 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 	</aui:fieldset>
 </aui:form>
 
+<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/document_library/select_folder" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+</portlet:renderURL>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />selectFolderButton').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						stack: true,
+						width: 680
+					},
+					id: '<portlet:namespace />selectFolder',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+					uri: '<%= selectFolderURL.toString() %>'
+				},
+				function(event) {
+					var folderData = {
+						idString: 'newFolderId',
+						idValue: event.folderid,
+						nameString: 'folderName',
+						nameValue: event.foldername
+					};
+
+					Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view" /></portlet:renderURL>', '<portlet:namespace />');
+				}
+			);
+		}
+	);
+</aui:script>
+
 <aui:script>
 	function <portlet:namespace />saveFileEntry() {
 		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectFolder(folderId, folderName) {
-		var folderData = {
-			idString: 'newFolderId',
-			idValue: folderId,
-			nameString: 'folderName',
-			nameValue: folderName
-		};
-
-		Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view" /></portlet:renderURL>', '<portlet:namespace />');
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

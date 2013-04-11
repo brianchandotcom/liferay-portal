@@ -16,7 +16,11 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
-<aui:form method="post" name="fm">
+<%
+String eventName = ParamUtil.getString(request, "eventName", "selectGroup");
+%>
+
+<aui:form method="post" name="selectGroupFm">
 	<liferay-ui:header
 		title="sites"
 	/>
@@ -66,33 +70,47 @@
 			if (group.isUser()) {
 				groupName = LanguageUtil.get(pageContext, "my-site");
 			}
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:opener.");
-			sb.append(renderResponse.getNamespace());
-			sb.append("selectGroup('");
-			sb.append(group.getGroupId());
-			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(groupName));
-			sb.append("'); window.close();");
-
-			String rowHREF = sb.toString();
 			%>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= groupName %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="type"
 				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
 			/>
+
+			<liferay-ui:search-container-column-text>
+
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("groupid", group.getGroupId());
+				data.put("groupname", HtmlUtil.escape(groupName));
+				%>
+
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectGroupFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
+</aui:script>

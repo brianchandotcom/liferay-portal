@@ -18,23 +18,23 @@
 
 		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY_1" value1="Test Test" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS_1" value1="1" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST_1" value1="By: Test Test" />
 
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="USERNAME_1" value1="Test Test" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="Test Test" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
 	<command name="pgDelete">
@@ -42,7 +42,9 @@
 
 		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS_1" />
 
 		<execute action="PGMessageboards#click" locator-key1="THREAD_ACTIONS_RECYCLE_BIN" />
 
@@ -53,16 +55,38 @@
 		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>
 
+	<command name="pgEdit">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+
+		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY" value1="${threadBodyNew}" />
+
+		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyNew}" />
+
+		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
 	<command name="pgReply">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#click" locator-key1="REPLY_1" value1="Reply" />
+		<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY" value1="${threadReplyBody}" />
 
@@ -74,35 +98,35 @@
 
 		<execute action="Home#click" locator1="link=${pageName}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY_1" value1="Test Test" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="2" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS_1" value1="2" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST_1" value1="By: Test Test" />
 
-		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_THREAD_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_THREAD_SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="USERNAME_1" value1="Test Test" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="Test Test" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="BODY_2" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="USERNAME_2" value1="Test Test" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="Test Test" />
 
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="RATING_2" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
 	</command>
 
 	<command name="cpTearDown">

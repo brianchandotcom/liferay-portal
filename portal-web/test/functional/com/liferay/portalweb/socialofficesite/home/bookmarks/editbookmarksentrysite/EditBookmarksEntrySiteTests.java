@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficesite.home;
+package com.liferay.portalweb.socialofficesite.home.bookmarks.editbookmarksentrysite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficesite.home.announcement.AnnouncementTestPlan;
-import com.liferay.portalweb.socialofficesite.home.bookmarks.BookmarksTestPlan;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
+import com.liferay.portalweb.socialofficesite.home.bookmarks.addbookmarksentrysite.AddBookmarksEntrySiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +25,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class HomeTestPlan extends BaseTestSuite {
-
+public class EditBookmarksEntrySiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AnnouncementTestPlan.suite());
-		testSuite.addTest(BookmarksTestPlan.suite());
-		//testSuite.addTest(HomeLARTestPlan.suite());
+		testSuite.addTestSuite(AddSitesSiteTest.class);
+		testSuite.addTestSuite(AddBookmarksEntrySiteTest.class);
+		testSuite.addTestSuite(EditBookmarksEntrySiteTest.class);
+		testSuite.addTestSuite(ViewEditBookmarksEntrySiteTest.class);
+		testSuite.addTestSuite(TearDownSOSitesTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -46,6 +46,115 @@
 		<echo file="portal-web/test-ant-scripts/${ant.script.file.name}" append="true">${template.content}</echo>
 	</target>
 
+	<target name="build-sql-file">
+		<if>
+			<not>
+				<isset property="sql.legacy.zip" />
+			</not>
+			<then>
+				<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<and>
+					<available file="sql/legacy" />
+					<uptodate
+						srcfile="${sql.legacy.zip}"
+						targetfile="sql/legacy"
+					/>
+				</and>
+			</not>
+			<then>
+				<delete dir="sql/legacy" failonerror="false" />
+
+				<unzip src="${sql.legacy.zip}" dest="sql" />
+
+				<touch>
+					<fileset dir="sql/legacy" />
+				</touch>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${database}" arg2="hsql" />
+			</not>
+			<then>
+				<if>
+					<or>
+						<not>
+							<isset property="sql.dir" />
+						</not>
+						<not>
+							<isset property="sql.file" />
+						</not>
+					</or>
+					<then>
+						<if>
+							<isset property="test.database.minimal" />
+							<then>
+								<property name="sql.dir" value="sql\create-minimal\" />
+								<property name="sql.file" value="create-minimal-${database.family}.sql" />
+							</then>
+							<else>
+								<property name="sql.dir" value="sql\create\" />
+								<property name="sql.file" value="create-${database.family}.sql" />
+							</else>
+						</if>
+					</then>
+				</if>
+
+				<copy file="${sql.dir}${sql.file}" tofile="create.sql" />
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.drop-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.drop-schema.token}" value="${database.sql-replacement.drop-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.create-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.create-schema.token}" value="${database.sql-replacement.create-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.use-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.use-schema.token}" value="${database.sql-replacement.use-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.create-schema-secondary.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.create-schema-secondary.token}" value="${database.sql-replacement.create-schema-secondary.value}" />
+						</replace>
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="build-test-ant-script">
 		<if>
 			<isset property="test.ant.script.kaleo" />
@@ -3596,115 +3705,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<delete file="create.sql" />
-	</target>
-
-	<target name="build-sql-file">
-		<if>
-			<not>
-				<isset property="sql.legacy.zip" />
-			</not>
-			<then>
-				<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<and>
-					<available file="sql/legacy" />
-					<uptodate
-						srcfile="${sql.legacy.zip}"
-						targetfile="sql/legacy"
-					/>
-				</and>
-			</not>
-			<then>
-				<delete dir="sql/legacy" failonerror="false" />
-
-				<unzip src="${sql.legacy.zip}" dest="sql" />
-
-				<touch>
-					<fileset dir="sql/legacy" />
-				</touch>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${database}" arg2="hsql" />
-			</not>
-			<then>
-				<if>
-					<or>
-						<not>
-							<isset property="sql.dir" />
-						</not>
-						<not>
-							<isset property="sql.file" />
-						</not>
-					</or>
-					<then>
-						<if>
-							<isset property="test.database.minimal" />
-							<then>
-								<property name="sql.dir" value="sql\create-minimal\" />
-								<property name="sql.file" value="create-minimal-${database.family}.sql" />
-							</then>
-							<else>
-								<property name="sql.dir" value="sql\create\" />
-								<property name="sql.file" value="create-${database.family}.sql" />
-							</else>
-						</if>
-					</then>
-				</if>
-
-				<copy file="${sql.dir}${sql.file}" tofile="create.sql" />
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.drop-schema.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.drop-schema.token}" value="${database.sql-replacement.drop-schema.value}" />
-						</replace>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.create-schema.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.create-schema.token}" value="${database.sql-replacement.create-schema.value}" />
-						</replace>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.use-schema.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.use-schema.token}" value="${database.sql-replacement.use-schema.value}" />
-						</replace>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<equals arg1="${database.sql-replacement.create-schema-secondary.token}" arg2="" />
-					</not>
-					<then>
-						<replace file="create.sql">
-							<replacefilter token="${database.sql-replacement.create-schema-secondary.token}" value="${database.sql-replacement.create-schema-secondary.value}" />
-						</replace>
-					</then>
-				</if>
-			</then>
-		</if>
 	</target>
 
 	<target name="record-java-processes">

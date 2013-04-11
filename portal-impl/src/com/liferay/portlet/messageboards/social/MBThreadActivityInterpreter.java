@@ -27,9 +27,6 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Zsolt Berentey
@@ -73,38 +70,41 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 		return message.getSubject();
 	}
 
-	@Override
-	protected String getLink(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		MBMessage message = getMessage(activity);
-
-		MBThread thread = message.getThread();
-
-		if (thread.isInTrash()) {
-			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), MBThread.class.getName(),
-				thread.getThreadId());
-
-			return portletURL.toString();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(serviceContext.getPortalURL());
-		sb.append(serviceContext.getPathMain());
-		sb.append("/message_boards/find_message?messageId=");
-		sb.append(message.getMessageId());
-
-		return sb.toString();
-	}
-
 	protected MBMessage getMessage(SocialActivity activity) throws Exception {
 		MBThread thread = MBThreadLocalServiceUtil.getThread(
 			activity.getClassPK());
 
 		return MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
+	}
+
+	@Override
+	protected String getPath(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(
+			activity.getClassPK());
+
+		return "/message_boards/find_message?messageId=" +
+			thread.getRootMessageId();
+	}
+
+	@Override
+	protected Object[] getTitleArguments(
+			String groupName, SocialActivity activity, String link,
+			String title, ServiceContext serviceContext)
+		throws Exception {
+
+		String userName = getUserName(activity.getUserId(), serviceContext);
+		String receiverUserName = StringPool.BLANK;
+
+		if (activity.getReceiverUserId() > 0) {
+			receiverUserName = getUserName(
+				activity.getReceiverUserId(), serviceContext);
+		}
+
+		return new Object[] {
+			groupName, userName, receiverUserName, wrapLink(link, title)};
 	}
 
 	@Override

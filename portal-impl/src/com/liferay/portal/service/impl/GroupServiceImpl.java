@@ -851,6 +851,26 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.UPDATE);
 
+		if (group.getParentGroupId() != parentGroupId) {
+			if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				PortalPermissionUtil.check(
+					getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+			}
+			else {
+				if (!GroupPermissionUtil.contains(
+						getPermissionChecker(), parentGroupId,
+						ActionKeys.MANAGE_SUBGROUPS) &&
+					!PortalPermissionUtil.contains(
+						getPermissionChecker(), ActionKeys.ADD_COMMUNITY)) {
+
+					throw new PrincipalException(
+						"User " + getUserId() + " does not have permissions " +
+							"to move site " + groupId + "to parent " +
+								parentGroupId);
+				}
+			}
+		}
+
 		if (group.isSite()) {
 			Group oldGroup = group;
 

@@ -751,6 +751,28 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organization, ActionKeys.UPDATE);
 
+		if (organization.getParentOrganizationId() != parentOrganizationId) {
+			if (parentOrganizationId ==
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				PortalPermissionUtil.check(
+					getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+			}
+			else {
+				if (!OrganizationPermissionUtil.contains(
+						getPermissionChecker(), parentOrganizationId,
+						ActionKeys.MANAGE_SUBORGANIZATIONS) &&
+					!PortalPermissionUtil.contains(
+						getPermissionChecker(), ActionKeys.ADD_ORGANIZATION)) {
+
+					throw new PrincipalException(
+						"User " + getUserId() + " does not have permissions " +
+							"to move organization " + organizationId + "to " +
+								"parent " + parentOrganizationId);
+				}
+			}
+		}
+
 		if (addresses != null) {
 			UsersAdminUtil.updateAddresses(
 				Organization.class.getName(), organizationId, addresses);

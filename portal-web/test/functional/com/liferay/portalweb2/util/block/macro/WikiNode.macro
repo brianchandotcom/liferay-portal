@@ -1,0 +1,102 @@
+<definition>
+	<command name="cpAdd">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator-key1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+
+		<execute action="CPWiki#click" locator-key1="ADD_WIKI" />
+
+		<execute action="CPWikiAddwiki#type" locator-key1="NAME" value1="${wikiName}" />
+
+		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION" value1="${wikiDescription}" />
+
+		<execute action="CPWikiAddwiki#click" locator-key1="SAVE" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiName}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_NUMBER_OF_PAGES_2" value1="0" />
+	</command>
+
+	<command name="cpDelete">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator-key1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiName}" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+
+		<execute action="CPWiki#assertTextNotPresent" value1="${wikiName}" />
+	</command>
+
+	<command name="cpEdit">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiName}" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_ACTIONS_EDIT" />
+
+		<execute action="CPWikiAddwiki#type" locator-key1="NAME" value1="${wikiNameNew}" />
+
+		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION" value1="${wikiDescriptionNew}" />
+
+		<execute action="CPWikiAddwiki#click" locator-key1="SAVE" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNameNew}" />
+
+		<execute action="CPWiki#assertTextNotEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiName}" />
+	</command>
+
+	<command name="cpTearDown">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+
+		<while>
+			<condition action="CPWiki#isElementPresent" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
+			<then>
+				<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
+
+				<execute action="CPWiki#click" locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN" />
+
+				<execute action="CPWiki#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+			</then>
+		</while>
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_1" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+	</command>
+</definition>

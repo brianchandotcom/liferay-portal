@@ -1,0 +1,69 @@
+<definition>
+	<command name="pgAddFrontPage">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
+
+		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiContent}" />
+
+		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiContent}" />
+	</command>
+
+	<command name="pgDeleteFrontPage">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
+
+		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" />
+
+		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_ACTIONS_RECYCLE_BIN" />
+
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+
+		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE_1" value1="FrontPage" />
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+	</command>
+
+	<command name="pgAddChildPage">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
+
+		<execute action="PGWikiAllpages#click" locator1="link=${wikiTitle}" />
+
+		<execute action="PGWiki#click" locator-key1="ADD_CHILD_PAGE" />
+
+		<execute action="PGWikiAddpage#type" locator-key1="TITLE" value1="${wikiChildTitle}" />
+
+		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiChildContent}" />
+
+		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildTitle}" />
+
+		<execute action="PGWiki#click" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiChildTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildContent}" />
+	</command>
+
+	<command name="cpTearDown">
+		<execute macro="WikiNode#cpTearDown" />
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+	</command>
+</definition>

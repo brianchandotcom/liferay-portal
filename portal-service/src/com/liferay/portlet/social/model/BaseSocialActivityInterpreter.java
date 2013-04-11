@@ -133,13 +133,13 @@ public abstract class BaseSocialActivityInterpreter
 			return null;
 		}
 
-		String link = getLink(activity, serviceContext);
-
 		String title = getTitle(activity, serviceContext);
 
 		if (Validator.isNull(title)) {
 			return null;
 		}
+
+		String link = getLink(activity, serviceContext);
 
 		String body = getBody(activity, serviceContext);
 
@@ -296,6 +296,10 @@ public abstract class BaseSocialActivityInterpreter
 			PortletURL portletURL = TrashUtil.getViewContentURL(
 				serviceContext.getRequest(), activity.getClassName(), classPK);
 
+			if (portletURL == null) {
+				return null;
+			}
+
 			return portletURL.toString();
 		}
 
@@ -335,14 +339,18 @@ public abstract class BaseSocialActivityInterpreter
 			groupName = getGroupName(activity.getGroupId(), serviceContext);
 		}
 
+		String titlePattern = getTitlePattern(groupName, activity);
+
+		if (Validator.isNull(titlePattern)) {
+			return null;
+		}
+
 		String link = getLink(activity, serviceContext);
 
 		String entryTitle = getEntryTitle(activity, serviceContext);
 
 		Object[] titleArguments = getTitleArguments(
 			groupName, activity, link, entryTitle, serviceContext);
-
-		String titlePattern = getTitlePattern(groupName, activity);
 
 		return serviceContext.translate(titlePattern, titleArguments);
 	}

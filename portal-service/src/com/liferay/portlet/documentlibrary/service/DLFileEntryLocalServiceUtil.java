@@ -523,6 +523,12 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntries(folderId, name);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntriesByStructureIds(
+		long[] structureIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntriesByStructureIds(structureIds);
+	}
+
 	public static int getFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFileEntriesCount();

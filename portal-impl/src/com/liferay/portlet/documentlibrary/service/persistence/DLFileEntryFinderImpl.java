@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,6 +58,9 @@ public class DLFileEntryFinderImpl
 
 	public static final String FIND_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".findByExtraSettings";
+
+	public static final String FIND_BY_STRUCTURE_IDS =
+		DLFileEntryFinder.class.getName() + ".findByStructureIds";
 
 	public static final String FIND_BY_MISVERSIONED =
 		DLFileEntryFinder.class.getName() + ".findByMisversioned";
@@ -199,6 +203,50 @@ public class DLFileEntryFinderImpl
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+
+			return (List<DLFileEntry>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public List<DLFileEntry> findByStructureIds(
+			long[] structureIds, int start, int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_STRUCTURE_IDS);
+
+			if ((structureIds == null) || (structureIds.length <= 0)) {
+				return Collections.EMPTY_LIST;
+			}
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(
+				getStructureIds(
+					structureIds, "DLFileEntryTypes_DDMStructures"));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			sql = StringUtil.replace(sql, "[$STRUCTURE_ID$]", sb.toString());
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(structureIds);
 
 			return (List<DLFileEntry>)QueryUtil.list(
 				q, getDialect(), start, end);
@@ -500,6 +548,25 @@ public class DLFileEntryFinderImpl
 			sb.append(".mimeType = ?");
 
 			if ((i + 1) != mimeTypes.length) {
+				sb.append(WHERE_OR);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected String getStructureIds(long[] structureIds, String tableName) {
+		if (structureIds.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(structureIds.length * 2 - 1);
+
+		for (int i = 0; i < structureIds.length; i++) {
+			sb.append(tableName);
+			sb.append(".structureId = ?");
+
+			if ((i + 1) != structureIds.length) {
 				sb.append(WHERE_OR);
 			}
 		}

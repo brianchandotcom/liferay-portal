@@ -833,6 +833,12 @@ public class JournalArticleLocalServiceWrapper
 			ddmStructureKey, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getStructureArticles(
+		java.lang.String[] ddmStructureKeys)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getStructureArticles(ddmStructureKeys);
+	}
+
 	public int getStructureArticlesCount(long groupId,
 		java.lang.String ddmStructureKey)
 		throws com.liferay.portal.kernel.exception.SystemException {

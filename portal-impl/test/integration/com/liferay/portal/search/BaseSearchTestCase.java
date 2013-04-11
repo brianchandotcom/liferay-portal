@@ -377,6 +377,13 @@ public abstract class BaseSearchTestCase {
 			initialBaseModelsSearchCount + 1,
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		updateDDMStructure(serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
 	}
 
 	protected void searchByKeywords() throws Exception {
@@ -614,6 +621,10 @@ public abstract class BaseSearchTestCase {
 		throws Exception {
 
 		return baseModel;
+	}
+
+	protected void updateDDMStructure(ServiceContext serviceContext)
+		throws Exception {
 	}
 
 	protected BaseModel<?> baseModel;

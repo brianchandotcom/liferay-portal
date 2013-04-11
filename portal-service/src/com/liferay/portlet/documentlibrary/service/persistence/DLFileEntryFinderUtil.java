@@ -75,6 +75,12 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByExtraSettings(start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByStructureIds(
+		long[] structureIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByStructureIds(structureIds, start, end);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByMisversioned()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByMisversioned();

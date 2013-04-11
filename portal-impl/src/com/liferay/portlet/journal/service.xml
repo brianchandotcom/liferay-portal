@@ -71,7 +71,7 @@
 			<finder-column name="companyId" />
 		</finder>
 		<finder name="StructureId" return-type="Collection">
-			<finder-column name="structureId" />
+			<finder-column name="structureId" arrayable-operator="OR" />
 		</finder>
 		<finder name="TemplateId" return-type="Collection">
 			<finder-column name="templateId" />

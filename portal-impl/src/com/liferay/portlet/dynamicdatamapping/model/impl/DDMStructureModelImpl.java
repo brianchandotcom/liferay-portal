@@ -108,9 +108,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	public static long DESCRIPTION_COLUMN_BITMASK = 4L;
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long NAME_COLUMN_BITMASK = 16L;
-	public static long STRUCTUREKEY_COLUMN_BITMASK = 32L;
-	public static long UUID_COLUMN_BITMASK = 64L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 128L;
+	public static long PARENTSTRUCTUREID_COLUMN_BITMASK = 32L;
+	public static long STRUCTUREKEY_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -459,7 +460,19 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	public void setParentStructureId(long parentStructureId) {
+		_columnBitmask |= PARENTSTRUCTUREID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentStructureId) {
+			_setOriginalParentStructureId = true;
+
+			_originalParentStructureId = _parentStructureId;
+		}
+
 		_parentStructureId = parentStructureId;
+	}
+
+	public long getOriginalParentStructureId() {
+		return _originalParentStructureId;
 	}
 
 	public String getClassName() {
@@ -899,6 +912,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureModelImpl._setOriginalCompanyId = false;
 
+		ddmStructureModelImpl._originalParentStructureId = ddmStructureModelImpl._parentStructureId;
+
+		ddmStructureModelImpl._setOriginalParentStructureId = false;
+
 		ddmStructureModelImpl._originalClassNameId = ddmStructureModelImpl._classNameId;
 
 		ddmStructureModelImpl._setOriginalClassNameId = false;
@@ -1150,6 +1167,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentStructureId;
+	private long _originalParentStructureId;
+	private boolean _setOriginalParentStructureId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

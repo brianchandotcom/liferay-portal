@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -139,6 +140,12 @@ public class IndexerWrapper implements Indexer {
 
 	public void reindex(String[] ids) throws SearchException {
 		_indexer.reindex(ids);
+	}
+
+	public void reindexStructures(List<Long> structureIds)
+		throws SearchException {
+
+		_indexer.reindexStructures(structureIds);
 	}
 
 	public Hits search(SearchContext searchContext) throws SearchException {

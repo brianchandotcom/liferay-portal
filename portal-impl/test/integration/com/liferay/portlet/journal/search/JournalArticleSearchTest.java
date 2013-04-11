@@ -28,6 +28,7 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
@@ -163,6 +164,18 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		return JournalTestUtil.updateArticle(
 			article, keywords, article.getContent(), serviceContext);
+	}
+
+	@Override
+	protected void updateDDMStructure(ServiceContext serviceContext)
+		throws Exception {
+
+		String xsd = DDMStructureTestUtil.getSampleStructureXSD("title");
+
+		DDMStructureLocalServiceUtil.updateStructure(
+			_ddmStructure.getStructureId(),
+			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
+			_ddmStructure.getDescriptionMap(), xsd, serviceContext);
 	}
 
 	private DDMStructure _ddmStructure;

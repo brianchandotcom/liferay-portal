@@ -19,6 +19,7 @@ import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -1033,6 +1034,13 @@ public class DLFileEntryLocalServiceImpl
 		throws SystemException {
 
 		return dlFileEntryPersistence.findByF_N(folderId, name);
+	}
+
+	public List<DLFileEntry> getFileEntriesByStructureIds(long[] structureIds)
+		throws SystemException {
+
+		return dlFileEntryFinder.findByStructureIds(
+			structureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	public int getFileEntriesCount() throws SystemException {

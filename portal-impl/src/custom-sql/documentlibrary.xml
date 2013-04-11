@@ -108,6 +108,23 @@
 				DLFileEntry.modifiedDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByStructureIds">
+		<![CDATA[
+			SELECT
+				{DLFileEntry.*}
+			FROM
+				DLFileEntry
+			WHERE
+				(DLFileEntry.fileEntryTypeId IN (
+					SELECT
+						DLFileEntryTypes_DDMStructures.fileEntryTypeId
+					FROM
+						DLFileEntryTypes_DDMStructures
+					WHERE
+						[$STRUCTURE_ID$]
+				))
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByOrphanedFileEntries">
 		<![CDATA[
 			SELECT

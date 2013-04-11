@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -114,6 +115,9 @@ public class DummyIndexer implements Indexer {
 	}
 
 	public void reindex(String[] ids) {
+	}
+
+	public void reindexStructures(List<Long> structureIds) {
 	}
 
 	public Hits search(SearchContext searchContext) {

@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -183,6 +184,18 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			null, dlFileEntry.getMimeType(), keywords, true, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	@Override
+	protected void updateDDMStructure(ServiceContext serviceContext)
+		throws Exception {
+
+		String xsd = DDMStructureTestUtil.getSampleStructureXSD("title");
+
+		DDMStructureLocalServiceUtil.updateStructure(
+			_ddmStructure.getStructureId(),
+			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
+			_ddmStructure.getDescriptionMap(), xsd, serviceContext);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

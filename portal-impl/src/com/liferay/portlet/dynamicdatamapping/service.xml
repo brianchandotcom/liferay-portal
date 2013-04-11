@@ -101,6 +101,10 @@
 		<finder name="StructureKey" return-type="Collection">
 			<finder-column name="structureKey" />
 		</finder>
+		<finder name="G_P" return-type="Collection" >
+			<finder-column name="groupId" />
+			<finder-column name="parentStructureId" />
+		</finder>
 		<finder name="G_C" return-type="Collection" >
 			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="classNameId" />

@@ -1677,6 +1677,12 @@ public class JournalArticleLocalServiceImpl
 			groupId, ddmStructureKey, start, end, obc);
 	}
 
+	public List<JournalArticle> getStructureArticles(String[] ddmStructureKeys)
+		throws SystemException {
+
+		return journalArticlePersistence.findByStructureId(ddmStructureKeys);
+	}
+
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey)
 		throws SystemException {
 

@@ -1871,6 +1871,7 @@
 		<!-- Social Activity -->
 
 		<action path="/social_activity/view" type="com.liferay.portlet.socialactivity.action.ViewAction">
+			<forward name="portlet.social_activity.error" path="portlet.social_activity.error" />
 			<forward name="portlet.social_activity.view" path="portlet.social_activity.view" />
 		</action>
 

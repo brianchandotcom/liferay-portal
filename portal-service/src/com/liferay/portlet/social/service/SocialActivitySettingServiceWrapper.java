@@ -67,6 +67,13 @@ public class SocialActivitySettingServiceWrapper
 			className);
 	}
 
+	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingService.getActivitySettings(groupId);
+	}
+
 	public com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
 		long groupId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.PortalException,

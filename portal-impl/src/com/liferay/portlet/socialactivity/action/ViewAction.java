@@ -17,9 +17,11 @@ package com.liferay.portlet.socialactivity.action;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.comparator.ModelResourceComparator;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -28,7 +30,6 @@ import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
@@ -51,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Zsolt Szabó
+ * @author Zsolt Berentey
  */
 public class ViewAction extends PortletAction {
 
@@ -62,11 +64,21 @@ public class ViewAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.UPDATE)) {
-			updateActivitySettings(actionRequest);
-		}
+		try {
+			if (cmd.equals(Constants.UPDATE)) {
+				updateActivitySettings(actionRequest);
+			}
 
-		sendRedirect(actionRequest, actionResponse);
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+		}
 	}
 
 	@Override
@@ -78,11 +90,34 @@ public class ViewAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		try {
+			renderRequest.setAttribute(
+				WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP,
+				getActivitySettingsMap(themeDisplay));
+		}
+		catch (Exception e) {
+			if (e instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return mapping.findForward("portlet.social_activity.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return mapping.findForward("portlet.social_activity.view");
+	}
+
+	protected Map<String, Boolean> getActivitySettingsMap(
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
 		Map<String, Boolean> activitySettingsMap =
 			new LinkedHashMap<String, Boolean>();
 
 		List<SocialActivitySetting> activitySettings =
-			SocialActivitySettingLocalServiceUtil.getActivitySettings(
+			SocialActivitySettingServiceUtil.getActivitySettings(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		String[] modelNames = SocialConfigurationUtil.getActivityModelNames();
@@ -94,7 +129,7 @@ public class ViewAction extends PortletAction {
 
 		for (String modelName : modelNames) {
 			List<SocialActivityDefinition> activityDefinitions =
-				SocialActivitySettingLocalServiceUtil.getActivityDefinitions(
+				SocialActivitySettingServiceUtil.getActivityDefinitions(
 					themeDisplay.getScopeGroupId(), modelName);
 
 			for (SocialActivityDefinition activityDefinition :
@@ -121,10 +156,7 @@ public class ViewAction extends PortletAction {
 			}
 		}
 
-		renderRequest.setAttribute(
-			WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP, activitySettingsMap);
-
-		return mapping.findForward("portlet.social_activity.view");
+		return activitySettingsMap;
 	}
 
 	protected SocialActivityCounterDefinition updateActivityCounterDefinition(
@@ -201,7 +233,7 @@ public class ViewAction extends PortletAction {
 			int activityType = actionJSONObject.getInt("activityType");
 
 			SocialActivityDefinition activityDefinition =
-				SocialActivitySettingLocalServiceUtil.getActivityDefinition(
+				SocialActivitySettingServiceUtil.getActivityDefinition(
 					themeDisplay.getSiteGroupIdOrLiveGroupId(), modelName,
 					activityType);
 

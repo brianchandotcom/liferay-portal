@@ -70,6 +70,13 @@ public class SocialActivitySettingServiceUtil {
 		return getService().getActivityDefinitions(groupId, className);
 	}
 
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActivitySettings(groupId);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
 		long groupId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.PortalException,

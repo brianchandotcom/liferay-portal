@@ -45,28 +45,28 @@
 </tr>
 <!--CATEGORY_TABLE-->
 <tr>
-	<td>CATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[1]/a</td>
+	<td>CATEGORY_TABLE_CATEGORY_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_CATEGORIES</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[2]/a</td>
+	<td>CATEGORY_TABLE_CATEGORIES_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_THREADS</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[3]/a</td>
+	<td>CATEGORY_TABLE_THREADS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_POSTS</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[4]/a</td>
+	<td>CATEGORY_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>CATEGORY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,7 +74,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CATEGORY_ACTION-->
+<!--CATEGORY_ACTIONS-->
 <tr>
 	<td>CATEGORY_ACTIONS_EDIT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
@@ -117,28 +117,28 @@
 </tr>
 <!--THREAD_TABLE-->
 <tr>
-	<td>THREAD_TABLE_THREAD</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[1]/a</td>
+	<td>THREAD_TABLE_THREAD_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_STARTED_BY</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[3]/a</td>
+	<td>THREAD_TABLE_STARTED_BY_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_POSTS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[4]/a</td>
+	<td>THREAD_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_LAST_POST</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[6]/a</td>
+	<td>THREAD_TABLE_LAST_POST_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[6]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>THREAD_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,7 +146,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--THREAD_ACTION-->
+<!--THREAD_ACTIONS-->
 <tr>
 	<td>THREAD_ACTIONS_EDIT</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>

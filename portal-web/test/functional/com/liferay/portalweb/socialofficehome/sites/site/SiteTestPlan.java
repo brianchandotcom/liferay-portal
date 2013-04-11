@@ -17,7 +17,7 @@ package com.liferay.portalweb.socialofficehome.sites.site;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitesdefaultpagenone.AddSitesDefaultPageNoneTests;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.AddSitesSiteTests;
-import com.liferay.portalweb.socialofficehome.sites.site.addsiteviewccusertest.AddSiteViewCCUserTests;
+import com.liferay.portalweb.socialofficehome.sites.site.addsiteviewccuser.AddSiteViewCCUserTests;
 import com.liferay.portalweb.socialofficehome.sites.site.deletesite.DeleteSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.searchdeletesite.SearchDeleteSiteTests;
 import com.liferay.portalweb.socialofficehome.sites.site.searchdmfolderdocumentdeletesite.SearchDMFolderDocumentDeleteSiteTests;

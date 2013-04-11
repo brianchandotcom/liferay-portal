@@ -153,6 +153,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		validateDateRange(startDate, endDate);
 
 		_companyId = companyId;
+
+		try {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				_companyId);
+
+			_companyGroupId = companyGroup.getGroupId();
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
 		_groupId = groupId;
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
@@ -173,6 +184,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		ZipReader zipReader) {
 
 		_companyId = companyId;
+
+		try {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				_companyId);
+
+			_companyGroupId = companyGroup.getGroupId();
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
 		_groupId = groupId;
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
@@ -755,6 +777,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public Map<String, List<MBMessage>> getComments() {
 		return _commentsMap;
+	}
+
+	public long getCompanyGroupId() {
+		return _companyGroupId;
 	}
 
 	public long getCompanyId() {
@@ -1729,6 +1755,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Map<String, List<MBMessage>> _commentsMap =
 		new HashMap<String, List<MBMessage>>();
 	private long _companyId;
+	private long _companyGroupId;
 	private String _dataStrategy;
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =

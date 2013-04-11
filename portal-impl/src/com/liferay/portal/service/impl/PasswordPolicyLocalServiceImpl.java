@@ -221,6 +221,12 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyPersistence.remove(passwordPolicy);
 	}
 
+	public PasswordPolicy fetchPasswordPolicy(long companyId, String name)
+		throws SystemException {
+
+		return passwordPolicyPersistence.fetchByC_N(companyId, name);
+	}
+
 	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws SystemException {

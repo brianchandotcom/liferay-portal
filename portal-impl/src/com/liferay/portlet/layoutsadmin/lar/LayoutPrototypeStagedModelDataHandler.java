@@ -62,33 +62,36 @@ public class LayoutPrototypeStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutPrototype, LayoutPrototypePortletDataHandler.NAMESPACE);
 
+		LayoutPrototype importedLayoutPrototype = null;
+
+		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutPrototype existingLayoutPrototype =
 				LayoutPrototypeLocalServiceUtil.
 					fetchLayoutPrototypeByUuidAndCompanyId(
 						layoutPrototype.getUuid(), companyId);
 
 			if (existingLayoutPrototype == null) {
-				existingLayoutPrototype =
-					LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
-						companyId, layoutPrototype.getName());
+				serviceContext.setUuid(layoutPrototype.getUuid());
+
+				importedLayoutPrototype =
+					LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+						userId, companyId, layoutPrototype.getNameMap(),
+						layoutPrototype.getDescription(),
+						layoutPrototype.isActive(), serviceContext);
 			}
-
-		LayoutPrototype importedLayoutPrototype = null;
-
-		if (existingLayoutPrototype == null) {
-			serviceContext.setUuid(layoutPrototype.getUuid());
-
-			importedLayoutPrototype =
-				LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-					userId, companyId, layoutPrototype.getNameMap(),
-					layoutPrototype.getDescription(),
-					layoutPrototype.isActive(), serviceContext);
+			else {
+				importedLayoutPrototype =
+					LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+						existingLayoutPrototype.getLayoutPrototypeId(),
+						layoutPrototype.getNameMap(),
+						layoutPrototype.getDescription(),
+						layoutPrototype.isActive(), serviceContext);
+			}
 		}
 		else {
 			importedLayoutPrototype =
-				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
-					existingLayoutPrototype.getLayoutPrototypeId(),
-					layoutPrototype.getNameMap(),
+				LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+					userId, companyId, layoutPrototype.getNameMap(),
 					layoutPrototype.getDescription(),
 					layoutPrototype.isActive(), serviceContext);
 		}

@@ -67,8 +67,9 @@ public class PasswordPolicyStagedModelDataHandler
 					passwordPolicy.getUuid(), companyId);
 
 		if (existingPasswordPolicy == null) {
-			existingPasswordPolicy = PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicy(companyId, passwordPolicy.getName());
+			existingPasswordPolicy =
+				PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
+					companyId, passwordPolicy.getName());
 		}
 
 		PasswordPolicy importedPasswordPolicy = null;

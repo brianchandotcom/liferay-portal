@@ -71,34 +71,39 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutSetPrototype, LayoutSetPrototypePortletDataHandler.NAMESPACE);
 
-		LayoutSetPrototype existingLayoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				fetchLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSetPrototype.getUuid(), companyId);
-
-		if (existingLayoutSetPrototype == null) {
-			existingLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-					companyId, layoutSetPrototype.getName());
-		}
-
 		LayoutSetPrototype importedLayoutSetPrototype = null;
 
-		if (existingLayoutSetPrototype == null) {
-			serviceContext.setUuid(layoutSetPrototype.getUuid());
+		if (portletDataContext.isDataStrategyMirror()) {
 
-			importedLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
-					userId, companyId, layoutSetPrototype.getNameMap(),
-					layoutSetPrototype.getDescription(),
-					layoutSetPrototype.isActive(), layoutsUpdateable,
-					serviceContext);
+			LayoutSetPrototype existingLayoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSetPrototype.getUuid(), companyId);
+
+			if (existingLayoutSetPrototype == null) {
+				serviceContext.setUuid(layoutSetPrototype.getUuid());
+
+				importedLayoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+						userId, companyId, layoutSetPrototype.getNameMap(),
+						layoutSetPrototype.getDescription(),
+						layoutSetPrototype.isActive(), layoutsUpdateable,
+						serviceContext);
+			}
+			else {
+				importedLayoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+						existingLayoutSetPrototype.getLayoutSetPrototypeId(),
+						layoutSetPrototype.getNameMap(),
+						layoutSetPrototype.getDescription(),
+						layoutSetPrototype.isActive(), layoutsUpdateable,
+						serviceContext);
+			}
 		}
 		else {
 			importedLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-					existingLayoutSetPrototype.getLayoutSetPrototypeId(),
-					layoutSetPrototype.getNameMap(),
+				LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+					userId, companyId, layoutSetPrototype.getNameMap(),
 					layoutSetPrototype.getDescription(),
 					layoutSetPrototype.isActive(), layoutsUpdateable,
 					serviceContext);

@@ -67,7 +67,6 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-
 		return LayoutSetPrototype.class;
 	}
 

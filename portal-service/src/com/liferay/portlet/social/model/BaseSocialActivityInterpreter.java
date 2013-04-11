@@ -163,14 +163,6 @@ public abstract class BaseSocialActivityInterpreter
 		return StringPool.BLANK;
 	}
 
-	protected String getClassName(SocialActivity activity) {
-		return activity.getClassName();
-	}
-
-	protected long getClassPK(SocialActivity activity) {
-		return activity.getClassPK();
-	}
-
 	protected String getEntryTitle(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -293,31 +285,43 @@ public abstract class BaseSocialActivityInterpreter
 		throws Exception {
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			getClassName(activity));
+			activity.getClassName());
 
-		long classPK = getClassPK(activity);
+		long classPK = activity.getClassPK();
 
 		if ((trashHandler != null) &&
 			(trashHandler.isInTrash(classPK) ||
 			 trashHandler.isInTrashContainer(classPK))) {
 
 			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), getClassName(activity), classPK);
+				serviceContext.getRequest(), activity.getClassName(), classPK);
 
 			return portletURL.toString();
 		}
 
-		StringBundler sb = new StringBundler(4);
+		String path = getPath(activity, serviceContext);
+
+		if (Validator.isNull(path)) {
+			return null;
+		}
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			return path;
+		}
+
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(serviceContext.getPortalURL());
 		sb.append(serviceContext.getPathMain());
-		sb.append(getPath(activity));
-		sb.append(classPK);
+		sb.append(path);
 
 		return sb.toString();
 	}
 
-	protected String getPath(SocialActivity activity) {
+	protected String getPath(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
 		return StringPool.BLANK;
 	}
 

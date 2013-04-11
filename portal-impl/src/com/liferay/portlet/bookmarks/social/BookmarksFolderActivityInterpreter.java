@@ -46,8 +46,11 @@ public class BookmarksFolderActivityInterpreter
 	}
 
 	@Override
-	protected String getPath(SocialActivity activity) {
-		return "/bookmarks/find_folder?folderId=";
+	protected String getPath(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
+		return "/bookmarks/find_folder?folderId=" + activity.getClassPK();
 	}
 
 	@Override

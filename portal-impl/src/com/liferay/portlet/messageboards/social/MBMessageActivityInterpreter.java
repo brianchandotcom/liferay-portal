@@ -20,14 +20,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,31 +73,30 @@ public class MBMessageActivityInterpreter
 	}
 
 	@Override
-	protected String getLink(
+	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			activity.getClassPK());
+		return "/message_boards/find_message?messageId=" +
+			activity.getClassPK();
+	}
 
-		MBThread thread = message.getThread();
+	@Override
+	protected Object[] getTitleArguments(
+			String groupName, SocialActivity activity, String link,
+			String title, ServiceContext serviceContext)
+		throws Exception {
 
-		if (thread.isInTrash()) {
-			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), MBThread.class.getName(),
-				thread.getThreadId());
+		String userName = getUserName(activity.getUserId(), serviceContext);
+		String receiverUserName = StringPool.BLANK;
 
-			return portletURL.toString();
+		if (activity.getReceiverUserId() > 0) {
+			receiverUserName = getUserName(
+				activity.getReceiverUserId(), serviceContext);
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(serviceContext.getPortalURL());
-		sb.append(serviceContext.getPathMain());
-		sb.append("/message_boards/find_message?messageId=");
-		sb.append(message.getMessageId());
-
-		return sb.toString();
+		return new Object[] {
+			groupName, userName, receiverUserName, wrapLink(link, title)};
 	}
 
 	@Override

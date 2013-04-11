@@ -117,8 +117,12 @@ public class DLFileEntryActivityInterpreter
 	}
 
 	@Override
-	protected String getPath(SocialActivity activity) {
-		return "/document_library/find_file_entry?fileEntryId=";
+	protected String getPath(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
+		return "/document_library/find_file_entry?fileEntryId=" +
+			activity.getClassPK();
 	}
 
 	@Override

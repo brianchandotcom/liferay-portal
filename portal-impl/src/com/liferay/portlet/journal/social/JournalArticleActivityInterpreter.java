@@ -25,9 +25,6 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Roberto Diaz
@@ -53,19 +50,9 @@ public class JournalArticleActivityInterpreter
 	}
 
 	@Override
-	protected String getLink(
+	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
-
-		if (TrashUtil.isInTrash(
-				JournalArticle.class.getName(), activity.getClassPK())) {
-
-			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), JournalArticle.class.getName(),
-				activity.getClassPK());
-
-			return portletURL.toString();
-		}
 
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(

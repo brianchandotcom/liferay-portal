@@ -72,8 +72,12 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getPath(SocialActivity activity) {
-		return "/document_library/find_folder?folderId=";
+	protected String getPath(
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
+
+		return "/document_library/find_folder?folderId=" +
+			activity.getClassPK();
 	}
 
 	@Override

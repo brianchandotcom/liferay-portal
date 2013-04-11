@@ -48,14 +48,12 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getLink(
+	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
-		sb.append(serviceContext.getPortalURL());
-		sb.append(serviceContext.getPathMain());
 		sb.append("/calendar/find_event?redirect=");
 		sb.append(HtmlUtil.escapeURL(serviceContext.getCurrentURL()));
 		sb.append("&eventId=");

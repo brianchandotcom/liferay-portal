@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="LOCATOR_KEY_1">
+			<execute function="Function#function" />
+		</case>
+	</command>
+</definition>

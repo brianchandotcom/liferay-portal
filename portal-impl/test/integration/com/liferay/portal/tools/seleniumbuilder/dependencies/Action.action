@@ -1,15 +1,15 @@
 <definition>
 	<command name="click">
-		<case locator1="locator1">
+		<case locator-key1="LOCATOR_KEY">
 			<execute function="Function#function" />
 		</case>
-		<case comparator="contains" locator1="locator1">
+		<case comparator="contains" locator-key1="OCATOR_KE">
 			<execute function="Function#function" />
 		</case>
-		<case comparator="endsWith" locator-key1="locator-key1">
+		<case comparator="endsWith" locator-key1="_KEY">
 			<execute function="Function#function" />
 		</case>
-		<case comparator="startsWith" locator-key1="locator-key1">
+		<case comparator="startsWith" locator-key1="LOCATOR_">
 			<execute function="Function#function" />
 		</case>
 		<default>

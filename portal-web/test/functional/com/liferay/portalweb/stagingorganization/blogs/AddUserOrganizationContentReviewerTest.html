@@ -105,17 +105,17 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayMonth']</td>
+	<td>//select[@name='_125_birthdayMonth']</td>
 	<td>label=April</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayDay']</td>
+	<td>//select[@name='_125_birthdayDay']</td>
 	<td>label=10</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayYear']</td>
+	<td>//select[@name='_125_birthdayYear']</td>
 	<td>label=1986</td>
 </tr>
 <tr>
@@ -220,18 +220,18 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Users and Organizations</td>
+	<td>waitForVisible</td>
+	<td>//iframe</td>
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Select Organization</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -244,34 +244,34 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//td[1]/a</td>
+	<td>waitForVisible</td>
+	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//td[@id='_125_organizationsSearchContainer_col-name_row-1']</td>
 	<td>Selenium</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[1]/a</td>
-	<td>Selenium</td>
+	<td>//input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table/tr/td[1]</td>
-	<td>Selenium</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -280,7 +280,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//tr[contains(.,'Selenium')]/td[1]</td>
 	<td>Selenium</td>
 </tr>
 <tr>
@@ -310,43 +310,43 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>title=Users and Organizations</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[4]/td/a</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='_125_rolesSearchContainer_col-title_row-2']</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td/a</td>
+	<td>//td[@id='_125_rolesSearchContainer_col-title_row-2']</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td/a</td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//table/tr/td[1]</td>
+	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
 	<td>assertText</td>

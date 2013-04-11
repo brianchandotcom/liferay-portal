@@ -67,11 +67,11 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 					RuntimeVariables.replace("User"));
 				selenium.select("//select[@id='_125_suffixId']",
 					RuntimeVariables.replace("label=Phd."));
-				selenium.select("//select[@id='_125_birthdayMonth']",
+				selenium.select("//select[@name='_125_birthdayMonth']",
 					RuntimeVariables.replace("label=April"));
-				selenium.select("//select[@id='_125_birthdayDay']",
+				selenium.select("//select[@name='_125_birthdayDay']",
 					RuntimeVariables.replace("label=10"));
-				selenium.select("//select[@id='_125_birthdayYear']",
+				selenium.select("//select[@name='_125_birthdayYear']",
 					RuntimeVariables.replace("label=1986"));
 				selenium.select("//select[@id='_125_male']",
 					RuntimeVariables.replace("label=Male"));
@@ -116,27 +116,31 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 					selenium.getText("//div/span/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(5000);
-				selenium.selectWindow("title=Users and Organizations");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
+				selenium.waitForVisible("//iframe");
+				selenium.selectFrame("//iframe");
 				selenium.type("//input[@name='_125_keywords']",
 					RuntimeVariables.replace("Selenium"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
-				selenium.waitForText("//td[1]/a", "Selenium");
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//td[@id='_125_organizationsSearchContainer_col-name_row-1']");
 				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//td[1]/a"));
-				selenium.clickAt("//td[1]/a",
-					RuntimeVariables.replace("Selenium"));
-				Thread.sleep(5000);
-				selenium.selectWindow("null");
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//table/tr/td[1]"));
+					selenium.getText(
+						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']"));
+				selenium.clickAt("//input[@value='Choose']",
+					RuntimeVariables.replace("Choose"));
+				selenium.selectFrame("relative=top");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//tr[3]/td[1]"));
+					selenium.getText("//tr[contains(.,'Selenium')]/td[1]"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

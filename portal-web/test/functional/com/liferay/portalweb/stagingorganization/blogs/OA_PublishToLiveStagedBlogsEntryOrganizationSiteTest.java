@@ -48,10 +48,10 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 					"Blogs Entry Title");
 				assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 					selenium.getText("//div[@class='entry-title']/h2/a"));
-				selenium.waitForText("//div[@class='entry-body']/p",
+				selenium.waitForText("//div[@class='entry-body']",
 					"Blogs Entry Content");
 				assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-					selenium.getText("//div[@class='entry-body']/p"));
+					selenium.getText("//div[@class='entry-body']"));
 				Thread.sleep(5000);
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));

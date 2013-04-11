@@ -49,69 +49,14 @@
 	<td>Blogs Entry Title</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//a[@class='cke_button_source cke_on']</td>
-	<td>Source Button On</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//td[@id='cke_contents__33_editor']/textarea</td>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Blogs Entry Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[.='Source']</td>
-	<td>Source</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_33_editor' and @style='display: none;']</td>
-	<td>Text Area</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__33_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__33_editor']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//body</td>
-	<td>Blogs Entry Content</td>
-</tr>
-<tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -135,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='entry-body']/p</td>
+	<td>//div[@class='entry-body']</td>
 	<td>Blogs Entry Content</td>
 </tr>
 </tbody></table>

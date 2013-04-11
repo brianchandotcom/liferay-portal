@@ -55,8 +55,9 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			if (categoryOrThread instanceof MBThread) {
 				MBThread thread = (MBThread)categoryOrThread;
 
-				messages.addAll(MBMessageLocalServiceUtil.getThreadMessages(
-					thread.getThreadId(), WorkflowConstants.STATUS_ANY));
+				messages.addAll(
+					MBMessageLocalServiceUtil.getThreadMessages(
+						thread.getThreadId(), WorkflowConstants.STATUS_ANY));
 			}
 			else {
 				category = (MBCategory)categoryOrThread;

@@ -1,4 +1,13 @@
 <definition>
+	<command name="assertTextEquals">
+		<case locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="ADD_WIKI">
 			<execute function="Click#valueClickAtAndWait" value1="Add Wiki" />
@@ -6,8 +15,17 @@
 		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />
 		</case>
+		<case locator-key1="WIKI_NODE_ACTIONS_EDIT">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
+		</case>
 		<case locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_ACTIONS_">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>
 	</command>
 </definition>

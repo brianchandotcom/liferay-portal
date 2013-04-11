@@ -39,6 +39,11 @@ public class ViewMBCategoryThreadMyPostsTest extends BaseTestCase {
 			selenium.getText("//td[3]/a"));
 		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertTrue(selenium.isPartialText("//td[5]/a", "By: Joe Bloggs"));
+		assertEquals(RuntimeVariables.replace("Approved"),
+			selenium.getText("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//td[7]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");

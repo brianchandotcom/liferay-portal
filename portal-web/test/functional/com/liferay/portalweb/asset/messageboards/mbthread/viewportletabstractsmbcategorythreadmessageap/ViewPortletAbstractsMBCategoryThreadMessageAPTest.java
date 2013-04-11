@@ -30,9 +30,13 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"MB Category Thread Message Subject"),
-			selenium.getText("//h3[@class='asset-title']/a"));
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a/span"));
+		assertTrue(selenium.isPartialText("//h3[@class='asset-title']/a",
+				"MB Category Thread Message Subject"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a[contains(.,Edit)]/span",
+				"Edit"));
 		assertEquals(RuntimeVariables.replace("MB Category Thread Message Body"),
 			selenium.getText("//div[@class='asset-summary']"));
 		assertEquals(RuntimeVariables.replace(
@@ -45,8 +49,24 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));
-		assertTrue(selenium.isPartialText("//div[@class='asset-content']",
-				"MB Category Thread Message Body"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a[contains(.,Edit)]/span",
+				"Edit"));
+		assertEquals(RuntimeVariables.replace(
+				"MB Category Thread Message Subject"),
+			selenium.getText("//div[@class='subject']/strong"));
+		assertEquals(RuntimeVariables.replace("MB Category Thread Message Body"),
+			selenium.getText("//div[@class='thread-body']"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//span[@class='user-name']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",

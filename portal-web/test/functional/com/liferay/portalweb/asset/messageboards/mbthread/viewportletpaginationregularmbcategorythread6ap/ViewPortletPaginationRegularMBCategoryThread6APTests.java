@@ -21,13 +21,13 @@ import com.liferay.portalweb.asset.assetpublisher.portlet.configureportletpagina
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.TearDownMBCategoryTest;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread1Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread2Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread3Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread4Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread5Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread6Test;
-import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbthread.TearDownMBThreadTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -59,7 +59,7 @@ public class ViewPortletPaginationRegularMBCategoryThread6APTests
 		testSuite.addTestSuite(NextButtonAPTest.class);
 		testSuite.addTestSuite(PreviousButtonAPTest.class);
 		testSuite.addTestSuite(SelectPageAPTest.class);
-		testSuite.addTestSuite(TearDownMBThreadTest.class);
+		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

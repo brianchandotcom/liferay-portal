@@ -20,8 +20,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//span[@title='Add New']/ul/li/strong/a/span</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//ul[@class='title-list']/li/span/a/span</td>
 	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/img</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -34,9 +44,44 @@
 	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
 	<td>assertPartialText</td>
-	<td>//div[@class='asset-content']</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a[contains(.,Edit)]/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='subject']/strong</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='thread-body']</td>
 	<td>MB Category Thread Message Body</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='user-name']</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-facebook']</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>Google+</td>
 </tr>
 <tr>
 	<td>assertText</td>

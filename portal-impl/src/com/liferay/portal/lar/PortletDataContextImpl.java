@@ -153,6 +153,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		validateDateRange(startDate, endDate);
 
 		_companyId = companyId;
+
+		try {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				_companyId);
+
+			_companyGroupId = companyGroup.getGroupId();
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
 		_groupId = groupId;
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
@@ -173,6 +184,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		ZipReader zipReader) {
 
 		_companyId = companyId;
+
+		try {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				_companyId);
+
+			_companyGroupId = companyGroup.getGroupId();
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
 		_groupId = groupId;
 		_scopeGroupId = groupId;
 		_parameterMap = parameterMap;
@@ -757,6 +779,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _commentsMap;
 	}
 
+	public long getCompanyGroupId() {
+		return _companyGroupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -925,6 +951,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public String getScopeType() {
 		return _scopeType;
+	}
+
+	public long getSourceCompanyGroupId() {
+		return _sourceCompanyGroupId;
 	}
 
 	public long getSourceGroupId() {
@@ -1442,6 +1472,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_scopeType = scopeType;
 	}
 
+	public void setSourceCompanyGroupId(long sourceCompanyGroupId) {
+		_sourceCompanyGroupId = sourceCompanyGroupId;
+	}
+
 	public void setSourceGroupId(long sourceGroupId) {
 		_sourceGroupId = sourceGroupId;
 	}
@@ -1729,6 +1763,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Map<String, List<MBMessage>> _commentsMap =
 		new HashMap<String, List<MBMessage>>();
 	private long _companyId;
+	private long _companyGroupId;
 	private String _dataStrategy;
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =
@@ -1753,6 +1788,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;
 	private String _scopeType;
+	private long _sourceCompanyGroupId;
 	private long _sourceGroupId;
 	private Date _startDate;
 	private UserIdStrategy _userIdStrategy;

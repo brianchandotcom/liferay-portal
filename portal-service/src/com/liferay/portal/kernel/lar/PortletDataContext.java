@@ -165,6 +165,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, List<MBMessage>> getComments();
 
+	public long getCompanyGroupId();
+
 	public long getCompanyId();
 
 	public String getDataStrategy();
@@ -237,6 +239,8 @@ public interface PortletDataContext extends Serializable {
 	public String getScopeLayoutUuid();
 
 	public String getScopeType();
+
+	public long getSourceCompanyGroupId();
 
 	public long getSourceGroupId();
 
@@ -353,6 +357,8 @@ public interface PortletDataContext extends Serializable {
 	public void setScopeLayoutUuid(String scopeLayoutUuid);
 
 	public void setScopeType(String scopeType);
+
+	public void setSourceCompanyGroupId(long sourceCompanyGroupId);
 
 	public void setSourceGroupId(long sourceGroupId);
 

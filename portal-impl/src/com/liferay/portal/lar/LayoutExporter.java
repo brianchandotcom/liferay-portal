@@ -315,6 +315,10 @@ public class LayoutExporter {
 				"end-date", String.valueOf(portletDataContext.getEndDate()));
 		}
 
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(companyId);
+
+		headerElement.addAttribute(
+			"company-group-id", String.valueOf(companyGroup.getGroupId()));
 		headerElement.addAttribute("group-id", String.valueOf(groupId));
 		headerElement.addAttribute(
 			"private-layout", String.valueOf(privateLayout));

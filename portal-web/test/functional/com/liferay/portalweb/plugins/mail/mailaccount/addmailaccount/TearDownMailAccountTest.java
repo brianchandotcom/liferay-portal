@@ -30,11 +30,10 @@ public class TearDownMailAccountTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home");
-				selenium.waitForVisible("link=Mail Test Page");
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 				boolean enterYourPasswordPresent = selenium.isElementPresent(
 						"//input[@id='_1_WAR_mailportlet_password']");
@@ -51,12 +50,12 @@ public class TearDownMailAccountTest extends BaseTestCase {
 					RuntimeVariables.replace("Login"));
 				selenium.waitForElementNotPresent(
 					"//input[@id='_1_WAR_mailportlet_password']");
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 			case 2:
 
 				boolean emailPresent = selenium.isElementPresent(
-						"//div/div/div[1]/div/ul/li/span/span");
+						"//a[@class='folders-link']");
 
 				if (!emailPresent) {
 					label = 3;
@@ -66,8 +65,8 @@ public class TearDownMailAccountTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace(
 						"liferay.qa.testing.trunk@gmail.com"),
-					selenium.getText("//div/div/div[1]/div/ul/li/span/span"));
-				selenium.clickAt("//div/div/div[1]/div/ul/li/span/span",
+					selenium.getText("//a[@class='folders-link']"));
+				selenium.clickAt("//a[@class='folders-link']",
 					RuntimeVariables.replace(
 						"liferay.qa.testing.trunk@gmail.com"));
 				selenium.waitForText("//a[@class='edit-account']",
@@ -76,7 +75,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 					selenium.getText("//a[@class='edit-account']"));
 				selenium.clickAt("//a[@class='edit-account']",
 					RuntimeVariables.replace("Edit Account"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.waitForElementPresent("//a[@class='delete-account']");
 				assertTrue(selenium.isElementPresent(
 						"//a[@class='delete-account']"));
@@ -90,14 +89,16 @@ public class TearDownMailAccountTest extends BaseTestCase {
 						"Account has been deleted."),
 					selenium.getText(
 						"//span[@class='message portlet-msg-success']"));
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 
 			case 3:
 				selenium.open("/web/guest/home/");
-				selenium.waitForVisible("link=Mail Test Page");
 				selenium.clickAt("link=Mail Test Page",
 					RuntimeVariables.replace("Mail Test Page"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				assertTrue(selenium.isElementNotPresent(
+						"//a[@class='folders-link']"));
 				assertFalse(selenium.isTextPresent(
 						"liferay.qa.testing.trunk@gmail.com"));
 

@@ -14,18 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Mail Test Page</td>
-	<td>Mail Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Mail Test Page</td>
 	<td>Mail Test Page</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +50,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +60,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//div/div/div[1]/div/ul/li/span/span</td>
+	<td>//a[@class='folders-link']</td>
 	<td>emailPresent</td>
 </tr>
 <tr>
@@ -75,12 +70,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/div/div[1]/div/ul/li/span/span</td>
+	<td>//a[@class='folders-link']</td>
 	<td>liferay.qa.testing.trunk@gmail.com</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div/div/div[1]/div/ul/li/span/span</td>
+	<td>//a[@class='folders-link']</td>
 	<td>liferay.qa.testing.trunk@gmail.com</td>
 </tr>
 <tr>
@@ -100,7 +95,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,7 +130,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,14 +144,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Mail Test Page</td>
 	<td>Mail Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Mail Test Page</td>
-	<td>Mail Test Page</td>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//a[@class='folders-link']</td>
+	<td>Email Account</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

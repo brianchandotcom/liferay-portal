@@ -25,16 +25,27 @@ public class AddPortletMailTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Mail Test Page");
-		selenium.click(RuntimeVariables.replace("link=Mail Test Page"));
+		selenium.clickAt("link=Mail Test Page",
+			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//a[@id='_145_addApplication']");
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.waitForElementPresent("//li[@title='Mail']/p/a");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+		selenium.waitForVisible("//input[@id='layout_configuration_content']");
+		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("m"));
+		selenium.waitForVisible("//li[@title='Mail']/p/a");
 		selenium.clickAt("//li[@title='Mail']/p/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");

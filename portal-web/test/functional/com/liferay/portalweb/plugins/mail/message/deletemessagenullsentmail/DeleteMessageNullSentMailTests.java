@@ -14,6 +14,10 @@
 
 package com.liferay.portalweb.plugins.mail.message.deletemessagenullsentmail;
 
+import com.liferay.portalweb.plugins.mail.mailaccount.addmailaccount.AddMailAccountTest;
+import com.liferay.portalweb.plugins.mail.mailaccount.addmailaccount.TearDownMailAccountTest;
+import com.liferay.portalweb.plugins.mail.portlet.addportlet.AddPageMailTest;
+import com.liferay.portalweb.plugins.mail.portlet.addportlet.AddPortletMailTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

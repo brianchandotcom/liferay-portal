@@ -25,19 +25,20 @@ public class DeleteMessageNullDraftsTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home");
-		selenium.waitForVisible("link=Mail Test Page");
-		selenium.click(RuntimeVariables.replace("link=Mail Test Page"));
+		selenium.clickAt("link=Mail Test Page",
+			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//a[@class='folders-link']");
 		assertEquals(RuntimeVariables.replace(
 				"liferay.qa.testing.trunk@gmail.com"),
-			selenium.getText("//div/div/div[1]/div/ul/li/span/span/a"));
-		selenium.clickAt("//div/div/div[1]/div/ul/li/span/span/a",
+			selenium.getText("//a[@class='folders-link']"));
+		selenium.clickAt("//a[@class='folders-link']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 		selenium.waitForVisible("//a[contains(.,'Drafts')]");
 		assertTrue(selenium.isPartialText("//a[contains(.,'Drafts')]", "Drafts"));
 		selenium.clickAt("//a[contains(.,'Drafts')]",
 			RuntimeVariables.replace("Drafts"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible("//input[@value='Delete']");
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));

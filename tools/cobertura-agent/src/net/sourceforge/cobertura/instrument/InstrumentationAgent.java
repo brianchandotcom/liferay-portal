@@ -136,8 +136,11 @@ public class InstrumentationAgent {
 			}
 		}
 
-		_instrumentation.retransformClasses(
-			modifiableClasses.toArray(new Class<?>[modifiableClasses.size()]));
+		if (!modifiableClasses.isEmpty()) {
+			_instrumentation.retransformClasses(
+				modifiableClasses.toArray(
+					new Class<?>[modifiableClasses.size()]));
+		}
 
 		_dynamicallyInstrumented = true;
 		_originalClassDefinitions = null;

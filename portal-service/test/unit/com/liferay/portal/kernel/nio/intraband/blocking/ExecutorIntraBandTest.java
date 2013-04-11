@@ -16,17 +16,26 @@ package com.liferay.portal.kernel.nio.intraband.blocking;
 
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.IntraBandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraBand.ReadingCallable;
 import com.liferay.portal.kernel.util.Time;
 
+import java.io.File;
+import java.io.RandomAccessFile;
+
+import java.nio.channels.Channel;
+import java.nio.channels.FileChannel;
+import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe.SinkChannel;
 import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.Pipe;
+import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -135,6 +144,132 @@ public class ExecutorIntraBandTest {
 		finally {
 			sourceChannel.close();
 			sinkChannel.close();
+		}
+	}
+
+	@Test
+	public void testRegisterChannelDuplex() throws Exception {
+
+		// Channel is null
+
+		try {
+			_executorIntraBand.registerChannel(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Channel is null", npe.getMessage());
+		}
+
+		// Channel is not of type GatheringByteChannel
+
+		try {
+			_executorIntraBand.registerChannel(
+				IntraBandTestUtil.<Channel>createProxy(Channel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not of type GatheringByteChannel",
+				iae.getMessage());
+		}
+
+		// Channel is not of type ScatteringByteChannel
+
+		try {
+			_executorIntraBand.registerChannel(
+				IntraBandTestUtil.<Channel>createProxy(
+					GatheringByteChannel.class));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is not of type ScatteringByteChannel",
+				iae.getMessage());
+		}
+
+		// Channel is of type SelectableChannel and configured in nonblocking
+		// mode
+
+		SocketChannel[] peerSocketChannels =
+			IntraBandTestUtil.createSocketChannelPeers();
+
+		SocketChannel socketChannel = peerSocketChannels[0];
+
+		socketChannel.configureBlocking(false);
+
+		try {
+			_executorIntraBand.registerChannel(socketChannel);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Channel is of type SelectableChannel and configured in " +
+					"nonblocking mode", iae.getMessage());
+		}
+
+		// Normal register, with SelectableChannel
+
+		socketChannel.configureBlocking(true);
+
+		try {
+			FutureRegistrationReference futureRegistrationReference =
+				(FutureRegistrationReference)_executorIntraBand.registerChannel(
+					socketChannel);
+
+			Assert.assertSame(
+				_executorIntraBand, futureRegistrationReference.getIntraBand());
+			Assert.assertTrue(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.cancelRegistration();
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			ThreadPoolExecutor threadPoolExecutor =
+				(ThreadPoolExecutor)_executorIntraBand.executorService;
+
+			while (threadPoolExecutor.getActiveCount() != 0);
+		}
+		finally {
+			peerSocketChannels[0].close();
+			peerSocketChannels[1].close();
+		}
+
+		// Normal register, with non-SelectableChannel
+
+		File tempFile = new File("tempFile");
+
+		tempFile.deleteOnExit();
+
+		RandomAccessFile randomAccessFile = new RandomAccessFile(
+			tempFile, "rw");
+
+		FileChannel fileChannel = randomAccessFile.getChannel();
+
+		try {
+			FutureRegistrationReference futureRegistrationReference =
+				(FutureRegistrationReference)_executorIntraBand.registerChannel(
+					fileChannel);
+
+			Assert.assertSame(
+				_executorIntraBand, futureRegistrationReference.getIntraBand());
+			Assert.assertTrue(futureRegistrationReference.isValid());
+
+			futureRegistrationReference.cancelRegistration();
+
+			Assert.assertFalse(futureRegistrationReference.isValid());
+
+			ThreadPoolExecutor threadPoolExecutor =
+				(ThreadPoolExecutor)_executorIntraBand.executorService;
+
+			while (threadPoolExecutor.getActiveCount() != 0);
+		}
+		finally {
+			fileChannel.close();
+			tempFile.delete();
 		}
 	}
 

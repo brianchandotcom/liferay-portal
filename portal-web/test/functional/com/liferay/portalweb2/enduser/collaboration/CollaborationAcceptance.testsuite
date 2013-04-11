@@ -1,7 +1,11 @@
 <definition>
+	<execute test-case="CPWikiAcceptance" />
+
 	<execute test-case="PGAnnouncementsAcceptance" />
 
 	<execute test-case="PGBlogsAcceptance" />
 
 	<execute test-case="PGMessageboardsAcceptance" />
+
+	<execute test-case="PGWikiAcceptance" />
 </definition>

@@ -1,0 +1,38 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddWikiNode">
+		<var name="wikiDescription" value="Wiki Node Description" />
+		<var name="wikiName" value="Wiki Node Name" />
+
+		<execute macro="WikiNode#cpAdd" />
+	</command>
+
+	<command name="DeleteWikiNode">
+		<var name="wikiDescription" value="Wiki Node Description" />
+		<var name="wikiName" value="Wiki Node Name" />
+
+		<execute macro="WikiNode#cpAdd" />
+
+		<execute macro="WikiNode#cpDelete" />
+	</command>
+
+	<command name="EditWikiNode">
+		<var name="wikiDescription" value="Wiki Node Description" />
+		<var name="wikiDescriptionNew" value="Wiki Node Description Edit" />
+		<var name="wikiName" value="Wiki Node Name" />
+		<var name="wikiNameNew" value="Wiki Node Name Edit" />
+
+		<execute macro="WikiNode#cpAdd" />
+
+		<execute macro="WikiNode#cpEdit" />
+	</command>
+
+	<tear-down>
+		<execute macro="WikiNode#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

@@ -48,4 +48,10 @@ public class OrganizationTestUtil {
 			user.getUserId(), parentOrganizationId, name, site);
 	}
 
+	public static Organization updateOrganization(Organization organization)
+		throws Exception {
+
+		return OrganizationLocalServiceUtil.updateOrganization(organization);
+	}
+
 }

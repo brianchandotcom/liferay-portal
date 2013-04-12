@@ -32,10 +32,12 @@
 
 				<liferay-ui:icon
 					cssClass="modify-link"
+					id="changePagesLink"
 					image="add"
 					label="<%= true %>"
 					message="change"
-					url='<%= "javascript:" + renderResponse.getNamespace() + "changePages();" %>'
+					method="get"
+					url="javascript:;"
 				/>
 
 				<div class="aui-helper-hidden" id="<portlet:namespace />changePages">
@@ -68,27 +70,6 @@
 				<li class="tree-item">
 					<aui:input checked="<%= true %>" helpMessage="all-applications-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
-					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
-						<li class="tree-item">
-							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
-								<liferay-ui:message key="archived-setups"></liferay-ui:message>,
-								<liferay-ui:message key="user-preferences"></liferay-ui:message>
-							</div>
-
-							<%
-							String changeGlobalConfigurationURL = "javascript:" + renderResponse.getNamespace() + "changeGlobalConfiguration();";
-							%>
-
-							<liferay-ui:icon
-								cssClass="modify-link"
-								image="add"
-								label="<%= true %>"
-								message="change"
-								url="<%= changeGlobalConfigurationURL %>"
-							/>
-						</li>
-					</ul>
-
 					<div class="aui-helper-hidden" id="<portlet:namespace />changeGlobalConfiguration">
 						<aui:fieldset cssClass="portlet-data-section" label="all-applications">
 							<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= true %>" />
@@ -96,6 +77,25 @@
 							<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
 						</aui:fieldset>
 					</div>
+
+					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
+						<li class="tree-item">
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
+								<liferay-ui:message key="archived-setups"></liferay-ui:message>,
+								<liferay-ui:message key="user-preferences"></liferay-ui:message>
+							</div>
+
+							<liferay-ui:icon
+								cssClass="modify-link"
+								id="changeGlobalConfigurationLink"
+								image="add"
+								label="<%= true %>"
+								message="change"
+								method="get"
+								url="javascript:;"
+							/>
+						</li>
+					</ul>
 
 					<aui:input helpMessage="choose-applications-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
 
@@ -136,61 +136,32 @@
 				<li class="tree-item">
 					<aui:input checked="<%= true %>" helpMessage="all-content-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalContent">
-						<li>
-							<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
-
-							<%
-							String changeGlobalContentURL = "javascript:" + renderResponse.getNamespace() + "changeGlobalContent();";
-							%>
-
-							<liferay-ui:icon
-								cssClass="modify-link"
-								image="add"
-								label="<%= true %>"
-								message="change"
-								url="<%= changeGlobalContentURL %>"
-							/>
-						</li>
-					</ul>
-
 					<div class="aui-helper-hidden" id="<portlet:namespace />changeGlobalContent">
 						<aui:fieldset cssClass="portlet-data-section" label="all-content">
 							<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 						</aui:fieldset>
 					</div>
 
+					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalContent">
+						<li>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
+
+							<liferay-ui:icon
+								cssClass="modify-link"
+								id="changeGlobalContentLink"
+								image="add"
+								label="<%= true %>"
+								message="change"
+								method="get"
+								url="javascript:;"
+							/>
+						</li>
+					</ul>
+
 					<aui:input helpMessage="choose-content-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />selectContents">
 						<li>
-							<liferay-ui:icon
-								cssClass="modify-link"
-								image="calendar"
-								label="<%= true %>"
-								message="filter-to-export-by-date"
-							/>
-
-							<%
-							String changeRangeURL = "javascript:" + renderResponse.getNamespace() + "changeRange();";
-							%>
-
-							<ul>
-								 <li>
-									<div class="selected-labels" id="<portlet:namespace />selectedRange">
-										<liferay-ui:message key="all"></liferay-ui:message>
-									</div>
-
-									<liferay-ui:icon
-										cssClass="modify-link"
-										image="add"
-										label="<%= true %>"
-										message="change"
-										url="<%= changeRangeURL %>"
-									/>
-								 </li>
-							</ul>
-
 							<div class="aui-helper-hidden" id="<portlet:namespace />changeRange">
 								<ul class="lfr-tree lfr-component">
 									<li class="tree-item">
@@ -283,6 +254,31 @@
 									</li>
 								</ul>
 							</div>
+
+							<liferay-ui:icon
+								cssClass="modify-link"
+								image="calendar"
+								label="<%= true %>"
+								message="filter-to-export-by-date"
+							/>
+
+							<ul>
+								 <li>
+									<div class="selected-labels" id="<portlet:namespace />selectedRange">
+										<liferay-ui:message key="all"></liferay-ui:message>
+									</div>
+
+									<liferay-ui:icon
+										cssClass="modify-link"
+										id="changeRangeLink"
+										image="add"
+										label="<%= true %>"
+										message="change"
+										method="get"
+										url="javascript:;"
+									/>
+								 </li>
+							</ul>
 						</li>
 
 						<%
@@ -302,8 +298,6 @@
 							String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
 							PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
-
-							String changeContentURL = "javascript:" + renderResponse.getNamespace() + "changeContent('" + portlet.getPortletId() + "');";
 						%>
 
 							<li>
@@ -314,34 +308,15 @@
 								PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
 
 								if (Validator.isNotNull(exportControls) || Validator.isNotNull(metadataControls)) {
+									String selectedContent = StringPool.BLANK;
 								%>
 
-									<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
-										<li>
-											<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></div>
-
-											<liferay-ui:icon
-												cssClass="modify-link"
-												image="add"
-												label="<%= true %>"
-												message="change"
-												url="<%= changeContentURL %>"
-											/>
-										</li>
-									</ul>
-
-									<aui:script>
-										Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
-									</aui:script>
-
-									<div class="aui-helper-hidden" id="<portlet:namespace />changeContent_<%= portlet.getPortletId() %>">
+								     <div class="aui-helper-hidden" id="<portlet:namespace />changeContent_<%= portlet.getPortletId() %>">
 										<ul class="lfr-tree lfr-component">
 											<li class="tree-item">
 												<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
 
 													<%
-													String selectedContent = StringPool.BLANK;
-
 													if (exportControls != null) {
 														request.setAttribute("render_controls.jsp-controls", exportControls);
 														request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
@@ -390,13 +365,40 @@
 													}
 													%>
 
-													<aui:script use="aui-base">
-														<portlet:namespace />refreshSelectedLabel('selectedContent_<%= portlet.getPortletId() %>', '<%= selectedContent %>');
-													</aui:script>
 												</aui:fieldset>
 											</li>
 										</ul>
 									</div>
+
+									<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
+										<li>
+											<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>">
+
+												<%= selectedContent %>
+
+											</div>
+
+											<%
+												Map<String,Object> data = new HashMap<String,Object>();
+
+												data.put("portletid", portlet.getPortletId());
+											%>
+
+											<liferay-ui:icon
+												cssClass="modify-link change-content-link"
+												data="<%= data %>"
+												image="add"
+												label="<%= true %>"
+												message="change"
+												method="get"
+												url="javascript:;"
+											/>
+										</li>
+									</ul>
+
+									<aui:script>
+										Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
+									</aui:script>
 
 								<%
 								}
@@ -433,12 +435,11 @@
 	</liferay-ui:panel-container>
 </div>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeContent',
-		function(portletId) {
-			var A = AUI();
+<aui:script use="aui-base,aui-dialog">
+	A.one('#<portlet:namespace />fm1').delegate(
+		'click',
+		function(event) {
+			var portletId = event.currentTarget.attr('data-portletid');
 
 			var changeContentNode = A.one('#<portlet:namespace />changeContent_' + portletId);
 
@@ -505,15 +506,12 @@
 				changeContentDialog.show();
 			}
 		},
-		['aui-dialog']
+		'.change-content-link a'
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeGlobalContent',
-		function() {
-			var A = AUI();
-
+	A.one('#<portlet:namespace />changeGlobalContentLink').on(
+		'click',
+		function(event) {
 			var changeGlobalContentNode = A.one('#<portlet:namespace />changeGlobalContent');
 
 			var changeGlobalContentDialog = changeGlobalContentNode.getData('changeGlobalContentDialog');
@@ -565,16 +563,12 @@
 			else {
 				changeGlobalContentDialog.show();
 			}
-		},
-		['aui-dialog']
+		}
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeGlobalConfiguration',
-		function() {
-			var A = AUI();
-
+	A.one('#<portlet:namespace />changeGlobalConfigurationLink').on(
+		'click',
+		function(event) {
 			var changeGlobalConfigurationNode = A.one('#<portlet:namespace />changeGlobalConfiguration');
 
 			var changeGlobalConfigurationDialog = changeGlobalConfigurationNode.getData('changeGlobalConfigurationDialog');
@@ -630,16 +624,12 @@
 			else {
 				changeGlobalConfigurationDialog.show();
 			}
-		},
-		['aui-dialog']
+		}
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changePages',
-		function() {
-			var A = AUI();
-
+	A.one('#<portlet:namespace />changePagesLink').on(
+		'click',
+		function(event) {
 			var changePagesNode = A.one('#<portlet:namespace />changePages');
 
 			var changePagesDialog = changePagesNode.getData('changePagesDialog');
@@ -746,16 +736,12 @@
 			else {
 				changePagesDialog.show();
 			}
-		},
-		['aui-dialog']
+		}
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />changeRange',
-		function() {
-			var A = AUI();
-
+	A.one('#<portlet:namespace />changeRangeLink').on(
+		'click',
+		function(event) {
 			var changeRangeNode = A.one('#<portlet:namespace />changeRange');
 
 			var changeRangeDialog = changeRangeNode.getData('changeRangeDialog');
@@ -816,33 +802,19 @@
 			else {
 				changeRangeDialog.show();
 			}
-		},
-		['aui-dialog']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />handleFilterAllToggle',
-		function(event) {
-			var checked = event.currentTarget.attr('checked');
-			var inputId = event.currentTarget.attr('id');
 		}
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />refreshSelectedLabel',
-		function(labelDivId, label) {
-			var A = AUI();
+	function <portlet:namespace />refreshSelectedLabel(labelDivId, label) {
+		var labelDiv = A.one('#<portlet:namespace />' + labelDivId);
 
-			var labelDiv = A.one('#<portlet:namespace />' + labelDivId);
-
-			if (labelDiv != null) {
-				labelDiv.html(label);
-			}
+		if (labelDiv != null) {
+			labelDiv.html(label);
 		}
-	);
+	}
+</aui:script>
 
+<aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', ['<portlet:namespace />showChangeGlobalConfiguration']);
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
 

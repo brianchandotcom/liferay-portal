@@ -508,28 +508,7 @@ public class SeleniumBuilderContext {
 				rootElement, "execute");
 
 		for (Element executeElement : executeElements) {
-			String function = executeElement.attributeValue("function");
-
-			int x = function.indexOf(StringPool.POUND);
-
-			if (x == -1) {
-				_seleniumBuilderFileUtil.throwValidationException(
-					1006, actionFileName, executeElement, "function");
-			}
-
-			String functionName = function.substring(0, x);
-
-			if (!_isFunctionName(functionName)) {
-				_seleniumBuilderFileUtil.throwValidationException(
-					2003, actionFileName, executeElement, functionName);
-			}
-
-			String functionCommand = function.substring(x + 1);
-
-			if (!_isFunctionCommand(functionName, functionCommand)) {
-				_seleniumBuilderFileUtil.throwValidationException(
-					2004, actionFileName, executeElement, functionCommand);
-			}
+			_validateFunctionElement(actionFileName, executeElement);
 		}
 	}
 
@@ -551,6 +530,8 @@ public class SeleniumBuilderContext {
 	}
 
 	public void validateFunctionElements(String functionName) {
+		String functionFileName = getFunctionFileName(functionName);
+
 		Element rootElement = getFunctionRootElement(functionName);
 
 		if (rootElement == null) {
@@ -567,8 +548,6 @@ public class SeleniumBuilderContext {
 			String commandName = commandElement.attributeValue("name");
 
 			if (commandElementNames.contains(commandName)) {
-				String functionFileName = getFunctionFileName(functionName);
-
 				_seleniumBuilderFileUtil.throwValidationException(
 					1009, functionFileName, commandElement, commandName);
 			}
@@ -576,6 +555,31 @@ public class SeleniumBuilderContext {
 				commandElementNames.add(commandName);
 			}
 		}
+
+		List<Element> conditionAndExecuteElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "condition");
+
+		conditionAndExecuteElements.addAll(
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "execute"));
+
+		for (Element conditionAndExecuteElement : conditionAndExecuteElements) {
+			String function = conditionAndExecuteElement.attributeValue(
+				"function");
+			String selenium = conditionAndExecuteElement.attributeValue(
+				"selenium");
+
+			if (function != null) {
+				_validateFunctionElement(
+					functionFileName, conditionAndExecuteElement);
+			}
+			else if (selenium != null) {
+				_validateSeleniumElement(
+					functionFileName, conditionAndExecuteElement);
+			}
+		}
+
 	}
 
 	public void validateMacroElements(String macroName) {
@@ -709,6 +713,14 @@ public class SeleniumBuilderContext {
 		return false;
 	}
 
+	private boolean _isSeleniumCommand(String command) {
+		if (_seleniumParameterCounts.containsKey(command)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isValidLocatorKey(
 		String actionName, String caseComparator, String locatorKey) {
 
@@ -747,6 +759,40 @@ public class SeleniumBuilderContext {
 
 	private String _normalizeFileName(String fileName) {
 		return _seleniumBuilderFileUtil.normalizeFileName(fileName);
+	}
+
+	private void _validateFunctionElement(String fileName, Element element) {
+		String function = element.attributeValue("function");
+
+		int x = function.indexOf(StringPool.POUND);
+
+		if (x == -1) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1006, fileName, element, "function");
+		}
+
+		String functionName = function.substring(0, x);
+
+		if (!_isFunctionName(functionName)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1011, fileName, element, functionName);
+		}
+
+		String functionCommand = function.substring(x + 1);
+
+		if (!_isFunctionCommand(functionName, functionCommand)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1012, fileName, element, functionCommand);
+		}
+	}
+
+	private void _validateSeleniumElement(String fileName, Element element) {
+		String selenium = element.attributeValue("selenium");
+
+		if (!_isSeleniumCommand(selenium)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1013, fileName, element, selenium);
+		}
 	}
 
 	private Map<String, String> _actionClassNames =

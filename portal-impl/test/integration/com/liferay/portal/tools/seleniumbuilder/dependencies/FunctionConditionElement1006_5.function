@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition function="IsElementPresent" />
+			<then>
+				<execute selenium="click" />
+			</then>
+		</if>
+	</command>
+</definition>

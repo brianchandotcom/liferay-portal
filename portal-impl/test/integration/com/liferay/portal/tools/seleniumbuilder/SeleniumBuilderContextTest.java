@@ -117,19 +117,19 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testActionExecuteElement2003() throws Exception {
+	public void testActionExecuteElement1011() throws Exception {
 		test(
-			"ActionExecuteElement2003.action",
-			"Error 2003: Invalid function name ClickX at " + _DIR_NAME +
-				"/ActionExecuteElement2003.action:4");
+			"ActionExecuteElement1011.action",
+			"Error 1011: Invalid function name ClickX at " + _DIR_NAME +
+				"/ActionExecuteElement1011.action:4");
 	}
 
 	@Test
-	public void testActionExecuteElement2004() throws Exception {
+	public void testActionExecuteElement1012() throws Exception {
 		test(
-			"ActionExecuteElement2004.action",
-			"Error 2004: Invalid function command clickAtX at " + _DIR_NAME +
-				"/ActionExecuteElement2004.action:4");
+			"ActionExecuteElement1012.action",
+			"Error 1012: Invalid function command clickAtX at " + _DIR_NAME +
+				"/ActionExecuteElement1012.action:4");
 	}
 
 	@Test
@@ -151,6 +151,86 @@ public class SeleniumBuilderContextTest {
 			"FunctionCommandElement1009.function",
 			"Error 1009: Duplicate command name name at " + _DIR_NAME +
 				"/FunctionCommandElement1009.function:6");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_5() throws Exception {
+		test(
+			"FunctionConditionElement1006_5.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_5.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1006_6() throws Exception {
+		test(
+			"FunctionConditionElement1006_6.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionConditionElement1006_6.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1011() throws Exception {
+		test(
+			"FunctionConditionElement1011.function",
+			"Error 1011: Invalid function name IsElementPresentX at " +
+				_DIR_NAME + "/FunctionConditionElement1011.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1012() throws Exception {
+		test(
+			"FunctionConditionElement1012.function",
+			"Error 1012: Invalid function command isElementPresentX at " +
+				_DIR_NAME + "/FunctionConditionElement1012.function:4");
+	}
+
+	@Test
+	public void testFunctionConditionElement1013() throws Exception {
+		test(
+			"FunctionConditionElement1013.function",
+			"Error 1013: Invalid selenium command isElementPresentX at " +
+				_DIR_NAME + "/FunctionConditionElement1013.function:4");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1006_3() throws Exception {
+		test(
+			"FunctionExecuteElement1006_3.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionExecuteElement1006_3.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1006_4() throws Exception {
+		test(
+			"FunctionExecuteElement1006_4.function",
+			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
+				"/FunctionExecuteElement1006_4.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1011() throws Exception {
+		test(
+			"FunctionExecuteElement1011.function",
+			"Error 1011: Invalid function name ClickX at " + _DIR_NAME +
+				"/FunctionExecuteElement1011.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1012() throws Exception {
+		test(
+			"FunctionExecuteElement1012.function",
+			"Error 1012: Invalid function command clickAtX at " + _DIR_NAME +
+				"/FunctionExecuteElement1012.function:3");
+	}
+
+	@Test
+	public void testFunctionExecuteElement1013() throws Exception {
+		test(
+			"FunctionExecuteElement1013.function",
+			"Error 1013: Invalid selenium command clickX at " + _DIR_NAME +
+				"/FunctionExecuteElement1013.function:3");
 	}
 
 	@Test

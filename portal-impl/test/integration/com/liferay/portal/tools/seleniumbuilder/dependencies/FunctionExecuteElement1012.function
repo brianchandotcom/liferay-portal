@@ -1,0 +1,5 @@
+<definition>
+	<command name="name">
+		<execute function="Click#clickAtX" />
+	</command>
+</definition>

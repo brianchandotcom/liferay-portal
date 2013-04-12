@@ -263,7 +263,7 @@
 							/>
 
 							<ul>
-								 <li>
+								<li>
 									<div class="selected-labels" id="<portlet:namespace />selectedRange">
 										<liferay-ui:message key="all"></liferay-ui:message>
 									</div>
@@ -277,7 +277,7 @@
 										method="get"
 										url="javascript:;"
 									/>
-								 </li>
+								</li>
 							</ul>
 						</li>
 
@@ -311,7 +311,7 @@
 									String selectedContent = StringPool.BLANK;
 								%>
 
-								     <div class="aui-helper-hidden" id="<portlet:namespace />changeContent_<%= portlet.getPortletId() %>">
+									<div class="aui-helper-hidden" id="<portlet:namespace />changeContent_<%= portlet.getPortletId() %>">
 										<ul class="lfr-tree lfr-component">
 											<li class="tree-item">
 												<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
@@ -435,383 +435,19 @@
 	</liferay-ui:panel-container>
 </div>
 
-<aui:script use="aui-base,aui-dialog">
-	A.one('#<portlet:namespace />fm1').delegate(
-		'click',
-		function(event) {
-			var portletId = event.currentTarget.attr('data-portletid');
-
-			var changeContentNode = A.one('#<portlet:namespace />changeContent_' + portletId);
-
-			var changeContentDialog = changeContentNode.getData('changeContentDialog');
-
-			if (!changeContentDialog) {
-				changeContentNode.show();
-
-				var contentBox;
-
-				changeContentDialog = new A.Dialog(
-					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: changeContentNode,
-						centered: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
-						width: 400,
-						buttons: [
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
-								handler: function() {
-									var inputs = contentBox.all('.aui-field-input-choice');
-									var selectedContent = [];
-
-									A.each(
-										inputs,
-										function(item, index, collection) {
-											var checked = item.attr('checked');
-
-											if (checked == true) {
-												var itemName = item.attr('id');
-
-												itemName = itemName.substring(0, itemName.length - 8);
-												itemName = itemName.substring(itemName.lastIndexOf('_') + 1, itemName.length);
-
-												selectedContent.push(Liferay.Language.get(itemName));
-											}
-										}
-									);
-
-									<portlet:namespace />refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
-
-									this.hide();
-								}
-							},
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-								handler: function() {
-									this.hide();
-								}
-							}
-						]
-					}
-				);
-
-				changeContentDialog.render();
-
-				contentBox = changeContentDialog.get('contentBox');
-
-				changeContentNode.setData('changeContentDialog', changeContentDialog);
-			}
-			else {
-				changeContentDialog.show();
-			}
-		},
-		'.change-content-link a'
-	);
-
-	A.one('#<portlet:namespace />changeGlobalContentLink').on(
-		'click',
-		function(event) {
-			var changeGlobalContentNode = A.one('#<portlet:namespace />changeGlobalContent');
-
-			var changeGlobalContentDialog = changeGlobalContentNode.getData('changeGlobalContentDialog');
-
-			if (!changeGlobalContentDialog) {
-				changeGlobalContentNode.show();
-
-				var contentBox;
-
-				changeGlobalContentDialog = new A.Dialog(
-					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: changeGlobalContentNode,
-						centered: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
-						width: 400,
-						buttons: [
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
-								handler: function() {
-									selectedGlobalContent = '';
-
-									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.CATEGORIES %>Checkbox').attr('checked') == true) {
-										selectedGlobalContent = Liferay.Language.get('categories');
-									}
-
-									<portlet:namespace />refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
-
-									this.hide();
-								}
-							},
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-								handler: function() {
-									this.hide();
-								}
-							}
-						]
-					}
-				);
-
-				changeGlobalContentDialog.render();
-
-				contentBox = changeGlobalContentDialog.get('contentBox');
-
-				changeGlobalContentNode.setData('changeGlobalContentDialog', changeGlobalContentDialog);
-			}
-			else {
-				changeGlobalContentDialog.show();
-			}
+<aui:script use="export-layouts">
+	new Liferay.ExportLayouts(
+		{
+			namespace: '<portlet:namespace />',
+			archivedSetupsCheckbox: '<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			categoriesCheckbox: '<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			layoutSetSettingsCheckbox: '<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
+			logoCheckbox: '<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			themeCheckbox: '<%= PortletDataHandlerKeys.THEME %>Checkbox',
+			themeReferenceCheckbox: '<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			userPreferencesCheckbox: '<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
-
-	A.one('#<portlet:namespace />changeGlobalConfigurationLink').on(
-		'click',
-		function(event) {
-			var changeGlobalConfigurationNode = A.one('#<portlet:namespace />changeGlobalConfiguration');
-
-			var changeGlobalConfigurationDialog = changeGlobalConfigurationNode.getData('changeGlobalConfigurationDialog');
-
-			if (!changeGlobalConfigurationDialog) {
-				changeGlobalConfigurationNode.show();
-
-				var contentBox;
-
-				changeGlobalConfigurationDialog = new A.Dialog(
-					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: changeGlobalConfigurationNode,
-						centered: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-configuration") %>',
-						width: 400,
-						buttons: [
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
-								handler: function() {
-									var selectedGlobalConfiguration = [];
-
-									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox').attr('checked') == true) {
-										selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
-									}
-
-									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox').attr('checked') == true) {
-										selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
-									}
-
-									<portlet:namespace />refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
-
-									this.hide();
-								}
-							},
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-								handler: function() {
-									this.hide();
-								}
-							}
-						]
-					}
-				);
-
-				changeGlobalConfigurationDialog.render();
-
-				contentBox = changeGlobalConfigurationDialog.get('contentBox');
-
-				changeGlobalConfigurationNode.setData('changeGlobalConfigurationDialog', changeGlobalConfigurationDialog);
-			}
-			else {
-				changeGlobalConfigurationDialog.show();
-			}
-		}
-	);
-
-	A.one('#<portlet:namespace />changePagesLink').on(
-		'click',
-		function(event) {
-			var changePagesNode = A.one('#<portlet:namespace />changePages');
-
-			var changePagesDialog = changePagesNode.getData('changePagesDialog');
-
-			if (!changePagesDialog) {
-				changePagesNode.show();
-
-				var contentBox;
-
-				changePagesDialog = new A.Dialog(
-					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: changePagesNode,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "pages") %>',
-						width: 400,
-						buttons: [
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
-								handler: function() {
-									var selectedPages = [];
-
-									var layoutsExportTreeOutput = contentBox.one('#<portlet:namespace />layoutsExportTreeOutput');
-
-									if (layoutsExportTreeOutput) {
-										var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
-
-										var treeView = layoutsExportTreeOutput.getData('treeInstance');
-										var rootNode = treeView.item(0);
-
-										if (rootNode.isChecked()) {
-											layoutIdsInput.val('');
-
-									       	selectedPages.push(Liferay.Language.get('all-pages'));
-										}
-										else {
-											var layoutIds = [];
-
-											var regexLayoutId = /layoutId_(\d+)/;
-
-											treeView.eachChildren(
-												function(item, index, collection) {
-													if (item.isChecked()) {
-														var match = regexLayoutId.exec(item.get('id'));
-
-														if (match) {
-															layoutIds.push(
-																{
-																	includeChildren: !item.hasChildNodes(),
-																	layoutId: match[1]
-																}
-															);
-														}
-													}
-												},
-												true
-											);
-
-											if (layoutIdsInput) {
-												layoutIdsInput.val(A.JSON.stringify(layoutIds));
-											}
-
-											selectedPages.push(Liferay.Language.get('selected-pages'));
-										}
-
-										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox').attr('checked') == true) {
-											selectedPages.push(Liferay.Language.get('site-pages-settings'));
-										}
-
-										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.THEME %>Checkbox').attr('checked') == true) {
-											selectedPages.push(Liferay.Language.get('theme'));
-										}
-
-										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox').attr('checked') == true) {
-											selectedPages.push(Liferay.Language.get('theme-settings'));
-										}
-
-										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.LOGO %>Checkbox').attr('checked') == true) {
-											selectedPages.push(Liferay.Language.get('logo'));
-										}
-
-										<portlet:namespace />refreshSelectedLabel('selectedPages', selectedPages.join(', '));
-									}
-
-									this.hide();
-								}
-							},
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-								handler: function() {
-									this.hide();
-								}
-							}
-						]
-					}
-				);
-
-				changePagesDialog.render();
-
-				contentBox = changePagesDialog.get('contentBox');
-
-				changePagesNode.setData('changePagesDialog', changePagesDialog);
-			}
-			else {
-				changePagesDialog.show();
-			}
-		}
-	);
-
-	A.one('#<portlet:namespace />changeRangeLink').on(
-		'click',
-		function(event) {
-			var changeRangeNode = A.one('#<portlet:namespace />changeRange');
-
-			var changeRangeDialog = changeRangeNode.getData('changeRangeDialog');
-
-			if (!changeRangeDialog) {
-				changeRangeNode.show();
-
-				var contentBox;
-
-				changeRangeDialog = new A.Dialog(
-					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: changeRangeNode,
-						centered: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
-						width: 400,
-						buttons: [
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
-								handler: function() {
-									var selectedRange = '';
-
-									if (contentBox.one('#<portlet:namespace />rangeAll').attr('checked') == true) {
-										selectedRange = Liferay.Language.get('all');
-									}
-									else if (contentBox.one('#<portlet:namespace />rangeLastPublish').attr('checked') == true) {
-										selectedRange = Liferay.Language.get('from-last-publish-date');
-									}
-									else if (contentBox.one('#<portlet:namespace />rangeDateRange').attr('checked') == true) {
-										selectedRange = Liferay.Language.get('date-range');
-									}
-									else if (contentBox.one('#<portlet:namespace />rangeLast').attr('checked') == true) {
-										selectedRange = Liferay.Language.get('last');
-									}
-
-									<portlet:namespace />refreshSelectedLabel('selectedRange', selectedRange);
-
-									this.hide();
-								}
-							},
-							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
-								handler: function() {
-									this.hide();
-								}
-							}
-						]
-					}
-				);
-
-				changeRangeDialog.render();
-
-				contentBox = changeRangeDialog.get('contentBox');
-
-				changeRangeNode.setData('changeRangeDialog', changeRangeDialog);
-			}
-			else {
-				changeRangeDialog.show();
-			}
-		}
-	);
-
-	function <portlet:namespace />refreshSelectedLabel(labelDivId, label) {
-		var labelDiv = A.one('#<portlet:namespace />' + labelDivId);
-
-		if (labelDiv != null) {
-			labelDiv.html(label);
-		}
-	}
 </aui:script>
 
 <aui:script>

@@ -47,8 +47,9 @@ public class AddUGUserGroupCommunitySiteTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("User Groups"),
 					selenium.getText("//h1[@class='header-title']/span"));
 				assertEquals(RuntimeVariables.replace("Add"),
-					selenium.getText("//span[contains(@class,'add-button')]/a"));
-				selenium.clickAt("//span[contains(@class,'add-button')]/a",
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a"));
+				selenium.clickAt("//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("New User Group"),
@@ -83,7 +84,8 @@ public class AddUGUserGroupCommunitySiteTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
-					selenium.getText("//tr[3]/td[2]/a"));
+					selenium.getText(
+						"//tr[contains(.,'UG UserGroup Name')]/td[2]/a"));
 
 			case 100:
 				label = -1;

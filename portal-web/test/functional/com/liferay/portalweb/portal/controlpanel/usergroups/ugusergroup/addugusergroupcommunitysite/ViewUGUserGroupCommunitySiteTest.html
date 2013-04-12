@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New Test</title>
+<title>ViewUGUserGroupCommunitySiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">New Test</td></tr>
+<tr><td rowspan="1" colspan="3">ViewUGUserGroupCommunitySiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -55,17 +55,22 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[1]/input</td>
+	<td>//tr[contains(.,'UG UserGroup Name')]/td[1]/input</td>
 	<td>Entry Check Box</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'UG UserGroup Name')]/td[2]/a</td>
 	<td>UG UserGroup Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'UG UserGroup Name')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'UG UserGroup Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -75,8 +80,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'UG UserGroup Name')]/td[2]/a</td>
 	<td>UG UserGroup Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'View All')]/a</td>
+	<td>View All</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -170,23 +185,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[@id='navigation']/ul/li[1]/a/span</td>
+	<td>link=Home</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[@id='navigation']/ul/li[2]/a/span</td>
+	<td>link=Calendar</td>
 	<td>Calendar</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//nav[@id='navigation']/ul/li[3]/a/span</td>
+	<td>link=Wiki</td>
 	<td>Wiki</td>
-</tr>
-<tr>
-	<td>close</td>
-	<td></td>
-	<td></td>
 </tr>
 </tbody></table>
 </body>

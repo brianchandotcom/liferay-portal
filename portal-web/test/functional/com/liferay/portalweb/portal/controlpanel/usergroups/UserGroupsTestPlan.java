@@ -29,8 +29,8 @@ public class UserGroupsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(UGUserGroupTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTest(UGUserGroupTestPlan.suite());
 
 		return testSuite;
 	}

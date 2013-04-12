@@ -41,17 +41,26 @@ public class ViewUGUserGroupCommunitySiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("User Groups"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertTrue(selenium.isVisible("//tr[3]/td[1]/input"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'UG UserGroup Name')]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
-			selenium.getText("//tr[3]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'UG UserGroup Name')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace(""),
+			selenium.getText("//tr[contains(.,'UG UserGroup Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[3]/td[4]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'UG UserGroup Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
-		selenium.clickAt("//tr[3]/td[2]/a",
+		selenium.clickAt("//tr[contains(.,'UG UserGroup Name')]/td[2]/a",
 			RuntimeVariables.replace("UG UserGroup Name"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("View All"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span[contains(.,'View All')]/a"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a"));
 		assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -89,11 +98,10 @@ public class ViewUGUserGroupCommunitySiteTest extends BaseTestCase {
 		RuntimeVariables.setValue("openPagesLink", openPagesLink);
 		selenium.open(RuntimeVariables.getValue("openPagesLink"));
 		assertEquals(RuntimeVariables.replace("Home"),
-			selenium.getText("//nav[@id='navigation']/ul/li[1]/a/span"));
+			selenium.getText("link=Home"));
 		assertEquals(RuntimeVariables.replace("Calendar"),
-			selenium.getText("//nav[@id='navigation']/ul/li[2]/a/span"));
+			selenium.getText("link=Calendar"));
 		assertEquals(RuntimeVariables.replace("Wiki"),
-			selenium.getText("//nav[@id='navigation']/ul/li[3]/a/span"));
-		selenium.close();
+			selenium.getText("link=Wiki"));
 	}
 }

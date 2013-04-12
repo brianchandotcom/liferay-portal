@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroup;
+package com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupcommunitysite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TearDownUGUserGroupTest extends BaseTestCase {
-	public void testTearDownUGUserGroup() throws Exception {
+public class AddUGUserGroupCommunitySiteTest extends BaseTestCase {
+	public void testAddUGUserGroupCommunitySite() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -44,36 +44,48 @@ public class TearDownUGUserGroupTest extends BaseTestCase {
 				selenium.clickAt("link=User Groups",
 					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("User Groups"),
+					selenium.getText("//h1[@class='header-title']/span"));
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText(
+						"//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a"));
+				selenium.clickAt("//div[@class='lfr-portlet-toolbar']/span[contains(.,'Add')]/a",
+					RuntimeVariables.replace("Add"));
+				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("New User Group"),
+					selenium.getText("//h1[@class='header-title']/span"));
+				selenium.type("//input[@id='_127_name']",
+					RuntimeVariables.replace("UG UserGroup Name"));
+				assertEquals(RuntimeVariables.replace("Public Pages"),
+					selenium.getText(
+						"//label[@for='_127_publicLayoutSetPrototypeId']"));
+				selenium.select("//select[@id='_127_publicLayoutSetPrototypeId']",
+					RuntimeVariables.replace("Community Site"));
 
-				boolean UserGroupPresent = selenium.isElementPresent(
-						"//input[@name='_127_rowIds']");
+				boolean propagationEnabledChecked = selenium.isChecked(
+						"//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']");
 
-				if (!UserGroupPresent) {
+				if (!propagationEnabledChecked) {
 					label = 2;
 
 					continue;
 				}
 
+				selenium.clickAt("//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']",
+					RuntimeVariables.replace("Enable Propagation"));
+
+			case 2:
 				assertFalse(selenium.isChecked(
-						"//input[@name='_127_allRowIds']"));
-				selenium.clickAt("//input[@name='_127_allRowIds']",
-					RuntimeVariables.replace("Select All"));
-				assertTrue(selenium.isChecked("//input[@name='_127_allRowIds']"));
-				selenium.waitForVisible(
-					"//tr[@class='portlet-section-body results-row last selected']");
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+						"//input[@id='_127_publicLayoutSetPrototypeLinkEnabledCheckbox']"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForConfirmation(
-					"Are you sure you want to delete this? It will be deleted immediately.");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-
-			case 2:
-				assertEquals(RuntimeVariables.replace(
-						"No user groups were found."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
+					selenium.getText(
+						"//tr[contains(.,'UG UserGroup Name')]/td[2]/a"));
 
 			case 100:
 				label = -1;

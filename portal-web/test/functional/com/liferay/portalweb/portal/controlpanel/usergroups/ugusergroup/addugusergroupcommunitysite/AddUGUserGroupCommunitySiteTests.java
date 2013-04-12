@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.usergroups;
+package com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroupcommunitysite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.usergroups.portlet.PortletTestPlan;
-import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.UGUserGroupTestPlan;
+import com.liferay.portalweb.portal.controlpanel.usergroups.ugusergroup.addugusergroup.TearDownUGUserGroupTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserGroupsTestPlan extends BaseTestSuite {
-
+public class AddUGUserGroupCommunitySiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(PortletTestPlan.suite());
-		testSuite.addTest(UGUserGroupTestPlan.suite());
+		testSuite.addTestSuite(AddUGUserGroupCommunitySiteTest.class);
+		testSuite.addTestSuite(ViewUGUserGroupCommunitySiteTest.class);
+		testSuite.addTestSuite(TearDownUGUserGroupTest.class);
 
 		return testSuite;
 	}
-
 }

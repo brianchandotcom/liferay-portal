@@ -58,7 +58,7 @@
 		<liferay-ui:panel collapsible="<%= false %>" cssClass="export-group-panel" defaultState="open" id="applicationPanel" persistState="<%= true %>" title="application-configuration">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
-					<aui:input checked="<%= true %>" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
+					<aui:input checked="<%= true %>" helpMessage="all-applications-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
 						<li class="tree-item">
@@ -85,7 +85,7 @@
 						</aui:fieldset>
 					</div>
 
-					<aui:input id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
+					<aui:input helpMessage="choose-applications-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
 
 					<c:if test="<%= !group.isLayoutPrototype() %>">
 						<ul class="aui-helper-hidden" id="<portlet:namespace />selectApplications">
@@ -122,7 +122,7 @@
 		<liferay-ui:panel collapsible="<%= false %>" cssClass="export-group-panel" defaultState="open" id="contentPanel" persistState="<%= true %>" title="content">
 			<ul class="lfr-tree lfr-component">
 				<li class="tree-item">
-					<aui:input checked="<%= true %>" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
+					<aui:input checked="<%= true %>" helpMessage="all-content-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalContent">
 						<li>
@@ -147,7 +147,7 @@
 						</aui:fieldset>
 					</div>
 
-					<aui:input id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
+					<aui:input helpMessage="choose-content-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />selectContents">
 						<li>

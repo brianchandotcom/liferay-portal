@@ -419,6 +419,16 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 						groupsQuery.addTerm(Field.GROUP_ID, group.getGroupId());
 					}
 				}
+
+				if (group.isSite() &&
+					!role.getName().equals(RoleConstants.SITE_MEMBER) &&
+					(role.getType() == RoleConstants.TYPE_SITE)) {
+
+					rolesQuery.addTerm(
+						Field.GROUP_ROLE_ID,
+						group.getGroupId() + StringPool.DASH +
+							role.getRoleId());
+				}
 			}
 
 			rolesQuery.addTerm(Field.ROLE_ID, role.getRoleId());

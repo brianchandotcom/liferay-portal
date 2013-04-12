@@ -4,18 +4,24 @@
 	<import file="../../build-test-db-sharding.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
 		<antcall target="prepare-db-sharding" />
 
-		<antcall target="prepare-sharding-properties" />
+		<antcall target="prepare-sharding-properties">
+			<param file="$${project.dir}/test.run.properties" />
+		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.plugin.hooks}

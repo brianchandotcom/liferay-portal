@@ -6,7 +6,7 @@
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
 		<family>db2</family>
 		<password>password</password>
-		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\create.sql -td;</remote-schema-command>
+		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\temporary\create.sql -td;</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -102,10 +102,10 @@
 	</mysql>
 	<oracle-10>
 		<device-name></device-name>
-		<driver>org.hsqldb.jdbcDriver</driver>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
 		<family>oracle</family>
 		<password>lportal</password>
-		<remote-schema-command>sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</remote-schema-command>
+		<remote-schema-command>sqlplus system/password @C:\temporary\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -125,8 +125,8 @@
 				<value></value>
 			</drop-schema>
 			<use-schema>
-				<token>-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\${tstamp.value}</token>
-				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</value>
+				<token></token>
+				<value></value>
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:xe</url>
@@ -135,10 +135,10 @@
 	</oracle-10>
 	<oracle-11>
 		<device-name></device-name>
-		<driver>org.hsqldb.jdbcDriver</driver>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
 		<family>oracle</family>
 		<password>lportal</password>
-		<remote-schema-command>sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</remote-schema-command>
+		<remote-schema-command>sqlplus system/password @C:\temporary\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -159,8 +159,8 @@
 			</drop-schema>
 			<rebuild-remote-schema></rebuild-remote-schema>
 			<use-schema>
-				<token>-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\${tstamp.value}</token>
-				<value>-pw ${vm.password} ${vm.username}@${database.host} sqlplus system/password @C:\${tstamp.value}\create.sql ${database.username} ${database.password}</value>
+				<token></token>
+				<value></value>
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:orcl</url>
@@ -172,7 +172,7 @@
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
 		<password></password>
-		<remote-schema-command>C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\create.sql</remote-schema-command>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -205,7 +205,7 @@
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
 		<password></password>
-		<remote-schema-command>C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${database.username} -f C:\${tstamp.value}\create.sql</remote-schema-command>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -238,7 +238,7 @@
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
 		<password>password</password>
-		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
+		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -271,7 +271,7 @@
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
 		<password>password1</password>
-		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
+		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -304,7 +304,7 @@
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sybase</family>
 		<password></password>
-		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\${tstamp.value}\create.sql</remote-schema-command>
+		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
 			<create-schema>
@@ -321,11 +321,11 @@
 			</create-schema-secondary>
 			<drop-schema>
 				<token>use master</token>
-				<value><![CDATA[use master$${line.separator}dump transaction master with no_log$${line.separator}go$${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${database.schema}&quot;)$${line.separator}begin$${line.separator}drop database ${database.schema}$${line.separator}end$${line.separator}go$${line.separator}create database ${database.schema} on ${database.device-name} = &quot;250m&quot;$${line.separator}go]]></value>
+				<value><![CDATA[use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = "${database.schema}")${line.separator}begin${line.separator}drop database ${database.schema}${line.separator}end${line.separator}go${line.separator}create database ${database.schema} on ${database.device-name} = "250m"${line.separator}go]]></value>
 			</drop-schema>
 			<use-schema>
 				<token>use lportal</token>
-				<value>use ${database.schema}$${line.separator}go</value>
+				<value>use ${database.schema}${line.separator}go</value>
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:jtds:sybase://${database.host}:5000/${database.schema}</url>

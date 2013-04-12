@@ -4,6 +4,10 @@
 	<import file="../../build-test-db-upgrade.xml" />
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-db2-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="db2" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -34,6 +38,10 @@ create database lportal;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -53,6 +61,8 @@ create database lportal character set utf8;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-oracle-firefox">
+		<antcall target="generate-test-properties" />
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -85,6 +95,8 @@ exit;]]></echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-postgresql-firefox">
+		<antcall target="generate-test-properties" />
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -115,6 +127,8 @@ create database lportal encoding = 'UNICODE';</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-sql-server-firefox">
+		<antcall target="generate-test-properties" />
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -145,6 +159,10 @@ create database lportal;</echo>
 	</target>
 
 	<target name="test-db-upgrade-smoke-latest-tomcat-sybase-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sybase" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />

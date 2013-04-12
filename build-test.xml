@@ -3,10 +3,6 @@
 <project name="portal-test" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
 
-	<tstamp>
-		<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-	</tstamp>
-
 	<property file="${project.dir}/test.${user.name}.properties" />
 	<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
 	<property file="${project.dir}/test.${env.HOST}.properties" />
@@ -431,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2416,12 +2412,12 @@
 					<equals arg1="${database}" arg2="postgresql-8.4" />
 					<equals arg1="${database}" arg2="postgresql-9.0" />
 					<equals arg1="${database}" arg2="sql-server-2005" />
-					<equals arg1="${database}" arg2="sql-server-2005" />
+					<equals arg1="${database}" arg2="sql-server-2008" />
 					<equals arg1="${database}" arg2="sybase" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2005, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
 			</then>
 		</if>
 	</target>
@@ -2868,7 +2864,7 @@
 		</if>
 	</target>
 
-	<target name="prepare-portal-ext-properties">
+	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<echo file="portal-impl/src/portal-ext.properties">plugin.notifications.enabled=false
 
 jdbc.default.jndi.name=
@@ -3685,11 +3681,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					</elseif>
 					<else>
 						<exec executable="${plink.executable}">
-							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\${tstamp.value}" />
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\temporary" />
 						</exec>
 
 						<exec executable="${pscp.executable}">
-							<arg line="-pw ${vm.password} create.sql ${vm.username}@${database.host}:\${tstamp.value}" />
+							<arg line="-pw ${vm.password} create.sql ${vm.username}@${database.host}:\temporary" />
 						</exec>
 
 						<exec executable="${plink.executable}">
@@ -3697,7 +3693,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 						</exec>
 
 						<exec executable="${plink.executable}">
-							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c rmdir /q /s C:\temporary" />
 						</exec>
 					</else>
 				</if>

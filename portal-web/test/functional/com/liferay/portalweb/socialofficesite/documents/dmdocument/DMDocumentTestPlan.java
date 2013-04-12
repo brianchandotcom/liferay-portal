@@ -25,6 +25,7 @@ import com.liferay.portalweb.socialofficesite.documents.dmdocument.adddmfolderim
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.adddmfolderimagesite.AddDMFolderImageSiteTests;
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.adddmfolderimagetagssite.AddDMFolderImageTagsSiteTests;
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.cancelcheckoutdmfolderdocumentsite.CancelCheckoutDMFolderDocumentSiteTests;
+import com.liferay.portalweb.socialofficesite.documents.dmdocument.cancelcheckoutsouserdmfolderdocumentsite.CancelCheckoutSOUserDMFolderDocumentSiteTests;
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.checkinmajordmfolderdocumentsite.CheckinMajorDMFolderDocumentSiteTests;
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.checkinminordmfolderdocumentsite.CheckinMinorDMFolderDocumentSiteTests;
 import com.liferay.portalweb.socialofficesite.documents.dmdocument.checkoutdmfolderdocumentsite.CheckoutDMFolderDocumentSiteTests;
@@ -68,6 +69,8 @@ public class DMDocumentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddDMFolderImageSiteTests.suite());
 		testSuite.addTest(AddDMFolderImageTagsSiteTests.suite());
 		testSuite.addTest(CancelCheckoutDMFolderDocumentSiteTests.suite());
+		testSuite.addTest(
+			CancelCheckoutSOUserDMFolderDocumentSiteTests.suite());
 		testSuite.addTest(CheckinMajorDMFolderDocumentSiteTests.suite());
 		testSuite.addTest(CheckinMinorDMFolderDocumentSiteTests.suite());
 		testSuite.addTest(CheckoutDMFolderDocumentSiteTests.suite());

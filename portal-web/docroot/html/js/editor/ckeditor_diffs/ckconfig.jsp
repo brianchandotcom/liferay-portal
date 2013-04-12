@@ -147,7 +147,13 @@ CKEDITOR.on(
 	function(event) {
 		var dialogDefinition = event.data.definition;
 
+		var onShow = dialogDefinition.onShow;
+
 		dialogDefinition.onShow = function() {
+			if (typeof onShow === 'function') {
+				onShow.apply(this);
+			}
+
 			if (window.top != window.self) {
 				var editorElement = this.getParentEditor().container;
 

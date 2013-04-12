@@ -21,11 +21,66 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.nio.ByteBuffer;
+import java.nio.channels.GatheringByteChannel;
+import java.nio.channels.ScatteringByteChannel;
+
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+import org.junit.Assert;
 
 /**
  * @author Shuyang Zhou
  */
 public class WelderTestUtil {
+
+	public static void assertConnectted(
+			final ScatteringByteChannel scatteringByteChannel,
+			final GatheringByteChannel gatheringByteChannel)
+		throws Exception {
+
+		Random random = new Random();
+
+		final byte[] data = new byte[1024 * 1024];
+
+		random.nextBytes(data);
+
+		FutureTask<Void> writeFutureTask = new FutureTask<Void>(
+			new Callable<Void>() {
+
+				public Void call() throws Exception {
+					ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+
+					while (byteBuffer.hasRemaining()) {
+						gatheringByteChannel.write(byteBuffer);
+					}
+
+					return null;
+				}
+			});
+
+		FutureTask<byte[]> readFutureTask = new FutureTask<byte[]>(
+			new Callable<byte[]>() {
+
+				public byte[] call() throws Exception {
+					ByteBuffer byteBuffer = ByteBuffer.allocate(data.length);
+
+					while (byteBuffer.hasRemaining()) {
+						scatteringByteChannel.read(byteBuffer);
+					}
+
+					return byteBuffer.array();
+				}
+			});
+
+		new Thread(writeFutureTask).start();
+		new Thread(readFutureTask).start();
+
+		writeFutureTask.get();
+
+		Assert.assertArrayEquals(data, readFutureTask.get());
+	}
 
 	public static <T extends Welder> T transform(T welder) throws Exception {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

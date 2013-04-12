@@ -46,8 +46,12 @@ public class JournalFolderAssetRenderer
 
 	public static final String TYPE = "folder";
 
-	public JournalFolderAssetRenderer(JournalFolder folder) {
+	public JournalFolderAssetRenderer(
+		JournalFolder folder, int assetRendererType) {
+
 		_folder = folder;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

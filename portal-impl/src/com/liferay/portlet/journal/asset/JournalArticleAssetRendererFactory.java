@@ -95,7 +95,7 @@ public class JournalArticleAssetRendererFactory
 			}
 		}
 
-		return new JournalArticleAssetRenderer(article);
+		return new JournalArticleAssetRenderer(article, type);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class JournalArticleAssetRendererFactory
 			JournalArticleServiceUtil.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		return new JournalArticleAssetRenderer(article);
+		return new JournalArticleAssetRenderer(article, TYPE_LATEST_APPROVED);
 	}
 
 	public String getClassName() {

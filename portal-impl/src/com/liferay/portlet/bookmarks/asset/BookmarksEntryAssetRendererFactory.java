@@ -51,7 +51,7 @@ public class BookmarksEntryAssetRendererFactory
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		return new BookmarksEntryAssetRenderer(entry);
+		return new BookmarksEntryAssetRenderer(entry, type);
 	}
 
 	public String getClassName() {

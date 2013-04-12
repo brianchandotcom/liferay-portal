@@ -35,7 +35,7 @@ public class MBDiscussionAssetRendererFactory
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
-		return new MBDiscussionAssetRenderer(message);
+		return new MBDiscussionAssetRenderer(message, type);
 	}
 
 	@Override

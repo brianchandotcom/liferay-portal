@@ -35,8 +35,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 
-	public MBDiscussionAssetRenderer(MBMessage message) {
-		super(message);
+	public MBDiscussionAssetRenderer(MBMessage message, int assetRendererType) {
+		super(message, assetRendererType);
 
 		_message = message;
 	}

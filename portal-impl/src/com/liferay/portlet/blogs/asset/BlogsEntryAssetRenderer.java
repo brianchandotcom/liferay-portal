@@ -47,8 +47,10 @@ import javax.portlet.WindowState;
 public class BlogsEntryAssetRenderer
 	extends BaseAssetRenderer implements TrashRenderer {
 
-	public BlogsEntryAssetRenderer(BlogsEntry entry) {
+	public BlogsEntryAssetRenderer(BlogsEntry entry, int assetRendererType) {
 		_entry = entry;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

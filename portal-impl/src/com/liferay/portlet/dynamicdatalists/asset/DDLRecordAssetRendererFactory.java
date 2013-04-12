@@ -49,7 +49,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 			recordVersion = record.getRecordVersion();
 		}
 
-		return new DDLRecordAssetRenderer(record, recordVersion);
+		return new DDLRecordAssetRenderer(record, recordVersion, type);
 	}
 
 	public String getClassName() {

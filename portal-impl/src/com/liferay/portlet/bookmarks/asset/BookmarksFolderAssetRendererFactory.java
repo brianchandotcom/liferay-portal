@@ -38,7 +38,7 @@ public class BookmarksFolderAssetRendererFactory
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			classPK);
 
-		return new BookmarksFolderAssetRenderer(folder);
+		return new BookmarksFolderAssetRenderer(folder, type);
 	}
 
 	public String getClassName() {

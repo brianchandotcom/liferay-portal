@@ -61,8 +61,10 @@ public class WikiPageAssetRenderer
 		}
 	}
 
-	public WikiPageAssetRenderer(WikiPage page) {
+	public WikiPageAssetRenderer(WikiPage page, int assetRendererType) {
 		_page = page;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

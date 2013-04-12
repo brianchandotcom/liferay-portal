@@ -50,7 +50,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
-		return new BlogsEntryAssetRenderer(entry);
+		return new BlogsEntryAssetRenderer(entry, type);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		BlogsEntry entry = BlogsEntryServiceUtil.getEntry(groupId, urlTitle);
 
-		return new BlogsEntryAssetRenderer(entry);
+		return new BlogsEntryAssetRenderer(entry, TYPE_LATEST_APPROVED);
 	}
 
 	public String getClassName() {

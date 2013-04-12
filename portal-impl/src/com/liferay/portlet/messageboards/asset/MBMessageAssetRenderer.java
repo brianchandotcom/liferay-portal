@@ -49,8 +49,10 @@ import javax.portlet.WindowState;
 public class MBMessageAssetRenderer
 	extends BaseAssetRenderer implements TrashRenderer {
 
-	public MBMessageAssetRenderer(MBMessage message) {
+	public MBMessageAssetRenderer(MBMessage message, int assetRendererType) {
 		_message = message;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

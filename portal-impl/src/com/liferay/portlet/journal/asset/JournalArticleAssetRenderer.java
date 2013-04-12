@@ -72,8 +72,12 @@ public class JournalArticleAssetRenderer
 		}
 	}
 
-	public JournalArticleAssetRenderer(JournalArticle article) {
+	public JournalArticleAssetRenderer(
+		JournalArticle article, int assetRendererType) {
+
 		_article = article;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	@Override

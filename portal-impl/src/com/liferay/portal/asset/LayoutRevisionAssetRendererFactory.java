@@ -90,7 +90,7 @@ public class LayoutRevisionAssetRendererFactory
 		LayoutRevision layoutRevision =
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
 
-		return new LayoutRevisionAssetRenderer(layoutRevision);
+		return new LayoutRevisionAssetRenderer(layoutRevision, type);
 	}
 
 	public String getClassName() {

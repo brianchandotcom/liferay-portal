@@ -42,7 +42,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 
 		User user = UserLocalServiceUtil.getUserById(classPK);
 
-		return new UserAssetRenderer(user);
+		return new UserAssetRenderer(user, type);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 		User user = UserLocalServiceUtil.getUserByScreenName(
 			group.getCompanyId(), urlTitle);
 
-		return new UserAssetRenderer(user);
+		return new UserAssetRenderer(user, TYPE_LATEST_APPROVED);
 	}
 
 	public String getClassName() {

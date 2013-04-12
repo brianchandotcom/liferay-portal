@@ -47,8 +47,12 @@ public class BookmarksFolderAssetRenderer
 
 	public static final String TYPE = "bookmarks_folder";
 
-	public BookmarksFolderAssetRenderer(BookmarksFolder folder) {
+	public BookmarksFolderAssetRenderer(
+		BookmarksFolder folder, int assetRendererType) {
+
 		_folder = folder;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

@@ -48,7 +48,7 @@ public class CalEventAssetRendererFactory extends BaseAssetRendererFactory {
 
 		CalEvent event = CalEventLocalServiceUtil.getEvent(classPK);
 
-		return new CalEventAssetRenderer(event);
+		return new CalEventAssetRenderer(event, type);
 	}
 
 	public String getClassName() {

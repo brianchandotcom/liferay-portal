@@ -44,8 +44,12 @@ import javax.portlet.RenderResponse;
 public class BookmarksEntryAssetRenderer
 	extends BaseAssetRenderer implements TrashRenderer {
 
-	public BookmarksEntryAssetRenderer(BookmarksEntry entry) {
+	public BookmarksEntryAssetRenderer(
+		BookmarksEntry entry, int assetRendererType) {
+
 		_entry = entry;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

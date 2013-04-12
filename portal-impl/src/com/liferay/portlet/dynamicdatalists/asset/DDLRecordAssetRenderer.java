@@ -46,7 +46,8 @@ import javax.portlet.RenderResponse;
 public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 	public DDLRecordAssetRenderer(
-		DDLRecord record, DDLRecordVersion recordVersion) {
+		DDLRecord record, DDLRecordVersion recordVersion,
+		int assetRendererType) {
 
 		_record = record;
 		_recordVersion = recordVersion;
@@ -61,6 +62,8 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 				_log.warn(e, e);
 			}
 		}
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

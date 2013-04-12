@@ -42,8 +42,10 @@ import javax.portlet.WindowState;
  */
 public class CalEventAssetRenderer extends BaseAssetRenderer {
 
-	public CalEventAssetRenderer(CalEvent event) {
+	public CalEventAssetRenderer(CalEvent event, int assetRendererType) {
 		_event = event;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

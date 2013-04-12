@@ -46,8 +46,10 @@ public class DLFolderAssetRenderer
 
 	public static final String TYPE = "folder";
 
-	public DLFolderAssetRenderer(Folder folder) {
+	public DLFolderAssetRenderer(Folder folder, int assetRendererType) {
 		_folder = folder;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

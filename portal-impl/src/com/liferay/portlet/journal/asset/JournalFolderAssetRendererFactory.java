@@ -37,7 +37,7 @@ public class JournalFolderAssetRendererFactory
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
-		return new JournalFolderAssetRenderer(folder);
+		return new JournalFolderAssetRenderer(folder, type);
 	}
 
 	public String getClassName() {

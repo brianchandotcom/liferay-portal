@@ -42,6 +42,8 @@ public interface AssetRenderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
+	public int getAssetRendererType();
+
 	public String getAddToPagePortletId() throws Exception;
 
 	public String[] getAvailableLocales() throws Exception;

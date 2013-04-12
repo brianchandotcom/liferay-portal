@@ -61,7 +61,8 @@ public class DLFileEntryAssetRenderer
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
-		_type = type;
+
+		setAssetRendererType(type);
 	}
 
 	public String getClassName() {
@@ -137,7 +138,7 @@ public class DLFileEntryAssetRenderer
 	public String getTitle(Locale locale) {
 		String title = null;
 
-		if (_type == AssetRendererFactory.TYPE_LATEST) {
+		if (getAssetRendererType() == AssetRendererFactory.TYPE_LATEST) {
 			title = _fileVersion.getTitle();
 		}
 		else {
@@ -273,7 +274,7 @@ public class DLFileEntryAssetRenderer
 
 			String version = ParamUtil.getString(renderRequest, "version");
 
-			if ((_type == AssetRendererFactory.TYPE_LATEST) ||
+			if ((getAssetRendererType() == AssetRendererFactory.TYPE_LATEST) ||
 				Validator.isNotNull(version)) {
 
 				if ((_fileEntry != null) && Validator.isNotNull(version)) {
@@ -294,6 +295,5 @@ public class DLFileEntryAssetRenderer
 
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
-	private int _type;
 
 }

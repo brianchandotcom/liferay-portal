@@ -38,8 +38,10 @@ import javax.portlet.RenderResponse;
  */
 public class UserAssetRenderer extends BaseAssetRenderer {
 
-	public UserAssetRenderer(User user) {
+	public UserAssetRenderer(User user, int assetRendererType) {
 		_user = user;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

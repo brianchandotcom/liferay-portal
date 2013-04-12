@@ -44,8 +44,10 @@ import javax.portlet.WindowState;
  */
 public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 
-	public MBCategoryAssetRenderer(MBCategory category) {
+	public MBCategoryAssetRenderer(MBCategory category, int assetRendererType) {
 		_category = category;
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

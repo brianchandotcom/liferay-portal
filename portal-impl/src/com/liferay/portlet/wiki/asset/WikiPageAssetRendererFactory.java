@@ -20,7 +20,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -41,12 +40,9 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
-		WikiPage page = null;
+		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
 
-		try {
-			page = WikiPageLocalServiceUtil.getWikiPage(classPK);
-		}
-		catch (NoSuchPageException nspe) {
+		if (page == null) {
 			if (type == TYPE_LATEST_APPROVED) {
 				page = WikiPageLocalServiceUtil.getPage(classPK);
 			}
@@ -59,7 +55,7 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 			}
 		}
 
-		return new WikiPageAssetRenderer(page);
+		return new WikiPageAssetRenderer(page, type);
 	}
 
 	public String getClassName() {

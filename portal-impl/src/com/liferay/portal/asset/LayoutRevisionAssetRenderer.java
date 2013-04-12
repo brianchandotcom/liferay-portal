@@ -40,7 +40,9 @@ import javax.portlet.RenderResponse;
  */
 public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 
-	public LayoutRevisionAssetRenderer(LayoutRevision layoutRevision) {
+	public LayoutRevisionAssetRenderer(
+		LayoutRevision layoutRevision, int assetRendererType) {
+
 		_layoutRevision = layoutRevision;
 
 		try {
@@ -53,6 +55,8 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+
+		setAssetRendererType(assetRendererType);
 	}
 
 	public String getClassName() {

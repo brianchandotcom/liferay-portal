@@ -78,8 +78,6 @@ public class AddWCSubstructure1Test extends BaseTestCase {
 		Thread.sleep(1000);
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
 			RuntimeVariables.replace("Choose"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
-			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
 			"xPath=(//iframe[contains(@src,'Structures')])[2]");
@@ -88,7 +86,8 @@ public class AddWCSubstructure1Test extends BaseTestCase {
 			"//script[contains(@src,'/liferay/store.js')]");
 		selenium.waitForVisible(
 			"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a");
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace("WC Structure Name"),
+			selenium.getText(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a"));
 		selenium.waitForVisible(
 			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/span");

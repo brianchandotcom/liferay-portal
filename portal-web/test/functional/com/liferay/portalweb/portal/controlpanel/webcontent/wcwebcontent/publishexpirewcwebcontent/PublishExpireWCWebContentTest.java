@@ -37,10 +37,10 @@ public class PublishExpireWCWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText(
-				"//tr[@data-title='WC WebContent Title']/td[contains(.,'WC WebContent Title')]"));
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
-		selenium.clickAt("//tr[@data-title='WC WebContent Title']/td[contains(.,'WC WebContent Title')]/span/a",
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[3]/span/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
@@ -51,16 +51,19 @@ public class PublishExpireWCWebContentTest extends BaseTestCase {
 			selenium.getText("//span[@class='workflow-version']"));
 		assertEquals(RuntimeVariables.replace("Status: Expired"),
 			selenium.getText("//span[@class='workflow-status']"));
+		assertEquals("WC WebContent Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText(
-				"//tr[@data-title='WC WebContent Title']/td[3]/span/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
 	}
 }

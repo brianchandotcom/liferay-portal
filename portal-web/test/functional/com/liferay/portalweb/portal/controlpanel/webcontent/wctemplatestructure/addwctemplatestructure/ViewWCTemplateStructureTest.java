@@ -103,20 +103,29 @@ public class ViewWCTemplateStructureTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData()</p><p"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				">$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p>$link.getData()</p><p"),
+				"()</p><p><img src=\"$dm.getData()\"></img></p><p>$fileupload.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$number.getData()</p><p>$radio.getData()</p><p>$select.getData()</p><p>$text.getData()</p><p"),
+				"()</p><p>$html.getData()</p><p><img src=\"$image.getData()\"></img></p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
-		assertEquals(RuntimeVariables.replace(">$textbox.getData()</p>##"),
+		assertEquals(RuntimeVariables.replace(
+				"><p>$integer.getData()</p><p><a href=\"$link.getData()\">Test Link</a"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[5]"));
+		assertEquals(RuntimeVariables.replace(
+				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[6]"));
 		selenium.selectFrame("relative=top");
 	}
 }

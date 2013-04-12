@@ -38,51 +38,54 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 		selenium.waitForVisible("//button[contains(@title,'List View')]");
 		selenium.clickAt("//button[contains(@title,'List View')]",
 			RuntimeVariables.replace("List View"));
-		selenium.waitForVisible("//tr[@data-title='WC WebContent Title']/td[2]");
+		selenium.waitForVisible(
+			"//tr[contains(.,'WC WebContent Title')]/td[1]/input[@type='checkbox']");
 
 		String webContentID = selenium.getText(
-				"//tr[@data-title='WC WebContent Title']/td[2]");
+				"//tr[contains(.,'WC WebContent Title')]/td[2]");
 		RuntimeVariables.setValue("webContentID", webContentID);
 		assertEquals(RuntimeVariables.replace("${webContentID}"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[2]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText(
-				"//tr[@data-title='WC WebContent Title']/td[3]/span/a[contains(.,'WC WebContent Title')]"));
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
 		assertTrue(selenium.isVisible(
-				"//tr[@data-title='WC WebContent Title']/td[5]"));
+				"//tr[contains(.,'WC WebContent Title')]/td[5]"));
 		assertTrue(selenium.isVisible(
-				"//tr[@data-title='WC WebContent Title']/td[6]"));
+				"//tr[contains(.,'WC WebContent Title')]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[7]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[7]"));
 		assertTrue(selenium.isVisible(
-				"//tr[@data-title='WC WebContent Title']/td[8]/span/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[@data-title='WC WebContent Title']/td[8]/span/span/ul/li/strong/a",
-			RuntimeVariables.replace("Actions"));
+				"//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a",
+			RuntimeVariables.replace("Menu Button"));
 		selenium.waitForVisible(
-			"//a[contains(@id,'SearchContainer_1_menu_expire')]");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("${webContentID}"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[2]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText(
-				"//tr[@data-title='WC WebContent Title']/td[contains(.,'WC WebContent Title')]/span/a"));
+				"//tr[contains(.,'WC WebContent Title')]/td/span/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[4]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
 		assertTrue(selenium.isVisible(
-				"//tr[@data-title='WC WebContent Title']/td[5]/"));
+				"//tr[contains(.,'WC WebContent Title')]/td[5]"));
 		assertTrue(selenium.isVisible(
-				"//tr[@data-title='WC WebContent Title']/td[6]"));
+				"//tr[contains(.,'WC WebContent Title')]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//tr[@data-title='WC WebContent Title']/td[7]"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[7]"));
 	}
 }

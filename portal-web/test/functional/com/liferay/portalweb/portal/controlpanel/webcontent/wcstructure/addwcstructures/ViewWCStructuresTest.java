@@ -106,74 +106,74 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a[contains(.,'Link')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[12]"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[13]"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[14]"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.clickAt("//span[@class='header-back-to']/a",
@@ -233,74 +233,74 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[12]"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[13]"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[14]"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.clickAt("//span[@class='header-back-to']/a",
@@ -358,74 +358,74 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label[contains(.,'Boolean')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[2]"));
-		assertEquals(RuntimeVariables.replace("Image"),
-			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label[contains(.,'Image')]"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label[contains(.,'Date')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label[contains(.,'Decimal')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label[contains(.,'Documents and Media')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label[contains(.,'File Upload')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label[contains(.,'HTML')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]"));
+		assertEquals(RuntimeVariables.replace("Image"),
+			selenium.getText(
+				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label[contains(.,'Integer')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label[contains(.,'Link to Page')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label[contains(.,'Number')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[11]"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label[contains(.,'Radio')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[12]"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label[contains(.,'Select')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[12]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[13]"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label[contains(.,'Text')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[13]/div/label"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[14]"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label[contains(.,'Text Box')]"));
+				"//div[@class='aui-diagram-builder-drop-container']/div[14]/div/label"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.selectFrame("relative=top");

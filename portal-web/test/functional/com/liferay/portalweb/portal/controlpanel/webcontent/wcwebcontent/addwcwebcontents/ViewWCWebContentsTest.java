@@ -59,6 +59,8 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals("WC WebContent1 Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent1 Content");
@@ -88,6 +90,8 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals("WC WebContent2 Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent2 Content");
@@ -117,6 +121,8 @@ public class ViewWCWebContentsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals("WC WebContent3 Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.waitForText("//body", "WC WebContent3 Content");

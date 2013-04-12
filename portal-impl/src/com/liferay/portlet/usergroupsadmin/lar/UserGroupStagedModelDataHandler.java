@@ -15,8 +15,8 @@
 package com.liferay.portlet.usergroupsadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.ServiceContext;
@@ -43,8 +43,8 @@ public class UserGroupStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(userGroup);
 
 		portletDataContext.addClassedModel(
-			userGroupElement, StagedModelPathUtil.getPath(userGroup), userGroup,
-			NAMESPACE);
+			userGroupElement, ExportImportPathUtil.getModelPath(userGroup),
+			userGroup, UserGroupsAdminPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -57,37 +57,36 @@ public class UserGroupStagedModelDataHandler
 		long companyId = portletDataContext.getCompanyId();
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			userGroup, NAMESPACE);
+			userGroup, UserGroupsAdminPortletDataHandler.NAMESPACE);
+
+		UserGroup existingUserGroup =
+			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+				userGroup.getUuid(), companyId);
+
+		if (existingUserGroup == null) {
+			existingUserGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+				companyId, userGroup.getName());
+		}
 
 		UserGroup importedUserGroup = null;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			UserGroup existingUserGroup =
-				UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
-					userGroup.getUuid(), companyId);
+		if (existingUserGroup == null) {
+			serviceContext.setUuid(userGroup.getUuid());
 
-			if (existingUserGroup == null) {
-				serviceContext.setUuid(userGroup.getUuid());
-
-				importedUserGroup = UserGroupLocalServiceUtil.addUserGroup(
-					userId, companyId, userGroup.getName(),
-					userGroup.getDescription(), serviceContext);
-			}
-			else {
-				importedUserGroup = UserGroupLocalServiceUtil.updateUserGroup(
-					companyId, existingUserGroup.getUserGroupId(),
-					userGroup.getName(), userGroup.getDescription(),
-					serviceContext);
-			}
-		}
-		else {
 			importedUserGroup = UserGroupLocalServiceUtil.addUserGroup(
 				userId, companyId, userGroup.getName(),
 				userGroup.getDescription(), serviceContext);
 		}
+		else {
+			importedUserGroup = UserGroupLocalServiceUtil.updateUserGroup(
+				companyId, existingUserGroup.getUserGroupId(),
+				userGroup.getName(), userGroup.getDescription(),
+				serviceContext);
+		}
 
 		portletDataContext.importClassedModel(
-			userGroup, importedUserGroup, NAMESPACE);
+			userGroup, importedUserGroup,
+			UserGroupsAdminPortletDataHandler.NAMESPACE);
 	}
 
 }

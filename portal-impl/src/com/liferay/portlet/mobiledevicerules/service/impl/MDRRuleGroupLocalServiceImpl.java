@@ -29,12 +29,14 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Edward C. Han
+ * @author Manuel de la Peña
  */
 public class MDRRuleGroupLocalServiceImpl
 	extends MDRRuleGroupLocalServiceBaseImpl {
@@ -178,32 +180,38 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	public List<MDRRuleGroup> search(
-			long groupId, String name, boolean andOperator, int start, int end)
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		return mdrRuleGroupFinder.findByG_N(
-			groupId, name, andOperator, start, end);
+			groupId, name, params, andOperator, start, end);
 	}
 
 	public List<MDRRuleGroup> searchByKeywords(
-			long groupId, String keywords, boolean andOperator, int start,
-			int end)
+			long groupId, String keywords, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.findByKeywords(groupId, keywords, start, end);
+		return mdrRuleGroupFinder.findByKeywords(
+			groupId, keywords, params, start, end);
 	}
 
 	public int searchByKeywordsCount(
-			long groupId, String keywords, boolean andOperator)
+			long groupId, String keywords, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
+		return mdrRuleGroupFinder.countByKeywords(groupId, params, keywords);
 	}
 
-	public int searchCount(long groupId, String name, boolean andOperator)
+	public int searchCount(
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
+		return mdrRuleGroupFinder.countByG_N(
+			groupId, name, params, andOperator);
 	}
 
 	public MDRRuleGroup updateRuleGroup(

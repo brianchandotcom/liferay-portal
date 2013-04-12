@@ -285,11 +285,11 @@ serverURL.setParameter("tabs3", tabs3);
 
 					// Property
 
-					row.addText(StringUtil.shorten(property, 80));
+					row.addText(HtmlUtil.escape(StringUtil.shorten(property, 80)));
 
 					// Value
 
-					row.addText(StringUtil.shorten(value, 80));
+					row.addText(HtmlUtil.escape(StringUtil.shorten(value, 80)));
 
 					// Add result row
 

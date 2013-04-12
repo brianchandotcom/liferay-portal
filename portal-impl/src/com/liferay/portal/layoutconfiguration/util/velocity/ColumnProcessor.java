@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portal.layoutconfiguration.util.velocity;
 
-<%@ page import="java.util.regex.Matcher" %><%@
-page import="java.util.regex.Pattern" %>
+/**
+ * @author Raymond Augé
+ */
+public interface ColumnProcessor {
 
-<%@ include file="/html/portlet/layout_configuration/init-ext.jsp" %>
+	public String processColumn(String columnId) throws Exception;
+
+	public String processColumn(String columnId, String classNames)
+		throws Exception;
+
+	public String processMax() throws Exception;
+
+	public String processPortlet(String portletId) throws Exception;
+
+}

@@ -464,7 +464,11 @@
 
 		<!-- Dockbar -->
 
-		<action path="/dockbar/view" forward="portlet.dockbar.view" />
+		<action path="/dockbar/add_panel" forward="portlet.dockbar.add_panel" />
+
+		<action path="/dockbar/view" type="com.liferay.portlet.dockbar.action.ViewAction">
+			<forward name="portlet.dockbar.view" path="portlet.dockbar.view" />
+		</action>
 
 		<!-- Document Library -->
 
@@ -946,10 +950,6 @@
 		<action path="/language/view" type="com.liferay.portlet.language.action.ViewAction">
 			<forward name="portlet.language.view" path="portlet.language.view" />
 		</action>
-
-		<!-- Layout Configuration -->
-
-		<action path="/layout_configuration/view" forward="portlet.layout_configuration.view" />
 
 		<!-- Layout Prototypes -->
 

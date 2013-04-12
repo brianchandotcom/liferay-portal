@@ -31,12 +31,12 @@ page import="com.liferay.portal.UserPasswordException" %><%@
 page import="com.liferay.portal.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.templateparser.TransformException" %><%@
 page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
+page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
 page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %><%@
-page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 

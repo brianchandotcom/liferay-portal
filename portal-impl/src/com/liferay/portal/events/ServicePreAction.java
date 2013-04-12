@@ -1006,8 +1006,7 @@ public class ServicePreAction extends Action {
 					}
 
 					themeDisplay.setURLAddContent(
-						"Liferay.LayoutConfiguration.toggle('".concat(
-							PortletKeys.LAYOUT_CONFIGURATION).concat("');"));
+						"Liferay.Dockbar.loadAddPanel();");
 				}
 
 				if (hasCustomizeLayoutPermission && customizedView) {
@@ -1018,8 +1017,7 @@ public class ServicePreAction extends Action {
 					}
 
 					themeDisplay.setURLAddContent(
-						"Liferay.LayoutConfiguration.toggle('".concat(
-							PortletKeys.LAYOUT_CONFIGURATION).concat("');"));
+						"Liferay.Dockbar.loadAddPanel();");
 				}
 			}
 

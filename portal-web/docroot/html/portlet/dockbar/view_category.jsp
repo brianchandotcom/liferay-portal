@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_configuration/init.jsp" %>
+<%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <%
 PortletCategory portletCategory = (PortletCategory)request.getAttribute(WebKeys.PORTLET_CATEGORY);
@@ -75,9 +75,13 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<div class="lfr-add-content <%= layout.isTypePortlet() ? "collapsed" : "" %>" id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>">
-		<h2>
-			<a href="javascript:;"><%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %></a>
-		</h2>
+		<div class="lfr-title-category">
+			<h2>
+				<a href="javascript:;">
+					<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %>
+				</a>
+			</h2>
+		</div>
 
 		<ul class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">
 
@@ -88,7 +92,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
 			%>
 
-				<liferay-util:include page="/html/portlet/layout_configuration/view_category.jsp" />
+				<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
 
 			<%
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);

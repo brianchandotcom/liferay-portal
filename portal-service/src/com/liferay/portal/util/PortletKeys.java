@@ -100,8 +100,6 @@ public class PortletKeys {
 
 	public static final String LANGUAGE = "82";
 
-	public static final String LAYOUT_CONFIGURATION = "87";
-
 	public static final String LAYOUT_PROTOTYPE = "146";
 
 	public static final String LAYOUT_SET_PROTOTYPE = "149";

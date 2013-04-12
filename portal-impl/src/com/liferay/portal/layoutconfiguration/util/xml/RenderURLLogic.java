@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util.xml;
+package com.liferay.portal.layoutconfiguration.util.xml;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;

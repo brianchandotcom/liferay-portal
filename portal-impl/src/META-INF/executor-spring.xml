@@ -39,7 +39,7 @@
 				<entry>
 					<key>
 						<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
-							<constructor-arg value="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
+							<constructor-arg value="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
 						</bean>
 					</key>
 					<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolExecutor">
@@ -68,7 +68,7 @@
 							<bean class="com.liferay.portal.kernel.util.NamedThreadFactory">
 								<constructor-arg name="name">
 									<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
-										<constructor-arg value="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
+										<constructor-arg value="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
 									</bean>
 								</constructor-arg>
 								<constructor-arg name="priority">

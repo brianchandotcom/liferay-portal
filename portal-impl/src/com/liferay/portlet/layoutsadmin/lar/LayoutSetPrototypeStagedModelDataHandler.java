@@ -72,7 +72,6 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		LayoutSetPrototype importedLayoutSetPrototype = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-
 			LayoutSetPrototype existingLayoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.
 					fetchLayoutSetPrototypeByUuidAndCompanyId(

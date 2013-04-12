@@ -24,6 +24,9 @@ import com.liferay.portalweb.socialofficesite.blogs.blogsentry.deleteblogsentrys
 import com.liferay.portalweb.socialofficesite.blogs.blogsentry.editblogsentrysite.EditBlogsEntrySiteTests;
 import com.liferay.portalweb.socialofficesite.blogs.blogsentry.editpermissionsblogsentry2guestnoview.EditPermissionsBlogsEntry2GuestNoViewTests;
 import com.liferay.portalweb.socialofficesite.blogs.blogsentry.rateblogsentrysite.RateBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.sousaddblogsentrysite.SOUs_AddBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.sousdeleteblogsentrysite.SOUs_DeleteBlogsEntrySiteTests;
+import com.liferay.portalweb.socialofficesite.blogs.blogsentry.souseditblogsentrysite.SOUs_EditBlogsEntrySiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,6 +48,9 @@ public class BlogsEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditBlogsEntrySiteTests.suite());
 		testSuite.addTest(EditPermissionsBlogsEntry2GuestNoViewTests.suite());
 		testSuite.addTest(RateBlogsEntrySiteTests.suite());
+		testSuite.addTest(SOUs_AddBlogsEntrySiteTests.suite());
+		testSuite.addTest(SOUs_DeleteBlogsEntrySiteTests.suite());
+		testSuite.addTest(SOUs_EditBlogsEntrySiteTests.suite());
 
 		return testSuite;
 	}

@@ -39,7 +39,12 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
-		return new MBMessageAssetRenderer(message);
+		MBMessageAssetRenderer mbMessageAssetRenderer =
+			new MBMessageAssetRenderer(message);
+
+		mbMessageAssetRenderer.setAssetRendererType(type);
+
+		return mbMessageAssetRenderer;
 	}
 
 	public String getClassName() {

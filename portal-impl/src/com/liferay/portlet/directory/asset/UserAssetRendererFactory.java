@@ -42,7 +42,11 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 
 		User user = UserLocalServiceUtil.getUserById(classPK);
 
-		return new UserAssetRenderer(user);
+		UserAssetRenderer userAssetRenderer = new UserAssetRenderer(user);
+
+		userAssetRenderer.setAssetRendererType(type);
+
+		return userAssetRenderer;
 	}
 
 	@Override

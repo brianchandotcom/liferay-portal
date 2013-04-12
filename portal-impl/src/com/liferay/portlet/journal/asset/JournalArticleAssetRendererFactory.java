@@ -95,7 +95,12 @@ public class JournalArticleAssetRendererFactory
 			}
 		}
 
-		return new JournalArticleAssetRenderer(article);
+		JournalArticleAssetRenderer journalArticleAssetRenderer =
+			new JournalArticleAssetRenderer(article);
+
+		journalArticleAssetRenderer.setAssetRendererType(type);
+
+		return journalArticleAssetRenderer;
 	}
 
 	@Override

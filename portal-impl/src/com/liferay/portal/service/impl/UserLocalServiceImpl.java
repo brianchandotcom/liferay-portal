@@ -1164,7 +1164,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userPassword = PasswordEncryptorUtil.encrypt(userPassword);
 			}
 
-			String encPassword = PasswordEncryptorUtil.encrypt(password);
+			String encPassword = PasswordEncryptorUtil.encrypt(
+				password, userPassword);
 
 			if (userPassword.equals(password) ||
 				userPassword.equals(encPassword)) {
@@ -1314,32 +1315,33 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				return false;
 			}
 
-			String password = user.getPassword();
+			String userPassword = user.getPassword();
 
 			if (user.isPasswordEncrypted()) {
-				if (password.equals(encPassword)) {
+				if (userPassword.equals(encPassword)) {
 					return true;
 				}
 
 				if (!PropsValues.PORTAL_JAAS_STRICT_PASSWORD) {
 					encPassword = PasswordEncryptorUtil.encrypt(
-						encPassword, password);
+						encPassword, userPassword);
 
-					if (password.equals(encPassword)) {
+					if (userPassword.equals(encPassword)) {
 						return true;
 					}
 				}
 			}
 			else {
 				if (!PropsValues.PORTAL_JAAS_STRICT_PASSWORD) {
-					if (password.equals(encPassword)) {
+					if (userPassword.equals(encPassword)) {
 						return true;
 					}
 				}
 
-				password = PasswordEncryptorUtil.encrypt(password);
+				userPassword = PasswordEncryptorUtil.encrypt(
+					userPassword, encPassword);
 
-				if (password.equals(encPassword)) {
+				if (userPassword.equals(encPassword)) {
 					return true;
 				}
 			}
@@ -1683,9 +1685,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new SystemException(ee);
 		}
 
-		String encPassword = PasswordEncryptorUtil.encrypt(password);
+		String userPassword = user.getPassword();
+		String encPassword = PasswordEncryptorUtil.encrypt(
+			password, userPassword);
 
-		if (user.getPassword().equals(encPassword)) {
+		if (userPassword.equals(encPassword)) {
 			if (isPasswordExpired(user)) {
 				user.setPasswordReset(true);
 

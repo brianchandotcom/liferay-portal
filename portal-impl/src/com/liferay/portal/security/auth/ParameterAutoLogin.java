@@ -110,7 +110,8 @@ public class ParameterAutoLogin extends BaseAutoLogin implements AuthVerifier {
 				userPassword = PasswordEncryptorUtil.encrypt(userPassword);
 			}
 
-			String encPassword = PasswordEncryptorUtil.encrypt(password);
+			String encPassword = PasswordEncryptorUtil.encrypt(
+				password, userPassword);
 
 			if (!userPassword.equals(password) &&
 				!userPassword.equals(encPassword)) {

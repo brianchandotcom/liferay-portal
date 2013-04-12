@@ -91,6 +91,16 @@ public class AssetVocabularyServiceUtil {
 		return getService().addVocabulary(title, serviceContext);
 	}
 
+	/**
+	* Deletes the vocabularies identified by vocabularyIds. If the
+	* serviceContext is not isFailOnPortalException, then the method will
+	* return a list with the vocabularies that could not be deleted.
+	*
+	* @param vocabularyIds the primary key of the vocabularies to be deleted
+	* @param serviceContext the service context to be applied.
+	* @return the list of vocabularies that could not be deleted when
+	serviceContext.isFailOnPortalException is false
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> deleteVocabularies(
 		long[] vocabularyIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

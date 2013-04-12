@@ -76,6 +76,16 @@ public class AssetCategoryServiceUtil {
 		return getService().addCategory(title, vocabularyId, serviceContext);
 	}
 
+	/**
+	* Deletes the categories identified by categoryIds. If the
+	* serviceContext is not isFailOnPortalException, then the method will
+	* return a list with the categories that could not be deleted.
+	*
+	* @param categoryIds the primary key of the categories to be deleted
+	* @param serviceContext the service context to be applied.
+	* @return the list of categories that could not be deleted when
+	serviceContext.isFailOnPortalException is false
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> deleteCategories(
 		long[] categoryIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

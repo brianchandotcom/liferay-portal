@@ -25,24 +25,32 @@ public class AddEventTypeVacationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_8_title", RuntimeVariables.replace("Off to Yosemite."));
-		selenium.type("_8_description",
+		selenium.type("//input[@id='_8_title']",
+			RuntimeVariables.replace("Off to Yosemite."));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Looking forward to camping."));
-		selenium.clickAt("_8_timeZoneSensitiveCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.select("_8_type", RuntimeVariables.replace("label=Vacation"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
+			RuntimeVariables.replace("Time Zone Sensitive Checkbox"));
+		selenium.select("//select[@id='_8_type']",
+			RuntimeVariables.replace("vacation"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
-			selenium.getText(
-				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a"));
+			selenium.getText("//tr[contains(.,'Off to Yosemite.')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Vacation"),
+			selenium.getText("//tr[contains(.,'Off to Yosemite.')]/td[3]/a"));
 	}
 }

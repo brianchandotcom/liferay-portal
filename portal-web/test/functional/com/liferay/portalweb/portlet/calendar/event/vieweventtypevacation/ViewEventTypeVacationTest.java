@@ -25,30 +25,27 @@ public class ViewEventTypeVacationTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Day", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
-		selenium.waitForPageToLoad("30000");
+		selenium.select("//select", RuntimeVariables.replace("vacation"));
 		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
 			selenium.getText("//div[@class='event-title']"));
-		selenium.clickAt("link=Week", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
-		selenium.waitForPageToLoad("30000");
+		selenium.select("//select", RuntimeVariables.replace("vacation"));
 		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
 			selenium.getText(
 				"//tr[@class='portlet-section-alternate results-row alt']/td[1]/a"));
-		selenium.clickAt("link=Month", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select", RuntimeVariables.replace("label=Vacation"));
-		selenium.waitForPageToLoad("30000");
+		selenium.select("//select", RuntimeVariables.replace("vacation"));
 		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
 			selenium.getText(
 				"//tr[@class='portlet-section-alternate results-row alt']/td[1]/a"));
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Off to Yosemite."),
 			selenium.getText(

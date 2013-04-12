@@ -25,29 +25,40 @@ public class EditEventTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Test Event"),
+			selenium.getText("//tr[contains(.,'Test Event')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Test Event"),
 			selenium.getText(
 				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a"));
-		Thread.sleep(5000);
-		selenium.clickAt("//td[4]/span/ul/li/strong/a",
+		Thread.sleep(1000);
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("_8_title", RuntimeVariables.replace("Test Event Edited"));
-		selenium.type("_8_description",
-			RuntimeVariables.replace("This is a Test Event. Edited."));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("Test Event Edited"),
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForPageToLoad("30000");
+		selenium.type("//input[@id='_8_title']",
+			RuntimeVariables.replace("Test Event Edited"));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
+			RuntimeVariables.replace("This is a Test Event. Edited."));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Test Event Edited"),
+			selenium.getText("//tr[contains(.,'Test Event Edited')]/td[2]/a"));
 	}
 }

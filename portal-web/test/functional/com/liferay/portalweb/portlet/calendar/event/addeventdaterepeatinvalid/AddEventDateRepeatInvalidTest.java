@@ -25,23 +25,34 @@ public class AddEventDateRepeatInvalidTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_8_title",
+		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Invalid End Date Test Event"));
-		selenium.waitForElementPresent("_8_dailyInterval");
-		selenium.type("_8_dailyInterval", RuntimeVariables.replace("1"));
-		selenium.clickAt("_8_endDateMonth",
-			RuntimeVariables.replace("End Date Month"));
-		selenium.select("_8_endDateMonth",
-			RuntimeVariables.replace("label=February"));
-		Thread.sleep(5000);
-		selenium.select("_8_endDateMonth",
-			RuntimeVariables.replace("label=February"));
-		assertFalse(selenium.isPartialText("_8_endDateDay", "30"));
+		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
+			RuntimeVariables.replace("Repeat Daily"));
+		selenium.waitForVisible("//input[@id='_8_dailyInterval']");
+		selenium.type("//input[@id='_8_dailyInterval']",
+			RuntimeVariables.replace("1"));
+		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
+			RuntimeVariables.replace("End by"));
+		selenium.select("//select[@id='_8_enddatemonth']",
+			RuntimeVariables.replace("February"));
+		selenium.select("//select[@id='_8_enddateday']",
+			RuntimeVariables.replace("23"));
+		selenium.select("//select[@id='_8_enddateyear']",
+			RuntimeVariables.replace("2009"));
+		selenium.clickAt("//input[@value='Save']	",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace(
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]	"));
+		assertEquals(RuntimeVariables.replace("Please enter a valid end date."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]	"));
 	}
 }

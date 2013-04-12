@@ -14,38 +14,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Event']</td>
-	<td></td>
+	<td>Add Event</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_startDateMonth</td>
-	<td>label=January</td>
+	<td>//select[@id='_8_startdatemonth']</td>
+	<td>January</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_startDateDay</td>
-	<td>label=1</td>
+	<td>//select[@id='_8_startdateday']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_startDateYear</td>
-	<td>label=2010</td>
+	<td>//select[@id='_8_startdateyear']</td>
+	<td>2010</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_8_title</td>
+	<td>//input[@id='_8_title']</td>
 	<td>Weekly Repeating Event</td>
 </tr>
 <tr>
@@ -54,49 +49,179 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>_8_weeklyInterval</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_8_weeklyInterval</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td>1</td>
 </tr>
 <tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos1Checkbox'))</td>
+	<td>sundayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${sundayChecked}</td>
+	<td>SundayNotChecked</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>_8_weeklyDayPos5Checkbox</td>
+	<td>//input[@id='_8_weeklyDayPos1Checkbox']</td>
+	<td>Sunday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SundayNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos2Checkbox'))</td>
+	<td>mondayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${mondayChecked}</td>
+	<td>MondayNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_8_weeklyDayPos2Checkbox']</td>
+	<td>Monday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>MondayNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos3Checkbox'))</td>
+	<td>tuesdayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${tuesdayChecked}</td>
+	<td>TuesdayNotChecked</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TuesdayNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos4Checkbox'))</td>
+	<td>wednesdayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${wednesdayChecked}</td>
+	<td>WednesdayNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_8_weeklyDayPos4Checkbox']</td>
+	<td>Wednesday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WednesdayNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos5Checkbox'))</td>
+	<td>thursdayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${thursdayChecked}</td>
+	<td>ThursdayChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_8_weeklyDayPos5Checkbox']</td>
+	<td>Thursday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ThursdayChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos6Checkbox'))</td>
+	<td>fridayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${fridayChecked}</td>
+	<td>FridayNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_8_weeklyDayPos6Checkbox']</td>
+	<td>Friday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>FridayNotChecked</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>eval(selenium.isChecked('_8_weeklyDayPos7Checkbox'))</td>
+	<td>saturdayChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${saturdayChecked}</td>
+	<td>SaturdayNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_8_weeklyDayPos7Checkbox']</td>
+	<td>Saturday Checkbox</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SaturdayNotChecked</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//input[@name='_8_endDateType' and @value='2']</td>
-	<td></td>
+	<td>End by</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateMonth</td>
-	<td>label=January</td>
+	<td>//select[@id='_8_enddatemonth']</td>
+	<td>January</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateDay</td>
-	<td>label=1</td>
+	<td>//select[@id='_8_enddateday']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_endDateYear</td>
-	<td>label=2011</td>
+	<td>//select[@id='_8_enddateyear']</td>
+	<td>2011</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-	<td></td>
 </tr>
 <tr>
 	<td>open</td>
@@ -104,24 +229,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Events</td>
-	<td></td>
+	<td>Events</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Weekly Repeating Event</td>
-	<td></td>
+	<td>Weekly Repeating Event</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -144,58 +264,63 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Events</td>
-	<td></td>
+	<td>Events</td>
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
-	<td></td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_startDateMonth</td>
+	<td>//select[@id='_8_startdatemonth']</td>
 	<td>January</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_startDateDay</td>
+	<td>//select[@id='_8_startdateday']</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_startDateYear</td>
+	<td>//select[@id='_8_startdateyear']</td>
 	<td>2010</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_8_title</td>
+	<td>//input[@id='_8_title']</td>
 	<td>Weekly Repeating Event</td>
 </tr>
 <tr>
@@ -205,17 +330,17 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>_8_weeklyInterval</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>_8_weeklyInterval</td>
+	<td>//input[@id='_8_weeklyInterval']</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>_8_weeklyDayPos5Checkbox</td>
+	<td>//input[@id='_8_weeklyDayPos5Checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,17 +350,17 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_endDateMonth</td>
+	<td>//select[@id='_8_enddatemonth']</td>
 	<td>January</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_endDateDay</td>
+	<td>//select[@id='_8_enddateday']</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>_8_endDateYear</td>
+	<td>//select[@id='_8_enddateyear']</td>
 	<td>2011</td>
 </tr>
 <tr>
@@ -244,24 +369,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=2010</td>
+	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -274,19 +394,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Weekly Repeating Event</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='event-title']/a</td>
+	<td>Weekly Repeating Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=2010</td>
+	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -299,19 +419,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Weekly Repeating Event</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='event-title']/a</td>
+	<td>Weekly Repeating Event</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Year</td>
-	<td></td>
+	<td>Year</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>//select</td>
-	<td>label=2010</td>
+	<td>2010</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -325,10 +445,9 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>link=Weekly Repeating Event</td>
-	<td></td>
+	<td>//div[@class='event-title']/a</td>
+	<td>Weekly Repeating Event</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -25,26 +25,35 @@ public class AddEventTypeConcertTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("_8_title",
-			RuntimeVariables.replace("Caedmon's Call Concert."));
-		selenium.type("_8_description",
+		selenium.type("//input[@id='_8_title']",
+			RuntimeVariables.replace("Caedmons Call Concert."));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
+		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
+		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace(
-				"I love this band guys. Everyone should see them. I've never seen them before."));
-		selenium.clickAt("_8_timeZoneSensitiveCheckbox",
-			RuntimeVariables.replace(""));
-		selenium.select("_8_type", RuntimeVariables.replace("label=Concert"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+				"I love this band guys. Everyone should see them. Ive never seen them before."));
+		selenium.clickAt("//input[@id='_8_timeZoneSensitiveCheckbox']",
+			RuntimeVariables.replace("Time Zone Sensitive Checkbox"));
+		selenium.select("//select[@id='_8_type']",
+			RuntimeVariables.replace("concert"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
-		assertEquals(RuntimeVariables.replace("Caedmon's Call Concert."),
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("Caedmons Call Concert."),
 			selenium.getText(
-				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a"));
+				"//tr[contains(.,'Caedmons Call Concert.')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Concert"),
+			selenium.getText(
+				"//tr[contains(.,'Caedmons Call Concert.')]/td[3]/a"));
 	}
 }

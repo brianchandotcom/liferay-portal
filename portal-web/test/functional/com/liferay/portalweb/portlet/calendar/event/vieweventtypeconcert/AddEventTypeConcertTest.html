@@ -14,56 +14,65 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Calendar Test Page</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Event']</td>
-	<td></td>
+	<td>Add Event</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_8_title</td>
-	<td>Caedmon's Call Concert.</td>
+	<td>//input[@id='_8_title']</td>
+	<td>Caedmons Call Concert.</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>_8_description</td>
-	<td>I love this band guys. Everyone should see them. I've never seen them before.</td>
+	<td>waitForVisible</td>
+	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
+	<td>Cut Button Disabled</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>typeFrame</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>I love this band guys. Everyone should see them. Ive never seen them before.</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>_8_timeZoneSensitiveCheckbox</td>
-	<td></td>
+	<td>//input[@id='_8_timeZoneSensitiveCheckbox']</td>
+	<td>Time Zone Sensitive Checkbox</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_8_type</td>
-	<td>label=Concert</td>
+	<td>//select[@id='_8_type']</td>
+	<td>concert</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Your request completed successfully.</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a</td>
-	<td>Caedmon's Call Concert.</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Caedmons Call Concert.')]/td[2]/a</td>
+	<td>Caedmons Call Concert.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Caedmons Call Concert.')]/td[3]/a</td>
+	<td>Concert</td>
+</tr>
 </tbody></table>
 </body>
 </html>

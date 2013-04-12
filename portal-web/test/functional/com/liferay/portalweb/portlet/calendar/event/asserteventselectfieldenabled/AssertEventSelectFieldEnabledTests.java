@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.calendar.event.asserteventselectfieldenabl
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.calendar.event.addevent.TearDownEventTest;
 import com.liferay.portalweb.portlet.calendar.portlet.addportletcalendar.AddPageCalendarTest;
 import com.liferay.portalweb.portlet.calendar.portlet.addportletcalendar.AddPortletCalendarTest;
 

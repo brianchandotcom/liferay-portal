@@ -25,18 +25,19 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Event']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Event"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("_8_startDateMonth",
-			RuntimeVariables.replace("label=January"));
-		selenium.select("_8_startDateDay", RuntimeVariables.replace("label=1"));
-		selenium.select("_8_startDateYear",
-			RuntimeVariables.replace("label=2010"));
-		selenium.type("_8_title",
+		selenium.select("//select[@id='_8_startdatemonth']",
+			RuntimeVariables.replace("January"));
+		selenium.select("//select[@id='_8_startdateday']",
+			RuntimeVariables.replace("1"));
+		selenium.select("//select[@id='_8_startdateyear']",
+			RuntimeVariables.replace("2010"));
+		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Daily Week Day Repeating Event"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='3']",
 			RuntimeVariables.replace(""));
@@ -44,22 +45,26 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@name='_8_endDateType' and @value='2']",
 			RuntimeVariables.replace(""));
-		selenium.select("_8_endDateMonth",
-			RuntimeVariables.replace("label=January"));
-		selenium.select("_8_endDateDay", RuntimeVariables.replace("label=1"));
-		selenium.select("_8_endDateYear", RuntimeVariables.replace("label=2011"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.select("//select[@id='_8_enddatemonth']",
+			RuntimeVariables.replace("January"));
+		selenium.select("//select[@id='_8_enddateday']",
+			RuntimeVariables.replace("1"));
+		selenium.select("//select[@id='_8_enddateyear']",
+			RuntimeVariables.replace("2011"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isTextPresent(
-				"Your request completed successfully."));
+		assertEquals(RuntimeVariables.replace(
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Daily Week Day Repeating Event",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Daily Week Day Repeating Event"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Daily Week Day Repeating Event"),
 			selenium.getText("//div[1]/h1/span"));
@@ -68,38 +73,56 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1/1/11"),
 			selenium.getText("//dl[@class='property-list']/dd[2]"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
-		selenium.clickAt("//td[6]/span/ul/li/strong/a",
-			RuntimeVariables.replace(""));
-		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+		Thread.sleep(1000);
+		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals("January", selenium.getSelectedLabel("_8_startDateMonth"));
-		assertEquals("1", selenium.getSelectedLabel("_8_startDateDay"));
-		assertEquals("2010", selenium.getSelectedLabel("_8_startDateYear"));
+		selenium.select("//select[@id='_8_startdatemonth']",
+			RuntimeVariables.replace("January"));
+		selenium.select("//select[@id='_8_startdateday']",
+			RuntimeVariables.replace("1"));
+		selenium.select("//select[@id='_8_startdateyear']",
+			RuntimeVariables.replace("2010"));
+		selenium.type("//input[@id='_8_title']",
+			RuntimeVariables.replace("Daily Week Day Repeating Event"));
+		assertEquals("January",
+			selenium.getSelectedLabel("//select[@id='_8_startdatemonth']"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[@id='_8_startdateday']"));
+		assertEquals("2010",
+			selenium.getSelectedLabel("//select[@id='_8_startdateyear']"));
 		assertEquals("Daily Week Day Repeating Event",
-			selenium.getValue("_8_title"));
+			selenium.getValue("//input[@id='_8_title']"));
 		assertTrue(selenium.isChecked(
 				"//input[@name='_8_recurrenceType' and @value='3']"));
 		assertTrue(selenium.isChecked(
 				"//input[@name='_8_dailyType' and @value='1']"));
 		assertTrue(selenium.isChecked(
 				"//input[@name='_8_endDateType' and @value='2']"));
-		assertEquals("January", selenium.getSelectedLabel("_8_endDateMonth"));
-		assertEquals("1", selenium.getSelectedLabel("_8_endDateDay"));
-		assertEquals("2011", selenium.getSelectedLabel("_8_endDateYear"));
+		assertEquals("January",
+			selenium.getSelectedLabel("//select[@id='_8_enddatemonth']"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[@id='_8_enddateday']"));
+		assertEquals("2011",
+			selenium.getSelectedLabel("//select[@id='_8_enddateyear']"));
 		selenium.open("/web/guest/home/");
-		selenium.waitForElementPresent("link=Calendar Test Page");
-		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Calendar Test Page",
+			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 		selenium.waitForElementPresent(
@@ -107,9 +130,8 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(1, 1, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"link=Daily Week Day Repeating Event"));
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible("//div[@class='event-title']/a"));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 		selenium.waitForElementPresent(
@@ -117,9 +139,8 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(1, 5, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent(
-				"link=Daily Week Day Repeating Event"));
-		selenium.clickAt("link=Year", RuntimeVariables.replace(""));
+		assertTrue(selenium.isVisible("//div[@class='event-title']/a"));
+		selenium.clickAt("link=Year", RuntimeVariables.replace("Year"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select", RuntimeVariables.replace("label=2010"));
 		selenium.waitForElementPresent(
@@ -127,7 +148,6 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@href, 'javascript:_8_updateCalendar(1, 6, 2010);')]",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementNotPresent(
-				"link=Daily Week Day Repeating Event"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='event-title']/a"));
 	}
 }

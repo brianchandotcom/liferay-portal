@@ -1384,6 +1384,11 @@ public class PortletImporter {
 				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 					portletDataContext.getScopeGroupId(), assetEntryUuid);
 
+				if (assetEntry == null) {
+					assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+						portletDataContext.getCompanyGroupId(), assetEntryUuid);
+				}
+
 				if (assetEntry != null) {
 					assetEntryIds.add(assetEntry.getEntryId());
 				}
@@ -1398,6 +1403,11 @@ public class PortletImporter {
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				portletDataContext.getScopeGroupId(), sourceUuid);
+
+			if (assetEntry == null) {
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					portletDataContext.getCompanyGroupId(), sourceUuid);
+			}
 
 			if (assetEntry != null) {
 				AssetLinkLocalServiceUtil.updateLinks(

@@ -53,6 +53,7 @@
 						var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
 
 						openMSOfficeError.html(errorMessage);
+
 						openMSOfficeError.show();
 					}
 				);

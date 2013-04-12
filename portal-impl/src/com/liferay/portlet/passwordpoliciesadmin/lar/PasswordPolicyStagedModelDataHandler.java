@@ -15,8 +15,8 @@
 package com.liferay.portlet.passwordpoliciesadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
@@ -43,7 +43,7 @@ public class PasswordPolicyStagedModelDataHandler
 			portletDataContext.getExportDataStagedModelElement(passwordPolicy);
 
 		portletDataContext.addClassedModel(
-			policyElement, StagedModelPathUtil.getPath(passwordPolicy),
+			policyElement, ExportImportPathUtil.getModelPath(passwordPolicy),
 			passwordPolicy, PasswordPolicyPortletDataHandler.NAMESPACE);
 	}
 
@@ -67,8 +67,9 @@ public class PasswordPolicyStagedModelDataHandler
 					passwordPolicy.getUuid(), companyId);
 
 		if (existingPasswordPolicy == null) {
-			existingPasswordPolicy = PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicy(companyId, passwordPolicy.getName());
+			existingPasswordPolicy =
+				PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
+					companyId, passwordPolicy.getName());
 		}
 
 		PasswordPolicy importedPasswordPolicy = null;

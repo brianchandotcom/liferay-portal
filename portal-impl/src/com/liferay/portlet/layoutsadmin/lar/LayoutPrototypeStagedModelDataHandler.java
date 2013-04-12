@@ -15,8 +15,8 @@
 package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelPathUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -44,8 +44,8 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			layoutPrototypeElement,
-			StagedModelPathUtil.getPath(layoutPrototype), layoutPrototype,
-			LayoutPrototypePortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(layoutPrototype),
+			layoutPrototype, LayoutPrototypePortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -62,33 +62,36 @@ public class LayoutPrototypeStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutPrototype, LayoutPrototypePortletDataHandler.NAMESPACE);
 
+		LayoutPrototype importedLayoutPrototype = null;
+
+		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutPrototype existingLayoutPrototype =
 				LayoutPrototypeLocalServiceUtil.
 					fetchLayoutPrototypeByUuidAndCompanyId(
 						layoutPrototype.getUuid(), companyId);
 
 			if (existingLayoutPrototype == null) {
-				existingLayoutPrototype =
-					LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
-						companyId, layoutPrototype.getName());
+				serviceContext.setUuid(layoutPrototype.getUuid());
+
+				importedLayoutPrototype =
+					LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+						userId, companyId, layoutPrototype.getNameMap(),
+						layoutPrototype.getDescription(),
+						layoutPrototype.isActive(), serviceContext);
 			}
-
-		LayoutPrototype importedLayoutPrototype = null;
-
-		if (existingLayoutPrototype == null) {
-			serviceContext.setUuid(layoutPrototype.getUuid());
-
-			importedLayoutPrototype =
-				LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-					userId, companyId, layoutPrototype.getNameMap(),
-					layoutPrototype.getDescription(),
-					layoutPrototype.isActive(), serviceContext);
+			else {
+				importedLayoutPrototype =
+					LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+						existingLayoutPrototype.getLayoutPrototypeId(),
+						layoutPrototype.getNameMap(),
+						layoutPrototype.getDescription(),
+						layoutPrototype.isActive(), serviceContext);
+			}
 		}
 		else {
 			importedLayoutPrototype =
-				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
-					existingLayoutPrototype.getLayoutPrototypeId(),
-					layoutPrototype.getNameMap(),
+				LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+					userId, companyId, layoutPrototype.getNameMap(),
 					layoutPrototype.getDescription(),
 					layoutPrototype.isActive(), serviceContext);
 		}

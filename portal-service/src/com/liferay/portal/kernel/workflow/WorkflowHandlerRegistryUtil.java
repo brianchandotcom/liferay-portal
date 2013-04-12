@@ -17,10 +17,14 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -91,6 +95,20 @@ public class WorkflowHandlerRegistryUtil {
 		if (WorkflowThreadLocal.isEnabled() &&
 			(serviceContext.getWorkflowAction() !=
 				WorkflowConstants.ACTION_PUBLISH)) {
+
+			return;
+		}
+
+		WorkflowInstanceLink workflowInstanceLink =
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				companyId, groupId, className, classPK);
+
+		if (workflowInstanceLink != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Workflow already started for: " + className + " " +
+						classPK + " from group " + groupId);
+			}
 
 			return;
 		}
@@ -210,6 +228,9 @@ public class WorkflowHandlerRegistryUtil {
 
 		_workflowHandlerRegistry = workflowHandlerRegistry;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WorkflowHandlerRegistryUtil.class);
 
 	private static WorkflowHandlerRegistry _workflowHandlerRegistry;
 

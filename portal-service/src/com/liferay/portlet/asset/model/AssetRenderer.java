@@ -44,6 +44,8 @@ public interface AssetRenderer {
 
 	public String getAddToPagePortletId() throws Exception;
 
+	public int getAssetRendererType();
+
 	public String[] getAvailableLocales() throws Exception;
 
 	public String getClassName();

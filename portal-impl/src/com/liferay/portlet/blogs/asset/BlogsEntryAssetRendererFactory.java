@@ -50,7 +50,12 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
-		return new BlogsEntryAssetRenderer(entry);
+		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
+			new BlogsEntryAssetRenderer(entry);
+
+		blogsEntryAssetRenderer.setAssetRendererType(type);
+
+		return blogsEntryAssetRenderer;
 	}
 
 	@Override

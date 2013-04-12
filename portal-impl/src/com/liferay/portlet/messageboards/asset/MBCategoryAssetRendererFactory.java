@@ -40,7 +40,12 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getMBCategory(classPK);
 
-		return new MBCategoryAssetRenderer(category);
+		MBCategoryAssetRenderer mbCategoryAssetRenderer =
+			new MBCategoryAssetRenderer(category);
+
+		mbCategoryAssetRenderer.setAssetRendererType(type);
+
+		return mbCategoryAssetRenderer;
 	}
 
 	public String getClassName() {

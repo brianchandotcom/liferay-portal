@@ -37,7 +37,12 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
 
-		return new DLFolderAssetRenderer(folder);
+		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
+			folder);
+
+		dlFolderAssetRenderer.setAssetRendererType(type);
+
+		return dlFolderAssetRenderer;
 	}
 
 	public String getClassName() {

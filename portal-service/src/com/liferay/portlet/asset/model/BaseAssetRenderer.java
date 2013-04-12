@@ -70,6 +70,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return _assetRendererFactory;
 	}
 
+	public int getAssetRendererType() {
+		return _assetRendererType;
+	}
+
 	public String[] getAvailableLocales() {
 		return _AVAILABLE_LOCALES;
 	}
@@ -276,6 +280,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			entry.getClassName());
 	}
 
+	public void setAssetRendererType(int assetRendererType) {
+		_assetRendererType = assetRendererType;
+	}
+
 	protected long getControlPanelPlid(
 			LiferayPortletRequest liferayPortletRequest)
 		throws PortalException, SystemException {
@@ -322,5 +330,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private static final String[] _AVAILABLE_LOCALES = new String[0];
 
 	private AssetRendererFactory _assetRendererFactory;
+
+	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
 }

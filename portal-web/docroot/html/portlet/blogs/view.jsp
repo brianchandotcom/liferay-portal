@@ -56,7 +56,11 @@ portletURL.setParameter("struts_action", "/blogs/view");
 		assetEntryQuery.setExcludeZeroViewCount(false);
 		assetEntryQuery.setVisible(Boolean.TRUE);
 
-		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+		if (searchContainer.recalculateCur(AssetEntryServiceUtil.getEntriesCount(assetEntryQuery))) {
+			assetEntryQuery.setEnd(searchContainer.getEnd());
+			assetEntryQuery.setStart(searchContainer.getStart());
+		}
+
 		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 	}
 	else {
@@ -66,11 +70,11 @@ portletURL.setParameter("struts_action", "/blogs/view");
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, status);
+		searchContainer.setTotal(BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, status));
+
 		results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, status, searchContainer.getStart(), searchContainer.getEnd());
 	}
 
-	searchContainer.setTotal(total);
 	searchContainer.setResults(results);
 	%>
 

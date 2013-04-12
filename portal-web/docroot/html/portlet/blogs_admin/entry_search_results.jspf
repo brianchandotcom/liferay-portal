@@ -16,8 +16,9 @@
 
 <%
 if (Validator.isNull(searchTerms.getKeywords())) {
+	searchContainer.setTotal(BlogsEntryLocalServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY));
+
 	results = BlogsEntryLocalServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-	total = BlogsEntryLocalServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
 }
 else {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
@@ -30,7 +31,12 @@ else {
 
 	Hits hits = indexer.search(searchContext);
 
-	total = hits.getLength();
+	if (searchContainer.recalculateCur(hits.getLength())) {
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setStart(searchContainer.getStart());
+
+		hits = indexer.search(searchContext);
+	}
 
 	for (int i = 0; i < hits.getDocs().length; i++) {
 		Document doc = hits.doc(i);
@@ -57,7 +63,7 @@ else {
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", total);
+pageContext.setAttribute("total", searchContainer.getTotal());
 %>
 
 <%!

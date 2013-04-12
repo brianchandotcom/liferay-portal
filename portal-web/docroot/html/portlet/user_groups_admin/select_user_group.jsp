@@ -17,8 +17,7 @@
 <%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
-String callback = ParamUtil.getString(request, "callback", "selectUserGroup");
-String target = ParamUtil.getString(request, "target");
+String eventName = ParamUtil.getString(request, "eventName", "selectUserGroup");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -30,10 +29,10 @@ if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
 
-portletURL.setParameter("callback", callback);
+portletURL.setParameter("eventName", eventName);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectUserGroupFm">
 	<liferay-ui:header
 		title="user-groups"
 	/>
@@ -77,39 +76,29 @@ portletURL.setParameter("callback", callback);
 			keyProperty="userGroupId"
 			modelVar="userGroup"
 		>
-
-			<%
-			String rowHREF = null;
-
-			if (UserGroupMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, userGroup.getUserGroupId())) {
-				StringBundler sb = new StringBundler(10);
-
-				sb.append("javascript:opener.");
-				sb.append(renderResponse.getNamespace());
-				sb.append(callback);
-				sb.append("('");
-				sb.append(userGroup.getUserGroupId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(userGroup.getName()));
-				sb.append("', '");
-				sb.append(target);
-				sb.append("'); window.close();");
-
-				rowHREF = sb.toString();
-			}
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(userGroup.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="description"
 				value="<%= HtmlUtil.escape(userGroup.getDescription()) %>"
 			/>
+
+			<liferay-ui:search-container-column-text>
+				<c:if test="<%= (UserGroupMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, userGroup.getUserGroupId())) %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("usergroupid", userGroup.getUserGroupId());
+					data.put("usergroupname", HtmlUtil.escape(userGroup.getName()));
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
@@ -117,5 +106,21 @@ portletURL.setParameter("callback", callback);
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
+	Liferay.Util.focusFormField(document.<portlet:namespace />selectUserGroupFm.<portlet:namespace />name);
+</aui:script>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectUserGroupFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
 </aui:script>

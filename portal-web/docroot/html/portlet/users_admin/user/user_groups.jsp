@@ -69,39 +69,53 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 
 	<liferay-ui:icon
 		cssClass="modify-link"
+		id="openUserGroupsLink"
 		image="add"
 		label="<%= true %>"
 		message="select"
-		url='<%= "javascript:" + renderResponse.getNamespace() + "openUserGroupSelector();" %>'
+		url="javascript:;"
 	/>
+
+	<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="struts_action" value="/user_groups_admin/select_user_group" />
+		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+	</portlet:renderURL>
+
+	<aui:script use="aui-base,escape">
+		A.one('#<portlet:namespace />openUserGroupsLink').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							align: Liferay.Util.Window.ALIGN_CENTER,
+							constrain: true,
+							modal: true,
+							stack: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectUserGroup',
+						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "user-group") %>',
+						uri: '<%= selectUserGroupURL.toString() %>'
+					},
+					function(event) {
+						var A = AUI();
+
+						var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
+
+						var rowColumns = [];
+
+						rowColumns.push(A.Escape.html(event.usergroupname));
+						rowColumns.push('<a class="modify-link" data-rowId="' + event.usergroupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeUserGroupIcon) %></a>');
+
+						searchContainer.addRow(rowColumns, event.usergroupid);
+						searchContainer.updateDataStore();
+					}
+				);
+			}
+		);
+	</aui:script>
 </c:if>
-
-<aui:script>
-	function <portlet:namespace />openUserGroupSelector() {
-		var userGroupWindow = window.open('<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/user_groups_admin/select_user_group" /><portlet:param name="p_u_i_d" value='<%= String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>', 'usergroup', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
-
-		userGroupWindow.focus();
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectUserGroup',
-		function(userGroupId, name) {
-			var A = AUI();
-
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');
-
-			var rowColumns = [];
-
-			rowColumns.push(A.Escape.html(name));
-			rowColumns.push('<a class="modify-link" data-rowId="' + userGroupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeUserGroupIcon) %></a>');
-
-			searchContainer.addRow(rowColumns, userGroupId);
-			searchContainer.updateDataStore();
-		},
-		['liferay-search-container', 'escape']
-	);
-</aui:script>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupsSearchContainer');

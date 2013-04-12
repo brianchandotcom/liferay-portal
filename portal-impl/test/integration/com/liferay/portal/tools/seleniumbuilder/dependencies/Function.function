@@ -1,40 +1,40 @@
 <definition>
 	<command name="name">
-		<execute function="function" />
+		<execute function="Click#clickAt" />
 
-		<execute selenium="selenium" />
+		<execute selenium="click" />
 
 		<if>
-			<condition function="Function#isFunction" />
+			<condition function="IsElementPresent#isElementPresent" />
 			<then>
-				<execute function="function" />
+				<execute function="Click#clickAt" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="Function#isFunction" />
+			<condition function="IsElementPresent#isElementPresent" />
 			<then>
-				<execute function="function" />
+				<execute function="Click#clickAt" />
 			</then>
 			<else>
-				<execute function="function" />
+				<execute function="Click#clickAt" />
 			</else>
 		</if>
 
 		<if>
-			<condition selenium="isSelenium" />
+			<condition selenium="isElementPresent" />
 			<then>
-				<execute selenium="selenium" />
+				<execute selenium="click" />
 			</then>
 		</if>
 
 		<if>
-			<condition selenium="isSelenium" />
+			<condition selenium="isElementPresent" />
 			<then>
-				<execute selenium="selenium" />
+				<execute selenium="click" />
 			</then>
 			<else>
-				<execute selenium="selenium" />
+				<execute selenium="click" />
 			</else>
 		</if>
 	</command>

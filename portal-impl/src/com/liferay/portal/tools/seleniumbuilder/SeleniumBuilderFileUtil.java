@@ -439,6 +439,20 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid locator-key " + string + " at " + suffix);
 		}
+		else if (errorCode == 1011) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid function name " + string + " at " + suffix);
+		}
+		else if (errorCode == 1012) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid function command " + string + " at " +
+					suffix);
+		}
+		else if (errorCode == 1013) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid selenium command " + string + " at " +
+					suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string +
@@ -452,15 +466,6 @@ public class SeleniumBuilderFileUtil {
 		else if (errorCode == 2002) {
 			throw new IllegalArgumentException(
 				prefix + "Missing matching " + string + ".path for " + suffix);
-		}
-		else if (errorCode == 2003) {
-			throw new IllegalArgumentException(
-				prefix + "Invalid function name " + string + " at " + suffix);
-		}
-		else if (errorCode == 2004) {
-			throw new IllegalArgumentException(
-				prefix + "Invalid function command " + string + " at " +
-					suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);

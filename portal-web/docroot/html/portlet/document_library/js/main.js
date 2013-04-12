@@ -78,7 +78,6 @@ AUI.add(
 						instance._eventDataProcessed = instance.ns('dataProcessed');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
-						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._eventChangeSearchFolder = instance.ns('changeSearchFolder');
 
 						instance._entriesContainer = instance.byId('entriesContainer');
@@ -170,7 +169,6 @@ AUI.add(
 
 						var eventHandles = [
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
-							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
 							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance),
 							History.after('stateChange', instance._afterStateChange, instance),
 							Liferay.on('showTab', instance._onShowTab, instance),
@@ -407,23 +405,6 @@ AUI.add(
 						else {
 							instance._documentLibraryContainer.all('.document-entries-paginator').show();
 						}
-					},
-
-					_openDocument: function(event) {
-						var instance = this;
-
-						Liferay.Util.openDocument(
-							event.webDavUrl,
-							null,
-							function(exception) {
-								var errorMessage = Lang.sub(
-									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
-									[exception.message]
-								);
-
-								instance._appViewFolders.displayMessage(MESSAGE_TYPE_ERROR, errorMessage);
-							}
-						);
 					},
 
 					_searchFileEntry: function(searchData) {

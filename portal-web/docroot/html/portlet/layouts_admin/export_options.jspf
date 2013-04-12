@@ -22,6 +22,14 @@
 
 		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<liferay-ui:panel collapsible="<%= false %>" cssClass="export-group-panel" defaultState="open" id="pagesPanel" persistState="<%= true %>" title="pages">
+				<div class="selected-labels" id="<portlet:namespace />selectedPages">
+					<liferay-ui:message key="all-pages"></liferay-ui:message>,
+					<liferay-ui:message key="site-pages-settings"></liferay-ui:message>,
+					<liferay-ui:message key="theme"></liferay-ui:message>,
+					<liferay-ui:message key="theme-settings"></liferay-ui:message>,
+					<liferay-ui:message key="logo"></liferay-ui:message>
+				</div>
+
 				<liferay-ui:icon
 					cssClass="modify-link"
 					image="add"
@@ -62,6 +70,10 @@
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
 						<li class="tree-item">
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
+								<liferay-ui:message key="archived-setups"></liferay-ui:message>,
+								<liferay-ui:message key="user-preferences"></liferay-ui:message>
+							</div>
 
 							<%
 							String changeGlobalConfigurationURL = "javascript:" + renderResponse.getNamespace() + "changeGlobalConfiguration();";
@@ -126,6 +138,7 @@
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalContent">
 						<li>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
 
 							<%
 							String changeGlobalContentURL = "javascript:" + renderResponse.getNamespace() + "changeGlobalContent();";
@@ -164,6 +177,10 @@
 
 							<ul>
 								 <li>
+									<div class="selected-labels" id="<portlet:namespace />selectedRange">
+										<liferay-ui:message key="all"></liferay-ui:message>
+									</div>
+
 									<liferay-ui:icon
 										cssClass="modify-link"
 										image="add"
@@ -301,6 +318,8 @@
 
 									<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
 										<li>
+											<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></div>
+
 											<liferay-ui:icon
 												cssClass="modify-link"
 												image="add"
@@ -321,9 +340,13 @@
 												<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
 
 													<%
+													String selectedContent = StringPool.BLANK;
+
 													if (exportControls != null) {
 														request.setAttribute("render_controls.jsp-controls", exportControls);
 														request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+
+														selectedContent += ArrayUtil.toString(exportControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 													%>
 
 														<aui:field-wrapper label="content">
@@ -351,6 +374,8 @@
 															if ((childrenControls != null) && (childrenControls.length > 0)) {
 																request.setAttribute("render_controls.jsp-controls", childrenControls);
 																request.setAttribute("render_controls.portletId", portlet.getPortletId());
+
+																selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ",") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 															%>
 
 															<aui:field-wrapper label="content-metadata">
@@ -365,6 +390,9 @@
 													}
 													%>
 
+													<aui:script use="aui-base">
+														<portlet:namespace />refreshSelectedLabel('selectedContent_<%= portlet.getPortletId() %>', '<%= selectedContent %>');
+													</aui:script>
 												</aui:fieldset>
 											</li>
 										</ul>
@@ -433,6 +461,27 @@
 							{
 								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
 								handler: function() {
+									var inputs = contentBox.all('.aui-field-input-choice');
+									var selectedContent = [];
+
+									A.each(
+										inputs,
+										function(item, index, collection) {
+											var checked = item.attr('checked');
+
+											if (checked == true) {
+												var itemName = item.attr('id');
+
+												itemName = itemName.substring(0, itemName.length - 8);
+												itemName = itemName.substring(itemName.lastIndexOf('_') + 1, itemName.length);
+
+												selectedContent.push(Liferay.Language.get(itemName));
+											}
+										}
+									);
+
+									<portlet:namespace />refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
+
 									this.hide();
 								}
 							},
@@ -486,6 +535,14 @@
 							{
 								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
 								handler: function() {
+									selectedGlobalContent = '';
+
+									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.CATEGORIES %>Checkbox').attr('checked') == true) {
+										selectedGlobalContent = Liferay.Language.get('categories');
+									}
+
+									<portlet:namespace />refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
+
 									this.hide();
 								}
 							},
@@ -539,6 +596,18 @@
 							{
 								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
 								handler: function() {
+									var selectedGlobalConfiguration = [];
+
+									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox').attr('checked') == true) {
+										selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
+									}
+
+									if (contentBox.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox').attr('checked') == true) {
+										selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
+									}
+
+									<portlet:namespace />refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+
 									this.hide();
 								}
 							},
@@ -591,6 +660,70 @@
 							{
 								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
 								handler: function() {
+									var selectedPages = [];
+
+									var layoutsExportTreeOutput = contentBox.one('#<portlet:namespace />layoutsExportTreeOutput');
+
+									if (layoutsExportTreeOutput) {
+										var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+
+										var treeView = layoutsExportTreeOutput.getData('treeInstance');
+										var rootNode = treeView.item(0);
+
+										if (rootNode.isChecked()) {
+											layoutIdsInput.val('');
+
+									       	selectedPages.push(Liferay.Language.get('all-pages'));
+										}
+										else {
+											var layoutIds = [];
+
+											var regexLayoutId = /layoutId_(\d+)/;
+
+											treeView.eachChildren(
+												function(item, index, collection) {
+													if (item.isChecked()) {
+														var match = regexLayoutId.exec(item.get('id'));
+
+														if (match) {
+															layoutIds.push(
+																{
+																	includeChildren: !item.hasChildNodes(),
+																	layoutId: match[1]
+																}
+															);
+														}
+													}
+												},
+												true
+											);
+
+											if (layoutIdsInput) {
+												layoutIdsInput.val(A.JSON.stringify(layoutIds));
+											}
+
+											selectedPages.push(Liferay.Language.get('selected-pages'));
+										}
+
+										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox').attr('checked') == true) {
+											selectedPages.push(Liferay.Language.get('site-pages-settings'));
+										}
+
+										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.THEME %>Checkbox').attr('checked') == true) {
+											selectedPages.push(Liferay.Language.get('theme'));
+										}
+
+										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox').attr('checked') == true) {
+											selectedPages.push(Liferay.Language.get('theme-settings'));
+										}
+
+										if (A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.LOGO %>Checkbox').attr('checked') == true) {
+											selectedPages.push(Liferay.Language.get('logo'));
+										}
+
+										<portlet:namespace />refreshSelectedLabel('selectedPages', selectedPages.join(', '));
+									}
+
 									this.hide();
 								}
 							},
@@ -644,6 +777,23 @@
 							{
 								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
 								handler: function() {
+									var selectedRange = '';
+
+									if (contentBox.one('#<portlet:namespace />rangeAll').attr('checked') == true) {
+										selectedRange = Liferay.Language.get('all');
+									}
+									else if (contentBox.one('#<portlet:namespace />rangeLastPublish').attr('checked') == true) {
+										selectedRange = Liferay.Language.get('from-last-publish-date');
+									}
+									else if (contentBox.one('#<portlet:namespace />rangeDateRange').attr('checked') == true) {
+										selectedRange = Liferay.Language.get('date-range');
+									}
+									else if (contentBox.one('#<portlet:namespace />rangeLast').attr('checked') == true) {
+										selectedRange = Liferay.Language.get('last');
+									}
+
+									<portlet:namespace />refreshSelectedLabel('selectedRange', selectedRange);
+
 									this.hide();
 								}
 							},
@@ -676,6 +826,20 @@
 		function(event) {
 			var checked = event.currentTarget.attr('checked');
 			var inputId = event.currentTarget.attr('id');
+		}
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />refreshSelectedLabel',
+		function(labelDivId, label) {
+			var A = AUI();
+
+			var labelDiv = A.one('#<portlet:namespace />' + labelDivId);
+
+			if (labelDiv != null) {
+				labelDiv.html(label);
+			}
 		}
 	);
 

@@ -20,7 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 long groupId = ParamUtil.getLong(request, "groupId");
-String callback = ParamUtil.getString(request, "callback", "selectTeam");
+String eventName = ParamUtil.getString(request, "eventName", "selectTeam");
 %>
 
 <liferay-ui:header
@@ -30,79 +30,80 @@ String callback = ParamUtil.getString(request, "callback", "selectTeam");
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/sites_admin/select_team" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="callback" value="<%= callback %>" />
+	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="get" name="selectTeamFm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<%
-	TeamSearch searchContainer = new TeamSearch(renderRequest, portletURL);
-	%>
+	<liferay-ui:search-container
+		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
+	>
+		<liferay-ui:search-form
+			page="/html/portlet/sites_admin/team_search.jsp"
+		/>
 
-	<liferay-ui:search-form
-		page="/html/portlet/sites_admin/team_search.jsp"
-		searchContainer="<%= searchContainer %>"
-	/>
+		<div class="separator"><!-- --></div>
 
-	<%
-	TeamSearchTerms searchTerms = (TeamSearchTerms)searchContainer.getSearchTerms();
+		<%
+		TeamSearchTerms searchTerms = (TeamSearchTerms)searchContainer.getSearchTerms();
 
-	int total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
+		%>
 
-	searchContainer.setTotal(total);
+		<liferay-ui:search-container-results
+			results="<%= TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			total="<%= TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>()) %>"
+		/>
 
-	List results = TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.TeamModel"
+			keyProperty="teamId"
+			modelVar="curTeam"
+			rowVar="row"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= curTeam.getName() %>"
+			/>
 
-	searchContainer.setResults(results);
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= curTeam.getDescription() %>"
+			/>
 
-	portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
-	%>
+			<liferay-ui:search-container-column-text>
 
-	<div class="separator"><!-- --></div>
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-	<%
-	List resultRows = searchContainer.getResultRows();
+				data.put("teamdescription", HtmlUtil.escape(curTeam.getDescription()));
+				data.put("teamid", curTeam.getTeamId());
+				data.put("teamname", HtmlUtil.escape(curTeam.getName()));
+				data.put("teamsearchcontainername", "teams");
+				%>
 
-	for (int i = 0; i < results.size(); i++) {
-		Team team = (Team)results.get(i);
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
 
-		team = team.toEscapedModel();
+		</liferay-ui:search-container-row>
 
-		ResultRow row = new ResultRow(team, team.getTeamId(), i);
-
-		StringBundler sb = new StringBundler(14);
-
-		sb.append("javascript:opener.");
-		sb.append(renderResponse.getNamespace());
-		sb.append(callback);
-		sb.append("('");
-		sb.append(team.getTeamId());
-		sb.append("', '");
-		sb.append(UnicodeFormatter.toString(team.getName()));
-		sb.append("', '");
-		sb.append("teams");
-		sb.append("', '");
-		sb.append(UnicodeFormatter.toString(team.getDescription()));
-		sb.append("', '");
-		sb.append(groupId);
-		sb.append("'); window.close();");
-
-		String rowHREF = sb.toString();
-
-		// Name
-
-		row.addText(team.getName(), rowHREF);
-
-		// Description
-
-		row.addText(team.getDescription(), rowHREF);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectTeamFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+
+			Util.getWindow().close();
+		},
+		'.selector-button input'
+	);
+</aui:script>

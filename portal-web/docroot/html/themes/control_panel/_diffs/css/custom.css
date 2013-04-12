@@ -294,11 +294,11 @@ body.portal-popup:after, body.portal-popup:before {
 }
 
 .panel-page-menu .lfr-panel .lfr-panel-content {
-	background: #DCE3EA url(../images/custom/shadow_top_bg.png) 0 0 repeat-x;
+	background: #DCE3EA url(../images/common/shadow_top_bg.png) 0 0 repeat-x;
 }
 
 .panel-page-menu .lfr-panel.lfr-extended .lfr-panel-content ul {
-	background: transparent url(../images/custom/shadow_bottom_bg.png) 0 100% repeat-x;
+	background: transparent url(../images/common/shadow_bottom_bg.png) 0 100% repeat-x;
 	border-bottom: 1px solid #ABB2B9;
 	padding: 5px 0;
 }

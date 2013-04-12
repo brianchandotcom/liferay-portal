@@ -2,21 +2,14 @@ AUI.add(
 	'liferay-dockbar-add-content',
 	function(A) {
 		var Lang = A.Lang;
-
 		var LayoutConfiguration = Liferay.LayoutConfiguration;
+		var Dockbar = Liferay.Dockbar;
 
-		var Node = A.Node;
+		var STR_CLICK = 'click';
 
-		var CLICK = 'click';
+		var TPL_ERROR = '<div class="portlet-msg-error">{0}</div>';
 
-		var TPL_ERROR =
-			'<div class="portlet-msg-error">' +
-				Liferay.Language.get('failed-to-load-content') +
-			'</div>';
-
-		var isString = Lang.isString;
-
-		var ParseContent = A.Plugin.ParseContent;
+		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var AddContent = A.Component.create(
 			{
@@ -33,83 +26,13 @@ AUI.add(
 						instance._config = config;
 
 						instance._addContentForm = instance.byId('addContentForm');
-
+						instance._closePanel = instance.byId('closePanel');
+						instance._entriesContainer = instance.byId('entriesContainer');
+						instance._numItems = instance.byId('numItems');
+						instance._searchInput = instance.byId('searchInput');
 						instance._styleButtonsList = instance.byId('styleButtons');
 
 						instance._styleButtons = instance._styleButtonsList.all('.button');
-
-						instance._styleButtons.on(CLICK, instance._onChangeDisplayStyle, instance);
-
-						instance._numItems = instance.byId('numItems');
-
-						instance._numItems.on('change', instance._onChangeNumItems, instance);
-
-						instance._searchInput = instance.byId('searchInput');
-
-						instance._createAddContentSearch();
-
-						instance._entriesContainer = instance.byId('entriesContainer');
-
-						instance._entriesContainer.delegate(CLICK, instance._addPortlet, '.content-shortcut');
-
-						instance._createToolTip();
-
-						LayoutConfiguration._loadContent();
-
-						Liferay.on('showTab', instance._onShowTab, instance);
-					},
-
-					_addPortlet: function(event) {
-						event.halt();
-
-						var item = event.currentTarget;
-
-						var portletId = item.attr('data-portlet-id');
-
-						var portletData = item.attr('data-class-pk') + "," + item.attr('data-class-name');
-
-						Liferay.Portlet.add(
-							{
-								portletData: portletData,
-								portletId: portletId
-							}
-						);
-					},
-
-					_afterPreviewFailure: function(event) {
-						var instance = this;
-
-						instance._tooltip.set('bodyContent', TPL_ERROR);
-					},
-
-					_afterPreviewSuccess: function(event) {
-						var instance = this;
-
-						var data = event.currentTarget.get('responseData');
-
-						var content = Node.create(data);
-
-						var tooltip = instance._tooltip;
-
-						tooltip.set('bodyContent', content);
-
-						tooltip.get('boundingBox').one('.add-button-preview input').on(CLICK, instance._addPortlet, instance);
-					},
-
-					_afterSuccess: function(event) {
-						var instance = this;
-
-						var data = event.currentTarget.get('responseData');
-
-						var content = Node.create(data);
-
-						instance._entriesContainer.setContent(content);
-
-						instance._createToolTip();
-					},
-
-					_createAddContentSearch: function() {
-						var instance = this;
 
 						var addContentSearch = new AddContentSearch(
 							{
@@ -119,7 +42,73 @@ AUI.add(
 							}
 						);
 
-						addContentSearch.after(
+						instance._addContentSearch = addContentSearch;
+
+						instance._createToolTip();
+
+						instance._loadPreviewTask = A.debounce('_loadPreviewFn', 200, instance);
+
+						instance._bindUI();
+
+						LayoutConfiguration._loadContent();
+					},
+
+					_addPortlet: function(event) {
+						event.halt();
+
+						var item = event.currentTarget;
+
+						var portletData = item.attr('data-class-pk') + ',' + item.attr('data-class-name');
+
+						Liferay.Portlet.add(
+							{
+								portletData: portletData,
+								portletId: item.attr('data-portlet-id')
+							}
+						);
+					},
+
+					_afterPreviewFailure: function(event) {
+						var instance = this;
+
+						var errorMsg = Lang.sub(
+							TPL_ERROR,
+							[Liferay.Language.get('failed-to-load-content')]
+						);
+
+						instance._tooltip.set('bodyContent', errorMsg);
+					},
+
+					_afterPreviewSuccess: function(event) {
+						var instance = this;
+
+						var tooltip = instance._tooltip;
+
+						tooltip.set('bodyContent', event.currentTarget.get('responseData'));
+
+						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortlet, instance);
+					},
+
+					_afterSuccess: function(event) {
+						var instance = this;
+
+						instance._entriesContainer.setContent(event.currentTarget.get('responseData'));
+
+						instance._createToolTip();
+					},
+
+					_bindUI: function() {
+						var instance = this;
+
+						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
+
+						instance._numItems.on('change', instance._onChangeNumItems, instance);
+
+						instance._entriesContainer.delegate(STR_CLICK, instance._addPortlet, '.content-shortcut');
+
+						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
+
+						instance._addContentSearch.after(
 							'query',
 							function(event) {
 								instance._restartSearch = true;
@@ -130,7 +119,7 @@ AUI.add(
 
 						instance._searchInput.on('keydown', instance._onSearchInputKeyDown, instance);
 
-						instance._addContentSearch = addContentSearch;
+						Liferay.on('showTab', instance._onShowTab, instance);
 					},
 
 					_createToolTip: function() {
@@ -148,50 +137,7 @@ AUI.add(
 								cssClass: 'lfr-content-preview-popup',
 								hideOn: 'mouseleave',
 								on: {
-									show: function() {
-										this.set('bodyContent', '<div class="loading-animation" />');
-
-										var currentNode = this.get('currentNode');
-
-										if (instance._previousNode && (instance._previousNode != currentNode)) {
-											currentNode.addClass('over');
-
-											instance._previousNode.removeClass('over');
-										}
-
-										var classPK = currentNode.attr('data-class-pk');
-										var className = currentNode.attr('data-class-name');
-
-										var uri = instance._addContentForm.getAttribute('action');
-
-										if (instance._ioPreviewHandle) {
-											instance._ioPreviewHandle.cancel();
-										}
-
-										instance._ioPreviewHandle = A.later(
-											100,
-											instance,
-											function() {
-												A.io.request(
-													uri,
-													{
-														after: {
-															failure: A.bind(instance._afterPreviewFailure, instance),
-															success: A.bind(instance._afterPreviewSuccess, instance)
-														},
-														data: {
-															classPK: classPK,
-															className: className,
-															viewEntries: false,
-															viewPreview: true
-														}
-													}
-												);
-											}
-										);
-
-										instance._previousNode = currentNode;
-									},
+									show: A.bind('_onTooltipShow', instance),
 									hide: function() {
 										var currentNode = this.get('currentNode');
 
@@ -205,16 +151,54 @@ AUI.add(
 						).render();
 					},
 
+					_getIOPreview: function() {
+						var instance = this;
+
+						var ioPreview = instance._ioPreview;
+
+						if (!ioPreview) {
+							ioPreview = A.io.request(
+								instance._addContentForm.getAttribute('action'),
+								{
+									after: {
+										failure: A.bind('_afterPreviewFailure', instance),
+										success: A.bind('_afterPreviewSuccess', instance)
+									},
+									autoLoad: false,
+									data: {
+										viewEntries: false,
+										viewPreview: true
+									}
+								}
+							);
+
+							instance._ioPreview = ioPreview;
+						}
+
+						return ioPreview;
+					},
+
+					_loadPreviewFn: function(className, classPK) {
+						var instance = this;
+
+						var ioPreview = instance._getIOPreview();
+
+						ioPreview.stop();
+
+						ioPreview.set('data.classPK', classPK);
+						ioPreview.set('data.className', className);
+
+						ioPreview.start();
+					},
+
 					_onChangeDisplayStyle: function(event) {
 						var instance = this;
 
-						instance._styleButtons.removeClass('selected');
+						var currentTarget = event.currentTarget;
 
-						event.currentTarget.addClass('selected');
+						currentTarget.radioClass('selected');
 
-						var styleButton = instance._styleButtonsList.one('.selected');
-
-						var displayStyle = styleButton.attr('data-style');
+						var displayStyle = currentTarget.attr('data-style');
 
 						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
 
@@ -245,6 +229,26 @@ AUI.add(
 						}
 					},
 
+					_onTooltipShow: function(event) {
+						var instance = this;
+
+						var tooltip = instance._tooltip;
+
+						tooltip.set('bodyContent', TPL_LOADING);
+
+						var currentNode = tooltip.get('currentNode');
+
+						if (instance._previousNode && (instance._previousNode != currentNode)) {
+							currentNode.addClass('over');
+
+							instance._previousNode.removeClass('over');
+						}
+
+						instance._previousNode = currentNode;
+
+						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+					},
+
 					_refreshContentList: function(event) {
 						var instance = this;
 
@@ -252,13 +256,11 @@ AUI.add(
 
 						var displayStyle = styleButton.attr('data-style');
 
-						var uri = instance._addContentForm.getAttribute('action');
-
 						A.io.request(
-							uri,
+							instance._addContentForm.getAttribute('action'),
 							{
 								after: {
-									success: A.bind(instance._afterSuccess, instance)
+									success: A.bind('_afterSuccess', instance)
 								},
 								data: {
 									delta: instance._numItems.val(),
@@ -288,10 +290,11 @@ AUI.add(
 			}
 		);
 
-		Liferay.AddContent = AddContent;
+		Dockbar.AddContent = AddContent;
+		Dockbar.AddContentSearch = AddContentSearch;
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-request', 'aui-tooltip', 'autocomplete-base', 'event-mouseenter', 'liferay-layout-configuration', 'liferay-portlet-base']
+		requires: ['aui-dialog', 'aui-io-request', 'aui-tooltip', 'autocomplete-base', 'event-mouseenter', 'liferay-dockbar', 'liferay-layout-configuration', 'liferay-portlet-base']
 	}
 );

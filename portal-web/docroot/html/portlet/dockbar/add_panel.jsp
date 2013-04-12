@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-
-
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 
@@ -34,7 +32,9 @@
 
 		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<div class="add-content-menu" id="portal_add_panel">
-				<span class="close-add-panel" id="<portlet:namespace />closePanel" onclick="Liferay.Dockbar.loadPanel();"><liferay-ui:message key="close" /></span>
+				<span class="close-add-panel" id="<portlet:namespace />closePanel">
+					<liferay-ui:message key="close" />
+				</span>
 
 				<%
 				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
@@ -69,16 +69,16 @@
 								%>
 
 								<span class="buttons" id="<portlet:namespace />styleButtons">
+									<span class='icon button <%= displayStyle.equals("icon") ? "selected" : "" %>' data-style="icon" title='<%= LanguageUtil.get(pageContext, "icon-view") %>'>
+										<liferay-ui:message key="icon" />
+									</span>
+
 									<span class='descriptive button <%= displayStyle.equals("descriptive") ? "selected" : "" %>' data-style="descriptive" title='<%= LanguageUtil.get(pageContext, "descriptive-view") %>'>
 										<liferay-ui:message key="descriptive" />
 									</span>
 
-									<span class='list button <%= displayStyle.equals("list") ? "selected" : "" %>' data-style="list" title='<%= LanguageUtil.get(pageContext, "list-view") %>'>
+									<span class='list button last <%= displayStyle.equals("list") ? "selected" : "" %>' data-style="list" title='<%= LanguageUtil.get(pageContext, "list-view") %>'>
 										<liferay-ui:message key="list" />
-									</span>
-
-									<span class='icon button last <%= displayStyle.equals("icon") ? "selected" : "" %>' data-style="icon" title='<%= LanguageUtil.get(pageContext, "icon-view") %>'>
-										<liferay-ui:message key="icon" />
 									</span>
 								</span>
 
@@ -242,7 +242,7 @@
 			</div>
 
 			<aui:script use="liferay-dockbar-add-content">
-				new Liferay.AddContent(
+				new Liferay.Dockbar.AddContent(
 					{
 						namespace: '<portlet:namespace />'
 					}

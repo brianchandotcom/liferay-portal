@@ -77,7 +77,9 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 	<div class="lfr-add-content <%= layout.isTypePortlet() ? "collapsed" : "" %>" id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>">
 		<div class="lfr-title-category">
 			<h2>
-				<a href="javascript:;"><%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %></a>
+				<a href="javascript:;">
+					<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %>
+				</a>
 			</h2>
 		</div>
 

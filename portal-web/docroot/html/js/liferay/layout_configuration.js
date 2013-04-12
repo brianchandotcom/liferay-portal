@@ -248,6 +248,8 @@
 
 						instance._dialogBody = A.one('#portal_add_panel');
 
+						Liferay.on('closePortlet', instance._onPortletClose, instance);
+
 						instance._portletItems = instance._dialogBody.all('div.lfr-portlet-item');
 
 						var portlets = instance._portletItems;
@@ -329,6 +331,22 @@
 						);
 
 						Util.focusFormField(instance._searchInput);
+					},
+
+					_onPortletClose: function(event) {
+						var instance = this;
+
+						var panel = instance._dialogBody;
+
+						if (panel) {
+							var item = panel.one('.lfr-portlet-item[plid=' + event.plid + '][portletId=' + event.portletId + '][instanceable=false]');
+
+							if (item && item.hasClass('lfr-portlet-used')) {
+								var portletId = item.attr('portletId');
+
+								instance._enablePortletEntry(portletId);
+							}
+						}
 					}
 				}
 			);

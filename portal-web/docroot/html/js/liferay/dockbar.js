@@ -19,9 +19,9 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
-		var TPL_ADD_CONTENT =
-			'<div class="lfr-add-panel">' +
-			'</div>';
+		var TPL_ADD_CONTENT = '<div class="lfr-add-panel" />';
+
+		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var Dockbar = {
 			init: function() {
@@ -112,6 +112,12 @@ AUI.add(
 				instance.messageIdList = [];
 			},
 
+			loadPanel: function() {
+				var instance = this;
+
+				Dockbar._loadAddPanel();
+			},
+
 			setMessage: function(message, messageId) {
 				var instance = this;
 
@@ -135,35 +141,6 @@ AUI.add(
 				messagesContainer.removeClass('multiple-messages');
 
 				return messageId;
-			},
-
-			_addPanel: function() {
-				var instance = this;
-
-				instance._setLoadingAnimation();
-
-				var addPanelButton = A.one('#' + instance._namespace + 'addPanel');
-
-				if (addPanelButton) {
-					var uri = addPanelButton.attr('data-url');
-
-					A.io.request(
-						uri,
-						{
-							after: {
-								success: function(event, id, obj) {
-									var response = this.get('responseData');
-
-									var panelNode = instance._getPanelNode();
-
-									panelNode.plug(A.Plugin.ParseContent);
-
-									panelNode.setContent(response);
-								}
-							}
-						}
-					);
-				}
 			},
 
 			_addMenu: function(options) {
@@ -409,15 +386,13 @@ AUI.add(
 			_setLoadingAnimation: function() {
 				var instance = this;
 
-				instance._getPanelNode().html('<div class="loading-animation" />');
+				instance._getPanelNode().html(TPL_LOADING);
 			},
 
 			_setPanelOffset: function() {
 				var instance = this;
 
-				var addContentNode = A.one('#' + instance._namespace + 'addPanelSidebar');
-
-				addContentNode.setStyle('top', instance.dockBar.get('offsetHeight') + 'px');
+				instance._addPanelNode.setStyle('top', instance.dockBar.height());
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -480,14 +455,6 @@ AUI.add(
 				instance._addUnderlay(options);
 			},
 			['liferay-dockbar-underlay']
-		);
-
-		Liferay.provide(
-			Dockbar,
-			'loadPanel',
-			function(event, id, obj) {
-				Dockbar._loadAddPanel();
-			}
 		);
 
 		Liferay.provide(
@@ -626,17 +593,6 @@ AUI.add(
 					);
 
 					addContentNode.focusManager.set('descendants', 'a:not(.lfr-portlet-used)');
-
-					Liferay.on(
-						'closePortlet',
-						function(event) {
-							var item = addContentNode.one('.app-shortcut[data-portlet-id=' + event.portletId + ']');
-
-							if (item) {
-								instance._toggleAppShortcut(item, false);
-							}
-						}
-					);
 				}
 
 				var manageContent = instance._addMenu(
@@ -703,6 +659,8 @@ AUI.add(
 					addPanelButton.on(
 						EVENT_CLICK,
 						function(event) {
+							event.preventDefault();
+
 							addContent.hide();
 
 							instance._loadAddPanel();
@@ -835,7 +793,41 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-portlet-url', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'aui-overlay-context', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
+		);
+
+		Liferay.provide(
+			Dockbar,
+			'_addPanel',
+			function() {
+				var instance = this;
+
+				instance._setLoadingAnimation();
+
+				var addPanelButton = A.one('#' + instance._namespace + 'addPanel');
+
+				if (addPanelButton) {
+					var uri = addPanelButton.attr('href');
+
+					A.io.request(
+						uri,
+						{
+							after: {
+								success: function(event, id, obj) {
+									var response = this.get('responseData');
+
+									var panelNode = instance._getPanelNode();
+
+									panelNode.plug(A.Plugin.ParseContent);
+
+									panelNode.setContent(response);
+								}
+							}
+						}
+					);
+				}
+			},
+			['aui-io-request']
 		);
 
 		Liferay.provide(
@@ -882,6 +874,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-node', 'event-touch']
+		requires: ['aui-node', 'event-touch']
 	}
 );

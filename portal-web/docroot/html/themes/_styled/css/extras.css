@@ -91,9 +91,11 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 }
 
 .lfr-add-panel {
-	.lfr-panel-content .app-view-entry-taglib.entry-display-style {
-		&:hover, &.hover, &.over {
-			@include border-radius(0);
+	.lfr-panel-content .app-view-entry-taglib {
+		&.display-list, &.display-descriptive {
+			&:hover, &.hover, &.over {
+				@include border-radius(0);
+			}
 		}
 	}
 
@@ -102,14 +104,24 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 		@include box-shadow(none);
 	}
 
-	.search-panel .add-content-search .aui-field-input {
-		@include border-radius(4px);
+	.lfr-panel.lfr-extended .lfr-panel-titlebar, .add-application-tab .lfr-add-content .lfr-title-category {
+		@include background-image(linear-gradient(#D2DBE4, #BDC8D6));
+	}
+
+	.search-panel {
+		.add-content-search .aui-field-input {
+			@include border-radius(4px);
+		}
+
+		.buttons .button {
+			@include border-radius(2px);
+		}
 	}
 }
 
 .lfr-content-preview-popup .lfr-content-preview-popup-content {
 	@include border-radius(0);
-	@include box-shadow(9px 4px 12px #777);
+	@include box-shadow(4px 3px 7px rgba(0,0,0,0.5));
 }
 
 .lfr-hudcrumbs ul {

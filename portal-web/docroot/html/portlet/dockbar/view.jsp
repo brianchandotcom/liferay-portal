@@ -62,7 +62,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 										<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 									</portlet:renderURL>
 
-									<a data-url="<%= addContentURL.toString() %>" href="javascript:;" id="<portlet:namespace />addPanel">
+									<a href="<%= addContentURL.toString() %>" id="<portlet:namespace />addPanel">
 										<liferay-ui:message key="content-and-applications" />
 									</a>
 								</li>

@@ -1,0 +1,34 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ADD">
+			<execute function="Click#pauseTextClickAt" value1="Add" />
+		</case>
+		<case locator-key1="ADD_ORGANIZATION_ROLE">
+			<execute function="Click#textClickAtAndWait" value1="Organization Role" />
+		</case>
+		<case locator-key1="ADD_REGULAR_ROLE">
+			<execute function="Click#textClickAtAndWait" value1="Regular Role" />
+		</case>
+		<case locator-key1="ADD_SITE_ROLE">
+			<execute function="Click#textClickAtAndWait" value1="Site Role" />
+		</case>
+		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
+			<execute function="Click#pauseTextClickAt" value1="Actions" />
+		</case>
+		<case locator-key1="SEARCH">
+			<execute function="Click#valueClickAtAndWait" value1="Search" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+</definition>

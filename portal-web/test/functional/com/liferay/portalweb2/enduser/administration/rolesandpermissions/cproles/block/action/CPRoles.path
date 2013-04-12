@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -86,6 +91,11 @@
 	<td></td>
 </tr>
 <!--ROLE_ACTIONS-->
+<tr>
+	<td>ROLE_ACTIONS_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ROLE_ACTIONS_DEFINE_PERMISSIONS</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]</td>

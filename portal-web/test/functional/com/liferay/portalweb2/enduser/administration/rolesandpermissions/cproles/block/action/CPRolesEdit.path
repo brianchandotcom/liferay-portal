@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>CPRolesEdit</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPRolesEdit</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPRolesEdit</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//h1[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME</td>
+	<td>//input[@id='_128_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//input[@id='_128_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[@id='_128_description_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddOrganizationRole">
+		<var name="roleName" value="Roles Orgrole Name" />
+
+		<execute macro="Role#cpAddOrgRole" />
+	</command>
+
+	<command name="AddRegularRole">
+		<var name="roleName" value="Roles Regrole Name" />
+
+		<execute macro="Role#cpAddRegRole" />
+	</command>
+
+	<command name="AddSiteRole">
+		<var name="roleName" value="Roles Siterole Name" />
+
+		<execute macro="Role#cpAddSiteRole" />
+	</command>
+
+	<tear-down>
+		<execute macro="Role#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

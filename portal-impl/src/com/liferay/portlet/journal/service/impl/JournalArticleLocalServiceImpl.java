@@ -140,12 +140,14 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 
 /**
- * The web content local service is responsible for accessing, creating,
- * modifying, searching, and deleting web content articles.
+ * The implementation of the web content local service is responsible for
+ * accessing, creating, modifying, searching, and deleting web content articles
+ * locally.
  *
  * <p>
- * The articles hold HTML content wrapped in XML. The XML lets you specify the
- * article's default locale and available locales. Here is a content example:
+ * The web content articles hold HTML content wrapped in XML. The XML lets you
+ * specify the article's default locale and available locales. Here is a content
+ * example:
  * </p>
  *
  * <pre>
@@ -931,7 +933,7 @@ public class JournalArticleLocalServiceImpl
 	 *         email notifications (optionally <code>null</code>)
 	 * @param  serviceContext the service context to be applied (optionally
 	 *         <code>null</code>). Can set the portlet preferences that include
-	 *         email information to notify recipients of unapproved web
+	 *         email information to notify recipients of the unapproved web
 	 *         content's denial.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1062,7 +1064,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if a matching web content article could not be
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1087,7 +1089,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1183,8 +1185,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Expires the matching web content article, updating its status to {@link
-	 * com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_EXPIRED}.
+	 * Expires the web content article matching the group, article ID, and
+	 * version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article
@@ -1217,7 +1219,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Expires the matching web content article.
+	 * Expires the web content article matching the group and article ID,
+	 * expiring all of its versions if the
+	 * <code>journal.article.expire.all.versions</code> portal property is
+	 * <code>true</code>, otherwise expiring only its latest approved version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article
@@ -2218,7 +2223,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * company, version, and status.
+	 * company, version, and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -2260,7 +2265,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * company and status.
+	 * company and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -2300,7 +2305,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the number of web content articles matching the company, version,
-	 * and status.
+	 * and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -2340,7 +2345,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the number of web content articles matching the company and
-	 * status.
+	 * workflow status.
 	 *
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  status the web content article's workflow status. For more
@@ -2642,7 +2647,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest web content article matching the group, URL title, and
-	 * status.
+	 * workflow status.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  urlTitle the web content article's accessible URL title
@@ -2702,7 +2707,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest version number of the web content with the group,
-	 * article ID, and status.
+	 * article ID, and workflow status.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -2941,7 +2946,7 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns <code>true</code> if the web content article, specified by group,
-	 * article ID, and status, is the latest version.
+	 * article ID, and workflow status, is the latest version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -3038,7 +3043,6 @@ public class JournalArticleLocalServiceImpl
 		return journalArticleLocalService.moveArticle(
 			groupId, article.getArticleId(), newFolderId);
 	}
-
 
 	/**
 	 * Moves the latest version of the web content article matching the group
@@ -3946,9 +3950,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Subscribes the user to notifications for the web content article with the
-	 * group ID value for its group ID and primary key of its article instance,
-	 * notifying him the instant article is created, deleted, or modified.
+	 * Subscribes the user to notifications for the web content article matching
+	 * the group, notifying him the instant versions of the article are created,
+	 * deleted, or modified.
 	 *
 	 * @param  userId the primary key of the user to subscribe
 	 * @param  groupId the primary key of the group
@@ -3963,9 +3967,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Unsubscribes the user to notifications for the web content article with
-	 * the group ID value for its group ID and primary key of its article
-	 * instance.
+	 * Unsubscribes the user from notifications for the web content article
+	 * matching the group.
 	 *
 	 * @param  userId the primary key of the user to unsubscribe
 	 * @param  groupId the primary key of the group
@@ -4745,7 +4748,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status.
+	 * Updates the workflow status of the web content article.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status
@@ -5037,7 +5040,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status by matching the class PK.
+	 * Updates the workflow status of the web content article matching the class
+	 * PK.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status
@@ -5070,8 +5074,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status by matching the group, article
-	 * ID, and version.
+	 * Updates the workflow status of the web content article matching the
+	 * group, article ID, and version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status

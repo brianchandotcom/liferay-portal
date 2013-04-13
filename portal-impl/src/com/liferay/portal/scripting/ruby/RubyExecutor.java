@@ -63,7 +63,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 
 		_scriptingContainer = new ScriptingContainer(
-			LocalContextScope.THREADSAFE);
+			LocalContextScope.CONCURRENT);
 
 		LocalContextProvider localContextProvider =
 			_scriptingContainer.getProvider();

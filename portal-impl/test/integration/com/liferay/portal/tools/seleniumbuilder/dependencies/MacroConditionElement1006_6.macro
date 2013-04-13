@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition action="isElementPresent" />
+			<then>
+				<execute macro="BlogsEnry#cpAdd" />
+			</then>
+		</if>
+	</command>
+</definition>

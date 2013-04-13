@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition action="BaseLiferay" />
+			<then>
+				<execute macro="BlogsEnry#cpAdd" />
+			</then>
+		</if>
+	</command>
+</definition>

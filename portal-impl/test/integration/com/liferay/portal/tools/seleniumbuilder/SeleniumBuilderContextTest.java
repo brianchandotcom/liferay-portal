@@ -178,19 +178,19 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testFunctionConditionElement1012() throws Exception {
+	public void testFunctionConditionElement1012_1() throws Exception {
 		test(
-			"FunctionConditionElement1012.function",
+			"FunctionConditionElement1012_1.function",
 			"Error 1012: Invalid function command isElementPresentX at " +
-				_DIR_NAME + "/FunctionConditionElement1012.function:4");
+				_DIR_NAME + "/FunctionConditionElement1012_1.function:4");
 	}
 
 	@Test
-	public void testFunctionConditionElement1013() throws Exception {
+	public void testFunctionConditionElement1012_2() throws Exception {
 		test(
-			"FunctionConditionElement1013.function",
-			"Error 1013: Invalid selenium command isElementPresentX at " +
-				_DIR_NAME + "/FunctionConditionElement1013.function:4");
+			"FunctionConditionElement1012_2.function",
+			"Error 1012: Invalid selenium command isElementPresentX at " +
+				_DIR_NAME + "/FunctionConditionElement1012_2.function:4");
 	}
 
 	@Test
@@ -218,19 +218,19 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testFunctionExecuteElement1012() throws Exception {
+	public void testFunctionExecuteElement1012_1() throws Exception {
 		test(
-			"FunctionExecuteElement1012.function",
+			"FunctionExecuteElement1012_1.function",
 			"Error 1012: Invalid function command clickAtX at " + _DIR_NAME +
-				"/FunctionExecuteElement1012.function:3");
+				"/FunctionExecuteElement1012_1.function:3");
 	}
 
 	@Test
-	public void testFunctionExecuteElement1013() throws Exception {
+	public void testFunctionExecuteElement1012_2() throws Exception {
 		test(
-			"FunctionExecuteElement1013.function",
-			"Error 1013: Invalid selenium command clickX at " + _DIR_NAME +
-				"/FunctionExecuteElement1013.function:3");
+			"FunctionExecuteElement1012_2.function",
+			"Error 1012: Invalid selenium command clickX at " + _DIR_NAME +
+				"/FunctionExecuteElement1012_2.function:3");
 	}
 
 	@Test
@@ -252,6 +252,118 @@ public class SeleniumBuilderContextTest {
 			"MacroCommandElement1009.macro",
 			"Error 1009: Duplicate command name name at " + _DIR_NAME +
 				"/MacroCommandElement1009.macro:6");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_5() throws Exception {
+		test(
+			"MacroConditionElement1006_5.macro",
+			"Error 1006: Invalid action attribute value in " +
+				_DIR_NAME + "/MacroConditionElement1006_5.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_6() throws Exception {
+		test(
+			"MacroConditionElement1006_6.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_6.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_7() throws Exception {
+		test(
+			"MacroConditionElement1006_7.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_7.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1006_8() throws Exception {
+		test(
+			"MacroConditionElement1006_8.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroConditionElement1006_8.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1010() throws Exception {
+		test(
+			"MacroConditionElement1010.macro",
+			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
+				"/MacroConditionElement1010.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1011_1() throws Exception {
+		test(
+			"MacroConditionElement1011_1.macro",
+			"Error 1011: Invalid action name BaseLiferays at " + _DIR_NAME +
+				"/MacroConditionElement1011_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1011_2() throws Exception {
+		test(
+			"MacroConditionElement1011_2.macro",
+			"Error 1011: Invalid macro name Pages at " + _DIR_NAME +
+				"/MacroConditionElement1011_2.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1012_1() throws Exception {
+		test(
+			"MacroConditionElement1012_1.macro",
+			"Error 1012: Invalid action command isElementPresents at " +
+				_DIR_NAME + "/MacroConditionElement1012_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1012_2() throws Exception {
+		test(
+			"MacroConditionElement1012_2.macro",
+			"Error 1012: Invalid macro command isPresents at " + _DIR_NAME +
+				"/MacroConditionElement1012_2.macro:4");
+	}
+
+	@Test
+	public void testMacroExecuteElement1010() throws Exception {
+		test(
+			"MacroExecuteElement1010.macro",
+			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
+				"/MacroExecuteElement1010.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1011_1() throws Exception {
+		test(
+			"MacroExecuteElement1011_1.macro",
+			"Error 1011: Invalid action name BaseLiferays at " + _DIR_NAME +
+				"/MacroExecuteElement1011_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1011_2() throws Exception {
+		test(
+			"MacroExecuteElement1011_2.macro",
+			"Error 1011: Invalid macro name BlogsEntrys at " + _DIR_NAME +
+				"/MacroExecuteElement1011_2.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1012_1() throws Exception {
+		test(
+			"MacroExecuteElement1012_1.macro",
+			"Error 1012: Invalid action command clicks at " + _DIR_NAME +
+				"/MacroExecuteElement1012_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1012_2() throws Exception {
+		test(
+			"MacroExecuteElement1012_2.macro",
+			"Error 1012: Invalid macro command pgAdder at " + _DIR_NAME +
+				"/MacroExecuteElement1012_2.macro:3");
 	}
 
 	@Test

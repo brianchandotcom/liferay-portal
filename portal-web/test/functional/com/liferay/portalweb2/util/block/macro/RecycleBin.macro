@@ -6,7 +6,7 @@
 
 		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
 
-		<execute action="Home#click" locator-key1="link=Recycle Bin" />
+		<execute action="Home#click" locator1="link=Recycle Bin" />
 
 		<if>
 			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />

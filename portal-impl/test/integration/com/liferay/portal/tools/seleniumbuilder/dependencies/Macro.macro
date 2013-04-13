@@ -4,31 +4,31 @@
 	<command name="name">
 		<var name="name" value="value" />
 
-		<execute action="action" locator1="locator1" value1="value1" />
+		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="macro" />
+		<execute macro="BlogsEntry#pgAdd" />
 
-		<execute macro="macro">
+		<execute macro="BlogsEntry#pgAdd">
 			<var name="name" value="value" />
 		</execute>
 
 		<if>
-			<condition action="isAction" />
+			<condition action="BaseLiferay#isElementPresent" />
 			<then>
 				<var name="name" value="value" />
 
-				<execute action="action" />
+				<execute action="BaseLiferay#click" />
 			</then>
 		</if>
 
 		<if>
-			<condition macro="isMacro" />
+			<condition action="BaseLiferay#isElementPresent" />
 			<then>
 				<var name="name" value="value" />
 
-				<execute macro="macro" />
+				<execute macro="BlogsEntry#pgAdd" />
 
-				<execute macro="macro">
+				<execute macro="BlogsEntry#pgAdd">
 					<var name="name" value="value" />
 				</execute>
 			</then>

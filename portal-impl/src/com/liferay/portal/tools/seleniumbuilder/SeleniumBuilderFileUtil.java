@@ -358,33 +358,42 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	protected void throwValidationException(int errorCode, String fileName) {
-		throwValidationException(errorCode, fileName, null, null, null, null);
+		throwValidationException(
+			errorCode, fileName, null, null, null, null, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element) {
 
 		throwValidationException(
-			errorCode, fileName, element, null, null, null);
+			errorCode, fileName, element, null, null, null, null);
 	}
 
 	protected void throwValidationException(
-		int errorCode, String fileName, Element element, String string) {
+		int errorCode, String fileName, Element element, String string1) {
 
 		throwValidationException(
-			errorCode, fileName, element, null, string, null);
+			errorCode, fileName, element, null, string1, null, null);
+	}
+
+	protected void throwValidationException(
+		int errorCode, String fileName, Element element, String string1,
+		String string2) {
+
+		throwValidationException(
+			errorCode, fileName, element, null, string1, string2, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String[] array) {
 
 		throwValidationException(
-			errorCode, fileName, element, array, null, null);
+			errorCode, fileName, element, array, null, null, null);
 	}
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String[] array,
-		String string, Exception e) {
+		String string1, String string2, Exception e) {
 
 		String prefix = "Error " + errorCode + ": ";
 		String suffix = fileName;
@@ -404,11 +413,11 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1002) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid " + string + " element in " + suffix);
+				prefix + "Invalid " + string1 + " element in " + suffix);
 		}
 		else if (errorCode == 1003) {
 			throw new IllegalArgumentException(
-				prefix + "Missing " + string + " attribute in " + suffix);
+				prefix + "Missing " + string1 + " attribute in " + suffix);
 		}
 		else if (errorCode == 1004) {
 			throw new IllegalArgumentException(
@@ -417,11 +426,12 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1005) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid " + string + " attribute in " + suffix);
+				prefix + "Invalid " + string1 + " attribute in " + suffix);
 		}
 		else if (errorCode == 1006) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid " + string + " attribute value in " + suffix);
+				prefix + "Invalid " + string1 + " attribute value in " +
+					suffix);
 		}
 		else if (errorCode == 1007) {
 			throw new IllegalArgumentException(
@@ -429,43 +439,39 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1008) {
 			throw new IllegalArgumentException(
-				prefix + "Duplicate file name " + string + " at " + suffix);
+				prefix + "Duplicate file name " + string1 + " at " + suffix);
 		}
 		else if (errorCode == 1009) {
 			throw new IllegalArgumentException(
-				prefix + "Duplicate command name " + string + " at " + suffix);
+				prefix + "Duplicate command name " + string1 + " at " + suffix);
 		}
 		else if (errorCode == 1010) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid locator-key " + string + " at " + suffix);
+				prefix + "Invalid locator-key " + string1 + " at " + suffix);
 		}
 		else if (errorCode == 1011) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid function name " + string + " at " + suffix);
+				prefix + "Invalid " + string1 + " name " + string2 + " at " +
+					suffix);
 		}
 		else if (errorCode == 1012) {
 			throw new IllegalArgumentException(
-				prefix + "Invalid function command " + string + " at " +
-					suffix);
-		}
-		else if (errorCode == 1013) {
-			throw new IllegalArgumentException(
-				prefix + "Invalid selenium command " + string + " at " +
+				prefix + "Invalid " + string1 + " command " + string2 + " at " +
 					suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
-				prefix + "Too many child elements in the " + string +
+				prefix + "Too many child elements in the " + string1 +
 					" element in " + suffix);
 		}
 		else if (errorCode == 2001) {
 			throw new IllegalArgumentException(
-				prefix + "Action command " + string +
+				prefix + "Action command " + string1 +
 					" does not match a function name at " + suffix);
 		}
 		else if (errorCode == 2002) {
 			throw new IllegalArgumentException(
-				prefix + "Missing matching " + string + ".path for " + suffix);
+				prefix + "Missing matching " + string1 + ".path for " + suffix);
 		}
 		else {
 			throw new IllegalArgumentException(prefix + suffix);
@@ -475,13 +481,15 @@ public class SeleniumBuilderFileUtil {
 	protected void throwValidationException(
 		int errorCode, String fileName, Exception e) {
 
-		throwValidationException(errorCode, fileName, null, null, null, e);
+		throwValidationException(
+			errorCode, fileName, null, null, null, null, e);
 	}
 
 	protected void throwValidationException(
-		int errorCode, String fileName, String string) {
+		int errorCode, String fileName, String string1) {
 
-		throwValidationException(errorCode, fileName, null, null, string, null);
+		throwValidationException(
+			errorCode, fileName, null, null, string1, null, null);
 	}
 
 	protected void validate(String fileName, Element rootElement)

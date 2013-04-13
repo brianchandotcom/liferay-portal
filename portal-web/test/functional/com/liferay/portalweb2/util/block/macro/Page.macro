@@ -1,4 +1,10 @@
 <definition>
+	<command name="isPresent">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#isElementPresent" locator1="link=${pageName}" />
+	</command>
+
 	<command name="pgAdd">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

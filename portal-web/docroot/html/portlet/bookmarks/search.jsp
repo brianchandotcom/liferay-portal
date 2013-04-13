@@ -140,9 +140,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 						value="<%= folder.getName() %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/html/portlet/bookmarks/entry_action.jsp"
-					/>
+					<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
+						<liferay-ui:search-container-column-jsp
+							path="/html/portlet/bookmarks/entry_action.jsp"
+						/>
+					</c:if>
 				</c:when>
 				<c:when test="<%= obj instanceof BookmarksFolder %>">
 
@@ -184,10 +186,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 						value='<%= (parentFolder != null) ? parentFolder.getName() : LanguageUtil.get(locale, "home") %>'
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/html/portlet/bookmarks/folder_action.jsp"
-					/>
-
+					<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
+						<liferay-ui:search-container-column-jsp
+							path="/html/portlet/bookmarks/folder_action.jsp"
+						/>
+					</c:if>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

@@ -1,0 +1,5 @@
+<definition>
+	<command name="name">
+		<execute macro="BlogsEntrys#pgAdd" />
+	</command>
+</definition>

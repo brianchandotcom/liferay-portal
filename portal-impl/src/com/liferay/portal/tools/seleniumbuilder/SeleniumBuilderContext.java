@@ -615,6 +615,8 @@ public class SeleniumBuilderContext {
 	}
 
 	public void validateTestCaseElements(String testCaseName) {
+		String testCaseFileName = getTestCaseFileName(testCaseName);
+
 		Element rootElement = getTestCaseRootElement(testCaseName);
 
 		if (rootElement == null) {
@@ -631,13 +633,27 @@ public class SeleniumBuilderContext {
 			String commandName = commandElement.attributeValue("name");
 
 			if (commandElementNames.contains(commandName)) {
-				String testCaseFileName = getTestCaseFileName(testCaseName);
-
 				_seleniumBuilderFileUtil.throwValidationException(
 					1009, testCaseFileName, commandElement, commandName);
 			}
 			else {
 				commandElementNames.add(commandName);
+			}
+		}
+
+		List<Element> executeElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "execute");
+
+		for (Element executeElement : executeElements) {
+			String action = executeElement.attributeValue("action");
+			String macro = executeElement.attributeValue("macro");
+
+			if (action != null) {
+				_validateActionElement(testCaseFileName, executeElement);
+			}
+			else if (macro != null) {
+				_validateMacroElement(testCaseFileName, executeElement);
 			}
 		}
 	}

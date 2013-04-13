@@ -327,6 +327,38 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testMacroExecuteElement1006_3() throws Exception {
+		test(
+			"MacroExecuteElement1006_3.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_3.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1006_4() throws Exception {
+		test(
+			"MacroExecuteElement1006_4.macro",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_4.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1006_5() throws Exception {
+		test(
+			"MacroExecuteElement1006_5.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_5.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1006_6() throws Exception {
+		test(
+			"MacroExecuteElement1006_6.macro",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/MacroExecuteElement1006_6.macro:3");
+	}
+
+	@Test
 	public void testMacroExecuteElement1010() throws Exception {
 		test(
 			"MacroExecuteElement1010.macro",
@@ -385,6 +417,78 @@ public class SeleniumBuilderContextTest {
 			"TestCaseCommandElement1009.testcase",
 			"Error 1009: Duplicate command name name at " + _DIR_NAME +
 				"/TestCaseCommandElement1009.testcase:6");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1006_3() throws Exception {
+		test(
+			"TestCaseExecuteElement1006_3.testcase",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/TestCaseExecuteElement1006_3.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1006_4() throws Exception {
+		test(
+			"TestCaseExecuteElement1006_4.testcase",
+			"Error 1006: Invalid action attribute value in " + _DIR_NAME +
+				"/TestCaseExecuteElement1006_4.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1006_5() throws Exception {
+		test(
+			"TestCaseExecuteElement1006_5.testcase",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/TestCaseExecuteElement1006_5.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1006_6() throws Exception {
+		test(
+			"TestCaseExecuteElement1006_6.testcase",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/TestCaseExecuteElement1006_6.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1010() throws Exception {
+		test(
+			"TestCaseExecuteElement1010.testcase",
+			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
+				"/TestCaseExecuteElement1010.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1011_1() throws Exception {
+		test(
+			"TestCaseExecuteElement1011_1.testcase",
+			"Error 1011: Invalid action name BaseLiferays at " + _DIR_NAME +
+				"/TestCaseExecuteElement1011_1.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1011_2() throws Exception {
+		test(
+			"TestCaseExecuteElement1011_2.testcase",
+			"Error 1011: Invalid macro name BlogsEntrys at " + _DIR_NAME +
+				"/TestCaseExecuteElement1011_2.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1012_1() throws Exception {
+		test(
+			"TestCaseExecuteElement1012_1.testcase",
+			"Error 1012: Invalid action command clicks at " + _DIR_NAME +
+				"/TestCaseExecuteElement1012_1.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseExecuteElement1012_2() throws Exception {
+		test(
+			"TestCaseExecuteElement1012_2.testcase",
+			"Error 1012: Invalid macro command pgAdder at " + _DIR_NAME +
+				"/TestCaseExecuteElement1012_2.testcase:3");
 	}
 
 	@Test

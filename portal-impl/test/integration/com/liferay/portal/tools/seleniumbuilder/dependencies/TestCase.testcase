@@ -4,11 +4,11 @@
 	<set-up>
 		<var name="name" value="value" />
 
-		<execute action="action" locator1="locator1" value1="value1" />
+		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="macro" />
+		<execute macro="BlogsEntry#pgAdd" />
 
-		<execute macro="macro">
+				<execute macro="BlogsEntry#pgAdd">
 			<var name="name" value="value" />
 		</execute>
 	</set-up>
@@ -16,11 +16,11 @@
 	<command name="name">
 		<var name="name" value="value" />
 
-		<execute action="action" locator1="locator1" value1="value1" />
+		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="macro" />
+		<execute macro="BlogsEntry#pgAdd" />
 
-		<execute macro="macro">
+				<execute macro="BlogsEntry#pgAdd">
 			<var name="name" value="value" />
 		</execute>
 	</command>
@@ -28,11 +28,11 @@
 	<tear-down>
 		<var name="name" value="value" />
 
-		<execute action="action" locator1="locator1" value1="value1" />
+		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="macro" />
+		<execute macro="BlogsEntry#pgAdd" />
 
-		<execute macro="macro">
+				<execute macro="BlogsEntry#pgAdd">
 			<var name="name" value="value" />
 		</execute>
 	</tear-down>

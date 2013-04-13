@@ -1,0 +1,5 @@
+<definition>
+	<command name="name">
+		<execute action="BaseLiferay#click" locator-key1="PAGE_NAME_X" />
+	</command>
+</definition>

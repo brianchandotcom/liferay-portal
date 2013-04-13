@@ -24,6 +24,7 @@ import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.search
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchsitessitetypeprivaterestricted.SearchSitesSiteTypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.searchthreaddeletesiteprivaterestrict.SearchThreadDeleteSitePrivateRestrictTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.sousfavoritesite1typeprivaterestricted.SOUs_FavoriteSite1TypePrivateRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.sousleavesitetypeprivaterestricted.SOUs_LeaveSiteTypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.soussearchsitessitetypeprivaterestricted.SOUs_SearchSitesSiteTypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.privaterestrictedsite.viewsitessitetypeprivaterestricted.ViewSitesSiteTypePrivateRestrictedTests;
 
@@ -48,6 +49,7 @@ public class PrivateRestrictedSiteTestPlan extends BaseTestSuite {
 		testSuite.addTest(SearchSitesSiteTypePrivateRestrictedTests.suite());
 		testSuite.addTest(SearchThreadDeleteSitePrivateRestrictTests.suite());
 		testSuite.addTest(SOUs_FavoriteSite1TypePrivateRestrictedTests.suite());
+		testSuite.addTest(SOUs_LeaveSiteTypePrivateRestrictedTests.suite());
 		testSuite.addTest(
 			SOUs_SearchSitesSiteTypePrivateRestrictedTests.suite());
 		testSuite.addTest(ViewSitesSiteTypePrivateRestrictedTests.suite());

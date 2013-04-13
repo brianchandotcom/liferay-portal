@@ -510,6 +510,9 @@ public class SeleniumBuilderContext {
 		else if (fileName.endsWith(".testcase")) {
 			validateTestCaseElements(name);
 		}
+		else if (fileName.endsWith(".testsuite")) {
+			validateTestSuiteElements(name);
+		}
 	}
 
 	public void validateFunctionElements(String functionName) {
@@ -658,6 +661,28 @@ public class SeleniumBuilderContext {
 		}
 	}
 
+	public void validateTestSuiteElements(String testSuiteName) {
+		Element rootElement = getTestSuiteRootElement(testSuiteName);
+
+		List<Element> executeElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "execute");
+
+		String testSuiteFileName = getTestSuiteFileName(testSuiteName);
+
+		for (Element executeElement : executeElements) {
+			String testCase = executeElement.attributeValue("test-case");
+			String testSuite = executeElement.attributeValue("test-suite");
+
+			if (testCase != null) {
+				_validateTestCaseElement(testSuiteFileName, executeElement);
+			}
+			else if (testSuite != null) {
+				_validateTestSuiteElement(testSuiteFileName, executeElement);
+			}
+		}
+	}
+
 	private String _getClassName(String fileName) {
 		return _seleniumBuilderFileUtil.getClassName(fileName);
 	}
@@ -780,6 +805,26 @@ public class SeleniumBuilderContext {
 	private boolean _isSeleniumCommand(String command) {
 		if (_seleniumParameterCounts.containsKey(command)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isTestCaseName(String name) {
+		for (String testCaseName : _testCaseNames) {
+			if (testCaseName.equals(name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isTestSuiteName(String name) {
+		for (String testSuiteName : _testSuiteNames) {
+			if (testSuiteName.equals(name)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -931,6 +976,24 @@ public class SeleniumBuilderContext {
 		if (!_isSeleniumCommand(selenium)) {
 			_seleniumBuilderFileUtil.throwValidationException(
 				1012, fileName, element, "selenium", selenium);
+		}
+	}
+
+	private void _validateTestCaseElement(String fileName, Element element) {
+		String testCase = element.attributeValue("test-case");
+
+		if (!_isTestCaseName(testCase)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1011, fileName, element, "test-case", testCase);
+		}
+	}
+
+	private void _validateTestSuiteElement(String fileName, Element element) {
+		String testSuite = element.attributeValue("test-suite");
+
+		if (!_isTestSuiteName(testSuite)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1011, fileName, element, "test-suite", testSuite);
 		}
 	}
 

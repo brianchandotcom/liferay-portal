@@ -14,8 +14,10 @@
 
 	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
+	<property name="scayt.file" value="scayt_4.0.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
 	<property name="vaadin.file" value="vaadin-6.7.4-liferay.zip" />
+	<property name="wsc.file" value="wsc_4.0.3.zip" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -305,6 +307,10 @@
 				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
 				</copy>
+
+				<antcall target="build-ckeditor-plugins-scayt" />
+
+				<antcall target="build-ckeditor-plugins-wsc" />
 			</then>
 			<else>
 				<copy todir="docroot/html/js/editor/ckeditor">
@@ -418,6 +424,34 @@
 		</script>
 
 		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
+	</target>
+
+	<target name="build-ckeditor-plugins-scayt">
+		<get
+			dest="${scayt.file}"
+			src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
+		/>
+
+		<unzip
+			dest="docroot/html/js/editor/ckeditor/plugins"
+			src="${scayt.file}"
+		/>
+
+		<delete file="${scayt.file}" />
+	</target>
+
+	<target name="build-ckeditor-plugins-wsc">
+		<get
+			dest="${wsc.file}"
+			src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
+		/>
+
+		<unzip
+			dest="docroot/html/js/editor/ckeditor/plugins"
+			src="${wsc.file}"
+		/>
+
+		<delete file="${wsc.file}" />
 	</target>
 
 	<target name="build-css">

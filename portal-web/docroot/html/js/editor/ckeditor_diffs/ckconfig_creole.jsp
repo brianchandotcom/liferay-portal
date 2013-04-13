@@ -70,12 +70,10 @@ CKEDITOR.config.removePlugins = [
 	'preview',
 	'print',
 	'save',
-	'scayt',
 	'smiley',
 	'showblocks',
 	'stylescombo',
-	'templates',
-	'wsc'
+	'templates'
 ].join();
 
 <c:if test="<%= resizable %>">

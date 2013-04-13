@@ -48,10 +48,8 @@ CKEDITOR.config.removePlugins = [
 	'preview',
 	'print',
 	'save',
-	'scayt',
 	'showblocks',
-	'templates',
-	'wsc'
+	'templates'
 ].join(',');
 
 CKEDITOR.config.toolbar_bbcode = [

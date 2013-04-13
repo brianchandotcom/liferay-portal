@@ -24,12 +24,12 @@ create database lportal2 character set utf8;</echo>
 		<echo file="portal-impl/src/portal-ext.properties" append="true"><![CDATA[
 
 jdbc.one.driverClassName=com.mysql.jdbc.Driver
-jdbc.one.url=jdbc:mysql://${db.mysql.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+jdbc.one.url=jdbc:mysql://${database.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 jdbc.one.username=
 jdbc.one.password=
 
 jdbc.two.driverClassName=com.mysql.jdbc.Driver
-jdbc.two.url=jdbc:mysql://${db.mysql.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 jdbc.two.username=
 jdbc.two.password=
 

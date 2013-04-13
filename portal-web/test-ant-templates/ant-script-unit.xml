@@ -4,6 +4,10 @@
 	<import file="../../build-test.xml" />
 
 	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="db2" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -16,7 +20,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="db2" />
+			<property name="database" value="db2" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -25,16 +29,24 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test">
-			<property name="db.type" value="mysql" />
+			<property name="database" value="mysql" />
 		</ant>
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="oracle-10" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -47,7 +59,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="oracle-10" />
+			<property name="database" value="oracle-10" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -56,6 +68,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-11-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="oracle-11" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -68,7 +84,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="oracle-11" />
+			<property name="database" value="oracle-11" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -77,6 +93,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-8.4" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -89,7 +109,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="postgresql-8.4" />
+			<property name="database" value="postgresql-8.4" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -98,6 +118,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-9.0" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -110,7 +134,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="postgresql-9.0" />
+			<property name="database" value="postgresql-9.0" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -119,6 +143,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sql-server-2005" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -131,7 +159,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="sql-server-2005" />
+			<property name="database" value="sql-server-2005" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -140,6 +168,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sql-server-2008" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -152,7 +184,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="sql-server-2008" />
+			<property name="database" value="sql-server-2008" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -161,6 +193,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sybase" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -173,7 +209,7 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="db.type" value="sybase" />
+			<property name="database" value="sybase" />
 		</ant>
 
 		<antcall target="stop-vm">

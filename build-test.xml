@@ -9,14 +9,6 @@
 	<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/test.properties" />
 
-	<propertycopy name="db.device.name" from="db.${db.type}.device.name" silent="true" />
-	<propertycopy name="db.driver" from="db.${db.type}.driver" silent="true" />
-	<propertycopy name="db.host" from="db.${db.type}.host" silent="true" />
-	<propertycopy name="db.password" from="db.${db.type}.password" silent="true" />
-	<propertycopy name="db.schema" from="db.${db.type}.schema" silent="true" />
-	<propertycopy name="db.url" from="db.${db.type}.url" silent="true" />
-	<propertycopy name="db.username" from="db.${db.type}.username" silent="true" />
-
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
@@ -48,6 +40,115 @@
 		</loadfile>
 
 		<echo file="portal-web/test-ant-scripts/${ant.script.file.name}" append="true">${template.content}</echo>
+	</target>
+
+	<target name="build-sql-file">
+		<if>
+			<not>
+				<isset property="sql.legacy.zip" />
+			</not>
+			<then>
+				<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<and>
+					<available file="sql/legacy" />
+					<uptodate
+						srcfile="${sql.legacy.zip}"
+						targetfile="sql/legacy"
+					/>
+				</and>
+			</not>
+			<then>
+				<delete dir="sql/legacy" failonerror="false" />
+
+				<unzip src="${sql.legacy.zip}" dest="sql" />
+
+				<touch>
+					<fileset dir="sql/legacy" />
+				</touch>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${database}" arg2="hsql" />
+			</not>
+			<then>
+				<if>
+					<or>
+						<not>
+							<isset property="sql.dir" />
+						</not>
+						<not>
+							<isset property="sql.file" />
+						</not>
+					</or>
+					<then>
+						<if>
+							<isset property="test.database.minimal" />
+							<then>
+								<property name="sql.dir" value="sql\create-minimal\" />
+								<property name="sql.file" value="create-minimal-${database.family}.sql" />
+							</then>
+							<else>
+								<property name="sql.dir" value="sql\create\" />
+								<property name="sql.file" value="create-${database.family}.sql" />
+							</else>
+						</if>
+					</then>
+				</if>
+
+				<copy file="${sql.dir}${sql.file}" tofile="create.sql" />
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.drop-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.drop-schema.token}" value="${database.sql-replacement.drop-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.create-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.create-schema.token}" value="${database.sql-replacement.create-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.use-schema.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.use-schema.token}" value="${database.sql-replacement.use-schema.value}" />
+						</replace>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${database.sql-replacement.create-schema-secondary.token}" arg2="" />
+					</not>
+					<then>
+						<replace file="create.sql">
+							<replacefilter token="${database.sql-replacement.create-schema-secondary.token}" value="${database.sql-replacement.create-schema-secondary.value}" />
+						</replace>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-test-ant-script">
@@ -326,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2306,15 +2407,17 @@
 				<or>
 					<equals arg1="${database}" arg2="db2" />
 					<equals arg1="${database}" arg2="mysql" />
+					<equals arg1="${database}" arg2="oracle-10" />
+					<equals arg1="${database}" arg2="oracle-11" />
 					<equals arg1="${database}" arg2="postgresql-8.4" />
 					<equals arg1="${database}" arg2="postgresql-9.0" />
 					<equals arg1="${database}" arg2="sql-server-2005" />
-					<equals arg1="${database}" arg2="sql-server-2005" />
+					<equals arg1="${database}" arg2="sql-server-2008" />
 					<equals arg1="${database}" arg2="sybase" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2, mysql, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2005, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
 			</then>
 		</if>
 	</target>
@@ -2486,7 +2589,7 @@
 
 	<target name="copy-optional-jars">
 		<if>
-			<equals arg1="${db.type}" arg2="db2" />
+			<equals arg1="${database}" arg2="db2" />
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
@@ -2504,7 +2607,7 @@
 			</then>
 			<elseif>
 				<and>
-					<equals arg1="${db.type}" arg2="mysql" />
+					<equals arg1="${database}" arg2="mysql" />
 					<not>
 						<available file="${simple.server.lib.global.dir}/mysql.jar" />
 					</not>
@@ -2519,7 +2622,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${db.type}" arg2="oracle-10" />
+				<equals arg1="${database}" arg2="oracle-10" />
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
@@ -2537,7 +2640,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${db.type}" arg2="oracle-11" />
+				<equals arg1="${database}" arg2="oracle-11" />
 				<then>
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
@@ -2618,7 +2721,7 @@
 		<delete file="execute-remote-command.bat" />
 	</target>
 
-	<target name="generate-test-properties">
+	<target name="generate-test-properties" depends="check-config">
 		<xmlproperty
 			file="portal-web/test-config/database.xml"
 			keeproot="true"
@@ -2714,7 +2817,7 @@
 	</target>
 
 	<target name="prepare-common">
-		<echo file="test.${user.name}.properties">db.type=${db.type}</echo>
+		<echo file="test.${user.name}.properties">database=${database}</echo>
 
 		<antcall target="prepare-portal-properties" inheritAll="false" />
 
@@ -2761,15 +2864,15 @@
 		</if>
 	</target>
 
-	<target name="prepare-portal-ext-properties">
+	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<echo file="portal-impl/src/portal-ext.properties">plugin.notifications.enabled=false
 
 jdbc.default.jndi.name=
 
-jdbc.default.driverClassName=${db.driver}
-jdbc.default.url=${db.url}
-jdbc.default.username=${db.username}
-jdbc.default.password=${db.password}
+jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}
 
 captcha.max.challenges=0
 
@@ -2788,7 +2891,7 @@ tunnel.servlet.hosts.allowed=
 resource.repositories.root=$${user.home}/liferay</echo>
 
 		<if>
-			<contains string="${db.type}" substring="db2" />
+			<contains string="${database}" substring="db2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -2797,7 +2900,7 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<contains string="${db.type}" substring="oracle" />
+				<contains string="${database}" substring="oracle" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -2808,7 +2911,7 @@ jdbc.default.numHelperThreads=1</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${db.type}" substring="sybase" />
+				<contains string="${database}" substring="sybase" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -3151,10 +3254,10 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 	name="jdbc/LiferayPool"
 	auth="Container"
 	type="javax.sql.DataSource"
-	driverClassName="${db.driver}"
-	url="${db.url}"
-	username="${db.username}"
-	password="${db.password}"
+	driverClassName="${database.driver}"
+	url="${database.url}"
+	username="${database.username}"
+	password="${database.password}"
 	maxActive="20"
 />
 </Context>]]></echo>
@@ -3268,14 +3371,14 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 
 	<target name="prepare-test-properties">
 		<echo file="portal-impl/test/portal-test-ext.properties">
-jdbc.default.driverClassName=${db.driver}
-jdbc.default.url=${db.url}
-jdbc.default.username=${db.username}
-jdbc.default.password=${db.password}
+jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}
 		</echo>
 
 		<if>
-			<contains string="${db.type}" substring="db2" />
+			<contains string="${database}" substring="db2" />
 			<then>
 				<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -3284,7 +3387,7 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<contains string="${db.type}" substring="oracle" />
+				<contains string="${database}" substring="oracle" />
 				<then>
 					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -3295,7 +3398,7 @@ jdbc.default.numHelperThreads=1</echo>
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${db.type}" substring="sybase" />
+				<contains string="${database}" substring="sybase" />
 				<then>
 					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
 
@@ -3318,36 +3421,36 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<property name="sql.dir" value="sql\legacy\${sql.version}\create\" />
 
 				<if>
-					<contains string="${db.type}" substring="db2" />
+					<contains string="${database}" substring="db2" />
 					<then>
 						<property name="sql.file" value="create-db2.sql" />
 					</then>
 					<elseif>
-						<contains string="${db.type}" substring="mysql" />
+						<contains string="${database}" substring="mysql" />
 						<then>
 							<property name="sql.file" value="create-mysql.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<contains string="${db.type}" substring="oracle" />
+						<contains string="${database}" substring="oracle" />
 						<then>
 							<property name="sql.file" value="create-oracle.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<contains string="${db.type}" substring="postgresql" />
+						<contains string="${database}" substring="postgresql" />
 						<then>
 							<property name="sql.file" value="create-postgresql.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<contains string="${db.type}" substring="sql-server" />
+						<contains string="${database}" substring="sql-server" />
 						<then>
 							<property name="sql.file" value="create-sql-server.sql" />
 						</then>
 					</elseif>
 					<elseif>
-						<contains string="${db.type}" substring="sybase" />
+						<contains string="${database}" substring="sybase" />
 						<then>
 							<property name="sql.file" value="create-sybase.sql" />
 						</then>
@@ -3363,55 +3466,55 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="prepare-versioned-db2">
-		<echo file="test.${user.name}.properties">db.type=db2</echo>
+		<echo file="test.${user.name}.properties">database=db2</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-mysql">
-		<echo file="test.${user.name}.properties">db.type=mysql</echo>
+		<echo file="test.${user.name}.properties">database=mysql</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-oracle-10">
-		<echo file="test.${user.name}.properties">db.type=oracle-10</echo>
+		<echo file="test.${user.name}.properties">database=oracle-10</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-oracle-11">
-		<echo file="test.${user.name}.properties">db.type=oracle-11</echo>
+		<echo file="test.${user.name}.properties">database=oracle-11</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-postgresql-8.4">
-		<echo file="test.${user.name}.properties">db.type=postgresql-8.4</echo>
+		<echo file="test.${user.name}.properties">database=postgresql-8.4</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-postgresql-9.0">
-		<echo file="test.${user.name}.properties">db.type=postgresql-9.0</echo>
+		<echo file="test.${user.name}.properties">database=postgresql-9.0</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-sql-server-2005">
-		<echo file="test.${user.name}.properties">db.type=sql-server-2005</echo>
+		<echo file="test.${user.name}.properties">database=sql-server-2005</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-sql-server-2008">
-		<echo file="test.${user.name}.properties">db.type=sql-server-2008</echo>
+		<echo file="test.${user.name}.properties">database=sql-server-2008</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
 	<target name="prepare-versioned-sybase">
-		<echo file="test.${user.name}.properties">db.type=sybase</echo>
+		<echo file="test.${user.name}.properties">database=sybase</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
@@ -3538,468 +3641,66 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
-	<target name="rebuild-database">
+	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
 		<if>
 			<not>
-				<isset property="sql.legacy.zip" />
+				<isset property="skip.rebuild-database" />
 			</not>
 			<then>
-				<fail>
-.
-
-Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP
-file.
-				</fail>
-			</then>
-			<else>
-				<if>
-					<and>
-						<not>
-							<isset property="skip.rebuild-legacy" />
-						</not>
-						<or>
-							<not>
-								<available file="sql/legacy" />
-							</not>
-							<not>
-								<uptodate
-									srcfile="${sql.legacy.zip}"
-									targetfile="sql/legacy"
-								/>
-							</not>
-						</or>
-					</and>
-					<then>
-						<delete dir="sql/legacy" failonerror="false" />
-
-						<unzip src="${sql.legacy.zip}" dest="sql" />
-
-						<touch>
-							<fileset dir="sql/legacy" />
-						</touch>
-					</then>
-				</if>
-
 				<if>
 					<not>
-						<isset property="skip.rebuild-database" />
+						<isset property="skip.delete-liferay-home" />
 					</not>
 					<then>
+						<delete dir="${user.home}/liferay" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${database}" arg2="hsql" />
+					<then>
+						<delete dir="${user.home}/liferay/data" includeemptydirs="true" />
+
 						<if>
 							<not>
-								<isset property="skip.delete-liferay-home" />
+								<isset property="test.database.minimal" />
 							</not>
 							<then>
-								<delete dir="${user.home}/liferay" />
+								<copy file="sql/${database.name}.properties" tofile="${user.home}/liferay/data/hsql/${database.name}.properties" />
+								<copy file="sql/${database.name}.script" tofile="${user.home}/liferay/data/hsql/${database.name}.script" />
 							</then>
 						</if>
-
-						<if>
-							<equals arg1="${db.type}" arg2="db2" />
-							<then>
-								<antcall target="rebuild-database-db2" />
-							</then>
-							<elseif>
-								<equals arg1="${db.type}" arg2="hsql" />
-								<then>
-									<antcall target="rebuild-database-hsql" />
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${db.type}" arg2="mysql" />
-								<then>
-									<antcall target="rebuild-database-mysql" />
-								</then>
-							</elseif>
-							<elseif>
-								<or>
-									<equals arg1="${db.type}" arg2="oracle-10" />
-									<equals arg1="${db.type}" arg2="oracle-11" />
-								</or>
-								<then>
-									<antcall target="rebuild-database-oracle" />
-								</then>
-							</elseif>
-							<elseif>
-								<or>
-									<equals arg1="${db.type}" arg2="postgresql-8.4" />
-									<equals arg1="${db.type}" arg2="postgresql-9.0" />
-								</or>
-								<then>
-									<antcall target="rebuild-database-postgresql" />
-								</then>
-							</elseif>
-							<elseif>
-								<or>
-									<equals arg1="${db.type}" arg2="sql-server-2005" />
-									<equals arg1="${db.type}" arg2="sql-server-2008" />
-								</or>
-								<then>
-									<antcall target="rebuild-database-sql-server" />
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${db.type}" arg2="sybase" />
-								<then>
-									<antcall target="rebuild-database-sybase" />
-								</then>
-							</elseif>
-						</if>
 					</then>
-				</if>
-			</else>
-		</if>
-	</target>
-
-	<target name="rebuild-database-db2">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-db2.sql" />
-					</then>
+					<elseif>
+						<equals arg1="${database.family}" arg2="mysql" />
+						<then>
+							<exec executable="${mysql.executable}" input="create.sql">
+								<arg line="${mysql.arg.line}" />
+							</exec>
+						</then>
+					</elseif>
 					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-db2.sql" />
+						<exec executable="${plink.executable}">
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c mkdir C:\temporary" />
+						</exec>
+
+						<exec executable="${pscp.executable}">
+							<arg line="-pw ${vm.password} create.sql ${vm.username}@${database.host}:\temporary" />
+						</exec>
+
+						<exec executable="${plink.executable}">
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} ${database.remote-schema-command}" />
+						</exec>
+
+						<exec executable="${plink.executable}">
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c rmdir /q /s C:\temporary" />
+						</exec>
 					</else>
 				</if>
 			</then>
 		</if>
 
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
-
-		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
-			<replacefilter token="create database lportal;" value="create database ${db.schema} pagesize 8192;" />
-			<replacefilter token="create database lportal pagesize 8192;" value="create database ${db.schema} pagesize 8192;" />
-			<replacefilter token="connect to lportal;" value="connect to ${db.schema} USER ${db.username} USING ${db.password};" />
-		</replace>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c db2cmd /c /w /i /t db2 -f C:\${tstamp.value}\${sql.file} -td;" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
-		</exec>
-
-		<delete file="${sql.file}" />
-	</target>
-
-	<target name="rebuild-database-hsql">
-		<delete dir="${app.server.parent.dir}/data" includeemptydirs="true" />
-
-		<if>
-			<not>
-				<isset property="test.database.minimal" />
-			</not>
-			<then>
-				<copy file="sql/${database.name}.properties" tofile="${app.server.parent.dir}/data/hsql/${database.name}.properties" />
-				<copy file="sql/${database.name}.script" tofile="${app.server.parent.dir}/data/hsql/${database.name}.script" />
-			</then>
-		</if>
-	</target>
-
-	<target name="rebuild-database-mysql">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-mysql.sql" />
-					</then>
-					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-mysql.sql" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
-
-		<if>
-			<isset property="test.database.collate" />
-			<then>
-				<replace file="${sql.file}">
-					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};" />
-					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8 collate utf8_bin;" />
-					<replacefilter token="use lportal;" value="use ${db.schema};" />
-				</replace>
-			</then>
-			<else>
-				<replace file="${sql.file}">
-					<replacefilter token="drop database if exists lportal;" value="drop database if exists ${db.schema};" />
-					<replacefilter token="create database lportal character set utf8;" value="create database ${db.schema} character set utf8;" />
-					<replacefilter token="use lportal;" value="use ${db.schema};" />
-				</replace>
-			</else>
-		</if>
-
-		<exec executable="${mysql.executable}" input="${sql.file}">
-			<arg line="${mysql.arg.line}" />
-		</exec>
-
-		<delete file="${sql.file}" />
-	</target>
-
-	<target name="rebuild-database-oracle">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-oracle.sql" />
-					</then>
-					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-oracle.sql" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${sql.dir}${sql.file} ${vm.username}@${db.host}:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} sqlplus system/password @C:\${tstamp.value}\${sql.file} ${db.username} ${db.password}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
-		</exec>
-	</target>
-
-	<target name="rebuild-database-postgresql">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-postgresql.sql" />
-					</then>
-					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-postgresql.sql" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
-
-		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
-			<replacefilter token="create database lportal encoding = 'UNICODE';" value="create database ${db.schema} encoding = 'UNICODE';" />
-			<replacefilter token="\c lportal;" value="\c ${db.schema};" />
-		</replace>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}" />
-		</exec>
-
-		<if>
-			<equals arg1="${db.type}" arg2="postgresql-8.4" />
-			<then>
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}" />
-				</exec>
-			</then>
-			<elseif>
-				<equals arg1="${db.type}" arg2="postgresql-9.0" />
-				<then>
-					<exec executable="${plink.executable}">
-						<arg line="-pw ${vm.password} ${vm.username}@${db.host} C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${db.username} -f C:\${tstamp.value}\${sql.file}" />
-					</exec>
-				</then>
-			</elseif>
-		</if>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
-		</exec>
-
-		<delete file="${sql.file}" />
-	</target>
-
-	<target name="rebuild-database-sql-server">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-sql-server.sql" />
-					</then>
-					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-sql-server.sql" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
-
-		<replace file="${sql.file}">
-			<replacefilter token="drop database lportal;" value="drop database ${db.schema};" />
-			<replacefilter token="create database lportal;" value="create database ${db.schema};" />
-			<replacefilter token="use lportal;" value="use ${db.schema};" />
-		</replace>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} osql -n -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
-		</exec>
-
-		<delete file="${sql.file}" />
-	</target>
-
-	<target name="rebuild-database-sybase">
-		<if>
-			<or>
-				<not>
-					<isset property="sql.dir" />
-				</not>
-				<not>
-					<isset property="sql.file" />
-				</not>
-			</or>
-			<then>
-				<if>
-					<isset property="test.database.minimal" />
-					<then>
-						<property name="sql.dir" value="sql\create-minimal\" />
-						<property name="sql.file" value="create-minimal-sybase.sql" />
-					</then>
-					<else>
-						<property name="sql.dir" value="sql\create\" />
-						<property name="sql.file" value="create-sybase.sql" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<copy file="${sql.dir}${sql.file}" tofile="${sql.file}" />
-
-		<replace file="${sql.file}">
-			<replacefilter token="use master" value="use master${line.separator}dump transaction master with no_log${line.separator}go${line.separator}if exists (select * from master.dbo.sysdatabases where name = &quot;${db.schema}&quot;)${line.separator}begin${line.separator}drop database ${db.schema}${line.separator}end${line.separator}go${line.separator}create database ${db.schema} on ${db.device.name} = &quot;250m&quot;${line.separator}go" />
-			<replacefilter token="exec sp_dboption 'lportal', 'allow nulls by default' , true" value="exec sp_dboption '${db.schema}', 'allow nulls by default' , true" />
-			<replacefilter token="exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true" value="exec sp_dboption '${db.schema}', 'select into/bulkcopy/pllsort' , true" />
-			<replacefilter token="use lportal" value="use ${db.schema}${line.separator}go" />
-		</replace>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c mkdir C:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${sql.file} ${vm.username}@${db.host}:\${tstamp.value}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} isql -U ${db.username} -P ${db.password} -i C:\${tstamp.value}\${sql.file}" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${db.host} cmd.exe /c rmdir /q /s C:\${tstamp.value}" />
-		</exec>
-
-		<delete file="${sql.file}" />
+		<delete file="create.sql" />
 	</target>
 
 	<target name="record-java-processes">
@@ -4079,7 +3780,7 @@ file.
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
 				<not>
-					<equals arg1="${db.type}" arg2="hsql" />
+					<equals arg1="${database}" arg2="hsql" />
 				</not>
 			</and>
 			<then>
@@ -4427,7 +4128,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<antcall target="clean-up-plugins" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 		</antcall>
 
 		<antcall target="rebuild-database" inheritAll="false">

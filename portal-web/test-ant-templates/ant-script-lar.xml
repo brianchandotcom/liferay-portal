@@ -4,12 +4,16 @@
 	<import file="../../build-test.xml" />
 
 	<target name="test-${test.ant.script.command}-geronimo-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -38,12 +42,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-glassfish-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -72,12 +80,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -106,12 +118,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -140,12 +156,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-jonas-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -174,6 +194,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="db2" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -186,7 +210,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="db2" />
+			<param name="database" value="db2" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -219,12 +243,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-hsql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="hsql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="hsql" />
+			<param name="database" value="hsql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -253,12 +281,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -287,12 +319,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-google-chrome">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -323,12 +359,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-mysql-internet-explorer">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -359,6 +399,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="oracle-10" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -371,7 +415,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="oracle-10" />
+			<param name="database" value="oracle-10" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -404,6 +448,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-oracle-11-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="oracle-11" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -416,7 +464,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="oracle-11" />
+			<param name="database" value="oracle-11" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -449,6 +497,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-8.4" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -461,7 +513,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="postgresql-8.4" />
+			<param name="database" value="postgresql-8.4" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -494,6 +546,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-9.0" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -506,7 +562,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="postgresql-9.0" />
+			<param name="database" value="postgresql-9.0" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -539,6 +595,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sql-server-2005" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -551,7 +611,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="sql-server-2005" />
+			<param name="database" value="sql-server-2005" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -580,6 +640,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sql-server-2008" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -592,7 +656,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="sql-server-2008" />
+			<param name="database" value="sql-server-2008" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -625,6 +689,10 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sybase" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -637,7 +705,7 @@
 		</antcall>
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="sybase" />
+			<param name="database" value="sybase" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -670,12 +738,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-weblogic-10.3-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -692,12 +764,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-6.1-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -714,12 +790,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -736,12 +816,16 @@
 	</target>
 
 	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 			${test.ant.script.file.properties}
 		</antcall>
 

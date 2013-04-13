@@ -75,7 +75,6 @@ import com.liferay.portalweb.socialofficeprofile.profile.viewprofileinstantmesse
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofilephonenumber.ViewProfilePhoneNumberTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofilesms.ViewProfileSMSTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofilesocialnetwork.ViewProfileSocialNetworkTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofiletag.ViewProfileTagTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofilewebsite.ViewProfileWebsiteTests;
 
 import junit.framework.Test;
@@ -152,7 +151,6 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(ViewProfilePhoneNumberTests.suite());
 		testSuite.addTest(ViewProfileSMSTests.suite());
 		testSuite.addTest(ViewProfileSocialNetworkTests.suite());
-		testSuite.addTest(ViewProfileTagTests.suite());
 		testSuite.addTest(ViewProfileWebsiteTests.suite());
 
 		return testSuite;

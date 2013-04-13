@@ -33,6 +33,7 @@ public class AddUserSOTagTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOTagTest.class);
+		testSuite.addTestSuite(ViewProfileTagTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

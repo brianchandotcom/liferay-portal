@@ -107,8 +107,6 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 			row.setSkip(true);
 		}
 
-		message = message.toEscapedModel();
-
 		row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
 		row.setObject(new Object[] {message, threadSubscriptionClassPKs});
 		row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));

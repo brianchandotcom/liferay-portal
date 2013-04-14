@@ -17,7 +17,6 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -37,14 +36,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
- * The web content service is responsible for accessing, creating, modifying,
- * searching, and deleting web content articles.
+ * The implementation of the web content remote service is responsible for
+ * accessing, creating, modifying, searching, and deleting web content articles
+ * remotely.
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -61,8 +60,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -170,15 +168,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a web content article.
+	 * Adds a web content article without any images.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -290,9 +287,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  autoArticleId whether to auto-generate the web content article ID
 	 * @param  version the web content article's version
 	 * @return the new web content article
-	 * @throws PortalException if the user did not have permission to copy the
-	 *         web content article, if a matching web content article could not
-	 *         be found, or if a portal exception occurred
+	 * @throws PortalException if the user did not have permission to add the
+	 *         copy the web content article, if a matching web content article
+	 *         could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle copyArticle(
@@ -319,7 +316,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if the user did not have permission to delete the
 	 *         web content article, if a matching web content article could not
 	 *         be found, or if a portal exception occurred
@@ -348,7 +345,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if the user did not have permission to delete the
 	 *         web content article or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -366,8 +363,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Expires the matching web content article, updating its status to {@link
-	 * com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_EXPIRED}.
+	 * Expires the web content article matching the group, article ID, and
+	 * version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -402,7 +399,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Expires the matching web content article.
+	 * Expires the web content article matching the group and article ID,
+	 * expiring all of its versions if the
+	 * <code>journal.article.expire.all.versions</code> portal property is
+	 * <code>true</code>, otherwise expiring only its latest approved version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -437,9 +437,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *
 	 * @param  id the primary key of the web content article
 	 * @return the web content article with the ID
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article or if a matching web content article could
-	 *         not be found
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if the user did not have permission to view the web
+	 *         content article
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getArticle(long id)
@@ -508,16 +508,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the primary key of the class name
 	 *         associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  classPK the primary key of the DDM structure, if the the
 	 *         DDMStructure class name is given as the <code>className</code>
 	 *         parameter, the primary key of the class associated with the web
 	 *         content article, or <code>0</code> otherwise
 	 * @return the matching web content article
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article or if a matching web content article could
-	 *         not be found
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if the user did not have permission to view the web
+	 *         content article
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getArticle(
@@ -543,7 +542,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  urlTitle the web content article's accessible URL title
 	 * @return the matching web content article
 	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article or if a portal exception occrred
+	 *         web content article or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getArticleByUrlTitle(long groupId, String urlTitle)
@@ -611,7 +610,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the web content articles matching the group and folders.
+	 * Returns all the web content articles matching the group and folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
@@ -634,7 +633,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * group and folders.
+	 * group and folder.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -724,7 +723,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * group, class name ID, and DDM structure key.
+	 * group, class name ID, DDM structure key, and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -740,14 +739,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
 	 * @param  end the upper bound of the range of web content articles to
@@ -809,8 +806,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of web content articles matching the group and
-	 * folders.
+	 * Returns the number of web content articles matching the group and folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderId the primary key of the web content article folder
@@ -854,14 +850,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -875,7 +869,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns the number of web content articles matching the group, default
-	 * class name ID, DDM structure key, and workflow status.
+	 * class name ID, and DDM structure key.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
@@ -940,12 +934,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * group, folders, and default class name ID. If the user ID is less than
-	 * <code>0</code>, the web content articles must only match the group and
-	 * folders.
+	 * group, user, the root folder or any of its subfolders.
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  userId the primary key of the user who created the file
+	 * @param  userId the primary key of the user (optionally <code>0</code>)
 	 * @param  rootFolderId the primary key of the root folder to begin the
 	 *         search
 	 * @param  start the lower bound of the range of web content articles to
@@ -956,8 +948,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         articles
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content articles
+	 * @throws PortalException if the root folder could not be found, if the
+	 *         current user did not have permission to view the root folder, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<JournalArticle> getGroupArticles(
@@ -986,17 +979,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of web content articles matching the group, folders,
-	 * and default class name ID. If the user ID is less than <code>0</code>,
-	 * the web content articles must only match the group and folders.
+	 * Returns the number of web content articles matching the group, user, and
+	 * the root folder or any of its subfolders.
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  userId the primary key of the user who created the file
+	 * @param  userId the primary key of the user (optionally <code>0</code>)
 	 * @param  rootFolderId the primary key of the root folder to begin the
 	 *         search
 	 * @return the number of matching web content articles
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content articles
+	 * @throws PortalException if the root folder could not be found, if the
+	 *         current user did not have permission to view the root folder, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getGroupArticlesCount(
@@ -1051,9 +1044,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the latest matching web content article
 	 * @throws PortalException if the user did not have permission to view the
 	 *         web content article or if a matching web content article could
@@ -1079,17 +1071,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the class name associated with the
-	 *         article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
 	 *         otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
 	 *         primary key of the class associated with the web content article,
 	 *         or <code>0</code> otherwise
 	 * @return the latest matching web content article
-	 * @throws PortalException if the user did not have permission to view the
-	 *         web content article or if a matching web content article could
-	 *         not be found
+	 * @throws PortalException if a matching web content article could not be
+	 *         found or if the user did not have permission to view the web
+	 *         content article
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle getLatestArticle(
@@ -1107,16 +1098,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Moves the web content article matching the group and article ID to a new
-	 * folder.
+	 * Moves all versions of the the web content article matching the group and
+	 * article ID to the folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  newFolderId the primary key of the web content article's new
 	 *         folder
-	 * @throws PortalException if the user did not have permission to update the
-	 *         web content article or if a matching web content article could
-	 *         not be found
+	 * @throws PortalException if the user did not have permission to update any
+	 *         one of the versions of the web content article or if any one of
+	 *         the versions of the web content article could not be moved to the
+	 *         folder
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void moveArticle(long groupId, String articleId, long newFolderId)
@@ -1135,7 +1127,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Moves the web content article from the Recycle Bin to a new folder.
+	 * Moves the web content article from the Recycle Bin to the folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  resourcePrimKey the primary key of the resource instance
@@ -1150,10 +1142,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         is considered a web content update activity; otherwise it is
 	 *         considered a web content add activity.
 	 * @return the updated web content article, which was moved from the Recycle
-	 *         Bin to a new folder
-	 * @throws PortalException if the user did not have permission to update the
-	 *         web content article, if a trashed web content article with the
-	 *         primary key could not be found, or if a portal exception occurred
+	 *         Bin to the folder
+	 * @throws PortalException if the user did not have permission to view or
+	 *         update the web content article, if a matching trashed web content
+	 *         article could not be found, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle moveArticleFromTrash(
@@ -1171,7 +1163,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Moves the web content article from the Recycle Bin to a new folder.
+	 * Moves the web content article from the Recycle Bin to the folder.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1186,10 +1178,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         is considered a web content update activity; otherwise it is
 	 *         considered a web content add activity.
 	 * @return the updated web content article, which was moved from the Recycle
-	 *         Bin to a new folder
-	 * @throws PortalException if the user did not have permission to update the
-	 *         web content article, if a trashed web content article with the
-	 *         primary key could not be found, or if a portal exception occurred
+	 *         Bin to the folder
+	 * @throws PortalException if the user did not have permission to view or
+	 *         update the web content article, if a trashed web content article
+	 *         with the primary key could not be found, or if a portal exception
+	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public JournalArticle moveArticleFromTrash(
@@ -1230,12 +1223,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Removes the web content of the web content article matching the group,
-	 * article ID, and version, and language.
+	 * Removes the web content of all the company's web content articles
+	 * matching the language.
 	 *
-	 * @param  companyId
+	 * @param  companyId the primary key of the web content article's company
 	 * @param  languageId the primary key of the language locale to remove
-	 * @throws PortalException
+	 * @throws PortalException if the user did not have permission to update any
+	 *         one of the the web content articles or if web content matching
+	 *         the language could not be found for any one of the articles
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void removeArticleLocale(long companyId, String languageId)
@@ -1277,13 +1272,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Restores the web content article from the Recycle Bin.
+	 * Restores the web content article associated with the resource primary key
+	 * from the Recycle Bin.
 	 *
 	 * @param  resourcePrimKey the primary key of the resource instance
-	 * @throws PortalException if the web content article with the primary key
-	 *         could not be found in the Recycle Bin, if the user did not have
-	 *         permission to restore the article, or if a portal exception
-	 *         occurred
+	 * @throws PortalException if a matching web content article could not be
+	 *         found in the Recycle Bin, if the user did not have permission to
+	 *         view or restore the article, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void restoreArticleFromTrash(long resourcePrimKey)
@@ -1299,8 +1294,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Restores the web content article associated with the resource primary key
-	 * from the Recycle Bin.
+	 * Restores the web content article from the Recycle Bin.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
@@ -1321,12 +1315,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * parameters without using the indexer, including a keywords parameter for
-	 * matching with the article's ID, title, description, and content, a DDM
-	 * structure key parameter, and a DDM template key parameter. It is
-	 * preferable to use the indexed version {@link #search(long, long, List,
-	 * long, String, String, String, LinkedHashMap, int, int, Sort)} instead of
-	 * this method wherever possible for performance reasons.
+	 * parameters, including a keywords parameter for matching with the
+	 * article's ID, title, description, and content, a DDM structure key
+	 * parameter, and a DDM template key parameter.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -1345,8 +1336,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -1370,9 +1360,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  start the lower bound of the range of web content articles to
@@ -1400,13 +1389,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * parameters without using the indexer, including keyword parameters for
-	 * article ID, title, description, and content, a DDM structure key
-	 * parameter, a DDM template key parameter, and an AND operator switch. It
-	 * is preferable to use the indexed version {@link #search(long, long, List,
-	 * long, String, String, String, String, String, String, String, String,
-	 * LinkedHashMap, boolean, int, int, Sort)} instead of this method wherever
-	 * possible for performance reasons.
+	 * parameters, including keyword parameters for article ID, title,
+	 * description, and content, a DDM structure key parameter, a DDM template
+	 * key parameter, and an AND operator switch.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -1425,8 +1410,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1453,9 +1437,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -1491,10 +1474,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * parameters without using the indexer, including keyword parameters for
-	 * article ID, title, description, and content, a DDM structure keys
-	 * (plural) parameter, a DDM template keys (plural) parameter, and an AND
-	 * operator switch.
+	 * parameters, including keyword parameters for article ID, title,
+	 * description, and content, a DDM structure keys (plural) parameter, a DDM
+	 * template keys (plural) parameter, and an AND operator switch.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -1513,8 +1495,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1541,9 +1522,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -1590,8 +1570,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -1615,9 +1594,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @return the number of matching web content articles
@@ -1649,8 +1627,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1677,9 +1654,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -1717,8 +1693,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -1745,9 +1720,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -1773,9 +1747,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Subscribes the user to notifications for the web content article with the
-	 * group ID value for its group ID and primary key of its article instance,
-	 * notifying him the instant article is created, deleted, or modified.
+	 * Subscribes the user to notifications for the web content article matching
+	 * the group, notifying him the instant versions of the article are created,
+	 * deleted, or modified.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @throws PortalException if the user did not have permission to subscribe
@@ -1793,9 +1767,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Unsubscribes the user to notifications for the web content article with
-	 * the group ID value for its group ID and primary key of its article
-	 * instance.
+	 * Unsubscribes the user from notifications for the web content article
+	 * matching the group.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @throws PortalException if the user did not have permission to subscribe
@@ -2101,16 +2074,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the web content article's status by matching the group, article
-	 * ID, and version.
+	 * Updates the workflow status of the web content article matching the
+	 * group, article ID, and version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  version the web content article's version
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, portlet preferences, and can set whether to

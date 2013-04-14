@@ -140,12 +140,14 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 
 /**
- * The web content local service is responsible for accessing, creating,
- * modifying, searching, and deleting web content articles.
+ * The implementation of the web content local service is responsible for
+ * accessing, creating, modifying, searching, and deleting web content articles
+ * locally.
  *
  * <p>
- * The articles hold HTML content wrapped in XML. The XML lets you specify the
- * article's default locale and available locales. Here is a content example:
+ * The web content articles hold HTML content wrapped in XML. The XML lets you
+ * specify the article's default locale and available locales. Here is a content
+ * example:
  * </p>
  *
  * <pre>
@@ -177,8 +179,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  classPK the primary key of the DDM structure, if the primary key
 	 *         of the DDMStructure class is given as the
 	 *         <code>classNameId</code> parameter, the primary key of the class
@@ -931,7 +932,7 @@ public class JournalArticleLocalServiceImpl
 	 *         email notifications (optionally <code>null</code>)
 	 * @param  serviceContext the service context to be applied (optionally
 	 *         <code>null</code>). Can set the portlet preferences that include
-	 *         email information to notify recipients of unapproved web
+	 *         email information to notify recipients of the unapproved web
 	 *         content's denial.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1062,7 +1063,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if a matching web content article could not be
 	 *         found or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -1087,7 +1088,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         portlet preferences that include email information to notify
-	 *         recipients of unapproved web content article's denial.
+	 *         recipients of the unapproved web content article's denial.
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -1183,8 +1184,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Expires the matching web content article, updating its status to {@link
-	 * com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_EXPIRED}.
+	 * Expires the web content article matching the group, article ID, and
+	 * version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article
@@ -1217,7 +1218,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Expires the matching web content article.
+	 * Expires the web content article matching the group and article ID,
+	 * expiring all of its versions if the
+	 * <code>journal.article.expire.all.versions</code> portal property is
+	 * <code>true</code>, otherwise expiring only its latest approved version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article
@@ -1347,8 +1351,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the primary key of the class name
 	 *         associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  classPK the primary key of the DDM structure, if the the
 	 *         DDMStructure class name is given as the <code>className</code>
 	 *         parameter, the primary key of the class associated with the web
@@ -2032,8 +2035,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2060,8 +2062,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2106,8 +2107,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2137,8 +2137,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2218,24 +2217,22 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * company, version, and status.
+	 * company, version, and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  version the web content article's version
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
 	 * @param  end the upper bound of the range of web content articles to
@@ -2260,23 +2257,21 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns an ordered range of all the web content articles matching the
-	 * company and status.
+	 * company and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
 	 * @param  end the upper bound of the range of web content articles to
@@ -2300,24 +2295,22 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the number of web content articles matching the company, version,
-	 * and status.
+	 * and workflow status.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  version the web content article's version
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
 	 * @param  end the upper bound of the range of web content articles to
@@ -2340,13 +2333,12 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the number of web content articles matching the company and
-	 * status.
+	 * workflow status.
 	 *
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the number of matching web content articles
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -2473,9 +2465,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  resourcePrimKey the primary key of the resource instance
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the latest web content article matching the resource primary key
 	 *         and workflow status, preferring articles with approved workflow
 	 *         status
@@ -2496,13 +2487,12 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  resourcePrimKey the primary key of the resource instance
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  preferApproved whether to prefer returning the latest matching
 	 *         article that has workflow status {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED}
-	 *         over returning one that has a different status
+	 *         WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 *         different status
 	 * @return the latest web content article matching the resource primary key
 	 *         and workflow status, optionally preferring articles with approved
 	 *         workflow status
@@ -2568,9 +2558,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the latest matching web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -2609,8 +2598,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  className the DDMStructure class name if the web content article
 	 *         is related to a DDM structure, the class name associated with the
-	 *         article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
+	 *         article, or {@link JournalArticleConstants#CLASSNAME_ID_DEFAULT}
 	 *         otherwise
 	 * @param  classPK the primary key of the DDM structure, if the DDMStructure
 	 *         class name is given as the <code>className</code> parameter, the
@@ -2642,14 +2630,13 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest web content article matching the group, URL title, and
-	 * status.
+	 * workflow status.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  urlTitle the web content article's accessible URL title
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the latest matching web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -2702,14 +2689,13 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns the latest version number of the web content with the group,
-	 * article ID, and status.
+	 * article ID, and workflow status.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return the latest version number of the matching web content
 	 * @throws PortalException if a matching web content article could not be
 	 *         found
@@ -2771,8 +2757,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2846,8 +2831,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2941,15 +2925,14 @@ public class JournalArticleLocalServiceImpl
 
 	/**
 	 * Returns <code>true</code> if the web content article, specified by group,
-	 * article ID, and status, is the latest version.
+	 * article ID, and workflow status, is the latest version.
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  articleId the primary key of the web content article
 	 * @param  version the web content article's version
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @return <code>true</code> if the specified web content article is the
 	 *         latest version; <code>false</code> otherwise
 	 * @throws PortalException if a matching web content article could not be
@@ -3038,7 +3021,6 @@ public class JournalArticleLocalServiceImpl
 		return journalArticleLocalService.moveArticle(
 			groupId, article.getArticleId(), newFolderId);
 	}
-
 
 	/**
 	 * Moves the latest version of the web content article matching the group
@@ -3290,8 +3272,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3302,8 +3283,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -3327,9 +3307,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  start the lower bound of the range of web content articles to
@@ -3370,8 +3349,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3382,8 +3360,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -3410,9 +3387,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -3458,8 +3434,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3470,8 +3445,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -3498,9 +3472,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -3547,8 +3520,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3559,8 +3531,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -3632,8 +3603,7 @@ public class JournalArticleLocalServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3644,8 +3614,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  title the title keywords (space separated, optionally
@@ -3657,9 +3626,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  type the web content article's type (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -3763,8 +3731,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         web content article ID, title, description, or content
 	 *         (optionally <code>null</code>). If the keywords value is not
@@ -3788,9 +3755,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @return the number of matching web content articles
@@ -3822,8 +3788,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -3850,9 +3815,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -3890,8 +3854,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  articleId the article ID keywords (space separated, optionally
 	 *         <code>null</code>)
 	 * @param  version the web content article's version (optionally
@@ -3918,9 +3881,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article's display date must be before (optionally
 	 *         <code>null</code>)
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  reviewDate the web content article's scheduled review date
 	 *         (optionally <code>null</code>)
 	 * @param  andOperator whether every field must match its value or keywords,
@@ -3946,9 +3908,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Subscribes the user to notifications for the web content article with the
-	 * group ID value for its group ID and primary key of its article instance,
-	 * notifying him the instant article is created, deleted, or modified.
+	 * Subscribes the user to notifications for the web content article matching
+	 * the group, notifying him the instant versions of the article are created,
+	 * deleted, or modified.
 	 *
 	 * @param  userId the primary key of the user to subscribe
 	 * @param  groupId the primary key of the group
@@ -3963,9 +3925,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Unsubscribes the user to notifications for the web content article with
-	 * the group ID value for its group ID and primary key of its article
-	 * instance.
+	 * Unsubscribes the user from notifications for the web content article
+	 * matching the group.
 	 *
 	 * @param  userId the primary key of the user to unsubscribe
 	 * @param  groupId the primary key of the group
@@ -4745,15 +4706,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status.
+	 * Updates the workflow status of the web content article.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status
 	 * @param  article the web content article
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  workflowContext the web content article's configured workflow
 	 *         context
@@ -5037,7 +4997,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status by matching the class PK.
+	 * Updates the workflow status of the web content article matching the class
+	 * PK.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status
@@ -5045,9 +5006,8 @@ public class JournalArticleLocalServiceImpl
 	 *         article is related to a DDM structure, the primary key of the
 	 *         class associated with the article, or <code>0</code> otherwise
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  workflowContext the web content article's configured workflow
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, portlet preferences, and can set whether to
@@ -5070,8 +5030,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Updates the web content article's status by matching the group, article
-	 * ID, and version.
+	 * Updates the workflow status of the web content article matching the
+	 * group, article ID, and version.
 	 *
 	 * @param  userId the primary key of the user updating the web content
 	 *         article's status
@@ -5079,9 +5039,8 @@ public class JournalArticleLocalServiceImpl
 	 * @param  articleId the primary key of the web content article
 	 * @param  version the web content article's version
 	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link
-	 *         com.liferay.portal.kernel.workflow.WorkflowConstants} for
-	 *         constants starting with the "STATUS_" prefix.
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
 	 * @param  articleURL the web content article's accessible URL
 	 * @param  workflowContext the web content article's configured workflow
 	 * @param  serviceContext the service context to be applied. Can set the
@@ -5115,8 +5074,7 @@ public class JournalArticleLocalServiceImpl
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or {@link
-	 *         com.liferay.portlet.journal.model.JournalArticleConstants#CLASSNAME_ID_DEFAULT}
-	 *         otherwise
+	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
 	 * @param  oldDDMTemplateKey the primary key of the web content article's
 	 *         old DDM template
 	 * @param  newDDMTemplateKey the primary key of the web content article's

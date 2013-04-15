@@ -191,26 +191,18 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								}
 							%>
 
-								<div class="asset-subtypefields aui-helper-hidden" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>Options">
-									<aui:select cssClass="asset-subtypefields-selector" label='<%= LanguageUtil.format(pageContext, "filter-by-field-x", HtmlUtil.escapeAttribute(assetAvailableClassTypes.get(assetAvailableClassTypeId))) %>' name='<%= "ddmStructureFieldName" + assetAvailableClassTypeId + "_" + className %>'>
-										<aui:option label="none" selected="<%= Validator.isNull(ddmStructureFieldName) %>" value="" />
+								<span class="asset-subtypefields aui-helper-hidden" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>Options">
+									<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+										<portlet:param name="struts_action" value="/portlet_configuration/select_structure_field" />
+										<portlet:param name="portletResource" value="<%= portletResource %>" />
+										<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
+										<portlet:param name="classTypeId" value="<%= String.valueOf(assetAvailableClassTypeId) %>" />
+									</portlet:renderURL>
 
-										<optgroup label="<liferay-ui:message key="fields" />">
-
-											<%
-											for (Map.Entry<String, Map<String, String>> classTypeFieldName : classTypeFieldNames.entrySet()) {
-												Map<String, String> attributes = classTypeFieldName.getValue();
-											%>
-
-												<aui:option label='<%= HtmlUtil.escapeAttribute(attributes.get("label")) %>' selected="<%= classTypeFieldName.getKey().equals(ddmStructureFieldName) %>" value="<%= classTypeFieldName.getKey() %>" />
-
-											<%
-											}
-											%>
-
-										</optgroup>
-									</aui:select>
-								</div>
+									<span class="asset-subtypefields-popup" data-href="<%= selectStructureFieldURL.toString() %>">
+										<%= LanguageUtil.get(pageContext, "filter-by-field") %>
+									</span>
+								</span>
 
 							<%
 							}
@@ -225,7 +217,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />ddmStructureFieldValueContainer">
 						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= ddmStructureFieldName %>" />
 
-						<aui:input label="value" name='<%= "preferences--ddmStructureFieldValue--" %>' value="<%= ddmStructureFieldValue %>" />
+						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= ddmStructureFieldValue %>" />
+
+						<span id="<portlet:namespace />ddmStructureFieldMessage">
+							<c:if test="<%= Validator.isNotNull(ddmStructureFieldLabel) %>">
+								<%= ddmStructureFieldLabel + StringPool.RAQUO + ddmStructureFieldValue %>
+							</c:if>
+						</span>
 					</div>
 				</aui:fieldset>
 			</liferay-ui:panel>
@@ -510,24 +508,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			}
 		);
 
-		sourcePanel.delegate(
-			'change',
-			function(event){
-				ddmStructureFieldValueContainer.hide();
-
-				ddmStructureFieldValue.val('');
-
-				var fieldName = event.target.val();
-
-				if (fieldName) {
-					ddmStructureFieldValueContainer.show();
-				}
-
-				ddmStructureFieldName.val(fieldName);
-			},
-			'.asset-subtypefields-selector'
-		);
-
 	<%
 	}
 	%>
@@ -568,6 +548,45 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				<portlet:namespace />toggleSubclasses();
 			}
 		}
+	);
+
+	sourcePanel.delegate(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						stack: true,
+						width: 600
+					},
+					eventName: '<portlet:namespace />selectDDMStructureField',
+					id: '<portlet:namespace />selectDDMStructure' + event.target.id,
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "select-ddm-structure-field") %>',
+					uri: event.target.attr('data-href')
+				},
+				function(event) {
+					var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
+
+					ddmStructureFieldName.val(event.name);
+
+					var ddmStructureFieldvalue = A.one('#<portlet:namespace />ddmStructureFieldValue');
+
+					ddmStructureFieldvalue.val(event.value);
+
+					var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
+
+					var ddmStructureFieldMessage = A.one('#<portlet:namespace />ddmStructureFieldMessage');
+
+					ddmStructureFieldMessage.html(event.label + ' <%= StringPool.RAQUO %> ' + event.value);
+
+					ddmStructureFieldValueContainer.show();
+				}
+			);
+		},
+		'.asset-subtypefields-popup'
 	);
 </aui:script>
 

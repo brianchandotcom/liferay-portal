@@ -212,6 +212,10 @@
 		<put name="portlet_content" value="/portlet/asset_publisher/error.jsp" />
 	</definition>
 
+	<definition name="portlet.asset_publisher.select_structure_field" extends="portlet.asset_publisher">
+		<put name="portlet_content" value="/portlet/asset_publisher/select_structure_field.jsp" />
+	</definition>
+
 	<definition name="portlet.asset_publisher.view" extends="portlet.asset_publisher">
 		<put name="portlet_content" value="/portlet/asset_publisher/view.jsp" />
 	</definition>

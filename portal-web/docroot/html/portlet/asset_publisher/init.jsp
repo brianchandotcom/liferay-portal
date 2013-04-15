@@ -49,6 +49,9 @@ page import="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" %
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
@@ -94,6 +97,7 @@ AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 String[] allAssetTagNames = new String[0];
 
+String ddmStructureFieldLabel = StringPool.BLANK;
 String ddmStructureFieldName = StringPool.BLANK;
 String ddmStructureFieldValue = StringPool.BLANK;
 
@@ -110,12 +114,20 @@ if (selectionStyle.equals("dynamic")) {
 	assetEntryQuery.setClassTypeIds(classTypeIds);
 
 	if ((classNameIds.length == 1) && (classTypeIds.length == 1)) {
-		ddmStructureFieldName = GetterUtil.getString(preferences.getValue("ddmStructureFieldName", StringPool.BLANK));
-		ddmStructureFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureFieldValue", StringPool.BLANK));
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchDDMStructure(classTypeIds[0]);
 
-		if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
-			assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
-			assetEntryQuery.setAttribute("ddmStructureFieldName", ddmStructureFieldName);
+		if (ddmStructure != null) {
+			ddmStructureFieldName = GetterUtil.getString(preferences.getValue("ddmStructureFieldName", StringPool.BLANK));
+			ddmStructureFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureFieldValue", StringPool.BLANK));
+
+			Set<String> fieldNames = ddmStructure.getFieldNames();
+
+			if (Validator.isNotNull(ddmStructureFieldName) && fieldNames.contains(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
+				ddmStructureFieldLabel = ddmStructure.getFieldProperty(ddmStructureFieldName, "label");
+
+				assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructure.getStructureId(), ddmStructureFieldName, locale));
+				assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+			}
 		}
 	}
 

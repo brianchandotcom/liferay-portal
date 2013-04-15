@@ -14,12 +14,18 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,6 +37,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -41,13 +49,25 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
+import java.io.Serializable;
+
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -151,6 +171,75 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					throw e;
 				}
 			}
+		}
+	}
+
+	@Override
+	public void serveResource(
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+
+		if (cmd.equals("getFieldValue")) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				resourceRequest);
+
+			String fieldsNamespace = ParamUtil.getString(
+				resourceRequest, "fieldsNamespace");
+			long structureId = ParamUtil.getLong(
+				resourceRequest, "structureId");
+
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + structureId);
+
+			if (fields == null) {
+				fields = DDMUtil.getFields(
+					structureId, fieldsNamespace, serviceContext);
+			}
+
+			String fieldName = ParamUtil.getString(resourceRequest, "name");
+
+			Field field = fields.get(fieldName);
+
+			Serializable fieldValue = field.getValue(themeDisplay.getLocale());
+
+			DDMStructure ddmStructure = field.getDDMStructure();
+
+			String type = ddmStructure.getFieldType(fieldName);
+
+			if (fieldValue instanceof Date) {
+				Date valueDate = (Date)fieldValue;
+
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
+
+				fieldValue = dateFormat.format(valueDate);
+			}
+			else if (type.equals(DDMImpl.TYPE_RADIO) ||
+					 type.equals(DDMImpl.TYPE_SELECT)) {
+
+				String valueString = String.valueOf(fieldValue);
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+					valueString);
+
+				String[] stringArray = ArrayUtil.toStringArray(jsonArray);
+
+				fieldValue = stringArray[0];
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("value", String.valueOf(fieldValue));
+
+			resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+			PortletResponseUtil.write(resourceResponse, jsonObject.toString());
 		}
 	}
 

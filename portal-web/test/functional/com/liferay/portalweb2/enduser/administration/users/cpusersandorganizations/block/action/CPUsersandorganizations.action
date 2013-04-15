@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ADD">
+			<execute function="Click#textClickAt" value1="Add" />
+		</case>
+		<case locator-key1="ADD_USER">
+			<execute function="Click#textClickAtAndWait" value1="User" />
+		</case>
+		<case locator-key1="SEARCH_ALL_USERS">
+			<execute function="Click#textClickAtAndWait" value1="Search All Users" />
+		</case>
+	</command>
+</definition>

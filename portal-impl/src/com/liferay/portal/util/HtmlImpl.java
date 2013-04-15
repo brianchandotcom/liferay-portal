@@ -345,48 +345,13 @@ public class HtmlImpl implements Html {
 			sb.append(text.substring(x, y));
 			sb.append(StringPool.SPACE);
 
-			// Look for text enclosed by <script></script>
+			// Look for text enclosed by <abc></abc>
 
-			boolean scriptFound = isScriptTag(text, y + 1);
-
-			if (scriptFound) {
-				int pos = y + _TAG_SCRIPT.length;
-
-				// Find end of the tag
-
-				pos = text.indexOf(">", pos);
-
-				if (pos >= 0) {
-
-					// Check if preceding character is / (i.e. is this instance
-					// of <script/>)
-
-					if (text.charAt(pos-1) != '/') {
-
-						// Search for the ending </script> tag
-
-						for (;;) {
-							pos = text.indexOf("</", pos);
-
-							if (pos >= 0) {
-								if (isScriptTag(text, pos + 2)) {
-									y = pos;
-
-									break;
-								}
-								else {
-
-									// Skip past "</"
-
-									pos += 2;
-								}
-							}
-							else {
-								break;
-							}
-						}
-					}
-				}
+			if (isTag(_TAG_SCRIPT, text, y + 1)) {
+				y = stripTag(_TAG_SCRIPT, text, y);
+			}
+			else if (isTag(_TAG_STYLE, text, y + 1)) {
+				y = stripTag(_TAG_STYLE, text, y);
 			}
 
 			x = text.indexOf(">", y);
@@ -529,27 +494,69 @@ public class HtmlImpl implements Html {
 		return sb.toString();
 	}
 
-	protected boolean isScriptTag(String text, int pos) {
-		if ((pos + _TAG_SCRIPT.length + 1) <= text.length()) {
+	protected boolean isTag(char[] tag, String text, int pos) {
+		if ((pos + tag.length + 1) <= text.length()) {
 			char item;
 
-			for (int i = 0; i < _TAG_SCRIPT.length; i++) {
+			for (int i = 0; i < tag.length; i++) {
 				item = text.charAt(pos++);
 
-				if (Character.toLowerCase(item) != _TAG_SCRIPT[i]) {
+				if (Character.toLowerCase(item) != tag[i]) {
 					return false;
 				}
 			}
 
 			item = text.charAt(pos);
 
-			// Check that char after "script" is not a letter (i.e. another tag)
+			// Check that char after tag is not a letter (i.e. another tag)
 
 			return !Character.isLetter(item);
 		}
 		else {
 			return false;
 		}
+	}
+
+	protected int stripTag(char[] tag, String text, int pos) {
+		int x = pos + _TAG_SCRIPT.length;
+
+		// Find end of the tag
+
+		x = text.indexOf(">", x);
+
+		if (x >= 0) {
+
+			// Check if preceding character is / (i.e. is this instance of
+			// <abc/>)
+
+			if (text.charAt(x-1) != '/') {
+
+				// Search for the ending </abc> tag
+
+				for (;;) {
+					x = text.indexOf("</", x);
+
+					if (x >= 0) {
+						if (isTag(tag, text, x + 2)) {
+							pos = x;
+
+							break;
+						}
+						else {
+
+							// Skip past "</"
+
+							x += 2;
+						}
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+
+		return pos;
 	}
 
 	private static final String[] _MS_WORD_HTML = new String[] {
@@ -561,6 +568,8 @@ public class HtmlImpl implements Html {
 	};
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};
+
+	private static final char[] _TAG_STYLE = {'s', 't', 'y', 'l', 'e'};
 
 	// See http://www.w3.org/TR/xpath20/#lexical-structure
 

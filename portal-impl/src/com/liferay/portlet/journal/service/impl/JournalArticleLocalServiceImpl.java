@@ -1701,8 +1701,8 @@ public class JournalArticleLocalServiceImpl
 
 				// Try with specified template first (in the current group and
 				// the global group). If a template is not specified, use the
-				// default one. If the specified template does not exist, use the
-				// default one. If the default one does not exist, throw an
+				// default one. If the specified template does not exist, use
+				// the default one. If the default one does not exist, throw an
 				// exception.
 
 				DDMTemplate ddmTemplate = null;
@@ -2456,7 +2456,7 @@ public class JournalArticleLocalServiceImpl
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException, SystemException {
 
-		return getLatestArticle(resourcePrimKey, com.liferay.portal.kernel.workflow.WorkflowConstants.STATUS_ANY);
+		return getLatestArticle(resourcePrimKey, WorkflowConstants.STATUS_ANY);
 	}
 
 	/**

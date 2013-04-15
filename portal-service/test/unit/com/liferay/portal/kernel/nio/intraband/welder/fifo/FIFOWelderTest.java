@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -43,6 +44,13 @@ public class FIFOWelderTest {
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
+
+	@Before
+	public void setUp() {
+		File tempFile = new File("tempFile");
+
+		tempFile.delete();
+	}
 
 	@After
 	public void tearDown() {

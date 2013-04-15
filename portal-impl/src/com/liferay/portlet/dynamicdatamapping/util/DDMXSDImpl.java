@@ -183,6 +183,8 @@ public class DDMXSDImpl implements DDMXSD {
 		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
 			pageContext, portletNamespace, namespace, element, locale);
 
+		freeMarkerContext.put("myField", Boolean.FALSE.toString());
+
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
 

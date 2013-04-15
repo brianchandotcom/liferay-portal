@@ -52,10 +52,10 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 <div class="page-activities">
 	<liferay-ui:search-container
 		iteratorURL="<%= iteratorURL %>"
+		total="<%= SocialActivityLocalServiceUtil.getActivitiesCount(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= SocialActivityLocalServiceUtil.getActivitiesCount(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>"
 		/>
 
 		<liferay-ui:search-container-row

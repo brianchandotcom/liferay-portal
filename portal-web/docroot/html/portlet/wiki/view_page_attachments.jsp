@@ -136,18 +136,17 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 <liferay-ui:search-container
 	emptyResultsMessage="<%= emptyResultsMessage %>"
 	iteratorURL="<%= iteratorURL %>"
+	total="<%= viewTrashAttachments ? wikiPage.getDeletedAttachmentsFileEntriesCount() : wikiPage.getAttachmentsFileEntriesCount() %>"
 >
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
 			<liferay-ui:search-container-results
 				results="<%= wikiPage.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= wikiPage.getDeletedAttachmentsFileEntriesCount() %>"
 			/>
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container-results
 				results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
 			/>
 		</c:otherwise>
 	</c:choose>

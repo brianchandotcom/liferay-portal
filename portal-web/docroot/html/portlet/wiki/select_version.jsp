@@ -24,10 +24,10 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 <liferay-ui:search-container
 	id="wikiPageVersionSearchContainer"
+	total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), new PageVersionComparator()) %>"
-		total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
 	/>
 
 	<liferay-ui:search-container-row

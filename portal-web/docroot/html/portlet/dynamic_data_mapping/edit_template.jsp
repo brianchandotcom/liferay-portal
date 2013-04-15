@@ -42,7 +42,7 @@ if ((structure == null) && (template != null)) {
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
-String language = BeanParamUtil.getString(template, request, "language", TemplateConstants.LANG_TYPE_VM);
+String language = BeanParamUtil.getString(template, request, "language", PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT);
 String script = BeanParamUtil.getString(template, request, "script");
 Set<String> supportedLanguageTypes = TemplateManagerUtil.getTemplateManagerNames();
 
@@ -159,6 +159,28 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
+				<aui:select helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+
+					<%
+					for (String curLangType : supportedLanguageTypes) {
+						StringBundler sb = new StringBundler(6);
+
+						sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
+						sb.append(StringPool.SPACE);
+						sb.append(StringPool.OPEN_PARENTHESIS);
+						sb.append(StringPool.PERIOD);
+						sb.append(curLangType);
+						sb.append(StringPool.CLOSE_PARENTHESIS);
+					%>
+
+						<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
 				<aui:input name="description" />
 
 				<c:if test="<%= template != null %>">

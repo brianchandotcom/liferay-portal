@@ -40,11 +40,11 @@ public class ViewWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
-				"//a[contains(@title,'WC WebContent Title')]/div/img"));
+				"//div[@data-title='WC WebContent Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]"));
-		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]",
+				"//div[@data-title='WC WebContent Title']/a/span[@class='entry-title']/span"));
+		selenium.clickAt("//div[@data-title='WC WebContent Title']/a/span[@class='entry-title']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content"),
@@ -80,9 +80,10 @@ public class ViewWCWebContentTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.selectFrame("//iframe[contains(@title,'Rich Text Editor')]");
-		selenium.waitForText("//body", "WC WebContent Content");
+		selenium.waitForText("//body[contains(.,'WC WebContent Content')]",
+			"WC WebContent Content");
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
-			selenium.getText("//body"));
+			selenium.getText("//body[contains(.,'WC WebContent Content')]"));
 		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isChecked("//input[@id='_15_indexableCheckbox']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

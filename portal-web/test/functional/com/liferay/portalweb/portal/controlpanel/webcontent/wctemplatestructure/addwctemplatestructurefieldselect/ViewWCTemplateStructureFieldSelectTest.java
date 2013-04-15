@@ -66,11 +66,10 @@ public class ViewWCTemplateStructureFieldSelectTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Structure Select Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Structure Select Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Select Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Select Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure Select Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Select Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -106,8 +105,9 @@ public class ViewWCTemplateStructureFieldSelectTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'select.getData')]",
-			RuntimeVariables.replace("<p>$select.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$select.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'select.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

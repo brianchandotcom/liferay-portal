@@ -61,7 +61,6 @@ public class ViewWCTemplateStructureFieldHTMLTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Structure HTML Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure HTML Name"),
@@ -69,8 +68,8 @@ public class ViewWCTemplateStructureFieldHTMLTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure HTML Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure HTML Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure HTML Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -105,8 +104,9 @@ public class ViewWCTemplateStructureFieldHTMLTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'html.getData')]",
-			RuntimeVariables.replace("<p>$html.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$html.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'html.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

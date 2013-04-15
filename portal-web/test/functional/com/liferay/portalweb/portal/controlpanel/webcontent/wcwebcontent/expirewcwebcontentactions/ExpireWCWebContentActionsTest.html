@@ -39,63 +39,78 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(@title,'List View')]</td>
+	<td>List View</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[contains(@title,'List View')]</td>
+	<td>List View</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[1]/input[@type='checkbox']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
 	<td>storeText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>webContentID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>${webContentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[5]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[6]</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[7]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a</td>
+	<td>Menu Button</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
-	<td>Actions</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a</td>
+	<td>Menu Button</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
 	<td>Expire</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
 	<td>Expire</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
 	<td>Expire</td>
 </tr>
 <tr>
@@ -104,33 +119,38 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[1]</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>${webContentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>Expired</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[5]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[6]</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[7]</td>
 	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>

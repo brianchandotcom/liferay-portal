@@ -39,159 +39,554 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='_166_keywords']</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Templates</td>
-	<td>Templates</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>template1Present</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>gotoIf</td>
-	<td>!${template1Present}</td>
-	<td>Template1NotPresent</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
+	<td>WC Structure Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-template ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>structure1TemplatePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${structure1TemplatePresent}</td>
+	<td>Structure1TemplateNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected templates?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Template1NotPresent</td>
+	<td>Structure1TemplateNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>template2Present</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no templates.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[2]</td>
+	<td>structure2Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${template2Present}</td>
-	<td>Template2NotPresent</td>
+	<td>!${structure2Present}</td>
+	<td>Structure2NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[2]</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[2]</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>structure2TemplatePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${structure2TemplatePresent}</td>
+	<td>Structure2TemplateNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected templates?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Template2NotPresent</td>
+	<td>Structure2TemplateNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>template3Present</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no templates.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[3]</td>
+	<td>structure3Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${template3Present}</td>
-	<td>Template3NotPresent</td>
+	<td>!${structure3Present}</td>
+	<td>Structure3NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[3]</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[3]</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>structure3TemplatePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${structure3TemplatePresent}</td>
+	<td>Structure3TemplateNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected templates?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Template3NotPresent</td>
+	<td>Structure3TemplateNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>template4Present</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no templates.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[4]</td>
+	<td>structure4Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${template4Present}</td>
-	<td>Template4NotPresent</td>
+	<td>!${structure4Present}</td>
+	<td>Structure4NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[4]</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[4]</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>structure4TemplatePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${structure4TemplatePresent}</td>
+	<td>Structure4TemplateNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected templates?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Template4NotPresent</td>
+	<td>Structure4TemplateNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('_15_rowIds'))</td>
-	<td>template5Present</td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no templates.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[5]</td>
+	<td>structure5Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${template5Present}</td>
-	<td>Template5NotPresent</td>
+	<td>!${structure5Present}</td>
+	<td>Structure5NotPresent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[5]</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td></td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a)[5]</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]</td>
+	<td>Manage Templates</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>structure5TemplatePresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${structure5TemplatePresent}</td>
+	<td>Structure5TemplateNotPresent</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td>All Rows</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected templates?</td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Structure5TemplateNotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>There are no templates.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Structure1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>Template5NotPresent</td>
+	<td>Structure2NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Structure3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Structure4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Structure5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

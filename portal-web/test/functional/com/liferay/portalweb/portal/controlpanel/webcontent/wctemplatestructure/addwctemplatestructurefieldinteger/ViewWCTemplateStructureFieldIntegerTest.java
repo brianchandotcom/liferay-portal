@@ -69,8 +69,8 @@ public class ViewWCTemplateStructureFieldIntegerTest extends BaseTestCase {
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Integer Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Integer Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure Integer Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure Integer Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -106,8 +106,9 @@ public class ViewWCTemplateStructureFieldIntegerTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'integer.getData')]",
-			RuntimeVariables.replace("<p>$integer.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$integer.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'integer.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

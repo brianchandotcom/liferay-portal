@@ -72,21 +72,21 @@ public class AddWCSubstructureTest extends BaseTestCase {
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
 		selenium.selectFrame(
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
-		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]/a");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[2]/a",
-			RuntimeVariables.replace("WC Structure Name"));
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]"));
+		Thread.sleep(1000);
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
-			"xPath=(//iframe[contains(@src,'Structures')])[2]");
-		selenium.selectFrame("xPath=(//iframe[contains(@src,'Structures')])[2]");
+			"xPath=(//iframe[contains(@src,'Structure')])[2]");
+		selenium.selectFrame("xPath=(//iframe[contains(@src,'Structure')])[2]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/store.js')]");
 		selenium.waitForVisible(
 			"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a");
-		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText(
+		assertTrue(selenium.isVisible(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[2]/div/a"));
 		selenium.waitForVisible(
 			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/span");

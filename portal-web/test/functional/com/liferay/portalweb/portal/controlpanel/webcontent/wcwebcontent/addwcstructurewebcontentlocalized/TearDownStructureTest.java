@@ -30,6 +30,10 @@ public class TearDownStructureTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -40,12 +44,26 @@ public class TearDownStructureTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Structures",
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+					RuntimeVariables.replace("Manage"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+				assertEquals(RuntimeVariables.replace("Structures"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 					RuntimeVariables.replace("Structures"));
-				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//iframe[contains(@src,'scopeStructureType')]");
+				selenium.selectFrame(
+					"//iframe[contains(@src,'scopeStructureType')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/store.js')]");
 
 				boolean structure1Present = selenium.isElementPresent(
-						"_15_rowIds");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structure1Present) {
 					label = 2;
@@ -53,18 +71,20 @@ public class TearDownStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-
-			case 2:
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean structure2Present = selenium.isElementPresent(
-						"_15_rowIds");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structure2Present) {
 					label = 3;
@@ -72,18 +92,20 @@ public class TearDownStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-
-			case 3:
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean structure3Present = selenium.isElementPresent(
-						"_15_rowIds");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structure3Present) {
 					label = 4;
@@ -91,18 +113,20 @@ public class TearDownStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-
-			case 4:
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean structure4Present = selenium.isElementPresent(
-						"_15_rowIds");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structure4Present) {
 					label = 5;
@@ -110,18 +134,20 @@ public class TearDownStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
-
-			case 5:
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean structure5Present = selenium.isElementPresent(
-						"_15_rowIds");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!structure5Present) {
 					label = 6;
@@ -129,15 +155,25 @@ public class TearDownStructureTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected structures[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
+				selenium.selectFrame("relative=top");
+
 			case 100:
 				label = -1;
 			}

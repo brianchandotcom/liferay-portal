@@ -79,6 +79,11 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]</td>
 	<td>Cut Button Disabled</td>
@@ -110,12 +115,12 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//a[contains(@title,'WC WebContent Title')]/div/img</td>
-	<td>WC WebContent Thumbnail</td>
+	<td>//div[@data-title='WC WebContent Title']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC WebContent Title Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]</td>
+	<td>//div[@data-title='WC WebContent Title']/a/span[@class='entry-title']/span</td>
 	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>

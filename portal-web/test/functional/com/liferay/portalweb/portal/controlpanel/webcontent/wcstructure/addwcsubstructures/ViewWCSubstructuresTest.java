@@ -164,7 +164,7 @@ public class ViewWCSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Not Indexable"),
+		assertEquals(RuntimeVariables.replace("Indexable - Keyword"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),
@@ -297,7 +297,7 @@ public class ViewWCSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Not Indexable"),
+		assertEquals(RuntimeVariables.replace("Indexable - Keyword"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),
@@ -430,7 +430,7 @@ public class ViewWCSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Indexable"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Not Indexable"),
+		assertEquals(RuntimeVariables.replace("Indexable - Keyword"),
 			selenium.getText(
 				"//tbody[@class='yui3-datatable-data']/tr[8]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Repeatable"),

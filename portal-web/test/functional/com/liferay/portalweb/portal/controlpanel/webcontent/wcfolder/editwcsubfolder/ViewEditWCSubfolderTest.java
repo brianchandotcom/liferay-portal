@@ -44,8 +44,8 @@ public class ViewEditWCSubfolderTest extends BaseTestCase {
 				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -111,8 +111,8 @@ public class ViewEditWCSubfolderTest extends BaseTestCase {
 				"//div[contains(@class,'article-entries-paginator')]/select"));
 		selenium.clickAt("//div[@data-title='WC Subfolder Name Edited']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Subfolder Name Edited"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),

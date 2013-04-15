@@ -65,11 +65,10 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Substructure1 Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Substructure1 Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Substructure1 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Substructure1 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Substructure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Substructure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -104,8 +103,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text1.getData')]",
-			RuntimeVariables.replace("<p>$text1.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text1.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text1.getData')]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -148,11 +148,10 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Substructure2 Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Substructure2 Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Substructure2 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Substructure2 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Substructure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Substructure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -187,8 +186,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]",
-			RuntimeVariables.replace("<p>$text2.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text2.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text2.getData')]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -231,11 +231,10 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Substructure3 Name"),
 			selenium.getText(
 				"//tr[contains(.,'WC Substructure3 Name')]/td[3]/a"));
-		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Substructure3 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Substructure3 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Substructure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Substructure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -270,8 +269,9 @@ public class ViewWCTemplateSubstructuresTest extends BaseTestCase {
 			selenium.getValue("//textarea[@id='_166_description_en_US']"));
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
-		selenium.sendKeys("//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text3.getData')]",
-			RuntimeVariables.replace("<p>$text3.getData()</p>##"));
+		assertEquals(RuntimeVariables.replace("<p>$text3.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[contains(.,'text3.getData')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

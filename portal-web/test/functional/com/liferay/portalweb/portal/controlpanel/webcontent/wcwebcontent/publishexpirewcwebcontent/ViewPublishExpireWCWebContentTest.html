@@ -39,89 +39,94 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[1]/input[@type='checkbox']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
 	<td>storeText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>webcontentID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[2]</td>
 	<td>${webcontentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[5]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[5]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[6]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[6]</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[7]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[7]</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[8]/span/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_permissions')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_view')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]</td>
 	<td>View (Opens New Window)</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_copy')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Copy')]</td>
 	<td>Copy</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]</td>
 	<td>Expire</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[contains(@id,'SearchContainer_1_menu_delete')]</td>
-	<td>Delete</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[2]/a</td>
-	<td>WC WebContent ID</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -184,28 +189,23 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Text Area</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
-	<td>CK Editor</td>
-</tr>
-<tr>
 	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//body</td>
+	<td>//body[contains(.,'WC WebContent Content')]</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//body</td>
+	<td>//body[contains(.,'WC WebContent Content')]</td>
 	<td>WC WebContent Content</td>
 </tr>
 <tr>
@@ -285,6 +285,31 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Expire']</td>
+	<td>Expire</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Delete']</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[3]/td[1]/input[@type='checkbox']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//tr[3]/td[2]</td>
 	<td>${webcontentID}</td>
 </tr>
@@ -320,6 +345,16 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//tr[3]/td[9]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[4]/td[1]/input[@type='checkbox']</td>
+	<td>Checkbox</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//tr[4]/td[2]</td>
 	<td>${webcontentID}</td>
 </tr>
@@ -352,6 +387,16 @@
 	<td>assertText</td>
 	<td>//tr[4]/td[8]</td>
 	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[9]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 2 results.</td>
 </tr>
 </tbody></table>
 </body>

@@ -72,11 +72,12 @@ public class AddWCSubstructure3Test extends BaseTestCase {
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
 		selenium.selectFrame(
 			"//iframe[contains(@src,'_166_selectParentStructure')]");
-		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]/a");
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[2]/a",
-			RuntimeVariables.replace("WC Structure Name"));
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[2]"));
+		Thread.sleep(1000);
+		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[5]/span/span/input[contains(@value,'Choose')]",
+			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible(
 			"xPath=(//iframe[contains(@src,'Structures')])[2]");

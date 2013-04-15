@@ -59,19 +59,18 @@ public class ViewWCStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
-		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[3]/a");
-		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure Name')]/td[2]/a"));
+		selenium.waitForVisible("//tr[contains(.,'WC Structure Name')]/td[2]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure Description"),
+			selenium.getText("//tr[contains(.,'WC Structure Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure Name"));
-		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//h1[@class='header-title']");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText("//h1[@class='header-title']"));

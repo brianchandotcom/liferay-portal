@@ -40,104 +40,296 @@ public class TearDownTemplateTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				selenium.clickAt("link=Templates",
-					RuntimeVariables.replace("Templates"));
+				assertEquals(RuntimeVariables.replace("Manage"),
+					selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+					RuntimeVariables.replace("Manage"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+				assertEquals(RuntimeVariables.replace("Structures"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+					RuntimeVariables.replace("Structures"));
+				selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+				selenium.selectFrame("//iframe[contains(@src,'Structures')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/store.js')]");
+				selenium.waitForVisible("//input[@name='_166_keywords']");
+				selenium.type("//input[@name='_166_keywords']",
+					RuntimeVariables.replace("WC Structure Name"));
+				selenium.clickAt("//input[@value='Search']",
+					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//tr[contains(.,'WC Structure Name')]/td[3]/a");
+				assertEquals(RuntimeVariables.replace("WC Structure Name"),
+					selenium.getText(
+						"//tr[contains(.,'WC Structure Name')]/td[3]/a"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+					RuntimeVariables.replace("Manage Templates"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//span[@class='lfr-toolbar-button add-template ']/a");
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText(
+						"//span[@class='lfr-toolbar-button add-template ']/a"));
 
-				boolean template1Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean structure1TemplatePresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
-				if (!template1Present) {
+				if (!structure1TemplatePresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
+				assertEquals(RuntimeVariables.replace("There are no templates."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
+					RuntimeVariables.replace("\u00ab Back"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
-				boolean template2Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean structure2Present = selenium.isElementPresent(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[2]");
 
-				if (!template2Present) {
+				if (!structure2Present) {
+					label = 8;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[2]",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+				assertEquals(RuntimeVariables.replace("Manage Templates"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+					RuntimeVariables.replace("Manage Templates"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean structure2TemplatePresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!structure2TemplatePresent) {
 					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
+				assertEquals(RuntimeVariables.replace("There are no templates."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
+					RuntimeVariables.replace("\u00ab Back"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
-				boolean template3Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean structure3Present = selenium.isElementPresent(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[3]");
 
-				if (!template3Present) {
+				if (!structure3Present) {
+					label = 9;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[3]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[3]",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+				assertEquals(RuntimeVariables.replace("Manage Templates"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+					RuntimeVariables.replace("Manage Templates"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean structure3TemplatePresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!structure3TemplatePresent) {
 					label = 4;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 4:
+				assertEquals(RuntimeVariables.replace("There are no templates."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
+					RuntimeVariables.replace("\u00ab Back"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
-				boolean template4Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean structure4Present = selenium.isElementPresent(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[4]");
 
-				if (!template4Present) {
+				if (!structure4Present) {
+					label = 10;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[4]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[4]",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+				assertEquals(RuntimeVariables.replace("Manage Templates"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+					RuntimeVariables.replace("Manage Templates"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean structure4TemplatePresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!structure4TemplatePresent) {
 					label = 5;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 5:
+				assertEquals(RuntimeVariables.replace("There are no templates."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//span[@class='header-back-to']/a"));
+				selenium.clickAt("//span[@class='header-back-to']/a",
+					RuntimeVariables.replace("\u00ab Back"));
+				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
 
-				boolean template5Present = selenium.isElementPresent(
-						"_15_rowIds");
+				boolean structure5Present = selenium.isElementPresent(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[5]");
 
-				if (!template5Present) {
+				if (!structure5Present) {
+					label = 11;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a)[5]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a)[5]",
+					RuntimeVariables.replace("Actions"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+				assertEquals(RuntimeVariables.replace("Manage Templates"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+					RuntimeVariables.replace("Manage Templates"));
+				selenium.waitForPageToLoad("30000");
+
+				boolean structure5TemplatePresent = selenium.isElementPresent(
+						"//span[@title='Actions']/ul/li/strong/a/span");
+
+				if (!structure5TemplatePresent) {
 					label = 6;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_15_allRowIds']",
-					RuntimeVariables.replace(""));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
+				selenium.clickAt("//input[@name='_166_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_166_allRowIds']"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected templates[\\s\\S]$"));
+				selenium.waitForConfirmation(
+					"Are you sure you want to delete this? It will be deleted immediately.");
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 6:
+				assertEquals(RuntimeVariables.replace("There are no templates."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+				selenium.selectFrame("relative=top");
+
 			case 100:
 				label = -1;
 			}

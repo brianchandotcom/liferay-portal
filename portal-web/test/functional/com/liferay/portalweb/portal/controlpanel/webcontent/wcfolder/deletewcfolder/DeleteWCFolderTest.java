@@ -66,7 +66,7 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_15_rowIdsJournalFolderCheckbox']"));
 				selenium.waitForElementPresent(
-					"//div[contains(@class,'display-icon selectable hover selected') and @data-title='WC Folder Name']");
+					"//div[contains(@class,'display-style display-icon selectable hover selected') and @data-title='WC Folder Name']");
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -79,10 +79,11 @@ public class DeleteWCFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//div[@class='portlet-msg-success']");
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.waitForVisible(
+					"//div[@class='portlet-msg-success taglib-trash-undo']");
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']",
+						"moved to the Recycle Bin. Undo"));
 				assertEquals(RuntimeVariables.replace(
 						"No Web Content was found."),
 					selenium.getText(

@@ -105,11 +105,6 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
-	<td>Structure ID</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[2]/a</td>
 	<td>Structure ID</td>
 </tr>
@@ -119,24 +114,29 @@
 	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[4]/a</td>
+	<td>WC Structure Description</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//tr[contains(.,'WC Structure Name')]/td[3]/a</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//h1[@class='header-title']</td>
-	<td>Header Title</td>
+	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -241,7 +241,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
+	<td>Date Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -271,7 +271,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>

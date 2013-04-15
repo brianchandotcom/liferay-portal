@@ -49,8 +49,9 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 						"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 				selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("WC Folder Name"));
-				selenium.waitForPageToLoad("30000");
 				Thread.sleep(1000);
+				selenium.waitForVisible(
+					"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img");
 				assertTrue(selenium.isVisible(
 						"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
 				assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
@@ -86,10 +87,10 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+						"The selected item was moved to the Recycle Bin. Undo"),
+					selenium.getText(
+						"//div[@class='portlet-msg-success taglib-trash-undo']"));
 				assertEquals(RuntimeVariables.replace(
 						"No Web Content was found."),
 					selenium.getText(
@@ -114,7 +115,7 @@ public class DeleteWCSubfolderTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
 					selenium.getText(
-						"//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span"));
+						"//tr[contains(.,'WC Subfolder Name')]/td[1]/span/a/span"));
 				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
 					selenium.getText("//a[@class='trash-empty-link']"));
 				selenium.clickAt("//a[@class='trash-empty-link']",

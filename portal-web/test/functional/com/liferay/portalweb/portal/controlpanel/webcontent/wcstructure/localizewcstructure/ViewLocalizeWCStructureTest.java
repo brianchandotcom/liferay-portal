@@ -70,11 +70,14 @@ public class ViewLocalizeWCStructureTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Nombre"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[3]"));
-		assertEquals(RuntimeVariables.replace("Fecha de modificaci\u00f3n"),
+		assertEquals(RuntimeVariables.replace("Descripci\u00f3n"),
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[4]"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace("Fecha de modificaci\u00f3n"),
+			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[@class='portlet-section-header results-header']/th[6]"));
 		assertTrue(selenium.isVisible(
 				"//tr[contains(.,'WC Nombre de la estructura')]/td[1]"));
 		assertTrue(selenium.isVisible(
@@ -82,11 +85,14 @@ public class ViewLocalizeWCStructureTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC Nombre de la estructura"),
 			selenium.getText(
 				"//tr[contains(.,'WC Nombre de la estructura')]/td[3]/a"));
-		assertTrue(selenium.isVisible(
+		assertEquals(RuntimeVariables.replace("WC Descripci\u00f3n Estructura"),
+			selenium.getText(
 				"//tr[contains(.,'WC Nombre de la estructura')]/td[4]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC Nombre de la estructura')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Acciones"),
 			selenium.getText(
-				"//tr[contains(.,'WC Nombre de la estructura')]/td[5]/span/ul/li/strong/a"));
+				"//tr[contains(.,'WC Nombre de la estructura')]/td[6]/span/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Mostrando 1 resultado."),
 			selenium.getText("//div[@class='search-results']"));
 		selenium.clickAt("//tr[contains(.,'WC Nombre de la estructura')]/td[3]/a",

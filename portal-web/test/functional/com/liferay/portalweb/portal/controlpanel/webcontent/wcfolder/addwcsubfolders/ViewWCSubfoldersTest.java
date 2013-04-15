@@ -44,8 +44,8 @@ public class ViewWCSubfoldersTest extends BaseTestCase {
 				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -115,8 +115,8 @@ public class ViewWCSubfoldersTest extends BaseTestCase {
 				"//div[contains(@class,'article-entries-paginator')]/select"));
 		selenium.clickAt("//div[@data-title='WC Subfolder1 Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Subfolder1 Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),
@@ -184,15 +184,16 @@ public class ViewWCSubfoldersTest extends BaseTestCase {
 				"//div[contains(@class,'article-entries-paginator')]/select"));
 		selenium.clickAt("//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'Up')]",
 			RuntimeVariables.replace("Up"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//div[@data-title='WC Subfolder2 Name']/a/span[@class='entry-title']");
 		assertEquals(RuntimeVariables.replace("WC Subfolder2 Name"),
 			selenium.getText(
 				"//div[@data-title='WC Subfolder2 Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Subfolder2 Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Subfolder2 Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),
@@ -260,15 +261,16 @@ public class ViewWCSubfoldersTest extends BaseTestCase {
 				"//div[contains(@class,'article-entries-paginator')]/select"));
 		selenium.clickAt("//div[contains(@class,'lfr-list-view-content folder-display')]/ul/li/a[contains(.,'Up')]",
 			RuntimeVariables.replace("Up"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible(
+			"//div[@data-title='WC Subfolder3 Name']/a/span[@class='entry-title']");
 		assertEquals(RuntimeVariables.replace("WC Subfolder3 Name"),
 			selenium.getText(
 				"//div[@data-title='WC Subfolder3 Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Subfolder3 Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Subfolder3 Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
+		selenium.waitForVisible("//h1[@class='portlet-title']");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//h1[@class='portlet-title']"));
 		assertEquals(RuntimeVariables.replace("WC Folder Name"),

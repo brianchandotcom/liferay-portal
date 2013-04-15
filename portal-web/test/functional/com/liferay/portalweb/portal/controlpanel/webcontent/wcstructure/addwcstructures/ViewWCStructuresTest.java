@@ -66,11 +66,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure1 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure1 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure1 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure1 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure1 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure1 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure1 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure1 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -146,6 +148,8 @@ public class ViewWCStructuresTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
+		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
@@ -174,11 +178,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.clickAt("//span[@class='header-back-to']/a",
 			RuntimeVariables.replace("\u00ab Back"));
-		selenium.waitForPageToLoad("30000");
+		Thread.sleep(1000);
+		selenium.selectFrame("relative=top");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
 		selenium.waitForVisible("//input[@name='_166_keywords']");
 		selenium.type("//input[@name='_166_keywords']",
 			RuntimeVariables.replace("WC Structure2 Name"));
-		selenium.clickAt("//input[@value='Search']",
+		selenium.clickAt("//div[@class='taglib-search-toggle-basic']/span/span[2]/span/input",
 			RuntimeVariables.replace("Search"));
 		Thread.sleep(1000);
 		selenium.waitForVisible(
@@ -187,11 +193,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure2 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure2 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure2 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure2 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure2 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -267,6 +275,8 @@ public class ViewWCStructuresTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
 		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
+		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
@@ -308,11 +318,13 @@ public class ViewWCStructuresTest extends BaseTestCase {
 				"//tr[contains(.,'WC Structure3 Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure3 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure3 Name')]/td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure3 Description"),
+			selenium.getText("//tr[contains(.,'WC Structure3 Name')]/td[4]/a"));
 		assertTrue(selenium.isVisible(
-				"//tr[contains(.,'WC Structure3 Name')]/td[4]/a"));
+				"//tr[contains(.,'WC Structure3 Name')]/td[5]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span"));
+				"//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//tr[contains(.,'WC Structure3 Name')]/td[3]/a",
 			RuntimeVariables.replace("WC Structure3 Name"));
 		selenium.waitForPageToLoad("30000");
@@ -387,6 +399,8 @@ public class ViewWCStructuresTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='aui-diagram-builder-drop-container']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Number"),

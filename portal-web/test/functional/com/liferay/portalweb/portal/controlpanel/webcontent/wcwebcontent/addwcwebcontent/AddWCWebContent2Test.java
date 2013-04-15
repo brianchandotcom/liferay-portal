@@ -65,9 +65,9 @@ public class AddWCWebContent2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible(
-				"//a[contains(@title,'WC WebContent2 Title')]/div/img"));
+				"//div[@data-title='WC WebContent2 Title']/a/div[@class='entry-thumbnail']/img"));
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText(
-				"//a[@class='entry-link']/span[contains(.,'WC WebContent2 Title')]"));
+				"//div[@data-title='WC WebContent2 Title']/a/span[@class='entry-title']/span"));
 	}
 }

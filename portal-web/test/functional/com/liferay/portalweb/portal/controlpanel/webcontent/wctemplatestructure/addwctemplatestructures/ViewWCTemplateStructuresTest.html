@@ -120,12 +120,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure1 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure1 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -206,21 +206,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[1]</td>
-	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData</td>
+	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[2]</td>
-	<td>()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p</td>
+	<td>()</p><p><img src="$dm.getData()"></img></p><p>$fileupload.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[3]</td>
-	<td>>$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+	<td>()</p><p>$html.getData()</p><p><img src="$image.getData()"></img></p</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[4]</td>
+	<td>><p>$integer.getData()</p><p><a href="$link.getData()">Test Link</a</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[5]</td>
+	<td>></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[6]</td>
 	<td>()</p><p>$text.getData()</p><p>$textbox.getData()</p>##</td>
 </tr>
 <tr>
@@ -340,12 +350,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure2 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure2 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -426,21 +436,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[1]</td>
-	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData</td>
+	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[2]</td>
-	<td>()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p</td>
+	<td>()</p><p><img src="$dm.getData()"></img></p><p>$fileupload.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[3]</td>
-	<td>>$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+	<td>()</p><p>$html.getData()</p><p><img src="$image.getData()"></img></p</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[4]</td>
+	<td>><p>$integer.getData()</p><p><a href="$link.getData()">Test Link</a</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[5]</td>
+	<td>></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[6]</td>
 	<td>()</p><p>$text.getData()</p><p>$textbox.getData()</p>##</td>
 </tr>
 <tr>
@@ -544,11 +564,6 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//tr[contains(.,'WC Structure3 Name')]/td[3]/a</td>
 	<td>WC Structure3 Name</td>
@@ -560,12 +575,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure3 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'WC Structure3 Name')]/td[5]/span/ul/li/strong/a</td>
+	<td>//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -646,21 +661,31 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[1]</td>
-	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData</td>
+	<td><p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[2]</td>
-	<td>()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p</td>
+	<td>()</p><p><img src="$dm.getData()"></img></p><p>$fileupload.getData</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[3]</td>
-	<td>>$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+	<td>()</p><p>$html.getData()</p><p><img src="$image.getData()"></img></p</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='ace_layer ace_text-layer']/div/div[4]</td>
+	<td>><p>$integer.getData()</p><p><a href="$link.getData()">Test Link</a</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[5]</td>
+	<td>></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='ace_layer ace_text-layer']/div/div[6]</td>
 	<td>()</p><p>$text.getData()</p><p>$textbox.getData()</p>##</td>
 </tr>
 <tr>

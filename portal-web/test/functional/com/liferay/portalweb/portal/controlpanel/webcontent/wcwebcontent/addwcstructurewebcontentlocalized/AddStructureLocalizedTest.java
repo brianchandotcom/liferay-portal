@@ -25,6 +25,10 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -35,43 +39,120 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Structures",
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
+			RuntimeVariables.replace("Manage"));
+		selenium.waitForVisible(
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+		assertEquals(RuntimeVariables.replace("Structures"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
+		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
+		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/store.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText(
+				"//span[@class='lfr-toolbar-button add-button ']/a"));
+		selenium.clickAt("//span[@class='lfr-toolbar-button add-button ']/a",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//input[@value='Add Structure']",
-			RuntimeVariables.replace("Add Structure"));
-		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_15_name_en_US']",
+		selenium.waitForVisible(
+			"//div[@class='aui-fieldset-content ']/span/span/label[contains(.,'Name (Required)')]");
+		selenium.type("//span[@class='aui-field-content']/span/span/input",
 			RuntimeVariables.replace("WC Structure Name"));
-		selenium.type("//textarea[@id='_15_description_en_US']",
+		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Description"));
-		selenium.clickAt("//input[@id='_15_editorButton']",
-			RuntimeVariables.replace("Launch Editor"));
-		selenium.waitForVisible("//iframe[@id='_15_xsdContentIFrame']");
-		selenium.selectFrame("//iframe[@id='_15_xsdContentIFrame']");
-		selenium.waitForValue("//textarea[@id='_15_plainEditorField']",
-			"<root></root>");
-		selenium.type("//textarea[@id='_15_plainEditorField']",
-			RuntimeVariables.replace(
-				"<root> \n\n <dynamic-element name='page-name' type='text'></dynamic-element> \n\n <dynamic-element name='page-description' type='text'></dynamic-element> \n\n</root>"));
-		selenium.clickAt("//input[@value='Update']",
-			RuntimeVariables.replace("Update"));
-		selenium.selectFrame("relative=top");
-		selenium.waitForVisible("//input[@id='_15_structure_el0_name']");
-		assertEquals("page-name",
-			selenium.getValue("//input[@id='_15_structure_el0_name']"));
-		assertEquals("page-description",
-			selenium.getValue("//input[@id='_15_structure_el1_name']"));
+		selenium.waitForVisible(
+			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
+			"//div[@class='aui-tabview-content aui-widget-bd']");
+		selenium.waitForVisible("//label[contains(.,'Text')]");
+		selenium.clickAt("//button[@id='editEvent']",
+			RuntimeVariables.replace("Edit Event"));
+		selenium.waitForElementPresent(
+			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");
+		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
+		assertEquals(RuntimeVariables.replace("Field Label"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[5]/td[2]",
+			RuntimeVariables.replace("Name Value"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
+		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
+			RuntimeVariables.replace("page-name"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[2]/td[2]",
+			RuntimeVariables.replace("Field Label Value"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
+		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
+			RuntimeVariables.replace("page-name"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForVisible("//label[contains(.,'Text')]");
+		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
+		assertTrue(selenium.isVisible("//button[@id='deleteEvent']"));
+		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[2]/div[3]/span/span/button[contains(@id,'editEvent')]",
+			RuntimeVariables.replace("Edit Event"));
+		selenium.waitForElementPresent(
+			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");
+		selenium.waitForVisible("//table[@class='yui3-datatable-table']");
+		assertEquals(RuntimeVariables.replace("Field Label"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[5]/td[2]",
+			RuntimeVariables.replace("Name Value"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
+		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
+			RuntimeVariables.replace("page-description"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
+		assertEquals(RuntimeVariables.replace("Text"),
+			selenium.getText(
+				"//tbody[@class='yui3-datatable-data']/tr[2]/td[2]"));
+		selenium.doubleClickAt("//tbody[@class='yui3-datatable-data']/tr[2]/td[2]",
+			RuntimeVariables.replace("Field Label Value"));
+		selenium.waitForVisible(
+			"//form[contains(@class,'aui-textcelleditor-content')]/div/input");
+		selenium.type("//form[contains(@class,'aui-textcelleditor-content')]/div/input",
+			RuntimeVariables.replace("page-description"));
+		selenium.clickAt("//button[@type='submit']",
+			RuntimeVariables.replace("Save"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isVisible("//td[2]/a"));
+		assertTrue(selenium.isVisible(
+				"//td[@id='_166_ddmStructuresSearchContainer_col-id_row-1']/a"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
-			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Description"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//td[contains(.,'WC Structure Name')]/a"));
+		selenium.waitForVisible(
+			"//span[@class='lfr-toolbar-button add-button ']/a");
 	}
 }

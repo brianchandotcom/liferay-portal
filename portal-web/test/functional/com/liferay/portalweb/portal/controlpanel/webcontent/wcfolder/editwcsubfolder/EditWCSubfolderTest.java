@@ -44,10 +44,9 @@ public class EditWCSubfolderTest extends BaseTestCase {
 				"//div[@data-title='WC Folder Name']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='WC Folder Name']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("WC Folder Name"));
-		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		assertTrue(selenium.isVisible(
-				"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img"));
+		selenium.waitForVisible(
+			"//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img");
 		assertEquals(RuntimeVariables.replace("WC Subfolder Name"),
 			selenium.getText(
 				"//div[@data-title='WC Subfolder Name']/a/span[@class='entry-title']"));

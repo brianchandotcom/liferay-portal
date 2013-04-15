@@ -36,29 +36,34 @@ public class PublishExpireWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
-			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//td[3]/a",
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[3]/span/a",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
-			"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']");
+			"//iframe[contains(@title,'Rich Text Editor')]");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Version: 1.0"),
 			selenium.getText("//span[@class='workflow-version']"));
 		assertEquals(RuntimeVariables.replace("Status: Expired"),
 			selenium.getText("//span[@class='workflow-status']"));
+		assertEquals("WC WebContent Title",
+			selenium.getValue("//input[@id='_15_title_en_US']"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
 	}
 }

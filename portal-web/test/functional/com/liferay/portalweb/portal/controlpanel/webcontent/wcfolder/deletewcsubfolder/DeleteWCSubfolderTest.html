@@ -54,7 +54,7 @@
 	<td>WC Folder Name</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//div[@data-title='WC Folder Name']/a/span[@class='entry-title']</td>
 	<td>WC Folder Name</td>
 </tr>
@@ -62,6 +62,11 @@
 	<td>pause</td>
 	<td>1000</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@data-title='WC Subfolder Name']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC Subfolder Name Thumbnail</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -129,14 +134,9 @@
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Folder Name')]/td[1]/span/a/span</td>
+	<td>//tr[contains(.,'WC Subfolder Name')]/td[1]/span/a/span</td>
 	<td>WC Subfolder Name</td>
 </tr>
 <tr>

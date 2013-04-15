@@ -67,8 +67,8 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'WC Structure1 Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure1 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure1 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -104,21 +104,29 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				"()</p><p><img src=\"$dm.getData()\"></img></p><p>$fileupload.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				"()</p><p>$html.getData()</p><p><img src=\"$image.getData()\"></img></p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+				"><p>$integer.getData()</p><p><a href=\"$link.getData()\">Test Link</a"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[5]"));
+		assertEquals(RuntimeVariables.replace(
+				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[6]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -163,8 +171,8 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 			selenium.getText("//tr[contains(.,'WC Structure2 Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure2 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure2 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -200,21 +208,29 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				"()</p><p><img src=\"$dm.getData()\"></img></p><p>$fileupload.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				"()</p><p>$html.getData()</p><p><img src=\"$image.getData()\"></img></p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+				"><p>$integer.getData()</p><p><a href=\"$link.getData()\">Test Link</a"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[5]"));
+		assertEquals(RuntimeVariables.replace(
+				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[6]"));
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
@@ -252,15 +268,14 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//tr[contains(.,'WC Structure3 Name')]/td[3]/a");
 		assertEquals(RuntimeVariables.replace("WC Structure3 Name"),
 			selenium.getText("//tr[contains(.,'WC Structure3 Name')]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"//tr[contains(.,'WC Structure3 Name')]/td[5]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[contains(.,'WC Structure3 Name')]/td[5]/span/ul/li/strong/a",
+				"//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
 			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
@@ -296,21 +311,29 @@ public class ViewWCTemplateStructuresTest extends BaseTestCase {
 		selenium.select("//select[@id='_166_editorType']",
 			RuntimeVariables.replace("value=rich"));
 		assertEquals(RuntimeVariables.replace(
-				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData()</p><p>$dm.getData"),
+				"<p>$boolean.getData()</p><p>$date.getData()</p><p>$decimal.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[1]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$fileupload.getData()</p><p>$html.getData()</p><p>$integer.getData()</p><p"),
+				"()</p><p><img src=\"$dm.getData()\"></img></p><p>$fileupload.getData"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[2]"));
 		assertEquals(RuntimeVariables.replace(
-				">$link.getData()</p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+				"()</p><p>$html.getData()</p><p><img src=\"$image.getData()\"></img></p"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+				"><p>$integer.getData()</p><p><a href=\"$link.getData()\">Test Link</a"),
 			selenium.getText(
 				"//div[@class='ace_layer ace_text-layer']/div/div[4]"));
+		assertEquals(RuntimeVariables.replace(
+				"></p><p>$number.getData()</p><p>$radio.getData()</p><p>$select.getData"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[5]"));
+		assertEquals(RuntimeVariables.replace(
+				"()</p><p>$text.getData()</p><p>$textbox.getData()</p>##"),
+			selenium.getText(
+				"//div[@class='ace_layer ace_text-layer']/div/div[6]"));
 		selenium.selectFrame("relative=top");
 	}
 }

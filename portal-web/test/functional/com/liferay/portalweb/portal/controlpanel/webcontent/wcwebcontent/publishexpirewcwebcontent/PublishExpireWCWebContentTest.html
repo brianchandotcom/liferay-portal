@@ -40,22 +40,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>Expired</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td>Text Area</td>
 </tr>
 <tr>
@@ -74,9 +74,19 @@
 	<td>Status: Expired</td>
 </tr>
 <tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -85,12 +95,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[3]/span/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[4]/a</td>
+	<td>//tr[contains(.,'WC WebContent Title')]/td[4]</td>
 	<td>Approved</td>
 </tr>
 </tbody></table>

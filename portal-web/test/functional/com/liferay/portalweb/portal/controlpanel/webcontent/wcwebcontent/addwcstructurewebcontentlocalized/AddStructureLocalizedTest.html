@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,74 +49,254 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Liferay Store</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Add Structure']</td>
-	<td>Add Structure</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-fieldset-content ']/span/span/label[contains(.,'Name (Required)')]</td>
+	<td>Name Field</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_15_name_en_US']</td>
+	<td>//span[@class='aui-field-content']/span/span/input</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>//textarea[@id='_166_description_en_US']</td>
 	<td>WC Structure Description</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@id='_15_editorButton']</td>
-	<td>Launch Editor</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>dragAndDropToObject</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>dragAndDropToObject</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title="Text"]/div</td>
+	<td>//div[@class='aui-tabview-content aui-widget-bd']</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe[@id='_15_xsdContentIFrame']</td>
-	<td>Editor</td>
+	<td>//label[contains(.,'Text')]</td>
+	<td>Text</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//iframe[@id='_15_xsdContentIFrame']</td>
-	<td>Editor</td>
+	<td>clickAt</td>
+	<td>//button[@id='editEvent']</td>
+	<td>Edit Event</td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>//textarea[@id='_15_plainEditorField']</td>
-	<td><root></root></td>
+	<td>waitForElementPresent</td>
+	<td>//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//table[@class='yui3-datatable-table']</td>
+	<td>Properties Table</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[1]</td>
+	<td>Field Label</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[5]/td[2]</td>
+	<td>Name Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Name Value Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_15_plainEditorField']</td>
-	<td><root> <br /><br /> <dynamic-element name='page-name' type='text'></dynamic-element> <br /><br /> <dynamic-element name='page-description' type='text'></dynamic-element> <br /><br /></root></td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>page-name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Update']</td>
-	<td>Update</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td>top</td>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Field Label Value</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_15_structure_el0_name']</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Field Label Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
 	<td>page-name</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@id='_15_structure_el0_name']</td>
-	<td>page-name</td>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@id='_15_structure_el1_name']</td>
+	<td>waitForVisible</td>
+	<td>//label[contains(.,'Text')]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='duplicateEvent']</td>
+	<td>Duplicate Event</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//button[@id='deleteEvent']</td>
+	<td>Delete Event</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]/div[3]/span/span/button[contains(@id,'editEvent')]</td>
+	<td>Edit Event</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//table[@class='yui3-datatable-table']</td>
+	<td>Properties Table</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[1]</td>
+	<td>Field Label</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[5]/td[2]</td>
+	<td>Name Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Name Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
 	<td>page-description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>doubleClickAt</td>
+	<td>//tbody[@class='yui3-datatable-data']/tr[2]/td[2]</td>
+	<td>Field Label Value</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>Field Label Value Editor</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[contains(@class,'aui-textcelleditor-content')]/div/input</td>
+	<td>page-description</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@type='submit']</td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -120,18 +310,18 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//td[2]/a</td>
+	<td>//td[@id='_166_ddmStructuresSearchContainer_col-id_row-1']/a</td>
 	<td>WC Structure ID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[3]/a</td>
+	<td>//td[contains(.,'WC Structure Name')]/a</td>
 	<td>WC Structure Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>WC Structure Description</td>
+	<td>waitForVisible</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
 </tr>
 </tbody></table>
 </body>

@@ -124,13 +124,18 @@
 	<td>WC Structure1 Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure1 Name')]/td[4]/a</td>
+	<td>WC Structure1 Description</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure1 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Structure1 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -216,7 +221,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
+	<td>Date Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -246,7 +251,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -292,6 +297,11 @@
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -354,9 +364,24 @@
 	<td>Cancel</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//span[@class='header-back-to']/a</td>
 	<td>« Back</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@src,'Structures')]</td>
+	<td>Structures</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -370,7 +395,7 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Search']</td>
+	<td>//div[@class='taglib-search-toggle-basic']/span/span[2]/span/input</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -394,13 +419,18 @@
 	<td>WC Structure2 Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure2 Name')]/td[4]/a</td>
+	<td>WC Structure2 Description</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure2 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Structure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -486,7 +516,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
+	<td>Date Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -516,7 +546,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -562,6 +592,11 @@
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -664,13 +699,18 @@
 	<td>WC Structure3 Name</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertText</td>
 	<td>//tr[contains(.,'WC Structure3 Name')]/td[4]/a</td>
+	<td>WC Structure3 Description</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'WC Structure3 Name')]/td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'WC Structure3 Name')]/td[5]/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'WC Structure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -756,7 +796,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[2]</td>
-	<td>Boolean Field</td>
+	<td>Date Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -786,7 +826,7 @@
 <tr>
 	<td>assertVisible</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[5]</td>
-	<td>File Upload</td>
+	<td>File Upload Field</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -832,6 +872,11 @@
 	<td>assertText</td>
 	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label</td>
 	<td>Link to Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='aui-diagram-builder-drop-container']/div[9]/div/div/a</td>
+	<td>Link</td>
 </tr>
 <tr>
 	<td>assertVisible</td>

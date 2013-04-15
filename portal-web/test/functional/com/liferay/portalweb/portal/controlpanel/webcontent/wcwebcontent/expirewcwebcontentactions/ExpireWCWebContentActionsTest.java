@@ -35,43 +35,57 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//button[contains(@title,'List View')]");
+		selenium.clickAt("//button[contains(@title,'List View')]",
+			RuntimeVariables.replace("List View"));
+		selenium.waitForVisible(
+			"//tr[contains(.,'WC WebContent Title')]/td[1]/input[@type='checkbox']");
 
-		String webContentID = selenium.getText("//td[2]/a");
+		String webContentID = selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[2]");
 		RuntimeVariables.setValue("webContentID", webContentID);
 		assertEquals(RuntimeVariables.replace("${webContentID}"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
-		assertTrue(selenium.isVisible("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
-		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[8]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
-			RuntimeVariables.replace("Actions"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[7]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a"));
+		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a",
+			RuntimeVariables.replace("Menu Button"));
 		selenium.waitForVisible(
-			"//a[contains(@id,'SearchContainer_1_menu_expire')]");
+			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("${webContentID}"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[3]/a"));
+			selenium.getText(
+				"//tr[contains(.,'WC WebContent Title')]/td/span/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
-			selenium.getText("//td[4]/a"));
-		assertTrue(selenium.isVisible("//td[5]/a"));
-		assertTrue(selenium.isVisible("//td[6]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[4]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[5]"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'WC WebContent Title')]/td[6]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[7]/a"));
+			selenium.getText("//tr[contains(.,'WC WebContent Title')]/td[7]"));
 	}
 }

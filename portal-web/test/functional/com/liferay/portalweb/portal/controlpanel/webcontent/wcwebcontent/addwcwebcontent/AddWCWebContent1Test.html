@@ -105,12 +105,12 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//a[contains(@title,'WC WebContent1 Title')]/div/img</td>
-	<td>WC WebContent1 Thumbnail</td>
+	<td>//div[@data-title='WC WebContent1 Title']/a/div[@class='entry-thumbnail']/img</td>
+	<td>WC WebContent1 Title Thumbnail</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a[@class='entry-link']/span[contains(.,'WC WebContent1 Title')]</td>
+	<td>//div[@data-title='WC WebContent1 Title']/a/span[@class='entry-title']/span</td>
 	<td>WC WebContent1 Title</td>
 </tr>
 </tbody></table>

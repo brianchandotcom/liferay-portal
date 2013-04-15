@@ -49,6 +49,7 @@ public class SocialActivitySetLocalServiceImpl
 		activitySet.setClassName(activity.getClassName());
 		activitySet.setClassPK(activity.getClassPK());
 		activitySet.setType(activity.getType());
+		activitySet.setActivityCount(1);
 
 		socialActivitySetPersistence.update(activitySet);
 
@@ -99,12 +100,19 @@ public class SocialActivitySetLocalServiceImpl
 		SocialActivitySet activitySet =
 			socialActivitySetPersistence.findByPrimaryKey(activitySetId);
 
-		activitySet.setActivityCount(activitySet.getActivityCount() + 1);
-
 		SocialActivity activity = socialActivityPersistence.findByPrimaryKey(
 			activityId);
 
+		// Activity
+
+		activity.setActivitySetId(activitySetId);
+
+		socialActivityPersistence.update(activity);
+
+		// Activity Set
+
 		activitySet.setModifiedDate(activity.getCreateDate());
+		activitySet.setActivityCount(activitySet.getActivityCount() + 1);
 
 		socialActivitySetPersistence.update(activitySet);
 	}

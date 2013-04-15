@@ -244,12 +244,8 @@ public class SocialActivityLocalServiceImpl
 			}
 
 			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-				long activitySetId =
-					socialActivityInterpreterLocalService.getActivitySetId(
-						activity.getActivityId());
-
-				socialActivitySetLocalService.incrementActivityCount(
-					activitySetId, activityId);
+				socialActivityInterpreterLocalService.updateActivitySet(
+					activity.getActivityId());
 			}
 		}
 

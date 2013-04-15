@@ -76,11 +76,6 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter>> getActivityInterpreters();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getActivitySetId(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}
@@ -113,4 +108,8 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 		java.lang.String selector,
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void updateActivitySet(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

@@ -79,12 +79,6 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		return getService().getActivityInterpreters();
 	}
 
-	public static long getActivitySetId(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getActivitySetId(activityId);
-	}
-
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}
@@ -122,6 +116,12 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activitySet, serviceContext);
+	}
+
+	public static void updateActivitySet(long activityId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateActivitySet(activityId);
 	}
 
 	public static SocialActivityInterpreterLocalService getService() {

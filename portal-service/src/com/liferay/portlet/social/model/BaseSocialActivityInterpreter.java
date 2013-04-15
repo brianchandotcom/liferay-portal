@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,6 +37,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySetLocalServiceUtil;
+import com.liferay.portlet.social.service.persistence.SocialActivityUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.List;
@@ -47,10 +51,6 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseSocialActivityInterpreter
 	implements SocialActivityInterpreter {
-
-	public long getActivitySetId(long activityId) {
-		return 0;
-	}
 
 	public String getSelector() {
 		return StringPool.BLANK;
@@ -88,6 +88,27 @@ public abstract class BaseSocialActivityInterpreter
 		}
 
 		return null;
+	}
+
+	public void updateActivitySet(long activityId)
+		throws PortalException, SystemException {
+
+		SocialActivity activity = SocialActivityUtil.fetchByPrimaryKey(
+			activityId);
+
+		if ((activity == null) || (activity.getActivitySetId() > 0)) {
+			return;
+		}
+
+		long activitySetId = getActivitySetId(activityId);
+
+		if (activitySetId > 0) {
+			SocialActivitySetLocalServiceUtil.incrementActivityCount(
+				activitySetId, activityId);
+		}
+		else {
+			SocialActivitySetLocalServiceUtil.addActivitySet(activityId);
+		}
 	}
 
 	protected String buildLink(String link, String text) {
@@ -154,6 +175,10 @@ public abstract class BaseSocialActivityInterpreter
 		throws Exception {
 
 		return _deprecatedMarkerSocialActivityFeedEntry;
+	}
+
+	protected long getActivitySetId(long activityId) {
+		return 0;
 	}
 
 	protected String getBody(

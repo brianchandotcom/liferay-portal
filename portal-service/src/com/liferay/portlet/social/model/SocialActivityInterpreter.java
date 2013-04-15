@@ -14,14 +14,14 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public interface SocialActivityInterpreter {
-
-	public long getActivitySetId(long activityId);
 
 	public String[] getClassNames();
 
@@ -32,5 +32,8 @@ public interface SocialActivityInterpreter {
 
 	public SocialActivityFeedEntry interpret(
 		SocialActivitySet activitySet, ServiceContext serviceContext);
+
+	public void updateActivitySet(long activityId)
+		throws PortalException, SystemException;
 
 }

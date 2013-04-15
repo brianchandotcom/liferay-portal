@@ -65,6 +65,17 @@ public interface AnnouncementsEntryService extends BaseService {
 		long plid, long classNameId, long classPK, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean autoDisplayDate,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, int priority,
+		boolean alert)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry addEntry(
+		long plid, long classNameId, long classPK, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, int priority, boolean alert)

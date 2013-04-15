@@ -220,7 +220,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>1000</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,6 +254,11 @@
 	<td>Selenium</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
@@ -264,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
@@ -272,11 +282,6 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -310,7 +315,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>1000</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
@@ -345,12 +350,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//table/tr/td[1]</td>
+	<td>//tr/td[contains(.,'Organization Content Reviewer')]</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table/tr/td[1]</td>
+	<td>//tr/td[contains(.,'Organization Content Reviewer')]</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>
@@ -365,7 +370,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[3]/div/div/table/tbody/tr[3]/td[1]</td>
+	<td>//tr/td[contains(.,'Organization Content Reviewer')]</td>
 	<td>Organization Content Reviewer</td>
 </tr>
 <tr>

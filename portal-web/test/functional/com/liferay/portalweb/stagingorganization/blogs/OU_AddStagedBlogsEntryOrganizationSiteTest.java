@@ -51,7 +51,7 @@ public class OU_AddStagedBlogsEntryOrganizationSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Pending Approval"),
-			selenium.getText("//div[2]/div[1]/h3"));
+			selenium.getText("//div[@class='entry pending']/div[1]/h3"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

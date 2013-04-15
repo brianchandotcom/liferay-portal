@@ -67,8 +67,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 					RuntimeVariables.replace("User"));
 				selenium.select("//select[@id='_125_suffixId']",
 					RuntimeVariables.replace("label=Phd."));
-				selenium.select("//select[@name='_125_birthdayMonth']",
-					RuntimeVariables.replace("label=April"));
 				selenium.select("//select[@name='_125_birthdayDay']",
 					RuntimeVariables.replace("label=10"));
 				selenium.select("//select[@name='_125_birthdayYear']",
@@ -78,6 +76,8 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.select("//select[@name='_125_birthdayMonth']",
+					RuntimeVariables.replace("label=April"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -116,7 +116,7 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 					selenium.getText("//div/span/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
 				selenium.type("//input[@name='_125_keywords']",
@@ -187,7 +187,7 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 			case 3:
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 				selenium.type("password1", RuntimeVariables.replace("test"));
 				selenium.type("password2", RuntimeVariables.replace("test"));
 				selenium.clickAt("//input[@value='Save']",

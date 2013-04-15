@@ -169,7 +169,6 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 						"//td[@id='_125_rolesSearchContainer_col-title_row-1']"));
 				selenium.clickAt("//input[@value='Choose']",
 					RuntimeVariables.replace("Organization Administrator"));
-				selenium.waitForPageToLoad("30000");
 				selenium.selectFrame("relative=top");
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
@@ -179,7 +178,8 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
 						"Organization Administrator"),
-					selenium.getText("//div[3]/div/div/table/tbody/tr[3]/td[1]"));
+					selenium.getText(
+						"//tr/td[contains(.,'Organization Administrator')]"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));

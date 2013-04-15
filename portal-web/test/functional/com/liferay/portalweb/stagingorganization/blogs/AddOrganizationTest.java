@@ -67,6 +67,6 @@ public class AddOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Selenium"),
-			selenium.getText("//a[2]/strong"));
+			selenium.getText("//tr[contains(.,'Selenium')]/td/a[2]/strong"));
 	}
 }

@@ -118,7 +118,7 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 					selenium.getText("//div/span/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
 				selenium.type("//input[@name='_125_keywords']",
@@ -130,16 +130,17 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Selenium"),
 					selenium.getText(
 						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']"));
+				Thread.sleep(1000);
 				selenium.clickAt("//input[@value='Choose']",
 					RuntimeVariables.replace("Choose"));
 				selenium.selectFrame("relative=top");
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Selenium"),
 					selenium.getText("//tr[contains(.,'Selenium')]/td[1]"));
 				assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']",
@@ -153,7 +154,7 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 						"//div/span[2]/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span[2]/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 				selenium.waitForVisible("//iframe");
 				selenium.selectFrame("//iframe");
 				selenium.waitForVisible(
@@ -165,10 +166,12 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//input[@value='Choose'])[2]",
 					RuntimeVariables.replace("Organization Content Reviewer"));
 				selenium.selectFrame("relative=top");
-				selenium.waitForVisible("//table/tr/td[1]");
+				selenium.waitForVisible(
+					"//tr/td[contains(.,'Organization Content Reviewer')]");
 				assertEquals(RuntimeVariables.replace(
 						"Organization Content Reviewer"),
-					selenium.getText("//table/tr/td[1]"));
+					selenium.getText(
+						"//tr/td[contains(.,'Organization Content Reviewer')]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -177,7 +180,8 @@ public class AddUserOrganizationContentReviewerTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
 						"Organization Content Reviewer"),
-					selenium.getText("//div[3]/div/div/table/tbody/tr[3]/td[1]"));
+					selenium.getText(
+						"//tr/td[contains(.,'Organization Content Reviewer')]"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));

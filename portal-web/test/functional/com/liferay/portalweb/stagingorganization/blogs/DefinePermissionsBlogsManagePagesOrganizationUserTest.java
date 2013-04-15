@@ -90,12 +90,12 @@ public class DefinePermissionsBlogsManagePagesOrganizationUserTest
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
-			selenium.getText("//td[1]/a"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr[contains(.,'Blogs')]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Sites"),
-			selenium.getText("//tr[4]/td[1]/a"));
+			selenium.getText("//tr[contains(.,'Sites')]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[4]/td[3]"));
+			selenium.getText("//tr[contains(.,'Sites')]/td[3]"));
 	}
 }

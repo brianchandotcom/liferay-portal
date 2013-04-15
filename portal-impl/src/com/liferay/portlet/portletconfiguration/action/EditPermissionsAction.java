@@ -224,6 +224,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 
 		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
+		if (pos != -1) {
 		long plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
@@ -232,6 +233,7 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			layout.setModifiedDate(new Date());
 
 			LayoutLocalServiceUtil.updateLayout(layout);
+		}
 		}
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {

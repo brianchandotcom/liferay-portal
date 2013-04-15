@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//a[@id='_125_detailsLink']</td>
 	<td></td>

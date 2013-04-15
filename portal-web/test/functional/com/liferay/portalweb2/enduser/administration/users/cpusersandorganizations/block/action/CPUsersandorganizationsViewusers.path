@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>
@@ -61,7 +66,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[.='Advanced »']</td>
+	<td>//a[contains(.,'Advanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +117,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_BASIC</td>
-	<td>//a[.='« Basic']</td>
+	<td>//a[contains(.,'Basic')]</td>
 	<td></td>
 </tr>
 <tr>

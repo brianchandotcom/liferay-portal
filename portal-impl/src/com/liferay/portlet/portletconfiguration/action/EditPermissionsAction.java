@@ -225,15 +225,15 @@ public class EditPermissionsAction extends EditConfigurationAction {
 		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
 		if (pos != -1) {
-		long plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+			long plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-		if (layout != null) {
-			layout.setModifiedDate(new Date());
+			if (layout != null) {
+				layout.setModifiedDate(new Date());
 
-			LayoutLocalServiceUtil.updateLayout(layout);
-		}
+				LayoutLocalServiceUtil.updateLayout(layout);
+			}
 		}
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {

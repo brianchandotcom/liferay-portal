@@ -91,8 +91,6 @@ if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
 }
 
-boolean showFolderAction = ArrayUtil.contains(folderColumns, "action");
-
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 int entriesPerPage = PrefsParamUtil.getInteger(preferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
 
@@ -109,8 +107,6 @@ String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(preferences, r
 if (!portletId.equals(PortletKeys.BOOKMARKS)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
 }
-
-boolean showEntryAction = ArrayUtil.contains(entryColumns, "action");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

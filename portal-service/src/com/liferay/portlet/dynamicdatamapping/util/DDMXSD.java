@@ -39,10 +39,21 @@ public interface DDMXSD {
 			boolean readOnly, Locale locale)
 		throws Exception;
 
+	public String getFieldHTML(
+			PageContext pageContext, Element element, String portletNamespace,
+			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception;
+
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, Fields fields, String portletNamespace,
 			String namespace, String mode, boolean readOnly, Locale locale)
+		throws Exception;
+
+	public String getFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			String fieldName, String portletNamespace, String namespace,
+			String mode, boolean readOnly, Locale locale)
 		throws Exception;
 
 	public String getHTML(

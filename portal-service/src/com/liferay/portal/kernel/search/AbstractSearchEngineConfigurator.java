@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.ParallelDestination;
+import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
@@ -196,13 +196,13 @@ public abstract class AbstractSearchEngineConfigurator {
 			searchWriterDestinationName);
 
 		if (searchWriterDestination == null) {
-			ParallelDestination parallelDestination = new ParallelDestination();
+			SerialDestination serialDestination = new SerialDestination();
 
-			parallelDestination.setName(searchWriterDestinationName);
+			serialDestination.setName(searchWriterDestinationName);
 
-			parallelDestination.open();
+			serialDestination.open();
 
-			searchWriterDestination = parallelDestination;
+			searchWriterDestination = serialDestination;
 
 			messageBus.addDestination(searchWriterDestination);
 		}

@@ -188,7 +188,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container','escape']
+		['liferay-search-container', 'escape']
 	);
 
 </aui:script>

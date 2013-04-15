@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -28,10 +30,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,11 +77,10 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getClassNameId(_className);
 	}
 
-	public Map<String, Map<String, String>> getClassTypeFieldNames(
-			long classTypeId, Locale locale)
+	public List<Tuple> getClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception {
 
-		return Collections.emptyMap();
+		return Collections.emptyList();
 	}
 
 	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
@@ -115,8 +116,8 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception {
 
-		Map<String, Map<String, String>> classTypeFieldNames =
-			getClassTypeFieldNames(classTypeId, locale);
+		List<Tuple> classTypeFieldNames = getClassTypeFieldNames(
+			classTypeId, locale);
 
 		return !classTypeFieldNames.isEmpty();
 	}
@@ -154,12 +155,11 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
 	}
 
-	protected Map<String, Map<String, String>> getDDMStructureFieldNames(
+	protected List<Tuple> getDDMStructureFieldNames(
 			DDMStructure ddmStructure, Locale locale)
 		throws Exception {
 
-		Map<String, Map<String, String>> ddmStructureFieldNames =
-			new HashMap<String, Map<String, String>>();
+		List<Tuple> fields = new ArrayList<Tuple>();
 
 		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
 			LocaleUtil.toLanguageId(locale));
@@ -173,15 +173,13 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 				continue;
 			}
 
+			String label = fieldMap.get("label");
 			String name = fieldMap.get("name");
 
-			String encodeFieldName = DDMIndexerUtil.encodeName(
-				ddmStructure.getStructureId(), name, locale);
-
-			ddmStructureFieldNames.put(encodeFieldName, fieldMap);
+			fields.add(new Tuple(label, name));
 		}
 
-		return ddmStructureFieldNames;
+		return fields;
 	}
 
 	protected String getIconPath(ThemeDisplay themeDisplay) {

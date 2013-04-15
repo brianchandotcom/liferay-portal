@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,6 +42,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePer
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -84,12 +86,10 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public Map<String, Map<String, String>> getClassTypeFieldNames(
-			long classTypeId, Locale locale)
+	public List<Tuple> getClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception {
 
-		Map<String, Map<String, String>> classTypeFieldNames =
-			new HashMap<String, Map<String, String>>();
+		List<Tuple> classTypeFieldNames = new ArrayList<Tuple>();
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(classTypeId);
@@ -97,7 +97,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			classTypeFieldNames.putAll(
+			classTypeFieldNames.addAll(
 				getDDMStructureFieldNames(ddmStructure, locale));
 		}
 

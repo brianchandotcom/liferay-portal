@@ -43,7 +43,13 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 	<#list commandElements as commandElement>
 		<#assign commandName = commandElement.attributeValue("name")>
 
-		public void ${commandName}(Map<String, String> environmentScopeVariables) throws Exception {
+		public
+			<#if commandName?starts_with("is")>
+				boolean
+			<#else>
+				void
+			</#if>
+		${commandName}(Map<String, String> environmentScopeVariables) throws Exception {
 			commandScopeVariables = new HashMap<String, String>();
 
 			commandScopeVariables.putAll(definitionScopeVariables);

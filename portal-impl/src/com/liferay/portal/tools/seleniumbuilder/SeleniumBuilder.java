@@ -117,6 +117,8 @@ public class SeleniumBuilder {
 				seleniumBuilderContext.getTestSuiteNames();
 
 			for (String testSuiteName : testSuiteNames) {
+				seleniumBuilderContext.validateTestSuiteElements(testSuiteName);
+
 				testSuiteConverter.convert(testSuiteName);
 			}
 		}

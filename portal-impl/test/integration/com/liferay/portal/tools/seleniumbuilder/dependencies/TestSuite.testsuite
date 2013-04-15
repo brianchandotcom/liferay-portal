@@ -1,5 +1,5 @@
 <definition>
-	<execute test-case="test-case" />
+	<execute test-case="CPBlogsAcceptance" />
 
-	<execute test-suite="test-suite" />
+	<execute test-suite="CollaborationAcceptance" />
 </definition>

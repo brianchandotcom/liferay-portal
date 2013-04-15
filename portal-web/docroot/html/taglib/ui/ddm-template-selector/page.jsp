@@ -33,7 +33,7 @@ boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("li
 
 long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay);
 
-Group ddmTemplateGroup = GroupServiceUtil.getGroup(ddmTemplateGroupId);
+Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
 <aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>

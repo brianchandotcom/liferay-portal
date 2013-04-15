@@ -2,6 +2,181 @@
 	<var name="emailAddress" value="test@liferay.com" />
 	<var name="password" value="test" />
 
+	<command name="cpAdd">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Users and Organizations" />
+
+		<execute action="CPUsersandorganizations#click" locator-key1="ADD" />
+
+		<execute action="CPUsersandorganizations#click" locator-key1="ADD_USER" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_SCREEN_NAME" value1="${screenName}" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_EMAIL_ADDRESS" value1="${emailAddress}" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_FIRST_NAME" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_LAST_NAME" value1="${lastName}" />
+
+		<execute action="CPUsersandorganizationsAdduser#click" locator-key1="SAVE" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_SCREEN_NAME" value1="${screenName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_EMAIL_ADDRESS" value1="${emailAddress}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_FIRST_NAME" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME" value1="${lastName}" />
+	</command>
+
+	<command name="cpDeactivate">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Users and Organizations" />
+
+		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#select" locator-key1="ADVANCED_SEARCH_STATUS" value1="Active" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BUTTON" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ALL_CHECKBOX" value1="Check All" />
+
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="DEACTIVATE" />
+
+				<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate the selected users?" />
+
+				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" />
+
+		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DEACTIVATE" value1="Deactivate" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
+			</then>
+		</if>
+	</command>
+
+	<command name="cpDelete">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Users and Organizations" />
+
+		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#select" locator-key1="ADVANCED_SEARCH_STATUS" value1="Inactive" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BUTTON" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ALL_CHECKBOX" value1="Check All" />
+
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="DELETE" />
+
+				<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to permanently delete the selected users?" />
+
+				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="INFO_MESSAGE" />
+
+		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DELETE" value1="Delete" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#select" locator-key1="ADVANCED_SEARCH_STATUS" value1="Active" />
+
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
+			</then>
+		</if>
+	</command>
+
+	<command name="cpView">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="link=Users and Organizations" />
+
+		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
+
+		<if>
+			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
+			<then>
+				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
+			</then>
+		</if>
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${screenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_BUTTON" />
+
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${lastName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${screenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_SCREEN_NAME" value1="${screenName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_EMAIL_ADDRESS" value1="${emailAddress}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_FIRST_NAME" value1="${firstName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME" value1="${lastName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="USER_NAME" value1="${firstName} ${lastName}" />
+	</command>
+
 	<command name="pgFirstLogin">
 		<execute macro="User#pgLogin" />
 
@@ -41,5 +216,13 @@
 				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
 			</then>
 		</if>
+	</command>
+
+	<command name="cpTearDown">
+		<var name="firstName" value="userfn*" />
+
+		<execute macro="User#cpDeactivate" />
+
+		<execute macro="User#cpDelete" />
 	</command>
 </definition>

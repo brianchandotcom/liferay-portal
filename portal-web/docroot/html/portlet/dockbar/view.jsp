@@ -120,7 +120,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 			</li>
 		</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowManageSiteMembershipsIcon() || themeDisplay.isShowPageSettingsIcon() || themeDisplay.isShowSiteContentIcon() || themeDisplay.isShowSiteMapSettingsIcon() || themeDisplay.isShowSiteSettingsIcon()) %>">
+		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowManageSiteIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 			<li class="manage-content has-submenu" id="<portlet:namespace />manageContent">
 				<a class="menu-button" href="javascript:;">
 					<span>
@@ -158,9 +158,9 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 								</li>
 							</c:if>
 
-							<c:if test="<%= themeDisplay.isShowSiteSettingsIcon() %>">
+							<c:if test="<%= themeDisplay.isShowManageSiteIcon() %>">
 								<li class='<%= "settings" + useDialogFullDialog %>'>
-									<aui:a href="<%= themeDisplay.getURLSiteContent() %>" label="site" title="manage-site" />
+									<aui:a href="<%= themeDisplay.getURLManageSite() %>" label="site" title="manage-site" />
 								</li>
 							</c:if>
 						</ul>

@@ -72,7 +72,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -886,23 +885,6 @@ public class ServicePreAction extends Action {
 			List<Portlet> siteContentPortlets =
 				PortalUtil.getControlPanelPortlets(
 					PortletCategoryKeys.CONTENT, themeDisplay);
-
-			Portlet groupPagesPortlet = PortletLocalServiceUtil.getPortletById(
-				PortletKeys.GROUP_PAGES);
-
-			siteContentPortlets.remove(groupPagesPortlet);
-
-			Portlet siteMembershipsAdminPortlet =
-				PortletLocalServiceUtil.getPortletById(
-					PortletKeys.SITE_MEMBERSHIPS_ADMIN);
-
-			siteContentPortlets.remove(siteMembershipsAdminPortlet);
-
-			Portlet siteSettingsPortlet =
-				PortletLocalServiceUtil.getPortletById(
-					PortletKeys.SITE_SETTINGS);
-
-			siteContentPortlets.remove(siteSettingsPortlet);
 
 			showManageSiteIcon =
 				PortletPermissionUtil.hasControlPanelAccessPermission(

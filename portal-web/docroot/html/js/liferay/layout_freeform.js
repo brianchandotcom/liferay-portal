@@ -20,7 +20,22 @@ AUI.add(
 							proxyNode.one('.portlet-topper').html(Layout._getPortletTitle(nodeId));
 						}
 					},
-					lazyStart: false
+
+					on: {
+						'drag:end': function(event) {
+							var instance = this;
+
+							var node = event.target.get('node');
+
+							node.removeClass('yui3-dd-dragging');
+						}
+					},
+
+					lazyStart: false,
+
+					proxy: {
+						positionProxy: true
+					}
 				}
 			);
 

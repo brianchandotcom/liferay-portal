@@ -1098,6 +1098,9 @@
 
 			Two classes were modified to enable proper serialization in
 			WebLogic. See LPS-28561.
+
+			Two classes were modified to add null-checks and initalization
+			for transient fields in WebLogic. See LPS-34308.
 		</comments>
 	</library>
 	<library>

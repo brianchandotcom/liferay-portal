@@ -69,14 +69,17 @@ public class ETagFilter extends BasePortalFilter {
 
 		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
+		boolean outputBuffer = true;
+
 		if (isEligibleForEtag(bufferCacheServletResponse.getStatus())) {
-			if (!ETagUtil.processETag(request, response, byteBuffer)) {
-				bufferCacheServletResponse.finishResponse();
-				bufferCacheServletResponse.outputBuffer();
+			if (ETagUtil.processETag(request, response, byteBuffer)) {
+				outputBuffer = false;
 			}
 		}
-		else {
+
+		if (outputBuffer) {
 			bufferCacheServletResponse.finishResponse();
+			bufferCacheServletResponse.outputBuffer();
 		}
 	}
 

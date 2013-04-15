@@ -16,7 +16,9 @@
 
 <%
 if (Validator.isNull(searchTerms.getKeywords())) {
-	searchContainer.setTotal(BlogsEntryLocalServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY));
+	total = BlogsEntryLocalServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
+
+	searchContainer.setTotal(total);
 
 	results = BlogsEntryLocalServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 }
@@ -31,7 +33,9 @@ else {
 
 	Hits hits = indexer.search(searchContext);
 
-	if (searchContainer.recalculateCur(hits.getLength())) {
+	total = hits.getLength();
+
+	if (searchContainer.recalculateCur(total)) {
 		searchContext.setEnd(searchContainer.getEnd());
 		searchContext.setStart(searchContainer.getStart());
 
@@ -63,7 +67,7 @@ else {
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", searchContainer.getTotal());
+pageContext.setAttribute("total", total);
 %>
 
 <%!

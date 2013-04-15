@@ -58,6 +58,9 @@ public class SOUs_ViewNotificationAnnouncementSiteTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_ViewNotificationAnnouncementSiteTest.class);
 		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_ViewMarkReadNotificationAnnouncementSiteTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownAnnouncementsEntrySOTest.class);
 		testSuite.addTestSuite(TearDownNotificationsTest.class);

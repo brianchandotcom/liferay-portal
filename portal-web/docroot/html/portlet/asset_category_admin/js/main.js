@@ -391,12 +391,14 @@ AUI.add(
 						instance._categoriesContainer.empty();
 					},
 
-					_createAlertMessage: function(items, selectedItems, pkField) {
+					_createAlertMessage: function(items, selectedItems, keyId) {
 						var itemNames = [];
 
 						for (var i = 0, length = items.length; i < length; i++) {
 							var item = items[i];
-							var itemId = item[pkField]
+
+							var itemId = item[keyId];
+
 							var itemName = selectedItems[itemId];
 
 							itemNames.push(itemName);
@@ -523,9 +525,10 @@ AUI.add(
 
 						for (var i = 0, length = itemIds.length; i < length; i++) {
 							var itemId = itemIds[i];
+
 							var item = itemLookupFn(itemId);
 
-							attrLookupFn = item[attrLookup];
+							var attrLookupFn = item[attrLookup];
 
 							itemNameMap[itemId] = attrLookupFn.call(item, attr);
 						}
@@ -1309,7 +1312,7 @@ AUI.add(
 							);
 						}
 						else {
-							categoryIds = instance._categoriesContainer.all('.category-item-check:checked').attr(DATA_CATEGORY_ID);
+							var categoryIds = instance._categoriesContainer.all('.category-item-check:checked').attr(DATA_CATEGORY_ID);
 
 							selectedCategories = instance._createItemNameMap(categoryIds, A.bind(instance._getCategory, instance), 'get', STR_TITLE);
 						}
@@ -1320,9 +1323,9 @@ AUI.add(
 					_getSelectedVocabularies: function() {
 						var instance = this;
 
-						vocabularyIds = A.all('.vocabulary-item-check:checked').attr(DATA_VOCABULARY_ID);
+						var vocabularyIds = A.all('.vocabulary-item-check:checked').attr(DATA_VOCABULARY_ID);
 
-						return instance._createItemNameMap(vocabularyIds, instance._getVocabulary, 'attr', DATA_VOCABULARY)
+						return instance._createItemNameMap(vocabularyIds, instance._getVocabulary, 'attr', DATA_VOCABULARY);
 					},
 
 					_getTreeNodeId: function(treeNode, regex) {

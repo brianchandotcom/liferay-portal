@@ -24,6 +24,12 @@ AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNO
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
+
+boolean autoDisplayDate = ParamUtil.getBoolean(request, "autoDisplayDate", false);
+
+if (entry == null) {
+	autoDisplayDate = true;
+}
 %>
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
@@ -108,8 +114,18 @@ String content = BeanParamUtil.getString(entry, request, "content");
 			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 		</aui:select>
 
-		<aui:input name="displayDate" />
+		<aui:input disabled="<%= autoDisplayDate %>" name="displayDate" />
 
+		<c:choose >
+			<c:when test="<%= autoDisplayDate %>">
+
+				<%
+				String autoDisplayDateOnClick = renderResponse.getNamespace() + "disableDisplayDate('displayDate', this.checked);";
+				%>
+
+				<aui:input label="display-date-is-based-on-creation-date" name="autoDisplayDate" onClick="<%= autoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
+			</c:when>
+		</c:choose>
 		<aui:input name="expirationDate" />
 	</aui:fieldset>
 
@@ -145,6 +161,23 @@ String content = BeanParamUtil.getString(entry, request, "content");
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
+	}
+
+	function <portlet:namespace />disableDisplayDate(date, checked) {
+		var A = AUI();
+
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
+
+		var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
+
+		if (calendarWidget) {
+			calendarWidget.set('disabled', checked);
+		}
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

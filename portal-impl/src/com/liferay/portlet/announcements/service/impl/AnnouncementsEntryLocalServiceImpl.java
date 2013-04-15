@@ -65,27 +65,30 @@ public class AnnouncementsEntryLocalServiceImpl
 			long userId, long classNameId, long classPK, String title,
 			String content, String url, String type, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, int priority,
-			boolean alert)
+			int displayDateMinute, boolean autoDisplayDate,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
 		throws PortalException, SystemException {
 
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date displayDate = PortalUtil.getDate(
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, user.getTimeZone(),
-			EntryDisplayDateException.class);
+		Date now = new Date();
+		Date displayDate = now;
+
+		if (!autoDisplayDate) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
 
 		Date expirationDate = PortalUtil.getDate(
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
-
-		Date now = new Date();
 
 		validate(title, content, url);
 
@@ -120,6 +123,24 @@ public class AnnouncementsEntryLocalServiceImpl
 			false, false);
 
 		return entry;
+	}
+
+	public AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute, int priority,
+			boolean alert)
+		throws PortalException, SystemException {
+
+		return addEntry(
+			userId, classNameId, classPK, title, content, url, type,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, false, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			priority, alert);
 	}
 
 	public void checkEntries() throws PortalException, SystemException {

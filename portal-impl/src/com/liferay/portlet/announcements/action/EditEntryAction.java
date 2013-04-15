@@ -159,6 +159,8 @@ public class EditEntryAction extends PortletAction {
 			actionRequest, "displayDateMinute");
 		int displayDateAmPm = ParamUtil.getInteger(
 			actionRequest, "displayDateAmPm");
+		boolean autoDisplayDate = ParamUtil.getBoolean(
+			actionRequest, "autoDisplayDate");
 
 		if (displayDateAmPm == Calendar.PM) {
 			displayDateHour += 12;
@@ -191,9 +193,9 @@ public class EditEntryAction extends PortletAction {
 			AnnouncementsEntryServiceUtil.addEntry(
 				themeDisplay.getPlid(), classNameId, classPK, title, content,
 				url, type, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, priority, alert);
+				displayDateHour, displayDateMinute, autoDisplayDate,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, priority, alert);
 		}
 		else {
 

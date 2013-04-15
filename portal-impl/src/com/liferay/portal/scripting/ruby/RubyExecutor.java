@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -30,6 +31,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +46,9 @@ import org.jruby.RubyInstanceConfig.CompileMode;
 import org.jruby.RubyInstanceConfig;
 import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.ScriptingContainer;
+import org.jruby.embed.internal.LocalContext;
 import org.jruby.embed.internal.LocalContextProvider;
+import org.jruby.embed.internal.ThreadSafeLocalContextProvider;
 import org.jruby.exceptions.RaiseException;
 
 /**
@@ -63,7 +68,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 
 		_scriptingContainer = new ScriptingContainer(
-			LocalContextScope.CONCURRENT);
+			LocalContextScope.THREADSAFE);
 
 		LocalContextProvider localContextProvider =
 			_scriptingContainer.getProvider();
@@ -124,6 +129,32 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	public String getLanguage() {
 		return LANGUAGE;
+	}
+
+	public void setResetThreadLocalRubyRuntime(
+		boolean resetThreadLocalRubyRuntime) {
+
+		_resetThreadLocalRubyRuntime = resetThreadLocalRubyRuntime;
+	}
+
+	protected static void resetThreadLocalRubyRuntime(
+		ScriptingContainer scriptingContainer) {
+
+		LocalContextProvider localContextProvider =
+			scriptingContainer.getProvider();
+
+		try {
+			ThreadLocal<LocalContext> contextHolder =
+				(ThreadLocal<LocalContext>)_contextHolderField.get(
+					localContextProvider);
+
+			LocalContext localContext = contextHolder.get();
+
+			_runtimeField.set(localContext, null);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected Map<String, Object> eval(
@@ -195,6 +226,11 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		catch (FileNotFoundException fnfe) {
 			throw new ScriptingException(fnfe);
 		}
+		finally {
+			if (_resetThreadLocalRubyRuntime) {
+				resetThreadLocalRubyRuntime(_scriptingContainer);
+			}
+		}
 	}
 
 	protected void initRubyGems() throws Exception {
@@ -232,8 +268,27 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	private static Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
 
+	private static Field _contextHolderField;
+
+	private static Field _runtimeField;
+
 	private String _basePath;
 	private List<String> _loadPaths;
+	private boolean _resetThreadLocalRubyRuntime = true;
+
+	static {
+		try {
+			_contextHolderField = ReflectionUtil.getDeclaredField(
+				ThreadSafeLocalContextProvider.class, "contextHolder");
+
+			_runtimeField = ReflectionUtil.getDeclaredField(
+				LocalContext.class, "runtime");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
 	private ScriptingContainer _scriptingContainer;
 
 }

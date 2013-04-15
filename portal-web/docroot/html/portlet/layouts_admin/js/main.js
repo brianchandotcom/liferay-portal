@@ -1,36 +1,39 @@
+/*global Liferay*/
+
 AUI.add(
 	'export-layouts',
 	function(A) {
 		var Lang = A.Lang;
 
-		var isString = Lang.isString;
+		var CHECKED = 'checked';
+
+		var CLICK = 'click';
+
+		var SET_NODE = '_setNode';
 
 		var ExportLayouts = A.Component.create(
 			{
 				ATTRS: {
-					namespace: {
-						validator: isString
+					archivedSetupsNode: {
+						settter: SET_NODE
 					},
-					archivedSetupsCheckbox: {
-						validator: isString
+					categoriesNode: {
+						settter: SET_NODE
 					},
-					categoriesCheckbox: {
-						validator: isString
+					layoutSetSettingsNode: {
+						settter: SET_NODE
 					},
-					layoutSetSettingsCheckbox: {
-						validator: isString
+					logoNode: {
+						settter: SET_NODE
 					},
-					logoCheckbox: {
-						validator: isString
+					themeNode: {
+						settter: SET_NODE
 					},
-					themeCheckbox: {
-						validator: isString
+					themeReferenceNode: {
+						settter: SET_NODE
 					},
-					themeReferenceCheckbox: {
-						validator: isString
-					},
-					userPreferencesCheckbox: {
-						validator: isString
+					userPreferencesNode: {
+						settter: SET_NODE
 					}
 				},
 
@@ -48,373 +51,445 @@ AUI.add(
 					},
 
 					destructor: function() {
+						var instance = this;
+
+						if (instance._changeContentDialog) {
+							instance._changeContentDialog.destroy();
+						}
+
+						if (instance._changeGlobalConfigurationDialog) {
+							instance._changeGlobalConfigurationDialog.destroy();
+						}
+
+						if (instance._changeGlobalContentDialog ) {
+							instance._changeGlobalContentDialog.destroy();
+						}
+
+						if (instance._changePagesDialog) {
+							instance._changePagesDialog.destroy();
+						}
+
+						if (instance._changeRangeDialog) {
+							instance._changeRangeDialog.destroy();
+						}
 					},
 
 					_attachChangeLinks: function() {
 						var instance = this;
 
 						instance.byId('fm1').delegate(
-							'click',
+							CLICK,
 							function(event) {
 								var portletId = event.currentTarget.attr('data-portletid');
 
-								var changeContentNode = instance.byId('changeContent_' + portletId);
+								// why are we getting this from data? if it is no special reason,
+								// please create an attribute and pass it via configuration, as any other attribute
+								// then change _getChangeContentDialog and remove its portletId param
+								// inside it may get the portlet id
 
-								var changeContentDialog = changeContentNode.getData('changeContentDialog');
+								var changeContentDialog = instance._getChangeContentDialog(portletId);
 
-								if (!changeContentDialog) {
-									changeContentNode.show();
-
-									var contentBox;
-
-									changeContentDialog = new A.Dialog(
-										{
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: changeContentNode,
-											centered: true,
-											modal: true,
-											title: Liferay.Language.get('content-to-export'),
-											width: 400,
-											buttons: [
-												{
-													label: Liferay.Language.get('ok'),
-													handler: function() {
-														var inputs = contentBox.all('.aui-field-input-choice');
-														var selectedContent = [];
-
-														A.each(
-															inputs,
-															function(item, index, collection) {
-																var checked = item.attr('checked');
-
-																if (checked == true) {
-																	var itemName = item.attr('id');
-
-																	itemName = itemName.substring(0, itemName.length - 8);
-																	itemName = itemName.substring(itemName.lastIndexOf('_') + 1, itemName.length);
-
-																	selectedContent.push(Liferay.Language.get(itemName));
-																}
-															}
-														);
-
-														instance._refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
-
-														this.hide();
-													}
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													handler: function() {
-														this.hide();
-													}
-												}
-											]
-										}
-									);
-
-									changeContentDialog.render();
-
-									contentBox = changeContentDialog.get('contentBox');
-
-									changeContentNode.setData('changeContentDialog', changeContentDialog);
-								}
-								else {
-									changeContentDialog.show();
-								}
+								changeContentDialog.show();
 							},
 							'.change-content-link a'
 						);
 
 						instance.byId('changeGlobalConfigurationLink').on(
-							'click',
+							CLICK,
 							function(event) {
-								var changeGlobalConfigurationNode = instance.byId('changeGlobalConfiguration');
+								var changeGlobalConfigurationDialog = instance._getChangeGlobalConfigurationDialog();
 
-								var changeGlobalConfigurationDialog = changeGlobalConfigurationNode.getData('changeGlobalConfigurationDialog');
-
-								if (!changeGlobalConfigurationDialog) {
-									changeGlobalConfigurationNode.show();
-
-									changeGlobalConfigurationDialog = new A.Dialog(
-										{
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: changeGlobalConfigurationNode,
-											centered: true,
-											modal: true,
-											title: Liferay.Language.get('application-configuration'),
-											width: 400,
-											buttons: [
-												{
-													label: Liferay.Language.get('ok'),
-													handler: function() {
-														var selectedGlobalConfiguration = [];
-
-														if (instance.byId(instance.get('archivedSetupsCheckbox')).attr('checked') == true) {
-															selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
-														}
-
-														if (instance.byId(instance.get('userPreferencesCheckbox')).attr('checked') == true) {
-															selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
-														}
-
-														instance._refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
-
-														this.hide();
-													}
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													handler: function() {
-														this.hide();
-													}
-												}
-											]
-										}
-									);
-
-									changeGlobalConfigurationDialog.render();
-
-									changeGlobalConfigurationNode.setData('changeGlobalConfigurationDialog', changeGlobalConfigurationDialog);
-								}
-								else {
-									changeGlobalConfigurationDialog.show();
-								}
+								changeGlobalConfigurationDialog.show();
 							}
 						);
 
 						instance.byId('changeGlobalContentLink').on(
-							'click',
+							CLICK,
 							function(event) {
-								var changeGlobalContentNode = instance.byId('changeGlobalContent');
+								var changeGlobalContentDialog = instance._getChangeGlobalContentDialog();
 
-								var changeGlobalContentDialog = changeGlobalContentNode.getData('changeGlobalContentDialog');
-
-								if (!changeGlobalContentDialog) {
-									changeGlobalContentNode.show();
-
-									changeGlobalContentDialog = new A.Dialog(
-										{
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: changeGlobalContentNode,
-											centered: true,
-											modal: true,
-											title: Liferay.Language.get('content-to-export'),
-											width: 400,
-											buttons: [
-												{
-													label: Liferay.Language.get('ok'),
-													handler: function() {
-														selectedGlobalContent = '';
-
-														if (instance.byId(instance.get('categoriesCheckbox')).attr('checked') == true) {
-															selectedGlobalContent = Liferay.Language.get('categories');
-														}
-
-														instance._refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
-
-														this.hide();
-													}
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													handler: function() {
-														this.hide();
-													}
-												}
-											]
-										}
-									);
-
-									changeGlobalContentDialog.render();
-
-									changeGlobalContentNode.setData('changeGlobalContentDialog', changeGlobalContentDialog);
-								}
-								else {
-									changeGlobalContentDialog.show();
-								}
+								changeGlobalContentDialog.show();
 							}
 						);
 
 						instance.byId('changePagesLink').on(
-							'click',
+							CLICK,
 							function(event) {
-								var changePagesNode = instance.byId('changePages');
+								var changePagesDialog = instance._getChangePagesDialog();
 
-								var changePagesDialog = changePagesNode.getData('changePagesDialog');
-
-								if (!changePagesDialog) {
-									changePagesNode.show();
-
-									changePagesDialog = new A.Dialog(
-										{
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: changePagesNode,
-											modal: true,
-											title: Liferay.Language.get('pages'),
-											width: 400,
-											buttons: [
-												{
-													label: Liferay.Language.get('ok'),
-													handler: function() {
-														var selectedPages = [];
-
-														var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
-
-														if (layoutsExportTreeOutput) {
-															var layoutIdsInput = instance.byId('layoutIds');
-
-															var treeView = layoutsExportTreeOutput.getData('treeInstance');
-															var rootNode = treeView.item(0);
-
-															if (rootNode.isChecked()) {
-																layoutIdsInput.val('');
-
-																selectedPages.push(Liferay.Language.get('all-pages'));
-															}
-															else {
-																var layoutIds = [];
-
-																var regexLayoutId = /layoutId_(\d+)/;
-
-																treeView.eachChildren(
-																	function(item, index, collection) {
-																		if (item.isChecked()) {
-																			var match = regexLayoutId.exec(item.get('id'));
-
-																			if (match) {
-																				layoutIds.push(
-																					{
-																						includeChildren: !item.hasChildNodes(),
-																						layoutId: match[1]
-																					}
-																				);
-																			}
-																		}
-																	},
-																	true
-																);
-
-																if (layoutIdsInput) {
-																	layoutIdsInput.val(A.JSON.stringify(layoutIds));
-																}
-
-																selectedPages.push(Liferay.Language.get('selected-pages'));
-															}
-
-															if (instance.byId(instance.get('layoutSetSettingsCheckbox')).attr('checked') == true) {
-																selectedPages.push(Liferay.Language.get('site-pages-settings'));
-															}
-
-															if (instance.byId(instance.get('themeCheckbox')).attr('checked') == true) {
-																selectedPages.push(Liferay.Language.get('theme'));
-															}
-
-															if (instance.byId(instance.get('themeReferenceCheckbox')).attr('checked') == true) {
-																selectedPages.push(Liferay.Language.get('theme-settings'));
-															}
-
-															if (instance.byId(instance.get('logoCheckbox')).attr('checked') == true) {
-																selectedPages.push(Liferay.Language.get('logo'));
-															}
-
-															instance._refreshSelectedLabel('selectedPages', selectedPages.join(', '));
-														}
-
-														this.hide();
-													}
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													handler: function() {
-														this.hide();
-													}
-												}
-											]
-										}
-									);
-
-									changePagesDialog.render();
-
-									changePagesNode.setData('changePagesDialog', changePagesDialog);
-								}
-								else {
-									changePagesDialog.show();
-								}
+								changePagesDialog.show();
 							}
 						);
 
 						instance.byId('changeRangeLink').on(
-							'click',
+							CLICK,
 							function(event) {
-								var changeRangeNode = instance.byId('changeRange');
+								var changeRangeDialog = instance._getChangeRangeDialog();
 
-								var changeRangeDialog = changeRangeNode.getData('changeRangeDialog');
-
-								if (!changeRangeDialog) {
-									changeRangeNode.show();
-
-									changeRangeDialog = new A.Dialog(
-										{
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: changeRangeNode,
-											centered: true,
-											modal: true,
-											title: Liferay.Language.get('content-to-export'),
-											width: 400,
-											buttons: [
-												{
-													label: Liferay.Language.get('ok'),
-													handler: function() {
-														var selectedRange = '';
-
-														if (instance.byId(instance.get('rangeAllCheckbox')).attr('checked') == true) {
-															selectedRange = Liferay.Language.get('all');
-														}
-														else if (instance.byId(instance.get('rangeLastPublishCheckbox')).attr('checked') == true) {
-															selectedRange = Liferay.Language.get('from-last-publish-date');
-														}
-														else if (instance.byId(instance.get('rangeDateRangeCheckbox')).attr('checked') == true) {
-															selectedRange = Liferay.Language.get('date-range');
-														}
-														else if (instance.byId(instance.get('rangeLastCheckbox')).attr('checked') == true) {
-															selectedRange = Liferay.Language.get('last');
-														}
-
-														instance._refreshSelectedLabel('selectedRange', selectedRange);
-
-														this.hide();
-													}
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													handler: function() {
-														this.hide();
-													}
-												}
-											]
-										}
-									);
-
-									changeRangeDialog.render();
-
-									changeRangeNode.setData('changeRangeDialog', changeRangeDialog);
-								}
-								else {
-									changeRangeDialog.show();
-								}
+								changeRangeDialog.show();
 							}
 						);
+					},
+
+					_getChangeContentDialog: function(portletId) {
+						var instance = this;
+
+						var changeContentDialog = instance._changeContentDialog;
+
+						if (!changeContentDialog) {
+							var changeContentNode = instance.byId('changeContent_' + portletId);
+
+							changeContentNode.show();
+
+							var contentBox;
+
+							changeContentDialog = new A.Dialog(
+								{
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									bodyContent: changeContentNode,
+									centered: true,
+									modal: true,
+									title: Liferay.Language.get('content-to-export'),
+									width: 400,
+									buttons: [
+										{
+											handler: function() {
+												var inputs = contentBox.all('.aui-field-input-choice');
+
+												var selectedContent = [];
+
+												A.each(
+													inputs,
+													function(item, index, collection) {
+														var checked = item.attr(CHECKED);
+
+														if (checked) {
+															var itemName = item.attr('id');
+
+															itemName = itemName.substring(0, itemName.length - 8);
+															itemName = itemName.substring(itemName.lastIndexOf('_') + 1, itemName.length);
+
+															selectedContent.push(Liferay.Language.get(itemName));
+														}
+													}
+												);
+
+												instance._refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
+
+												this.hide();
+											},
+											label: Liferay.Language.get('ok')
+										},
+										{
+											handler: function() {
+												this.hide();
+											},
+											label: Liferay.Language.get('cancel')
+										}
+									]
+								}
+							);
+
+							changeContentDialog.render();
+
+							contentBox = changeContentDialog.get('contentBox');
+
+							instance._changeContentDialog = changeContentDialog;
+						}
+
+						return changeContentDialog;
+					},
+
+					_getChangeGlobalConfigurationDialog: function() {
+						var instance = this;
+
+						var changeGlobalConfigurationDialog = instance._changeGlobalConfigurationDialog;
+
+						if (!changeGlobalConfigurationDialog) {
+							var changeGlobalConfigurationNode = instance.byId('changeGlobalConfiguration');
+
+							changeGlobalConfigurationNode.show();
+
+							changeGlobalConfigurationDialog = new A.Dialog(
+								{
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									bodyContent: changeGlobalConfigurationNode,
+									buttons: [
+										{
+											handler: function() {
+												var selectedGlobalConfiguration = [];
+
+												if (instance.get('archivedSetupsNode').attr(CHECKED)) {
+													selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
+												}
+
+												if (instance.get('userPreferencesNode').attr(CHECKED)) {
+													selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
+												}
+
+												instance._refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+
+												this.hide();
+											},
+											label: Liferay.Language.get('ok')
+										},
+										{
+											handler: function() {
+												this.hide();
+											},
+											label: Liferay.Language.get('cancel')
+										}
+									],
+									centered: true,
+									modal: true,
+									title: Liferay.Language.get('application-configuration'),
+									width: 400
+								}
+							);
+
+							changeGlobalConfigurationDialog.render();
+
+							instance._changeGlobalConfigurationDialog = changeGlobalConfigurationDialog;
+						}
+
+						return changeGlobalConfigurationDialog;
+					},
+
+					_getChangeGlobalContentDialog: function() {
+						var instance = this;
+
+						var changeGlobalContentDialog = instance._changeGlobalContentDialog;
+
+						if (!changeGlobalContentDialog) {
+							var changeGlobalContentNode = instance.byId('changeGlobalContent');
+
+							changeGlobalContentNode.show();
+
+							changeGlobalContentDialog = new A.Dialog(
+								{
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									buttons: [
+										{
+											handler: function() {
+												var selectedGlobalContent = '';
+
+												if (instance.get('categoriesNode').attr(CHECKED)) {
+													selectedGlobalContent = Liferay.Language.get('categories');
+												}
+
+												instance._refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
+
+												this.hide();
+											},
+											label: Liferay.Language.get('ok')
+										},
+										{
+											handler: function() {
+												this.hide();
+											},
+											label: Liferay.Language.get('cancel')
+										}
+									],
+									bodyContent: changeGlobalContentNode,
+									centered: true,
+									modal: true,
+									title: Liferay.Language.get('content-to-export'),
+									width: 400
+								}
+							);
+
+							changeGlobalContentDialog.render();
+
+							instance._changeGlobalContentDialog = changeGlobalContentDialog;
+						}
+
+						return changeGlobalContentDialog;
+					},
+
+					_getChangePagesDialog: function() {
+						var instance = this;
+
+						var changePagesDialog = instance._changePagesDialog;
+
+						if (!changePagesDialog) {
+							var changePagesNode = instance.byId('changePages');
+
+							changePagesNode.show();
+
+							changePagesDialog = new A.Dialog(
+								{
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									bodyContent: changePagesNode,
+									buttons: [
+										{
+											handler: function() {
+												var selectedPages = [];
+
+												var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
+
+												if (layoutsExportTreeOutput) {
+													var layoutIdsInput = instance.byId('layoutIds');
+
+													var treeView = layoutsExportTreeOutput.getData('treeInstance');
+													var rootNode = treeView.item(0);
+
+													if (rootNode.isChecked()) {
+														layoutIdsInput.val('');
+
+														selectedPages.push(Liferay.Language.get('all-pages'));
+													}
+													else {
+														var layoutIds = [];
+
+														var regexLayoutId = /layoutId_(\d+)/;
+
+														treeView.eachChildren(
+															function(item, index, collection) {
+																if (item.isChecked()) {
+																	var match = regexLayoutId.exec(item.get('id'));
+
+																	if (match) {
+																		layoutIds.push(
+																			{
+																				includeChildren: !item.hasChildNodes(),
+																				layoutId: match[1]
+																			}
+																		);
+																	}
+																}
+															},
+															true
+														);
+
+														if (layoutIdsInput) {
+															layoutIdsInput.val(A.JSON.stringify(layoutIds));
+														}
+
+														selectedPages.push(Liferay.Language.get('selected-pages'));
+													}
+
+													if (instance.get('layoutSetSettingsNode').attr(CHECKED)) {
+														selectedPages.push(Liferay.Language.get('site-pages-settings'));
+													}
+
+													if (instance.get('themeNode').attr(CHECKED)) {
+														selectedPages.push(Liferay.Language.get('theme'));
+													}
+
+													if (instance.get('themeReferenceNode').attr(CHECKED)) {
+														selectedPages.push(Liferay.Language.get('theme-settings'));
+													}
+
+													if (instance.get('logoNode').attr(CHECKED)) {
+														selectedPages.push(Liferay.Language.get('logo'));
+													}
+
+													instance._refreshSelectedLabel('selectedPages', selectedPages.join(', '));
+												}
+
+												this.hide();
+											},
+											label: Liferay.Language.get('ok')
+										},
+										{
+											handler: function() {
+												this.hide();
+											},
+											label: Liferay.Language.get('cancel')
+										}
+									],
+									modal: true,
+									title: Liferay.Language.get('pages'),
+									width: 400
+								}
+							);
+
+							changePagesDialog.render();
+
+							instance._changePagesDialog = changePagesDialog;
+						}
+
+						return changePagesDialog;
+					},
+
+					_getChangeRangeDialog: function() {
+						var instance = this;
+
+						var changeRangeDialog = instance._changeRangeDialog;
+
+						if (!changeRangeDialog) {
+							var changeRangeNode = instance.byId('changeRange');
+
+							changeRangeNode.show();
+
+							changeRangeDialog = new A.Dialog(
+								{
+									align: Liferay.Util.Window.ALIGN_CENTER,
+									bodyContent: changeRangeNode,
+									buttons: [
+										{
+											handler: function() {
+												var selectedRange = '';
+
+												// These below (like rangeAllNode) are missing in ATTRS?
+
+												if (instance.get('rangeAllNode').attr(CHECKED)) {
+													selectedRange = Liferay.Language.get('all');
+												}
+												else if (instance.get('rangeLastPublishNode').attr(CHECKED)) {
+													selectedRange = Liferay.Language.get('from-last-publish-date');
+												}
+												else if (instance.get('rangeDateRangeNode').attr(CHECKED)) {
+													selectedRange = Liferay.Language.get('date-range');
+												}
+												else if (instance.get('rangeLastNode').attr(CHECKED)) {
+													selectedRange = Liferay.Language.get('last');
+												}
+
+												instance._refreshSelectedLabel('selectedRange', selectedRange);
+
+												this.hide();
+											},
+											label: Liferay.Language.get('ok')
+										},
+										{
+											handler: function() {
+												this.hide();
+											},
+											label: Liferay.Language.get('cancel')
+										}
+									],
+									centered: true,
+									modal: true,
+									title: Liferay.Language.get('content-to-export'),
+									width: 400
+								}
+							);
+
+							changeRangeDialog.render();
+
+							instance._changeRangeDialog = changeRangeDialog;
+						}
+
+						return changeRangeDialog;
 					},
 
 					_refreshSelectedLabel: function(labelDivId, label) {
 						var instance = this;
 
-						var labelDiv = A.one('#' + instance.NS + labelDivId);
+						var labelNode = instance.byId(labelDivId);
 
-						if (labelDiv != null) {
-							labelDiv.html(label);
+						if (labelNode) {
+							labelNode.html(label);
 						}
+					},
+
+					_setNode: function(value) {
+						if (Lang.isString(value) && value.indexOf('#') !== 0) {
+							value = '#' + value;
+						}
+
+						return A.one(value);
 					}
 				}
 			}

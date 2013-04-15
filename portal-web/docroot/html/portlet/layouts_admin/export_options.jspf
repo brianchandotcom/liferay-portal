@@ -438,14 +438,14 @@
 <aui:script use="export-layouts">
 	new Liferay.ExportLayouts(
 		{
+			archivedSetupsNode: '<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			categoriesNode: '<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			layoutSetSettingsNode: '<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
+			logoNode: '<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
-			archivedSetupsCheckbox: '<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			categoriesCheckbox: '<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
-			layoutSetSettingsCheckbox: '<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
-			logoCheckbox: '<%= PortletDataHandlerKeys.LOGO %>Checkbox',
-			themeCheckbox: '<%= PortletDataHandlerKeys.THEME %>Checkbox',
-			themeReferenceCheckbox: '<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			userPreferencesCheckbox: '<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
+			themeNode: '<%= PortletDataHandlerKeys.THEME %>Checkbox',
+			themeReferenceNode: '<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			userPreferencesNode: '<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
 </aui:script>

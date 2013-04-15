@@ -64,9 +64,13 @@ if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
 }
 
+String navigation = ParamUtil.getString(request, "navigation");
+
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+
+request.setAttribute("view.jsp-navigation", navigation);
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 %>

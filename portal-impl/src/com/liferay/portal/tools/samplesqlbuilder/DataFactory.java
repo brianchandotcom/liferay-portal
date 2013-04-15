@@ -1212,7 +1212,7 @@ public class DataFactory {
 		jxPreferences.setValue("enablePrint", "false");
 		jxPreferences.setValue("enableRatings", "false");
 		jxPreferences.setValue("enableRelatedAssets", "true");
-		jxPreferences.setValue("enableViewCountIncrement", "true");
+		jxPreferences.setValue("enableViewCountIncrement", "false");
 		jxPreferences.setValue(
 			"groupId", String.valueOf(journalArticleResource.getGroupId()));
 		jxPreferences.setValue("showAvailableLocales", "false");

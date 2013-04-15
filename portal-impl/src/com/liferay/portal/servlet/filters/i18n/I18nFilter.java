@@ -142,9 +142,13 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String i18nPathLanguageId = i18nLanguageId;
-
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+
+		if (!LanguageUtil.isAvailableLocale(locale)) {
+			return null;
+		}
+
+		String i18nPathLanguageId = i18nLanguageId;
 
 		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
 			i18nPathLanguageId = locale.getLanguage();
@@ -156,12 +160,6 @@ public class I18nFilter extends BasePortalFilter {
 			if (locale.equals(priorityLocale)) {
 				i18nPathLanguageId = locale.getLanguage();
 			}
-		}
-
-		Locale i18PathLocale = LocaleUtil.fromLanguageId(i18nLanguageId);
-
-		if (!LanguageUtil.isAvailableLocale(i18PathLocale)) {
-			return null;
 		}
 
 		String i18nPath = StringPool.SLASH.concat(i18nPathLanguageId);

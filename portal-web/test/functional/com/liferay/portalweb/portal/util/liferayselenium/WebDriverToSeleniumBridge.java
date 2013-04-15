@@ -983,6 +983,9 @@ public class WebDriverToSeleniumBridge
 
 			label = options.get(optionIndex).getText();
 		}
+		else if (optionLocator.startsWith("label=")) {
+			label = optionLocator.substring(6);
+		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
 
@@ -1015,13 +1018,10 @@ public class WebDriverToSeleniumBridge
 				}
 			}
 		}
-		else {
-			if (optionLocator.startsWith("label=")) {
-				label = optionLocator.substring(6);
-			}
-		}
 
 		webElement.sendKeys(label);
+
+		keyPress(selectLocator, "\\13");
 	}
 
 	public void selectFrame(String locator) {

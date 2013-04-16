@@ -13,14 +13,27 @@ AUI.add(
 						'drag:start': function(event) {
 							var instance = this;
 
-							var proxyNode = instance.get('proxyNode');
 							var node = DDM.activeDrag.get('node');
 							var nodeId = node.get('id');
+
+							var proxyNode = instance.get('proxyNode');
 
 							proxyNode.one('.portlet-topper').html(Layout._getPortletTitle(nodeId));
 						}
 					},
-					lazyStart: false
+					lazyStart: false,
+					on: {
+						'drag:end': function(event) {
+							var instance = this;
+
+							var node = event.target.get('node');
+
+							node.removeClass('yui3-dd-dragging');
+						}
+					},
+					proxy: {
+						positionProxy: true
+					}
 				}
 			);
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivitySet;
 import com.liferay.portlet.social.service.base.SocialActivitySetLocalServiceBaseImpl;
+import com.liferay.portlet.social.util.comparator.SocialActivitySetModifiedDateComparator;
 
 import java.util.List;
 
@@ -94,10 +95,37 @@ public class SocialActivitySetLocalServiceImpl
 		}
 	}
 
+	public SocialActivitySet fetchByC_C_T_First(
+			long classNameId, long classPK, int type)
+		throws SystemException {
+
+		return socialActivitySetPersistence.fetchByC_C_T_First(
+			classNameId, classPK, type,
+			new SocialActivitySetModifiedDateComparator());
+	}
+
+	public SocialActivitySet fetchByG_U_T_First(
+			long groupId, long userId, int type)
+		throws SystemException {
+
+		return socialActivitySetPersistence.fetchByG_U_T_First(
+				groupId, userId, type,
+			new SocialActivitySetModifiedDateComparator());
+	}
+
+	public SocialActivitySet fetchByU_C_C_T_First(
+			long userId, long classNameId, long classPK, int type)
+		throws SystemException {
+
+		return socialActivitySetPersistence.fetchByU_C_C_T_First(
+			userId, classNameId, classPK, type,
+			new SocialActivitySetModifiedDateComparator());
+	}
+
 	public void incrementActivityCount(long activitySetId, long activityId)
 		throws PortalException, SystemException {
 
-		// Activity Set
+		// Activity set
 
 		SocialActivitySet activitySet =
 			socialActivitySetPersistence.findByPrimaryKey(activitySetId);

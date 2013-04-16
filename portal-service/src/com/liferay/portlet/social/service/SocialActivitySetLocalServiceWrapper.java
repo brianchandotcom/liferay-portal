@@ -269,6 +269,27 @@ public class SocialActivitySetLocalServiceWrapper
 			classPK);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_First(
+		long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.fetchByC_C_T_First(classNameId,
+			classPK, type);
+	}
+
+	public com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_First(
+		long groupId, long userId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.fetchByG_U_T_First(groupId,
+			userId, type);
+	}
+
+	public com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_First(
+		long userId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.fetchByU_C_C_T_First(userId,
+			classNameId, classPK, type);
+	}
+
 	public void incrementActivityCount(long activitySetId, long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

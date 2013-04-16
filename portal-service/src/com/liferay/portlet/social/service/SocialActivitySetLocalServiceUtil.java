@@ -271,6 +271,25 @@ public class SocialActivitySetLocalServiceUtil {
 		getService().decrementActivityCount(classNameId, classPK);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivitySet fetchByC_C_T_First(
+		long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchByC_C_T_First(classNameId, classPK, type);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivitySet fetchByG_U_T_First(
+		long groupId, long userId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchByG_U_T_First(groupId, userId, type);
+	}
+
+	public static com.liferay.portlet.social.model.SocialActivitySet fetchByU_C_C_T_First(
+		long userId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchByU_C_C_T_First(userId, classNameId, classPK, type);
+	}
+
 	public static void incrementActivityCount(long activitySetId,
 		long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException,

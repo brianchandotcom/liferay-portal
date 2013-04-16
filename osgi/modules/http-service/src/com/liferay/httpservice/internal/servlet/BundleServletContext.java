@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -236,6 +237,28 @@ public class BundleServletContext extends LiferayServletContext {
 		return classLoader;
 	}
 
+	@Override
+	public String getContextPath() {
+		if (_contextPath == null) {
+			StringBundler sb = new StringBundler(5);
+
+			String contextPath = super.getContextPath();
+
+			if (!contextPath.equals(StringPool.SLASH)) {
+				sb.append(contextPath);
+			}
+
+			sb.append(PortalUtil.getPathContext());
+			sb.append(Portal.PATH_MODULE);
+			sb.append(StringPool.SLASH);
+			sb.append(getServletContextName());
+
+			_contextPath = sb.toString();
+		}
+
+		return _contextPath;
+	}
+
 	public HttpContext getHttpContext() {
 		return _httpContext;
 	}
@@ -273,7 +296,7 @@ public class BundleServletContext extends LiferayServletContext {
 			contextPath = contextPath.substring(portalContextPath.length());
 		}
 
-		if (path.startsWith(Portal.PATH_MODULE) &&
+		if (path.startsWith(_PATH_MODULE_SLASH) &&
 			path.startsWith(contextPath)) {
 
 			path = path.substring(contextPath.length());
@@ -306,27 +329,27 @@ public class BundleServletContext extends LiferayServletContext {
 			extensionMapping = true;
 		}
 
-		path = path.substring(0, path.lastIndexOf(StringPool.SLASH));
+		String alias = path.substring(0, path.lastIndexOf(StringPool.SLASH));
 
-		while (path.length() != 0) {
-			if (_servletsByURLPatterns.containsKey(path)) {
-				bundleFilterChain.setServlet(_servletsByURLPatterns.get(path));
+		while (alias.length() != 0) {
+			if (_servletsByURLPatterns.containsKey(alias)) {
+				bundleFilterChain.setServlet(_servletsByURLPatterns.get(alias));
 
 				return new BundleRequestDispatcher(
-					path, false, path, this, bundleFilterChain);
+					alias, false, path, this, bundleFilterChain);
 			}
 			else if (_servletsByURLPatterns.containsKey(
-						path.concat(extension))) {
+						alias.concat(extension))) {
 
 				bundleFilterChain.setServlet(
-					_servletsByURLPatterns.get(path.concat(extension)));
+					_servletsByURLPatterns.get(alias.concat(extension)));
 
 				return new BundleRequestDispatcher(
-					path.concat(extension), true, path, this,
+					alias.concat(extension), true, path, this,
 					bundleFilterChain);
 			}
 
-			path = path.substring(0, path.lastIndexOf(StringPool.SLASH));
+			alias = path.substring(0, alias.lastIndexOf(StringPool.SLASH));
 		}
 
 		if (_servletsByURLPatterns.containsKey(
@@ -1028,11 +1051,15 @@ public class BundleServletContext extends LiferayServletContext {
 		"/META-INF/", "/OSGI-INF/", "/OSGI-OPT/", "/WEB-INF/"
 	};
 
+	private static final String _PATH_MODULE_SLASH =
+		Portal.PATH_MODULE + StringPool.SLASH;
+
 	private static Log _log = LogFactoryUtil.getLog(BundleServletContext.class);
 
 	private Bundle _bundle;
 	private Map<String, Object> _contextAttributes =
 		new ConcurrentHashMap<String, Object>();
+	private String _contextPath;
 	private Map<String, Filter> _filtersByFilterNames =
 		new ConcurrentHashMap<String, Filter>();
 	private Map<String, Filter> _filtersByURLPatterns =

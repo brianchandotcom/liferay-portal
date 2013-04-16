@@ -54,6 +54,16 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	public static final String FIND_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".findByG_N";
 
+	public int countByKeywords(long groupId, String keywords)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return countByKeywords(groupId, params, keywords);
+	}
+
 	public int countByKeywords(
 			long groupId, LinkedHashMap<String, Object> params, String keywords)
 		throws SystemException {
@@ -71,12 +81,32 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return countByG_N(groupId, names, params, andOperator);
 	}
 
+	public int countByG_N(long groupId, String name, boolean andOperator)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return countByG_N(groupId, name, params, andOperator);
+	}
+
 	public int countByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
+
+		return countByG_N(groupId, names, params, andOperator);
+	}
+
+	public int countByG_N(long groupId, String[] names, boolean andOperator)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
 
 		return countByG_N(groupId, names, params, andOperator);
 	}
@@ -162,6 +192,17 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	}
 
 	public List<MDRRuleGroup> findByKeywords(
+			long groupId, String keywords, int start, int end)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return findByKeywords(groupId, keywords, params, start, end);
+	}
+
+	public List<MDRRuleGroup> findByKeywords(
 			long groupId, String keywords, LinkedHashMap<String, Object> params,
 			int start, int end)
 		throws SystemException {
@@ -180,6 +221,17 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	}
 
 	public List<MDRRuleGroup> findByG_N(
+			long groupId, String name, boolean andOperator)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return findByG_N(groupId, name, params, andOperator);
+	}
+
+	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
@@ -190,11 +242,36 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	}
 
 	public List<MDRRuleGroup> findByG_N(
+			long groupId, String name, boolean andOperator, int start, int end)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return findByG_N(groupId, name, params, andOperator, start, end);
+	}
+
+	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
+
+		return findByG_N(groupId, names, params, andOperator, start, end);
+	}
+
+	public List<MDRRuleGroup> findByG_N(
+			long groupId, String[] names, boolean andOperator, int start,
+			int end)
+		throws SystemException {
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
 
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
@@ -329,7 +406,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 	protected void setParameterValues(
 			QueryPos qPos, LinkedHashMap<String, Object> params)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		if ((params == null) || params.isEmpty()) {
 			return;

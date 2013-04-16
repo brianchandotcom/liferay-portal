@@ -96,6 +96,8 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.count"));
+		_maxJournalArticlePageCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.journal.article.page.count"));
 		_maxJournalArticleSize = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.size"));
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
@@ -124,8 +126,9 @@ public class SampleSQLBuilder {
 
 		_dataFactory = new DataFactory(
 			baseDir, _maxBlogsEntryCount, _maxGroupCount,
-			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserToGroupCount);
+			_maxJournalArticleCount, _maxJournalArticleSize,
+			_maxMBCategoryCount, _maxMBThreadCount, _maxMBMessageCount,
+			_maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 
@@ -341,6 +344,7 @@ public class SampleSQLBuilder {
 		put(context, "maxDLFolderDepth", _maxDLFolderDepth);
 		put(context, "maxGroupCount", _maxGroupCount);
 		put(context, "maxJournalArticleCount", _maxJournalArticleCount);
+		put(context, "maxJournalArticlePageCount", _maxJournalArticlePageCount);
 		put(
 			context, "maxJournalArticleVersionCount",
 			_maxJournalArticleVersionCount);
@@ -492,6 +496,7 @@ public class SampleSQLBuilder {
 	private int _maxDLFolderDepth;
 	private int _maxGroupCount;
 	private int _maxJournalArticleCount;
+	private int _maxJournalArticlePageCount;
 	private int _maxJournalArticleSize;
 	private int _maxJournalArticleVersionCount;
 	private int _maxMBCategoryCount;

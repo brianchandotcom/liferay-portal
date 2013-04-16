@@ -154,14 +154,15 @@ public class DataFactory {
 
 	public DataFactory(
 			String baseDir, int maxBlogsEntryCount, int maxGroupsCount,
-			int maxJournalArticleSize, int maxMBCategoryCount,
-			int maxMBThreadCount, int maxMBMessageCount,
+			int maxJournalArticleCount, int maxJournalArticleSize,
+			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
 			int maxUserToGroupCount)
 		throws Exception {
 
 		_baseDir = baseDir;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxGroupsCount = maxGroupsCount;
+		_maxJournalArticleCount = maxJournalArticleCount;
 		_maxMBCategoryCount = maxMBCategoryCount;
 		_maxMBThreadCount = maxMBThreadCount;
 		_maxMBMessageCount = maxMBMessageCount;
@@ -294,6 +295,18 @@ public class DataFactory {
 
 	public long getJournalArticleClassNameId() {
 		return _classNamesMap.get(JournalArticle.class.getName());
+	}
+
+	public String getJournalArticleLayoutColum(String portletPrefix) {
+		StringBundler sb = new StringBundler(3 * _maxJournalArticleCount);
+
+		for (int i = 1; i <= _maxJournalArticleCount; i++) {
+			sb.append(portletPrefix);
+			sb.append(i);
+			sb.append(StringPool.COMMA);
+		}
+
+		return sb.toString();
 	}
 
 	public long getLayoutClassNameId() {
@@ -1760,6 +1773,7 @@ public class DataFactory {
 	private int _maxBlogsEntryCount;
 	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
+	private int _maxJournalArticleCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;

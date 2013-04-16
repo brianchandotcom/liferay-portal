@@ -330,6 +330,8 @@ public class SocialActivityFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
+			qPos.add(userId);
+			qPos.add(userId);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -625,6 +627,8 @@ public class SocialActivityFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(userId);
+			qPos.add(userId);
 			qPos.add(userId);
 
 			return (List<SocialActivity>)QueryUtil.list(

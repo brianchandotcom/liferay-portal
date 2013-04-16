@@ -22,30 +22,62 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddPortletPCDuplicateTest extends BaseTestCase {
 	public void testAddPortletPCDuplicate() throws Exception {
-		selenium.selectWindow("null");
-		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Page Comments Test Page",
-			RuntimeVariables.replace("Page Comments Test Page"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//li[@id='_145_addContent']/a/span"));
-		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("p"));
-		selenium.waitForVisible("//li[@title='Page Comments']");
-		assertFalse(selenium.isVisible("//li[@title='Page Comments']/p/a"));
+		int label = 1;
+
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
+				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Page Comments Test Page",
+					RuntimeVariables.replace("Page Comments Test Page"));
+				selenium.waitForPageToLoad("30000");
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+				assertEquals(RuntimeVariables.replace("Add"),
+					selenium.getText("//li[@id='_145_addContent']/a/span"));
+				selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+				selenium.waitForVisible(
+					"//li[contains(@class,'add-application')]/a");
+				assertEquals(RuntimeVariables.replace(
+						"Content and Applications"),
+					selenium.getText(
+						"//li[contains(@class,'add-application')]/a"));
+				selenium.clickAt("//li[contains(@class,'add-application')]/a",
+					RuntimeVariables.replace("Content and Applications"));
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+
+				boolean searchApplicationsNotVisible = selenium.isVisible(
+						"//input[@id='layout_configuration_content']");
+
+				if (searchApplicationsNotVisible) {
+					label = 2;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Applications"),
+					selenium.getText(
+						"//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]"));
+				selenium.clickAt("//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]",
+					RuntimeVariables.replace("Applications"));
+
+			case 2:
+				selenium.waitForVisible(
+					"//input[@id='layout_configuration_content']");
+				selenium.sendKeys("//input[@id='layout_configuration_content']",
+					RuntimeVariables.replace("p"));
+				selenium.waitForVisible("//li[@title='Page Comments']");
+				assertFalse(selenium.isVisible(
+						"//li[@title='Page Comments']/p/a"));
+
+			case 100:
+				label = -1;
+			}
+		}
 	}
 }

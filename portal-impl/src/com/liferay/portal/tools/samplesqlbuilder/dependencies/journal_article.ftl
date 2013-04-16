@@ -20,8 +20,7 @@
 	</#list>
 
 	<@insertResourcePermission
-		_resourceName = "com.liferay.portlet.journal.model.JournalArticle"
-		_resourcePrimkey = stringUtil.valueOf(journalArticleResource.resourcePrimKey)
+		_entry = journalArticleResource
 	/>
 
 	<@insertMBDiscussion

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.ResourceActionsException;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -941,7 +942,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		if (auditedModel instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)auditedModel;
 
-			groupId = groupedModel.getGroupId();
+			groupId = BeanPropertiesUtil.getLongSilent(
+				groupedModel, "resourceGroupId", groupedModel.getGroupId());
 		}
 
 		return groupId;

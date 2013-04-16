@@ -89,7 +89,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 				{
 					requestParams: {
 						'<portlet:namespace />folderId': folderId,
-						'<portlet:namespace />navigation': '<%= navigation %>',
+						'<portlet:namespace />navigation': '<%= HtmlUtil.escape(navigation) %>',
 						'<portlet:namespace />struts_action': '/document_library/view',
 						'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 						'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,

@@ -180,12 +180,29 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	public List<MDRRuleGroup> search(
+			long groupId, String name, boolean andOperator, int start, int end)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.findByG_N(
+			groupId, name, andOperator, start, end);
+	}
+
+	public List<MDRRuleGroup> search(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		return mdrRuleGroupFinder.findByG_N(
 			groupId, name, params, andOperator, start, end);
+	}
+
+	public List<MDRRuleGroup> searchByKeywords(
+			long groupId, String keywords, boolean andOperator, int start,
+			int end)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.findByKeywords(
+			groupId, keywords, start, end);
 	}
 
 	public List<MDRRuleGroup> searchByKeywords(
@@ -198,11 +215,24 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	public int searchByKeywordsCount(
+			long groupId, String keywords, boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
+	}
+
+	public int searchByKeywordsCount(
 			long groupId, String keywords, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
 
 		return mdrRuleGroupFinder.countByKeywords(groupId, params, keywords);
+	}
+
+	public int searchCount(long groupId, String name, boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
 	}
 
 	public int searchCount(

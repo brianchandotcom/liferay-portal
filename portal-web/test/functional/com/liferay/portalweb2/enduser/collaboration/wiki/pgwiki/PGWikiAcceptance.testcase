@@ -11,13 +11,13 @@
 	</set-up>
 
 	<command name="AddWikiFrontPage">
-		<var name="wikiContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="WikiPage#pgAddFrontPage" />
 	</command>
 
 	<command name="DeleteWikiFrontPage">
-		<var name="wikiContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="WikiPage#pgAddFrontPage" />
 
@@ -25,10 +25,10 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPage">
-		<var name="wikiChildContent" value="Wiki Node Name" />
-		<var name="wikiChildTitle" value="Wiki Front Page Child Page Title" />
-		<var name="wikiContent" value="Wiki Front Page Child Page Content" />
-		<var name="wikiTitle" value="FrontPage" />
+		<var name="wikiChildPageContent" value="Wiki Node Name" />
+		<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title" />
+		<var name="wikiPageContent" value="Wiki Front Page Child Page Content" />
+		<var name="wikiPageTitle" value="FrontPage" />
 
 		<execute macro="WikiPage#pgAddFrontPage" />
 

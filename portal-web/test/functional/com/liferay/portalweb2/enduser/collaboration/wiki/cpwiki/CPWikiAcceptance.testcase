@@ -4,15 +4,15 @@
 	</set-up>
 
 	<command name="AddWikiNode">
-		<var name="wikiDescription" value="Wiki Node Description" />
-		<var name="wikiName" value="Wiki Node Name" />
+		<var name="wikiNodeDescription" value="Wiki Node Description" />
+		<var name="wikiNodeName" value="Wiki Node Name" />
 
 		<execute macro="WikiNode#cpAdd" />
 	</command>
 
 	<command name="DeleteWikiNode">
-		<var name="wikiDescription" value="Wiki Node Description" />
-		<var name="wikiName" value="Wiki Node Name" />
+		<var name="wikiNodeDescription" value="Wiki Node Description" />
+		<var name="wikiNodeName" value="Wiki Node Name" />
 
 		<execute macro="WikiNode#cpAdd" />
 
@@ -20,10 +20,10 @@
 	</command>
 
 	<command name="EditWikiNode">
-		<var name="wikiDescription" value="Wiki Node Description" />
-		<var name="wikiDescriptionNew" value="Wiki Node Description Edit" />
-		<var name="wikiName" value="Wiki Node Name" />
-		<var name="wikiNameNew" value="Wiki Node Name Edit" />
+		<var name="wikiNodeDescription" value="Wiki Node Description" />
+		<var name="wikiNodeDescriptionNew" value="Wiki Node Description Edit" />
+		<var name="wikiNodeName" value="Wiki Node Name" />
+		<var name="wikiNodeNameNew" value="Wiki Node Name Edit" />
 
 		<execute macro="WikiNode#cpAdd" />
 

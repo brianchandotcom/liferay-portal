@@ -277,7 +277,9 @@ public class EditUserAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
-				if (e instanceof RequiredUserException) {
+				if (e instanceof RequiredUserException ||
+					e instanceof CompanyMaxUsersException) {
+
 					String redirect = PortalUtil.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
 
@@ -456,6 +458,20 @@ public class EditUserAction extends PortletAction {
 
 				if (cmd.equals(Constants.DEACTIVATE)) {
 					status = WorkflowConstants.STATUS_INACTIVE;
+				}
+
+				if (cmd.equals(Constants.RESTORE)) {
+					Company company = PortalUtil.getCompany(actionRequest);
+					long companyId = company.getCompanyId();
+
+					if ((company.getMaxUsers() > 0) &&
+						(company.getMaxUsers() <=
+							UserLocalServiceUtil.searchCount(
+								companyId, null,
+								WorkflowConstants.STATUS_APPROVED, null))) {
+
+						throw new CompanyMaxUsersException();
+					}
 				}
 
 				UserServiceUtil.updateStatus(deleteUserId, status);

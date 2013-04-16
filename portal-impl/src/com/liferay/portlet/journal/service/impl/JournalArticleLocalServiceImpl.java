@@ -835,7 +835,8 @@ public class JournalArticleLocalServiceImpl
 				groupId, newArticleId);
 
 		JournalArticle newArticle = journalArticlePersistence.create(id);
-
+		
+		newArticle.setFolderId(oldArticle.getFolderId());
 		newArticle.setResourcePrimKey(resourcePrimKey);
 		newArticle.setGroupId(groupId);
 		newArticle.setCompanyId(user.getCompanyId());

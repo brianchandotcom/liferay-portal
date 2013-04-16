@@ -28,7 +28,7 @@ if (orderByType.equals("asc")) {
 	reverseOrderByType = "desc";
 }
 
-String navigation = GetterUtil.getString(request.getAttribute("view.jsp-navigation"), "home");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <liferay-ui:icon-menu align="left" direction="down" icon="" message="sort-by" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
@@ -89,7 +89,7 @@ String navigation = GetterUtil.getString(request.getAttribute("view.jsp-navigati
 				{
 					requestParams: {
 						'<portlet:namespace />folderId': folderId,
-						'<portlet:namespace />navigation': <%= navigation %>,
+						'<portlet:namespace />navigation': '<%= navigation %>',
 						'<portlet:namespace />struts_action': '/document_library/view',
 						'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 						'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,

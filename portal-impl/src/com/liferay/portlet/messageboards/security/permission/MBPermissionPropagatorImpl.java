@@ -46,18 +46,6 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	public void propagateMessageRolePermissions(
-			ActionRequest actionRequest, String className, long primaryKey,
-			long messageId, long[] roleIds)
-		throws Exception {
-
-		for (long roleId : roleIds) {
-			propagateRolePermissions(
-				actionRequest, roleId, className, primaryKey,
-				MBMessage.class.getName(), messageId);
-		}
-	}
-
 	public void propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)
@@ -142,6 +130,18 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			propagateMessageRolePermissions(
 				actionRequest, className, groupId, message.getMessageId(),
 				roleIds);
+		}
+	}
+
+	public void propagateMessageRolePermissions(
+			ActionRequest actionRequest, String className, long primaryKey,
+			long messageId, long[] roleIds)
+		throws Exception {
+
+		for (long roleId : roleIds) {
+			propagateRolePermissions(
+				actionRequest, roleId, className, primaryKey,
+				MBMessage.class.getName(), messageId);
 		}
 	}
 

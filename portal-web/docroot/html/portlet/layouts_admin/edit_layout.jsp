@@ -226,7 +226,7 @@ String[][] categorySections = {mainSections};
 
 					var layoutToolbarChildren = [];
 
-					<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) %>">
+					<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) %>">
 						layoutToolbarChildren.push(
 							{
 								handler: function(event) {

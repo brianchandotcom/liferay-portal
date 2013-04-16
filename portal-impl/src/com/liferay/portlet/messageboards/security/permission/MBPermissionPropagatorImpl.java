@@ -35,6 +35,30 @@ import javax.portlet.ActionRequest;
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 	public void propagateCategoryRolePermissions(
+			ActionRequest actionRequest, String className, long primaryKey,
+			long categoryId, long[] roleIds)
+		throws Exception {
+
+		for (long roleId : roleIds) {
+			propagateRolePermissions(
+				actionRequest, roleId, className, primaryKey,
+				MBCategory.class.getName(), categoryId);
+		}
+	}
+
+	public void propagateMessageRolePermissions(
+			ActionRequest actionRequest, String className, long primaryKey,
+			long messageId, long[] roleIds)
+		throws Exception {
+
+		for (long roleId : roleIds) {
+			propagateRolePermissions(
+				actionRequest, roleId, className, primaryKey,
+				MBMessage.class.getName(), messageId);
+		}
+	}
+
+	public void propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)
 		throws Exception {
@@ -48,16 +72,19 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			MBCategoryLocalServiceUtil.getCategoriesAndThreads(
 				category.getGroupId(), categoryId);
 
-		List<MBCategory> categories = new ArrayList<MBCategory>();
-		List<MBMessage> messages = new ArrayList<MBMessage>();
-
 		for (Object categoryOrThread : categoriesAndThreads) {
 			if (categoryOrThread instanceof MBThread) {
 				MBThread thread = (MBThread)categoryOrThread;
 
-				messages.addAll(
+				List<MBMessage> messages =
 					MBMessageLocalServiceUtil.getThreadMessages(
-						thread.getThreadId(), WorkflowConstants.STATUS_ANY));
+						thread.getThreadId(), WorkflowConstants.STATUS_ANY);
+
+				for (MBMessage message : messages) {
+					propagateMessageRolePermissions(
+						actionRequest, className, categoryId,
+						message.getMessageId(), roleIds);
+				}
 			}
 			else {
 				category = (MBCategory)categoryOrThread;
@@ -71,21 +98,24 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 					category.getCategoryId());
 
 				for (long addCategoryId : categoryIds) {
-					categories.add(
-						MBCategoryLocalServiceUtil.getCategory(addCategoryId));
+					propagateCategoryRolePermissions(
+						actionRequest, className, categoryId, addCategoryId,
+						roleIds);
 
-					messages.addAll(
+					List<MBMessage> messages =
 						MBMessageLocalServiceUtil.getCategoryMessages(
 							category.getGroupId(), addCategoryId,
 							WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS));
+							QueryUtil.ALL_POS);
+
+					for (MBMessage message : messages) {
+						propagateMessageRolePermissions(
+							actionRequest, className, categoryId,
+							message.getMessageId(), roleIds);
+					}
 				}
 			}
 		}
-
-		propagateRolePermissions(
-			actionRequest, className, categoryId, roleIds, categories,
-			messages);
 	}
 
 	public void propagateMBRolePermissions(
@@ -97,32 +127,21 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
 			groupId);
+
+		for (MBCategory category : categories) {
+			propagateCategoryRolePermissions(
+				actionRequest, className, groupId, category.getCategoryId(),
+				roleIds);
+		}
+
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getGroupMessages(
 			groupId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		propagateRolePermissions(
-			actionRequest, className, groupId, roleIds, categories, messages);
-	}
-
-	public void propagateRolePermissions(
-			ActionRequest actionRequest, String className, long primaryKey,
-			long[] roleIds, List<MBCategory> categories,
-			List<MBMessage> messages)
-		throws Exception {
-
-		for (long roleId : roleIds) {
-			for (MBCategory category : categories) {
-				propagateRolePermissions(
-					actionRequest, roleId, className, primaryKey,
-					MBCategory.class.getName(), category.getPrimaryKey());
-			}
-
-			for (MBMessage message : messages) {
-				propagateRolePermissions(
-					actionRequest, roleId, className, primaryKey,
-					MBMessage.class.getName(), message.getPrimaryKey());
-			}
+		for (MBMessage message : messages) {
+			propagateMessageRolePermissions(
+				actionRequest, className, groupId, message.getMessageId(),
+				roleIds);
 		}
 	}
 
@@ -160,9 +179,11 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY);
 
-		propagateRolePermissions(
-			actionRequest, className, messageId, roleIds,
-			new ArrayList<MBCategory>(), messages);
+		for (MBMessage message : messages) {
+			propagateMessageRolePermissions(
+				actionRequest, className, messageId, message.getMessageId(),
+				roleIds);
+		}
 	}
 
 }

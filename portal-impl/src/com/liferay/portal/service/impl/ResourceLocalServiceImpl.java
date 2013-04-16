@@ -226,6 +226,47 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			guestPermissions, null);
 	}
 
+	public void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, String[] groupPermissions,
+			String[] guestPermissions, PermissionedModel permissionedModel)
+		throws PortalException, SystemException {
+
+		if (!PermissionThreadLocal.isAddResource()) {
+			return;
+		}
+
+		validate(name, false);
+
+		if (primKey == null) {
+			return;
+		}
+
+		// Individual
+
+		Resource resource = getResource(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		// Permissions
+
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		try {
+			addModelResources(
+				companyId, groupId, userId, resource, groupPermissions,
+				guestPermissions, permissionedModel);
+		}
+		finally {
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
+		}
+	}
+
 	/**
 	 * Adds resources for the entity with the name and primary key, always
 	 * creating a resource at the individual scope and only creating resources
@@ -288,6 +329,76 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		addResources(
 			companyId, groupId, userId, name, primKey, portletActions,
 			addGroupPermissions, addGuestPermissions, null);
+	}
+
+	public void addResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, boolean portletActions, boolean addGroupPermissions,
+			boolean addGuestPermissions, PermissionedModel permissionedModel)
+		throws PortalException, SystemException {
+
+		if (!PermissionThreadLocal.isAddResource()) {
+			return;
+		}
+
+		validate(name, portletActions);
+
+		if (primKey == null) {
+			return;
+		}
+
+		// Individual
+
+		Resource resource = getResource(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		// Permissions
+
+		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+
+		PermissionThreadLocal.setIndexEnabled(false);
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		ResourcePermissionsThreadLocal.setResourcePermissions(
+			resourcePermissions);
+
+		try {
+			addResources(
+				companyId, groupId, userId, resource, portletActions,
+				permissionedModel);
+
+			// Group permissions
+
+			if ((groupId > 0) && addGroupPermissions) {
+				addGroupPermissions(
+					companyId, groupId, userId, name, resource, portletActions,
+					permissionedModel);
+			}
+
+			// Guest permissions
+
+			if (addGuestPermissions) {
+
+				// Don't add guest permissions when you've already added group
+				// permissions and the given group is the guest group.
+
+				addGuestPermissions(
+					companyId, groupId, userId, name, resource, portletActions,
+					permissionedModel);
+			}
+		}
+		finally {
+			ResourcePermissionsThreadLocal.setResourcePermissions(null);
+
+			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+
+			PermissionCacheUtil.clearCache();
+
+			SearchEngineUtil.updatePermissionFields(name, primKey);
+		}
 	}
 
 	/**
@@ -742,47 +853,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 	}
 
-	protected void addModelResources(
-			long companyId, long groupId, long userId, String name,
-			String primKey, String[] groupPermissions,
-			String[] guestPermissions, PermissionedModel permissionedModel)
-		throws PortalException, SystemException {
-
-		if (!PermissionThreadLocal.isAddResource()) {
-			return;
-		}
-
-		validate(name, false);
-
-		if (primKey == null) {
-			return;
-		}
-
-		// Individual
-
-		Resource resource = getResource(
-			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		// Permissions
-
-		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
-
-		PermissionThreadLocal.setIndexEnabled(false);
-
-		try {
-			addModelResources(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions, permissionedModel);
-		}
-		finally {
-			PermissionThreadLocal.setIndexEnabled(flushEnabled);
-
-			PermissionCacheUtil.clearCache();
-
-			SearchEngineUtil.updatePermissionFields(name, primKey);
-		}
-	}
-
 	protected void addResources(
 			long companyId, long groupId, long userId, Resource resource,
 			boolean portletActions, PermissionedModel permissionedModel)
@@ -822,76 +892,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				resource.getCompanyId(), resource.getName(),
 				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
 				userId, actionIds.toArray(new String[actionIds.size()]));
-		}
-	}
-
-	protected void addResources(
-			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions, boolean addGroupPermissions,
-			boolean addGuestPermissions, PermissionedModel permissionedModel)
-		throws PortalException, SystemException {
-
-		if (!PermissionThreadLocal.isAddResource()) {
-			return;
-		}
-
-		validate(name, portletActions);
-
-		if (primKey == null) {
-			return;
-		}
-
-		// Individual
-
-		Resource resource = getResource(
-			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		// Permissions
-
-		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
-
-		PermissionThreadLocal.setIndexEnabled(false);
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		ResourcePermissionsThreadLocal.setResourcePermissions(
-			resourcePermissions);
-
-		try {
-			addResources(
-				companyId, groupId, userId, resource, portletActions,
-				permissionedModel);
-
-			// Group permissions
-
-			if ((groupId > 0) && addGroupPermissions) {
-				addGroupPermissions(
-					companyId, groupId, userId, name, resource, portletActions,
-					permissionedModel);
-			}
-
-			// Guest permissions
-
-			if (addGuestPermissions) {
-
-				// Don't add guest permissions when you've already added group
-				// permissions and the given group is the guest group.
-
-				addGuestPermissions(
-					companyId, groupId, userId, name, resource, portletActions,
-					permissionedModel);
-			}
-		}
-		finally {
-			ResourcePermissionsThreadLocal.setResourcePermissions(null);
-
-			PermissionThreadLocal.setIndexEnabled(flushEnabled);
-
-			PermissionCacheUtil.clearCache();
-
-			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
 	}
 

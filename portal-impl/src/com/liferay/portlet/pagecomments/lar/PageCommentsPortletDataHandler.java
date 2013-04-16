@@ -50,30 +50,6 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletDataContext.addPermissions(
-			RESOURCE_NAME, portletDataContext.getScopeGroupId());
-
-		Element rootElement = addExportDataRootElement(portletDataContext);
-
-		rootElement.addAttribute(
-			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
-		rootElement.addAttribute(
-			"plid", String.valueOf(portletDataContext.getPlid()));
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "comments")) {
-			portletDataContext.addComments(
-				Layout.class, portletDataContext.getPlid());
-		}
-
-		return getExportDataRootElementString(rootElement);
-	}
-
-	@Override
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)

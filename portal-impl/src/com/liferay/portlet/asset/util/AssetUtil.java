@@ -62,6 +62,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.ArrayList;
@@ -517,6 +518,12 @@ public class AssetUtil {
 		else if (sortField.equals("title")) {
 			sortField = "localized_title_".concat(
 				LocaleUtil.toLanguageId(locale));
+		}
+		else if (sortField.startsWith(
+					DDMIndexerImpl.DDM_FIELD_NAMESPACE +
+						StringPool.FORWARD_SLASH)) {
+
+			sortField = sortField.concat(LocaleUtil.toLanguageId(locale));
 		}
 
 		return new Sort(

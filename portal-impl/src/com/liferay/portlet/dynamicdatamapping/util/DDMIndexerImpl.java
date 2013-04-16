@@ -146,7 +146,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(_FIELD_NAMESPACE);
+		sb.append(DDM_FIELD_NAMESPACE);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(ddmStructureId);
 		sb.append(StringPool.FORWARD_SLASH);
@@ -159,8 +159,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		return sb.toString();
 	}
-
-	private static final String _FIELD_NAMESPACE = "ddm";
 
 	private static Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 

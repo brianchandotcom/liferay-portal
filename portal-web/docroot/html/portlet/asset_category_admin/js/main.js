@@ -392,17 +392,16 @@ AUI.add(
 					},
 
 					_createAlertMessage: function(items, selectedItems, keyId) {
-						var itemNames = [];
+						var instance = this;
 
-						for (var i = 0, length = items.length; i < length; i++) {
-							var item = items[i];
+						var itemNames = AArray.map(
+							items,
+							function(item, index, collection) {
+								var itemId = item[keyId];
 
-							var itemId = item[keyId];
-
-							var itemName = selectedItems[itemId];
-
-							itemNames.push(itemName);
-						}
+								return selectedNames[itemId];
+							}
+						);
 
 						return Liferay.Language.get('the-following-items-could-not-be-deleted') + ' ' + itemNames.join(', ');
 					},
@@ -521,9 +520,13 @@ AUI.add(
 					},
 
 					_createItemNameMap: function(itemIds, itemLookupFn, attrLookup, attr) {
+						var instance = this;
+
 						var itemNameMap = {};
 
-						for (var i = 0, length = itemIds.length; i < length; i++) {
+						var length = itemIds.length;
+
+						for (var i = 0; i < length; i++) {
 							var itemId = itemIds[i];
 
 							var item = itemLookupFn(itemId);
@@ -1045,7 +1048,7 @@ AUI.add(
 						var filteredCategories = [];
 
 						if (Lang.isArray(categories)) {
-							filteredCategories = A.Array.filter(
+							filteredCategories = AArray.filter(
 								categories,
 								function(item, index, collection) {
 									return (item.parentCategoryId == parentCategoryId);
@@ -1314,7 +1317,7 @@ AUI.add(
 						else {
 							var categoryIds = instance._categoriesContainer.all('.category-item-check:checked').attr(DATA_CATEGORY_ID);
 
-							selectedCategories = instance._createItemNameMap(categoryIds, A.bind(instance._getCategory, instance), 'get', STR_TITLE);
+							selectedCategories = instance._createItemNameMap(categoryIds, A.bind('_getCategory', instance), 'get', STR_TITLE);
 						}
 
 						return selectedCategories;
@@ -2306,17 +2309,18 @@ AUI.add(
 					_processCategoryDeletion: function() {
 						var instance = this;
 
-						var vocabularyId = arguments[0];
-
 						var categories = arguments[1];
+						var vocabularyId = arguments[0];
 
 						var exception;
 						var result;
 
-						if (arguments.length > 2) {
+						var argsLength = arguments.length;
+
+						if (argsLength > 2) {
 							result = arguments[2];
 
-							if (arguments.length > 3) {
+							if (argsLength > 3) {
 								exception = arguments[2];
 								result = arguments[3];
 							}

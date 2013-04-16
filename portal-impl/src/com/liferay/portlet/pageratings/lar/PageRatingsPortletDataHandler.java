@@ -48,18 +48,6 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletDataContext.addRatingsEntries(
-			Layout.class, portletDataContext.getPlid());
-
-		return String.valueOf(portletDataContext.getPlid());
-	}
-
-	@Override
 	protected PortletPreferences doImportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)

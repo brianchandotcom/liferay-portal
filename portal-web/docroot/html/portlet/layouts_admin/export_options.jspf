@@ -379,9 +379,9 @@
 											</div>
 
 											<%
-												Map<String,Object> data = new HashMap<String,Object>();
+											Map<String,Object> data = new HashMap<String,Object>();
 
-												data.put("portletid", portlet.getPortletId());
+											data.put("portletid", portlet.getPortletId());
 											%>
 
 											<liferay-ui:icon
@@ -443,6 +443,10 @@
 			layoutSetSettingsNode: '<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
+			rangeAllNode: 'rangeAll',
+			rangeDateRangeNode: 'rangeDateRange',
+			rangeLastNode: 'rangeLast',
+			rangeLastPublishNode: 'rangeLastPublish',
 			themeNode: '<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
 			userPreferencesNode: '<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'

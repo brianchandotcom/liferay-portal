@@ -154,6 +154,17 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 			name, primKey, groupPermissions, guestPermissions);
 	}
 
+	public void addModelResources(long companyId, long groupId, long userId,
+		java.lang.String name, java.lang.String primKey,
+		java.lang.String[] groupPermissions,
+		java.lang.String[] guestPermissions,
+		com.liferay.portal.model.PermissionedModel permissionedModel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_resourceLocalService.addModelResources(companyId, groupId, userId,
+			name, primKey, groupPermissions, guestPermissions, permissionedModel);
+	}
+
 	/**
 	* Adds resources for the entity with the name and primary key, always
 	* creating a resource at the individual scope and only creating resources
@@ -213,6 +224,18 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_resourceLocalService.addResources(companyId, groupId, userId, name,
 			primKey, portletActions, addGroupPermissions, addGuestPermissions);
+	}
+
+	public void addResources(long companyId, long groupId, long userId,
+		java.lang.String name, java.lang.String primKey,
+		boolean portletActions, boolean addGroupPermissions,
+		boolean addGuestPermissions,
+		com.liferay.portal.model.PermissionedModel permissionedModel)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_resourceLocalService.addResources(companyId, groupId, userId, name,
+			primKey, portletActions, addGroupPermissions, addGuestPermissions,
+			permissionedModel);
 	}
 
 	/**

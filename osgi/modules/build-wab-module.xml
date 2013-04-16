@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<project name="module-admin" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-module.xml" />
+
+	<target name="clean">
+		<antcall target="build-common-java.clean" />
+		<delete dir="docroot/WEB-INF/classes" />
+	</target>
+
+	<target name="compile">
+		<if>
+			<not>
+				<uptodate targetfile="classes/.touch">
+					<srcfiles dir="src" includes="**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<ant dir="${project.dir}/osgi/bootstrap" target="jar" inheritAll="false" />
+
+				<path id="this.classpath">
+					<fileset dir="${project.dir}/osgi/bootstrap" includes="osgi-bootstrap.jar" />
+					<path refid="project.classpath" />
+				</path>
+
+				<mkdir dir="docroot/WEB-INF/classes" />
+
+				<antcall target="compile-java" inheritrefs="true">
+					<param name="javac.classpathref" value="this.classpath" />
+					<param name="javac.destdir" value="docroot/WEB-INF/classes" />
+					<param name="javac.srcdir" value="docroot/WEB-INF/src" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
+	<target name="jar" depends="compile">
+		<if>
+			<not>
+				<uptodate targetfile="${jar.file}.jar">
+					<srcfiles dir="docroot" includes="**/*.*"/>
+				</uptodate>
+			</not>
+			<then>
+				<manifest-helper />
+
+				<bndexpand propertyfile="${project.dir}/common.bnd" />
+
+				<bnd
+					eclipse="false"
+					exceptions="true"
+					failok="false"
+					inherit="true"
+					output="."
+					sourcepath="."
+				>
+					<bndfiles path="bnd.bnd" />
+					<classpath>
+						<pathelement location="docroot/WEB-INF/classes" />
+					</classpath>
+				</bnd>
+			</then>
+		</if>
+	</target>
+</project>

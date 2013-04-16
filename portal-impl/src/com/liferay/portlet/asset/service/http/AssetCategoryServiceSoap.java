@@ -112,10 +112,26 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
-	public static void deleteCategories(long[] categoryIds)
+	/**
+	* Deletes the categories identified by categoryIds. If the
+	* serviceContext is not isFailOnPortalException, then the method will
+	* return a list with the categories that could not be deleted.
+	*
+	* @param categoryIds the primary key of the categories to be deleted
+	* @param serviceContext the service context to be applied.
+	* @return the list of categories that could not be deleted when
+	serviceContext.isFailOnPortalException is false
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategorySoap[] deleteCategories(
+		long[] categoryIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			AssetCategoryServiceUtil.deleteCategories(categoryIds);
+			java.util.List<com.liferay.portlet.asset.model.AssetCategory> returnValue =
+				AssetCategoryServiceUtil.deleteCategories(categoryIds,
+					serviceContext);
+
+			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

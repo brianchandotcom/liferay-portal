@@ -87,6 +87,16 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getUserId(), title, serviceContext);
 	}
 
+	/**
+	 * Deletes the vocabularies identified by vocabularyIds. If the
+	 * serviceContext is not isFailOnPortalException, then the method will
+	 * return a list with the vocabularies that could not be deleted.
+	 *
+	 * @param  vocabularyIds the primary key of the vocabularies to be deleted
+	 * @param  serviceContext the service context to be applied.
+	 * @return the list of vocabularies that could not be deleted when
+	 *         serviceContext.isFailOnPortalException is false
+	 */
 	public List<AssetVocabulary> deleteVocabularies(
 			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {

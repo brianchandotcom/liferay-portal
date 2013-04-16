@@ -1,10 +1,13 @@
 <definition>
 	<command name="click">
 		<case locator-key1="NAVIGATION_MANAGE_ENTRIES">
-			<execute function="Click#textClickAtAndWait" value1="Manage Entries"/>
+			<execute function="Click#textClickAtAndWait" value1="Manage Entries" />
 		</case>
 		<case comparator="startsWith" locator-key1="ENTRY_DELETE_">
-			<execute function="Click#textClickAndWait" value1="Delete"/>
+			<execute function="Click#textClickAndWait" value1="Delete" />
+		</case>
+		<case comparator="startsWith" locator-key1="ENTRY_EDIT_">
+			<execute function="Click#textClickAndWait" value1="Edit" />
 		</case>
 	</command>
 </definition>

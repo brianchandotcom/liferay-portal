@@ -135,10 +135,35 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			propagateCategoryRolePermissions(
 				actionRequest, className, primKey, roleIds);
 		}
+		else if (className.equals(MBMessage.class.getName())) {
+			long messageId = GetterUtil.getLong(primKey);
+
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+			if (message.isRoot()) {
+				propagateThreadRolePermissions(
+					actionRequest, className, messageId, message.getThreadId(),
+					roleIds);
+			}
+		}
 		else if (className.equals("com.liferay.portlet.messageboards")) {
 			propagateMBRolePermissions(
 				actionRequest, className, primKey, roleIds);
 		}
+	}
+
+	public void propagateThreadRolePermissions(
+			ActionRequest actionRequest, String className, long messageId,
+			long threadId, long[] roleIds)
+		throws Exception {
+
+		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		propagateRolePermissions(
+			actionRequest, className, messageId, roleIds,
+			new ArrayList<MBCategory>(), messages);
 	}
 
 }

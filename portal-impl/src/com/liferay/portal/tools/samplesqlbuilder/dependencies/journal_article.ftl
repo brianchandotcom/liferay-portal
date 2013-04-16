@@ -1,4 +1,6 @@
 <#list 1..maxJournalArticleCount as journalArticleCount>
+	<#assign portletId = "56_INSTANCE_TEST" + journalArticleCount>
+
 	<#assign journalArticleResource = dataFactory.newJournalArticleResource(groupId)>
 
 	insert into JournalArticleResource values ('${journalArticleResource.uuid}', ${journalArticleResource.resourcePrimKey}, ${journalArticleResource.groupId}, '${journalArticleResource.articleId}');
@@ -32,7 +34,7 @@
 		_mbThreadId = counter.get()
 	/>
 
-	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", "56,")>
+	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticleCount, "", portletId)>
 
 	${writerLayoutCSV.write(layout.friendlyURL + "\n")}
 
@@ -40,10 +42,19 @@
 		_layout = layout
 	/>
 
+	<#assign portletPreferences = dataFactory.newPortletPreferences(layout.plid, portletId, journalArticleResource)>
+
 	<@insertPortletPreferences
-		_entry = journalArticleResource
-		_plid = layout.plid
+		_portletPreferences = portletPreferences
 	/>
+
+	<#assign portletPreferencesList = dataFactory.newPortletPreferences(layout.plid)>
+
+	<#list portletPreferencesList as portletPreferences>
+		<@insertPortletPreferences
+			_portletPreferences = portletPreferences
+		/>
+	</#list>
 
 	<#assign journalContentSearch = dataFactory.newJournalContentSearch(journalArticle, layout.plid)>
 

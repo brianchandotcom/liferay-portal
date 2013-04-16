@@ -1186,17 +1186,44 @@ public class DataFactory {
 			_counter.get(), _maxMBMessageCount);
 	}
 
-	public List<PortletPreferences> newPortletPreferences(
-			long plid, JournalArticleResource journalArticleResource)
-		throws Exception {
-
+	public List<PortletPreferences> newPortletPreferences(long plid) {
 		List<PortletPreferences> portletPreferencesList =
-			new ArrayList<PortletPreferences>(3);
+			new ArrayList<PortletPreferences>(2);
 
 		portletPreferencesList.add(
 			newPortletPreferences(
 				plid, PortletKeys.DOCKBAR,
 				PortletConstants.DEFAULT_PREFERENCES));
+
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, PortletKeys.PORTLET_CONFIGURATION,
+				PortletConstants.DEFAULT_PREFERENCES));
+
+		return portletPreferencesList;
+	}
+
+	public PortletPreferences newPortletPreferences(
+			long plid, String portletId, DDLRecordSet ddlRecordSet)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPreferences =
+			new com.liferay.portlet.PortletPreferencesImpl();
+
+		jxPreferences.setValue("editable", "true");
+		jxPreferences.setValue(
+			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+		jxPreferences.setValue("spreadsheet", "false");
+
+		return newPortletPreferences(
+			plid, portletId,
+			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+	}
+
+	public PortletPreferences newPortletPreferences(
+			long plid, String portletId,
+			JournalArticleResource journalArticleResource)
+		throws Exception {
 
 		javax.portlet.PortletPreferences jxPreferences =
 			new com.liferay.portlet.PortletPreferencesImpl();
@@ -1213,49 +1240,9 @@ public class DataFactory {
 			"groupId", String.valueOf(journalArticleResource.getGroupId()));
 		jxPreferences.setValue("showAvailableLocales", "false");
 
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.JOURNAL_CONTENT,
-				PortletPreferencesFactoryUtil.toXML(jxPreferences)));
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.PORTLET_CONFIGURATION,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		return portletPreferencesList;
-	}
-
-	public List<PortletPreferences> newPortletPreferences(
-			long plid, String ddlPortletId, DDLRecordSet ddlRecordSet)
-		throws Exception {
-
-		List<PortletPreferences> portletPreferencesList =
-			new ArrayList<PortletPreferences>(4);
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.DOCKBAR,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.PORTLET_CONFIGURATION,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		javax.portlet.PortletPreferences jxPreferences =
-			new com.liferay.portlet.PortletPreferencesImpl();
-
-		jxPreferences.setValue("editable", "true");
-		jxPreferences.setValue(
-			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
-		jxPreferences.setValue("spreadsheet", "false");
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, ddlPortletId,
-				PortletPreferencesFactoryUtil.toXML(jxPreferences)));
-
-		return portletPreferencesList;
+		return newPortletPreferences(
+			plid, portletId,
+			PortletPreferencesFactoryUtil.toXML(jxPreferences));
 	}
 
 	public List<Layout> newPublicLayouts(long groupId) {

@@ -42,10 +42,18 @@
 			</#list>
 		</#if>
 
+		<#assign portletPreferences = dataFactory.newPortletPreferences(layout.plid, portletId, ddlRecordSet)>
+
 		<@insertPortletPreferences
-			_entry = ddlRecordSet
-			_plid = layout.plid
-			_portletId = portletId
+			_portletPreferences = portletPreferences
 		/>
+
+		<#assign portletPreferencesList = dataFactory.newPortletPreferences(layout.plid)>
+
+		<#list portletPreferencesList as portletPreferences>
+			<@insertPortletPreferences
+				_portletPreferences = portletPreferences
+			/>
+		</#list>
 	</#list>
 </#if>

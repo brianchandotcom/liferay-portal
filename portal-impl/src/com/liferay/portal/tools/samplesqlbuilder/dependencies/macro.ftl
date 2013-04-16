@@ -187,23 +187,13 @@
 </#macro>
 
 <#macro insertPortletPreferences
-	_entry
-	_plid
-	_portletId = 'null'
+	_portletPreferences
 >
-	<#if (_portletId = 'null')>
-		<#local portletPreferencesList = dataFactory.newPortletPreferences(_plid, _entry)>
-	<#else>
-		<#local portletPreferencesList = dataFactory.newPortletPreferences(_plid, _portletId, _entry)>
-	</#if>
+	insert into PortletPreferences values (${_portletPreferences.portletPreferencesId}, ${_portletPreferences.ownerId}, ${_portletPreferences.ownerType}, ${_portletPreferences.plid}, '${_portletPreferences.portletId}', '${_portletPreferences.preferences}');
 
-	<#list portletPreferencesList as portletPreferences>
-		insert into PortletPreferences values (${portletPreferences.portletPreferencesId}, ${portletPreferences.ownerId}, ${portletPreferences.ownerType}, ${portletPreferences.plid}, '${portletPreferences.portletId}', '${portletPreferences.preferences}');
-
-		<@insertResourcePermission
-			_entry = portletPreferences
-		/>
-	</#list>
+	<@insertResourcePermission
+		_entry = _portletPreferences
+	/>
 </#macro>
 
 <#macro insertResourcePermission

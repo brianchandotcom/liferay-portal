@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,4 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
+
+package com.liferay.portal.layoutconfiguration.util.xml;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+public abstract class RuntimeLogic {
+
+	public static final String CLOSE_2_TAG = "/>";
+
+	public abstract String getClose1Tag();
+
+	public String getClose2Tag() {
+		return CLOSE_2_TAG;
+	}
+
+	public abstract String getOpenTag();
+
+	public abstract String processXML(String xml) throws Exception;
+
+}

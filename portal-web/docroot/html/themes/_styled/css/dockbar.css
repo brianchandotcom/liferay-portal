@@ -280,8 +280,8 @@ html > .lfr-dockbar-pinned {
 	left: 10px !important;
 }
 
-.lfr-has-sidebar #main-content {
-	padding-left: 220px;
+.lfr-has-add-content #wrapper {
+	padding-left: 340px;
 }
 
 .manage-layouts {

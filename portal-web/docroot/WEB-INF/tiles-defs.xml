@@ -390,6 +390,12 @@
 
 	<!-- Dockbar -->
 
+	<definition name="portlet.dockbar" extends="portlet" />
+
+	<definition name="portlet.dockbar.add_panel" extends="portlet.dockbar">
+		<put name="portlet_content" value="/portlet/dockbar/add_panel.jsp" />
+	</definition>
+
 	<definition name="portlet.dockbar.view" path="/portlet/dockbar/view.jsp" />
 
 	<!-- Document Library -->
@@ -770,16 +776,6 @@
 
 	<definition name="portlet.language.view" extends="portlet.language">
 		<put name="portlet_content" value="/portlet/language/view.jsp" />
-	</definition>
-
-	<!-- Layout Configuration -->
-
-	<definition name="portlet.layout_configuration" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.layout_configuration.view" extends="portlet.layout_configuration">
-		<put name="portlet_content" value="/portlet/layout_configuration/view.jsp" />
 	</definition>
 
 	<!-- Layout Prototypes -->

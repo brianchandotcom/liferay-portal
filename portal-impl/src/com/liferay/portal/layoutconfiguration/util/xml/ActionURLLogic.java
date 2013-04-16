@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util.xml;
+package com.liferay.portal.layoutconfiguration.util.xml;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.xml.Document;

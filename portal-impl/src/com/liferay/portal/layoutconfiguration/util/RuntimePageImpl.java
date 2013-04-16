@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutconfiguration.util;
+package com.liferay.portal.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -34,6 +34,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
+import com.liferay.portal.layoutconfiguration.util.velocity.TemplateProcessor;
+import com.liferay.portal.layoutconfiguration.util.xml.ActionURLLogic;
+import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
+import com.liferay.portal.layoutconfiguration.util.xml.RenderURLLogic;
+import com.liferay.portal.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.Portlet;
@@ -43,12 +49,6 @@ import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
-import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
-import com.liferay.portlet.layoutconfiguration.util.xml.ActionURLLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.PortletLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.RenderURLLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.taglib.util.DummyVelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;

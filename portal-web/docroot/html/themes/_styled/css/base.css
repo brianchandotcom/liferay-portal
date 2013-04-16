@@ -237,10 +237,6 @@ code, pre {
 /* ---------- Portal add content ---------- */
 
 .portal-add-content {
-	background: #FFF;
-	text-align: left;
-	z-index: 20;
-
 	a {
 		text-decoration: none;
 	}

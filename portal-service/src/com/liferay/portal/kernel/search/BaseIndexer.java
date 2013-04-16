@@ -560,7 +560,7 @@ public abstract class BaseIndexer implements Indexer {
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			assetEntry.getTitle(), true);
 
-		document.addLocalizedKeyword("localized_title", titleMap, true);
+		document.addLocalizedText("localized_title", titleMap);
 	}
 
 	/**
@@ -906,7 +906,7 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		searchQuery.addTerms(Field.KEYWORDS, keywords);
+		searchQuery.addTerms(Field.KEYWORDS, keywords, searchContext.isLike());
 
 		addSearchExpando(searchQuery, searchContext, keywords);
 	}

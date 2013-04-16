@@ -387,6 +387,11 @@ public class AssetUtil {
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+
+		if (Validator.isNotNull(assetEntryQuery.getKeywords())) {
+			searchContext.setLike(true);
+		}
+
 		searchContext.setSorts(
 			getSorts(assetEntryQuery, searchContext.getLocale()));
 		searchContext.setStart(start);

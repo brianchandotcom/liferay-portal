@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
@@ -230,6 +231,25 @@ public class AssetSearcher extends BaseIndexer {
 		addSearchAnyTags(contextQuery, searchContext);
 		addSearchNotAllTags(contextQuery, searchContext);
 		addSearchNotAnyTags(contextQuery, searchContext);
+	}
+
+	@Override
+	protected void addSearchKeywords(
+			BooleanQuery searchQuery, SearchContext searchContext)
+		throws Exception {
+
+		String keywords = searchContext.getKeywords();
+
+		if (Validator.isNull(keywords)) {
+			return;
+		}
+
+		super.addSearchKeywords(searchQuery, searchContext);
+
+		String field = DocumentImpl.getLocalizedName(
+			searchContext.getLocale(), "localized_title");
+
+		searchQuery.addTerm(field, keywords, true);
 	}
 
 	@Override

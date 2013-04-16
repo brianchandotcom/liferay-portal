@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+<%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
+page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
@@ -32,8 +33,7 @@ page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %><%@
 page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalArticleServiceUtil" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
-page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %><%@
-page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %>
+page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

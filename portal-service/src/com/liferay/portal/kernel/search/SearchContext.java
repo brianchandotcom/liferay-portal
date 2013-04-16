@@ -187,6 +187,10 @@ public class SearchContext implements Serializable {
 		return _includeStagingGroups;
 	}
 
+	public boolean isLike() {
+		return _like;
+	}
+
 	public boolean isScopeStrict() {
 		return _scopeStrict;
 	}
@@ -284,6 +288,10 @@ public class SearchContext implements Serializable {
 		_keywords = keywords;
 	}
 
+	public void setLike(boolean like) {
+		_like = like;
+	}
+
 	public void setLocale(Locale locale) {
 		if (locale != null) {
 			_locale = locale;
@@ -350,6 +358,7 @@ public class SearchContext implements Serializable {
 	private boolean _includeLiveGroups = true;
 	private boolean _includeStagingGroups = true;
 	private String _keywords;
+	private boolean _like;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private long[] _nodeIds;
 	private String _originalKeywords;

@@ -33,6 +33,7 @@ page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.Node" %><%@
 page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
 page import="com.liferay.portal.kernel.xml.XPath" %><%@
+page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.NoSuchEntryException" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
@@ -102,7 +103,6 @@ page import="com.liferay.portlet.journal.service.permission.JournalPermission" %
 page import="com.liferay.portlet.journal.util.JournalConverterUtil" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %><%@
-page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 

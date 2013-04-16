@@ -73,6 +73,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void echo(String message);
 
+	public void fail(String message);
+
 	public String getCurrentDay();
 
 	public String getCurrentMonth();

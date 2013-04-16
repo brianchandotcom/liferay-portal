@@ -6,7 +6,7 @@
 				<execute action="action" />
 			</then>
 			<else>
-				<fail />
+				<execute-fail />
 			</else>
 		</if>
 	</command>

@@ -680,7 +680,10 @@ public class SeleniumBuilderFileUtil {
 				throwValidationException(1002, fileName, element, elementName);
 			}
 
-			if (elementName.equals("execute")) {
+			if (elementName.equals("echo") || elementName.equals("fail")) {
+				validateEchoElement(fileName, element);
+			}
+			else if (elementName.equals("execute")) {
 				validateExecuteElement(
 					fileName, element, allowedExecuteAttributeNames, ".+",
 					allowedExecuteChildElementNames);
@@ -703,6 +706,14 @@ public class SeleniumBuilderFileUtil {
 			else {
 				throwValidationException(1002, fileName, element, elementName);
 			}
+		}
+	}
+
+	protected void validateEchoElement(String fileName, Element echoElement) {
+		String message = echoElement.attributeValue("message");
+
+		if (message == null) {
+			throwValidationException(1003, fileName, echoElement, "message");
 		}
 	}
 
@@ -1009,7 +1020,9 @@ public class SeleniumBuilderFileUtil {
 
 				validateBlockElement(
 					fileName, element,
-					new String[] {"execute", "if", "var", "while"},
+					new String[] {
+						"echo", "execute", "fail", "if", "var","while"
+					},
 					new String[] {"action", "macro"}, new String[] {"var"});
 			}
 			else if (elementName.equals("var")) {

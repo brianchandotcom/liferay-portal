@@ -148,6 +148,10 @@ public abstract class BaseSeleniumImpl
 		LiferaySeleniumHelper.echo(message);
 	}
 
+	public void fail(String message) {
+		LiferaySeleniumHelper.fail(message);
+	}
+
 	public String getCurrentDay() {
 		return _commandProcessor.getString("getCurrentDay", new String[0]);
 	}

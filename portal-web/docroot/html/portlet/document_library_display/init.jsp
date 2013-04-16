@@ -149,11 +149,4 @@ boolean mergedView = false;
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<c:choose>
-	<c:when test="<%= portletId.equals(PortletKeys.DOCUMENT_LIBRARY) %>">
-		<%@ include file="/html/portlet/document_library/init-ext.jsp" %>
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>
-	</c:otherwise>
-</c:choose>
+<%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>

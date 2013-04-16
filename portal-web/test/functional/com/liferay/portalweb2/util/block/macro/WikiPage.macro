@@ -6,13 +6,13 @@
 
 		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
 
-		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiContent}" />
+		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiPageContent}" />
 
 		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH" />
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiContent}" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="pgDeleteFrontPage">
@@ -40,25 +40,25 @@
 
 		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
 
-		<execute action="PGWikiAllpages#click" locator1="link=${wikiTitle}" />
+		<execute action="PGWikiAllpages#click" locator1="link=${wikiPageTitle}" />
 
 		<execute action="PGWiki#click" locator-key1="ADD_CHILD_PAGE" />
 
-		<execute action="PGWikiAddpage#type" locator-key1="TITLE" value1="${wikiChildTitle}" />
+		<execute action="PGWikiAddpage#type" locator-key1="TITLE" value1="${wikiChildPageTitle}" />
 
-		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiChildContent}" />
+		<execute action="PGWikiAddpage#type" locator-key1="BODY" value1="${wikiChildPageContent}" />
 
 		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH" />
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildTitle}" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildPageTitle}" />
 
-		<execute action="PGWiki#click" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildTitle}" />
+		<execute action="PGWiki#click" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildPageTitle}" />
 
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiChildTitle}" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildContent}" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildPageContent}" />
 	</command>
 
 	<command name="cpTearDown">

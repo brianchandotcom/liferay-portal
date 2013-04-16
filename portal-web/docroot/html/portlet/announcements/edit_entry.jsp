@@ -116,16 +116,15 @@ if (entry == null) {
 
 		<aui:input disabled="<%= autoDisplayDate %>" name="displayDate" />
 
-		<c:choose >
-			<c:when test="<%= autoDisplayDate %>">
+		<c:if test="<%= autoDisplayDate %>">
 
-				<%
-				String autoDisplayDateOnClick = renderResponse.getNamespace() + "disableDisplayDate('displayDate', this.checked);";
-				%>
+			<%
+			String autoDisplayDateOnClick = renderResponse.getNamespace() + "disableDisplayDate('displayDate', this.checked);";
+			%>
 
-				<aui:input label="display-date-is-based-on-creation-date" name="autoDisplayDate" onClick="<%= autoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
-			</c:when>
-		</c:choose>
+			<aui:input label="display-date-is-based-on-creation-date" name="autoDisplayDate" onClick="<%= autoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
+		</c:if>
+
 		<aui:input name="expirationDate" />
 	</aui:fieldset>
 
@@ -139,6 +138,23 @@ if (entry == null) {
 </aui:form>
 
 <aui:script>
+	function <portlet:namespace />disableDisplayDate(date, checked) {
+		var A = AUI();
+
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
+		document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
+
+		var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
+
+		if (calendarWidget) {
+			calendarWidget.set('disabled', checked);
+		}
+	}
+
 	function <portlet:namespace />getContent() {
 		return window.<portlet:namespace />editor.getHTML();
 	}
@@ -161,23 +177,6 @@ if (entry == null) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />disableDisplayDate(date, checked) {
-		var A = AUI();
-
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
-
-		var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
-
-		if (calendarWidget) {
-			calendarWidget.set('disabled', checked);
-		}
 	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">

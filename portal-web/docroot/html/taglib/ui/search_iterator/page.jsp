@@ -206,19 +206,6 @@ int sortColumnIndex = -1;
 			%>
 
 			</tr>
-			<tr class="lfr-template portlet-section-body results-row">
-
-				<%
-				for (int i = 0; i < headerNames.size(); i++) {
-				%>
-
-					<td></td>
-
-				<%
-				}
-				%>
-
-			</tr>
 		</c:if>
 
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
@@ -355,6 +342,22 @@ int sortColumnIndex = -1;
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>
+
+		<c:if test="<%= headerNames != null %>">
+			<tr class="lfr-template portlet-section-body results-row">
+
+				<%
+				for (int i = 0; i < headerNames.size(); i++) {
+				%>
+
+					<td></td>
+
+				<%
+				}
+				%>
+
+			</tr>
+		</c:if>
 
 		</table>
 	</div>

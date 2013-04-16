@@ -161,10 +161,10 @@ AUI.add(
 						var row;
 
 						if (id) {
-							row = instance._table.one('.' + CSS_TEMPLATE);
+							var template = instance._table.one('.' + CSS_TEMPLATE);
 
-							if (row) {
-								row = row.clone();
+							if (template) {
+								row = template.clone();
 
 								var cells = row.all('> td');
 
@@ -181,7 +181,7 @@ AUI.add(
 									}
 								);
 
-								instance._table.append(row);
+								template.placeBefore(row);
 
 								row.removeClass(CSS_TEMPLATE);
 

@@ -47,17 +47,4 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		return portletPreferences;
 	}
 
-	@Override
-	protected PortletPreferences doImportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
-		throws Exception {
-
-		portletDataContext.importRatingsEntries(
-			Layout.class, GetterUtil.getLong(data),
-			portletDataContext.getPlid());
-
-		return null;
-	}
-
 }

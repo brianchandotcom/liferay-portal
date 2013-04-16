@@ -692,6 +692,11 @@ public class LayoutStagedModelDataHandler
 
 		newLayouts.add(importedLayout);
 
+		// Layout ratings
+
+		portletDataContext.importRatingsEntries(
+			Layout.class, layout.getPlid(), importedLayout.getPlid());
+
 		boolean importPermissions = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.PERMISSIONS);

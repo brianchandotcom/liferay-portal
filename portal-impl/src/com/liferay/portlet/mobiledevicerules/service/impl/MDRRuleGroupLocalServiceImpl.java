@@ -179,6 +179,10 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupPersistence.countByGroupId(groupId);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, String,
+	 *             java.util.LinkedHashMap, boolean, int, int)}
+	 */
 	public List<MDRRuleGroup> search(
 			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
@@ -196,6 +200,10 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, name, params, andOperator, start, end);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
+	 *             String, java.util.LinkedHashMap, boolean, int, int)}
+	 */
 	public List<MDRRuleGroup> searchByKeywords(
 			long groupId, String keywords, boolean andOperator, int start,
 			int end)
@@ -214,6 +222,10 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, keywords, params, start, end);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
+	 *             String, java.util.LinkedHashMap, boolean)}
+	 */
 	public int searchByKeywordsCount(
 			long groupId, String keywords, boolean andOperator)
 		throws SystemException {
@@ -229,6 +241,10 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupFinder.countByKeywords(groupId, params, keywords);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchCount(long,
+	 *             String, java.util.LinkedHashMap, boolean)}
+	 */
 	public int searchCount(long groupId, String name, boolean andOperator)
 		throws SystemException {
 

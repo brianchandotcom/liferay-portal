@@ -21,7 +21,7 @@
 		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />
 		</case>
-		<case locator-key1="SEARCH">
+		<case locator-key1="SEARCH_BUTTON">
 			<execute function="Click#valueClickAtAndWait" value1="Search" />
 		</case>
 	</command>

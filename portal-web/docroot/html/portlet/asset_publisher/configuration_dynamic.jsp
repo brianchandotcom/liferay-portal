@@ -448,6 +448,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	var assetMulitpleSelector = A.one('#<portlet:namespace />currentClassNameIds');
 	var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 	var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
+	var orderByColumn1 = A.one('#<portlet:namespace />orderByColumn1');
+	var orderByColumn2 = A.one('#<portlet:namespace />orderByColumn2');
+	var MAP_DDM_STRUCTURES = {};
 
 	var sourcePanel = A.one('#assetPublisherSourcePanel');
 
@@ -462,7 +465,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var <%= className %>Options = A.one('#<portlet:namespace /><%= className %>Options');
 
-		function <portlet:namespace />toggle<%= className %>() {
+		function <portlet:namespace />toggle<%= className %>(removeOrderBySubType) {
 			var assetOptions = assetMulitpleSelector.all('option');
 
 			if ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
@@ -473,6 +476,20 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			else {
 				<%= className %>Options.hide();
 			}
+
+			if (removeOrderBySubType) {
+				var orderByColumn1SubType = orderByColumn1.one('.order-by-subtype');
+
+				if (orderByColumn1SubType) {
+					orderByColumn1SubType.remove();
+				}
+
+				var orderByColumn2SubType = orderByColumn2.one('.order-by-subtype');
+
+				if (orderByColumn2SubType) {
+					orderByColumn2SubType.remove();
+				}
+			}
 		}
 
 		<%
@@ -480,6 +497,50 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
+		}
+
+		Set<Long> assetAvailableClassTypeIdsSet = assetAvailableClassTypes.keySet();
+
+		for (long subTypeId : assetAvailableClassTypeIdsSet) {
+			List<Tuple> classTypeFieldNames = curRendererFactory.getClassTypeFieldNames(subTypeId, locale);
+
+			if (classTypeFieldNames.isEmpty()) {
+				continue;
+			}
+		%>
+
+			var orderGroupColumn1<%= className %>_<%= subTypeId %> = '<%= className %>_<%= subTypeId %>_optTextOrderByColumn1';
+			var orderGroupColumn2<%= className %>_<%= subTypeId %> = '<%= className %>_<%= subTypeId %>_optTextOrderByColumn2';
+
+			MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId)) %>">';
+			MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId)) %>">';
+
+			<%
+			for (Tuple classTypeFieldName : classTypeFieldNames) {
+				String value = DDMIndexerUtil.encodeName(subTypeId, (String)classTypeFieldName.getObject(1));
+				String selectedOrderByColumn1 = StringPool.BLANK;
+				String selectedOrderByColumn2 = StringPool.BLANK;
+
+				if (orderByColumn1.equals(value)) {
+					selectedOrderByColumn1 = "selected";
+				}
+
+				if (orderByColumn2.equals(value)) {
+					selectedOrderByColumn2 = "selected";
+				}
+			%>
+
+				MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] += '<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>';
+				MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] += '<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>';
+
+			<%
+			}
+			%>
+
+			MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] += '</optgroup>';
+			MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] += '</optgroup>';
+
+		<%
 		}
 		%>
 
@@ -492,6 +553,23 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			if (structureOptions) {
 				structureOptions.show();
+			}
+
+			if ((selectedSubType != 'false') && (selectedSubType != 'true')) {
+				var orderByColumn1SubType = orderByColumn1.one('.order-by-subtype');
+
+				if (orderByColumn1SubType) {
+					orderByColumn1SubType.remove();
+				}
+
+				var orderByColumn2SubType = orderByColumn2.one('.order-by-subtype');
+
+				if (orderByColumn2SubType) {
+					orderByColumn2SubType.remove();
+				}
+
+				orderByColumn1.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubType + '_optTextOrderByColumn1']);
+				orderByColumn2.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubType + '_optTextOrderByColumn2']);
 			}
 		}
 
@@ -512,14 +590,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	}
 	%>
 
-	function <portlet:namespace />toggleSubclasses() {
+	function <portlet:namespace />toggleSubclasses(removeOrderBySubType) {
 
 		<%
 		for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
 			String className = AssetPublisherUtil.getClassName(curRendererFactory);
 		%>
 
-			<portlet:namespace />toggle<%= className %>();
+			<portlet:namespace />toggle<%= className %>(removeOrderBySubType);
 
 		<%
 		}
@@ -527,7 +605,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 	}
 
-	<portlet:namespace />toggleSubclasses();
+	<portlet:namespace />toggleSubclasses(false);
 
 	assetSelector.on(
 		'change',
@@ -537,7 +615,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			ddmStructureFieldName.val('');
 			ddmStructureFieldValue.val('');
 
-			<portlet:namespace />toggleSubclasses();
+			<portlet:namespace />toggleSubclasses(true);
 		}
 	);
 

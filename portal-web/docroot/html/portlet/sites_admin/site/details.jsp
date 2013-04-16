@@ -495,8 +495,8 @@ if (parentGroup != null) {
 	Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
 </aui:script>
 
-<aui:script use="liferay-search-container,escape">
-	function <portlet:namespace />createURL(href, value, onclick) {
+<aui:script use="escape,liferay-search-container">
+	var createURL = function(href, value, onclick) {
 		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 	};
 
@@ -523,7 +523,7 @@ if (parentGroup != null) {
 
 					var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_group" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + event.groupid;
 
-					rowColumns.push(<portlet:namespace />createURL(href, A.Escape.html(event.groupname)));
+					rowColumns.push(createURL(href, A.Escape.html(event.groupname)));
 					rowColumns.push(event.grouptype);
 					rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
@@ -534,9 +534,7 @@ if (parentGroup != null) {
 			);
 		}
 	);
-</aui:script>
 
-<aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentGroupSearchContainer');
 
 	searchContainer.get('contentBox').delegate(

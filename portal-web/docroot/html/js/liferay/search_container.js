@@ -181,7 +181,7 @@ AUI.add(
 									}
 								);
 
-								instance._table.insertBefore(row, template);
+								template.placeBefore(row);
 
 								row.removeClass(CSS_TEMPLATE);
 

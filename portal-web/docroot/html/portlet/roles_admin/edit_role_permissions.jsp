@@ -207,7 +207,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	}
 
 	Liferay.on(
-		'<portlet:namespace />selectGroup', 
+		'<portlet:namespace />selectGroup',
 		function(event) {
 			var selectedGroupIds = [];
 

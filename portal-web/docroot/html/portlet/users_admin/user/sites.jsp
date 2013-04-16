@@ -105,7 +105,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
 </portlet:renderURL>
 
-<aui:script use="liferay-search-container,escape">
+<aui:script use="escape,liferay-search-container">
 	A.one('#<portlet:namespace />selectSiteLink').on(
 		'click',
 		function(event) {
@@ -137,9 +137,7 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 			);
 		}
 	);
-</aui:script>
 
-<aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
 
 	searchContainer.get('contentBox').delegate(

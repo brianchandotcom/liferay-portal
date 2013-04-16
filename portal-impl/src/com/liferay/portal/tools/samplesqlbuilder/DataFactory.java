@@ -63,9 +63,12 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
+import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
@@ -194,6 +197,7 @@ public class DataFactory {
 
 		_accountId = _counter.get();
 		_companyId = _counter.get();
+		_defaultUserId = _counter.get();
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
@@ -207,6 +211,7 @@ public class DataFactory {
 				new File(
 					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
 
+		initAssetCateogries();
 		initCompany();
 		initDLFileEntryType();
 		initGroups();
@@ -223,6 +228,10 @@ public class DataFactory {
 
 	public Role getAdministratorRole() {
 		return _administratorRole;
+	}
+
+	public List<AssetVocabulary> getAssetVocabularies() {
+		return _assetVocabularies;
 	}
 
 	public long getBlogsEntryClassNameId() {
@@ -351,6 +360,27 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return _classNamesMap.get(WikiPage.class.getName());
+	}
+
+	public void initAssetCateogries() {
+		_assetVocabularies = new ArrayList<AssetVocabulary>(_maxGroupsCount);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(PropsValues.ASSET_VOCABULARY_DEFAULT);
+		sb.append("</Title></root>");
+
+		String title = sb.toString();
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			_assetVocabularies.add(
+				newAssetVocabulary(
+					i, _defaultUserId, null,
+					PropsValues.ASSET_VOCABULARY_DEFAULT, title));
+		}
 	}
 
 	public void initCompany() {
@@ -516,7 +546,7 @@ public class DataFactory {
 
 	public void initUsers() {
 		_defaultUser = newUser(
-			_counter.get(), StringPool.BLANK, StringPool.BLANK,
+			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, true);
 		_guestUser = newUser(_counter.get(), "Test", "Test", "Test", false);
 		_sampleUser = newUser(
@@ -1271,6 +1301,21 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> newResourcePermission(
+		AssetVocabulary assetVocabulary) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(1);
+
+		resourcePermissions.add(
+			newResourcePermission(
+				AssetVocabulary.class.getName(),
+				StringUtil.valueOf(assetVocabulary.getVocabularyId()),
+				_ownerRole.getRoleId(), _defaultUserId));
+
+		return resourcePermissions;
+	}
+
+	public List<ResourcePermission> newResourcePermission(
 		JournalArticleResource journalArticleResource) {
 
 		return newResourcePermission(
@@ -1422,6 +1467,27 @@ public class DataFactory {
 		assetEntry.setTitle(title);
 
 		return assetEntry;
+	}
+
+	protected AssetVocabulary newAssetVocabulary(
+		long grouId, long userId, String userName, String name, String title) {
+
+		AssetVocabulary assetVocabulary = new AssetVocabularyImpl();
+
+		assetVocabulary.setUuid(SequentialUUID.generate());
+		assetVocabulary.setVocabularyId(_counter.get());
+		assetVocabulary.setGroupId(grouId);
+		assetVocabulary.setCompanyId(_companyId);
+		assetVocabulary.setUserId(userId);
+		assetVocabulary.setUserName(userName);
+		assetVocabulary.setCreateDate(new Date());
+		assetVocabulary.setModifiedDate(new Date());
+		assetVocabulary.setName(name);
+		assetVocabulary.setTitle(title);
+		assetVocabulary.setSettings(
+			"multiValued=true\\nselectedClassNameIds=0");
+
+		return assetVocabulary;
 	}
 
 	protected DDMContent newDDMContent(
@@ -1748,6 +1814,7 @@ public class DataFactory {
 	private Account _account;
 	private long _accountId;
 	private Role _administratorRole;
+	private List<AssetVocabulary> _assetVocabularies;
 	private String _baseDir;
 	private List<ClassName> _classNames;
 	private Map<String, Long> _classNamesMap = new HashMap<String, Long>();
@@ -1758,6 +1825,7 @@ public class DataFactory {
 	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
+	private long _defaultUserId;
 	private String _dlDDMStructureContent;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;

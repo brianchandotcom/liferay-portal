@@ -1367,15 +1367,15 @@ public class DataFactory {
 		return layouts;
 	}
 
-	public List<ResourcePermission> newResourcePermission(
+	public List<ResourcePermission> newResourcePermissions(
 		AssetCategory assetCategory) {
 
-		return newResourcePermission(
+		return newResourcePermissions(
 			AssetCategory.class.getName(),
 			StringUtil.valueOf(assetCategory.getCategoryId()), _sampleUserId);
 	}
 
-	public List<ResourcePermission> newResourcePermission(
+	public List<ResourcePermission> newResourcePermissions(
 		AssetVocabulary assetVocabulary) {
 
 		if (assetVocabulary.getUserId() == _defaultUserId) {
@@ -1391,28 +1391,28 @@ public class DataFactory {
 			return resourcePermissions;
 		}
 
-		return newResourcePermission(
+		return newResourcePermissions(
 			AssetVocabulary.class.getName(),
 			StringUtil.valueOf(assetVocabulary.getVocabularyId()),
 			_sampleUserId);
 	}
 
-	public List<ResourcePermission> newResourcePermission(
+	public List<ResourcePermission> newResourcePermissions(
 		JournalArticleResource journalArticleResource) {
 
-		return newResourcePermission(
+		return newResourcePermissions(
 			JournalArticle.class.getName(),
 			StringUtil.valueOf(journalArticleResource.getResourcePrimKey()),
 			_sampleUserId);
 	}
 
-	public List<ResourcePermission> newResourcePermission(Layout layout) {
-		return newResourcePermission(
+	public List<ResourcePermission> newResourcePermissions(Layout layout) {
+		return newResourcePermissions(
 			Layout.class.getName(), StringUtil.valueOf(layout.getPlid()),
 			_sampleUserId);
 	}
 
-	public List<ResourcePermission> newResourcePermission(
+	public List<ResourcePermission> newResourcePermissions(
 		PortletPreferences portletPreferences) {
 
 		String portletId = portletPreferences.getPortletId();
@@ -1428,7 +1428,7 @@ public class DataFactory {
 		String primKey = PortletPermissionUtil.getPrimaryKey(
 			portletPreferences.getPlid(), portletId);
 
-		return newResourcePermission(name, primKey, 0);
+		return newResourcePermissions(name, primKey, 0);
 	}
 
 	public SocialActivity newSocialActivity(DLFileEntry dlFileEntry) {
@@ -1770,24 +1770,6 @@ public class DataFactory {
 		return portletPreferences;
 	}
 
-	protected List<ResourcePermission> newResourcePermission(
-		String name, String primKey, long ownerId) {
-
-		List<ResourcePermission> resourcePermissions =
-			new ArrayList<ResourcePermission>(3);
-
-		resourcePermissions.add(
-			newResourcePermission(
-				name, primKey, _ownerRole.getRoleId(), ownerId));
-		resourcePermissions.add(
-			newResourcePermission(name, primKey, _guestRole.getRoleId(), 0));
-		resourcePermissions.add(
-			newResourcePermission(
-				name, primKey, _siteMemberRole.getRoleId(), 0));
-
-		return resourcePermissions;
-	}
-
 	protected ResourcePermission newResourcePermission(
 		String name, String primKey, long roleId, long ownerId) {
 
@@ -1804,6 +1786,24 @@ public class DataFactory {
 		resourcePermission.setActionIds(1);
 
 		return resourcePermission;
+	}
+
+	protected List<ResourcePermission> newResourcePermissions(
+		String name, String primKey, long ownerId) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(3);
+
+		resourcePermissions.add(
+			newResourcePermission(
+				name, primKey, _ownerRole.getRoleId(), ownerId));
+		resourcePermissions.add(
+			newResourcePermission(name, primKey, _guestRole.getRoleId(), 0));
+		resourcePermissions.add(
+			newResourcePermission(
+				name, primKey, _siteMemberRole.getRoleId(), 0));
+
+		return resourcePermissions;
 	}
 
 	protected Role newRole(String name, int type) {

@@ -144,7 +144,7 @@
 >
 	insert into Layout values ('${_layout.uuid}', ${_layout.plid}, ${_layout.groupId}, ${_layout.companyId}, '${dataFactory.getDateString(_layout.createDate)}', '${dataFactory.getDateString(_layout.modifiedDate)}', ${_layout.privateLayout?string}, ${_layout.layoutId}, ${_layout.parentLayoutId}, '${_layout.name}', '${_layout.title}', '${_layout.description}', '${_layout.keywords}', '${_layout.robots}', '${_layout.type}', '${_layout.typeSettings}', ${_layout.hidden?string}, '${_layout.friendlyURL}', ${_layout.iconImage?string}, ${_layout.iconImageId}, '${_layout.themeId}', '${_layout.colorSchemeId}', '${_layout.wapThemeId}', '${_layout.wapColorSchemeId}', '${_layout.css}', ${_layout.priority}, '${_layout.layoutPrototypeUuid}', ${_layout.layoutPrototypeLinkEnabled?string}, '${_layout.sourcePrototypeLayoutUuid}');
 
-	<@insertResourcePermission
+	<@insertResourcePermissions
 		_entry = _layout
 	/>
 </#macro>
@@ -197,15 +197,15 @@
 >
 	insert into PortletPreferences values (${_portletPreferences.portletPreferencesId}, ${_portletPreferences.ownerId}, ${_portletPreferences.ownerType}, ${_portletPreferences.plid}, '${_portletPreferences.portletId}', '${_portletPreferences.preferences}');
 
-	<@insertResourcePermission
+	<@insertResourcePermissions
 		_entry = _portletPreferences
 	/>
 </#macro>
 
-<#macro insertResourcePermission
+<#macro insertResourcePermissions
 	_entry
 >
-	<#local resourcePermissions = dataFactory.newResourcePermission(_entry)>
+	<#local resourcePermissions = dataFactory.newResourcePermissions(_entry)>
 
 	<#list resourcePermissions as resourcePermission>
 		insert into ResourcePermission values (${resourcePermission.resourcePermissionId}, ${resourcePermission.companyId}, '${resourcePermission.name}', ${resourcePermission.scope}, '${resourcePermission.primKey}', ${resourcePermission.roleId}, ${resourcePermission.ownerId}, ${resourcePermission.actionIds});

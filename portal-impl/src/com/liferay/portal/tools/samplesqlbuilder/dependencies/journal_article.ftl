@@ -39,7 +39,7 @@
 			</#if>
 		</#list>
 
-		<@insertResourcePermission
+		<@insertResourcePermissions
 			_entry = journalArticleResource
 		/>
 

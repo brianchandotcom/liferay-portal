@@ -15,6 +15,12 @@
 		<execute selenium="isVisible" />
 	</command>
 
+	<command name="pauseIsElementPresent">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="isElementPresent" />
+	</command>
+
 	<command name="waitForVisible">
 		<execute selenium="waitForVisible" />
 

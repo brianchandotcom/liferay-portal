@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>WIKI_NODE_TABLE_ACTIONS_1</td>
-	<td>xPath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_NODE_TABLE_ACTIONS_2</td>
-	<td>xPath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[2]</td>
+	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td></td>
 </tr>
 <tr>

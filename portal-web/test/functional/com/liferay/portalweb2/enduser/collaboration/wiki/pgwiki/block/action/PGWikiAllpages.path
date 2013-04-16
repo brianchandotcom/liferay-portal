@@ -18,6 +18,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WIKI_PAGE_TABLE-->
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE_1</td>

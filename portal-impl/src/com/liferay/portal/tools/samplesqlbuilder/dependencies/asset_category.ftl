@@ -5,3 +5,13 @@
 		_entry = assetVocabulary
 	/>
 </#list>
+
+<#if (maxAssetCategoryCount > 0)>
+	<#list dataFactory.assetCategories as assetCategory>
+		insert into AssetCategory values ('${assetCategory.uuid}', ${assetCategory.categoryId}, ${assetCategory.groupId}, ${assetCategory.companyId}, ${assetCategory.userId}, '${assetCategory.userName}', '${dataFactory.getDateString(assetCategory.createDate)}', '${dataFactory.getDateString(assetCategory.modifiedDate)}', ${assetCategory.parentCategoryId}, ${assetCategory.leftCategoryId}, ${assetCategory.rightCategoryId}, '${assetCategory.name}', '${assetCategory.title}', '${assetCategory.description}', ${assetCategory.vocabularyId});
+
+		<@insertResourcePermission
+			_entry = assetCategory
+		/>
+	</#list>
+</#if>

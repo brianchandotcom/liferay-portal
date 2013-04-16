@@ -34,6 +34,7 @@
 			<#if (versionCount = maxJournalArticleVersionCount) >
 				<@insertAssetEntry
 					_entry = journalArticle
+					_currentIndex = journalArticleCount
 				/>
 			</#if>
 		</#list>

@@ -1,0 +1,5 @@
+<definition>
+	<command name="name">
+		<fail message-fail="message-fail" />
+	</command>
+</definition>

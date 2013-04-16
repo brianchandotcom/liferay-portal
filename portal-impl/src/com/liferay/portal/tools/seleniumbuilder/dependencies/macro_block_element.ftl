@@ -3,7 +3,11 @@
 <#list elements as element>
 	<#assign name = element.getName()>
 
-	<#if name == "execute">
+	<#if name == "echo">
+		<#assign message = element.attributeValue("message")>
+
+		liferaySelenium.echo("${message}");
+	<#elseif name == "execute">
 		<#if element.attributeValue("action")??>
 			<#assign actionElement = element>
 
@@ -13,6 +17,10 @@
 
 			<#include "macro_element.ftl">
 		</#if>
+	<#elseif name == "fail">
+		<#assign message = element.attributeValue("message")>
+
+		liferaySelenium.fail("${message}");
 	<#elseif name == "if">
 		<#assign conditionElement = element.element("condition")>
 

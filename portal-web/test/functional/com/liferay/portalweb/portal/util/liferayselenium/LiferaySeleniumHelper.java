@@ -243,6 +243,10 @@ public class LiferaySeleniumHelper {
 		System.out.println(message);
 	}
 
+	public static void fail(String message) {
+		BaseTestCase.fail(message);
+	}
+
 	public static String getNumberDecrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
 	}

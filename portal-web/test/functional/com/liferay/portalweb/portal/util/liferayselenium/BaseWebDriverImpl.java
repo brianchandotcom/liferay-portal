@@ -151,6 +151,10 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.echo(message);
 	}
 
+	public void fail(String message) {
+		LiferaySeleniumHelper.fail(message);
+	}
+
 	public String getCurrentDay() {
 		Calendar calendar = Calendar.getInstance();
 

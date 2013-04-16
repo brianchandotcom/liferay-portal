@@ -33,5 +33,9 @@
 				</execute>
 			</then>
 		</if>
+
+		<echo message="message" />
+
+		<fail message="message" />
 	</command>
 </definition>

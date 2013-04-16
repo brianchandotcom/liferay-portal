@@ -715,8 +715,8 @@ public class SeleniumBuilderTest {
 	public void testMacroCommandElement1001() throws Exception {
 		test(
 			"MacroCommandElement1001.macro",
-			"Error 1001: Missing (execute|if|var|while) child element in " +
-				_DIR_NAME + "/MacroCommandElement1001.macro:2");
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroCommandElement1001.macro:2");
 	}
 
 	@Test
@@ -920,18 +920,26 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroEchoElement1003() throws Exception {
+		test(
+			"MacroEchoElement1003.macro",
+			"Error 1003: Missing message attribute in " + _DIR_NAME +
+				"/MacroEchoElement1003.macro:3");
+	}
+
+	@Test
 	public void testMacroElseElement1001() throws Exception {
 		test(
 			"MacroElseElement1001.macro",
-			"Error 1001: Missing (execute|if|var|while) child element in " +
-				_DIR_NAME + "/MacroElseElement1001.macro:8");
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroElseElement1001.macro:8");
 	}
 
 	@Test
 	public void testMacroElseElement1002() throws Exception {
 		test(
 			"MacroElseElement1002.macro",
-			"Error 1002: Invalid fail element in " + _DIR_NAME +
+			"Error 1002: Invalid execute-fail element in " + _DIR_NAME +
 				"/MacroElseElement1002.macro:9");
 	}
 
@@ -1048,6 +1056,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroFailElement1003() throws Exception {
+		test(
+			"MacroFailElement1003.macro",
+			"Error 1003: Missing message attribute in " + _DIR_NAME +
+				"/MacroFailElement1003.macro:3");
+	}
+
+	@Test
 	public void testMacroIfElement1001_1() throws Exception {
 		test(
 			"MacroIfElement1001_1.macro",
@@ -1091,15 +1107,15 @@ public class SeleniumBuilderTest {
 	public void testMacroThenElement1001() throws Exception {
 		test(
 			"MacroThenElement1001.macro",
-			"Error 1001: Missing (execute|if|var|while) child element in " +
-				_DIR_NAME + "/MacroThenElement1001.macro:5");
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroThenElement1001.macro:5");
 	}
 
 	@Test
 	public void testMacroThenElement1002() throws Exception {
 		test(
 			"MacroThenElement1002.macro",
-			"Error 1002: Invalid fail element in " + _DIR_NAME +
+			"Error 1002: Invalid execute-fail element in " + _DIR_NAME +
 				"/MacroThenElement1002.macro:6");
 	}
 
@@ -1768,6 +1784,9 @@ public class SeleniumBuilderTest {
 		finally {
 			if (expectException) {
 				Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+			}
+			else {
+				Assert.assertEquals(null, actualErrorMessage);
 			}
 		}
 	}

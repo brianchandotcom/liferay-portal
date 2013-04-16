@@ -3,7 +3,7 @@
 		<if>
 			<condition action="Action#isAction" />
 			<then>
-				<fail />
+				<execute-fail />
 			</then>
 		</if>
 	</command>

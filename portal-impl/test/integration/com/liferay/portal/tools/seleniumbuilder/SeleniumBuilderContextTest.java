@@ -31,11 +31,13 @@ import org.junit.runner.RunWith;
 public class SeleniumBuilderContextTest {
 
 	public SeleniumBuilderContextTest() {
-		try {
-			_seleniumBuilderContext = new SeleniumBuilderContext(_BASE_DIR);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (_seleniumBuilderContext == null) {
+			try {
+				_seleniumBuilderContext = new SeleniumBuilderContext(_BASE_DIR);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 	}
 
@@ -585,6 +587,6 @@ public class SeleniumBuilderContextTest {
 	private static Log _log = LogFactoryUtil.getLog(
 		SeleniumBuilderContextTest.class);
 
-	private SeleniumBuilderContext _seleniumBuilderContext;
+	private static SeleniumBuilderContext _seleniumBuilderContext;
 
 }

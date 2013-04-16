@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
@@ -77,6 +76,8 @@ public class SampleSQLBuilder {
 		String baseDir = arguments.get("sample.sql.base.dir");
 
 		_dbType = arguments.get("sample.sql.db.type");
+		_maxAssetCategoryCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.asset.category.count"));
 		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
@@ -97,6 +98,8 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.count"));
+		_maxJournalArticlePageCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.journal.article.page.count"));
 		_maxJournalArticleSize = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.journal.article.size"));
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
@@ -124,9 +127,10 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.output.merge"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxBlogsEntryCount, _maxGroupCount,
-			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserToGroupCount);
+			baseDir, _maxAssetCategoryCount, _maxBlogsEntryCount,
+			_maxGroupCount, _maxJournalArticleCount, _maxJournalArticleSize,
+			_maxMBCategoryCount, _maxMBThreadCount, _maxMBMessageCount,
+			_maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 
@@ -332,6 +336,7 @@ public class SampleSQLBuilder {
 
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
+		put(context, "maxAssetCategoryCount", _maxAssetCategoryCount);
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
@@ -342,6 +347,7 @@ public class SampleSQLBuilder {
 		put(context, "maxDLFolderDepth", _maxDLFolderDepth);
 		put(context, "maxGroupCount", _maxGroupCount);
 		put(context, "maxJournalArticleCount", _maxJournalArticleCount);
+		put(context, "maxJournalArticlePageCount", _maxJournalArticlePageCount);
 		put(
 			context, "maxJournalArticleVersionCount",
 			_maxJournalArticleVersionCount);
@@ -353,7 +359,6 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
-		put(context, "stringUtil", StringUtil_IW.getInstance());
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
@@ -484,6 +489,7 @@ public class SampleSQLBuilder {
 		new ConcurrentHashMap<String, StringBundler>();
 	private Map<String, Writer> _insertSQLWriters =
 		new ConcurrentHashMap<String, Writer>();
+	private int _maxAssetCategoryCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLRecordCount;
@@ -494,6 +500,7 @@ public class SampleSQLBuilder {
 	private int _maxDLFolderDepth;
 	private int _maxGroupCount;
 	private int _maxJournalArticleCount;
+	private int _maxJournalArticlePageCount;
 	private int _maxJournalArticleSize;
 	private int _maxJournalArticleVersionCount;
 	private int _maxMBCategoryCount;

@@ -8,6 +8,8 @@
 
 <#include "roles.ftl">
 
+<#include "asset_category.ftl">
+
 <#include "groups.ftl">
 
 <#include "counters.ftl">

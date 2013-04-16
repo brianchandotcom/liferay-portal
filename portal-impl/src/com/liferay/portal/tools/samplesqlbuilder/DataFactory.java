@@ -63,9 +63,15 @@ import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
+import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
@@ -153,15 +159,18 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, int maxBlogsEntryCount, int maxGroupsCount,
+			String baseDir, int maxAssetCategoryCount, int maxBlogsEntryCount,
+			int maxGroupsCount, int maxJournalArticleCount,
 			int maxJournalArticleSize, int maxMBCategoryCount,
 			int maxMBThreadCount, int maxMBMessageCount,
 			int maxUserToGroupCount)
 		throws Exception {
 
 		_baseDir = baseDir;
+		_maxAssetCategoryCount = maxAssetCategoryCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxGroupsCount = maxGroupsCount;
+		_maxJournalArticleCount = maxJournalArticleCount;
 		_maxMBCategoryCount = maxMBCategoryCount;
 		_maxMBThreadCount = maxMBThreadCount;
 		_maxMBMessageCount = maxMBMessageCount;
@@ -193,6 +202,7 @@ public class DataFactory {
 
 		_accountId = _counter.get();
 		_companyId = _counter.get();
+		_defaultUserId = _counter.get();
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
@@ -206,6 +216,7 @@ public class DataFactory {
 				new File(
 					_baseDir, _DEPENDENCIES_DIR + "ddm_structure_ddl.xml")));
 
+		initAssetCateogries();
 		initCompany();
 		initDLFileEntryType();
 		initGroups();
@@ -222,6 +233,21 @@ public class DataFactory {
 
 	public Role getAdministratorRole() {
 		return _administratorRole;
+	}
+
+	public List<AssetCategory> getAssetCategories() {
+		return _assetCategories;
+	}
+
+	public long getAssetCategoryId(long groupId, int currentIndex) {
+		int index = (currentIndex - 1) % _maxAssetCategoryCount;
+		index = _maxAssetCategoryCount * ((int)groupId - 1) + index;
+
+		return _assetCategories.get(index).getCategoryId();
+	}
+
+	public List<AssetVocabulary> getAssetVocabularies() {
+		return _assetVocabularies;
 	}
 
 	public long getBlogsEntryClassNameId() {
@@ -296,6 +322,18 @@ public class DataFactory {
 		return _classNamesMap.get(JournalArticle.class.getName());
 	}
 
+	public String getJournalArticleLayoutColum(String portletPrefix) {
+		StringBundler sb = new StringBundler(3 * _maxJournalArticleCount);
+
+		for (int i = 1; i <= _maxJournalArticleCount; i++) {
+			sb.append(portletPrefix);
+			sb.append(i);
+			sb.append(StringPool.COMMA);
+		}
+
+		return sb.toString();
+	}
+
 	public long getLayoutClassNameId() {
 		return _classNamesMap.get(Layout.class.getName());
 	}
@@ -314,10 +352,6 @@ public class DataFactory {
 		}
 
 		return groupIds;
-	}
-
-	public String getPortletPermissionPrimaryKey(long plid, String portletId) {
-		return PortletPermissionUtil.getPrimaryKey(plid, portletId);
 	}
 
 	public Role getPowerUserRole() {
@@ -342,6 +376,78 @@ public class DataFactory {
 
 	public long getWikiPageClassNameId() {
 		return _classNamesMap.get(WikiPage.class.getName());
+	}
+
+	public void initAssetCateogries() {
+		_assetVocabularies = new ArrayList<AssetVocabulary>();
+		_assetCategories = new ArrayList<AssetCategory>();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(PropsValues.ASSET_VOCABULARY_DEFAULT);
+		sb.append("</Title></root>");
+
+		String defaultTitle = sb.toString();
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			_assetVocabularies.add(
+				newAssetVocabulary(
+					i, _defaultUserId, null,
+					PropsValues.ASSET_VOCABULARY_DEFAULT, defaultTitle));
+
+			long lastRightCategoryId = 2;
+
+			for (int j = 0; j < _maxAssetCategoryCount; j++) {
+				sb = new StringBundler(4);
+
+				sb.append("Test_");
+				sb.append(i);
+				sb.append(StringPool.UNDERLINE);
+				sb.append(j);
+
+				String name = sb.toString();
+
+				sb = new StringBundler(5);
+
+				sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+				sb.append(
+					"available-locales=\"en_US\" default-locale=\"en_US\">");
+				sb.append("<Title language-id=\"en_US\">");
+				sb.append(name);
+				sb.append("</Title></root>");
+
+				String title = sb.toString();
+
+				AssetVocabulary assetVocabulary = newAssetVocabulary(
+					i, _sampleUserId, _SAMPLE_USER_NAME, name, title);
+
+				_assetVocabularies.add(assetVocabulary);
+
+				AssetCategory assetCategory = new AssetCategoryImpl();
+
+				assetCategory.setUuid(SequentialUUID.generate());
+				assetCategory.setCategoryId(_counter.get());
+				assetCategory.setGroupId(i);
+				assetCategory.setCompanyId(_companyId);
+				assetCategory.setUserId(_sampleUserId);
+				assetCategory.setUserName(_SAMPLE_USER_NAME);
+				assetCategory.setCreateDate(new Date());
+				assetCategory.setModifiedDate(new Date());
+				assetCategory.setParentCategoryId(
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+				assetCategory.setLeftCategoryId(lastRightCategoryId++);
+				assetCategory.setRightCategoryId(lastRightCategoryId++);
+				assetCategory.setName(name);
+				assetCategory.setTitle(title);
+				assetCategory.setVocabularyId(
+					assetVocabulary.getVocabularyId());
+
+				_assetCategories.add(assetCategory);
+			}
+		}
 	}
 
 	public void initCompany() {
@@ -507,7 +613,7 @@ public class DataFactory {
 
 	public void initUsers() {
 		_defaultUser = newUser(
-			_counter.get(), StringPool.BLANK, StringPool.BLANK,
+			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, true);
 		_guestUser = newUser(_counter.get(), "Test", "Test", "Test", false);
 		_sampleUser = newUser(
@@ -1190,17 +1296,44 @@ public class DataFactory {
 			_counter.get(), _maxMBMessageCount);
 	}
 
-	public List<PortletPreferences> newPortletPreferences(
-			long plid, JournalArticleResource journalArticleResource)
-		throws Exception {
-
+	public List<PortletPreferences> newPortletPreferences(long plid) {
 		List<PortletPreferences> portletPreferencesList =
-			new ArrayList<PortletPreferences>(3);
+			new ArrayList<PortletPreferences>(2);
 
 		portletPreferencesList.add(
 			newPortletPreferences(
 				plid, PortletKeys.DOCKBAR,
 				PortletConstants.DEFAULT_PREFERENCES));
+
+		portletPreferencesList.add(
+			newPortletPreferences(
+				plid, PortletKeys.PORTLET_CONFIGURATION,
+				PortletConstants.DEFAULT_PREFERENCES));
+
+		return portletPreferencesList;
+	}
+
+	public PortletPreferences newPortletPreferences(
+			long plid, String portletId, DDLRecordSet ddlRecordSet)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPreferences =
+			new com.liferay.portlet.PortletPreferencesImpl();
+
+		jxPreferences.setValue("editable", "true");
+		jxPreferences.setValue(
+			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+		jxPreferences.setValue("spreadsheet", "false");
+
+		return newPortletPreferences(
+			plid, portletId,
+			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+	}
+
+	public PortletPreferences newPortletPreferences(
+			long plid, String portletId,
+			JournalArticleResource journalArticleResource)
+		throws Exception {
 
 		javax.portlet.PortletPreferences jxPreferences =
 			new com.liferay.portlet.PortletPreferencesImpl();
@@ -1217,49 +1350,9 @@ public class DataFactory {
 			"groupId", String.valueOf(journalArticleResource.getGroupId()));
 		jxPreferences.setValue("showAvailableLocales", "false");
 
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.JOURNAL_CONTENT,
-				PortletPreferencesFactoryUtil.toXML(jxPreferences)));
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.PORTLET_CONFIGURATION,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		return portletPreferencesList;
-	}
-
-	public List<PortletPreferences> newPortletPreferences(
-			long plid, String ddlPortletId, DDLRecordSet ddlRecordSet)
-		throws Exception {
-
-		List<PortletPreferences> portletPreferencesList =
-			new ArrayList<PortletPreferences>(4);
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.DOCKBAR,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, PortletKeys.PORTLET_CONFIGURATION,
-				PortletConstants.DEFAULT_PREFERENCES));
-
-		javax.portlet.PortletPreferences jxPreferences =
-			new com.liferay.portlet.PortletPreferencesImpl();
-
-		jxPreferences.setValue("editable", "true");
-		jxPreferences.setValue(
-			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
-		jxPreferences.setValue("spreadsheet", "false");
-
-		portletPreferencesList.add(
-			newPortletPreferences(
-				plid, ddlPortletId,
-				PortletPreferencesFactoryUtil.toXML(jxPreferences)));
-
-		return portletPreferencesList;
+		return newPortletPreferences(
+			plid, portletId,
+			PortletPreferencesFactoryUtil.toXML(jxPreferences));
 	}
 
 	public List<Layout> newPublicLayouts(long groupId) {
@@ -1274,20 +1367,68 @@ public class DataFactory {
 		return layouts;
 	}
 
-	public List<ResourcePermission> newResourcePermission(
-		String name, String primKey) {
+	public List<ResourcePermission> newResourcePermissions(
+		AssetCategory assetCategory) {
 
-		List<ResourcePermission> resourcePermissions =
-			new ArrayList<ResourcePermission>(3);
+		return newResourcePermissions(
+			AssetCategory.class.getName(),
+			StringUtil.valueOf(assetCategory.getCategoryId()), _sampleUserId);
+	}
 
-		resourcePermissions.add(
-			newResourcePermission(name, primKey, _ownerRole.getRoleId()));
-		resourcePermissions.add(
-			newResourcePermission(name, primKey, _guestRole.getRoleId()));
-		resourcePermissions.add(
-			newResourcePermission(name, primKey, _siteMemberRole.getRoleId()));
+	public List<ResourcePermission> newResourcePermissions(
+		AssetVocabulary assetVocabulary) {
 
-		return resourcePermissions;
+		if (assetVocabulary.getUserId() == _defaultUserId) {
+			List<ResourcePermission> resourcePermissions =
+				new ArrayList<ResourcePermission>(1);
+
+			resourcePermissions.add(
+				newResourcePermission(
+					AssetVocabulary.class.getName(),
+					StringUtil.valueOf(assetVocabulary.getVocabularyId()),
+					_ownerRole.getRoleId(), _defaultUserId));
+
+			return resourcePermissions;
+		}
+
+		return newResourcePermissions(
+			AssetVocabulary.class.getName(),
+			StringUtil.valueOf(assetVocabulary.getVocabularyId()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
+		JournalArticleResource journalArticleResource) {
+
+		return newResourcePermissions(
+			JournalArticle.class.getName(),
+			StringUtil.valueOf(journalArticleResource.getResourcePrimKey()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(Layout layout) {
+		return newResourcePermissions(
+			Layout.class.getName(), StringUtil.valueOf(layout.getPlid()),
+			_sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
+		PortletPreferences portletPreferences) {
+
+		String portletId = portletPreferences.getPortletId();
+
+		String name = portletId;
+
+		int index = portletId.indexOf(StringPool.UNDERLINE);
+
+		if (index > 0) {
+			name = portletId.substring(0, index);
+		}
+
+		String primKey = PortletPermissionUtil.getPrimaryKey(
+			portletPreferences.getPlid(), portletId);
+
+		return newResourcePermissions(name, primKey, 0);
 	}
 
 	public SocialActivity newSocialActivity(DLFileEntry dlFileEntry) {
@@ -1408,6 +1549,27 @@ public class DataFactory {
 		assetEntry.setTitle(title);
 
 		return assetEntry;
+	}
+
+	protected AssetVocabulary newAssetVocabulary(
+		long grouId, long userId, String userName, String name, String title) {
+
+		AssetVocabulary assetVocabulary = new AssetVocabularyImpl();
+
+		assetVocabulary.setUuid(SequentialUUID.generate());
+		assetVocabulary.setVocabularyId(_counter.get());
+		assetVocabulary.setGroupId(grouId);
+		assetVocabulary.setCompanyId(_companyId);
+		assetVocabulary.setUserId(userId);
+		assetVocabulary.setUserName(userName);
+		assetVocabulary.setCreateDate(new Date());
+		assetVocabulary.setModifiedDate(new Date());
+		assetVocabulary.setName(name);
+		assetVocabulary.setTitle(title);
+		assetVocabulary.setSettings(
+			"multiValued=true\\nselectedClassNameIds=0");
+
+		return assetVocabulary;
 	}
 
 	protected DDMContent newDDMContent(
@@ -1609,7 +1771,7 @@ public class DataFactory {
 	}
 
 	protected ResourcePermission newResourcePermission(
-		String name, String primKey, long roleId) {
+		String name, String primKey, long roleId, long ownerId) {
 
 		ResourcePermission resourcePermission = new ResourcePermissionImpl();
 
@@ -1620,10 +1782,28 @@ public class DataFactory {
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermission.setPrimKey(primKey);
 		resourcePermission.setRoleId(roleId);
-		resourcePermission.setOwnerId(0);
+		resourcePermission.setOwnerId(ownerId);
 		resourcePermission.setActionIds(1);
 
 		return resourcePermission;
+	}
+
+	protected List<ResourcePermission> newResourcePermissions(
+		String name, String primKey, long ownerId) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(3);
+
+		resourcePermissions.add(
+			newResourcePermission(
+				name, primKey, _ownerRole.getRoleId(), ownerId));
+		resourcePermissions.add(
+			newResourcePermission(name, primKey, _guestRole.getRoleId(), 0));
+		resourcePermissions.add(
+			newResourcePermission(
+				name, primKey, _siteMemberRole.getRoleId(), 0));
+
+		return resourcePermissions;
 	}
 
 	protected Role newRole(String name, int type) {
@@ -1716,6 +1896,8 @@ public class DataFactory {
 	private Account _account;
 	private long _accountId;
 	private Role _administratorRole;
+	private List<AssetCategory> _assetCategories;
+	private List<AssetVocabulary> _assetVocabularies;
 	private String _baseDir;
 	private List<ClassName> _classNames;
 	private Map<String, Long> _classNamesMap = new HashMap<String, Long>();
@@ -1726,6 +1908,7 @@ public class DataFactory {
 	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
+	private long _defaultUserId;
 	private String _dlDDMStructureContent;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
@@ -1738,9 +1921,11 @@ public class DataFactory {
 	private List<String> _lastNames;
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
+	private int _maxAssetCategoryCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
+	private int _maxJournalArticleCount;
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;

@@ -159,6 +159,7 @@
 			<arg value="sql.dir=${basedir}" />
 			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
 			<arg value="sample.sql.db.type=hypersonic" />
+			<arg value="sample.sql.max.asset.category.count=1" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=1" />
 			<arg value="sample.sql.max.blogs.entry.count=1" />
 			<arg value="sample.sql.max.ddl.record.count=1" />
@@ -169,6 +170,7 @@
 			<arg value="sample.sql.max.dl.folder.depth=1" />
 			<arg value="sample.sql.max.group.count=1" />
 			<arg value="sample.sql.max.journal.article.count=1" />
+			<arg value="sample.sql.max.journal.article.page.count=1" />
 			<arg value="sample.sql.max.journal.article.size=1" />
 			<arg value="sample.sql.max.journal.article.version.count=1" />
 			<arg value="sample.sql.max.mb.category.count=1" />

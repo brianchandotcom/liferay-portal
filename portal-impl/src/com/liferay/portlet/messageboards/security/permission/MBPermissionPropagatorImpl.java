@@ -140,7 +140,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
 
-			if (messageId != message.getRootMessageId()) {
+			if (!message.isRoot()) {
 				return;
 			}
 

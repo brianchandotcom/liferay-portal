@@ -30,12 +30,69 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Site Membership Policy allows to customize the user membership regarding
- * sites and site roles.
+ * Provides the Site Membership Policy interface, allowing customization of user
+ * membership regarding sites and site roles.
  *
+ * <p>
  * Site Membership Policies define the sites a user is allowed to be a member
- * of, the sites the user must be a member of, the roles the user can be
- * assigned to and the roles the user must be assigned.
+ * of, the sites the user must be a member of, the site roles the user is
+ * allowed to be assigned, and the site roles the user must be assigned.
+ * </p>
+ *
+ * <p>
+ * An implementation may include any number of policies and actions to enforce
+ * those policies. The implementation may include policies and actions like the
+ * following:
+ * </p>
+ *
+ * <ul>
+ * <li>
+ * If a user is a member of the site he will automatically be a member of all
+ * its
+ * child sites.
+ * </li>
+ * <li>
+ * Only the members of the parent site can become a member of this site.
+ * </li>
+ * <li>
+ * If a user doesn't have the custom attribute A, he cannot be assigned to site
+ * B.
+ * </li>
+ * <li>
+ * If the user is added to site A, he will automatically be added to site B.
+ * </li>
+ * <li>
+ * The user must have the Administrator Role in order to be added to site "Admin
+ * Site".
+ * </li>
+ * <li>
+ * All users with the custom attribute A will automatically have the site
+ * role B.
+ * </li>
+ * <li>
+ * All the users with site role A cannot have site role B (incompatible
+ * roles).
+ * </li>
+ * </ul>
+ *
+ * <p>
+ * Liferay's core services invoke {@link #checkMembership(long[], long[],
+ * long[])} to detect policy violations before adding the users to and removing
+ * the users from the sites. On passing the check, the service proceeds with the
+ * changes and propagates appropriate related actions in the portal by invoking
+ * {@link #propagateMembership(long[], long[], long[])}. On failing the check,
+ * the service foregoes making the changes. For example, Liferay executes this
+ * logic when adding and updating sites, adding and removing users with respect
+ * to sites, and adding and removing site roles with respect to users.
+ * </p>
+ *
+ * <p>
+ * Liferay's UI calls the "is*" methods, such as {@link
+ * #isMembershipAllowed(long, long)}, to determine appropriate options to
+ * display to the user. For example, the UI calls {@link
+ * #isMembershipAllowed(long, long)} to decide whether to display the "Join"
+ * link to the user.
+ * </p>
  *
  * @author Sergio González
  * @author Roberto Díaz
@@ -43,29 +100,44 @@ import java.util.Map;
 public interface SiteMembershipPolicy {
 
 	/**
-	 * Check if the users can be added or removed from certain sites.
+	 * Checks if the users can be added to and removed from the respective
+	 * sites.
 	 *
-	 * @param  userIds the primary key of the users that are added or removed
-	 * @param  addGroupIds the primary key of the sites that the users are added
-	 *         to. (optionally <code>null</code> if the user is not added to any
-	 *         site)
-	 * @param  removeGroupIds the primary key of the sites that the users are
-	 *         removed from. (optionally <code>null</code> if the user is not
-	 *         removed from any site)
-	 * @throws PortalException
-	 * @throws SystemException
+	 * <p>
+	 * Liferay's core services call this method before adding the users to and
+	 * removing the users from the respective sites. If this method throws an
+	 * exception, the service foregoes making the changes.
+	 * </p>
+	 *
+	 * @param  userIds the primary keys of the users to be added and removed
+	 *         from the sites
+	 * @param  addGroupIds the primary keys of the sites to which the users are
+	 *         to be added (optionally <code>null</code>)
+	 * @param  removeGroupIds the primary keys of the sites from which the users
+	 *         are to be removed (optionally <code>null</code>)
+	 * @throws PortalException if any one user could not be added to a site, if
+	 *         any one user could not be removed from a site, or if a portal
+	 *         exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException;
 
 	/**
-	 * Check if certain site roles can be assigned or unassigned to users.
+	 * Checks if the site roles can be added to or removed from their users.
 	 *
-	 * @param  addUserGroupRoles the user user's group roles that are added
-	 * @param  removeUserGroupRoles the user user's group roles that are removed
-	 * @throws PortalException
-	 * @throws SystemException
+	 * <p>
+	 * Liferay's core services call this method before adding the users to and
+	 * removing the users from the respective site roles. If this method throws
+	 * an exception, the service foregoes making the changes.
+	 * </p>
+	 *
+	 * @param  addUserGroupRoles the user group roles to be added
+	 * @param  removeUserGroupRoles the user group roles to be removed
+	 * @throws PortalException if any one user group role violated the policy or
+	 *         if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -79,60 +151,72 @@ public interface SiteMembershipPolicy {
 	 * @param  groupId the primary key of the site
 	 * @return <code>true</code> if the user can be added to the site;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException, SystemException;
 
 	/**
+	 * Returns <code>true</code> if the policy prevents the user from being
+	 * removed from the site by the user associated with the permission checker.
 	 *
-	 * @param  permissionChecker
-	 * @param  userId
-	 * @param  groupId
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  permissionChecker the permission checker referencing a user
+	 * @param  userId the primary key of the user to check for protection
+	 * @param  groupId the primary key of the site
+	 * @return <code>true</code> if the policy prevents the user from being
+	 *         removed from the site by the user associated with the permission
+	 *         checker; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the site membership for the user is
-	 * mandatory.
+	 * Returns <code>true</code> if site membership for the user is mandatory.
+	 * Liferay's UI, for example, calls this method in deciding whether to
+	 * display the option to leave the site.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the site
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @return <code>true</code> if site membership for the user is mandatory;
+	 *         <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the site role can be added to the user.
+	 * Returns <code>true</code> if the role can be added to the user on the
+	 * site. Liferay's UI calls this method.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the site
 	 * @param  roleId the primary key of the role
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @return <code>true</code> if the role can be added to the user on the
+	 *         site; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException, SystemException;
 
 	/**
+	 * Returns <code>true</code> if the policy prevents the user from being
+	 * removed from the role by the user associated with the permission checker.
 	 *
-	 * @param  permissionChecker
-	 * @param  userId
-	 * @param  groupId
-	 * @param  roleId
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  permissionChecker the permission checker referencing a user
+	 * @param  userId the primary key of the user to check for protection
+	 * @param  groupId the primary key of the site
+	 * @param  roleId the primary key of the role
+	 * @return <code>true</code> if the policy prevents the user from being
+	 *         removed from the role by the user associated with the permission
+	 *         checker; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId, long groupId,
@@ -140,60 +224,79 @@ public interface SiteMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the site role is mandatory for the user.
+	 * Returns <code>true</code> if the role is mandatory for the user on the
+	 * site. If <code>true</code>, nobody can remove the role from this user on
+	 * the site. Liferay's UI calls this method.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the site
 	 * @param  roleId the primary key of the role
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @return <code>true</code> if the role is mandatory for the user on the
+	 *         site; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException, SystemException;
 
 	/**
-	 * Performs the membership policy related actions when a user is added or
-	 * removed from a site.
+	 * Performs membership policy related actions after the users are added to
+	 * and removed from the respective sites. Liferay's core services call this
+	 * method after adding and removing the users to and from the respective
+	 * sites.
 	 *
-	 * These actions needs to ensure the integrity of the membership policy from
-	 * a sites point of view.
+	 * <p>
+	 * The actions must ensure the integrity of each site's membership policy.
+	 * For example, some actions for implementations to consider performing are:
+	 * </p>
 	 *
-	 * Example of actions:
+	 * <ul>
+	 * <li>
+	 * Adding the users to the child sites of each site to which the users
+	 * were added.
+	 * </li>
+	 * <li>
+	 * Removing the users from the child sites of each site from which the users
+	 * were removed.
+	 * </li>
+	 * </ul>
 	 *
-	 * 1. Add the users to the children sites of the current site.
-	 * 2.
-	 *
-	 * @param  userIds the primary key of the users that are added or removed
-	 * @param  addGroupIds the primary key of the sites that the users are added
-	 *         to. (optionally <code>null</code> if the user is not added to any
-	 *         site)
-	 * @param  removeGroupIds the primary key of the sites that the users are
-	 *         removed from. (optionally <code>null</code> if the user is not
-	 *         removed from any site)
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  userIds the primary key of the users to be added or removed
+	 * @param  addGroupIds the primary keys of the sites to which the users were
+	 *         added (optionally <code>null</code>)
+	 * @param  removeGroupIds the primary keys of the sites from which the users
+	 *         were removed (optionally <code>null</code>)
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void propagateMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException;
 
 	/**
-	 * Performs the membership policy related actions when a site role is added
-	 * or removed from the user.
+	 * Performs membership policy related actions after the respective site
+	 * roles are added to and removed from the affected users. Liferay's core
+	 * services call this method after the roles are added to and removed from
+	 * the users.
 	 *
-	 * These actions need to ensure the integrity of the membership policy from
-	 * a site roles point of view.
+	 * <p>
+	 * The actions must ensure the membership policy of each site role. For
+	 * example, some actions for implementations to consider performing are:
+	 * </p>
 	 *
-	 * Example of actions:
+	 * <ul>
+	 * <li>
+	 * If the role A is added to a user, role B should be added too.
+	 * </li>
+	 * <li>
+	 * If the role A is removed from a user, role B should be removed too.
+	 * </li>
+	 * </ul>
 	 *
-	 * 1. If the role A is added to a user, role B should be added too.
-	 * 2. If the role A is removed from a user, role B should be removed too.
-	 *
-	 * @param  addUserGroupRoles the user user's group roles that are added
-	 * @param  removeUserGroupRoles the user user's group roles that are removed
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  addUserGroupRoles the user group roles added
+	 * @param  removeUserGroupRoles the user group roles removed
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -201,43 +304,75 @@ public interface SiteMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Check the integrity of the membership policy for all the sites of the
-	 * portal from a sites and site roles point of view.
+	 * Checks the integrity of the membership policy of each of the portal's
+	 * sites and performs operations necessary for the compliance of each site
+	 * and site role. This method is called when upgrading Liferay and can also
+	 * be triggered manually from the Control Panel.
 	 *
-	 * If necessary, perform the actions to fix the issue.
-	 *
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy() throws PortalException, SystemException;
 
 	/**
-	 * Check the integrity of the membership policy for a certain site of the
-	 * portal from a sites and site roles point of view.
+	 * Checks the integrity of the membership policy of the site and performs
+	 * operations necessary for the site's compliance.
 	 *
-	 * If necessary, perform the actions to fix the issue.
-	 *
-	 * @param  group the site
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  group the site to verify
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy(Group group)
 		throws PortalException, SystemException;
 
 	/**
-	 * Check the integrity of the membership policy for certain site from a
-	 * sites and site roles point of view when adding or updating the site.
+	 * Checks the integrity of the membership policy of the site, with respect
+	 * to its new categories, tags, expando attributes, and type settings
+	 * properties, and performs operations necessary for the compliance of the
+	 * site and its site roles. Liferay calls this method when adding and
+	 * updating sites.
 	 *
-	 * Perform the necessary operations when adding or updating a site.
+	 * <p>
+	 * The actions must ensure the integrity of the site's membership policy
+	 * based on what has changed in the categories, tags, expando attributes,
+	 * and type settings properties.
+	 * </p>
 	 *
-	 * @param  group the site
-	 * @param  oldGroup
-	 * @param  oldAssetCategories
-	 * @param  oldAssetTags
-	 * @param  oldExpandoAttributes
-	 * @param  oldTypeSettingsProperties
-	 * @throws PortalException
-	 * @throws SystemException
+	 * <p>
+	 * For example, if the membership policy is that sites with the
+	 * "admnistrator" tag should only allow administrators as users, then this
+	 * method could enforce that policy using the following logic:
+	 * </p>
+	 *
+	 * <ul>
+	 * <li>
+	 * If the old tags include the "administrator" tag and the new tags include
+	 * it too, then no action needs to be performed regarding the
+	 * policy. Note, the new tags can be obtained by calling
+	 * <code>assetTagLocalService.getTags(Group.class.getName(),
+	 * group.getGroupId());</code>.
+	 * </li>
+	 * <li>
+	 * If the old tags include the "administrator" tag and the new tags don't
+	 * include it,
+	 * then no action needs to be performed regarding the
+	 * policy, as non-administrator users need not be removed.
+	 * </li>
+	 * <li>
+	 * However, if the old tags don't include the "administrator" tag, but the
+	 * new tags include it, any site user that does not have the Administrator
+	 * role
+	 * must be removed from the site.
+	 * </li>
+	 *
+	 * @param  group the added or updated site to verify
+	 * @param  oldGroup the old site
+	 * @param  oldAssetCategories the old categories
+	 * @param  oldAssetTags the old tags
+	 * @param  oldExpandoAttributes the old expando attributes
+	 * @param  oldTypeSettingsProperties the old type settings properties
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy(
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
@@ -247,20 +382,26 @@ public interface SiteMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
+	 * Checks the integrity of the membership policy of the role and performs
+	 * operations necessary for the role's compliance.
 	 *
-	 * @param  role
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  role the role to verify
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
 	/**
+	 * Checks the integrity of the membership policy of the role, with respect
+	 * to its expando attributes, and performs operations necessary for the
+	 * role's compliance. Liferay calls this method when adding and updating
+	 * roles.
 	 *
-	 * @param  role
-	 * @param  oldRole
-	 * @param  oldExpandoAttributes
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @param  role the added or updated role to verify
+	 * @param  oldRole the old role
+	 * @param  oldExpandoAttributes the old expando attributes
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void verifyPolicy(
 			Role role, Role oldRole,

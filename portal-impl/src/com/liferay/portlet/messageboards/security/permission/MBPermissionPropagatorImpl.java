@@ -158,8 +158,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		throws Exception {
 
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
-			threadId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			threadId, WorkflowConstants.STATUS_ANY);
 
 		propagateRolePermissions(
 			actionRequest, className, messageId, roleIds,

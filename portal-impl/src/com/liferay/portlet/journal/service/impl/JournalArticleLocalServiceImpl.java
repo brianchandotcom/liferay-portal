@@ -5409,6 +5409,12 @@ public class JournalArticleLocalServiceImpl
 				continue;
 			}
 
+			if (dynamicContent.getText().isEmpty()) {
+				imageLocalService.deleteImage(imageId);
+
+				continue;
+			}
+
 			byte[] bytes = images.get(elInstanceId + "_" + elName + elLanguage);
 
 			if ((bytes != null) && (bytes.length > 0)) {

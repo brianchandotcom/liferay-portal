@@ -79,36 +79,36 @@ public class JournalArticleActivityInterpreter
 
 		if (activityType == JournalActivityKeys.ADD_ARTICLE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-add-article";
+				return "activity-journal-article-add-article";
 			}
 			else {
-				return "activity-journal-add-article-in";
+				return "activity-journal-article-add-article-in";
 			}
 		}
 		else if (activityType == JournalActivityKeys.UPDATE_ARTICLE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-update-article";
+				return "activity-journal-article-update-article";
 			}
 			else {
-				return "activity-journal-update-article-in";
+				return "activity-journal-article-update-article-in";
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-move-to-trash";
+				return "activity-journal-article-move-to-trash";
 			}
 			else {
-				return "activity-journal-move-to-trash-in";
+				return "activity-journal-article-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-restore-from-trash";
+				return "activity-journal-article-restore-from-trash";
 			}
 			else {
-				return "activity-journal-restore-from-trash-in";
+				return "activity-journal-article-restore-from-trash-in";
 			}
 		}
 

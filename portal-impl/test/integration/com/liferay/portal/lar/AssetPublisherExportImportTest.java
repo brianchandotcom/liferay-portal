@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +36,8 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 
 import java.util.HashMap;
@@ -246,6 +249,72 @@ public class AssetPublisherExportImportTest
 			StringUtil.merge(portletPreferences.getValues("scopeIds", null)));
 	}
 
+	@Test
+	public void testSortByGlobalAssetVocabulary() throws Exception {
+		doTestSortByAssetVocabulary(true);
+	}
+
+	@Test
+	public void testSortyByAssetVocabulary() throws Exception {
+		doTestSortByAssetVocabulary(false);
+	}
+
+	protected void doTestSortByAssetVocabulary(boolean globalVocabulary)
+		throws Exception {
+
+		long groupId = group.getGroupId();
+
+		if (globalVocabulary) {
+			Company company = CompanyLocalServiceUtil.getCompany(
+				layout.getCompanyId());
+
+			Group companyGroup = company.getGroup();
+
+			groupId = companyGroup.getGroupId();
+		}
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				ServiceTestUtil.getServiceContext(groupId));
+
+		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+
+		preferenceMap.put(
+			"assetVocabularyId",
+			new String[] {String.valueOf(assetVocabulary.getVocabularyId())});
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			layout, preferenceMap);
+
+		Assert.assertNotNull(
+			"assetVocabularyId preference has been lost after export/import",
+			portletPreferences.getValue("assetVocabularyId", null));
+
+		long importedAssetVocabularyId = GetterUtil.getLong(
+			portletPreferences.getValue("assetVocabularyId", null));
+
+		AssetVocabulary importedVocabulary =
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+				importedAssetVocabularyId);
+
+		Assert.assertNotNull(
+			"The vocabulary referenced by asset publisher doesn't exist",
+			importedVocabulary);
+
+		long expectedGroupId = groupId;
+
+		if (!globalVocabulary) {
+			expectedGroupId = importedGroup.getGroupId();
+		}
+
+		Assert.assertEquals(
+			"The vocabulary has been imported to the wrong group",
+			expectedGroupId, importedVocabulary.getGroupId());
+
+		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(assetVocabulary);
+	}
+
 	protected PortletPreferences getImportedPortletPreferences(
 			Layout layout, Map<String, String[]> preferenceMap)
 		throws Exception {
@@ -258,6 +327,9 @@ public class AssetPublisherExportImportTest
 
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
+		parameterMap.put(
+				PortletDataHandlerKeys.CATEGORIES,
+				new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});

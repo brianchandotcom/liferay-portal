@@ -16,13 +16,7 @@
 
 <#assign repeatable = false>
 
-<#assign myFieldValue = "true">
-
-<#if myField??>
-	<#assign myFieldValue = "${myField}">
-</#if>
-
-<#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true") && (myFieldValue == "true")>
+<#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true") && (!ignoreRepeatable?? || !ignoreRepeatable)>
 	<#assign repeatable = true>
 </#if>
 

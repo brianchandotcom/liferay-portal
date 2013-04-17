@@ -34,71 +34,17 @@
 
 		liferaySelenium.fail("${message}");
 	<#elseif name == "if">
-		if (
-			<#if element.element("condition")??>
-				<#assign actionElement = element.element("condition")>
+		<#assign ifElement = element>
 
-				<#include "action_element.ftl">
-			<#elseif element.element("contains")??>
-				<#assign containsElement = element.element("contains")>
+		<#include "macro_if_element.ftl">
 
-				<#assign string = containsElement.attributeValue("string")>
+		<#assign elseifElements = element.elements("elseif")>
 
-				<#if string?contains("${") && string?contains("}")>
-					<#assign string = string?replace("${", "\" + commandScopeVariables.get(\"")>
+		<#list elseifElements as elseifElement>
+			<#assign ifElement = elseifElement>
 
-					<#assign string = string?replace("}", "\") + \"")>
-				</#if>
-
-				<#assign substring = containsElement.attributeValue("substring")>
-
-				<#if substring?contains("${") && substring?contains("}")>
-					<#assign substring = substring?replace("${", "\" + commandScopeVariables.get(\"")>
-
-					<#assign substring = substring?replace("}", "\") + \"")>
-				</#if>
-
-				("${string}").contains("${substring}")
-			<#elseif element.element("equals")??>
-				<#assign equalsElement = element.element("equals")>
-
-				<#assign arg1 = equalsElement.attributeValue("arg1")>
-
-				<#if arg1?contains("${") && arg1?contains("}")>
-					<#assign arg1 = arg1?replace("${", "\" + commandScopeVariables.get(\"")>
-
-					<#assign arg1 = arg1?replace("}", "\") + \"")>
-				</#if>
-
-				<#assign arg2 = equalsElement.attributeValue("arg2")>
-
-				<#if arg2?contains("${") && arg2?contains("}")>
-					<#assign arg2 = arg2?replace("${", "\" + commandScopeVariables.get(\"")>
-
-					<#assign arg2 = arg2?replace("}", "\") + \"")>
-				</#if>
-
-				("${arg1}").equals("${arg2}")
-			<#elseif element.element("isset")??>
-				<#assign equalsElement = element.element("isset")>
-
-				<#assign var = equalsElement.attributeValue("var")>
-
-				<#if var?contains("${") && var?contains("}")>
-					<#assign var = var?replace("${", "\" + commandScopeVariables.get(\"")>
-
-					<#assign var = var?replace("}", "\") + \"")>
-				</#if>
-
-				commandScopeVariables.containsKey("${var}")
-			</#if>
-		) {
-			<#assign thenElement = element.element("then")>
-
-			<#assign blockElement = thenElement>
-
-			<#include "macro_block_element.ftl">
-		}
+			<#include "macro_if_element.ftl">
+		</#list>
 
 		<#if element.element("else")??>
 			<#assign elseElement = element.element("else")>

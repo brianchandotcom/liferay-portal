@@ -993,6 +993,13 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames,
 					allowedIfConditionElementNames);
 			}
+			else if (elementName.equals("elseif")) {
+				validateIfElement(
+					fileName, element, allowedBlockChildElementNames,
+					allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames,
+					allowedIfConditionElementNames);
+			}
 			else if (elementName.equals("equals")) {
 				validateSimpleElement(
 					fileName, element, new String[] {"arg1", "arg2"});

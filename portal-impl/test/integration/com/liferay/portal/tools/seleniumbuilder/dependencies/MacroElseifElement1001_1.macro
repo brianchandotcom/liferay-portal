@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<condition action="BaseLiferay#isElementPresent" />
+			<then>
+				<execute action="BaseLiferay#click" />
+			</then>
+			<elseif>
+			</elseif>
+		</if>
+	</command>
+</definition>

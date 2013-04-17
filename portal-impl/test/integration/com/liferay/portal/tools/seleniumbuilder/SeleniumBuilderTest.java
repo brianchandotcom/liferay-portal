@@ -1024,6 +1024,40 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroElseifElement1001_1() throws Exception {
+		test(
+			"MacroElseifElement1001_1.macro",
+			"Error 1001: Missing (condition|contains|equals|isset) child " +
+				"element in " + _DIR_NAME +
+				"/MacroElseifElement1001_1.macro:8");
+	}
+
+	@Test
+	public void testMacroElseifElement1001_2() throws Exception {
+		test(
+			"MacroElseifElement1001_2.macro",
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/MacroElseifElement1001_2.macro:8");
+	}
+
+	@Test
+	public void testMacroElseifElement1001_3() throws Exception {
+		test(
+			"MacroElseifElement1001_3.macro",
+			"Error 1001: Missing (condition|contains|equals|isset) child " +
+				"element in " + _DIR_NAME +
+				"/MacroElseifElement1001_3.macro:8");
+	}
+
+	@Test
+	public void testMacroElseifElement1002() throws Exception {
+		test(
+			"MacroElseifElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroElseifElement1002.macro:13");
+	}
+
+	@Test
 	public void testMacroEqualsElement1002() throws Exception {
 		test(
 			"MacroEqualsElement1002.macro",

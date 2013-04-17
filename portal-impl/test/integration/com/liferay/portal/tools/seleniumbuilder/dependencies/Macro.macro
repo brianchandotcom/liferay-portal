@@ -39,20 +39,21 @@
 			<then>
 				<execute action="BaseLiferay#click" />
 			</then>
-		</if>
-
-		<if>
-			<equals arg1="arg1" arg2="arg2" />
-			<then>
+			<elseif>
+				<equals arg1="arg1" arg2="arg2" />
+				<then>
+					<execute action="BaseLiferay#click" />
+				</then>
+			</elseif>
+			<elseif>
+				<isset var="var" />
+				<then>
+					<execute action="BaseLiferay#click" />
+				</then>
+			</elseif>
+			<else>
 				<execute action="BaseLiferay#click" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="var" />
-			<then>
-				<execute action="BaseLiferay#click" />
-			</then>
+			</else>
 		</if>
 
 		<echo message="message" />

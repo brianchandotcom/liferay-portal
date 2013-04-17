@@ -11,6 +11,20 @@ AUI.add(
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
+		var AddApplicationSearch = A.Component.create(
+			{
+				AUGMENTS: [A.AutoCompleteBase],
+				EXTENDS: A.Base,
+				NAME: 'addapplicationsearch',
+				prototype: {
+					initializer: function() {
+						this._bindUIACBase();
+						this._syncUIACBase();
+					}
+				}
+			}
+		);
+
 		var AddContent = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -25,18 +39,50 @@ AUI.add(
 
 						instance._config = config;
 
+						instance._addApplicationPanel = instance.byId('addApplicationPanel');
 						instance._addContentForm = instance.byId('addContentForm');
 						instance._closePanel = instance.byId('closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
-						instance._searchInput = instance.byId('searchInput');
+						instance._searchContentInput = instance.byId('searchContentInput');
+						instance._searchApplicationInput = instance.byId('searchApplication');
 						instance._styleButtonsList = instance.byId('styleButtons');
+
+						instance._portlets = instance._addApplicationPanel.all('.lfr-portlet-item');
+						instance._categories = instance._addApplicationPanel.all('.lfr-content-category');
+						instance._categoryContainers = instance._addApplicationPanel.all('.lfr-add-content');
 
 						instance._styleButtons = instance._styleButtonsList.all('.button');
 
+						var results = [];
+
+						instance._portlets.each(
+							function(node) {
+								results.push(
+									{
+										node: node,
+										search: node.attr('data-search')
+									}
+								);
+							}
+						);
+
+						var addApplicationSearch = new AddApplicationSearch(
+							{
+								inputNode: instance._searchApplicationInput,
+								minQueryLength: 0,
+								queryDelay: 300,
+								source: results,
+								resultFilters: 'phraseMatch',
+								resultTextLocator: 'search'
+							}
+						);
+
+						instance._addApplicationSearch = addApplicationSearch;
+
 						var addContentSearch = new AddContentSearch(
 							{
-								inputNode: instance._searchInput,
+								inputNode: instance._searchContentInput,
 								minQueryLength: 0,
 								queryDelay: 300
 							}
@@ -108,6 +154,15 @@ AUI.add(
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
 
+						instance._addApplicationSearch.on(
+							'results',
+							function(event) {
+								instance._restartSearch = true;
+
+								instance._refreshApplicationList(event);
+							}
+						);
+
 						instance._addContentSearch.after(
 							'query',
 							function(event) {
@@ -117,7 +172,9 @@ AUI.add(
 							}
 						);
 
-						instance._searchInput.on('keydown', instance._onSearchInputKeyDown, instance);
+						instance._searchContentInput.on('keydown', instance._onSearchInputKeyDown, instance);
+
+						instance._searchApplicationInput.on('keydown', instance._onSearchInputKeyDown, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
@@ -250,6 +307,52 @@ AUI.add(
 						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
 					},
 
+					_refreshApplicationList: function(event) {
+						var instance = this;
+
+						var query = event.query;
+
+						if (!query) {
+							instance._categories.addClass('lfr-collapsed');
+
+							instance._categoryContainers.show();
+							instance._portlets.show();
+						}
+						else if (query == '*') {
+							instance._categories.removeClass('lfr-collapsed');
+
+							instance._categoryContainers.show();
+							instance._portlets.show();
+						}
+						else {
+							instance._categories.addClass('lfr-collapsed');
+
+							instance._categoryContainers.hide();
+							instance._portlets.hide();
+
+							A.each(
+								event.results,
+								function(result) {
+									var node = result.raw.node;
+
+									node.show();
+
+									var categoryParent = node.ancestorsByClassName('lfr-content-category');
+
+									if (categoryParent) {
+										categoryParent.removeClass('lfr-collapsed');
+									}
+
+									var contentParent = node.ancestorsByClassName('lfr-add-content');
+
+									if (contentParent) {
+										contentParent.show();
+									}
+								}
+							);
+						}
+					},
+
 					_refreshContentList: function(event) {
 						var instance = this;
 
@@ -266,7 +369,7 @@ AUI.add(
 								data: {
 									delta: instance._numItems.val(),
 									displayStyle: displayStyle,
-									keywords: instance._searchInput.val(),
+									keywords: instance._searchContentInput.val(),
 									viewEntries: true,
 									viewPreview: false
 								}
@@ -291,11 +394,12 @@ AUI.add(
 			}
 		);
 
+		Dockbar.AddApplicationSearch = AddApplicationSearch;
 		Dockbar.AddContent = AddContent;
 		Dockbar.AddContentSearch = AddContentSearch;
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-request', 'aui-tooltip', 'autocomplete-base', 'event-mouseenter', 'liferay-dockbar', 'liferay-layout-configuration', 'liferay-portlet-base']
+		requires: ['aui-dialog', 'aui-io-request', 'aui-tooltip', 'autocomplete-base', 'autocomplete-filters', 'event-mouseenter', 'liferay-dockbar', 'liferay-layout-configuration', 'liferay-portlet-base']
 	}
 );

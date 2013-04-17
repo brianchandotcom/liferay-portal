@@ -10,10 +10,6 @@
 			var DDM = A.DD.DDM;
 			var Layout = Liferay.Layout;
 
-			var CSS_REPAINT = 'lfr-helper-repaint';
-
-			var FORCE_REPAINT = (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() === 9);
-
 			A.mix(
 				LayoutConfiguration,
 				{
@@ -24,103 +20,6 @@
 					init: function() {
 						var instance = this;
 
-						var menu = A.one('#portal_add_panel');
-
-						instance.menu = menu;
-
-						var searchInput = A.one('#layout_configuration_content');
-
-						instance._searchInput = searchInput;
-
-						if (menu) {
-							instance.portlets = menu.all('.lfr-portlet-item');
-							instance.categories = menu.all('.lfr-content-category');
-							instance.categoryContainers = menu.all('.lfr-add-content');
-
-							var data = function(node) {
-								var id = node.attr('id');
-
-								var dataNode = A.one('#' + id + 'CategoryPath');
-
-								var value = (dataNode && dataNode.val()) || '';
-
-								return [Util.uncamelize(value), value].join(' ').toLowerCase();
-							};
-
-							var isVisible = function(item, index, collection) {
-								return !item.hasClass('aui-helper-hidden');
-							};
-
-							new A.LiveSearch(
-								{
-									data: data,
-									hide: function(node) {
-										node.hide();
-									},
-									input: searchInput,
-									nodes: '#portal_add_panel .lfr-portlet-item',
-									show: function(node) {
-										node.show();
-
-										var categoryParent = node.ancestorsByClassName('lfr-content-category');
-										var contentParent = node.ancestorsByClassName('lfr-add-content');
-
-										if (categoryParent) {
-											categoryParent.show();
-										}
-
-										if (contentParent) {
-											contentParent.replaceClass('collapsed', 'expanded');
-											contentParent.show();
-										}
-									}
-								}
-							);
-
-							var body = A.getBody();
-
-							var repaintTask = A.debounce(body.toggleClass, 10, body, CSS_REPAINT);
-
-							new A.LiveSearch(
-								{
-									after: {
-										search: function(event) {
-											if (!this.query) {
-												instance.categories.hide();
-												instance.categoryContainers.replaceClass('expanded', 'collapsed');
-												instance.categoryContainers.show();
-											}
-
-											if (this.query == '*') {
-												instance.categories.show();
-												instance.categoryContainers.replaceClass('collapsed', 'expanded');
-												instance.categoryContainers.show();
-
-												instance.portlets.show();
-											}
-
-											if (FORCE_REPAINT) {
-												repaintTask();
-											}
-										}
-									},
-									data: data,
-									hide: function(node) {
-										var children = node.all('.lfr-content-category > li');
-
-										var action = 'hide';
-
-										if (children.some(isVisible)) {
-											action = 'show';
-										}
-
-										node[action]();
-									},
-									input: searchInput,
-									nodes: '#portal_add_panel .lfr-add-content'
-								}
-							);
-						}
 					},
 
 					_addPortlet: function(portlet, options) {
@@ -195,7 +94,7 @@
 					_eachPortletEntry: function(portletId, callback) {
 						var instance = this;
 
-						var portlets = A.all('[portletid=' + portletId + ']');
+						var portlets = A.all('[data-portlet-id=' + portletId + ']');
 
 						portlets.each(callback);
 					},
@@ -217,10 +116,10 @@
 						var portletMetaData = portlet._LFR_portletMetaData;
 
 						if (!portletMetaData) {
-							var instanceable = (portlet.attr('instanceable') == 'true');
-							var plid = portlet.attr('plid');
-							var portletId = portlet.attr('portletId');
-							var portletItemId = portlet.attr('portletItemId');
+							var instanceable = (portlet.attr('data-instanceable') == 'true');
+							var plid = portlet.attr('data-plid');
+							var portletId = portlet.attr('data-portlet-id');
+							var portletItemId = portlet.attr('data-portlet-item-id');
 							var portletUsed = portlet.hasClass('lfr-portlet-used');
 
 							portletMetaData = {
@@ -248,89 +147,73 @@
 
 						instance._dialogBody = A.one('#portal_add_panel');
 
-						Liferay.on('closePortlet', instance._onPortletClose, instance);
+						if (instance._dialogBody) {
+							Liferay.on('closePortlet', instance._onPortletClose, instance);
 
-						instance._portletItems = instance._dialogBody.all('div.lfr-portlet-item');
+							instance._portletItems = instance._dialogBody.all('div.lfr-portlet-item');
 
-						var portlets = instance._portletItems;
+							var portlets = instance._portletItems;
 
-						var dialogBody = instance._dialogBody;
-
-						dialogBody.delegate(
-							'click',
-							function(event) {
-								var link = event.currentTarget;
-								var portlet = link.ancestor('.lfr-portlet-item');
-
-								instance._addPortlet(portlet);
-							},
-							'.lfr-portlet-item a'
-						);
-
-						var portletItem = null;
-						var layoutOptions = Layout.options;
-
-						var portletItemOptions = {
-							delegateConfig: {
-								container: '#portal_add_panel',
-								dragConfig: {
-									clickPixelThresh: 0,
-									clickTimeThresh: 0
-								},
-								invalid: '.lfr-portlet-used',
-								target: false
-							},
-							dragNodes: '.lfr-portlet-item',
-							dropContainer: function(dropNode) {
-								return dropNode.one(layoutOptions.dropContainer);
-							},
-							on: Layout.DEFAULT_LAYOUT_OPTIONS.on
-						};
-
-						if (themeDisplay.isFreeformLayout()) {
-							portletItem = new Layout.FreeFormPortletItem(portletItemOptions);
-						}
-						else {
-							portletItem = new Layout.PortletItem(portletItemOptions);
-						}
-
-						if (Browser.isIe()) {
-							dialogBody.delegate(
-								'mouseenter',
-								function(event) {
-									event.currentTarget.addClass('over');
-								},
-								'.lfr-portlet-item'
-							);
+							var dialogBody = instance._dialogBody;
 
 							dialogBody.delegate(
-								'mouseleave',
+								'click',
 								function(event) {
-									event.currentTarget.removeClass('over');
+									var link = event.currentTarget;
+									var portlet = link.ancestor('.lfr-portlet-item');
+
+									if (!portlet.hasClass('lfr-portlet-used')) {
+										instance._addPortlet(portlet);
+									}
 								},
-								'.lfr-portlet-item'
+								'.lfr-portlet-item a'
 							);
+
+							var portletItem = null;
+							var layoutOptions = Layout.options;
+
+							var portletItemOptions = {
+								delegateConfig: {
+									container: '#portal_add_panel',
+									dragConfig: {
+										clickPixelThresh: 0,
+										clickTimeThresh: 0
+									},
+									invalid: '.lfr-portlet-used',
+									target: false
+								},
+								dragNodes: '.lfr-portlet-item',
+								dropContainer: function(dropNode) {
+									return dropNode.one(layoutOptions.dropContainer);
+								},
+								on: Layout.DEFAULT_LAYOUT_OPTIONS.on
+							};
+
+							if (themeDisplay.isFreeformLayout()) {
+								portletItem = new Layout.FreeFormPortletItem(portletItemOptions);
+							}
+							else {
+								portletItem = new Layout.PortletItem(portletItemOptions);
+							}
+
+							if (Browser.isIe()) {
+								dialogBody.delegate(
+									'mouseenter',
+									function(event) {
+										event.currentTarget.addClass('over');
+									},
+									'.lfr-portlet-item'
+								);
+
+								dialogBody.delegate(
+									'mouseleave',
+									function(event) {
+										event.currentTarget.removeClass('over');
+									},
+									'.lfr-portlet-item'
+								);
+							}
 						}
-
-						dialogBody.delegate(
-							'click',
-							function(event) {
-								var heading = event.currentTarget.ancestor('.lfr-add-content');
-
-								var category = heading.one('> .lfr-content-category');
-
-								if (category) {
-									category.toggle();
-								}
-
-								if (heading) {
-									heading.toggleClass('collapsed').toggleClass('expanded');
-								}
-							},
-							'.lfr-add-content .lfr-title-category > h2'
-						);
-
-						Util.focusFormField(instance._searchInput);
 					},
 
 					_onPortletClose: function(event) {
@@ -339,10 +222,10 @@
 						var panel = instance._dialogBody;
 
 						if (panel) {
-							var item = panel.one('.lfr-portlet-item[plid=' + event.plid + '][portletId=' + event.portletId + '][instanceable=false]');
+							var item = panel.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
 							if (item && item.hasClass('lfr-portlet-used')) {
-								var portletId = item.attr('portletId');
+								var portletId = item.attr('data-portlet-id');
 
 								instance._enablePortletEntry(portletId);
 							}
@@ -517,7 +400,7 @@
 		},
 		'',
 		{
-			requires: ['aui-live-search', 'dd', 'liferay-layout']
+			requires: ['dd', 'liferay-layout']
 		}
 	);
 

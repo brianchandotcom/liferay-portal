@@ -1421,7 +1421,7 @@ public class SeleneseToJavaBuilder {
 
 			FileUtil.write(file, content);
 		}
-	};
+	}
 
 	private static final String[] _FIX_PARAM_NEW_SUBS = {"\\n", "\\n"};
 

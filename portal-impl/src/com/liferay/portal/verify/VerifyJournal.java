@@ -280,6 +280,7 @@ public class VerifyJournal extends VerifyProcess {
 				JournalArticleLocalServiceUtil.checkStructure(
 					groupId, articleId, version);
 			}
+
 		};
 
 		actionableDynamicQuery.performActions();

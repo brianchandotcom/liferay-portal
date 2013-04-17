@@ -1185,6 +1185,7 @@ public class ProcessExecutorTest {
 
 			serverSocket.setReuseAddress(true);
 		}
+
 	};
 
 	private static class AttachChildProcessCallable1

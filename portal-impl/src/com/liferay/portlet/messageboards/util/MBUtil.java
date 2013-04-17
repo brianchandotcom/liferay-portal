@@ -940,6 +940,7 @@ public class MBUtil {
 
 				return null;
 			}
+
 		};
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
@@ -973,6 +974,7 @@ public class MBUtil {
 
 				return null;
 			}
+
 		};
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
@@ -1003,6 +1005,7 @@ public class MBUtil {
 
 				return null;
 			}
+
 		};
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
@@ -1032,6 +1035,7 @@ public class MBUtil {
 
 				return null;
 			}
+
 		};
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);

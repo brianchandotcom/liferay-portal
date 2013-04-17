@@ -8,6 +8,8 @@
 
 		<execute action="Dockbar#click" locator-key1="ADD_PORTLET" />
 
+		<execute action="Dockbar#click" locator-key1="APPLICATION_LINK" />
+
 		<execute action="Dockbar#type" locator-key1="APPLICATION_SEARCH" value1="${portletName}" />
 
 		<execute action="Dockbar#click" locator1="//li[@title='${portletName}']/p/a" value1="Add" />

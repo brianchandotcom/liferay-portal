@@ -47,7 +47,23 @@
 </tr>
 <tr>
 	<td>ADD_PORTLET</td>
-	<td>//a[@id='_145_addApplication']</td>
+	<td>//a[@id='_145_addPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_LINK</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_SEARCH</td>
+	<td>//input[@id='layout_configuration_content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,6 +72,11 @@
 	<td></td>
 </tr>
 <!--APPLICATION-->
+<tr>
+	<td>APPLICATION_LINK</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Applications')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>APPLICATION_SEARCH</td>
 	<td>//input[@id='layout_configuration_content']</td>

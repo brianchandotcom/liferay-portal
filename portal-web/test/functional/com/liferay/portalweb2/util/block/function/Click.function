@@ -11,6 +11,12 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 
+	<command name="clickAtApplicationSearch">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
+
+		<execute function="Click#clickAt" />
+	</command>
+
 	<command name="partialTextClickAt">
 		<execute function="AssertTextEquals#assertPartialText" />
 
@@ -71,5 +77,11 @@
 		<execute function="AssertTextEquals#assertValue" />
 
 		<execute selenium="clickAtAndWait" />
+	</command>
+
+	<command name="valueClickAtAndWaitCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="Click#valueClickAtAndWait" />
 	</command>
 </definition>

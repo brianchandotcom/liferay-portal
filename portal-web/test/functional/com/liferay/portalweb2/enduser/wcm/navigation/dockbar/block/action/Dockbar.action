@@ -4,13 +4,16 @@
 			<execute function="Click#textClickAt" value1="Page" />
 		</case>
 		<case locator-key1="ADD_PORTLET">
-			<execute function="Click#partialTextClickAt" value1="More" />
+			<execute function="Click#partialTextClickAt" value1="Content and Applications" />
 		</case>
 		<case locator-key1="GO_TO_CONTROL_PANEL">
 			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
 		</case>
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
+		</case>
+		<case locator-key1="APPLICATION_LINK">
+			<execute function="Click#clickAtApplicationSearch" />
 		</case>
 	</command>
 

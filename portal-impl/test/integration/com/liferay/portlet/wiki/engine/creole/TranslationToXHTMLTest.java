@@ -14,13 +14,14 @@
 
 package com.liferay.portlet.wiki.engine.creole;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.mockito.ReturnArgumentCalledAnswer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,21 +30,47 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class TranslationToXHTMLTest {
+
+@PrepareForTest(HtmlUtil.class)
+@RunWith(PowerMockRunner.class)
+public class TranslationToXHTMLTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		mockStatic(HtmlUtil.class);
+
+		when(
+			HtmlUtil.escape(Mockito.anyString())
+		).then(
+			new ReturnArgumentCalledAnswer<String>(0)
+		);
+	}
+
+	@After
+	public void tearDown() {
+		verifyStatic();
+	}
 
 	@Test
 	public void testEscapedEscapedCharacter() {
 		Assert.assertEquals(
-			"<p>~&#034;~ is escaped&#034; </p>", translate("escape-2.creole"));
+			"<p>~\"~ is escaped\" </p>", translate("escape-2.creole"));
 	}
 
 	@Test

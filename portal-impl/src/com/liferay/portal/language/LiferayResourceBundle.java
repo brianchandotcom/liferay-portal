@@ -115,6 +115,7 @@ public class LiferayResourceBundle extends ResourceBundle {
 					throw new NoSuchElementException();
 				}
 			}
+
 		};
 	}
 

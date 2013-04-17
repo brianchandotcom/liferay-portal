@@ -92,6 +92,7 @@ public class CodeCoverageAssertor implements TestRule {
 							new Class<?>[assertClasses.size()]));
 				}
 			}
+
 		};
 	}
 

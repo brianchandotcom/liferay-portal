@@ -727,7 +727,7 @@
 
 			var liferayForm = Liferay.Form.get(form.attr('id'));
 
-			if (liferayForm) {
+			if (liferayForm && !event.skipValidation) {
 				var validator = liferayForm.formValidator;
 
 				if (A.instanceOf(validator, A.FormValidator)) {
@@ -1943,14 +1943,15 @@
 	Liferay.provide(
 		window,
 		'submitForm',
-		function(form, action, singleSubmit) {
+		function(form, action, singleSubmit, skipValidation) {
 			if (!Util._submitLocked) {
 				Liferay.fire(
 					'submitForm',
 					{
 						form: A.one(form),
 						action: action,
-						singleSubmit: singleSubmit
+						singleSubmit: singleSubmit,
+						skipValidation: skipValidation
 					}
 				);
 			}

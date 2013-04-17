@@ -705,7 +705,7 @@ if (Validator.isNotNull(content)) {
 					document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
 					document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
 
-					submitForm(document.<portlet:namespace />fm1);
+					submitForm(document.<portlet:namespace />fm1, null, false, true);
 				}
 			}
 		);

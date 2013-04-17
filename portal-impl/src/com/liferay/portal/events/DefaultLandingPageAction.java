@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
@@ -61,13 +63,28 @@ public class DefaultLandingPageAction extends Action {
 				PropsKeys.DEFAULT_LANDING_PAGE_PATH + StringPool.EQUAL + path);
 		}
 
-		if (Validator.isNotNull(path)) {
-			LastPath lastPath = new LastPath(StringPool.BLANK, path);
-
-			HttpSession session = request.getSession();
-
-			session.setAttribute(WebKeys.LAST_PATH, lastPath);
+		if (Validator.isNull(path)) {
+			return;
 		}
+
+		HttpSession session = request.getSession();
+
+		if (path.contains("[$SCREEN_NAME$]")) {
+
+			User user = (User)session.getAttribute(WebKeys.USER);
+
+			if (user == null) {
+				return;
+			}
+
+			String screenName = user.getScreenName();
+
+			path = StringUtil.replace(path, "[$SCREEN_NAME$]", screenName);
+		}
+
+		LastPath lastPath = new LastPath(StringPool.BLANK, path);
+
+		session.setAttribute(WebKeys.LAST_PATH, lastPath);
 
 		// The commented code shows how you can programmaticaly set the user's
 		// landing page. You can modify this class to utilize a custom algorithm

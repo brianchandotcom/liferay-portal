@@ -324,17 +324,6 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 				);
 			}
 		}
-
-		function updatePalette() {
-			var selectedLanguage = getSelectedLanguage();
-
-			if ((selectedLanguage === 'ftl') || (selectedLanguage === 'vm')) {
-				showPalette();
-			}
-			else {
-				hidePalette();
-			}
-		}
 	</c:if>
 
 	function getEditorContent() {
@@ -348,11 +337,18 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	}
 
 	function onTemplateLanguageChange(event) {
-		<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-			updatePalette(event);
+		document.<portlet:namespace />fm.<portlet:namespace />cmd.value = '';
+
+		if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
+			Liferay.fire('<portlet:namespace />saveTemplate');
+		}
+		<c:if test="<%= template == null %>">
+			else {
+				document.<portlet:namespace />fm.<portlet:namespace />scriptContent.value = '';
+			}
 		</c:if>
 
-		updateEditorPlugins(event);
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function setEditorContent(content) {
@@ -361,25 +357,29 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 		prevEditorContent = content;
 	}
 
-	function updateEditorPlugins(event) {
+	function setEditorPlugins(event) {
 		var selectedOptionValue = getSelectedLanguage();
 
 		var processor;
 
-		if (selectedOptionValue === 'ftl') {
-			processor = new A.AceEditor.AutoCompleteFreemarker(
-				{
-					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
-				}
-			);
-		}
-		else if (selectedOptionValue === 'vm') {
-			processor = new A.AceEditor.AutoCompleteVelocity(
-				{
-					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
-				}
-			);
-		}
+		<c:choose>
+			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_FTL )%>">
+				processor = new A.AceEditor.AutoCompleteFreemarker(
+					{
+						variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
+					}
+				);
+
+			</c:when>
+			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_VM )%>">
+				processor = new A.AceEditor.AutoCompleteVelocity(
+					{
+						variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
+					}
+				);
+
+			</c:when>
+		</c:choose>
 
 		if (processor) {
 			richEditor.unplug(ACPlugin);
@@ -430,7 +430,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 
 			selectLanguageNode.on('change', onTemplateLanguageChange);
 
-			updateEditorPlugins();
+			setEditorPlugins();
 
 			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');

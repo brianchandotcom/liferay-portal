@@ -5731,16 +5731,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (company.isSystem()) {
+		if (company.isSystem() || (company.getMaxUsers() == 0)) {
 			return;
 		}
 
-		if ((company.getMaxUsers() > 0) &&
-			(company.getMaxUsers() <=
-				searchCount(
-					companyId, null, WorkflowConstants.STATUS_APPROVED,
-					null))) {
+		int userCount = searchCount(
+			companyId, null, WorkflowConstants.STATUS_APPROVED, null);
 
+		if (userCount > company.getMaxUsers()) {
 			throw new CompanyMaxUsersException();
 		}
 	}

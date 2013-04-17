@@ -72,18 +72,12 @@ for (String portletId : portletIds) {
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 
 if (!categories.isEmpty() || !portlets.isEmpty()) {
+	String id = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
+	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName());
 %>
 
-	<div class="lfr-add-content <%= layout.isTypePortlet() ? "collapsed" : "" %>" id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>">
-		<div class="lfr-title-category">
-			<h2>
-				<a href="javascript:;">
-					<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName()) %>
-				</a>
-			</h2>
-		</div>
-
-		<ul class="lfr-content-category <%= layout.isTypePortlet() ? "aui-helper-hidden" : "" %>">
+	<div class="lfr-add-content">
+		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= id %>" persistState="<%= true %>" title="<%= title %>">
 
 			<%
 			for (PortletCategory category : categories) {
@@ -125,18 +119,38 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 				<c:choose>
 					<c:when test="<%= layout.isTypePortlet() %>">
-						<li
-							class="lfr-portlet-item <c:if test="<%= portletLocked %>">lfr-portlet-used</c:if> <c:if test="<%= portletInstanceable %>">lfr-instanceable</c:if>"
-							id="<portlet:namespace />portletItem<%= portlet.getPortletId() %>"
-							instanceable="<%= portletInstanceable %>"
-							plid="<%= plid %>"
-							portletId="<%= portlet.getPortletId() %>"
-							title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-						>
-							<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %> <a href="javascript:;"><liferay-ui:message key="add" /></a></p>
-						</li>
 
-						<input id="<portlet:namespace />portletItem<%= portlet.getPortletId() %>CategoryPath" type="hidden" value="<%= divId.toString().replace(':', '-') %>" />
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
+						data.put("instanceable", portletInstanceable);
+						data.put("plid", plid);
+						data.put("portlet-id", portlet.getPortletId());
+						data.put("search", divId.toString().replace(':', '-'));
+						data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+
+						String cssClass = "lfr-portlet-item";
+
+						if (portletLocked) {
+							cssClass += " lfr-portlet-used";
+						}
+
+						if (portletInstanceable) {
+							cssClass += " lfr-instanceable";
+						}
+						%>
+
+						<liferay-ui:app-view-entry
+							cssClass="<%= cssClass %>"
+							data="<%= data %>"
+							displayStyle="list"
+							showCheckbox="<%= false %>"
+							showLinkTitle="<%= false %>"
+							thumbnailSrc=""
+							title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+							url="javascript:;"
+						/>
 
 						<%
 						List<PortletItem> portletItems = PortletItemLocalServiceUtil.getPortletItems(themeDisplay.getScopeGroupId(), portlet.getPortletId(), com.liferay.portal.model.PortletPreferences.class.getName());
@@ -154,21 +168,28 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							while (matcher.find()) {
 								divId.append(matcher.group());
 							}
+
+							Map<String, Object> portletItemData = new HashMap<String, Object>();
+
+							portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
+							portletItemData.put("instanceable", portletInstanceable);
+							portletItemData.put("plid", plid);
+							portletItemData.put("portlet-id", portlet.getPortletId());
+							portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
+							portletItemData.put("search", divId.toString().replace(':', '-'));
+							portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
 						%>
 
-							<li
-								class="lfr-portlet-item lfr-archived-setup"
-								id="<portlet:namespace />portletItem<%= portletItem.getPortletItemId() %>"
-								instanceable="<%= portletInstanceable %>"
-								plid="<%= plid %>"
-								portletId="<%= portlet.getPortletId() %>"
-								portletItemId="<%= portletItem.getPortletItemId() %>"
+							<liferay-ui:app-view-entry
+								cssClass="lfr-portlet-item lfr-archived-setup"
+								data="<%= portletItemData %>"
+								displayStyle="list"
+								showCheckbox="<%= false %>"
+								showLinkTitle="<%= false %>"
+								thumbnailSrc=""
 								title="<%= HtmlUtil.escape(portletItem.getName()) %>"
-							>
-								<p><%= HtmlUtil.escape(portletItem.getName()) %> <a href="javascript:;"><liferay-ui:message key="add" /></a></p>
-							</li>
-
-							<input id="<portlet:namespace />portletItem<%= portletItem.getPortletItemId() %>CategoryPath" type="hidden" value="<%= divId.toString().replace(':', '-') %>" />
+								url="javascript:;"
+							/>
 
 						<%
 						}
@@ -186,7 +207,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 			}
 			%>
 
-		</ul>
+		 </liferay-ui:panel>
 	</div>
 
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />

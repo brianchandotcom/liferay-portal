@@ -67,6 +67,13 @@ public class ExportImportPathUtil {
 	}
 
 	public static String getModelPath(
+		long groupId, String className, long classPK) {
+
+		return getModelPath(
+			_PATH_PREFIX_GROUP, groupId, className, classPK, null);
+	}
+
+	public static String getModelPath(
 		PortletDataContext portletDataContext, String className, long classPK) {
 
 		return getModelPath(portletDataContext, className, classPK, null);

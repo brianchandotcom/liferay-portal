@@ -33,9 +33,11 @@ import java.util.Date;
 public class PollsQuestionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PollsQuestion> {
 
+	public static final String[] CLASS_NAMES = {PollsQuestion.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return PollsQuestion.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

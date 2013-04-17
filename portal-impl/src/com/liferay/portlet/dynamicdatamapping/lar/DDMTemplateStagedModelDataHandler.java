@@ -54,9 +54,11 @@ import java.util.Map;
 public class DDMTemplateStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMTemplate> {
 
+	public static final String[] CLASS_NAMES = {DDMTemplate.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return DDMTemplate.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	protected DDMTemplate addTemplate(

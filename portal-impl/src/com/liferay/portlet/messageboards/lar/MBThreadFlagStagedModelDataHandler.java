@@ -40,9 +40,11 @@ import java.util.Map;
 public class MBThreadFlagStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBThreadFlag> {
 
+	public static final String[] CLASS_NAMES = {MBThreadFlag.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MBThreadFlag.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

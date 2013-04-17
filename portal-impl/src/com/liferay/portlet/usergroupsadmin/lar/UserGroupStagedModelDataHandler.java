@@ -28,9 +28,11 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 public class UserGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<UserGroup> {
 
+	public static final String[] CLASS_NAMES = {UserGroup.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return UserGroup.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

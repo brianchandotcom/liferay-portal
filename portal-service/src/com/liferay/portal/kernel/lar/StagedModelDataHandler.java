@@ -26,7 +26,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
-	public String getClassName();
+	public String[] getClassNames();
 
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)

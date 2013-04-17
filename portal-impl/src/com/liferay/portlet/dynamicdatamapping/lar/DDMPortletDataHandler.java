@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -36,13 +37,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -328,11 +329,8 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 
 				beginPos = currentLocation;
 
-				DLPortletDataHandler.exportFileEntry(
-					portletDataContext, dlFileEntryTypesElement,
-					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-					dlRepositoriesElement, dlRepositoryEntriesElement,
-					fileEntry, checkDateRange);
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, fileEntry);
 
 				Element dlReferenceElement = entityElement.addElement(
 					"dl-reference");
@@ -344,13 +342,13 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 				String path = null;
 
 				if (fileEntry.isDefaultRepository()) {
-					path = DLPortletDataHandler.getFileEntryPath(
-						portletDataContext, fileEntry);
+					path = ExportImportPathUtil.getModelPath(
+						(DLFileEntry)fileEntry.getModel());
 
 				}
 				else {
-					path = DLPortletDataHandler.getRepositoryEntryPath(
-						portletDataContext, fileEntry.getFileEntryId());
+					path = ExportImportPathUtil.getModelPath(
+						(RepositoryEntry)fileEntry.getModel());
 				}
 
 				dlReferenceElement.addAttribute("path", path);

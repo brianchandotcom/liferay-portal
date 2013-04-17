@@ -37,9 +37,11 @@ import java.util.Map;
 public class PollsVoteStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PollsVote> {
 
+	public static final String[] CLASS_NAMES = {PollsVote.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return PollsVote.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

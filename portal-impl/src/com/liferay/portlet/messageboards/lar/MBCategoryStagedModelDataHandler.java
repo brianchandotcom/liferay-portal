@@ -34,9 +34,11 @@ import java.util.Map;
 public class MBCategoryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBCategory> {
 
+	public static final String[] CLASS_NAMES = {MBCategory.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MBCategory.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override
@@ -106,7 +108,8 @@ public class MBCategoryStagedModelDataHandler
 			(parentCategoryId == category.getParentCategoryId())) {
 
 			String parentCategoryPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, getClassName(), parentCategoryId);
+				portletDataContext, MBCategory.class.getName(),
+				parentCategoryId);
 
 			MBCategory parentCategory =
 				(MBCategory)portletDataContext.getZipEntryAsObject(

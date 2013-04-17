@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.StagedModel;
 
 /**
@@ -60,12 +60,12 @@ public class StagedModelDataHandlerUtil {
 	private static <T extends StagedModel> StagedModelDataHandler<T>
 		_getStagedModelDataHandler(T stagedModel) {
 
-		BaseModel<?> baseModel = (BaseModel<?>)stagedModel;
+		ClassedModel classedModel = (ClassedModel)stagedModel;
 
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			(StagedModelDataHandler<T>)
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					baseModel.getModelClassName());
+					classedModel.getModelClassName());
 
 		return stagedModelDataHandler;
 	}

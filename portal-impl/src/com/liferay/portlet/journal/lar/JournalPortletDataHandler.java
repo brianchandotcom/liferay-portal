@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -54,7 +55,9 @@ import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
@@ -89,7 +92,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -964,72 +966,55 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element entityElement)
 		throws Exception {
 
-		Element dlRepositoriesElement = entityElement.element(
-			"dl-repositories");
+		Element dlRepositoriesElement =
+			portletDataContext.getImportDataGroupElement(Repository.class);
 
-		List<Element> dlRepositoryElements = Collections.emptyList();
-
-		if (dlRepositoriesElement != null) {
-			dlRepositoryElements = dlRepositoriesElement.elements("repository");
-		}
+		List<Element> dlRepositoryElements = dlRepositoriesElement.elements();
 
 		for (Element repositoryElement : dlRepositoryElements) {
-			DLPortletDataHandler.importRepository(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, repositoryElement);
 		}
 
-		Element dlRepositoryEntriesElement = entityElement.element(
-			"dl-repository-entries");
+		Element dlRepositoryEntriesElement =
+			portletDataContext.getImportDataGroupElement(RepositoryEntry.class);
 
-		List<Element> dlRepositoryEntryElements = Collections.emptyList();
-
-		if (dlRepositoryEntriesElement != null) {
-			dlRepositoryEntryElements = dlRepositoryEntriesElement.elements(
-				"repository-entry");
-		}
+		List<Element> dlRepositoryEntryElements =
+			dlRepositoryEntriesElement.elements();
 
 		for (Element repositoryEntryElement : dlRepositoryEntryElements) {
-			DLPortletDataHandler.importRepositoryEntry(
-				portletDataContext, repositoryEntryElement);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, entityElement);
 		}
 
-		Element dlFoldersElement = entityElement.element("dl-folders");
+		Element dlFoldersElement = portletDataContext.getImportDataGroupElement(
+			DLFolder.class);
 
-		List<Element> dlFolderElements = Collections.emptyList();
-
-		if (dlFoldersElement != null) {
-			dlFolderElements = dlFoldersElement.elements("folder");
-		}
+		List<Element> dlFolderElements = dlFoldersElement.elements();
 
 		for (Element folderElement : dlFolderElements) {
-			DLPortletDataHandler.importFolder(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, folderElement);
 		}
 
-		Element dlFileEntriesElement = entityElement.element("dl-file-entries");
+		Element dlFileEntriesElement =
+			portletDataContext.getImportDataGroupElement(DLFileEntry.class);
 
-		List<Element> dlFileEntryElements = Collections.emptyList();
-
-		if (dlFileEntriesElement != null) {
-			dlFileEntryElements = dlFileEntriesElement.elements("file-entry");
-		}
+		List<Element> dlFileEntryElements = dlFileEntriesElement.elements();
 
 		for (Element fileEntryElement : dlFileEntryElements) {
-			DLPortletDataHandler.importFileEntry(
-				portletDataContext, fileEntryElement);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, entityElement);
 		}
 
-		Element dlFileRanksElement = entityElement.element("dl-file-ranks");
+		Element dlFileRanksElement =
+			portletDataContext.getImportDataGroupElement(DLFileRank.class);
 
-		List<Element> dlFileRankElements = Collections.emptyList();
-
-		if (dlFileRanksElement != null) {
-			dlFileRankElements = dlFileRanksElement.elements("file-rank");
-		}
+		List<Element> dlFileRankElements = dlFileRanksElement.elements();
 
 		for (Element fileRankElement : dlFileRankElements) {
-			DLPortletDataHandler.importFileRank(
-				portletDataContext, fileRankElement);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, entityElement);
 		}
 	}
 

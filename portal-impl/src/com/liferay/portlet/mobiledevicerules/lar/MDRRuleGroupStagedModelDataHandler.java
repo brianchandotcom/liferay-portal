@@ -29,9 +29,11 @@ import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupUti
 public class MDRRuleGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MDRRuleGroup> {
 
+	public static final String[] CLASS_NAMES = {MDRRuleGroup.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MDRRuleGroup.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

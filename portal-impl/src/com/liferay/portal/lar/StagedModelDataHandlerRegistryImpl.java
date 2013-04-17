@@ -16,8 +16,11 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistry;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,13 +48,36 @@ public class StagedModelDataHandlerRegistryImpl
 	}
 
 	public void register(StagedModelDataHandler<?> stagedModelDataHandler) {
-		_stagedModelDataHandlers.put(
-			stagedModelDataHandler.getClassName(), stagedModelDataHandler);
+		for (String className : stagedModelDataHandler.getClassNames()) {
+			if (_stagedModelDataHandlers.containsKey(className)) {
+				if (_log.isDebugEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Skipping registration of: ");
+					sb.append(stagedModelDataHandler);
+					sb.append(" for class: ");
+					sb.append(className);
+					sb.append(". This class already has a registered ");
+					sb.append("staged model data handler.");
+
+					_log.debug(sb.toString());
+				}
+
+				continue;
+			}
+
+			_stagedModelDataHandlers.put(className, stagedModelDataHandler);
+		}
 	}
 
 	public void unregister(StagedModelDataHandler<?> stagedModelDataHandler) {
-		_stagedModelDataHandlers.remove(stagedModelDataHandler.getClassName());
+		for (String className : stagedModelDataHandler.getClassNames()) {
+			_stagedModelDataHandlers.remove(className);
+		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		StagedModelDataHandlerRegistryImpl.class);
 
 	private Map<String, StagedModelDataHandler<?>> _stagedModelDataHandlers =
 		new HashMap<String, StagedModelDataHandler<?>>();

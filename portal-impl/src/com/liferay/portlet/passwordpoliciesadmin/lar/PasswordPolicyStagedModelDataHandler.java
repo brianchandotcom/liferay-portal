@@ -28,9 +28,11 @@ import com.liferay.portal.service.ServiceContext;
 public class PasswordPolicyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PasswordPolicy> {
 
+	public static final String[] CLASS_NAMES = {PasswordPolicy.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return PasswordPolicy.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

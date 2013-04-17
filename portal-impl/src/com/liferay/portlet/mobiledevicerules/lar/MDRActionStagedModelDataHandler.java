@@ -43,9 +43,11 @@ import java.util.Map;
 public class MDRActionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MDRAction> {
 
+	public static final String[] CLASS_NAMES = {MDRAction.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MDRAction.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

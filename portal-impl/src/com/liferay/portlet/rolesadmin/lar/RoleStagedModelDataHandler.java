@@ -28,9 +28,11 @@ import com.liferay.portal.service.ServiceContext;
 public class RoleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Role> {
 
+	public static final String[] CLASS_NAMES = {Role.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return Role.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

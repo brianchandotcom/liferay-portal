@@ -28,9 +28,12 @@ import com.liferay.portal.service.ServiceContext;
 public class LayoutPrototypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler <LayoutPrototype> {
 
+	public static final String[] CLASS_NAMES =
+		{LayoutPrototype.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return LayoutPrototype.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

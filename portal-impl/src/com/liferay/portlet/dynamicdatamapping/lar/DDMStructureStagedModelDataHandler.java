@@ -37,9 +37,11 @@ import java.util.Locale;
 public class DDMStructureStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMStructure> {
 
+	public static final String[] CLASS_NAMES = {DDMStructure.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return DDMStructure.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

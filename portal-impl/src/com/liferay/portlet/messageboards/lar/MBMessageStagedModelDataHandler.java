@@ -50,9 +50,11 @@ import java.util.Map;
 public class MBMessageStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBMessage> {
 
+	public static final String[] CLASS_NAMES = {MBMessage.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MBMessage.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

@@ -36,9 +36,11 @@ import java.util.Map;
 public class DDLRecordSetStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDLRecordSet> {
 
+	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return DDLRecordSet.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

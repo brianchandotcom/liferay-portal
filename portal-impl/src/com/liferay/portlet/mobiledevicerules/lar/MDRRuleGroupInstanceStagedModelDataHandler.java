@@ -43,9 +43,12 @@ import java.util.Map;
 public class MDRRuleGroupInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MDRRuleGroupInstance> {
 
+	public static final String[] CLASS_NAMES =
+		{MDRRuleGroupInstance.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MDRRuleGroupInstance.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

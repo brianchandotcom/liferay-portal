@@ -41,7 +41,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 	}
 
-	public abstract String getClassName();
+	public abstract String[] getClassNames();
 
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)

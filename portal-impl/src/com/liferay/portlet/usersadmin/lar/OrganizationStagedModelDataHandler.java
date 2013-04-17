@@ -35,9 +35,11 @@ import java.util.Queue;
 public class OrganizationStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Organization> {
 
+	public static final String[] CLASS_NAMES = {Organization.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return Organization.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override
@@ -85,7 +87,8 @@ public class OrganizationStagedModelDataHandler
 			(parentOrganizationId == organization.getParentOrganizationId())) {
 
 			String parentOrganizationPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, getClassName(), parentOrganizationId);
+				portletDataContext, Organization.class.getName(),
+				parentOrganizationId);
 
 			Organization parentOrganization =
 				(Organization)portletDataContext.getZipEntryAsObject(

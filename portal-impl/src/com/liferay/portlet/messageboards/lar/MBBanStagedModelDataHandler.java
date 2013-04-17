@@ -32,9 +32,11 @@ import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 public class MBBanStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBBan> {
 
+	public static final String[] CLASS_NAMES = {MBBan.class.getName()};
+
 	@Override
-	public String getClassName() {
-		return MBBan.class.getName();
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override

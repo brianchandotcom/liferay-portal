@@ -123,6 +123,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
 
+						data.put("draggable", Boolean.TRUE.toString());
 						data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
 						data.put("instanceable", portletInstanceable);
 						data.put("plid", plid);
@@ -149,7 +150,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							showLinkTitle="<%= false %>"
 							thumbnailSrc=""
 							title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-							url="javascript:;"
 						/>
 
 						<%
@@ -171,6 +171,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 							Map<String, Object> portletItemData = new HashMap<String, Object>();
 
+							portletItemData.put("draggable", Boolean.TRUE.toString());
 							portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
 							portletItemData.put("instanceable", portletInstanceable);
 							portletItemData.put("plid", plid);
@@ -188,7 +189,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								showLinkTitle="<%= false %>"
 								thumbnailSrc=""
 								title="<%= HtmlUtil.escape(portletItem.getName()) %>"
-								url="javascript:;"
 							/>
 
 						<%

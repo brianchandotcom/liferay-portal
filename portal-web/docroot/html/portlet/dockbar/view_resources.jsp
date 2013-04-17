@@ -101,11 +101,15 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						continue;
 					}
 
+					String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("class-name", assetEntry.getClassName());
 					data.put("class-pk", assetEntry.getClassPK());
+					data.put("draggable", Boolean.TRUE.toString());
 					data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+					data.put("title", title);
 				%>
 
 					<liferay-ui:app-view-entry
@@ -116,8 +120,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						showCheckbox="<%= false %>"
 						showLinkTitle="<%= false %>"
 						thumbnailSrc='<%= displayStyle.equals("list") ? assetRenderer.getIconPath(liferayPortletRequest) : assetRenderer.getThumbnailPath(liferayPortletRequest) %>'
-						title="<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60)) %>"
-						url="javascript:;"
+						title="<%= title %>"
 					/>
 
 				<%

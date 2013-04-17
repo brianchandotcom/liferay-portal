@@ -31,7 +31,7 @@
 		%>
 
 		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
-			<div class="add-content-menu" id="<portlet:namespace />addApplicationPanel">
+			<div class="add-content-menu" id="<portlet:namespace />addApplicationAndContentPanel">
 				<span class="close-add-panel" id="<portlet:namespace />closePanel">
 					<liferay-ui:message key="close" />
 				</span>
@@ -115,7 +115,7 @@
 						%>
 
 						<div class="portal-add-content">
-							<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() %>' cssClass="add-application-tab" method="post" name="fm">
+							<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() %>' cssClass="add-application-tab" method="post" name="addApplicationForm">
 								<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 								<aui:input name="<%= Constants.CMD %>" type="hidden" value="template" />
 								<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= refererURL.toString() %>" />
@@ -158,6 +158,7 @@
 
 												Map<String, Object> data = new HashMap<String, Object>();
 
+												data.put("draggable", Boolean.TRUE.toString());
 												data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
 												data.put("instanceable", portlet.isInstanceable());
 												data.put("plid", plid);
@@ -183,7 +184,6 @@
 													showLinkTitle="<%= false %>"
 													thumbnailSrc='<%= "" %>'
 													title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-													url="javascript:;"
 												/>
 
 											<%

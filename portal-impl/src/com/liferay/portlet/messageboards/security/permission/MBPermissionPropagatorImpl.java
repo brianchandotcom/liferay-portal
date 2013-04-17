@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -132,11 +131,11 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 	}
 
 	public void propagateMBRolePermissions(
-			ActionRequest actionRequest, String className, String primKey,
-			long[] roleIds)
+			final ActionRequest actionRequest, final String className,
+			String primKey, final long[] roleIds)
 		throws PortalException, SystemException {
 
-		long groupId = GetterUtil.getLong(primKey);
+		final long groupId = GetterUtil.getLong(primKey);
 
 		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
 			groupId);
@@ -147,15 +146,25 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 				roleIds);
 		}
 
-		List<MBMessage> messages = MBMessageLocalServiceUtil.getGroupMessages(
-			groupId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		ActionableDynamicQuery actionableDynamicQuery =
+			new MBMessageActionableDynamicQuery() {
 
-		for (MBMessage message : messages) {
-			propagateMessageRolePermissions(
-				actionRequest, className, groupId, message.getMessageId(),
-				roleIds);
-		}
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				MBMessage message = (MBMessage)object;
+
+				propagateMessageRolePermissions(
+					actionRequest, className, groupId, message.getMessageId(),
+					roleIds);
+			}
+
+		};
+
+		actionableDynamicQuery.setGroupId(groupId);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	public void propagateMessageRolePermissions(

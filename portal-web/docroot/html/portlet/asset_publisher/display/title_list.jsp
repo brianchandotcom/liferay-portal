@@ -55,7 +55,7 @@ viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redi
 
 String viewURL = viewInContext ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) : viewFullContentURL.toString();
 
-viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
+viewURL = _checkViewURL(viewURL, currentURL, themeDisplay, assetEntry.getLayoutUuid(), viewInContext);
 %>
 
 	<c:if test="<%= assetEntryIndex == 0 %>">

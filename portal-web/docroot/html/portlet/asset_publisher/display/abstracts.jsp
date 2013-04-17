@@ -70,7 +70,7 @@ if (Validator.isNull(viewURL)) {
 
 String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() : "read-more-x-about-x";
 
-viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
+viewURL = _checkViewURL(viewURL, currentURL, themeDisplay, assetEntry.getLayoutUuid(), viewInContext);
 %>
 
 <c:if test="<%= show %>">

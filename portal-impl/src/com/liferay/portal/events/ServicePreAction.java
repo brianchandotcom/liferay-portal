@@ -1753,6 +1753,13 @@ public class ServicePreAction extends Action {
 			layouts = null;
 
 			if (!isLoginRequest(request) && !hasViewLayoutPermission) {
+
+				if (user.isDefaultUser() &&
+					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
+
+					throw new PrincipalException("User is not authenticated");
+				}
+
 				SessionErrors.add(
 					request, LayoutPermissionException.class.getName());
 			}

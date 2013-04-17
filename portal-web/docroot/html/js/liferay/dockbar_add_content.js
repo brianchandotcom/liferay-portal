@@ -2,8 +2,10 @@ AUI.add(
 	'liferay-dockbar-add-content',
 	function(A) {
 		var Lang = A.Lang;
+		var Layout = Liferay.Layout;
 		var LayoutConfiguration = Liferay.LayoutConfiguration;
 		var Dockbar = Liferay.Dockbar;
+		var Portlet = Liferay.Portlet;
 
 		var STR_CLICK = 'click';
 
@@ -99,14 +101,83 @@ AUI.add(
 						LayoutConfiguration._loadContent();
 					},
 
-					_addPortlet: function(event) {
+					_addApplicationPortlet: function(event) {
+						var instance = this;
+
+						var link = event.currentTarget;
+						var portlet = link.ancestor('.lfr-portlet-item');
+
+						if (!portlet.hasClass('lfr-portlet-used')) {
+							instance._addPortletFromApplicationPanel(portlet);
+						}
+					},
+
+					_addPortletFromApplicationPanel: function(portlet, options) {
+						var instance = this;
+
+						var portletMetaData = instance._getPortletMetaData(portlet);
+
+						if (!portletMetaData.portletUsed) {
+							var plid = portletMetaData.plid;
+							var portletId = portletMetaData.portletId;
+							var portletItemId = portletMetaData.portletItemId;
+							var isInstanceable = portletMetaData.instanceable;
+
+							if (!isInstanceable) {
+								instance._disablePortletEntry(portletId);
+							}
+
+							var beforePortletLoaded = null;
+							var placeHolder = A.Node.create(TPL_LOADING);
+
+							if (options) {
+								var item = options.item;
+
+								item.placeAfter(placeHolder);
+								item.remove(true);
+
+								beforePortletLoaded = options.beforePortletLoaded;
+							}
+							else {
+								var layoutOptions = Layout.options;
+
+								var firstColumn = Layout.getActiveDropNodes().item(0);
+
+								if (firstColumn) {
+									var dropColumn = firstColumn.one(layoutOptions.dropContainer);
+									var referencePortlet = Layout.findReferencePortlet(dropColumn);
+
+									if (referencePortlet) {
+										referencePortlet.placeBefore(placeHolder);
+									}
+									else {
+										if (dropColumn) {
+											dropColumn.append(placeHolder);
+										}
+									}
+								}
+							}
+
+							var portletOptions = {
+								beforePortletLoaded: beforePortletLoaded,
+								plid: plid,
+								placeHolder: placeHolder,
+								portletId: portletId,
+								portletItemId: portletItemId
+							};
+
+							Portlet.add(portletOptions);
+						}
+					},
+
+					_addPortletFromContentPanel: function(event) {
 						event.halt();
 
 						var item = event.currentTarget;
 
 						var portletData = item.attr('data-class-pk') + ',' + item.attr('data-class-name');
 
-						Liferay.Portlet.add(
+						Portlet.add(
 							{
 								portletData: portletData,
 								portletId: item.attr('data-portlet-id')
@@ -132,7 +203,7 @@ AUI.add(
 
 						tooltip.set('bodyContent', event.currentTarget.get('responseData'));
 
-						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortlet, instance);
+						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortletFromContentPanel, instance);
 					},
 
 					_afterSuccess: function(event) {
@@ -150,7 +221,9 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._entriesContainer.delegate(STR_CLICK, instance._addPortlet, '.content-shortcut');
+						instance._addApplicationPanel.delegate(STR_CLICK, instance._addApplicationPortlet, '.lfr-portlet-item a', instance);
+
+						instance._entriesContainer.delegate(STR_CLICK, instance._addPortletFromContentPanel, '.content-shortcut');
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
 
@@ -175,6 +248,8 @@ AUI.add(
 						instance._searchContentInput.on('keydown', instance._onSearchInputKeyDown, instance);
 
 						instance._searchApplicationInput.on('keydown', instance._onSearchInputKeyDown, instance);
+
+						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
@@ -209,6 +284,36 @@ AUI.add(
 						).render();
 					},
 
+					_disablePortletEntry: function(portletId) {
+						var instance = this;
+
+						instance._eachPortletEntry(
+							portletId,
+							function(item, index) {
+								item.addClass('lfr-portlet-used');
+							}
+						);
+					},
+
+					_eachPortletEntry: function(portletId, callback) {
+						var instance = this;
+
+						var portlets = A.all('[data-portlet-id=' + portletId + ']');
+
+						portlets.each(callback);
+					},
+
+					_enablePortletEntry: function(portletId) {
+						var instance = this;
+
+						instance._eachPortletEntry(
+							portletId,
+							function(item, index) {
+								item.removeClass('lfr-portlet-used');
+							}
+						);
+					},
+
 					_getIOPreview: function() {
 						var instance = this;
 
@@ -234,6 +339,32 @@ AUI.add(
 						}
 
 						return ioPreview;
+					},
+
+					_getPortletMetaData: function(portlet) {
+						var instance = this;
+
+						var portletMetaData = portlet._LFR_portletMetaData;
+
+						if (!portletMetaData) {
+							var instanceable = (portlet.attr('data-instanceable') == 'true');
+							var plid = portlet.attr('data-plid');
+							var portletId = portlet.attr('data-portlet-id');
+							var portletItemId = portlet.attr('data-portlet-item-id');
+							var portletUsed = portlet.hasClass('lfr-portlet-used');
+
+							portletMetaData = {
+								instanceable: instanceable,
+								plid: plid,
+								portletId: portletId,
+								portletItemId: portletItemId,
+								portletUsed: portletUsed
+							};
+
+							portlet._LFR_portletMetaData = portletMetaData;
+						}
+
+						return portletMetaData;
 					},
 
 					_loadPreviewFn: function(className, classPK) {
@@ -305,6 +436,18 @@ AUI.add(
 						instance._previousNode = currentNode;
 
 						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+					},
+
+					_onPortletClose: function(event) {
+						var instance = this;
+
+						var item = instance._addApplicationPanel.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
+
+						if (item && item.hasClass('lfr-portlet-used')) {
+							var portletId = item.attr('data-portlet-id');
+
+							instance._enablePortletEntry(portletId);
+						}
 					},
 
 					_refreshApplicationList: function(event) {

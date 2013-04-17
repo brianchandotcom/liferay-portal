@@ -12,32 +12,44 @@
 	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}/{groupId:\d+}</pattern>
 		<ignored-parameter name="assetEntryId" />
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}</pattern>
 		<ignored-parameter name="assetEntryId" />
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/id/{assetEntryId:\d+}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}/{groupId:\d+}/{p_p_state}</pattern>
 		<ignored-parameter name="assetEntryId" />
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}/{p_p_state}</pattern>
 		<ignored-parameter name="assetEntryId" />
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/id/{assetEntryId:\d+}/{p_p_state}</pattern>
+		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="struts_action">/asset_publisher/view_content</implicit-parameter>
+		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 </routes>

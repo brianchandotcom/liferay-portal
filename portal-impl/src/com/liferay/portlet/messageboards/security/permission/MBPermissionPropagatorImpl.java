@@ -41,6 +41,32 @@ import javax.portlet.ActionRequest;
  */
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, String primKey,
+			long[] roleIds)
+		throws PortalException, SystemException {
+
+		if (className.equals(MBCategory.class.getName())) {
+			propagateCategoryRolePermissions(
+				actionRequest, className, primKey, roleIds);
+		}
+		else if (className.equals(MBMessage.class.getName())) {
+			long messageId = GetterUtil.getLong(primKey);
+
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+			if (message.isRoot()) {
+				propagateThreadRolePermissions(
+					actionRequest, className, messageId, message.getThreadId(),
+					roleIds);
+			}
+		}
+		else if (className.equals("com.liferay.portlet.messageboards")) {
+			propagateMBRolePermissions(
+				actionRequest, className, primKey, roleIds);
+		}
+	}
+
 	protected void propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, long primaryKey,
 			long categoryId, long[] roleIds)
@@ -176,32 +202,6 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			propagateRolePermissions(
 				actionRequest, roleId, className, primaryKey,
 				MBMessage.class.getName(), messageId);
-		}
-	}
-
-	public void propagateRolePermissions(
-			ActionRequest actionRequest, String className, String primKey,
-			long[] roleIds)
-		throws PortalException, SystemException {
-
-		if (className.equals(MBCategory.class.getName())) {
-			propagateCategoryRolePermissions(
-				actionRequest, className, primKey, roleIds);
-		}
-		else if (className.equals(MBMessage.class.getName())) {
-			long messageId = GetterUtil.getLong(primKey);
-
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
-
-			if (message.isRoot()) {
-				propagateThreadRolePermissions(
-					actionRequest, className, messageId, message.getThreadId(),
-					roleIds);
-			}
-		}
-		else if (className.equals("com.liferay.portlet.messageboards")) {
-			propagateMBRolePermissions(
-				actionRequest, className, primKey, roleIds);
 		}
 	}
 

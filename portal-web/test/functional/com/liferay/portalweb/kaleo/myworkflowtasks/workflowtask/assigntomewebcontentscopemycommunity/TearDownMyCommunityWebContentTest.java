@@ -101,6 +101,9 @@ public class TearDownMyCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				assertTrue(selenium.isPartialText(
+						"//a[@id='_160_groupSelectorButton']/span",
+						"Joe Bloggs's Personal"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

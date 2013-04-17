@@ -44,7 +44,7 @@ public class TearDownGuestWebContentTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Liferay"),
 					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 				selenium.clickAt("link=Web Content",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean webContentPresent = selenium.isElementPresent(
@@ -100,6 +100,8 @@ public class TearDownGuestWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

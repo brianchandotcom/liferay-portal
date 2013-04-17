@@ -100,6 +100,8 @@ public class TearDownGuestWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace("Liferay"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

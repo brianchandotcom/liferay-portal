@@ -113,6 +113,21 @@ public class TearDownOrganizationWebContentTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
+				Thread.sleep(1000);
+				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
+					RuntimeVariables.replace("Scope Selector"));
+				selenium.waitForVisible(
+					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
+					RuntimeVariables.replace("Organization Name"));
+				selenium.waitForPageToLoad("30000");
+				selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
+					"Organization Name");
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText("//a[@id='_160_groupSelectorButton']/span"));
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");

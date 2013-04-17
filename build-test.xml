@@ -2594,14 +2594,14 @@
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
 						dir="${simple.server.lib.global.dir}"
-						includes="db2*.jar"
+						includes="${jdbc.db2.driver}"
 					/>
 				</delete>
 
 				<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
-							includes="*.jar"
+							includes="${jdbc.db2.driver}"
 					/>
 				</copy>
 			</then>
@@ -2609,14 +2609,14 @@
 				<and>
 					<equals arg1="${database}" arg2="mysql" />
 					<not>
-						<available file="${simple.server.lib.global.dir}/mysql.jar" />
+						<available file="${simple.server.lib.global.dir}/${jdbc.mysql.driver}" />
 					</not>
 				</and>
 				<then>
 					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/mysql/5.0.7"
-							includes="*.jar"
+							includes="${jdbc.mysql.driver}"
 						/>
 					</copy>
 				</then>
@@ -2627,14 +2627,14 @@
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
 							dir="${simple.server.lib.global.dir}"
-							includes="ojdbc*.jar"
+							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
 
 					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/oracle/10.2.0.1.0"
-							includes="*.jar"
+							includes="${jdbc.oracle.driver}"
 						/>
 					</copy>
 				</then>
@@ -2645,14 +2645,14 @@
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
 							dir="${simple.server.lib.global.dir}"
-							includes="ojdbc*.jar"
+							includes="${jdbc.oracle.driver}"
 						/>
 					</delete>
 
 					<copy todir="${todir}">
 						<fileset
 							dir="${jdbc.drivers.optional.dir}/oracle/11.2.0.1.0"
-							includes="*.jar"
+							includes="${jdbc.oracle.driver}"
 						/>
 					</copy>
 				</then>

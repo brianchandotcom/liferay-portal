@@ -33,7 +33,7 @@
 				<copy todir="${tstamp.value}">
 					<fileset
 						dir="${jdbc.drivers.optional.dir}"
-						includes="*.jar"
+						includes="${jdbc.drivers}"
 					/>
 				</copy>
 			</then>

@@ -216,7 +216,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="${jdbc.drivers.optional.dir}"
-						includes="*.jar"
+						includes="${jdbc.drivers}"
 					/>
 				</copy>
 			</then>

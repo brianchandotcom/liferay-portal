@@ -119,8 +119,8 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 							propagateMessageRolePermissions(
 								actionRequest, className, categoryId,
 								message.getMessageId(), roleIds);
-
 						}
+
 					};
 
 					actionableDynamicQuery.setGroupId(category.getGroupId());

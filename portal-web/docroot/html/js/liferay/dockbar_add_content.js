@@ -7,7 +7,19 @@ AUI.add(
 		var Dockbar = Liferay.Dockbar;
 		var Portlet = Liferay.Portlet;
 
+		var BODY_CONTENT = 'bodyContent';
+
+		var CSS_CLASS_OVER = 'over';
+
+		var RESPONSE_DATA = 'responseData';
+
+		var STR_ACTION = 'action';
+
 		var STR_CLICK = 'click';
+
+		var STR_LFR_COLLAPSED = 'lfr-collapsed';
+
+		var STR_LFR_PORTLET_USED = 'lfr-portlet-used';
 
 		var TPL_ERROR = '<div class="portlet-msg-error">{0}</div>';
 
@@ -107,7 +119,7 @@ AUI.add(
 						var link = event.currentTarget;
 						var portlet = link.ancestor('.lfr-portlet-item');
 
-						if (!portlet.hasClass('lfr-portlet-used')) {
+						if (!portlet.hasClass(STR_LFR_PORTLET_USED)) {
 							instance._addPortletFromApplicationPanel(portlet);
 						}
 					},
@@ -193,7 +205,7 @@ AUI.add(
 							[Liferay.Language.get('unable-to-load-content')]
 						);
 
-						instance._tooltip.set('bodyContent', errorMsg);
+						instance._tooltip.set(BODY_CONTENT, errorMsg);
 					},
 
 					_afterPreviewSuccess: function(event) {
@@ -201,7 +213,7 @@ AUI.add(
 
 						var tooltip = instance._tooltip;
 
-						tooltip.set('bodyContent', event.currentTarget.get('responseData'));
+						tooltip.set(BODY_CONTENT, event.currentTarget.get(RESPONSE_DATA));
 
 						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortletFromContentPanel, instance);
 					},
@@ -209,7 +221,7 @@ AUI.add(
 					_afterSuccess: function(event) {
 						var instance = this;
 
-						instance._entriesContainer.setContent(event.currentTarget.get('responseData'));
+						instance._entriesContainer.setContent(event.currentTarget.get(RESPONSE_DATA));
 
 						instance._createToolTip();
 					},
@@ -274,7 +286,7 @@ AUI.add(
 									hide: function() {
 										var currentNode = this.get('currentNode');
 
-										currentNode.removeClass('over');
+										currentNode.removeClass(CSS_CLASS_OVER);
 									}
 								},
 								showArrow: false,
@@ -290,7 +302,7 @@ AUI.add(
 						instance._eachPortletEntry(
 							portletId,
 							function(item, index) {
-								item.addClass('lfr-portlet-used');
+								item.addClass(STR_LFR_PORTLET_USED);
 							}
 						);
 					},
@@ -309,7 +321,7 @@ AUI.add(
 						instance._eachPortletEntry(
 							portletId,
 							function(item, index) {
-								item.removeClass('lfr-portlet-used');
+								item.removeClass(STR_LFR_PORTLET_USED);
 							}
 						);
 					},
@@ -321,7 +333,7 @@ AUI.add(
 
 						if (!ioPreview) {
 							ioPreview = A.io.request(
-								instance._addContentForm.getAttribute('action'),
+								instance._addContentForm.getAttribute(STR_ACTION),
 								{
 									after: {
 										failure: A.bind('_afterPreviewFailure', instance),
@@ -351,7 +363,7 @@ AUI.add(
 							var plid = portlet.attr('data-plid');
 							var portletId = portlet.attr('data-portlet-id');
 							var portletItemId = portlet.attr('data-portlet-item-id');
-							var portletUsed = portlet.hasClass('lfr-portlet-used');
+							var portletUsed = portlet.hasClass(STR_LFR_PORTLET_USED);
 
 							portletMetaData = {
 								instanceable: instanceable,
@@ -423,14 +435,14 @@ AUI.add(
 
 						var tooltip = instance._tooltip;
 
-						tooltip.set('bodyContent', TPL_LOADING);
+						tooltip.set(BODY_CONTENT, TPL_LOADING);
 
 						var currentNode = tooltip.get('currentNode');
 
 						if (instance._previousNode && (instance._previousNode != currentNode)) {
-							currentNode.addClass('over');
+							currentNode.addClass(CSS_CLASS_OVER);
 
-							instance._previousNode.removeClass('over');
+							instance._previousNode.removeClass(CSS_CLASS_OVER);
 						}
 
 						instance._previousNode = currentNode;
@@ -443,7 +455,7 @@ AUI.add(
 
 						var item = instance._addApplicationPanel.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
-						if (item && item.hasClass('lfr-portlet-used')) {
+						if (item && item.hasClass(STR_LFR_PORTLET_USED)) {
 							var portletId = item.attr('data-portlet-id');
 
 							instance._enablePortletEntry(portletId);
@@ -456,19 +468,19 @@ AUI.add(
 						var query = event.query;
 
 						if (!query) {
-							instance._categories.addClass('lfr-collapsed');
+							instance._categories.addClass(STR_LFR_COLLAPSED);
 
 							instance._categoryContainers.show();
 							instance._portlets.show();
 						}
 						else if (query == '*') {
-							instance._categories.removeClass('lfr-collapsed');
+							instance._categories.removeClass(STR_LFR_COLLAPSED);
 
 							instance._categoryContainers.show();
 							instance._portlets.show();
 						}
 						else {
-							instance._categories.addClass('lfr-collapsed');
+							instance._categories.addClass(STR_LFR_COLLAPSED);
 
 							instance._categoryContainers.hide();
 							instance._portlets.hide();
@@ -483,7 +495,7 @@ AUI.add(
 									var categoryParent = node.ancestorsByClassName('lfr-content-category');
 
 									if (categoryParent) {
-										categoryParent.removeClass('lfr-collapsed');
+										categoryParent.removeClass(STR_LFR_COLLAPSED);
 									}
 
 									var contentParent = node.ancestorsByClassName('lfr-add-content');
@@ -504,7 +516,7 @@ AUI.add(
 						var displayStyle = styleButton.attr('data-style');
 
 						A.io.request(
-							instance._addContentForm.getAttribute('action'),
+							instance._addContentForm.getAttribute(STR_ACTION),
 							{
 								after: {
 									success: A.bind('_afterSuccess', instance)

@@ -21,6 +21,12 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<name>fieldName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>fields</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

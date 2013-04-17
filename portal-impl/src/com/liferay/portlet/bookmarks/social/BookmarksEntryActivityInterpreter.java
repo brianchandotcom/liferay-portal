@@ -61,36 +61,36 @@ public class BookmarksEntryActivityInterpreter
 
 		if (activityType == BookmarksActivityKeys.ADD_ENTRY) {
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-add-entry";
+				return "activity-bookmarks-entry-add-entry";
 			}
 			else {
-				return "activity-bookmarks-add-entry-in";
+				return "activity-bookmarks-entry-add-entry-in";
 			}
 		}
 		else if (activityType == BookmarksActivityKeys.UPDATE_ENTRY) {
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-update-entry";
+				return "activity-bookmarks-entry-update-entry";
 			}
 			else {
-				return "activity-bookmarks-update-entry-in";
+				return "activity-bookmarks-entry-update-entry-in";
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-entry-move-to-trash";
+				return "activity-bookmarks-entry-entry-move-to-trash";
 			}
 			else {
-				return "activity-bookmarks-entry-move-to-trash-in";
+				return "activity-bookmarks-entry-entry-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-entry-restore-from-trash";
+				return "activity-bookmarks-entry-entry-restore-from-trash";
 			}
 			else {
-				return "activity-bookmarks-entry-restore-from-trash-in";
+				return "activity-bookmarks-entry-entry-restore-from-trash-in";
 			}
 		}
 

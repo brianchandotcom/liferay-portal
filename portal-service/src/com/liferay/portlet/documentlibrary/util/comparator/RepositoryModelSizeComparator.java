@@ -27,9 +27,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
  */
 public class RepositoryModelSizeComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "size ASC";
+	public static final String ORDER_BY_ASC = "size_ ASC";
 
-	public static final String ORDER_BY_DESC = "size DESC";
+	public static final String ORDER_BY_DESC = "size_ DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"size"};
 

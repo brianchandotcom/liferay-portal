@@ -3,52 +3,32 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CHECKED = 'checked';
-
-		var CLICK = 'click';
-
 		var REGEX_LAYOUT_ID = /layoutId_(\d+)/;
 
-		var SET_NODE = '_setNode';
+		var STR_CHECKED = 'checked';
+
+		var STR_CLICK = 'click';
 
 		var STR_EMPTY = '';
+
+		var defaultConfig = {
+			setter: A.one
+		};
 
 		var ExportLayouts = A.Component.create(
 			{
 				ATTRS: {
-					archivedSetupsNode: {
-						setter: SET_NODE
-					},
-					categoriesNode: {
-						setter: SET_NODE
-					},
-					layoutSetSettingsNode: {
-						setter: SET_NODE
-					},
-					logoNode: {
-						setter: SET_NODE
-					},
-					rangeAllNode: {
-						setter: SET_NODE
-					},
-					rangeDateRangeNode: {
-						setter: SET_NODE
-					},
-					rangeLastNode: {
-						setter: SET_NODE
-					},
-					rangeLastPublishNode: {
-						setter: SET_NODE
-					},
-					themeNode: {
-						setter: SET_NODE
-					},
-					themeReferenceNode: {
-						setter: SET_NODE
-					},
-					userPreferencesNode: {
-						setter: SET_NODE
-					}
+					archivedSetupsNode: defaultConfig,
+					categoriesNode: defaultConfig,
+					layoutSetSettingsNode: defaultConfig,
+					logoNode: defaultConfig,
+					rangeAllNode: defaultConfig,
+					rangeDateRangeNode: defaultConfig,
+					rangeLastNode: defaultConfig,
+					rangeLastPublishNode:defaultConfig,
+					themeNode: defaultConfig,
+					themeReferenceNode: defaultConfig,
+					userPreferencesNode: defaultConfig
 				},
 
 				AUGMENTS: [Liferay.PortletBase],
@@ -67,24 +47,24 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
-						if (instance._changeContentDialog) {
-							instance._changeContentDialog.destroy();
+						if (instance._contentDialog) {
+							instance._contentDialog.destroy();
 						}
 
-						if (instance._changeGlobalConfigurationDialog) {
-							instance._changeGlobalConfigurationDialog.destroy();
+						if (instance._globalConfigurationDialog) {
+							instance._globalConfigurationDialog.destroy();
 						}
 
-						if (instance._changeGlobalContentDialog ) {
-							instance._changeGlobalContentDialog.destroy();
+						if (instance._globalContentDialog ) {
+							instance._globalContentDialog.destroy();
 						}
 
-						if (instance._changePagesDialog) {
-							instance._changePagesDialog.destroy();
+						if (instance._pagesDialog) {
+							instance._pagesDialog.destroy();
 						}
 
-						if (instance._changeRangeDialog) {
-							instance._changeRangeDialog.destroy();
+						if (instance._rangeDialog) {
+							instance._rangeDialog.destroy();
 						}
 					},
 
@@ -92,70 +72,70 @@ AUI.add(
 						var instance = this;
 
 						instance.byId('fm1').delegate(
-							CLICK,
+							STR_CLICK,
 							function(event) {
 								var portletId = event.currentTarget.attr('data-portletid');
 
-								var changeContentDialog = instance._getChangeContentDialog(portletId);
+								var contentDialog = instance._getContentDialog(portletId);
 
-								changeContentDialog.show();
+								contentDialog.show();
 							},
-							'.change-content-link a'
+							'.content-link a'
 						);
 
-						instance.byId('changeGlobalConfigurationLink').on(
-							CLICK,
+						instance.byId('globalConfigurationLink').on(
+							STR_CLICK,
 							function(event) {
-								var changeGlobalConfigurationDialog = instance._getChangeGlobalConfigurationDialog();
+								var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
-								changeGlobalConfigurationDialog.show();
+								globalConfigurationDialog.show();
 							}
 						);
 
-						instance.byId('changeGlobalContentLink').on(
-							CLICK,
+						instance.byId('globalContentLink').on(
+							STR_CLICK,
 							function(event) {
-								var changeGlobalContentDialog = instance._getChangeGlobalContentDialog();
+								var globalContentDialog = instance._getGlobalContentDialog();
 
-								changeGlobalContentDialog.show();
+								globalContentDialog.show();
 							}
 						);
 
-						instance.byId('changePagesLink').on(
-							CLICK,
+						instance.byId('pagesLink').on(
+							STR_CLICK,
 							function(event) {
-								var changePagesDialog = instance._getChangePagesDialog();
+								var pagesDialog = instance._getPagesDialog();
 
-								changePagesDialog.show();
+								pagesDialog.show();
 							}
 						);
 
-						instance.byId('changeRangeLink').on(
-							CLICK,
+						instance.byId('rangeLink').on(
+							STR_CLICK,
 							function(event) {
-								var changeRangeDialog = instance._getChangeRangeDialog();
+								var rangeDialog = instance._getRangeDialog();
 
-								changeRangeDialog.show();
+								rangeDialog.show();
 							}
 						);
 					},
 
-					_getChangeContentDialog: function(portletId) {
+					_getContentDialog: function(portletId) {
 						var instance = this;
 
-						var changeContentDialog = instance._changeContentDialog;
+						var contentDialog = instance._contentDialog;
 
-						if (!changeContentDialog) {
-							var changeContentNode = instance.byId('changeContent_' + portletId);
+						if (!contentDialog) {
+							var contentNode = instance.byId('content_' + portletId);
 
-							changeContentNode.show();
+							contentNode.show();
 
 							var contentBox;
 
-							changeContentDialog = new A.Dialog(
+							contentDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
-									bodyContent: changeContentNode,
+									bodyContent: contentNode,
 									centered: true,
 									modal: true,
 									title: Liferay.Language.get('content-to-export'),
@@ -167,18 +147,12 @@ AUI.add(
 
 												var selectedContent = [];
 
-												A.each(
-													inputs,
+												inputs.each(
 													function(item, index, collection) {
-														var checked = item.attr(CHECKED);
+														var checked = item.attr(STR_CHECKED);
 
 														if (checked) {
-															var itemName = item.attr('id');
-
-															itemName = itemName.substring(0, itemName.length - 8);
-															itemName = itemName.substring(itemName.lastIndexOf('_') + 1, itemName.length);
-
-															selectedContent.push(Liferay.Language.get(itemName));
+															selectedContent.push(item.attr('data-name'));
 														}
 													}
 												);
@@ -197,42 +171,40 @@ AUI.add(
 										}
 									]
 								}
-							);
+							).render();
 
-							changeContentDialog.render();
+							contentBox = contentDialog.get('contentBox');
 
-							contentBox = changeContentDialog.get('contentBox');
-
-							instance._changeContentDialog = changeContentDialog;
+							instance._contentDialog = contentDialog;
 						}
 
-						return changeContentDialog;
+						return contentDialog;
 					},
 
-					_getChangeGlobalConfigurationDialog: function() {
+					_getGlobalConfigurationDialog: function() {
 						var instance = this;
 
-						var changeGlobalConfigurationDialog = instance._changeGlobalConfigurationDialog;
+						var globalConfigurationDialog = instance._globalConfigurationDialog;
 
-						if (!changeGlobalConfigurationDialog) {
-							var changeGlobalConfigurationNode = instance.byId('changeGlobalConfiguration');
+						if (!globalConfigurationDialog) {
+							var globalConfigurationNode = instance.byId('globalConfiguration');
 
-							changeGlobalConfigurationNode.show();
+							globalConfigurationNode.show();
 
-							changeGlobalConfigurationDialog = new A.Dialog(
+							globalConfigurationDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
-									bodyContent: changeGlobalConfigurationNode,
+									bodyContent: globalConfigurationNode,
 									buttons: [
 										{
 											handler: function() {
 												var selectedGlobalConfiguration = [];
 
-												if (instance.get('archivedSetupsNode').attr(CHECKED)) {
+												if (instance.get('archivedSetupsNode').attr(STR_CHECKED)) {
 													selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
 												}
 
-												if (instance.get('userPreferencesNode').attr(CHECKED)) {
+												if (instance.get('userPreferencesNode').attr(STR_CHECKED)) {
 													selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
 												}
 
@@ -254,27 +226,25 @@ AUI.add(
 									title: Liferay.Language.get('application-configuration'),
 									width: 400
 								}
-							);
+							).render();
 
-							changeGlobalConfigurationDialog.render();
-
-							instance._changeGlobalConfigurationDialog = changeGlobalConfigurationDialog;
+							instance._globalConfigurationDialog = globalConfigurationDialog;
 						}
 
-						return changeGlobalConfigurationDialog;
+						return globalConfigurationDialog;
 					},
 
-					_getChangeGlobalContentDialog: function() {
+					_getGlobalContentDialog: function() {
 						var instance = this;
 
-						var changeGlobalContentDialog = instance._changeGlobalContentDialog;
+						var globalContentDialog = instance._globalContentDialog;
 
-						if (!changeGlobalContentDialog) {
-							var changeGlobalContentNode = instance.byId('changeGlobalContent');
+						if (!globalContentDialog) {
+							var globalContentNode = instance.byId('globalContent');
 
-							changeGlobalContentNode.show();
+							globalContentNode.show();
 
-							changeGlobalContentDialog = new A.Dialog(
+							globalContentDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
 									buttons: [
@@ -282,7 +252,7 @@ AUI.add(
 											handler: function() {
 												var selectedGlobalContent = STR_EMPTY;
 
-												if (instance.get('categoriesNode').attr(CHECKED)) {
+												if (instance.get('categoriesNode').attr(STR_CHECKED)) {
 													selectedGlobalContent = Liferay.Language.get('categories');
 												}
 
@@ -299,36 +269,34 @@ AUI.add(
 											label: Liferay.Language.get('cancel')
 										}
 									],
-									bodyContent: changeGlobalContentNode,
+									bodyContent: globalContentNode,
 									centered: true,
 									modal: true,
 									title: Liferay.Language.get('content-to-export'),
 									width: 400
 								}
-							);
+							).render();
 
-							changeGlobalContentDialog.render();
-
-							instance._changeGlobalContentDialog = changeGlobalContentDialog;
+							instance._globalContentDialog = globalContentDialog;
 						}
 
-						return changeGlobalContentDialog;
+						return globalContentDialog;
 					},
 
-					_getChangePagesDialog: function() {
+					_getPagesDialog: function() {
 						var instance = this;
 
-						var changePagesDialog = instance._changePagesDialog;
+						var pagesDialog = instance._pagesDialog;
 
-						if (!changePagesDialog) {
-							var changePagesNode = instance.byId('changePages');
+						if (!pagesDialog) {
+							var pagesNode = instance.byId('pages');
 
-							changePagesNode.show();
+							pagesNode.show();
 
-							changePagesDialog = new A.Dialog(
+							pagesDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
-									bodyContent: changePagesNode,
+									bodyContent: pagesNode,
 									buttons: [
 										{
 											handler: function() {
@@ -375,19 +343,19 @@ AUI.add(
 														selectedPages.push(Liferay.Language.get('selected-pages'));
 													}
 
-													if (instance.get('layoutSetSettingsNode').attr(CHECKED)) {
+													if (instance.get('layoutSetSettingsNode').attr(STR_CHECKED)) {
 														selectedPages.push(Liferay.Language.get('site-pages-settings'));
 													}
 
-													if (instance.get('themeNode').attr(CHECKED)) {
+													if (instance.get('themeNode').attr(STR_CHECKED)) {
 														selectedPages.push(Liferay.Language.get('theme'));
 													}
 
-													if (instance.get('themeReferenceNode').attr(CHECKED)) {
+													if (instance.get('themeReferenceNode').attr(STR_CHECKED)) {
 														selectedPages.push(Liferay.Language.get('theme-settings'));
 													}
 
-													if (instance.get('logoNode').attr(CHECKED)) {
+													if (instance.get('logoNode').attr(STR_CHECKED)) {
 														selectedPages.push(Liferay.Language.get('logo'));
 													}
 
@@ -409,45 +377,43 @@ AUI.add(
 									title: Liferay.Language.get('pages'),
 									width: 400
 								}
-							);
+							).render();
 
-							changePagesDialog.render();
-
-							instance._changePagesDialog = changePagesDialog;
+							instance._pagesDialog = pagesDialog;
 						}
 
-						return changePagesDialog;
+						return pagesDialog;
 					},
 
-					_getChangeRangeDialog: function() {
+					_getRangeDialog: function() {
 						var instance = this;
 
-						var changeRangeDialog = instance._changeRangeDialog;
+						var rangeDialog = instance._rangeDialog;
 
-						if (!changeRangeDialog) {
-							var changeRangeNode = instance.byId('changeRange');
+						if (!rangeDialog) {
+							var rangeNode = instance.byId('range');
 
-							changeRangeNode.show();
+							rangeNode.show();
 
-							changeRangeDialog = new A.Dialog(
+							rangeDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
-									bodyContent: changeRangeNode,
+									bodyContent: rangeNode,
 									buttons: [
 										{
 											handler: function() {
 												var selectedRange = STR_EMPTY;
 
-												if (instance.get('rangeAllNode').attr(CHECKED)) {
+												if (instance.get('rangeAllNode').attr(STR_CHECKED)) {
 													selectedRange = Liferay.Language.get('all');
 												}
-												else if (instance.get('rangeLastPublishNode').attr(CHECKED)) {
+												else if (instance.get('rangeLastPublishNode').attr(STR_CHECKED)) {
 													selectedRange = Liferay.Language.get('from-last-publish-date');
 												}
-												else if (instance.get('rangeDateRangeNode').attr(CHECKED)) {
+												else if (instance.get('rangeDateRangeNode').attr(STR_CHECKED)) {
 													selectedRange = Liferay.Language.get('date-range');
 												}
-												else if (instance.get('rangeLastNode').attr(CHECKED)) {
+												else if (instance.get('rangeLastNode').attr(STR_CHECKED)) {
 													selectedRange = Liferay.Language.get('last');
 												}
 
@@ -469,14 +435,12 @@ AUI.add(
 									title: Liferay.Language.get('content-to-export'),
 									width: 400
 								}
-							);
+							).render();
 
-							changeRangeDialog.render();
-
-							instance._changeRangeDialog = changeRangeDialog;
+							instance._rangeDialog = rangeDialog;
 						}
 
-						return changeRangeDialog;
+						return rangeDialog;
 					},
 
 					_refreshSelectedLabel: function(labelDivId, label) {
@@ -487,16 +451,6 @@ AUI.add(
 						if (labelNode) {
 							labelNode.html(label);
 						}
-					},
-
-					_setNode: function(value) {
-						var instance = this;
-
-						if (Lang.isString(value)) {
-							value = instance.byId(value);
-						}
-
-						return value;
 					}
 				}
 			}

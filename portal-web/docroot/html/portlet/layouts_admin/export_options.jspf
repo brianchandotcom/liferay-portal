@@ -32,7 +32,7 @@
 
 				<liferay-ui:icon
 					cssClass="modify-link"
-					id="changePagesLink"
+					id="pagesLink"
 					image="add"
 					label="<%= true %>"
 					message="change"
@@ -40,7 +40,7 @@
 					url="javascript:;"
 				/>
 
-				<div class="aui-helper-hidden" id="<portlet:namespace />changePages">
+				<div class="aui-helper-hidden" id="<portlet:namespace />pages">
 					<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 						<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 							<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
@@ -70,7 +70,7 @@
 				<li class="tree-item">
 					<aui:input checked="<%= true %>" helpMessage="all-applications-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
-					<div class="aui-helper-hidden" id="<portlet:namespace />changeGlobalConfiguration">
+					<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
 						<aui:fieldset cssClass="portlet-data-section" label="all-applications">
 							<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= true %>" />
 
@@ -87,7 +87,7 @@
 
 							<liferay-ui:icon
 								cssClass="modify-link"
-								id="changeGlobalConfigurationLink"
+								id="globalConfigurationLink"
 								image="add"
 								label="<%= true %>"
 								message="change"
@@ -136,7 +136,7 @@
 				<li class="tree-item">
 					<aui:input checked="<%= true %>" helpMessage="all-content-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-					<div class="aui-helper-hidden" id="<portlet:namespace />changeGlobalContent">
+					<div class="aui-helper-hidden" id="<portlet:namespace />globalContent">
 						<aui:fieldset cssClass="portlet-data-section" label="all-content">
 							<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 						</aui:fieldset>
@@ -148,7 +148,7 @@
 
 							<liferay-ui:icon
 								cssClass="modify-link"
-								id="changeGlobalContentLink"
+								id="globalContentLink"
 								image="add"
 								label="<%= true %>"
 								message="change"
@@ -162,7 +162,7 @@
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />selectContents">
 						<li>
-							<div class="aui-helper-hidden" id="<portlet:namespace />changeRange">
+							<div class="aui-helper-hidden" id="<portlet:namespace />range">
 								<ul class="lfr-tree lfr-component">
 									<li class="tree-item">
 										<aui:fieldset cssClass="portlet-data-section" label="filter-to-export-by-date">
@@ -270,7 +270,7 @@
 
 									<liferay-ui:icon
 										cssClass="modify-link"
-										id="changeRangeLink"
+										id="rangeLink"
 										image="add"
 										label="<%= true %>"
 										message="change"
@@ -311,7 +311,7 @@
 									String selectedContent = StringPool.BLANK;
 								%>
 
-									<div class="aui-helper-hidden" id="<portlet:namespace />changeContent_<%= portlet.getPortletId() %>">
+									<div class="aui-helper-hidden" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
 										<ul class="lfr-tree lfr-component">
 											<li class="tree-item">
 												<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
@@ -385,7 +385,7 @@
 											%>
 
 											<liferay-ui:icon
-												cssClass="modify-link change-content-link"
+												cssClass="modify-link content-link"
 												data="<%= data %>"
 												image="add"
 												label="<%= true %>"
@@ -438,18 +438,18 @@
 <aui:script use="export-layouts">
 	new Liferay.ExportLayouts(
 		{
-			archivedSetupsNode: '<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			categoriesNode: '<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
-			layoutSetSettingsNode: '<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
-			logoNode: '<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			archivedSetupsNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			categoriesNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			layoutSetSettingsNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
+			logoNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
-			rangeAllNode: 'rangeAll',
-			rangeDateRangeNode: 'rangeDateRange',
-			rangeLastNode: 'rangeLast',
-			rangeLastPublishNode: 'rangeLastPublish',
-			themeNode: '<%= PortletDataHandlerKeys.THEME %>Checkbox',
-			themeReferenceNode: '<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			userPreferencesNode: '<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
+			rangeAllNode: '#<portlet:namespace />rangeAll',
+			rangeDateRangeNode: '#<portlet:namespace />rangeDateRange',
+			rangeLastNode: '#<portlet:namespace />rangeLast',
+			rangeLastPublishNode: '#<portlet:namespace />rangeLastPublish',
+			themeNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.THEME %>Checkbox',
+			themeReferenceNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			userPreferencesNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
 </aui:script>

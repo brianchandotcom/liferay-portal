@@ -40,6 +40,7 @@ pageContext.setAttribute("portletURL", portletURL);
 String portletURLString = portletURL.toString();
 %>
 
+<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-account-because-the-maximum-number-of-users-has-been-reached" />
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 <liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
 

@@ -16,13 +16,12 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,9 +61,11 @@ import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
+import com.liferay.portlet.usersadmin.util.UserUpdatePermissionException;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -1751,11 +1752,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long curUserId = getUserId();
 
 		if (curUserId == userId) {
-			screenName = screenName.trim().toLowerCase();
-
-			if (!screenName.equalsIgnoreCase(user.getScreenName())) {
-				validateScreenName(user, screenName);
-			}
+			validateUpdatePermission(
+				user, screenName, emailAddress, firstName, middleName, lastName,
+				prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear,
+				male, jobTitle);
 
 			emailAddress = emailAddress.trim().toLowerCase();
 
@@ -2497,12 +2497,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	protected void validateEmailAddress(User user, String emailAddress)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!UsersAdminUtil.hasUpdateEmailAddress(permissionChecker, user)) {
-			throw new UserEmailAddressException();
-		}
-
 		if (!user.hasCompanyMx() && user.hasCompanyMx(emailAddress)) {
 			Company company = companyPersistence.findByPrimaryKey(
 				user.getCompanyId());
@@ -2547,13 +2541,68 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
-	protected void validateScreenName(User user, String screenName)
+	protected void validateUpdatePermission(
+			User user, String screenName, String emailAddress, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			int birthdayMonth, int birthdayDay, int birthdayYear, boolean male,
+			String jobTitle)
 		throws PortalException, SystemException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		Contact contact = user.getContact();
 
-		if (!UsersAdminUtil.hasUpdateScreenName(permissionChecker, user)) {
-			throw new UserScreenNameException();
+		Calendar birthday = CalendarFactoryUtil.getCalendar();
+
+		birthday.setTime(contact.getBirthday());
+
+		List<String> changedFieldsList = new ArrayList<String>();
+
+		if (!screenName.equalsIgnoreCase(user.getScreenName())) {
+			changedFieldsList.add("screenName");
+		}
+
+		if (!emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
+			changedFieldsList.add("emailAddress");
+		}
+
+		if (!firstName.equalsIgnoreCase(user.getFirstName())) {
+			changedFieldsList.add("firstName");
+		}
+
+		if (!middleName.equalsIgnoreCase(user.getMiddleName())) {
+			changedFieldsList.add("middleName");
+		}
+
+		if (!lastName.equalsIgnoreCase(user.getLastName())) {
+			changedFieldsList.add("lastName");
+		}
+
+		if (prefixId != contact.getPrefixId()) {
+			changedFieldsList.add("prefix");
+		}
+
+		if (suffixId != contact.getSuffixId()) {
+			changedFieldsList.add("suffix");
+		}
+
+		if ((birthdayMonth != birthday.get(Calendar.MONDAY)) ||
+			(birthdayDay != birthday.get(Calendar.DATE)) ||
+			(birthdayYear != birthday.get(Calendar.YEAR))) {
+
+			changedFieldsList.add("birthday");
+		}
+
+		if (male != contact.getMale()) {
+			changedFieldsList.add("gender");
+		}
+
+		if (!jobTitle.equalsIgnoreCase(user.getJobTitle())) {
+			changedFieldsList.add("jobTitle");
+		}
+
+		for (String field : changedFieldsList) {
+			if (!UsersAdminUtil.hasUpdatePermission(user, field)) {
+				throw new UserUpdatePermissionException();
+			}
 		}
 	}
 

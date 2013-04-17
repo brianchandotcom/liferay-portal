@@ -86,6 +86,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.usersadmin.util.UserUpdatePermissionException;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -264,6 +265,7 @@ public class EditUserAction extends PortletAction {
 					 e instanceof UserReminderQueryException ||
 					 e instanceof UserScreenNameException ||
 					 e instanceof UserSmsException ||
+					 e instanceof UserUpdatePermissionException ||
 					 e instanceof WebsiteURLException) {
 
 				if (e instanceof NoSuchListTypeException) {

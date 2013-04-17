@@ -135,6 +135,7 @@ AUI.add(
 									points: ['lc', 'rc']
 								},
 								cssClass: 'lfr-content-preview-popup',
+								constrain: true,
 								hideOn: 'mouseleave',
 								on: {
 									show: A.bind('_onTooltipShow', instance),

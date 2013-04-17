@@ -47,12 +47,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 
-		<if>
-			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
-			<then>
-				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
-			</then>
-		</if>
+		<execute macro="CPUsersandorganizationsViewusers#showAdvancedSearch" />
 
 		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME" value1="${firstName}" />
 
@@ -77,12 +72,7 @@
 
 		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DEACTIVATE" value1="Deactivate" />
 
-		<if>
-			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
-			<then>
-				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
-			</then>
-		</if>
+		<execute macro="CPUsersandorganizationsViewusers#showBasicSearch" />
 	</command>
 
 	<command name="cpDelete">
@@ -96,12 +86,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 
-		<if>
-			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
-			<then>
-				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
-			</then>
-		</if>
+		<execute macro="CPUsersandorganizationsViewusers#showAdvancedSearch" />
 
 		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="ADVANCED_SEARCH_FIRST_NAME" value1="${firstName}" />
 
@@ -126,14 +111,7 @@
 
 		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DELETE" value1="Delete" />
 
-		<if>
-			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
-			<then>
-				<execute action="CPUsersandorganizationsViewusers#select" locator-key1="ADVANCED_SEARCH_STATUS" value1="Active" />
-
-				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
-			</then>
-		</if>
+		<execute macro="CPUsersandorganizationsViewusers#showBasicSearch" />
 	</command>
 
 	<command name="cpView">
@@ -147,12 +125,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 
-		<if>
-			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="ADVANCED_SEARCH_BASIC" />
-			<then>
-				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="ADVANCED_SEARCH_BASIC" />
-			</then>
-		</if>
+		<execute macro="CPUsersandorganizationsViewusers#showBasicSearch" />
 
 		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${screenName}" />
 

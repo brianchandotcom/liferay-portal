@@ -1,5 +1,5 @@
 <definition>
-	<command name="cpAddOrgRole">
+	<command name="cpAdd">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
@@ -10,7 +10,27 @@
 
 		<execute action="CPRoles#click" locator-key1="ADD" />
 
-		<execute action="CPRoles#click" locator-key1="ADD_ORGANIZATION_ROLE" />
+		<if>
+			<equals arg1="${roleType}" arg2="Organization" />
+			<then>
+				<execute action="CPRoles#click" locator-key1="ADD_ORGANIZATION_ROLE" />
+			</then>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Regular" />
+				<then>
+					<execute action="CPRoles#click" locator-key1="ADD_REGULAR_ROLE" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Site" />
+				<then>
+					<execute action="CPRoles#click" locator-key1="ADD_SITE_ROLE" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var roleType. Must be (Organization|Regular|Site)." />
+			</else>
+		</if>
 
 		<execute action="CPRolesAddrole#type" locator-key1="NAME" value1="${roleName}" />
 
@@ -26,13 +46,30 @@
 
 		<execute action="Home#click" locator1="link=Roles" />
 
-		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
+		<if>
+			<equals arg1="${roleType}" arg2="Organization" />
+			<then>
+				<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
+			</then>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Regular" />
+				<then>
+					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Site" />
+				<then>
+					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
+				</then>
+			</elseif>
+		</if>
 
 		<execute action="CPRoles#click" locator-key1="SEARCH_BUTTON" />
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
 
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TYPE_1" value1="Organization" />
+		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TYPE_1" value1="${roleType}" />
 
 		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
 
@@ -41,94 +78,24 @@
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />
 
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="NAME" value1="${roleName}" />
+	</command>
+
+	<command name="cpAddOrgRole">
+		<execute macro="Role#cpAdd">
+			<var name="roleType" value="Organization" />
+		</execute>
 	</command>
 
 	<command name="cpAddRegRole">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
-
-		<execute action="CPRoles#click" locator-key1="ADD" />
-
-		<execute action="CPRoles#click" locator-key1="ADD_REGULAR_ROLE" />
-
-		<execute action="CPRolesAddrole#type" locator-key1="NAME" value1="${roleName}" />
-
-		<execute action="CPRolesAddrole#click" locator-key1="SAVE" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
-
-		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
-
-		<execute action="CPRoles#click" locator-key1="SEARCH_BUTTON" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TYPE_1" value1="Regular" />
-
-		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
-
-		<execute action="CPRoles#click" locator-key1="ROLE_ACTIONS_EDIT" />
-
-		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />
-
-		<execute action="CPRolesEdit#assertTextEquals" locator-key1="NAME" value1="${roleName}" />
+		<execute macro="Role#cpAdd">
+			<var name="roleType" value="Regular" />
+		</execute>
 	</command>
 
 	<command name="cpAddSiteRole">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
-
-		<execute action="CPRoles#click" locator-key1="ADD" />
-
-		<execute action="CPRoles#click" locator-key1="ADD_SITE_ROLE" />
-
-		<execute action="CPRolesAddrole#type" locator-key1="NAME" value1="${roleName}" />
-
-		<execute action="CPRolesAddrole#click" locator-key1="SAVE" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
-
-		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
-
-		<execute action="CPRoles#click" locator-key1="SEARCH_BUTTON" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
-
-		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TYPE_1" value1="Site" />
-
-		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
-
-		<execute action="CPRoles#click" locator-key1="ROLE_ACTIONS_EDIT" />
-
-		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />
-
-		<execute action="CPRolesEdit#assertTextEquals" locator-key1="NAME" value1="${roleName}" />
+		<execute macro="Role#cpAdd">
+			<var name="roleType" value="Site" />
+		</execute>
 	</command>
 
 	<command name="cpTearDown">

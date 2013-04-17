@@ -1,0 +1,35 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddUser">
+		<var name="emailAddress" value="userea@liferay.com" />
+		<var name="firstName" value="userfn" />
+		<var name="lastName" value="userln" />
+		<var name="screenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="User#cpView" />
+	</command>
+
+	<command name="DeleteUser">
+		<var name="emailAddress" value="userea@liferay.com" />
+		<var name="firstName" value="userfn" />
+		<var name="lastName" value="userln" />
+		<var name="screenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="User#cpDeactivate" />
+
+		<execute macro="User#cpDelete" />
+	</command>
+
+	<tear-down>
+		<execute macro="User#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

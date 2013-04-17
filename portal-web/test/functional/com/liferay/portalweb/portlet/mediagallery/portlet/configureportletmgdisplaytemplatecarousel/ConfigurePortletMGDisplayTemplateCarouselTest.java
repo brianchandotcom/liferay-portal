@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowactions;
+package com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletMGShowActionsTest extends BaseTestCase {
-	public void testConfigurePortletMGShowActions() throws Exception {
+public class ConfigurePortletMGDisplayTemplateCarouselTest extends BaseTestCase {
+	public void testConfigurePortletMGDisplayTemplateCarousel()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -46,21 +47,17 @@ public class ConfigurePortletMGShowActionsTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//input[contains(@id,'showActionsCheckbox')]");
-		assertFalse(selenium.isChecked(
-				"//input[contains(@id,'showActionsCheckbox')]"));
-		selenium.clickAt("//input[contains(@id,'showActionsCheckbox')]",
-			RuntimeVariables.replace("Show Actions"));
-		assertTrue(selenium.isChecked(
-				"//input[contains(@id,'showActionsCheckbox')]"));
+		selenium.waitForVisible("//select[@id='_86_displayStyle']	");
+		selenium.select("//select[@id='_86_displayStyle']	",
+			RuntimeVariables.replace("Carousel"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[contains(@id,'showActionsCheckbox')]"));
+			selenium.getText("//div[@class='portlet-msg-success']	"));
+		assertEquals("Carousel",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']	"));
 		selenium.selectFrame("relative=top");
 	}
 }

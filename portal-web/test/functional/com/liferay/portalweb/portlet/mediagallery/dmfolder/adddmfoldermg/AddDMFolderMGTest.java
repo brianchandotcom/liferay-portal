@@ -34,9 +34,9 @@ public class AddDMFolderMGTest extends BaseTestCase {
 		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Folder')]",
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_31_name']",
+		selenium.type("//input[contains(@class,'aui-field-input-text lfr-input-text')]",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.type("//textarea[@id='_31_description']",
+		selenium.type("//textarea[contains(@class,'aui-field-input-text lfr-textarea')]",
 			RuntimeVariables.replace("DM Folder Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

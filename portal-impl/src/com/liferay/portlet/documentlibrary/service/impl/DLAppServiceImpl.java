@@ -3061,6 +3061,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
+		FileVersion oldDestinationFileVersion =
+			destinationFileEntry.getFileVersion();
+
+		dlAppHelperLocalService.addFileEntry(
+			getUserId(), destinationFileEntry, oldDestinationFileVersion,
+			serviceContext);
+
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
@@ -3068,13 +3075,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			try {
 				destinationFileEntry = toRepository.updateFileEntry(
-					destinationFileEntry.getFileEntryId(), fileEntry.getTitle(),
-					destinationFileEntry.getMimeType(),
-					destinationFileEntry.getTitle(),
-					destinationFileEntry.getDescription(), StringPool.BLANK,
+					destinationFileEntry.getFileEntryId(),
+					fileVersion.getTitle(), fileVersion.getMimeType(),
+					fileVersion.getTitle(), fileVersion.getDescription(),
+					StringPool.BLANK,
 					DLAppUtil.isMajorVersion(previousFileVersion, fileVersion),
 					fileVersion.getContentStream(false), fileVersion.getSize(),
 					serviceContext);
+
+				FileVersion destinationFileVersion =
+					destinationFileEntry.getFileVersion();
+
+				dlAppHelperLocalService.updateFileEntry(
+					getUserId(), destinationFileEntry,
+					oldDestinationFileVersion, destinationFileVersion,
+					serviceContext);
+
+				oldDestinationFileVersion = destinationFileVersion;
 			}
 			catch (PortalException pe) {
 				toRepository.deleteFileEntry(
@@ -3083,10 +3100,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				throw pe;
 			}
 		}
-
-		dlAppHelperLocalService.addFileEntry(
-			getUserId(), destinationFileEntry,
-			destinationFileEntry.getFileVersion(), serviceContext);
 
 		return destinationFileEntry;
 	}

@@ -460,20 +460,6 @@ public class EditUserAction extends PortletAction {
 					status = WorkflowConstants.STATUS_INACTIVE;
 				}
 
-				if (cmd.equals(Constants.RESTORE)) {
-					Company company = PortalUtil.getCompany(actionRequest);
-					long companyId = company.getCompanyId();
-
-					if ((company.getMaxUsers() > 0) &&
-						(company.getMaxUsers() <=
-							UserLocalServiceUtil.searchCount(
-								companyId, null,
-								WorkflowConstants.STATUS_APPROVED, null))) {
-
-						throw new CompanyMaxUsersException();
-					}
-				}
-
 				UserServiceUtil.updateStatus(deleteUserId, status);
 			}
 			else {

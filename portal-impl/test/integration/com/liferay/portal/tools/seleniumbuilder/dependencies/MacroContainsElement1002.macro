@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<contains string="string" substring="substring">
+				<fail />
+			</contains>
+			<then>
+				<execute action="action" />
+			</then>
+		</if>
+	</command>
+</definition>

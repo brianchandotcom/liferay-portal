@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<equals arg1="arg1" />
+			<then>
+				<execute action="action" />
+			</then>
+		</if>
+	</command>
+</definition>

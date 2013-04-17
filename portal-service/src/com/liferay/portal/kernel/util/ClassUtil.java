@@ -275,6 +275,7 @@ public class ClassUtil {
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {
 					if (st.ttype == StreamTokenizer.TT_WORD) {
 						s += st.sval;
+
 						if (s.trim().endsWith(")")) {
 							break;
 						}

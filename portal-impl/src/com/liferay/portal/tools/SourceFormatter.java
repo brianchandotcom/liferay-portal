@@ -2226,7 +2226,8 @@ public class SourceFormatter {
 
 					if (Validator.isNotNull(previousLine) &&
 						Validator.isNotNull(trimmedLine) &&
-						!previousLine.contains("/*")) {
+						!previousLine.contains("/*") &&
+						!previousLine.endsWith("*/")) {
 
 						String trimmedPreviousLine = StringUtil.trimLeading(
 							previousLine);
@@ -2235,6 +2236,15 @@ public class SourceFormatter {
 							 !trimmedLine.startsWith("// ")) ||
 							(!trimmedPreviousLine.startsWith("// ") &&
 							 trimmedLine.startsWith("// "))) {
+
+							sb.append("\n");
+						}
+						else if (!trimmedPreviousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								 !trimmedPreviousLine.endsWith(
+									StringPool.COLON) &&
+								 (trimmedLine.startsWith("for (") ||
+								  trimmedLine.startsWith("if ("))) {
 
 							sb.append("\n");
 						}

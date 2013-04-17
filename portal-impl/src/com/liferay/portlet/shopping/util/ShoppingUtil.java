@@ -331,6 +331,7 @@ public class ShoppingUtil {
 			for (int i = 0; i < range.length - 1; i++) {
 				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
 					int rangeId = i / 2;
+
 					if (MathUtil.isOdd(i)) {
 						rangeId = (i + 1) / 2;
 					}
@@ -404,6 +405,7 @@ public class ShoppingUtil {
 			for (int i = 0; i < range.length - 1; i++) {
 				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
 					int rangeId = i / 2;
+
 					if (MathUtil.isOdd(i)) {
 						rangeId = (i + 1) / 2;
 					}
@@ -500,6 +502,7 @@ public class ShoppingUtil {
 		double shipping = calculateAlternativeShipping(items, altShipping);
 
 		double insurance = 0.0;
+
 		if (insure) {
 			insurance = calculateInsurance(items);
 		}
@@ -748,6 +751,7 @@ public class ShoppingUtil {
 				String[] vArray = values.get(j);
 
 				int arrayPos;
+
 				for (arrayPos = i / numOfRepeats;
 					arrayPos >= vArray.length;
 					arrayPos = arrayPos - vArray.length) {

@@ -41,7 +41,7 @@ import javax.portlet.ActionRequest;
  */
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
-	public void propagateCategoryRolePermissions(
+	protected void propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, long primaryKey,
 			long categoryId, long[] roleIds)
 		throws PortalException, SystemException {
@@ -53,7 +53,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	public void propagateCategoryRolePermissions(
+	protected void propagateCategoryRolePermissions(
 			final ActionRequest actionRequest, final String className,
 			String primKey, final long[] roleIds)
 		throws PortalException, SystemException {
@@ -130,7 +130,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	public void propagateMBRolePermissions(
+	protected void propagateMBRolePermissions(
 			final ActionRequest actionRequest, final String className,
 			String primKey, final long[] roleIds)
 		throws PortalException, SystemException {
@@ -167,7 +167,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		actionableDynamicQuery.performActions();
 	}
 
-	public void propagateMessageRolePermissions(
+	protected void propagateMessageRolePermissions(
 			ActionRequest actionRequest, String className, long primaryKey,
 			long messageId, long[] roleIds)
 		throws PortalException, SystemException {
@@ -205,7 +205,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	public void propagateThreadRolePermissions(
+	protected void propagateThreadRolePermissions(
 			ActionRequest actionRequest, String className, long messageId,
 			long threadId, long[] roleIds)
 		throws PortalException, SystemException {

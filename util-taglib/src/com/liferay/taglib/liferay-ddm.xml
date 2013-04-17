@@ -19,6 +19,11 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>fieldName</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>fields</name>
 				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</inputType>
 				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</outputType>

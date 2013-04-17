@@ -1,20 +1,20 @@
 <#include "macro.ftl">
 
+<#include "asset_category.ftl">
+
 <#include "class_names.ftl">
 
-<#include "counters.ftl">
-
 <#include "company.ftl">
+
+<#include "default_dl_file_type.ftl">
+
+<#include "default_user.ftl">
 
 <#include "groups.ftl">
 
 <#include "roles.ftl">
 
-<#include "default_user.ftl">
-
-<#include "asset_category.ftl">
-
-<#include "default_dl_file_type.ftl">
+<#include "counters.ftl">
 
 update Release_ set verified = TRUE;
 

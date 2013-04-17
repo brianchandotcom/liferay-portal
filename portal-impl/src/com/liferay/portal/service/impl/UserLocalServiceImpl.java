@@ -5735,8 +5735,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		validateCompanyMaxUsers(companyId);
-
 		if ((company.getMaxUsers() > 0) &&
 			(company.getMaxUsers() <=
 				searchCount(

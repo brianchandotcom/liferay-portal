@@ -646,24 +646,32 @@ public class SeleniumBuilderTest {
 	public void testFunctionIfElement1001_1() throws Exception {
 		test(
 			"FunctionIfElement1001_1.function",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/FunctionIfElement1001_1.function:3");
+			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
+				"/FunctionIfElement1001_1.function:3");
 	}
 
 	@Test
 	public void testFunctionIfElement1001_2() throws Exception {
 		test(
 			"FunctionIfElement1001_2.function",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/FunctionIfElement1001_2.function:3");
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/FunctionIfElement1001_2.function:3");
 	}
 
 	@Test
 	public void testFunctionIfElement1001_3() throws Exception {
 		test(
 			"FunctionIfElement1001_3.function",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/FunctionIfElement1001_3.function:3");
+			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
+				"/FunctionIfElement1001_3.function:3");
+	}
+
+	@Test
+	public void testFunctionIfElement1001_4() throws Exception {
+		test(
+			"FunctionIfElement1001_4.function",
+			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
+				"/FunctionIfElement1001_4.function:3");
 	}
 
 	@Test
@@ -920,11 +928,19 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroEchoElement1003() throws Exception {
+	public void testMacroEchoElement1005() throws Exception {
 		test(
-			"MacroEchoElement1003.macro",
-			"Error 1003: Missing message attribute in " + _DIR_NAME +
-				"/MacroEchoElement1003.macro:3");
+			"MacroEchoElement1005.macro",
+			"Error 1005: Invalid message-fail attribute in " + _DIR_NAME +
+				"/MacroEchoElement1005.macro:3");
+	}
+
+	@Test
+	public void testMacroEchoElement1006() throws Exception {
+		test(
+			"MacroEchoElement1006.macro",
+			"Error 1006: Invalid message attribute value in " + _DIR_NAME +
+				"/MacroEchoElement1006.macro:3");
 	}
 
 	@Test
@@ -1056,35 +1072,43 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroFailElement1003() throws Exception {
+	public void testMacroFailElement1005() throws Exception {
 		test(
-			"MacroFailElement1003.macro",
-			"Error 1003: Missing message attribute in " + _DIR_NAME +
-				"/MacroFailElement1003.macro:3");
+			"MacroFailElement1005.macro",
+			"Error 1005: Invalid message-fail attribute in " + _DIR_NAME +
+				"/MacroFailElement1005.macro:3");
+	}
+
+	@Test
+	public void testMacroFailElement1006() throws Exception {
+		test(
+			"MacroFailElement1006.macro",
+			"Error 1006: Invalid message attribute value in " + _DIR_NAME +
+				"/MacroFailElement1006.macro:3");
 	}
 
 	@Test
 	public void testMacroIfElement1001_1() throws Exception {
 		test(
 			"MacroIfElement1001_1.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroIfElement1001_1.macro:3");
+			"Error 1001: Missing (condition|contains|equals|isset) child " +
+				"element in " + _DIR_NAME + "/MacroIfElement1001_1.macro:3");
 	}
 
 	@Test
 	public void testMacroIfElement1001_2() throws Exception {
 		test(
 			"MacroIfElement1001_2.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroIfElement1001_2.macro:3");
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/MacroIfElement1001_2.macro:3");
 	}
 
 	@Test
 	public void testMacroIfElement1001_3() throws Exception {
 		test(
 			"MacroIfElement1001_3.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroIfElement1001_3.macro:3");
+			"Error 1001: Missing (condition|contains|equals|isset) child " +
+				"element in " + _DIR_NAME + "/MacroIfElement1001_3.macro:3");
 	}
 
 	@Test

@@ -1,5 +1,7 @@
 <#--
-FreeMarker Transform Template
+Display templates are used to lay out the fields defined in a Data
+Definition.
 
-All dynamic elements in a structure can be accessed as a FreeMarker variable.
+Please use the left panel to quickly add commonly used variables.
+Autocomplete is also available and can be invoked by typing ${
 -->

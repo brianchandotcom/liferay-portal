@@ -17,7 +17,6 @@ package com.liferay.portlet.assetpublisher.template;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -50,11 +49,6 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.assetpublisher";
-	}
-
-	@Override
-	public String getTemplatesHelpPropertyKey() {
-		return PropsKeys.ASSET_PUBLISHER_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override

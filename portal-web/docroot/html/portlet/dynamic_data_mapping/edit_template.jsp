@@ -56,7 +56,7 @@ if (Validator.isNull(script)) {
 
 		supportedLanguageTypes = TemplateManagerUtil.getSupportedLanguageTypes(propertyNamePrefix);
 	}
-	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class)) {
+	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class.getName())) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(TemplateConstants.LANG_TYPE_VM)));
 	}
 	else if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {

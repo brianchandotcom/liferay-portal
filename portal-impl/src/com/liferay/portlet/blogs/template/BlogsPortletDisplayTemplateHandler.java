@@ -17,7 +17,6 @@ package com.liferay.portlet.blogs.template;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -49,11 +48,6 @@ public class BlogsPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.blogs";
-	}
-
-	@Override
-	public String getTemplatesHelpPropertyKey() {
-		return PropsKeys.BLOGS_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override

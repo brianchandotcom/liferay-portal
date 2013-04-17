@@ -17,7 +17,6 @@ package com.liferay.portlet.sitemap.template;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -50,11 +49,6 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.sitemap";
-	}
-
-	@Override
-	public String getTemplatesHelpPropertyKey() {
-		return PropsKeys.SITEMAP_DISPLAY_TEMPLATES_HELP;
 	}
 
 	@Override

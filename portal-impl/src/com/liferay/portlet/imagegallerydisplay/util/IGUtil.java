@@ -14,18 +14,26 @@
 
 package com.liferay.portlet.imagegallerydisplay.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.UniqueList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.util.Collections;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -60,13 +68,29 @@ public class IGUtil {
 				"struts_action", "/image_gallery_display/view");
 		}
 
-		List<Folder> ancestorFolders = folder.getAncestors();
+		List<Long> ancestorFolderIds = folder.getAncestorFolderIds();
 
-		Collections.reverse(ancestorFolders);
+		Collections.reverse(ancestorFolderIds);
 
-		for (Folder ancestorFolder : ancestorFolders) {
+		String portletId = PortalUtil.getPortletId(request);
+
+		PortletPreferences preferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, portletId);
+
+		long rootFolderId = PrefsParamUtil.getLong(
+			preferences, request, "rootFolderId",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		List<Long> filteredFolderAncestorIds = removeRootFolderAncestors(
+			rootFolderId, ancestorFolderIds);
+
+		for (Long ancestorFolderId : filteredFolderAncestorIds) {
 			portletURL.setParameter(
-				"folderId", String.valueOf(ancestorFolder.getFolderId()));
+				"folderId", String.valueOf(ancestorFolderId));
+
+			Folder ancestorFolder = DLAppLocalServiceUtil.getFolder(
+				ancestorFolderId);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				request, ancestorFolder.getName(), portletURL.toString());
@@ -96,6 +120,25 @@ public class IGUtil {
 		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
 		addPortletBreadcrumbEntries(folder, request, renderResponse);
+	}
+
+	protected static List<Long> removeRootFolderAncestors(
+			Long rootFolderId, List<Long> ancestorFolderIds)
+		throws PortalException, SystemException {
+
+		List<Long> avoidBreadcrumbFolderIds = new UniqueList<Long>();
+
+		if (Validator.isNotNull(rootFolderId) &&
+			(rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ) {
+
+			Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+
+			avoidBreadcrumbFolderIds = rootFolder.getAncestorFolderIds();
+
+			avoidBreadcrumbFolderIds.add(rootFolder.getFolderId());
+		}
+
+		return ListUtil.remove(ancestorFolderIds, avoidBreadcrumbFolderIds);
 	}
 
 }

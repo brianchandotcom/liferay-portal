@@ -896,6 +896,62 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroContainsElement1002() throws Exception {
+		test(
+			"MacroContainsElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroContainsElement1002.macro:5");
+	}
+
+	@Test
+	public void testMacroContainsElement1004_1() throws Exception {
+		test(
+			"MacroContainsElement1004_1.macro",
+			"Error 1004: Missing (string|substring) attribute in " + _DIR_NAME +
+				"/MacroContainsElement1004_1.macro:4");
+	}
+
+	@Test
+	public void testMacroContainsElement1004_2() throws Exception {
+		test(
+			"MacroContainsElement1004_2.macro",
+			"Error 1004: Missing (string|substring) attribute in " + _DIR_NAME +
+				"/MacroContainsElement1004_2.macro:4");
+	}
+
+	@Test
+	public void testMacroContainsElement1004_3() throws Exception {
+		test(
+			"MacroContainsElement1004_3.macro",
+			"Error 1004: Missing (string|substring) attribute in " + _DIR_NAME +
+				"/MacroContainsElement1004_3.macro:4");
+	}
+
+	@Test
+	public void testMacroContainsElement1005() throws Exception {
+		test(
+			"MacroContainsElement1005.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroContainsElement1005.macro:4");
+	}
+
+	@Test
+	public void testMacroContainsElement1006_1() throws Exception {
+		test(
+			"MacroContainsElement1006_1.macro",
+			"Error 1006: Invalid string attribute value in " + _DIR_NAME +
+				"/MacroContainsElement1006_1.macro:4");
+	}
+
+	@Test
+	public void testMacroContainsElement1006_2() throws Exception {
+		test(
+			"MacroContainsElement1006_2.macro",
+			"Error 1006: Invalid substring attribute value in " + _DIR_NAME +
+				"/MacroContainsElement1006_2.macro:4");
+	}
+
+	@Test
 	public void testMacroDefinitionElement1000() throws Exception {
 		test(
 			"MacroDefinitionElement1000.macro",
@@ -965,6 +1021,62 @@ public class SeleniumBuilderTest {
 			"MacroElseElement1007.macro",
 			"Error 1007: Poorly formed XML in " + _DIR_NAME +
 				"/MacroElseElement1007.macro");
+	}
+
+	@Test
+	public void testMacroEqualsElement1002() throws Exception {
+		test(
+			"MacroEqualsElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroEqualsElement1002.macro:5");
+	}
+
+	@Test
+	public void testMacroEqualsElement1004_1() throws Exception {
+		test(
+			"MacroEqualsElement1004_1.macro",
+			"Error 1004: Missing (arg1|arg2) attribute in " + _DIR_NAME +
+				"/MacroEqualsElement1004_1.macro:4");
+	}
+
+	@Test
+	public void testMacroEqualsElement1004_2() throws Exception {
+		test(
+			"MacroEqualsElement1004_2.macro",
+			"Error 1004: Missing (arg1|arg2) attribute in " + _DIR_NAME +
+				"/MacroEqualsElement1004_2.macro:4");
+	}
+
+	@Test
+	public void testMacroEqualsElement1004_3() throws Exception {
+		test(
+			"MacroEqualsElement1004_3.macro",
+			"Error 1004: Missing (arg1|arg2) attribute in " + _DIR_NAME +
+				"/MacroEqualsElement1004_3.macro:4");
+	}
+
+	@Test
+	public void testMacroEqualsElement1005() throws Exception {
+		test(
+			"MacroEqualsElement1005.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroEqualsElement1005.macro:4");
+	}
+
+	@Test
+	public void testMacroEqualsElement1006_1() throws Exception {
+		test(
+			"MacroEqualsElement1006_1.macro",
+			"Error 1006: Invalid arg1 attribute value in " + _DIR_NAME +
+				"/MacroEqualsElement1006_1.macro:4");
+	}
+
+	@Test
+	public void testMacroEqualsElement1006_2() throws Exception {
+		test(
+			"MacroEqualsElement1006_2.macro",
+			"Error 1006: Invalid arg2 attribute value in " + _DIR_NAME +
+				"/MacroEqualsElement1006_2.macro:4");
 	}
 
 	@Test
@@ -1125,6 +1237,38 @@ public class SeleniumBuilderTest {
 			"MacroIfElement1007.macro",
 			"Error 1007: Poorly formed XML in " + _DIR_NAME +
 				"/MacroIfElement1007.macro");
+	}
+
+	@Test
+	public void testMacroIssetElement1002() throws Exception {
+		test(
+			"MacroIssetElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroIssetElement1002.macro:5");
+	}
+
+	@Test
+	public void testMacroIssetElement1004() throws Exception {
+		test(
+			"MacroIssetElement1004.macro",
+			"Error 1004: Missing (var) attribute in " + _DIR_NAME +
+				"/MacroIssetElement1004.macro:4");
+	}
+
+	@Test
+	public void testMacroIssetElement1005() throws Exception {
+		test(
+			"MacroIssetElement1005.macro",
+			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
+				"/MacroIssetElement1005.macro:4");
+	}
+
+	@Test
+	public void testMacroIssetElement1006() throws Exception {
+		test(
+			"MacroIssetElement1006.macro",
+			"Error 1006: Invalid var attribute value in " + _DIR_NAME +
+				"/MacroIssetElement1006.macro:4");
 	}
 
 	@Test

@@ -224,6 +224,7 @@ public class CheckoutAction extends CartAction {
 		String billingStateSel = ParamUtil.getString(
 			actionRequest, "billingStateSel");
 		String billingState = billingStateSel;
+
 		if (Validator.isNull(billingStateSel)) {
 			billingState = ParamUtil.getString(actionRequest, "billingState");
 		}
@@ -252,6 +253,7 @@ public class CheckoutAction extends CartAction {
 		String shippingStateSel = ParamUtil.getString(
 			actionRequest, "shippingStateSel");
 		String shippingState = shippingStateSel;
+
 		if (Validator.isNull(shippingStateSel)) {
 			shippingState = ParamUtil.getString(actionRequest, "shippingState");
 		}

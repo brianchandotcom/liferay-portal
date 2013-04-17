@@ -66,6 +66,7 @@ public class CamelCaseUtil {
 			char c = s.charAt(i);
 
 			boolean nextUpperCase = true;
+
 			if (i < (s.length() - 1)) {
 				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
 			}

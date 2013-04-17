@@ -39,6 +39,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		}
 
 		ElementIdentifier[] elIds = getElementsIdentifiedByAttribute();
+
 		for (int i = 0; i < elIds.length; i++) {
 			if (name1.equals(elIds[i].getElementName())) {
 				if (_compareAttribute(
@@ -53,6 +54,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		}
 
 		elIds = getElementsIdentifiedByChild();
+
 		for (int i = 0; i < elIds.length; i++) {
 			if (name1.equals(elIds[i].getElementName())) {
 				if (_compareChildText(

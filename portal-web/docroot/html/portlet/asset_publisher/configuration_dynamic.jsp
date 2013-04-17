@@ -79,7 +79,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								}
 							%>
 
-							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
+								<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= (classNameIds.length == 1) && (classNameId == classNameIds[0]) %>" value="<%= classNameId %>" />
 
 							<%
 							}
@@ -445,7 +445,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 <aui:script use="aui-base">
 	var assetSelector = A.one('#<portlet:namespace />anyAssetType');
-	var assetMulitpleSelector = A.one('#<portlet:namespace />currentClassNameIds');
+	var assetMultipleSelector = A.one('#<portlet:namespace />currentClassNameIds');
 	var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 	var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = A.one('#<portlet:namespace />orderByColumn1');
@@ -466,7 +466,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		var <%= className %>Options = A.one('#<portlet:namespace /><%= className %>Options');
 
 		function <portlet:namespace />toggle<%= className %>(removeOrderBySubType) {
-			var assetOptions = assetMulitpleSelector.all('option');
+			var assetOptions = assetMultipleSelector.all('option');
 
 			if ((assetSelector.val() == '<%= curRendererFactory.getClassNameId() %>') ||
 				((assetSelector.val() == 'false') && (assetOptions.size() == 1) && (assetOptions.item(0).val() == '<%= curRendererFactory.getClassNameId() %>'))) {

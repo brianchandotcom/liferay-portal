@@ -238,7 +238,7 @@ public class DDMTemplateServiceUtil {
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if the user did not have permission to delete the
+	* @throws PortalException if the user did not have permission to view the
 	template
 	* @throws SystemException if a system exception occurred
 	*/

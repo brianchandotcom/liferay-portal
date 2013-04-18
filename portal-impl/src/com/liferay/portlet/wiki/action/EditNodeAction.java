@@ -143,7 +143,7 @@ public class EditNodeAction extends PortletAction {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		int nodeCount = WikiNodeLocalServiceUtil.getNodesCount(
 			themeDisplay.getScopeGroupId());

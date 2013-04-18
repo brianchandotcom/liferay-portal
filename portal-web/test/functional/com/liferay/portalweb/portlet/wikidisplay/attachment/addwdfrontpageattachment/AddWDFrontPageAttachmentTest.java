@@ -39,16 +39,16 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Attachments']",
 			RuntimeVariables.replace("Add Attachments"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(1000);
-		selenium.waitForVisible("//input[@value='Select Files']");
-		selenium.clickAt("//input[@value='Select Files']",
-			RuntimeVariables.replace("Select Files"));
-		selenium.waitForVisible("//input[@type='file']");
+		selenium.waitForVisible("//div[contains(@class,'yui3-uploader')]");
+		selenium.waitForElementPresent("//input[@type='file']");
 		selenium.uploadCommonFile("//input[@type='file']",
 			RuntimeVariables.replace("Document_1.jpg"));
-		selenium.clickAt("//input[@value='Save']",
+		selenium.waitForElementPresent(
+			"//ul[contains(@id,'_fileListContent')]/li[contains(@class,'upload-complete')]");
+		selenium.clickAt("xpath=(//input[@value='Save'])[2]",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
+		selenium.waitForText("//span[@class='success-message']",
+			"Successfully saved.");
 		assertEquals(RuntimeVariables.replace("Successfully saved."),
 			selenium.getText("//span[@class='success-message']"));
 		assertEquals(RuntimeVariables.replace("Document_1.jpg"),

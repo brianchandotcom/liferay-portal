@@ -35,12 +35,10 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Delete"),
+		assertEquals(RuntimeVariables.replace("Remove"),
 			selenium.getText("//td[3]/span/a/span"));
 		selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText(

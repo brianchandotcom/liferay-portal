@@ -33,35 +33,35 @@ public class WebXMLDefinitionTest {
 
 	@Test
 	public void testAddMultipleFilterDefinition() {
-		testAddFilterDefinitions(5);
+		addFilterDefinitions(5);
 	}
 
 	@Test
 	public void testAddMultipleListenerDefinition() {
-		testAddListenerDefinition(5);
+		addListenerDefinition(5);
 	}
 
 	@Test
 	public void testAddMultipleServletDefinitions() {
-		testAddServletDefinitions(5);
+		addServletDefinitions(5);
 	}
 
 	@Test
 	public void testAddSingleFilterDefinition() {
-		testAddFilterDefinitions(1);
+		addFilterDefinitions(1);
 	}
 
 	@Test
 	public void testAddSingleListenerDefinition() {
-		testAddListenerDefinition(1);
+		addListenerDefinition(1);
 	}
 
 	@Test
 	public void testAddSingleServletDefinition() {
-		testAddServletDefinitions(1);
+		addServletDefinitions(1);
 	}
 
-	protected void testAddFilterDefinitions(int count) {
+	protected void addFilterDefinitions(int count) {
 		for (int i = 0; i < count; i++) {
 			String s = String.valueOf(i);
 
@@ -80,7 +80,7 @@ public class WebXMLDefinitionTest {
 		Assert.assertEquals(count, filterDefinitions.size());
 	}
 
-	protected void testAddListenerDefinition(int count) {
+	protected void addListenerDefinition(int count) {
 		for (int i = 0; i < count; i++) {
 			ListenerDefinition listenerDefinition = new ListenerDefinition();
 
@@ -95,7 +95,7 @@ public class WebXMLDefinitionTest {
 		Assert.assertEquals(count, listenerDefinitions.size());
 	}
 
-	protected void testAddServletDefinitions(int count) {
+	protected void addServletDefinitions(int count) {
 		for (int i = 0; i < count; i++) {
 			String s = String.valueOf(i);
 

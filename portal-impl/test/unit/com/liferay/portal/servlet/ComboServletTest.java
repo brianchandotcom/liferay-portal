@@ -80,8 +80,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_UNIX);
 
-		testGetResourceURL(
-			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
+		getResourceURL(servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
 	@Test
@@ -89,15 +88,14 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_WINDOWS);
 
-		testGetResourceURL(
-			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
+		getResourceURL(servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
 	@Test
 	public void testGetResourceURLWithWrongContext() throws Exception {
 		ServletContext servletContext = getServletContext(null);
 
-		testGetResourceURL(servletContext, null, true);
+		getResourceURL(servletContext, null, true);
 	}
 
 	@Test
@@ -105,27 +103,10 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_UNIX);
 
-		testGetResourceURL(servletContext, "/dummyPath", true);
+		getResourceURL(servletContext, "/dummyPath", true);
 	}
 
-	protected ServletContext getServletContext(final String path) {
-		return new MockServletContext() {
-
-			@Override
-			public URL getResource(String resourcePath)
-				throws MalformedURLException {
-
-				if (path == null) {
-					return null;
-				}
-
-				return new URL("file:" + path + resourcePath);
-			}
-
-		};
-	}
-
-	protected void testGetResourceURL(
+	protected void getResourceURL(
 			ServletContext servletContext, String path, boolean expectNull)
 		throws Exception {
 
@@ -145,6 +126,23 @@ public class ComboServletTest extends PowerMockito {
 			Assert.assertEquals(servletContext.getResource(path), resourceURL);
 		}
 
+	}
+
+	protected ServletContext getServletContext(final String path) {
+		return new MockServletContext() {
+
+			@Override
+			public URL getResource(String resourcePath)
+				throws MalformedURLException {
+
+				if (path == null) {
+					return null;
+				}
+
+				return new URL("file:" + path + resourcePath);
+			}
+
+		};
 	}
 
 	private static final String _JAVASCRIPT_DIR = "html/js";

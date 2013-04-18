@@ -82,149 +82,138 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 
 	@Test
 	public void testEncryptBCrypt() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_BCRYPT,
 			"$2a$10$/ST7LsB.7AAHsn/tlK6hr.nudQaBbJhPX9KfRSSzsn.1ij45lVzaK");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT);
 	}
 
 	@Test
 	public void testEncryptBCryptWith10Rounds() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_BCRYPT + "/10",
 			"$2a$10$AHEC063zO5wHcovp1JteTukrB5jSWa2OTBkoUx79ItxqKzSBp/Sem");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT + "/10");
+		encryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT + "/10");
 	}
 
 	@Test
 	public void testEncryptBCryptWith12Rounds() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_BCRYPT + "/12",
 			"$2a$12$2dD/NrqCEBlVgFEkkFCbzOll2a9vrdl8tTTqGosm26wJK1eCtsjnO");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT + "/12");
+		encryptDisabled(PasswordEncryptorUtil.TYPE_BCRYPT + "/12");
 	}
 
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testEncryptCrypt() throws Exception {
-		testEncrypt(PasswordEncryptorUtil.TYPE_CRYPT, "SNbUMVY9kKQpY");
+		encrypt(PasswordEncryptorUtil.TYPE_CRYPT, "SNbUMVY9kKQpY");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_CRYPT);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_CRYPT);
 	}
 
 	@Test
 	public void testEncryptMD2() throws Exception {
-		testEncrypt(PasswordEncryptorUtil.TYPE_MD2, "8DiBqIxuORNfDsxg79YJuQ==");
+		encrypt(PasswordEncryptorUtil.TYPE_MD2, "8DiBqIxuORNfDsxg79YJuQ==");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_MD2);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_MD2);
 	}
 
 	@Test
 	public void testEncryptMD5() throws Exception {
-		testEncrypt(PasswordEncryptorUtil.TYPE_MD5, "X03MO1qnZdYdgyfeuILPmQ==");
+		encrypt(PasswordEncryptorUtil.TYPE_MD5, "X03MO1qnZdYdgyfeuILPmQ==");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_MD5);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_MD5);
 	}
 
 	@Test
 	public void testEncryptNONE() throws Exception {
-		testEncrypt(PasswordEncryptorUtil.TYPE_NONE, "password");
+		encrypt(PasswordEncryptorUtil.TYPE_NONE, "password");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_NONE);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_NONE);
 	}
 
 	@Test
 	public void testEncryptPBKDF2() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1",
 			"AAAAoAAB9ADJZ16OuMAPPHe2CUbP0HPyXvagoKHumh7iHU3c");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1");
+		encryptDisabled(PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1");
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000Rounds() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/50000",
 			"AAAAoAAAw1B+jxO3UiVsWdBk4B9xGd/Ko3GKHW2afYhuit49");
 
-		testEncryptDisabled(
+		encryptDisabled(
 			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/50000");
 	}
 
 	@Test
 	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
-		testEncrypt(
-			PasswordEncryptorUtil.TYPE_PBKDF2+ "WithHmacSHA1/128/50000",
+		encrypt(
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000",
 			"AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva");
 
-		testEncryptDisabled(
-			PasswordEncryptorUtil.TYPE_PBKDF2+ "WithHmacSHA1/128/50000");
+		encryptDisabled(
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000");
 	}
 
 	@Test
 	public void testEncryptSHA() throws Exception {
-		testEncrypt(
-			PasswordEncryptorUtil.TYPE_SHA, "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
+		encrypt(PasswordEncryptorUtil.TYPE_SHA, "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_NONE);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_NONE);
 	}
 
 	@Test
 	public void testEncryptSHA1() throws Exception {
-		testEncrypt("SHA-1", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
+		encrypt("SHA-1", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
 
-		testEncryptDisabled("SHA-1");
+		encryptDisabled("SHA-1");
 	}
 
 	@Test
 	public void testEncryptSHA256() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_SHA_256,
 			"XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_SHA_256);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_SHA_256);
 	}
 
 	@Test
 	public void testEncryptSHA384() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_SHA_384,
 			"qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1EbFmGYMlM5oDEfRnDB4On");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_SHA_384);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_SHA_384);
 	}
 
 	@Test
 	public void testEncryptSSHA() throws Exception {
-		testEncrypt(
+		encrypt(
 			PasswordEncryptorUtil.TYPE_SSHA,
 			"2EWEKeVpSdd79PkTX5vaGXH5uQ028Smy/H1NmA==");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_SSHA);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_SSHA);
 	}
 
 	@Test
 	public void testEncryptUFCCRYPT() throws Exception {
-		testEncrypt(PasswordEncryptorUtil.TYPE_UFC_CRYPT, "2lrTlR/pWPUOQ");
+		encrypt(PasswordEncryptorUtil.TYPE_UFC_CRYPT, "2lrTlR/pWPUOQ");
 
-		testEncryptDisabled(PasswordEncryptorUtil.TYPE_UFC_CRYPT);
+		encryptDisabled(PasswordEncryptorUtil.TYPE_UFC_CRYPT);
 	}
 
-	protected String getAlgorithmHeader(String encryptedPassword) {
-		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
-
-		if (index > 0) {
-			return encryptedPassword.substring(1, index);
-		}
-
-		return StringPool.EMPTY;
-	}
-
-	protected void testEncrypt(String algorithm, String encryptedPassword)
+	protected void encrypt(String algorithm, String encryptedPassword)
 		throws PwdEncryptorException {
 
 		String legacyEncryptionAlgorithm =
@@ -261,7 +250,7 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 		}
 	}
 
-	protected void testEncryptDisabled(String algorithm)
+	protected void encryptDisabled(String algorithm)
 		throws PwdEncryptorException {
 
 		String legacyEncryptionAlgorithm =
@@ -288,6 +277,16 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =
 				legacyEncryptionAlgorithm;
 		}
+	}
+
+	protected String getAlgorithmHeader(String encryptedPassword) {
+		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
+		if (index > 0) {
+			return encryptedPassword.substring(1, index);
+		}
+
+		return StringPool.EMPTY;
 	}
 
 }

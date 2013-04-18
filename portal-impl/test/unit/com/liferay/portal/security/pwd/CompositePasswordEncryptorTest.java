@@ -73,9 +73,9 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptBCrypt() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"$2a$10$/ST7LsB.7AAHsn/tlK6hr.nudQaBbJhPX9KfRSSzsn.1ij45lVzaK");
 	}
@@ -84,16 +84,16 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptBCryptWith10Rounds() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT + "/10";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 	}
 
 	@Test
 	public void testEncryptBCryptWith12Rounds() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_BCRYPT + "/12";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"$2a$12$2dD/NrqCEBlVgFEkkFCbzOll2a9vrdl8tTTqGosm26wJK1eCtsjnO");
 	}
@@ -103,68 +103,67 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptCRYPT() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_CRYPT;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "SNbUMVY9kKQpY");
+		encrypt(algorithm, "password", "SNbUMVY9kKQpY");
 	}
 
 	@Test
 	public void testEncryptFailure() throws Exception {
-		testEncryptFailure(
+		encryptFailure(
 			"Some Nonexistent Algorithm", StringPool.BLANK, StringPool.BLANK);
 
-		testEncryptFailure(null, null, null);
+		encryptFailure(null, null, null);
 
-		testEncryptFailure(null, null, StringPool.BLANK);
+		encryptFailure(null, null, StringPool.BLANK);
 
-		testEncryptFailure(null, StringPool.BLANK, null);
+		encryptFailure(null, StringPool.BLANK, null);
 
-		testEncryptFailure(StringPool.BLANK, null, null);
+		encryptFailure(StringPool.BLANK, null, null);
 
-		testEncryptFailure(StringPool.BLANK, null, StringPool.BLANK);
+		encryptFailure(StringPool.BLANK, null, StringPool.BLANK);
 
-		testEncryptFailure(StringPool.BLANK, StringPool.BLANK, null);
+		encryptFailure(StringPool.BLANK, StringPool.BLANK, null);
 
-		testEncryptFailure(null, StringPool.BLANK, StringPool.BLANK);
+		encryptFailure(null, StringPool.BLANK, StringPool.BLANK);
 
-		testEncryptFailure(
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+		encryptFailure(StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
 	public void testEncryptMD2() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_MD2;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "8DiBqIxuORNfDsxg79YJuQ==");
+		encrypt(algorithm, "password", "8DiBqIxuORNfDsxg79YJuQ==");
 	}
 
 	@Test
 	public void testEncryptMD5() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_MD5;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "X03MO1qnZdYdgyfeuILPmQ==");
+		encrypt(algorithm, "password", "X03MO1qnZdYdgyfeuILPmQ==");
 	}
 
 	@Test
 	public void testEncryptNONE() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_NONE;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "password");
+		encrypt(algorithm, "password", "password");
 	}
 
 	@Test
 	public void testEncryptPBKDF2() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"AAAAoAAB9ADJZ16OuMAPPHe2CUbP0HPyXvagoKHumh7iHU3c");
 	}
@@ -174,9 +173,9 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 		String algorithm =
 			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/50000";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"AAAAoAAAw1B+jxO3UiVsWdBk4B9xGd/Ko3GKHW2afYhuit49");
 	}
@@ -186,9 +185,9 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 		String algorithm =
 			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva");
 	}
@@ -197,27 +196,27 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptSHA() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_SHA;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
+		encrypt(algorithm, "password", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
 	}
 
 	@Test
 	public void testEncryptSHA1() throws Exception {
 		String algorithm = "SHA-1";
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
+		encrypt(algorithm, "password", "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
 	}
 
 	@Test
 	public void testEncryptSHA256() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_SHA_256;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=");
 	}
@@ -226,9 +225,9 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptSHA384() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_SHA_384;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password",
 			"qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1EbFmGYMl" +
 				"M5oDEfRnDB4On");
@@ -238,9 +237,9 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptSSHA() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_SSHA;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(
+		encrypt(
 			algorithm, "password", "2EWEKeVpSdd79PkTX5vaGXH5uQ028Smy/H1NmA==");
 	}
 
@@ -248,21 +247,21 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	public void testEncryptUFCCRYPT() throws Exception {
 		String algorithm = PasswordEncryptorUtil.TYPE_UFC_CRYPT;
 
-		testEncrypt(algorithm);
+		encrypt(algorithm);
 
-		testEncrypt(algorithm, "password", "2lrTlR/pWPUOQ");
+		encrypt(algorithm, "password", "2lrTlR/pWPUOQ");
 	}
 
-	protected void testEncrypt(String algorithm) throws Exception {
+	protected void encrypt(String algorithm) throws Exception {
 		String password = "password";
 
 		String encrypted = PasswordEncryptorUtil.encrypt(
 			algorithm, password, null);
 
-		testEncrypt(algorithm, password, encrypted);
+		encrypt(algorithm, password, encrypted);
 	}
 
-	protected void testEncrypt(
+	protected void encrypt(
 			String algorithm, String plainTextPassword,
 			String encryptedPassword)
 		throws Exception {
@@ -273,7 +272,7 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 				algorithm, plainTextPassword, encryptedPassword));
 	}
 
-	protected void testEncryptFailure(
+	protected void encryptFailure(
 		String algorithm, String plainTextPassword, String encryptedPassword) {
 
 		try {

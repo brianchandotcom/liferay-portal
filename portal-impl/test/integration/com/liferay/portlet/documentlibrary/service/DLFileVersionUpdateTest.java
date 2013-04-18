@@ -40,34 +40,34 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testWithExtensionWithContent() throws Exception {
-		testVersionUpdate(
+		updateVersion(
 			_FULL_FILE_NAME, _ZERO_BYTES, ContentTypes.TEXT_PLAIN,
 			_FULL_FILE_NAME, CONTENT.getBytes(), ContentTypes.TEXT_PLAIN);
 	}
 
 	@Test
 	public void testWithExtensionWithoutContent() throws Exception {
-		testVersionUpdate(
+		updateVersion(
 			_FULL_FILE_NAME, _ZERO_BYTES, ContentTypes.TEXT_PLAIN,
 			_FULL_FILE_NAME, _ZERO_BYTES, ContentTypes.TEXT_PLAIN);
 	}
 
 	@Test
 	public void testWithoutExtensionWithContent() throws Exception {
-		testVersionUpdate(
+		updateVersion(
 			_BASE_FILE_NAME, _ZERO_BYTES, ContentTypes.APPLICATION_OCTET_STREAM,
 			_BASE_FILE_NAME, CONTENT.getBytes(), ContentTypes.TEXT_PLAIN);
 	}
 
 	@Test
 	public void testWithoutExtensionWithoutContent() throws Exception {
-		testVersionUpdate(
+		updateVersion(
 			_BASE_FILE_NAME, _ZERO_BYTES, ContentTypes.APPLICATION_OCTET_STREAM,
 			_BASE_FILE_NAME, _ZERO_BYTES,
 			ContentTypes.APPLICATION_OCTET_STREAM);
 	}
 
-	protected void testVersionUpdate(
+	protected void updateVersion(
 			String addFileName, byte[] addBytes, String addMimeType,
 			String updateFileName, byte[] updateBytes, String updateMimeType)
 		throws PortalException, SystemException {

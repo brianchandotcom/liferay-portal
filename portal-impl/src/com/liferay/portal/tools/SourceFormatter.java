@@ -1975,66 +1975,67 @@ public class SourceFormatter {
 						}
 					}
 				}
-			}
 
-			if ((line.contains(" && ") || line.contains(" || ")) &&
-				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+				if ((line.contains(" && ") || line.contains(" || ")) &&
+					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
-				_processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
-			}
-
-			if (trimmedLine.endsWith(StringPool.PLUS) &&
-				!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
-
-				String strippedQuotesLine = _stripQuotes(
-					trimmedLine, StringPool.QUOTE);
-
-				int closeParenthesisCount = StringUtil.count(
-					strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-				int openParenthesisCount = StringUtil.count(
-					strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-				if (openParenthesisCount > closeParenthesisCount) {
 					_processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
-			}
 
-			if (line.contains(StringPool.COMMA) &&
-				!line.contains(StringPool.CLOSE_PARENTHESIS) &&
-				!line.contains(StringPool.GREATER_THAN) &&
-				!line.contains(StringPool.QUOTE) &&
-				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+				if (trimmedLine.endsWith(StringPool.PLUS) &&
+					!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 
-				_processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
-			}
+					String strippedQuotesLine = _stripQuotes(
+						trimmedLine, StringPool.QUOTE);
 
-			if (line.endsWith(" +") || line.endsWith(" -") ||
-				line.endsWith(" *") || line.endsWith(" /")) {
+					int closeParenthesisCount = StringUtil.count(
+						strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+					int openParenthesisCount = StringUtil.count(
+						strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
 
-				int x = line.indexOf(" = ");
-
-				if (x != -1) {
-					int y = line.indexOf(StringPool.QUOTE);
-
-					if ((y == -1) || (x < y)) {
+					if (openParenthesisCount > closeParenthesisCount) {
 						_processErrorMessage(
 							fileName,
 							"line break: " + fileName + " " + lineCount);
 					}
 				}
-			}
 
-			if (line.endsWith(" throws") ||
-				(previousLine.endsWith(
-					StringPool.OPEN_PARENTHESIS) &&
-				 line.contains(" throws " ) &&
-				 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+				if (line.contains(StringPool.COMMA) &&
+					!line.contains(StringPool.CLOSE_PARENTHESIS) &&
+					!line.contains(StringPool.GREATER_THAN) &&
+					!line.contains(StringPool.QUOTE) &&
+					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
-				_processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
+					_processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
+				if (line.endsWith(" +") || line.endsWith(" -") ||
+					line.endsWith(" *") || line.endsWith(" /")) {
+
+					int x = line.indexOf(" = ");
+
+					if (x != -1) {
+						int y = line.indexOf(StringPool.QUOTE);
+
+						if ((y == -1) || (x < y)) {
+							_processErrorMessage(
+								fileName,
+								"line break: " + fileName + " " + lineCount);
+						}
+					}
+				}
+
+				if (line.endsWith(" throws") ||
+					(previousLine.endsWith(
+						StringPool.OPEN_PARENTHESIS) &&
+					 line.contains(" throws " ) &&
+					 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+
+					_processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
 			}
 
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {

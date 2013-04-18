@@ -23,46 +23,39 @@ test.properties to point to an ApacheDS installation file.
 			</then>
 		</if>
 
-		<antcall target="install-vm-java" />
+		<delete dir="${app.server.parent.dir}/apacheds_1.5.7" />
 
-		<echo>Restarting ${vm.host}.</echo>
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${apache.directory.win32.zip}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
 
-		<exec dir="${vm.drive}/${vm.host}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host}\${vm.host}.vmx reset" />
-		</exec>
+				<copy
+					file="${apache.directory.win32.dir}/${apache.directory.win32.zip}"
+					tofile="${app.server.parent.dir}/${apache.directory.win32.zip}"
+				/>
+			</then>
+		</if>
 
-		<sleep seconds="60" />
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${apache.directory.win32.dir}${apache.directory.win32.zip} ${vm.username}@${vm.host}:/" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} ${unzip.executable} -oq C:\${apache.directory.win32.zip} -d C:\" />
-		</exec>
+		<unzip
+			 dest="${app.server.parent.dir}"
+			 src="${app.server.parent.dir}/${apache.directory.win32.zip}"
+		/>
 	</target>
 
 	<target name="run-ldap-tomcat">
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="vm.vmdk.suffix" value="alpha-2010-02-02" />
-		 </antcall>
-
 		<antcall target="prepare-ldap-apache" />
 
 		<parallel>
 			<daemons>
-				<echo file="execute-remote-command.bat">
-					cd C:\apacheds_1.5.7
-					apacheds.bat
-				</echo>
-
-				<antcall target="execute-remote-command" />
+				<antcall target="start-ldap" />
 			</daemons>
 
 			<sequential>
 				<waitfor>
-					<socket port="10389" server="${vm.host}" />
+					<socket port="10389" server="localhost" />
 				</waitfor>
 
 				<tstamp>
@@ -127,18 +120,16 @@ cn: usergroup
 uniqueMember: cn=janesmith,ou=users,dc=example,dc=com
 businessCategory: cn=janesmith,ou=users,dc=example,dc=com</echo>
 
-				<exec executable="${pscp.executable}">
-					<arg line="-pw ${vm.password} ${tstamp.value} ${vm.username}@${vm.host}:/" />
+				<exec dir="${app.server.parent.dir}/apacheds_1.5.7/bin" executable="java">
+					<arg value="-jar" />
+					<arg value="apacheds-tools.jar" />
+					<arg value="import" />
+					<arg value="-e" />
+					<arg value="-f" />
+					<arg value="${project.dir}\${tstamp.value}" />
 				</exec>
 
 				<delete file="${tstamp.value}" />
-
-				<echo file="execute-remote-command.bat">
-					cd C:\apacheds_1.5.7\bin
-					java -jar apacheds-tools.jar import -e -f C:/${tstamp.value}
-				</echo>
-
-				<antcall target="execute-remote-command" />
 
 				<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 					<property name="test.class" value="${test.name}" />
@@ -146,8 +137,6 @@ businessCategory: cn=janesmith,ou=users,dc=example,dc=com</echo>
 			</sequential>
 		</parallel>
 
-		<exec dir="${vm.drive}/${vm.host}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host}\${vm.host}.vmx stop hard" />
-		</exec>
+		<antcall target="stop-ldap" />
 	</target>
 </project>

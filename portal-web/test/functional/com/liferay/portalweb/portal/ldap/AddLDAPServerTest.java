@@ -57,7 +57,7 @@ public class AddLDAPServerTest extends BaseTestCase {
 				"//input[@name='_130_defaultLdap' and @value='apache']"));
 		selenium.click("//input[@value='Reset Values']");
 		selenium.type("//input[@id='_130_ldap.base.provider.url.0']",
-			RuntimeVariables.replace("ldap://[$VM_HOST$]:10389"));
+			RuntimeVariables.replace("ldap://localhost:10389"));
 		selenium.type("//input[@id='_130_ldap.base.dn.0']",
 			RuntimeVariables.replace("dc=example,dc=com"));
 		selenium.type("//input[@id='_130_ldap.security.principal.0']",

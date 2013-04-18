@@ -427,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -4084,6 +4084,13 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		</if>
 	</target>
 
+	<target name="start-ldap">
+		<exec dir="${app.server.parent.dir}/apacheds_1.5.7" executable="cmd">
+			<arg value="/c" />
+			<arg value="apacheds.bat" />
+		</exec>
+	</target>
+
 	<target name="start-selenium">
 		<!--<java
 			jar="lib/development/selenium-server.jar"
@@ -4110,6 +4117,55 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM IEDriverServer.exe" />
 		</exec>
+	</target>
+
+	<target name="stop-ldap">
+		<if>
+			<os family="windows" />
+			<then>
+				<exec executable="${shell.executable}">
+					<arg line="/c jps -l > java-processes" />
+				</exec>
+			</then>
+			<else>
+				<exec executable="${shell.executable}" output="java-processes">
+					<arg line="-c jps -l" />
+				</exec>
+			</else>
+		</if>
+
+		<loadfile property="java-processes.content" srcfile="java-processes" />
+
+		<delete file="java-processes" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			String javaProcessesNewContent = project.getProperty("java-processes.content");
+
+			if (javaProcessesNewContent.contains("File Not Found")) {
+				javaProcessesNewContent = "";
+			}
+
+			String javaProcessList = javaProcessesNewContent.replaceAll("\r\n", ",");
+
+			if (javaProcessList.endsWith(",")) {
+				javaProcessList = javaProcessList.substring(0, javaProcessList.length() - 1);
+			}
+
+			project.setProperty("java.process.list", javaProcessList);
+		</script>
+
+		<for list="${java.process.list}" param="java.process">
+			<sequential>
+				<if>
+					<contains string="@{java.process}" substring="org.apache.directory.server.UberjarMain" />
+					<then>
+						<antcall target="kill-java-process">
+							<param name="java.process.to.kill" value="@{java.process}" />
+						</antcall>
+					</then>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="stop-selenium">

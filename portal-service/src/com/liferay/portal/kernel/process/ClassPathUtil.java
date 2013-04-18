@@ -32,11 +32,12 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -46,12 +47,28 @@ import javax.servlet.ServletException;
  */
 public class ClassPathUtil {
 
+	public static Set<URL> getClassPathURLs(ClassLoader classLoader) {
+		Set<URL> urls = new LinkedHashSet<URL>();
+
+		while (classLoader != null) {
+			if (classLoader instanceof URLClassLoader) {
+				URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
+
+				urls.addAll(Arrays.asList(urlClassLoader.getURLs()));
+			}
+
+			classLoader = classLoader.getParent();
+		}
+
+		return urls;
+	}
+
 	public static URL[] getClassPathURLs(String classPath)
 		throws MalformedURLException {
 
 		String[] paths = StringUtil.split(classPath, File.pathSeparatorChar);
 
-		List<URL> urls = new ArrayList<URL>();
+		Set<URL> urls = new LinkedHashSet<URL>();
 
 		for (String path : paths) {
 			File file = new File(path);

@@ -14,13 +14,16 @@
 
 package com.liferay.portal.tools.servicebuilder;
 
+import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.freemarker.FreeMarkerUtil;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.CharPool;
@@ -81,12 +84,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.lang.reflect.Constructor;
+
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,10 +103,14 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.DocumentException;
+
+import org.springframework.context.support.AbstractApplicationContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -318,6 +331,83 @@ public class ServiceBuilder {
 		}
 
 		Introspector.flushCaches();
+	}
+
+	public static void reenterableMain(String[] args) throws Exception {
+		Properties properties = new Properties(System.getProperties());
+
+		URL[] jvmClassPathURLs = ClassPathUtil.getClassPathURLs(
+			ClassPathUtil.getJVMClassPath(true));
+
+		Thread currentThread = Thread.currentThread();
+
+		Set<URL> contextClassPathURLs = ClassPathUtil.getClassPathURLs(
+			currentThread.getContextClassLoader());
+
+		Class<ServiceBuilder> serviceBuilderClass = ServiceBuilder.class;
+
+		Set<URL> literalClassPathURLs = ClassPathUtil.getClassPathURLs(
+			serviceBuilderClass.getClassLoader());
+
+		Set<URL> mergedURLs = new LinkedHashSet<URL>();
+
+		mergedURLs.addAll(literalClassPathURLs);
+		mergedURLs.addAll(contextClassPathURLs);
+		mergedURLs.addAll(Arrays.asList(jvmClassPathURLs));
+
+		ClassLoader classLoader = new URLClassLoader(
+			mergedURLs.toArray(new URL[mergedURLs.size()]), null);
+
+		class ReenterableCallable implements Callable<Void> {
+
+			public ReenterableCallable(String[] args) {
+				_args = args;
+			}
+
+			@Override
+			public Void call() throws Exception {
+				main(_args);
+
+				BeanLocatorImpl beanLocatorImpl =
+					(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();
+
+				AbstractApplicationContext abstractApplicationContext =
+					(AbstractApplicationContext)
+						beanLocatorImpl.getApplicationContext();
+
+				abstractApplicationContext.close();
+
+				return null;
+			}
+
+			private final String[] _args;
+
+		}
+
+		Class<? extends Callable<Void>> reenterableCallableClass =
+			(Class<? extends Callable<Void>>)classLoader.loadClass(
+				ReenterableCallable.class.getName());
+
+		Constructor<? extends Callable<Void>> constructor =
+			reenterableCallableClass.getConstructor(String[].class);
+
+		constructor.setAccessible(true);
+
+		FutureTask<Void> mainFutureTask = new FutureTask<Void>(
+			constructor.newInstance(new Object[]{args}));
+
+		Thread invokerThread = new Thread(mainFutureTask);
+
+		invokerThread.setContextClassLoader(classLoader);
+		invokerThread.setDaemon(true);
+
+		invokerThread.start();
+
+		mainFutureTask.get();
+
+		invokerThread.join();
+
+		System.setProperties(properties);
 	}
 
 	public static String toHumanName(String name) {

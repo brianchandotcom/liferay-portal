@@ -27,9 +27,8 @@ import java.util.Map;
  * membership regarding roles.
  *
  * <p>
- * Role Membership Policies define the roles a user is allowed to be a member
- * of, the roles the user must be a member of, the roles the user is
- * allowed to be assigned, and the roles the user must be assigned.
+ * Role Membership Policies define the roles a user is allowed to be assigned,
+ * and the roles the user must be assigned.
  * </p>
  *
  * <p>
@@ -65,15 +64,15 @@ import java.util.Map;
  * and propagates appropriate related actions in the portal by invoking
  * {@link #propagateRoles(long[], long[], long[])}. On failing the check, the
  * service foregoes making the changes. For example, Liferay executes this logic
- * when adding and updating roles, adding and removing users with respect to
- * roles, and adding and removing roles with respect to users.
+ * when adding and updating roles, and adding and removing roles with respect to
+ * users.
  * </p>
  *
  * <p>
  * Liferay's UI calls the "is*" methods, such as {@link #isRoleAllowed(long,
  * long)}, to determine appropriate options to display to the user. For example,
- * the UI calls {@link #isRoleAllowed(long, long)} to decide whether to display
- * the "Join" link to the user.
+ * the UI calls {@link #isRoleAllowed(long, long)} to decide whether to enable
+ * the checkbox for adding the role to the user.
  * </p>
  *
  * @author Roberto Díaz
@@ -90,9 +89,13 @@ public interface RoleMembershipPolicy {
 	 * exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  addRoleIds the user roles to be added
-	 * @param  removeRoleIds the user roles to be removed
-	 * @throws PortalException if any one user role violated the policy or if a
+	 * @param  userIds the primary keys of the users to be added and removed
+	 *         from the roles
+	 * @param  addRoleIds the primary keys of the roles to be added
+	 *         (optionally <code>null</code>)
+	 * @param  removeRoleIds the primary keys of the roles to be removed
+	 *         (optionally <code>null</code>)
+	 * @throws PortalException if any one role violated the policy or if a
 	 *         portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -116,8 +119,8 @@ public interface RoleMembershipPolicy {
 
 	/**
 	 * Returns <code>true</code> if the role is mandatory for the user.
-	 * If <code>true</code>, nobody can remove the role from this user.
-	 * Liferay's UI calls this method.
+	 * Liferay's UI, for example, calls this method in deciding whether the
+	 * checkbox to select a role will be enable.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  roleId the primary key of the role
@@ -161,8 +164,10 @@ public interface RoleMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
 	 * roles and performs operations necessary for the compliance of each role.
-	 * This method is called when upgrading Liferay and can also be triggered
-	 * manually from the Control Panel.
+	 * This method can be triggered manually from the
+	 * Control Panel. If the <code>membership.policy.auto.verify</code> portal
+	 * property is <code>true</code> this method will be triggered when starting
+	 * Liferay or everytime a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -181,9 +186,9 @@ public interface RoleMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of the role, with respect
-	 * to its new attributes and/or expando attributes, and performs operations
-	 * necessary for the compliance of the role. Liferay calls this method when
-	 * adding and updating roles.
+	 * to its expando attributes, and performs operations necessary for the
+	 * role's compliance. Liferay calls this method when adding and updating
+	 * roles.
 	 *
 	 * @param  role the added or updated role to verify
 	 * @param  oldRole the old role

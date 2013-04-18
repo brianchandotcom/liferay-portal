@@ -38,6 +38,7 @@ import com.liferay.portal.ReservedUserScreenNameException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserIdException;
 import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.UserPermissionException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
@@ -86,7 +87,6 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.usersadmin.util.UserUpdatePermissionException;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -262,10 +262,10 @@ public class EditUserAction extends PortletAction {
 					 e instanceof UserEmailAddressException ||
 					 e instanceof UserIdException ||
 					 e instanceof UserPasswordException ||
+					 e instanceof UserPermissionException ||
 					 e instanceof UserReminderQueryException ||
 					 e instanceof UserScreenNameException ||
 					 e instanceof UserSmsException ||
-					 e instanceof UserUpdatePermissionException ||
 					 e instanceof WebsiteURLException) {
 
 				if (e instanceof NoSuchListTypeException) {

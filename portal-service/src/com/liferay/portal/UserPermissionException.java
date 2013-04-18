@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.util;
+package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jonathan McCann
  */
-public class UserUpdatePermissionException extends PortalException {
+public class UserPermissionException extends PortalException {
 
-	public UserUpdatePermissionException() {
+	public UserPermissionException() {
 		super();
 	}
 
-	public UserUpdatePermissionException(String msg) {
+	public UserPermissionException(String msg) {
 		super(msg);
 	}
 
-	public UserUpdatePermissionException(String msg, Throwable cause) {
+	public UserPermissionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public UserUpdatePermissionException(Throwable cause) {
+	public UserPermissionException(Throwable cause) {
 		super(cause);
 	}
 

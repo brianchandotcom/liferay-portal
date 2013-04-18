@@ -48,6 +48,7 @@ page import="com.liferay.portal.ReservedUserScreenNameException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@
 page import="com.liferay.portal.UserIdException" %><%@
 page import="com.liferay.portal.UserPasswordException" %><%@
+page import="com.liferay.portal.UserPermissionException" %><%@
 page import="com.liferay.portal.UserPortraitSizeException" %><%@
 page import="com.liferay.portal.UserScreenNameException" %><%@
 page import="com.liferay.portal.UserSmsException" %><%@
@@ -79,7 +80,6 @@ page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UserUpdatePermissionException" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 

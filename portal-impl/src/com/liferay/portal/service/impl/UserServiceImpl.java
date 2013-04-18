@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
+import com.liferay.portal.UserPermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
@@ -61,7 +62,6 @@ import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-import com.liferay.portlet.usersadmin.util.UserUpdatePermissionException;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -2601,7 +2601,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		for (String field : changedFieldsList) {
 			if (!UsersAdminUtil.hasUpdatePermission(user, field)) {
-				throw new UserUpdatePermissionException();
+				throw new UserPermissionException();
 			}
 		}
 	}

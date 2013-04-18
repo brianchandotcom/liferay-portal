@@ -43,10 +43,14 @@ public class DeleteSettingsAdditionalEmailAddressTest extends BaseTestCase {
 		selenium.waitForVisible("//a[@id='_130_additionalEmailAddressesLink']");
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
+		selenium.waitForVisible("//input[@id='_130_emailAddressAddress0']");
 		assertEquals("Admin@Liferay.com",
 			selenium.getValue("//input[@id='_130_emailAddressAddress0']"));
-		selenium.waitForVisible("//button[2]");
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete"));
+		selenium.waitForVisible(
+			"xpath=(//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2])[1]");
+		selenium.clickAt("xpath=(//div[@id='_130_additionalEmailAddresses']/fieldset/div[2]/div/span/span/button[2])[1]",
+			RuntimeVariables.replace("Delete"));
+		Thread.sleep(1000);
 		assertFalse(selenium.isTextPresent("Admin@Liferay.com"));
 	}
 }

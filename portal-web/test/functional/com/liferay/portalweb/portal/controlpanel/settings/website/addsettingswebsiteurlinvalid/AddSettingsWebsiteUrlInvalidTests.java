@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsiteurlinvalid;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsite.TearDownSettingsWebsiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +27,7 @@ public class AddSettingsWebsiteUrlInvalidTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsWebsiteUrlInvalidTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsWebsiteTest.class);
 
 		return testSuite;
 	}

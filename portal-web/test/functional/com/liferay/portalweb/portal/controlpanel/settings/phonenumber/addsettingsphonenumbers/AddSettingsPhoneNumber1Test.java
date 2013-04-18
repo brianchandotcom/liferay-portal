@@ -43,6 +43,7 @@ public class AddSettingsPhoneNumber1Test extends BaseTestCase {
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
+		selenium.waitForVisible("//input[@id='_130_phoneNumber0']");
 		selenium.type("//input[@id='_130_phoneNumber0']",
 			RuntimeVariables.replace("123-123-1234"));
 		selenium.type("//input[@id='_130_phoneExtension0']",

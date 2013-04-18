@@ -43,6 +43,7 @@ public class AddSettingsWebsiteTest extends BaseTestCase {
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
+		selenium.waitForVisible("//input[@id='_130_websiteUrl0']");
 		selenium.type("//input[@id='_130_websiteUrl0']",
 			RuntimeVariables.replace("http://www.liferay.com"));
 		selenium.select("//select[@id='_130_websiteTypeId0']",

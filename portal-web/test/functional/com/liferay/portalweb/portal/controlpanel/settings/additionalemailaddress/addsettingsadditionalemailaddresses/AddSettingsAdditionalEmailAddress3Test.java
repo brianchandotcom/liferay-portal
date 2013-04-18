@@ -48,6 +48,7 @@ public class AddSettingsAdditionalEmailAddress3Test extends BaseTestCase {
 		selenium.waitForVisible("//div[2]/span/span/button");
 		selenium.clickAt("//div[2]/span/span/button",
 			RuntimeVariables.replace("Add"));
+		selenium.waitForVisible("//input[@id='_130_emailAddressAddress3']");
 		selenium.type("//input[@id='_130_emailAddressAddress3']",
 			RuntimeVariables.replace("Admin3@Liferay.com"));
 		selenium.select("//select[@id='_130_emailAddressTypeId3']",

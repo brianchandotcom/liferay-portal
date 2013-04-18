@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumbers;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumber.TearDownSettingsPhoneNumberTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +29,7 @@ public class AddSettingsPhoneNumbersTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSettingsPhoneNumber1Test.class);
 		testSuite.addTestSuite(AddSettingsPhoneNumber2Test.class);
 		testSuite.addTestSuite(AddSettingsPhoneNumber3Test.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsPhoneNumberTest.class);
 
 		return testSuite;
 	}

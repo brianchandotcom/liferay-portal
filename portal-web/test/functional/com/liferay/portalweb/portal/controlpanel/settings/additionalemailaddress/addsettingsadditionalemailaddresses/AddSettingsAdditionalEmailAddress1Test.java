@@ -45,6 +45,7 @@ public class AddSettingsAdditionalEmailAddress1Test extends BaseTestCase {
 				"Additional Email Addresses"));
 		selenium.clickAt("//a[@id='_130_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
+		selenium.waitForVisible("//input[@id='_130_emailAddressAddress0']");
 		selenium.type("//input[@id='_130_emailAddressAddress0']",
 			RuntimeVariables.replace("Admin@Liferay.com"));
 		selenium.select("//select[@id='_130_emailAddressTypeId0']",
@@ -52,6 +53,7 @@ public class AddSettingsAdditionalEmailAddress1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
+		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

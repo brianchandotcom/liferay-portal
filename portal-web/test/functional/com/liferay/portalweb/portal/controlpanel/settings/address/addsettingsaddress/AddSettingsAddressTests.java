@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +26,7 @@ public class AddSettingsAddressTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsAddressTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsAddressTest.class);
 
 		return testSuite;
 	}

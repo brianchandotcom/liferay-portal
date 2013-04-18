@@ -43,6 +43,7 @@ public class AddSettingsAddressCityNullTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
+		selenium.waitForVisible("//input[@id='_130_addressStreet1_0']");
 		selenium.type("//input[@id='_130_addressStreet1_0']",
 			RuntimeVariables.replace("123. Liferay Ln."));
 		selenium.type("//input[@id='_130_addressCity0']",

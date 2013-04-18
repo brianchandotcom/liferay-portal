@@ -43,10 +43,16 @@ public class DeleteSettingsPhoneNumberTest extends BaseTestCase {
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_130_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
+		selenium.waitForVisible("//input[@id='_130_phoneNumber0']");
 		assertEquals("123-123-1234",
 			selenium.getValue("//input[@id='_130_phoneNumber0']"));
-		selenium.waitForVisible("//button[2]");
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete"));
+		selenium.waitForVisible(
+			"xpath=(//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2])[1]");
+		selenium.clickAt("xpath=(//div[@id='_130_phoneNumbers']/fieldset/div[2]/div/span/span/button[2])[1]",
+			RuntimeVariables.replace("Delete"));
+		selenium.waitForVisible("//a[@class='lfr-action-undo']");
+		assertTrue(selenium.isPartialText("//a[@class='lfr-action-undo']",
+				"Undo"));
 		assertFalse(selenium.isTextPresent("1231231234"));
 	}
 }

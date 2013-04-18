@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddresszipnull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress.TearDownSettingsAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +27,7 @@ public class AddSettingsAddressZipNullTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsAddressZipNullTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsAddressTest.class);
 
 		return testSuite;
 	}

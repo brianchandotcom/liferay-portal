@@ -16,7 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddres
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.AddSettingsAdditionalEmailAddressTest;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsEmailAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +29,7 @@ public class DeleteSettingsAdditionalEmailAddressTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsAdditionalEmailAddressTest.class);
 		testSuite.addTestSuite(DeleteSettingsAdditionalEmailAddressTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsEmailAddressTest.class);
 
 		return testSuite;
 	}

@@ -43,10 +43,13 @@ public class DeleteSettingsWebsiteTest extends BaseTestCase {
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
+		selenium.waitForVisible("//input[@id='_130_websiteUrl0']");
 		assertEquals("http://www.liferay.com",
 			selenium.getValue("//input[@id='_130_websiteUrl0']"));
-		selenium.waitForVisible("//button[2]");
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete"));
+		selenium.waitForVisible(
+			"xpath=(//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2])[1]");
+		selenium.clickAt("xpath=(//div[@id='_130_websites']/fieldset/div[2]/div/span/span/button[2])[1]",
+			RuntimeVariables.replace("Delete"));
 		assertFalse(selenium.isTextPresent("//input[@id='_130_websiteUrl0']"));
 	}
 }

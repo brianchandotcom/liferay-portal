@@ -26,7 +26,7 @@ public class AddSettingsAdditionalEmailAddressTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsAdditionalEmailAddressTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsEmailAddressTest.class);
 
 		return testSuite;
 	}

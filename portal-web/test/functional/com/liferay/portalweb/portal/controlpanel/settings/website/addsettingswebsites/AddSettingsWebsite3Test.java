@@ -43,6 +43,7 @@ public class AddSettingsWebsite3Test extends BaseTestCase {
 				"Websites"));
 		selenium.clickAt("//a[@id='_130_websitesLink']",
 			RuntimeVariables.replace("Websites"));
+		selenium.waitForVisible("//div[2]/span/span/button");
 		selenium.clickAt("//div[2]/span/span/button",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForVisible("//input[@id='_130_websiteUrl3']");

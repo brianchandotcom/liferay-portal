@@ -43,10 +43,13 @@ public class DeleteSettingsAddressTest extends BaseTestCase {
 				"Addresses"));
 		selenium.clickAt("//a[@id='_130_addressesLink']",
 			RuntimeVariables.replace("Addresses"));
+		selenium.waitForVisible("//input[@id='_130_addressStreet1_0']");
 		assertEquals("123. Liferay Ln.",
 			selenium.getValue("//input[@id='_130_addressStreet1_0']"));
-		selenium.waitForVisible("//button[2]");
-		selenium.clickAt("//button[2]", RuntimeVariables.replace("Delete Row"));
+		selenium.waitForVisible(
+			"xpath=(//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2])[1]");
+		selenium.clickAt("xpath=(//div[@id='_130_addresses']/fieldset/div[2]/div/span/span/button[2])[1]",
+			RuntimeVariables.replace("Delete Row"));
 		assertFalse(selenium.isTextPresent("123. Liferay Ln."));
 	}
 }

@@ -46,6 +46,7 @@ public class AddSettingsPhoneNumber3Test extends BaseTestCase {
 		selenium.waitForVisible("//div[2]/span/span/button[1]");
 		selenium.clickAt("//div[2]/span/span/button[1]",
 			RuntimeVariables.replace("Add Row"));
+		selenium.waitForVisible("//input[@id='_130_phoneNumber3']");
 		selenium.type("//input[@id='_130_phoneNumber3']",
 			RuntimeVariables.replace("123-123-1234"));
 		selenium.type("//input[@id='_130_phoneExtension3']",

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsites;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
+import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsite.TearDownSettingsWebsiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +29,7 @@ public class AddSettingsWebsitesTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSettingsWebsite1Test.class);
 		testSuite.addTestSuite(AddSettingsWebsite2Test.class);
 		testSuite.addTestSuite(AddSettingsWebsite3Test.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsWebsiteTest.class);
 
 		return testSuite;
 	}

@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.settings.address.deletesettingsaddress;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.settings.additionalemailaddress.addsettingsadditionalemailaddress.TearDownSettingsIdentificationTest;
 import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress.AddSettingsAddressTest;
+import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress.TearDownSettingsAddressTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,7 +29,7 @@ public class DeleteSettingsAddressTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSettingsAddressTest.class);
 		testSuite.addTestSuite(DeleteSettingsAddressTest.class);
-		testSuite.addTestSuite(TearDownSettingsIdentificationTest.class);
+		testSuite.addTestSuite(TearDownSettingsAddressTest.class);
 
 		return testSuite;
 	}

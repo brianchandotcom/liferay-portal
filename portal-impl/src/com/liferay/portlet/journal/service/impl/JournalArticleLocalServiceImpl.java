@@ -5409,7 +5409,7 @@ public class JournalArticleLocalServiceImpl
 				continue;
 			}
 
-			if (dynamicContent.getText().isEmpty()) {
+			if (Validator.isNull(dynamicContent.getText())) {
 				imageLocalService.deleteImage(imageId);
 
 				continue;

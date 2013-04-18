@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.struts.LastPath;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,7 +83,8 @@ public class DefaultLandingPageAction extends Action {
 				path,
 				new String[] {"${liferay:screenName}", "${liferay:userId}"},
 				new String[] {
-					user.getScreenName(), String.valueOf(user.getUserId())
+					HtmlUtil.escapeURL(user.getScreenName()),
+					String.valueOf(user.getUserId())
 				});
 		}
 

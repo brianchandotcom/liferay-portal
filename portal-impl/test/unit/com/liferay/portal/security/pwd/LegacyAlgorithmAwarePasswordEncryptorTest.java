@@ -167,8 +167,7 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 
 	@Test
 	public void testEncryptSHA() throws Exception {
-		encrypt(
-			PasswordEncryptorUtil.TYPE_SHA, "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
+		encrypt(PasswordEncryptorUtil.TYPE_SHA, "W6ph5Mm5Pz8GgiULbPgzG37mj9g=");
 
 		encryptDisabled(PasswordEncryptorUtil.TYPE_NONE);
 	}
@@ -212,16 +211,6 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 		encrypt(PasswordEncryptorUtil.TYPE_UFC_CRYPT, "2lrTlR/pWPUOQ");
 
 		encryptDisabled(PasswordEncryptorUtil.TYPE_UFC_CRYPT);
-	}
-
-	protected String getAlgorithmHeader(String encryptedPassword) {
-		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
-
-		if (index > 0) {
-			return encryptedPassword.substring(1, index);
-		}
-
-		return StringPool.EMPTY;
 	}
 
 	protected void encrypt(String algorithm, String encryptedPassword)
@@ -288,6 +277,16 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =
 				legacyEncryptionAlgorithm;
 		}
+	}
+
+	protected String getAlgorithmHeader(String encryptedPassword) {
+		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
+		if (index > 0) {
+			return encryptedPassword.substring(1, index);
+		}
+
+		return StringPool.EMPTY;
 	}
 
 }

@@ -80,8 +80,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_UNIX);
 
-		getResourceURL(
-			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
+		getResourceURL(servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
 	@Test
@@ -89,8 +88,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_WINDOWS);
 
-		getResourceURL(
-			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
+		getResourceURL(servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
 	@Test
@@ -106,23 +104,6 @@ public class ComboServletTest extends PowerMockito {
 			_WAS_DEFAULT_PATH_UNIX);
 
 		getResourceURL(servletContext, "/dummyPath", true);
-	}
-
-	protected ServletContext getServletContext(final String path) {
-		return new MockServletContext() {
-
-			@Override
-			public URL getResource(String resourcePath)
-				throws MalformedURLException {
-
-				if (path == null) {
-					return null;
-				}
-
-				return new URL("file:" + path + resourcePath);
-			}
-
-		};
 	}
 
 	protected void getResourceURL(
@@ -145,6 +126,23 @@ public class ComboServletTest extends PowerMockito {
 			Assert.assertEquals(servletContext.getResource(path), resourceURL);
 		}
 
+	}
+
+	protected ServletContext getServletContext(final String path) {
+		return new MockServletContext() {
+
+			@Override
+			public URL getResource(String resourcePath)
+				throws MalformedURLException {
+
+				if (path == null) {
+					return null;
+				}
+
+				return new URL("file:" + path + resourcePath);
+			}
+
+		};
 	}
 
 	private static final String _JAVASCRIPT_DIR = "html/js";

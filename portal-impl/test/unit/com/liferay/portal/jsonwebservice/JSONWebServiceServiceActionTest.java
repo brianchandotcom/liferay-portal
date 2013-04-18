@@ -177,19 +177,6 @@ public class JSONWebServiceServiceActionTest
 			"/somectx.foo/hello-world/user-id/173/world-name/Jupiter");
 	}
 
-	protected MockHttpServletRequest createInvokerHttpServletRequest(
-		String content) {
-
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoke");
-
-		mockHttpServletRequest.setContent(content.getBytes());
-		mockHttpServletRequest.setMethod(HttpMethods.POST);
-		mockHttpServletRequest.setRemoteUser("root");
-
-		return mockHttpServletRequest;
-	}
-
 	protected void checkServletContextInvoker(
 			String ctx, boolean setContextPath, String query)
 		throws Exception {
@@ -275,6 +262,19 @@ public class JSONWebServiceServiceActionTest
 			mockHttpServletResponse);
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+	}
+
+	protected MockHttpServletRequest createInvokerHttpServletRequest(
+		String content) {
+
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/invoke");
+
+		mockHttpServletRequest.setContent(content.getBytes());
+		mockHttpServletRequest.setMethod(HttpMethods.POST);
+		mockHttpServletRequest.setRemoteUser("root");
+
+		return mockHttpServletRequest;
 	}
 
 	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;

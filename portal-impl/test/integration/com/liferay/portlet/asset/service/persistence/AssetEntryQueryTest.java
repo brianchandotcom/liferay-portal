@@ -109,7 +109,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testAllAssetCategories1() throws Exception {
-		assetCategoriesCategorization(new long[]{_healthCategoryId}, false, false, 2);
+		assetCategoriesCategorization(
+			new long[]{_healthCategoryId}, false, false, 2);
 	}
 
 	@Test
@@ -128,7 +129,7 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAllAssetCategories4() throws Exception {
 		assetCategoriesCategorization(
-			new long[]{
+			new long[] {
 				_healthCategoryId, _sportCategoryId, _foodCategoryId,
 				_travelCategoryId
 			},
@@ -149,7 +150,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAllAssetTags3() throws Exception {
 		assetTagsCategorization(
-			new String[]{"liferay", "architecture", "services"}, false, false, 1);
+			new String[]{"liferay", "architecture", "services"}, false, false,
+			1);
 	}
 
 	@Test
@@ -161,7 +163,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testAnyAssetCategories1() throws Exception {
-		assetCategoriesCategorization(new long[]{_healthCategoryId}, true, false, 2);
+		assetCategoriesCategorization(
+			new long[]{_healthCategoryId}, true, false, 2);
 	}
 
 	@Test
@@ -190,7 +193,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testAnyAssetTags2() throws Exception {
-		assetTagsCategorization(new String[]{"liferay", "architecture"}, true, false, 2);
+		assetTagsCategorization(
+			new String[]{"liferay", "architecture"}, true, false, 2);
 	}
 
 	@Test
@@ -202,12 +206,14 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testAnyAssetTags4() throws Exception {
-		assetTagsCategorization(new String[]{"modularity", "osgi"}, true, false, 1);
+		assetTagsCategorization(
+			new String[]{"modularity", "osgi"}, true, false, 1);
 	}
 
 	@Test
 	public void testNotAllAssetCategories1() throws Exception {
-		assetCategoriesCategorization(new long[]{_healthCategoryId}, false, true, 0);
+		assetCategoriesCategorization(
+			new long[]{_healthCategoryId}, false, true, 0);
 	}
 
 	@Test
@@ -236,7 +242,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testNotAllAssetTags2() throws Exception {
-		assetTagsCategorization(new String[]{"liferay", "architecture"}, false, true, 0);
+		assetTagsCategorization(
+			new String[]{"liferay", "architecture"}, false, true, 0);
 	}
 
 	@Test
@@ -255,7 +262,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testNotAnyAssetCategories1() throws Exception {
-		assetCategoriesCategorization(new long[]{_healthCategoryId}, true, true, 0);
+		assetCategoriesCategorization(
+			new long[]{_healthCategoryId}, true, true, 0);
 	}
 
 	@Test
@@ -284,7 +292,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testNotAnyAssetTags2() throws Exception {
-		assetTagsCategorization(new String[]{"liferay", "architecture"}, true, true, 0);
+		assetTagsCategorization(
+			new String[]{"liferay", "architecture"}, true, true, 0);
 	}
 
 	@Test
@@ -296,74 +305,8 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testNotAnyAssetTags4() throws Exception {
-		assetTagsCategorization(new String[]{"modularity", "osgi"}, true, true, 1);
-	}
-
-	protected AssetEntryQuery buildAssetEntryQuery(
-			long groupId, long[] assetCategoryIds, String[] assetTagNames,
-			boolean any, boolean not)
-		throws PortalException, SystemException {
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		if (assetCategoryIds != null) {
-			assetEntryQuery = buildAssetEntryQueryWithAssetCategoryIds(
-				assetEntryQuery, assetCategoryIds, any, not);
-		}
-
-		if (assetTagNames != null) {
-			long[] assetTagIds = null;
-
-			assetTagIds = AssetTagLocalServiceUtil.getTagIds(
-				groupId, assetTagNames);
-
-			assetEntryQuery = buildAssetEntryQueryWithAssetTagIds(
-				assetEntryQuery, assetTagIds, any, not);
-		}
-
-		assetEntryQuery.setGroupIds(new long[] {groupId});
-
-		return assetEntryQuery;
-	}
-
-	protected AssetEntryQuery buildAssetEntryQueryWithAssetCategoryIds(
-		AssetEntryQuery assetEntryQuery, long[] assetCategoryIds, boolean any,
-		boolean not) {
-
-		if (any && not) {
-			assetEntryQuery.setNotAnyCategoryIds(assetCategoryIds);
-		}
-		else if (!any && not) {
-			assetEntryQuery.setNotAllCategoryIds(assetCategoryIds);
-		}
-		else if (any && !not) {
-			assetEntryQuery.setAnyCategoryIds(assetCategoryIds);
-		}
-		else {
-			assetEntryQuery.setAllCategoryIds(assetCategoryIds);
-		}
-
-		return assetEntryQuery;
-	}
-
-	protected AssetEntryQuery buildAssetEntryQueryWithAssetTagIds(
-			AssetEntryQuery assetEntryQuery, long[] assetTagIds, boolean any,
-		boolean not) {
-
-		if (any && not) {
-			assetEntryQuery.setNotAnyTagIds(assetTagIds);
-		}
-		else if (!any && not) {
-			assetEntryQuery.setNotAllTagIds(assetTagIds);
-		}
-		else if (any && !not) {
-			assetEntryQuery.setAnyTagIds(assetTagIds);
-		}
-		else {
-			assetEntryQuery.setAllTagIds(assetTagIds);
-		}
-
-		return assetEntryQuery;
+		assetTagsCategorization(
+			new String[]{"modularity", "osgi"}, true, true, 1);
 	}
 
 	protected void assetCategoriesCategorization(
@@ -453,6 +396,73 @@ public class AssetEntryQueryTest {
 			"Modularity with OSGI", null,
 			new String[]{"liferay", "architecture", "modularity", "osgi"}, any,
 			not, expectedResults);
+	}
+
+	protected AssetEntryQuery buildAssetEntryQuery(
+			long groupId, long[] assetCategoryIds, String[] assetTagNames,
+			boolean any, boolean not)
+		throws PortalException, SystemException {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		if (assetCategoryIds != null) {
+			assetEntryQuery = buildAssetEntryQueryWithAssetCategoryIds(
+				assetEntryQuery, assetCategoryIds, any, not);
+		}
+
+		if (assetTagNames != null) {
+			long[] assetTagIds = null;
+
+			assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+				groupId, assetTagNames);
+
+			assetEntryQuery = buildAssetEntryQueryWithAssetTagIds(
+				assetEntryQuery, assetTagIds, any, not);
+		}
+
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+
+		return assetEntryQuery;
+	}
+
+	protected AssetEntryQuery buildAssetEntryQueryWithAssetCategoryIds(
+		AssetEntryQuery assetEntryQuery, long[] assetCategoryIds, boolean any,
+		boolean not) {
+
+		if (any && not) {
+			assetEntryQuery.setNotAnyCategoryIds(assetCategoryIds);
+		}
+		else if (!any && not) {
+			assetEntryQuery.setNotAllCategoryIds(assetCategoryIds);
+		}
+		else if (any && !not) {
+			assetEntryQuery.setAnyCategoryIds(assetCategoryIds);
+		}
+		else {
+			assetEntryQuery.setAllCategoryIds(assetCategoryIds);
+		}
+
+		return assetEntryQuery;
+	}
+
+	protected AssetEntryQuery buildAssetEntryQueryWithAssetTagIds(
+			AssetEntryQuery assetEntryQuery, long[] assetTagIds, boolean any,
+		boolean not) {
+
+		if (any && not) {
+			assetEntryQuery.setNotAnyTagIds(assetTagIds);
+		}
+		else if (!any && not) {
+			assetEntryQuery.setNotAllTagIds(assetTagIds);
+		}
+		else if (any && !not) {
+			assetEntryQuery.setAnyTagIds(assetTagIds);
+		}
+		else {
+			assetEntryQuery.setAllTagIds(assetTagIds);
+		}
+
+		return assetEntryQuery;
 	}
 
 	private long[] _assetCategoryIds1;

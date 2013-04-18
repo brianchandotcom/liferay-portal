@@ -127,8 +127,7 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 
 		encryptFailure(null, StringPool.BLANK, StringPool.BLANK);
 
-		encryptFailure(
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+		encryptFailure(StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test

@@ -795,6 +795,35 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _deriveDefaultPermissions;
 	}
 
+	/**
+	 * Returns <code>true</code> if portal exceptions should be handled as
+	 * failures, possibly halting processing, or <code>false</code> if the
+	 * exceptions should be handled differently, possibly allowing processing to
+	 * continue in some manner. Services may check this flag to execute desired
+	 * behavior.
+	 *
+	 * <p>
+	 * Batch invocation of such services (exposed as a JSON web services) can
+	 * result in execution of all service invocations, in spite of portal
+	 * exceptions.
+	 * </p>
+	 *
+	 * <p>
+	 * If this flag is set to <code>false</code>, services can implement logic
+	 * that allows processing to continue, while collecting information
+	 * regarding the exceptions for returning to the caller. For example, the
+	 * {@link
+	 * com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl#deleteVocabularies(
+	 * long[], ServiceContext)} method uses the list it returns to give
+	 * information on vocabularies it fails to delete; it returns an empty list
+	 * if all deletions are successful.
+	 * </p>
+	 *
+	 * @return <code>true</code> if portal exceptions are to be handled as
+	 *         failures; <code>false</code> if portal exceptions can be handled
+	 *         differently, possibly allowing processing to continue in some
+	 *         manner
+	 */
 	public boolean isFailOnPortalException() {
 		return _failOnPortalException;
 	}
@@ -1120,6 +1149,17 @@ public class ServiceContext implements Cloneable, Serializable {
 		_expandoBridgeAttributes = expandoBridgeAttributes;
 	}
 
+	/**
+	 * Sets whether portal exceptions should be handled as failures, possibly
+	 * halting processing, or if exceptions should be handled differently,
+	 * possibly allowing processing to continue in some manner.
+	 *
+	 * @param failOnPortalException whether portal exceptions should be handled
+	 *        as failures, or if portal exceptions should be handled
+	 *        differently, possibly allowing processing to continue in some
+	 *        manner
+	 * @see   #isFailOnPortalException()
+	 */
 	public void setFailOnPortalException(boolean failOnPortalException) {
 		_failOnPortalException = failOnPortalException;
 	}
@@ -1128,7 +1168,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Sets the date when an <code>aui:form</code> was generated in this service
 	 * context. The form date can be used in detecting situations in which an
 	 * entity has been modified while another client was editing that entity.
-	 * </p>
 	 *
 	 * <p>
 	 * Example:
@@ -1139,7 +1178,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * article. Person1 publishes changes to the article first. When person2
 	 * attempts to publish changes to that article, the service implementation
 	 * finds that a modification to that article has already been published some
-	 * time after person2 started editing the article. Since the the article
+	 * time after person2 started editing the article. Since the article
 	 * modification date was found to be later than the form date for person2,
 	 * person2 could be alerted to the modification and make a backup copy of
 	 * his edits before synchronizing with the published changes by person1.

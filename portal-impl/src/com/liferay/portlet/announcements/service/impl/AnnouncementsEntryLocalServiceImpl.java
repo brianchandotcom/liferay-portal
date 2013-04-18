@@ -76,6 +76,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		Date now = new Date();
+
 		Date displayDate = now;
 
 		if (!autoDisplayDate) {

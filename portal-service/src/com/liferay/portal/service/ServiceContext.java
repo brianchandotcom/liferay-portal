@@ -797,25 +797,26 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	/**
 	 * Returns <code>true</code> if portal exceptions should be handled as
-	 * failures, possibly halting processing, or <code>false</code> if
+	 * failures, possibly halting processing, or <code>false</code> if the
 	 * exceptions should be handled differently, possibly allowing processing to
-	 * continue in some manner. Services that check this flag dictate their
-	 * desired behavior.
+	 * continue in some manner. Services may check this flag to execute desired
+	 * behavior.
 	 *
 	 * <p>
-	 * Those service methods - exposed as a JSON web service - that perform an
-	 * operation on multiple items can be instructed through this flag not to
-	 * fail when processing encounters portal exceptions.
+	 * Batch invocation of such services (exposed as a JSON web services) can
+	 * result in execution of all service invocations, in spite of portal
+	 * exceptions.
 	 * </p>
 	 *
 	 * <p>
 	 * If this flag is set to <code>false</code>, services can implement logic
 	 * that allows processing to continue, while collecting information
-	 * regarding the exceptions to return to the caller. For example, the {@link
+	 * regarding the exceptions for returning to the caller. For example, the
+	 * {@link
 	 * com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl#deleteVocabularies(
 	 * long[], ServiceContext)} method uses the list it returns to give
-	 * information on vocabularies it failed to delete; it returns an empty list
-	 * if all deletions were successful.
+	 * information on vocabularies it fails to delete; it returns an empty list
+	 * if all deletions are successful.
 	 * </p>
 	 *
 	 * @return <code>true</code> if portal exceptions are to be handled as

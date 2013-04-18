@@ -41,7 +41,7 @@ public class RestoreBlogEntryRecycleBinTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText(
-				"//tr[contains(.,'Blogs Entry Title')]/td[1]/span/a	"));
+				"//tr[contains(.,'Blogs Entry Title')]/td[1]/span/a/span	"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -51,8 +51,8 @@ public class RestoreBlogEntryRecycleBinTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]	"));
-		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]	"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]	",
+			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"The item has been restored to Blogs"),

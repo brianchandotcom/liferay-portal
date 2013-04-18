@@ -15,12 +15,12 @@
 package com.liferay.portalweb.portal.controlpanel.recyclebin.blogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-//import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.movetorecyclebinblogentries.MoveToRecycleBinBlogEntriesTests;
-//import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.movetorecyclebinblogentry.MoveToRecycleBinBlogEntryTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.movetorecyclebinblogentries.MoveToRecycleBinBlogEntriesTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.movetorecyclebinblogentry.MoveToRecycleBinBlogEntryTests;
 import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.restoreblogentriesrecyclebin.RestoreBlogEntriesRecycleBinTests;
 import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.restoreblogentryrecyclebin.RestoreBlogEntryRecycleBinTests;
-//import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.searchblogentriesno.SearchBlogEntriesNoTests;
-//import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.searchblogentryno.SearchBlogEntryNoTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.searchblogentriesno.SearchBlogEntriesNoTests;
+import com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.searchblogentryno.SearchBlogEntryNoTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,12 +33,12 @@ public class BlogsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		//testSuite.addTest(MoveToRecycleBinBlogEntriesTests.suite());
-		//testSuite.addTest(MoveToRecycleBinBlogEntryTests.suite());
+		testSuite.addTest(MoveToRecycleBinBlogEntriesTests.suite());
+		testSuite.addTest(MoveToRecycleBinBlogEntryTests.suite());
 		testSuite.addTest(RestoreBlogEntriesRecycleBinTests.suite());
 		testSuite.addTest(RestoreBlogEntryRecycleBinTests.suite());
-		//testSuite.addTest(SearchBlogEntriesNoTests.suite());
-		//testSuite.addTest(SearchBlogEntryNoTests.suite());
+		testSuite.addTest(SearchBlogEntriesNoTests.suite());
+		testSuite.addTest(SearchBlogEntryNoTests.suite());
 
 		return testSuite;
 	}

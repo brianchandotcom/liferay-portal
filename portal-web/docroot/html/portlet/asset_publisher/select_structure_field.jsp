@@ -121,7 +121,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 						success: function(event, id, obj) {
 							var jsonArray = this.get('responseData');
 
-							result["value"] = jsonArray.value;
+							result['value'] = jsonArray.value;
 
 							Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
 

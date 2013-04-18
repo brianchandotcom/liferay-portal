@@ -185,62 +185,63 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		if (cmd.equals("getFieldValue")) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				resourceRequest);
-
-			String fieldsNamespace = ParamUtil.getString(
-				resourceRequest, "fieldsNamespace");
-			long structureId = ParamUtil.getLong(
-				resourceRequest, "structureId");
-
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + structureId);
-
-			if (fields == null) {
-				fields = DDMUtil.getFields(
-					structureId, fieldsNamespace, serviceContext);
-			}
-
-			String fieldName = ParamUtil.getString(resourceRequest, "name");
-
-			Field field = fields.get(fieldName);
-
-			Serializable fieldValue = field.getValue(themeDisplay.getLocale());
-
-			DDMStructure ddmStructure = field.getDDMStructure();
-
-			String type = ddmStructure.getFieldType(fieldName);
-
-			if (fieldValue instanceof Date) {
-				Date valueDate = (Date)fieldValue;
-
-				DateFormat dateFormat =
-					DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
-
-				fieldValue = dateFormat.format(valueDate);
-			}
-			else if (type.equals(DDMImpl.TYPE_RADIO) ||
-					 type.equals(DDMImpl.TYPE_SELECT)) {
-
-				String valueString = String.valueOf(fieldValue);
-
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-					valueString);
-
-				String[] stringArray = ArrayUtil.toStringArray(jsonArray);
-
-				fieldValue = stringArray[0];
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("value", String.valueOf(fieldValue));
-
-			resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-			PortletResponseUtil.write(resourceResponse, jsonObject.toString());
+		if (!cmd.equals("getFieldValue")) {
+			return;
 		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			resourceRequest);
+
+		String fieldsNamespace = ParamUtil.getString(
+			resourceRequest, "fieldsNamespace");
+
+		long structureId = ParamUtil.getLong(resourceRequest, "structureId");
+
+		Fields fields = (Fields)serviceContext.getAttribute(
+			Fields.class.getName() + structureId);
+
+		if (fields == null) {
+			fields = DDMUtil.getFields(
+				structureId, fieldsNamespace, serviceContext);
+		}
+
+		String fieldName = ParamUtil.getString(resourceRequest, "name");
+
+		Field field = fields.get(fieldName);
+
+		Serializable fieldValue = field.getValue(themeDisplay.getLocale());
+
+		DDMStructure ddmStructure = field.getDDMStructure();
+
+		String type = ddmStructure.getFieldType(fieldName);
+
+		if (fieldValue instanceof Date) {
+			Date valueDate = (Date)fieldValue;
+
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyyMMddHHmmss");
+
+			fieldValue = dateFormat.format(valueDate);
+		}
+		else if (type.equals(DDMImpl.TYPE_RADIO) ||
+				 type.equals(DDMImpl.TYPE_SELECT)) {
+
+			String valueString = String.valueOf(fieldValue);
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
+
+			fieldValue = stringArray[0];
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("value", String.valueOf(fieldValue));
+
+		resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		PortletResponseUtil.write(resourceResponse, jsonObject.toString());
 	}
 
 	protected void addScope(

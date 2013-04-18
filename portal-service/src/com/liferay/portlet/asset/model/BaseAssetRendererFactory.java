@@ -172,7 +172,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 			String type = fieldMap.get("type");
 
 			if (Validator.isNull(indexType) || privateField ||
-				!ArrayUtil.contains(_WHITE_LIST_INDEXED_FIELDS, type)) {
+				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
 
 				continue;
 			}
@@ -196,7 +196,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 
 	private static final boolean _SELECTABLE = true;
 
-	private static final String[] _WHITE_LIST_INDEXED_FIELDS = {
+	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-integer", "ddm-number",
 		"radio", "select", "text"
 	};

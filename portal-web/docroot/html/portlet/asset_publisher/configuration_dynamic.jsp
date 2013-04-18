@@ -564,7 +564,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
 					id: '<portlet:namespace />selectDDMStructure' + event.target.id,
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "select-ddm-structure-field") %>',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "structure-field") %>',
 					uri: event.target.attr('data-href')
 				},
 				function(event) {

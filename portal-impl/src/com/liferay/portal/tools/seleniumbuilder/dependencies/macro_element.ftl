@@ -18,6 +18,12 @@ executeScopeVariables.putAll(commandScopeVariables);
 
 		<#assign varValue = varElement.attributeValue("value")>
 
+		<#if varValue?contains("${") && varValue?contains("}")>
+			<#assign varValue = varValue?replace("${", "\" + commandScopeVariables.get(\"")>
+
+			<#assign varValue = varValue?replace("}", "\") + \"")>
+		</#if>
+
 		executeScopeVariables.put("${varName}", "${varValue}");
 	</#list>
 </#if>

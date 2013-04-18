@@ -1,12 +1,8 @@
 <definition>
 	<command name="cpAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute action="CPRoles#click" locator-key1="ADD" />
 
@@ -38,13 +34,9 @@
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
@@ -99,13 +91,9 @@
 	</command>
 
 	<command name="cpTearDown">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Roles" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Name" />
 

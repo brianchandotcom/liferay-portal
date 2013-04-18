@@ -3,13 +3,9 @@
 	<var name="password" value="test" />
 
 	<command name="cpAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Users and Organizations" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ADD" />
 
@@ -37,13 +33,9 @@
 	</command>
 
 	<command name="cpDeactivate">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Users and Organizations" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 
@@ -76,13 +68,9 @@
 	</command>
 
 	<command name="cpDelete">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Users and Organizations" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 
@@ -115,13 +103,9 @@
 	</command>
 
 	<command name="cpView">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Users and Organizations" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
 
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_ALL_USERS" />
 

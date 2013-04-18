@@ -272,8 +272,8 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
 		parameterMap.put(
-				PortletDataHandlerKeys.CATEGORIES,
-				new String[] {Boolean.TRUE.toString()});
+			PortletDataHandlerKeys.CATEGORIES,
+			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});

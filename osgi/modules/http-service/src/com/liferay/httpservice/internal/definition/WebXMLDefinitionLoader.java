@@ -14,6 +14,8 @@
 
 package com.liferay.httpservice.internal.definition;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -110,9 +112,19 @@ public class WebXMLDefinitionLoader {
 
 			String filterClassName = filterElement.elementText("filter-class");
 
-			Class<?> filterClass = bundle.loadClass(filterClassName);
+			Class<?> clazz = null;
 
-			Filter filter = (Filter)filterClass.newInstance();
+			try {
+				clazz = bundle.loadClass(filterClassName);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Filter " + filterClassName + " can not be processed");
+
+				continue;
+			}
+
+			Filter filter = (Filter)clazz.newInstance();
 
 			filterDefinition.setFilter(filter);
 
@@ -161,7 +173,17 @@ public class WebXMLDefinitionLoader {
 			String listenerClassName = listenerElement.elementText(
 				"listener-class");
 
-			Class<?> clazz = bundle.loadClass(listenerClassName);
+			Class<?> clazz = null;
+
+			try {
+				clazz = bundle.loadClass(listenerClassName);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Listener " + listenerClassName + " can not be processed");
+
+					continue;
+			}
 
 			Object listener = clazz.newInstance();
 
@@ -184,7 +206,17 @@ public class WebXMLDefinitionLoader {
 			String servletClassName = servletElement.elementText(
 				"servlet-class");
 
-			Class<?> servletClass = bundle.loadClass(servletClassName);
+			Class<?> servletClass = null;;
+
+			try {
+				servletClass = bundle.loadClass(servletClassName);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Servlet " + servletClassName + " can not be processed");
+
+				continue;
+			}
 
 			Servlet servlet = (Servlet)servletClass.newInstance();
 
@@ -223,6 +255,9 @@ public class WebXMLDefinitionLoader {
 	}
 
 	private static final String _SLASH_STAR = "/*";
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WebXMLDefinitionLoader.class);
 
 	private Element _defaultWebXmlRootElement;
 

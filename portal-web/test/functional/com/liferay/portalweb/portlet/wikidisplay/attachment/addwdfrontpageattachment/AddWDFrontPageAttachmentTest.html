@@ -39,24 +39,14 @@
 	<td>Add Attachments</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Select Files']</td>
-	<td>Select Files</td>
+	<td>//div[contains(@class,'yui3-uploader')]</td>
+	<td>Uploader</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@value='Select Files']</td>
-	<td>Select Files</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>//input[@type='file']</td>
-	<td>File 1</td>
+	<td>File</td>
 </tr>
 <tr>
 	<td>uploadCommonFile</td>
@@ -64,9 +54,19 @@
 	<td>Document_1.jpg</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
+	<td>waitForElementPresent</td>
+	<td>//ul[contains(@id,'_fileListContent')]/li[contains(@class,'upload-complete')]</td>
+	<td>Upload Complete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xpath=(//input[@value='Save'])[2]</td>
 	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='success-message']</td>
+	<td>Successfully saved.</td>
 </tr>
 <tr>
 	<td>assertText</td>

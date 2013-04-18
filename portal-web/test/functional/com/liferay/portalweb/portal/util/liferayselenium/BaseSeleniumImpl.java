@@ -267,8 +267,11 @@ public abstract class BaseSeleniumImpl
 
 		sb.append("if (xpathResult.singleNodeValue) {");
 		sb.append("var element = xpathResult.singleNodeValue;");
-		sb.append("element.style.display = 'inline-block';");
+		sb.append("element.style.cssText = 'display:inline !important';");
 		sb.append("element.style.overflow = 'visible';");
+		sb.append("element.style.minHeight = '1px';");
+		sb.append("element.style.minWidth = '1px';");
+		sb.append("element.style.opacity = '1';");
 		sb.append("element.style.visibility = 'visible';");
 		sb.append("}");
 
@@ -353,6 +356,8 @@ public abstract class BaseSeleniumImpl
 	}
 
 	public void uploadFile(String location, String value) {
+		makeVisible(location);
+
 		super.type(location, value);
 	}
 

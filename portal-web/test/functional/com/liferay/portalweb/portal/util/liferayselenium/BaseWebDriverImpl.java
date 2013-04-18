@@ -315,8 +315,11 @@ public abstract class BaseWebDriverImpl
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("var element = arguments[0];");
-		sb.append("element.style.display = 'inline-block';");
+		sb.append("element.style.cssText = 'display:inline !important';");
 		sb.append("element.style.overflow = 'visible';");
+		sb.append("element.style.minHeight = '1px';");
+		sb.append("element.style.minWidth = '1px';");
+		sb.append("element.style.opacity = '1';");
 		sb.append("element.style.visibility = 'visible';");
 
 		WebElement webElement = getWebElement(locator);
@@ -364,6 +367,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void uploadFile(String location, String value) {
+		makeVisible(location);
+
 		WebElement webElement = getWebElement(location);
 
 		webElement.sendKeys(value);

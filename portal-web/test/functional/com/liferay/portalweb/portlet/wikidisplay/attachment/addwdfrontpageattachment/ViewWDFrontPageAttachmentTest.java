@@ -70,12 +70,12 @@ public class ViewWDFrontPageAttachmentTest extends BaseTestCase {
 			selenium.getText(
 				"//tr[@class='portlet-section-header results-header']/th[3]"));
 		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
-			selenium.getText("//tr[3]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("12.9k"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//tr[3]/td[3]/span/a/span"));
-		selenium.clickAt("//tr[3]/td[1]/a",
+			selenium.getText("//tr[2]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("13k"),
+			selenium.getText("//tr[2]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Remove"),
+			selenium.getText("//tr[2]/td[3]/span/a/span"));
+		selenium.clickAt("//tr[2]/td[1]/a",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(

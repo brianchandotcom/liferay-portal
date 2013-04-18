@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrymultiple;
+package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentries;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryMultipleTests extends BaseTestSuite {
+public class AddBlogsEntriesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);

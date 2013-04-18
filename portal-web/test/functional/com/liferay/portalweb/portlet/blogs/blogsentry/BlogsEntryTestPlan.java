@@ -15,10 +15,10 @@
 package com.liferay.portalweb.portlet.blogs.blogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentries.AddBlogsEntriesTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentryautodraft.AddBlogsEntryAutoDraftTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrycontentnull.AddBlogsEntryContentNullTests;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrymultiple.AddBlogsEntryMultipleTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitle150characters.AddBlogsEntryTitle150CharactersTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitle151characters.AddBlogsEntryTitle151CharactersTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitleescapecharacters.AddBlogsEntryTitleEscapeCharactersTests;
@@ -59,10 +59,10 @@ public class BlogsEntryTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(AddBlogsEntriesTests.suite());
 		testSuite.addTest(AddBlogsEntryTests.suite());
 		testSuite.addTest(AddBlogsEntryAutoDraftTests.suite());
 		testSuite.addTest(AddBlogsEntryContentNullTests.suite());
-		testSuite.addTest(AddBlogsEntryMultipleTests.suite());
 		testSuite.addTest(AddBlogsEntryTitle150CharactersTests.suite());
 		testSuite.addTest(AddBlogsEntryTitle151CharactersTests.suite());
 		testSuite.addTest(AddBlogsEntryTitleEscapeCharactersTests.suite());

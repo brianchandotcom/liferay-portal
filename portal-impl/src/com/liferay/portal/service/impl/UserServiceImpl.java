@@ -2548,16 +2548,19 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String jobTitle)
 		throws PortalException, SystemException {
 
+		List<String> changedFieldsList = new ArrayList<String>();
+
 		Contact contact = user.getContact();
 
 		Calendar birthday = CalendarFactoryUtil.getCalendar();
 
 		birthday.setTime(contact.getBirthday());
 
-		List<String> changedFieldsList = new ArrayList<String>();
+		if ((birthdayMonth != birthday.get(Calendar.MONTH)) ||
+			(birthdayDay != birthday.get(Calendar.DAY_OF_MONTH)) ||
+			(birthdayYear != birthday.get(Calendar.YEAR))) {
 
-		if (!screenName.equalsIgnoreCase(user.getScreenName())) {
-			changedFieldsList.add("screenName");
+			changedFieldsList.add("birthday");
 		}
 
 		if (!emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
@@ -2568,35 +2571,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			changedFieldsList.add("firstName");
 		}
 
-		if (!middleName.equalsIgnoreCase(user.getMiddleName())) {
-			changedFieldsList.add("middleName");
-		}
-
-		if (!lastName.equalsIgnoreCase(user.getLastName())) {
-			changedFieldsList.add("lastName");
-		}
-
-		if (prefixId != contact.getPrefixId()) {
-			changedFieldsList.add("prefix");
-		}
-
-		if (suffixId != contact.getSuffixId()) {
-			changedFieldsList.add("suffix");
-		}
-
-		if ((birthdayMonth != birthday.get(Calendar.MONTH)) ||
-			(birthdayDay != birthday.get(Calendar.DAY_OF_MONTH)) ||
-			(birthdayYear != birthday.get(Calendar.YEAR))) {
-
-			changedFieldsList.add("birthday");
-		}
-
 		if (male != contact.getMale()) {
 			changedFieldsList.add("gender");
 		}
 
 		if (!jobTitle.equalsIgnoreCase(user.getJobTitle())) {
 			changedFieldsList.add("jobTitle");
+		}
+
+		if (!lastName.equalsIgnoreCase(user.getLastName())) {
+			changedFieldsList.add("lastName");
+		}
+
+		if (!middleName.equalsIgnoreCase(user.getMiddleName())) {
+			changedFieldsList.add("middleName");
+		}
+
+		if (prefixId != contact.getPrefixId()) {
+			changedFieldsList.add("prefix");
+		}
+
+		if (!screenName.equalsIgnoreCase(user.getScreenName())) {
+			changedFieldsList.add("screenName");
+		}
+
+		if (suffixId != contact.getSuffixId()) {
+			changedFieldsList.add("suffix");
 		}
 
 		for (String field : changedFieldsList) {

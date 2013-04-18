@@ -1,8 +1,32 @@
 <definition>
+	<command name="cpGoto">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+
+		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
+
+		<if>
+			<equals arg1="${portletName}" arg2="Wiki" />
+			<then>
+				<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+			</then>
+			<else>
+				<execute action="Home#click" locator1="link=${portletName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="isPresent">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<execute action="Home#isElementPresent" locator1="link=${pageName}" />
+	</command>
+
+	<command name="pgGoto">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="pgAdd">

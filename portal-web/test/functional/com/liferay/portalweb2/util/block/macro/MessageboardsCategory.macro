@@ -1,8 +1,27 @@
 <definition>
-	<command name="pgAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+	<command name="cpTearDown">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Message Boards" />
+		</execute>
 
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<while>
+			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_ROWS" />
+			<then>
+				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_ROWS" />
+
+				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN" />
+
+				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
+			</then>
+		</while>
+
+		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+	</command>
+
+	<command name="pgAdd">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGMessageboards#click" locator-key1="ADD_CATEGORY" />
 
@@ -12,9 +31,9 @@
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 
@@ -30,9 +49,9 @@
 	</command>
 
 	<command name="pgDelete">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 
@@ -49,9 +68,9 @@
 	</command>
 
 	<command name="pgEdit">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 
@@ -66,28 +85,5 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameNew}" />
-	</command>
-
-	<command name="cpTearDown">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Message Boards" />
-
-		<while>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_ROWS" />
-			<then>
-				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_ROWS" />
-
-				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN" />
-
-				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
-			</then>
-		</while>
-
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>
 </definition>

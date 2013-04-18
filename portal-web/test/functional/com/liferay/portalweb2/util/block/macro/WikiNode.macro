@@ -1,12 +1,8 @@
 <definition>
 	<command name="cpAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute action="CPWiki#click" locator-key1="ADD_WIKI" />
 
@@ -24,13 +20,9 @@
 	</command>
 
 	<command name="cpDelete">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
 
@@ -44,13 +36,9 @@
 	</command>
 
 	<command name="cpEdit">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
 
@@ -72,13 +60,9 @@
 	</command>
 
 	<command name="cpTearDown">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<while>
 			<condition action="CPWiki#isElementPresent" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />

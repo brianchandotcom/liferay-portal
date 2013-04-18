@@ -1,12 +1,8 @@
 <definition>
 	<command name="cpTearDown">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
-
-		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
-
-		<execute action="Home#click" locator1="link=Blogs" />
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Blogs" />
+		</execute>
 
 		<if>
 			<condition action="CPBlogs#isElementPresent" locator-key1="BLOGS_ENTRY_TABLE_ALL_ROWS" />
@@ -21,9 +17,9 @@
 	</command>
 
 	<command name="pgAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY" />
 
@@ -41,9 +37,9 @@
 	</command>
 
 	<command name="pgEdit">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 
@@ -65,9 +61,9 @@
 	</command>
 
 	<command name="pgMoveToRecycleBin">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 

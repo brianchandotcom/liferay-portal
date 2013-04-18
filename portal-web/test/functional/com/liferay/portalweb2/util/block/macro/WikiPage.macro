@@ -1,8 +1,8 @@
 <definition>
 	<command name="pgAddFrontPage">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
 
@@ -16,9 +16,9 @@
 	</command>
 
 	<command name="pgDeleteFrontPage">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
 
@@ -34,9 +34,9 @@
 	</command>
 
 	<command name="pgAddChildPage">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
 

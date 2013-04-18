@@ -251,12 +251,12 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSortByAssetVocabulary() throws Exception {
-		testSortByAssetVocabulary(false);
+		sortByAssetVocabulary(false);
 	}
 
 	@Test
 	public void testSortByGlobalAssetVocabulary() throws Exception {
-		testSortByAssetVocabulary(true);
+		sortByAssetVocabulary(true);
 	}
 
 	protected PortletPreferences getImportedPortletPreferences(
@@ -272,8 +272,8 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
 		parameterMap.put(
-				PortletDataHandlerKeys.CATEGORIES,
-				new String[] {Boolean.TRUE.toString()});
+			PortletDataHandlerKeys.CATEGORIES,
+			new String[]{Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
@@ -301,7 +301,7 @@ public class AssetPublisherExportImportTest
 			assetPublisherPortletId);
 	}
 
-	protected void testSortByAssetVocabulary(boolean globalVocabulary)
+	protected void sortByAssetVocabulary(boolean globalVocabulary)
 		throws Exception {
 
 		long groupId = group.getGroupId();

@@ -51,15 +51,15 @@ public class DB2DialectTest {
 
 	@Test
 	public void testPagingWithOffset() {
-		testPaging(_SQL, 10, 20);
+		paging(_SQL, 10, 20);
 	}
 
 	@Test
 	public void testPagingWithoutOffset() {
-		testPaging(_SQL, 0, 20);
+		paging(_SQL, 0, 20);
 	}
 
-	protected void testPaging(String sql, int offset, int limit) {
+	protected void paging(String sql, int offset, int limit) {
 		Session session = null;
 
 		try {

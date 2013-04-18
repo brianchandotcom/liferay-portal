@@ -78,7 +78,7 @@ public class GroupServiceTest {
 
 		givePermissionToManageSubsites(user, group);
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, true, false, false, false, true, true,
 			true);
 	}
@@ -93,7 +93,7 @@ public class GroupServiceTest {
 
 		givePermissionToManageSubsites(user, group11);
 
-		testGroup(
+		manageGroup(
 			user, group1, group11, null, true, false, false, false, false, true,
 			true);
 	}
@@ -104,7 +104,7 @@ public class GroupServiceTest {
 
 		User user = UserTestUtil.addUser(null, group.getGroupId());
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, true, false, false, false, false, false,
 			false);
 	}
@@ -117,7 +117,7 @@ public class GroupServiceTest {
 
 		giveSiteAdminRole(user, group);
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, true, false, true, false, true, true,
 			true);
 	}
@@ -132,7 +132,7 @@ public class GroupServiceTest {
 
 		giveSiteAdminRole(user, group11);
 
-		testGroup(
+		manageGroup(
 			user, group1, group11, null, true, false, false, true, false, true,
 			true);
 	}
@@ -179,12 +179,12 @@ public class GroupServiceTest {
 
 	@Test
 	public void testSelectableParentSites() throws Exception {
-		testSelectableParentSites(false);
+		selectParentSites(false);
 	}
 
 	@Test
 	public void testSelectableParentSitesStaging() throws Exception {
-		testSelectableParentSites(true);
+		selectParentSites(true);
 	}
 
 	@Test
@@ -302,7 +302,7 @@ public class GroupServiceTest {
 
 		givePermissionToManageSubsites(user, group);
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, false, true, false, false, true, true,
 			true);
 	}
@@ -317,7 +317,7 @@ public class GroupServiceTest {
 
 		givePermissionToManageSubsites(user, group11);
 
-		testGroup(
+		manageGroup(
 			user, group1, group11, null, false, true, false, false, false, true,
 			true);
 	}
@@ -328,7 +328,7 @@ public class GroupServiceTest {
 
 		User user = UserTestUtil.addUser(null, group.getGroupId());
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, false, true, false, false, false, false,
 			false);
 	}
@@ -341,7 +341,7 @@ public class GroupServiceTest {
 
 		giveSiteAdminRole(user, group);
 
-		testGroup(
+		manageGroup(
 			user, group, null, null, false, true, true, false, true, true,
 			true);
 	}
@@ -356,7 +356,7 @@ public class GroupServiceTest {
 
 		giveSiteAdminRole(user, group11);
 
-		testGroup(
+		manageGroup(
 			user, group1, group11, null, false, true, false, true, false, true,
 			true);
 	}
@@ -386,7 +386,7 @@ public class GroupServiceTest {
 			user.getUserId(), group.getGroupId(), roleIds);
 	}
 
-	protected void testGroup(
+	protected void manageGroup(
 			User user, Group group1, Group group11, Group group111,
 			boolean addGroup, boolean updateGroup, boolean hasManageSite1,
 			boolean hasManageSite11, boolean hasManageSubsitePermisionOnGroup1,
@@ -519,7 +519,7 @@ public class GroupServiceTest {
 		}
 	}
 
-	protected void testSelectableParentSites(boolean staging) throws Exception {
+	protected void selectParentSites(boolean staging) throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		Assert.assertTrue(group.isRoot());

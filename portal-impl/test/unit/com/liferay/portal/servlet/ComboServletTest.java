@@ -80,7 +80,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_UNIX);
 
-		testGetResourceURL(
+		getResourceURL(
 			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
@@ -89,7 +89,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_WINDOWS);
 
-		testGetResourceURL(
+		getResourceURL(
 			servletContext, CharPool.SLASH + _JAVASCRIPT_DIR, false);
 	}
 
@@ -97,7 +97,7 @@ public class ComboServletTest extends PowerMockito {
 	public void testGetResourceURLWithWrongContext() throws Exception {
 		ServletContext servletContext = getServletContext(null);
 
-		testGetResourceURL(servletContext, null, true);
+		getResourceURL(servletContext, null, true);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class ComboServletTest extends PowerMockito {
 		ServletContext servletContext = getServletContext(
 			_WAS_DEFAULT_PATH_UNIX);
 
-		testGetResourceURL(servletContext, "/dummyPath", true);
+		getResourceURL(servletContext, "/dummyPath", true);
 	}
 
 	protected ServletContext getServletContext(final String path) {
@@ -125,7 +125,7 @@ public class ComboServletTest extends PowerMockito {
 		};
 	}
 
-	protected void testGetResourceURL(
+	protected void getResourceURL(
 			ServletContext servletContext, String path, boolean expectNull)
 		throws Exception {
 

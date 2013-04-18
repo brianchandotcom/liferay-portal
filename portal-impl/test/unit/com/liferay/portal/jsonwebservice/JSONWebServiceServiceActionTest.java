@@ -143,36 +143,36 @@ public class JSONWebServiceServiceActionTest
 
 	@Test
 	public void testServletContextInvoker1() throws Exception {
-		testServletContextInvoker("/somectx", true, "/foo/hello-world");
+		checkServletContextInvoker("/somectx", true, "/foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextInvoker2() throws Exception {
-		testServletContextInvoker(
+		checkServletContextInvoker(
 			"/somectx", false, "/somectx.foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextRequestParams1() throws Exception {
-		testServletContextRequestParams("/somectx", true, "/foo/hello-world");
+		checkServletContextRequestParams("/somectx", true, "/foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextRequestParams2() throws Exception {
-		testServletContextRequestParams(
+		checkServletContextRequestParams(
 			"/somectx", false, "/somectx.foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextURL1() throws Exception {
-		testServletContextURL(
+		checkServletContextURL(
 			"/somectx", true,
 			"/foo/hello-world/user-id/173/world-name/Jupiter");
 	}
 
 	@Test
 	public void testServletContextURL2() throws Exception {
-		testServletContextURL(
+		checkServletContextURL(
 			"/somectx", false,
 			"/somectx.foo/hello-world/user-id/173/world-name/Jupiter");
 	}
@@ -190,7 +190,7 @@ public class JSONWebServiceServiceActionTest
 		return mockHttpServletRequest;
 	}
 
-	protected void testServletContextInvoker(
+	protected void checkServletContextInvoker(
 			String ctx, boolean setContextPath, String query)
 		throws Exception {
 
@@ -224,7 +224,7 @@ public class JSONWebServiceServiceActionTest
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
 
-	protected void testServletContextRequestParams(
+	protected void checkServletContextRequestParams(
 			String ctx, boolean setContextPath, String request)
 		throws Exception {
 
@@ -252,7 +252,7 @@ public class JSONWebServiceServiceActionTest
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
 
-	protected void testServletContextURL(
+	protected void checkServletContextURL(
 			String ctx, boolean setContextPath, String request)
 		throws Exception {
 

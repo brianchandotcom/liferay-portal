@@ -725,15 +725,17 @@
 
 			var hasErrors = false;
 
-			var liferayForm = Liferay.Form.get(form.attr('id'));
+			if (!event.skipValidation) {
+				var liferayForm = Liferay.Form.get(form.attr('id'));
 
-			if (liferayForm && !event.skipValidation) {
-				var validator = liferayForm.formValidator;
+				if (liferayForm) {
+					var validator = liferayForm.formValidator;
 
-				if (A.instanceOf(validator, A.FormValidator)) {
-					validator.validate();
+					if (A.instanceOf(validator, A.FormValidator)) {
+						validator.validate();
 
-					hasErrors = validator.hasErrors();
+						hasErrors = validator.hasErrors();
+					}
 				}
 			}
 

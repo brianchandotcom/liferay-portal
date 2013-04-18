@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrymultiple;
+package com.liferay.portalweb.portal.controlpanel.recyclebin.blogs.restoreblogentriesrecyclebin;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry1Test;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry2Test;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry3Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
@@ -29,17 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryMultipleTests extends BaseTestSuite {
+public class RestoreBlogEntriesRecycleBinTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
-		testSuite.addTestSuite(AddBlogsEntry1Test.class);
-		testSuite.addTestSuite(ViewBlogsEntry1Test.class);
-		testSuite.addTestSuite(AddBlogsEntry2Test.class);
-		testSuite.addTestSuite(ViewBlogsEntry2Test.class);
-		testSuite.addTestSuite(AddBlogsEntry3Test.class);
-		testSuite.addTestSuite(ViewBlogsEntry3Test.class);
+		testSuite.addTestSuite(AddBlogEntriesTest.class);
+		testSuite.addTestSuite(MoveToRecycleBinBlogEntriesTest.class);
+		testSuite.addTestSuite(RestoreBlogEntriesRecycleBinTest.class);
+		testSuite.addTestSuite(ViewRestoreBlogEntriesRecycleBinTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

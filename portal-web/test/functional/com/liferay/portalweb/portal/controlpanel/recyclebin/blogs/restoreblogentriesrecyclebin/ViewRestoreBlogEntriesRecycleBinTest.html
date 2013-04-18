@@ -1,0 +1,263 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewRestoreBlogEntriesRecycleBinTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewRestoreBlogEntriesRecycleBinTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Blogs Test Page</td>
+	<td>Blogs Test Page</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Blog Entry']</td>
+	<td>Add Blog Entry</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Permissions']</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[1]</td>
+	<td>Blogs Entry3 Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@class='entry-date'])[1]</td>
+	<td>Entry Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Edit')]/span/a/span)[1]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Permissions')]/span/a/span)[1]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Move to the Recycle Bin')]/span/a/span)[1]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-body']/div)[1]</td>
+	<td>Blogs Entry3 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-author'])[1]</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//span[@class='comments']/a)[1]</td>
+	<td>0 Comments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='taglib-flags']/span/a/span)[1]</td>
+	<td>Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-twitter'])[1]</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-facebook'])[1]</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-plusone'])[1]</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xpath=(//div[contains(@id,'ratingStar')]/div)[1]</td>
+	<td>Your Rating</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[contains(@id,'ratingScore')]/div	)[1]</td>
+	<td>Average (0 Votes)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[2]</td>
+	<td>Blogs Entry2 Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@class='entry-date'])[2]</td>
+	<td>Entry Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Edit')]/span/a/span)[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Permissions')]/span/a/span)[2]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Move to the Recycle Bin')]/span/a/span)[2]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-body']/div)[3]</td>
+	<td>Blogs Entry2 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-author'])[2]</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//span[@class='comments']/a)[2]</td>
+	<td>0 Comments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='taglib-flags']/span/a/span)[2]</td>
+	<td>Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-twitter'])[2]</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-facebook'])[2]</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-plusone'])[2]</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xpath=(//div[contains(@id,'ratingStar')]/div)[2]</td>
+	<td>Your Rating</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[contains(@id,'ratingScore')]/div	)[2]</td>
+	<td>Average (0 Votes)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-title']/h2/a)[3]</td>
+	<td>Blogs Entry1 Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//div[@class='entry-date'])[3]</td>
+	<td>Entry Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Edit')]/span/a/span)[3]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Permissions')]/span/a/span)[3]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//td[contains(.,'Move to the Recycle Bin')]/span/a/span)[3]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-body']/div)[5]</td>
+	<td>Blogs Entry1 Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='entry-author'])[3]</td>
+	<td>By Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//span[@class='comments']/a)[3]</td>
+	<td>0 Comments</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[@class='taglib-flags']/span/a/span)[3]</td>
+	<td>Flag</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-twitter'])[3]</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-facebook'])[3]</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=(//li[@class='taglib-social-bookmark-plusone'])[3]</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xpath=(//div[contains(@id,'ratingStar')]/div)[3]</td>
+	<td>Your Rating</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xpath=(//div[contains(@id,'ratingScore')]/div	)[3]</td>
+	<td>Average (0 Votes)</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='subscribe']/span/a[contains(@href,'rss')]	</td>
+	<td>RSS</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='subscribe']/span/a[contains(@href,'subscribe')]	</td>
+	<td>Subscribe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='search-results']	</td>
+	<td>Showing 3 results.</td>
+</tr>
+</tbody></table>
+</body>
+</html>

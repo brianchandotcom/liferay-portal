@@ -40,8 +40,8 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * An implementation may include any number of policies and actions to enforce
- * those policies. The implementation may include policies and actions like the
+ * An implementation may include any number of rules and actions to enforce
+ * those rules. The implementation may include rules and actions like the
  * following:
  * </p>
  *
@@ -86,14 +86,18 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * Liferay's UI calls the "is*"
- * ({@link #isMembershipProtected(PermissionChecker, long, long)} and
- * {@link #isRoleProtected(PermissionChecker, long, long, long)} are also called
- * from Liferay's core services) methods, such as {@link
+ * Liferay's UI calls the "is*" methods, such as {@link
  * #isMembershipAllowed(long, long)}, to determine appropriate options to
  * display to the user. For example, the UI calls {@link
  * #isMembershipAllowed(long, long)} to decide whether to display the "Join"
  * link to the user.
+ * </p>
+ *
+ * <p>
+ * Liferay's core services call {@link #isMembershipProtected(PermissionChecker,
+ * long, long)} and {@link #isRoleProtected(PermissionChecker, long, long,
+ * long)} to protect user site memberships and site role assignments,
+ * appropriately.
  * </p>
  *
  * @author Sergio González
@@ -309,10 +313,10 @@ public interface SiteMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
 	 * sites and performs operations necessary for the compliance of each site
-	 * and site role. This method can be triggered manually from the
-	 * Control Panel. If the <code>membership.policy.auto.verify</code> portal
-	 * property is <code>true</code> this method will be triggered when starting
-	 * Liferay or everytime a membership policy hook is deployed.
+	 * and site role. This method can be triggered manually from the Control
+	 * Panel. If the <code>membership.policy.auto.verify</code> portal property
+	 * is <code>true</code> this method is triggered when starting Liferay and
+	 * every time a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -332,15 +336,15 @@ public interface SiteMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of the site, with respect
-	 * to its new categories, tags, expando attributes, and type settings
-	 * properties, and performs operations necessary for the compliance of the
-	 * site and its site roles. Liferay calls this method when adding and
-	 * updating sites.
+	 * to the site's new attribute values, categories, tags, expando attributes,
+	 * and type settings properties, and performs operations necessary for the
+	 * compliance of the site and its site roles. Liferay calls this method when
+	 * adding and updating sites.
 	 *
 	 * <p>
 	 * The actions must ensure the integrity of the site's membership policy
-	 * based on what has changed in the categories, tags, expando attributes,
-	 * and type settings properties.
+	 * based on what has changed in the site's attribute values, categories,
+	 * tags, expando attributes, and type settings properties.
 	 * </p>
 	 *
 	 * <p>

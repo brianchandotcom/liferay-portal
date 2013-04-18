@@ -27,13 +27,13 @@ import java.util.Map;
  * of user membership regarding user groups.
  *
  * <p>
- * User Group Membership Policies define the user groups a user is allowed
- * to be a member of and the user groups the user must be a member of.
+ * User Group Membership Policies define the user groups a user is allowed to be
+ * a member of and the user groups the user must be a member of.
  * </p>
  *
  * <p>
- * An implementation may include any number of policies and actions to enforce
- * those policies. The implementation may include policies and actions like the
+ * An implementation may include any number of rules and actions to enforce
+ * those rules. The implementation may include rules and actions like the
  * following:
  * </p>
  *
@@ -66,9 +66,9 @@ import java.util.Map;
  * <p>
  * Liferay's UI calls the "is*" methods, such as {@link
  * #isMembershipAllowed(long, long)}, to determine appropriate options to
- * display to the user. For example, the UI calls
- * {@link #isMembershipAllowed(long, long)} to decide whether to enable the
- * checkbox for adding the user to the user group.
+ * display to the user. For example, the UI calls {@link
+ * #isMembershipAllowed(long, long)} to decide whether to enable the checkbox
+ * for adding the user to the user group.
  * </p>
  *
  * @author Roberto Díaz
@@ -77,13 +77,13 @@ import java.util.Map;
 public interface UserGroupMembershipPolicy {
 
 	/**
-	 * Checks if the users can be added to and removed from the respective
-	 * user groups.
+	 * Checks if the users can be added to and removed from the respective user
+	 * groups.
 	 *
 	 * <p>
 	 * Liferay's core services call this method before adding the users to and
-	 * removing the users from the respective user groups. If this method
-	 * throws an exception, the service foregoes making the changes.
+	 * removing the users from the respective user groups. If this method throws
+	 * an exception, the service foregoes making the changes.
 	 * </p>
 	 *
 	 * @param  userIds the primary keys of the users to be added and removed
@@ -92,9 +92,9 @@ public interface UserGroupMembershipPolicy {
 	 *         users are to be added (optionally <code>null</code>)
 	 * @param  removeUserGroupIds the primary keys of the user groups from which
 	 *         the users are to be removed (optionally <code>null</code>)
-	 * @throws PortalException if any one user could not be added to a
-	 *         user group, if any one user could not be removed from a user
-	 *         group, or if a portal exception occurred
+	 * @throws PortalException if any one user could not be added to a user
+	 *         group, if any one user could not be removed from a user group, or
+	 *         if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkMembership(
@@ -132,8 +132,8 @@ public interface UserGroupMembershipPolicy {
 
 	/**
 	 * Performs membership policy related actions after the users are added to
-	 * and removed from the respective user groups. Liferay's core services
-	 * call this method after adding and removing the users to and from the
+	 * and removed from the respective user groups. Liferay's core services call
+	 * this method after adding and removing the users to and from the
 	 * respective user groups.
 	 *
 	 * <p>
@@ -154,10 +154,10 @@ public interface UserGroupMembershipPolicy {
 	 * </ul>
 	 *
 	 * @param  userIds the primary key of the users to be added or removed
-	 * @param  addUserGroupIds the primary keys of the user groups to which
-	 *         the users were added (optionally <code>null</code>)
-	 * @param  removeUserGroupIds the primary keys of the user groups from
-	 *         which the users were removed (optionally <code>null</code>)
+	 * @param  addUserGroupIds the primary keys of the user groups to which the
+	 *         users were added (optionally <code>null</code>)
+	 * @param  removeUserGroupIds the primary keys of the user groups from which
+	 *         the users were removed (optionally <code>null</code>)
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -167,11 +167,11 @@ public interface UserGroupMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
-	 * user groups and performs operations necessary for the compliance of
-	 * each user group. This method can be triggered manually from the Control
-	 * Panel. If the <code>membership.policy.auto.verify</code> portal property
-	 * is <code>true</code> this method will be triggered when starting Liferay
-	 * or everytime a membership policy hook is deployed.
+	 * user groups and performs operations necessary for the compliance of each
+	 * user group. This method can be triggered manually from the Control Panel.
+	 * If the <code>membership.policy.auto.verify</code> portal property is
+	 * <code>true</code> this method is triggered when starting Liferay and
+	 * every time a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -190,14 +190,15 @@ public interface UserGroupMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Checks the integrity of the membership policy of the user group,
-	 * with respect to its expando attributes, and performs operations necessary
-	 * for the compliance of the user group. Liferay calls this method when
-	 * adding and updating user groups.
+	 * Checks the integrity of the membership policy of the user group, with
+	 * respect to the user group's new attribute values and expando attributes,
+	 * and performs operations necessary for the compliance of the user group.
+	 * Liferay calls this method when adding and updating user groups.
 	 *
 	 * <p>
 	 * The actions must ensure the integrity of the user group's membership
-	 * policy based on what has changed in the expando attributes.
+	 * policy based on what has changed in the user group's attribute values and
+	 * expando attributes.
 	 * </p>
 	 *
 	 * <p>

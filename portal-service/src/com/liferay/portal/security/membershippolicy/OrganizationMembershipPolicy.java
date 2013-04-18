@@ -40,8 +40,8 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * An implementation may include any number of policies and actions to enforce
- * those policies. The implementation may include policies and actions like the
+ * An implementation may include any number of rules and actions to enforce
+ * those rules. The implementation may include rules and actions like the
  * following:
  * </p>
  *
@@ -56,8 +56,7 @@ import java.util.Map;
  * </li>
  * <li>
  * If a user doesn't have the custom attribute A, he cannot be assigned to
- * organization
- * B.
+ * organization B.
  * </li>
  * <li>
  * If the user is added to organization A, he will automatically be added to
@@ -90,14 +89,18 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * Liferay's UI calls the "is*"
- * ({@link #isMembershipProtected(PermissionChecker, long, long)} and
- * {@link #isRoleProtected(PermissionChecker, long, long, long)} are also called
- * from Liferay's core services) methods, such as {@link
+ * Liferay's UI calls the "is*" methods, such as {@link
  * #isMembershipAllowed(long, long)}, to determine appropriate options to
  * display to the user. For example, the UI calls {@link
  * #isMembershipAllowed(long, long)} to decide whether to enable the checkbox
  * for adding the user to the organization.
+ * </p>
+ *
+ * <p>
+ * Liferay's core services call {@link #isMembershipProtected(PermissionChecker,
+ * long, long)} and {@link #isRoleProtected(PermissionChecker, long, long,
+ * long)} to protect user organization memberships and organization role
+ * assignments, appropriately.
  * </p>
  *
  * @author Roberto Díaz
@@ -168,8 +171,8 @@ public interface OrganizationMembershipPolicy {
 
 	/**
 	 * Returns <code>true</code> if the policy prevents the user from being
-	 * removed from the organization by the user associated with the
-	 * permission checker.
+	 * removed from the organization by the user associated with the permission
+	 * checker.
 	 *
 	 * @param  permissionChecker the permission checker referencing a user
 	 * @param  userId the primary key of the user to check for protection
@@ -324,8 +327,8 @@ public interface OrganizationMembershipPolicy {
 	 * each organization and organization role. This method can be triggered
 	 * manually from the Control Panel. If the
 	 * <code>membership.policy.auto.verify</code> portal property is
-	 * <code>true</code> this method will be triggered when starting Liferay or
-	 * everytime a membership policy hook is deployed.
+	 * <code>true</code> this method is triggered when starting Liferay and
+	 * every time a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -344,16 +347,16 @@ public interface OrganizationMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Checks the integrity of the membership policy of the organization,
-	 * with respect to its new categories, tags, and expando attributes, and
-	 * performs operations necessary for the compliance of the organization and
-	 * its organization roles. Liferay calls this method when adding and
-	 * updating organizations.
+	 * Checks the integrity of the membership policy of the organization, with
+	 * respect to the organization's new attribute values, categories, tags, and
+	 * expando attributes, and performs operations necessary for the compliance
+	 * of the organization and its organization roles. Liferay calls this method
+	 * when adding and updating organizations.
 	 *
 	 * <p>
 	 * The actions must ensure the integrity of the organization's membership
-	 * policy based on what has changed in the categories, tags, and expando
-	 * attributes.
+	 * policy based on what has changed in the organization's attribute values,
+	 * categories, tags, and expando attributes.
 	 * </p>
 	 *
 	 * <p>
@@ -409,8 +412,8 @@ public interface OrganizationMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of the organization role,
 	 * with respect to its expando attributes, and performs operations necessary
-	 * for the role's compliance. Liferay calls this method when adding
-	 * and updating organization roles.
+	 * for the role's compliance. Liferay calls this method when adding and
+	 * updating organization roles.
 	 *
 	 * @param  role the added or updated role to verify
 	 * @param  oldRole the old role

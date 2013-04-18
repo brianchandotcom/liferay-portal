@@ -32,8 +32,8 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * An implementation may include any number of policies and actions to enforce
- * those policies. The implementation may include policies and actions like the
+ * An implementation may include any number of rules and actions to enforce
+ * those rules. The implementation may include rules and actions like the
  * following:
  * </p>
  *
@@ -46,10 +46,6 @@ import java.util.Map;
  * If the user is added to role A, he will automatically be added to role B.
  * </li>
  * <li>
- * The user must have the Administrator Role in order to be added to role "Admin
- * Role".
- * </li>
- * <li>
  * All users with the custom attribute A will automatically have the role B.
  * </li>
  * <li>
@@ -58,13 +54,13 @@ import java.util.Map;
  * </ul>
  *
  * <p>
- * Liferay's core services invoke {@link #checkRoles(long[], long[], long[])}
- * to detect policy violations before adding the users to and removing the users
+ * Liferay's core services invoke {@link #checkRoles(long[], long[], long[])} to
+ * detect policy violations before adding the users to and removing the users
  * from the roles. On passing the check, the service proceeds with the changes
- * and propagates appropriate related actions in the portal by invoking
- * {@link #propagateRoles(long[], long[], long[])}. On failing the check, the
- * service foregoes making the changes. For example, Liferay executes this logic
- * when adding and updating roles, and adding and removing roles with respect to
+ * and propagates appropriate related actions in the portal by invoking {@link
+ * #propagateRoles(long[], long[], long[])}. On failing the check, the service
+ * foregoes making the changes. For example, Liferay executes this logic when
+ * adding and updating roles, and adding and removing roles with respect to
  * users.
  * </p>
  *
@@ -91,8 +87,8 @@ public interface RoleMembershipPolicy {
 	 *
 	 * @param  userIds the primary keys of the users to be added and removed
 	 *         from the roles
-	 * @param  addRoleIds the primary keys of the roles to be added
-	 *         (optionally <code>null</code>)
+	 * @param  addRoleIds the primary keys of the roles to be added (optionally
+	 *         <code>null</code>)
 	 * @param  removeRoleIds the primary keys of the roles to be removed
 	 *         (optionally <code>null</code>)
 	 * @throws PortalException if any one role violated the policy or if a
@@ -151,9 +147,9 @@ public interface RoleMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param userIds the primary keys of the users
-	 * @param addRoleIds the primary keys of the added roles
-	 * @param removeRoleIds the primary keys of the removed roles
+	 * @param  userIds the primary keys of the users
+	 * @param  addRoleIds the primary keys of the added roles
+	 * @param  removeRoleIds the primary keys of the removed roles
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -164,10 +160,10 @@ public interface RoleMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
 	 * roles and performs operations necessary for the compliance of each role.
-	 * This method can be triggered manually from the
-	 * Control Panel. If the <code>membership.policy.auto.verify</code> portal
-	 * property is <code>true</code> this method will be triggered when starting
-	 * Liferay or everytime a membership policy hook is deployed.
+	 * This method can be triggered manually from the Control Panel. If the
+	 * <code>membership.policy.auto.verify</code> portal property is
+	 * <code>true</code> this method is triggered when starting Liferay and
+	 * every time a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -186,9 +182,9 @@ public interface RoleMembershipPolicy {
 
 	/**
 	 * Checks the integrity of the membership policy of the role, with respect
-	 * to its expando attributes, and performs operations necessary for the
-	 * role's compliance. Liferay calls this method when adding and updating
-	 * roles.
+	 * to the role's new attribute values and expando attributes, and performs
+	 * operations necessary for the role's compliance. Liferay calls this method
+	 * when adding and updating roles.
 	 *
 	 * @param  role the added or updated role to verify
 	 * @param  oldRole the old role

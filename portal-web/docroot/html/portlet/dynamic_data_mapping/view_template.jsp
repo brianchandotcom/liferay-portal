@@ -46,6 +46,9 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 	if (structure != null) {
 		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
 	}
+	else if (refererPortletName.equals(PortletKeys.JOURNAL)) {
+		title = "templates";
+	}
 	else {
 		title = "application-display-templates";
 	}
@@ -120,10 +123,11 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 
 			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
 			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("backURL", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 			rowURL.setParameter("classNameId", String.valueOf(classNameId));
-			rowURL.setParameter("classPK", String.valueOf(classPK));
+			rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
 			rowURL.setParameter("type", template.getType());
 
 			String rowHREF = rowURL.toString();
@@ -152,6 +156,25 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				name="description"
 				path="/html/portlet/dynamic_data_mapping/template_description.jsp"
 			/>
+
+			<c:if test="<%= structure == null %>">
+
+				<%
+				String structureName = StringPool.BLANK;
+
+				if (template.getClassPK() > 0) {
+					DDMStructure templateStructure = DDMStructureServiceUtil.getStructure(template.getClassPK());
+
+					structureName = templateStructure.getName();
+				}
+				%>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="structure"
+					value="<%= structureName %>"
+				/>
+			</c:if>
 
 			<c:if test="<%= Validator.isNull(templateTypeValue) && (classNameId == 0) %>">
 

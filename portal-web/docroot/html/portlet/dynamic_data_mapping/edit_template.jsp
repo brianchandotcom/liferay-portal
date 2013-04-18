@@ -132,7 +132,12 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		if (classNameId > 0) {
 			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-			title = LanguageUtil.get(pageContext, "new") + StringPool.SPACE + templateHandler.getName(locale);
+			if (templateHandler != null) {
+				title = LanguageUtil.get(pageContext, "new") + StringPool.SPACE + templateHandler.getName(locale);
+			}
+			else if (refererPortletName.equals(PortletKeys.JOURNAL)) {
+				title = LanguageUtil.get(pageContext, "new-template");
+			}
 		}
 		else {
 			title = LanguageUtil.get(pageContext, "new-application-display-template");
@@ -147,7 +152,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</portlet:renderURL>
 
 	<liferay-ui:header
-		backURL="<%= (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) ? backURL : viewTemplatesURL %>"
+		backURL="<%= ((portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || refererPortletName.equals(PortletKeys.JOURNAL) || Validator.isNotNull(portletResource)) && Validator.isNotNull(backURL)) ? backURL : viewTemplatesURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
@@ -159,6 +164,24 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
+				<c:if test="<%= refererPortletName.equals(PortletKeys.JOURNAL) %>">
+					<aui:field-wrapper helpMessage="structure-help" label="structure">
+						<c:choose>
+							<c:when test="<%= classPK < 0 %>">
+								<liferay-ui:icon
+									image="add"
+									label="<%= true %>"
+									message="select"
+									url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+								/>
+							</c:when>
+							<c:otherwise>
+								<%= structure == null ? "" : structure.getName(locale) %>
+							</c:otherwise>
+						</c:choose>
+					</aui:field-wrapper>
+				</c:if>
+
 				<aui:select helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 					<%
@@ -383,6 +406,39 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		</aui:script>
 	</c:otherwise>
 </c:choose>
+
+<c:if test="<%= classPK < 0 && !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+	<aui:script>
+		function <portlet:namespace />openDDMStructureSelector() {
+			Liferay.Util.openDDMPortlet(
+				{
+					availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
+					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+					classPK: 0,
+					ddmResource: '<%= ddmResource %>',
+					dialog: {
+						modal: true,
+						width: 820
+					},
+					eventName: '<portlet:namespace />selectStructure',
+					groupId: <%= groupId %>,
+					storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
+					structureName: 'structure',
+					structureType: 'com.liferay.portlet.journal.model.JournalArticle',
+					struts_action: '/dynamic_data_mapping/select_structure',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+				},
+				function(event){
+					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
+						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
+
+						refreshEditor();
+					}
+				}
+			);
+		}
+	</aui:script>
+</c:if>
 
 <aui:button-row>
 	<aui:script>

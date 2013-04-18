@@ -75,6 +75,15 @@
 			/>
 
 			<%
+			taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
+			%>
+
+			<liferay-ui:icon
+				message="templates"
+				url="<%= taglibURL %>"
+			/>
+
+			<%
 			taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
 			%>
 
@@ -104,6 +113,10 @@
 		}
 	</c:if>
 
+	<%
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	%>
+
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openDDMPortlet(
 			{
@@ -114,13 +127,7 @@
 					width: 820
 				},
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
-
-				<%
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-				%>
-
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-
 				showGlobalScope: 'false',
 				showManageTemplates: 'true',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
@@ -128,6 +135,30 @@
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
 				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+			}
+		);
+	}
+
+	function <portlet:namespace />openTemplatesView() {
+		Liferay.Util.openDDMPortlet(
+			{
+				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
+				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				classPK: -1,
+				ddmResource: '<%= ddmResource %>',
+				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
+				dialog: {
+					width: 820
+				},
+				groupId: <%= scopeGroupId %>,
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
+				structureName: 'structure',
+				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
+				struts_action: '/dynamic_data_mapping/view_template',
+				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			}
 		);
 	}

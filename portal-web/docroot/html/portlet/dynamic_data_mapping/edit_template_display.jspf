@@ -339,21 +339,6 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 		return selectLanguageNode.val();
 	}
 
-	function onTemplateLanguageChange(event) {
-		document.<portlet:namespace />fm.<portlet:namespace />cmd.value = '';
-
-		if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
-			Liferay.fire('<portlet:namespace />saveTemplate');
-		}
-		<c:if test="<%= template == null %>">
-			else {
-				document.<portlet:namespace />fm.<portlet:namespace />scriptContent.value = '';
-			}
-		</c:if>
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	function setEditorContent(content) {
 		richEditor.getSession().setValue(content);
 
@@ -429,7 +414,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 				}
 			);
 
-			selectLanguageNode.on('change', onTemplateLanguageChange);
+			selectLanguageNode.on('change', refreshEditor);
 
 			setEditorPlugins();
 
@@ -461,6 +446,25 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 			</c:if>
 		},
 		'#<portlet:namespace />richEditor'
+	);
+
+	Liferay.provide(
+		window,
+		'refreshEditor',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace />cmd.value = '';
+
+			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
+				Liferay.fire('<portlet:namespace />saveTemplate');
+			}
+			<c:if test="<%= template == null %>">
+				else {
+					document.<portlet:namespace />fm.<portlet:namespace />scriptContent.value = '';
+				}
+			</c:if>
+
+			submitForm(document.<portlet:namespace />fm);
+		}
 	);
 </aui:script>
 

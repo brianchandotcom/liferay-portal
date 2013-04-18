@@ -25,10 +25,14 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.wiki.DuplicateNodeNameException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
+import com.liferay.portlet.wiki.NodeDeletionException;
 import com.liferay.portlet.wiki.NodeNameException;
 import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
@@ -137,6 +141,18 @@ public class EditNodeAction extends PortletAction {
 			LiferayPortletConfig liferayPortletConfig,
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int nodeCount = WikiNodeLocalServiceUtil.getNodesCount(
+			themeDisplay.getScopeGroupId());
+
+		if (nodeCount == 1) {
+			SessionErrors.add(actionRequest, NodeDeletionException.class);
+
+			return;
+		}
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 

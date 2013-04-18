@@ -2584,8 +2584,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			changedFieldsList.add("suffix");
 		}
 
-		if ((birthdayMonth != birthday.get(Calendar.MONDAY)) ||
-			(birthdayDay != birthday.get(Calendar.DATE)) ||
+		if ((birthdayMonth != birthday.get(Calendar.MONTH)) ||
+			(birthdayDay != birthday.get(Calendar.DAY_OF_MONTH)) ||
 			(birthdayYear != birthday.get(Calendar.YEAR))) {
 
 			changedFieldsList.add("birthday");

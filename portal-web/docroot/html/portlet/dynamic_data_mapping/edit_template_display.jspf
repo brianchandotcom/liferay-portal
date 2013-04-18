@@ -97,6 +97,12 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 												dataContent2 = templateVariableDefinition.getLabel();
 												dataContent3 = "</a>";
 											}
+											else if (dataType.equals("service-locator")) {
+												String variableName = templateVariableDefinition.getClazz().getSimpleName();
+
+												dataContent1 = _getAssignCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\"", language);
+												dataContent2 = _getVariableCode(variableName, language);
+											}
 											else if (templateVariableDefinition.isCollection()) {
 												TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
@@ -456,6 +462,18 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 </aui:script>
 
 <%!
+private String _getAssignCode(String variableName, String code, String language) {
+
+	if (language.equalsIgnoreCase("ftl")) {
+		return "<#assign " + variableName + " = " + code + ")>";
+	}
+	else if (language.equalsIgnoreCase("vm")) {
+		return "#set( $" + variableName + " = " + code + " )";
+	}
+
+	return variableName;
+}
+
 private String[] _getBooleanCodeArray(String testClause, String language) {
 	String[] booleanCodeArray = new String[2];
 
@@ -559,10 +577,13 @@ private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDef
 		sb.append("</i></p>");
 	}
 
-	sb.append(LanguageUtil.get(pageContext, "variable"));
-	sb.append(StringPool.COLON);
-	sb.append("&nbsp;");
-	sb.append(templateVariableDefinition.getName());
+	if (!Validator.equals(templateVariableDefinition.getDataType(), "service-locator")) {
+		sb.append(LanguageUtil.get(pageContext, "variable"));
+		sb.append(StringPool.COLON);
+		sb.append("&nbsp;");
+		sb.append(templateVariableDefinition.getName());
+	}
+
 	sb.append(_getPaletteItemTitle(pageContext, "class", templateVariableDefinition.getClazz()));
 
 	if (templateVariableDefinition.isCollection()) {

@@ -173,6 +173,10 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		for (TemplateVariableGroup templateVariableGroup :
 				templateVariableGroups.values()) {
 
+			if (!templateVariableGroup.isAutocompleteEnabled()) {
+				continue;
+			}
+
 			templateVariableDefinitions.addAll(
 				templateVariableGroup.getTemplateVariableDefinitions());
 		}

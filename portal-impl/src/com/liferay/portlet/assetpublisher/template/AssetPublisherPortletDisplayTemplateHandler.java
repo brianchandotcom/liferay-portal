@@ -22,6 +22,15 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetCategoryService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryService;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
+import com.liferay.portlet.asset.service.AssetTagService;
+import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherHelper;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
@@ -82,6 +91,32 @@ public class AssetPublisherPortletDisplayTemplateHandler
 			"asset-entry", AssetEntry.class,
 			PortletDisplayTemplateConstants.ENTRY);
 
+		TemplateVariableGroup assetServicesTemplateVariableGroup =
+			new TemplateVariableGroup("asset-services");
+
+		assetServicesTemplateVariableGroup.setAutocompleteEnabled(false);
+
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetEntryService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetEntryLocalService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetVocabularyService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetVocabularyLocalService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetCategoryService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetCategoryLocalService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagLocalService.class);
+		assetServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagStatsLocalService.class);
+
+		templateVariableGroups.put(
+			"asset-services", assetServicesTemplateVariableGroup);
 		return templateVariableGroups;
 	}
 

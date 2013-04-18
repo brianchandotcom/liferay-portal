@@ -23,6 +23,10 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetCategoryService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -68,6 +72,22 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 			"vocabularies", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"vocabulary", AssetVocabulary.class, "curVocabulary");
 
+		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
+			new TemplateVariableGroup("category-services");
+
+		categoriesServicesTemplateVariableGroup.setAutocompleteEnabled(false);
+
+		categoriesServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetVocabularyService.class);
+		categoriesServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetVocabularyLocalService.class);
+		categoriesServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetCategoryService.class);
+		categoriesServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetCategoryLocalService.class);
+
+		templateVariableGroups.put(
+			"category-services", categoriesServicesTemplateVariableGroup);
 		return templateVariableGroups;
 	}
 

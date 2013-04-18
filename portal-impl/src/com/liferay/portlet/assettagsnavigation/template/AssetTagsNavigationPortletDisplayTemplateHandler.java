@@ -22,6 +22,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetTagLocalService;
+import com.liferay.portlet.asset.service.AssetTagService;
+import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -66,6 +69,21 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		templateVariableGroup.addCollectionVariable(
 			"tags", List.class, PortletDisplayTemplateConstants.ENTRIES, "tag",
 			AssetTag.class, "curTag");
+
+		TemplateVariableGroup tagsServicesTemplateVariableGroup =
+			new TemplateVariableGroup("tag-services");
+
+		tagsServicesTemplateVariableGroup.setAutocompleteEnabled(false);
+
+		tagsServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagService.class);
+		tagsServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagLocalService.class);
+		tagsServicesTemplateVariableGroup.addServiceLocatorVariable(
+			AssetTagStatsLocalService.class);
+
+		templateVariableGroups.put(
+			"tag-services", tagsServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
 	}

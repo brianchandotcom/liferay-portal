@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UniqueList;
 
 import java.util.Collection;
@@ -57,6 +58,24 @@ public class TemplateVariableGroup {
 		return templateVariableDefinition;
 	}
 
+	public TemplateVariableDefinition addServiceLocatorVariable(
+		Class serviceClass) {
+
+		String label = TextFormatter.format(
+			serviceClass.getSimpleName(), TextFormatter.I);
+
+		label = TextFormatter.format(label, TextFormatter.K);
+
+		TemplateVariableDefinition templateVariableDefinition =
+			new TemplateVariableDefinition(
+				label, serviceClass, "service-locator",
+				serviceClass.getCanonicalName(), label + "-help", false);
+
+		_templateVariableDefinitions.add(templateVariableDefinition);
+
+		return templateVariableDefinition;
+	}
+
 	public TemplateVariableDefinition addVariable(
 		String label, Class<?> clazz, String variableName) {
 
@@ -82,6 +101,15 @@ public class TemplateVariableGroup {
 		return _templateVariableDefinitions;
 	}
 
+	public boolean isAutocompleteEnabled() {
+		return _autocompleteEnabled;
+	}
+
+	public void setAutocompleteEnabled(boolean autocompleteEnabled) {
+		_autocompleteEnabled = autocompleteEnabled;
+	}
+
+	private boolean _autocompleteEnabled;
 	private String _label;
 	private Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =

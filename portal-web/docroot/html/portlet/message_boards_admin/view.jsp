@@ -548,7 +548,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 				<br>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "deleteThreads();" %>' value="delete" />
+				<aui:button onClick='<%= renderResponse.getNamespace() + "deleteThreads();" %>' value='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "lockThreads();" %>' value="lock" />
 

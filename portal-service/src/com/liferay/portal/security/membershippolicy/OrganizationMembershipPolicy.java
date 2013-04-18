@@ -72,7 +72,7 @@ public interface OrganizationMembershipPolicy {
 		throws PortalException, SystemException;
 
 	public void propagateRoles(
-			List<UserGroupRole> adduserGroupRoles,
+			List<UserGroupRole> addUserGroupRoles,
 			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException, SystemException;
 

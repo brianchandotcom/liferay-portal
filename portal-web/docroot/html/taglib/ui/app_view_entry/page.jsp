@@ -64,7 +64,14 @@ if (showLinkTitle) {
 
 			<liferay-util:include page="<%= actionJsp %>" />
 
-			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= linkTitle %>">
+			<c:choose>
+				<c:when test="<%= Validator.isNull(url) %>">
+					<div class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> title="<%= linkTitle %>">
+				</c:when>
+				<c:otherwise>
+					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= linkTitle %>">
+				</c:otherwise>
+			</c:choose>
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
@@ -96,12 +103,26 @@ if (showLinkTitle) {
 
 					<span class="entry-result-icon"></span>
 				</span>
-			</a>
+			<c:choose>
+				<c:when test="<%= Validator.isNull(url) %>">
+					</div>
+				</c:when>
+				<c:otherwise>
+					</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %> data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
-			<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= linkTitle %>">
+			<c:choose>
+				<c:when test="<%= Validator.isNull(url) %>">
+					<div class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" title="<%= linkTitle %>">
+				</c:when>
+				<c:otherwise>
+					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= linkTitle %>">
+				</c:otherwise>
+			</c:choose>
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
 
@@ -154,7 +175,14 @@ if (showLinkTitle) {
 						</div>
 					</c:if>
 				</span>
-			</a>
+			<c:choose>
+				<c:when test="<%= Validator.isNull(url) %>">
+					</div>
+				</c:when>
+				<c:otherwise>
+					</a>
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			if (!folder) {

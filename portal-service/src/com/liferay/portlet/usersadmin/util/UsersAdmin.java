@@ -150,7 +150,7 @@ public interface UsersAdmin {
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;
 
-	public boolean hasUpdatePermission(User user, String field)
+	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException;
 
 	/**

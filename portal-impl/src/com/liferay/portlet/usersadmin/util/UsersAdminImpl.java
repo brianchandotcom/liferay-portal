@@ -1062,7 +1062,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		return hasUpdatePermission(user, "emailAddress");
 	}
 
-	public boolean hasUpdatePermission(User user, String field)
+	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(user)) {
@@ -1073,7 +1073,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			PropsValues.FIELDS_EDITABLE_WHITELIST_COM_LIFERAY_PORTAL_MODEL_USER;
 
 		for (String userEditable : usersEditableWhitelist) {
-			if (validateUpdatePermission(user, userEditable)) {
+			if (hasUpdatePermission(user, userEditable)) {
 				return true;
 			}
 		}
@@ -1096,7 +1096,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		for (String userEditable : usersEditable) {
-			if (validateUpdatePermission(user, userEditable)) {
+			if (hasUpdatePermission(user, userEditable)) {
 				return true;
 			}
 		}
@@ -1339,28 +1339,31 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 	}
 
-	protected boolean validateUpdatePermission(User user, String field)
+	protected boolean hasUpdatePermission(User user, String userEditable)
 		throws PortalException, SystemException {
 
-		if (Validator.equals(field, "user-with-mx") && user.hasCompanyMx()) {
+		if (Validator.equals(userEditable, "user-with-mx") &&
+			user.hasCompanyMx()) {
+
 			return true;
 		}
 
-		if (Validator.equals(field, "user-without-mx") &&
+		if (Validator.equals(userEditable, "user-without-mx") &&
 			!user.hasCompanyMx()) {
 
 			return true;
 		}
 
-		if (field.startsWith(StringPool.AT)) {
+		if (userEditable.startsWith(StringPool.AT)) {
 			String emailAddress = user.getEmailAddress();
 
-			if (emailAddress.endsWith(field)) {
+			if (emailAddress.endsWith(userEditable)) {
 				return true;
 			}
 		}
 
-		Role role = RoleLocalServiceUtil.fetchRole(user.getCompanyId(), field);
+		Role role = RoleLocalServiceUtil.fetchRole(
+			user.getCompanyId(), userEditable);
 
 		if ((role != null) &&
 			RoleLocalServiceUtil.hasUserRole(

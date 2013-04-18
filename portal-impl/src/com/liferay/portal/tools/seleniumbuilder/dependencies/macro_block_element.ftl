@@ -60,6 +60,12 @@
 
 		<#assign varValue = element.attributeValue("value")>
 
+		<#if varValue?contains("${") && varValue?contains("}")>
+			<#assign varValue = varValue?replace("${", "\" + commandScopeVariables.get(\"")>
+
+			<#assign varValue = varValue?replace("}", "\") + \"")>
+		</#if>
+
 		commandScopeVariables.put("${varName}", "${varValue}");
 	<#elseif name == "while">
 		while (

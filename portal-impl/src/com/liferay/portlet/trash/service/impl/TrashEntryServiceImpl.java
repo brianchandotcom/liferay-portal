@@ -35,6 +35,7 @@ import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryList;
 import com.liferay.portlet.trash.model.TrashEntrySoap;
+import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -169,7 +170,15 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	public void deleteEntry(String className, long classPK)
 		throws PortalException, SystemException {
 
-		TrashEntry entry = trashEntryLocalService.getEntry(className, classPK);
+		TrashEntry entry = trashEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (entry == null) {
+			entry = new TrashEntryImpl();
+
+			entry.setClassName(className);
+			entry.setClassPK(classPK);
+		}
 
 		deleteEntry(entry);
 	}

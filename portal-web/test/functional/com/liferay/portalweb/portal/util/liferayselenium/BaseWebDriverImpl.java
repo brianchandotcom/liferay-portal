@@ -367,6 +367,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public void uploadFile(String location, String value) {
+		makeVisible(location);
+
 		WebElement webElement = getWebElement(location);
 
 		webElement.sendKeys(value);

@@ -119,10 +119,10 @@ if (entry == null) {
 		<c:if test="<%= autoDisplayDate %>">
 
 			<%
-			String autoDisplayDateOnClick = renderResponse.getNamespace() + "disableDisplayDate('displayDate', this.checked);";
+			String taglibAutoDisplayDateOnClick = renderResponse.getNamespace() + "toggleDisplayDate('displayDate', this.checked);";
 			%>
 
-			<aui:input label="display-date-is-based-on-creation-date" name="autoDisplayDate" onClick="<%= autoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
+			<aui:input label="display-immediately" name="autoDisplayDate" onClick="<%= taglibAutoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
 		</c:if>
 
 		<aui:input name="expirationDate" />
@@ -138,12 +138,9 @@ if (entry == null) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />disableDisplayDate(date, checked) {
+	function <portlet:namespace />toggleDisplayDate(date, checked) {
 		var A = AUI();
 
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Day"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Year"].disabled = checked;
 		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
 		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
 		document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;

@@ -159,12 +159,13 @@ public class EditEntryAction extends PortletAction {
 			actionRequest, "displayDateMinute");
 		int displayDateAmPm = ParamUtil.getInteger(
 			actionRequest, "displayDateAmPm");
-		boolean autoDisplayDate = ParamUtil.getBoolean(
-			actionRequest, "autoDisplayDate");
 
 		if (displayDateAmPm == Calendar.PM) {
 			displayDateHour += 12;
 		}
+
+		boolean autoDisplayDate = ParamUtil.getBoolean(
+			actionRequest, "autoDisplayDate");
 
 		int expirationDateMonth = ParamUtil.getInteger(
 			actionRequest, "expirationDateMonth");

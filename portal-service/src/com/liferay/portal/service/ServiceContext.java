@@ -796,30 +796,32 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Returns <code>true</code> if portal exceptions should be handled as
+	 * failures, possibly halting processing, or <code>false</code> if
+	 * exceptions should be handled differently, possibly allowing processing to
+	 * continue in some manner. Services that check this flag dictate their
+	 * desired behavior.
+	 *
 	 * <p>
-	 * Returns the value of the <i>failOnError</i> flag, which is responsible
-	 * for controlling error handling in the following use-case.
+	 * Those service methods - exposed as a JSON web service - that perform an
+	 * operation on multiple items can be instructed through this flag not to
+	 * fail when processing encounters portal exceptions.
 	 * </p>
 	 *
 	 * <p>
-	 * Those Service methods - exposed as a JSON web-service - that perform an
-	 * operation on a bunch of items can be instructed through this flag not to
-	 * fail when processing encounters error on a subset of items.
+	 * If this flag is set to <code>false</code>, services can implement logic
+	 * that allows processing to continue, while collecting information
+	 * regarding the exceptions to return to the caller. For example, the {@link
+	 * com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl#deleteVocabularies(
+	 * long[], ServiceContext)} method uses the list it returns to give
+	 * information on vocabularies it failed to delete; it returns an empty list
+	 * if all deletions were successful.
 	 * </p>
 	 *
-	 * <p>
-	 * If this flag is set (<code>true</code>), processing will be halted and an
-	 * exception returned over the course of the invocation of the remote
-	 * method.
-	 * </p>
-	 *
-	 * <p>
-	 * Otherwise - if this flag is unset (<code>false</code>) - some kind of
-	 * collection should be returned to the caller to indicate which items could
-	 * not have been processed.
-	 * </p>
-	 *
-	 * @return the value of flag <i>failOnError</i>
+	 * @return <code>true</code> if portal exceptions are to be handled as
+	 *         failures; <code>false</code> if portal exceptions can be handled
+	 *         differently, possibly allowing processing to continue in some
+	 *         manner
 	 */
 	public boolean isFailOnPortalException() {
 		return _failOnPortalException;
@@ -1147,13 +1149,15 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * <p>
-	 * Sets the value of the <i>failOnError</i> flag, which is responsible for
-	 * controlling error handling in the following use-case.
-	 * </p>
+	 * Sets whether portal exceptions should be handled as failures, possibly
+	 * halting processing, or if exceptions should be handled differently,
+	 * possibly allowing processing to continue in some manner.
 	 *
-	 * @param failOnError value of the <i>failOnError</i> flag.
-	 * @see   ServiceContext#getFailOnError()
+	 * @param failOnPortalException whether portal exceptions should be handled
+	 *        as failures, or if portal exceptions should be handled
+	 *        differently, possibly allowing processing to continue in some
+	 *        manner
+	 * @see   #isFailOnPortalException()
 	 */
 	public void setFailOnPortalException(boolean failOnPortalException) {
 		_failOnPortalException = failOnPortalException;
@@ -1163,7 +1167,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Sets the date when an <code>aui:form</code> was generated in this service
 	 * context. The form date can be used in detecting situations in which an
 	 * entity has been modified while another client was editing that entity.
-	 * </p>
 	 *
 	 * <p>
 	 * Example:
@@ -1174,7 +1177,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * article. Person1 publishes changes to the article first. When person2
 	 * attempts to publish changes to that article, the service implementation
 	 * finds that a modification to that article has already been published some
-	 * time after person2 started editing the article. Since the the article
+	 * time after person2 started editing the article. Since the article
 	 * modification date was found to be later than the form date for person2,
 	 * person2 could be alerted to the modification and make a backup copy of
 	 * his edits before synchronizing with the published changes by person1.

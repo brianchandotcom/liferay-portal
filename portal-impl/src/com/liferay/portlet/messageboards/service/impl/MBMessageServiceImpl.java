@@ -603,8 +603,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long messageId, String fileName)
 		throws PortalException, SystemException {
 
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.ADD_FILE);
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		MBCategoryPermission.check(
+			getPermissionChecker(), message.getGroupId(),
+			message.getCategoryId(), ActionKeys.ADD_FILE);
 
 		mbMessageLocalService.restoreMessageAttachmentFromTrash(
 			getUserId(), messageId, fileName);

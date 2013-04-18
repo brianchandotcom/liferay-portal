@@ -16,12 +16,17 @@ package com.liferay.portlet.messageboards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 /**
  * Implements trash handling for message boards message entity.
@@ -66,6 +71,23 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
 		return message.isInTrashThread();
+	}
+
+	@Override
+	public void restoreRelatedTrashEntry(String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (!className.equals(DLFileEntry.class.getName())) {
+			return;
+		}
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			classPK);
+
+		MBMessage message = MBMessageAttachmentsUtil.getMessage(classPK);
+
+		MBMessageServiceUtil.restoreMessageAttachmentFromTrash(
+			message.getMessageId(), fileEntry.getTitle());
 	}
 
 	public void restoreTrashEntry(long userId, long classPK) {

@@ -28,6 +28,9 @@ if (classPK > 0) {
 
 	classNameId = ddmStructure.getClassNameId();
 }
+else if ((classPK == -1) && refererPortletName.equals(PortletKeys.JOURNAL)) {
+	classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+}
 else if (template != null) {
 	classNameId = template.getClassNameId();
 }

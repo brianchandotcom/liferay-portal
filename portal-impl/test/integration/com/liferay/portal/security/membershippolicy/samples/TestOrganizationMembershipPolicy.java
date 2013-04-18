@@ -137,7 +137,7 @@ public class TestOrganizationMembershipPolicy
 
 	@Override
 	public void propagateRoles(
-		List<UserGroupRole> adduserGroupRoles,
+		List<UserGroupRole> addUserGroupRoles,
 		List<UserGroupRole> removeUserGroupRoles) {
 
 		BaseOrganizationMembershipPolicyTestCase.setPropagateRoles(true);

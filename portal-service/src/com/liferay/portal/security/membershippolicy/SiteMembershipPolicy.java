@@ -48,8 +48,7 @@ import java.util.Map;
  * <ul>
  * <li>
  * If a user is a member of the site he will automatically be a member of all
- * its
- * child sites.
+ * its child sites.
  * </li>
  * <li>
  * Only the members of the parent site can become a member of this site.
@@ -87,7 +86,10 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * Liferay's UI calls the "is*" methods, such as {@link
+ * Liferay's UI calls the "is*"
+ * ({@link #isMembershipProtected(PermissionChecker, long, long)} and
+ * {@link #isRoleProtected(PermissionChecker, long, long, long)} are also called
+ * from Liferay's core services) methods, such as {@link
  * #isMembershipAllowed(long, long)}, to determine appropriate options to
  * display to the user. For example, the UI calls {@link
  * #isMembershipAllowed(long, long)} to decide whether to display the "Join"
@@ -145,7 +147,8 @@ public interface SiteMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns <code>true</code> if the user can be added to the site.
+	 * Returns <code>true</code> if the user can be added to the site. Liferay's
+	 * UI calls this method.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the site
@@ -225,8 +228,7 @@ public interface SiteMembershipPolicy {
 
 	/**
 	 * Returns <code>true</code> if the role is mandatory for the user on the
-	 * site. If <code>true</code>, nobody can remove the role from this user on
-	 * the site. Liferay's UI calls this method.
+	 * site. Liferay's UI calls this method.
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the site
@@ -261,7 +263,8 @@ public interface SiteMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  userIds the primary key of the users to be added or removed
+	 * @param  userIds the primary key of the users that have been added or
+	 *         removed
 	 * @param  addGroupIds the primary keys of the sites to which the users were
 	 *         added (optionally <code>null</code>)
 	 * @param  removeGroupIds the primary keys of the sites from which the users
@@ -306,8 +309,10 @@ public interface SiteMembershipPolicy {
 	/**
 	 * Checks the integrity of the membership policy of each of the portal's
 	 * sites and performs operations necessary for the compliance of each site
-	 * and site role. This method is called when upgrading Liferay and can also
-	 * be triggered manually from the Control Panel.
+	 * and site role. This method can be triggered manually from the
+	 * Control Panel. If the <code>membership.policy.auto.verify</code> portal
+	 * property is <code>true</code> this method will be triggered when starting
+	 * Liferay or everytime a membership policy hook is deployed.
 	 *
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
@@ -382,8 +387,8 @@ public interface SiteMembershipPolicy {
 		throws PortalException, SystemException;
 
 	/**
-	 * Checks the integrity of the membership policy of the role and performs
-	 * operations necessary for the role's compliance.
+	 * Checks the integrity of the membership policy of the site role and
+	 * performs operations necessary for the role's compliance.
 	 *
 	 * @param  role the role to verify
 	 * @throws PortalException if a portal exception occurred
@@ -392,10 +397,10 @@ public interface SiteMembershipPolicy {
 	public void verifyPolicy(Role role) throws PortalException, SystemException;
 
 	/**
-	 * Checks the integrity of the membership policy of the role, with respect
-	 * to its expando attributes, and performs operations necessary for the
-	 * role's compliance. Liferay calls this method when adding and updating
-	 * roles.
+	 * Checks the integrity of the membership policy of the site role, with
+	 * respect to its expando attributes, and performs operations necessary for
+	 * the role's compliance. Liferay calls this method when adding and updating
+	 * site roles.
 	 *
 	 * @param  role the added or updated role to verify
 	 * @param  oldRole the old role

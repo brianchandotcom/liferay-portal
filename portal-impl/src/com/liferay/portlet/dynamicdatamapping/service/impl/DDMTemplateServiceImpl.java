@@ -33,7 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Dynamic Data Mapping (DDM) Template local service is responsible for
+ * The Dynamic Data Mapping (DDM) Template service is responsible for
  * accessing, creating, modifying, and deleting templates.
  *
  * @author Brian Wing Shun Chan
@@ -266,7 +266,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template, or <code>null</code> if a matching
 	 *         template could not be found
-	 * @throws PortalException if the user did not have permission to delete the
+	 * @throws PortalException if the user did not have permission to view the
 	 *         template
 	 * @throws SystemException if a system exception occurred
 	 */

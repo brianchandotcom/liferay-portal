@@ -203,6 +203,7 @@ public class DataFactory {
 		_accountId = _counter.get();
 		_companyId = _counter.get();
 		_defaultUserId = _counter.get();
+		_globalGroupId = _counter.get();
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
@@ -305,6 +306,10 @@ public class DataFactory {
 		return _classNamesMap.get(DLFileEntry.class.getName());
 	}
 
+	public Group getGlobalGroup() {
+		return _globalGroup;
+	}
+
 	public long getGroupClassNameId() {
 		return _classNamesMap.get(Group.class.getName());
 	}
@@ -395,12 +400,12 @@ public class DataFactory {
 
 		String defaultTitle = sb.toString();
 
-		for (int i = 1; i <= _maxGroupsCount; i++) {
-			_assetVocabularies.add(
-				newAssetVocabulary(
-					i, _defaultUserId, null,
-					PropsValues.ASSET_VOCABULARY_DEFAULT, defaultTitle));
+		_assetVocabularies.add(
+			newAssetVocabulary(
+				_globalGroupId, _defaultUserId, null,
+				PropsValues.ASSET_VOCABULARY_DEFAULT, defaultTitle));
 
+		for (int i = 1; i <= _maxGroupsCount; i++) {
 			long lastRightCategoryId = 2;
 
 			for (int j = 0; j < _maxAssetCategoryCount; j++) {
@@ -490,6 +495,10 @@ public class DataFactory {
 
 	public void initGroups() throws Exception {
 		long groupClassNameId = getGroupClassNameId();
+
+		_globalGroup = newGroup(
+			_globalGroupId, _classNamesMap.get(Company.class.getName()),
+			_companyId, GroupConstants.GLOBAL, false);
 
 		_guestGroup = newGroup(
 			_guestGroupId, groupClassNameId, _guestGroupId,
@@ -1915,6 +1924,8 @@ public class DataFactory {
 	private String _dlDDMStructureContent;
 	private List<String> _firstNames;
 	private SimpleCounter _futureDateCounter;
+	private Group _globalGroup;
+	private long _globalGroupId;
 	private List<Group> _groups;
 	private Group _guestGroup;
 	private long _guestGroupId;

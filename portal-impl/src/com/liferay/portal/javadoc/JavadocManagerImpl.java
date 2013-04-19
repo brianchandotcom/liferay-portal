@@ -68,6 +68,10 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 	}
 
+	public JavadocClass lookupJavadocClass(Class clazz) {
+		return _javadocClasses.get(clazz);
+	}
+
 	public JavadocMethod lookupJavadocMethod(Method method) {
 		JavadocMethod javadocMethod = _javadocMethods.get(method);
 

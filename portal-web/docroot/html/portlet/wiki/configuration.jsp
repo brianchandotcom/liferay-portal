@@ -21,34 +21,37 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String emailFromName = ParamUtil.getString(request, "emailFromName", WikiUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", WikiUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", WikiUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", WikiUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
-String emailPageAddedSubjectPrefix = ParamUtil.getString(request, "emailPageAddedSubjectPrefix", WikiUtil.getEmailPageAddedSubjectPrefix(preferences));
-String emailPageAddedBody = ParamUtil.getString(request, "emailPageAddedBody", WikiUtil.getEmailPageAddedBody(preferences));
-String emailPageAddedSignature = ParamUtil.getString(request, "emailPageAddedSignature", WikiUtil.getEmailPageAddedSignature(preferences));
+boolean emailPageAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailPageAddedEnabled--", WikiUtil.getEmailPageAddedEnabled(preferences));
+boolean emailPageUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailPageUpdatedEnabled--", WikiUtil.getEmailPageUpdatedEnabled(preferences));
 
-String emailPageUpdatedSubjectPrefix = ParamUtil.getString(request, "emailPageUpdatedSubjectPrefix", WikiUtil.getEmailPageUpdatedSubjectPrefix(preferences));
-String emailPageUpdatedBody = ParamUtil.getString(request, "emailPageUpdatedBody", WikiUtil.getEmailPageUpdatedBody(preferences));
-String emailPageUpdatedSignature = ParamUtil.getString(request, "emailPageUpdatedSignature", WikiUtil.getEmailPageUpdatedSignature(preferences));
-
-String bodyEditorParam = StringPool.BLANK;
-String bodyEditorBody = StringPool.BLANK;
-String signatureEditorParam = StringPool.BLANK;
-String signatureEditorBody = StringPool.BLANK;
+String emailParam = StringPool.BLANK;
+String defaultEmailSubject = StringPool.BLANK;
+String defaultEmailBody = StringPool.BLANK;
+String defaultEmailSignature = StringPool.BLANK;
 
 if (tabs2.equals("page-added-email")) {
-	bodyEditorParam = "emailPageAddedBody";
-	bodyEditorBody = emailPageAddedBody;
-	signatureEditorParam = "emailPageAddedSignature";
-	signatureEditorBody = emailPageAddedSignature;
+	emailParam = "emailPageAdded";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
+	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
 }
 else if (tabs2.equals("page-updated-email")) {
-	bodyEditorParam = "emailPageUpdatedBody";
-	bodyEditorBody = emailPageUpdatedBody;
-	signatureEditorParam = "emailPageUpdatedSignature";
-	signatureEditorBody = emailPageUpdatedSignature;
+	emailParam = "emailPageUpdated";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
+	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
 }
+
+String emailSubjectParam = emailParam + "Subject";
+String emailBodyParam = emailParam + "Body";
+String emailSignatureParam = emailParam + "Signature";
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, emailSubjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam, defaultEmailBody);
+String emailSignature = PrefsParamUtil.getString(preferences, request, emailSignatureParam, defaultEmailSignature);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -81,10 +84,10 @@ else if (tabs2.equals("page-updated-email")) {
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 	<liferay-ui:error key="emailPageAddedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailPageAddedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailPageAddedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailPageAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailPageUpdatedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailPageUpdatedSignature" message="please-enter-a-valid-signature" />
-	<liferay-ui:error key="emailPageUpdatedSubjectPrefix" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
 	<c:choose>
@@ -151,25 +154,18 @@ else if (tabs2.equals("page-updated-email")) {
 			<aui:fieldset>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("page-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailPageAddedEnabled--" type="checkbox" value="<%= WikiUtil.getEmailPageAddedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailPageAddedEnabled--" type="checkbox" value="<%= emailPageAddedEnabled %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("page-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailPageUpdatedEnabled--" type="checkbox" value="<%= WikiUtil.getEmailPageUpdatedEnabled(preferences) %>" />
+						<aui:input label="enabled" name="preferences--emailPageUpdatedEnabled--" type="checkbox" value="<%= emailPageUpdatedEnabled %>" />
 					</c:when>
 				</c:choose>
 
-				<c:choose>
-					<c:when test='<%= tabs2.equals("page-added-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject-prefix" name="preferences--emailPageAddedSubjectPrefix--" type="text" value="<%= emailPageAddedSubjectPrefix %>" />
-					</c:when>
-					<c:when test='<%= tabs2.equals("page-updated-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject-prefix" name="preferences--emailPageUpdatedSubjectPrefix--" type="text" value="<%= emailPageUpdatedSubjectPrefix %>" />
-					</c:when>
-				</c:choose>
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailSubjectParam + "--" %>' value="<%= emailSubject %>" />
 
-				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + bodyEditorParam + "--" %>' type="textarea" value="<%= bodyEditorBody %>" />
+				<aui:input cssClass="lfr-textarea-container" label="body" name='<%= "preferences--" + emailBodyParam + "--" %>' type="textarea" value="<%= emailBody %>" />
 
-				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + signatureEditorParam + "--" %>' type="textarea" value="<%= signatureEditorBody %>" wrap="soft" />
+				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + emailSignatureParam + "--" %>' type="textarea" value="<%= emailSignature %>" wrap="soft" />
 			</aui:fieldset>
 
 			<div class="definition-of-terms">

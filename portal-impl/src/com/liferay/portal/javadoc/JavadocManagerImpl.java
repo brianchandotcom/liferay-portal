@@ -68,6 +68,10 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 	}
 
+	public JavadocClass lookupJavadocClass(Class clazz) {
+		return _javadocClasses.get(clazz);
+	}
+
 	public JavadocMethod lookupJavadocMethod(Method method) {
 		JavadocMethod javadocMethod = _javadocMethods.get(method);
 
@@ -213,6 +217,12 @@ public class JavadocManagerImpl implements JavadocManager {
 		String servletContextName, Element javadocElement, Class<?> clazz) {
 
 		JavadocClass javadocClass = new JavadocClass(clazz);
+
+		String typeComment = javadocElement.elementTextTrim("comment");
+
+		if (typeComment != null) {
+			javadocClass.setComment(typeComment);
+		}
 
 		List<Element> authorElements = javadocElement.elements("author");
 

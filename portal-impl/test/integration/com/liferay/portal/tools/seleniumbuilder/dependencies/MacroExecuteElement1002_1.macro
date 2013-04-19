@@ -1,7 +1,7 @@
 <definition>
 	<command name="name">
 		<execute action="Action#action">
-			<fail />
+			<var name="name" value="value" />
 		</execute>
 	</command>
 </definition>

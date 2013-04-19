@@ -1,12 +1,24 @@
 <#if ifElement.getName() == "elseif">
-	else
+	<#assign ifType = "else if">
+<#elseif ifElement.getName() == "while">
+	<#assign ifType = "while">
+<#else>
+	<#assign ifType = "if">
 </#if>
 
-if (
+${ifType} (
 	<#if ifElement.element("condition")??>
-		<#assign actionElement = ifElement.element("condition")>
+		<#assign conditionElement = ifElement.element("condition")>
 
-		<#include "action_element.ftl">
+		<#if conditionElement.attributeValue("action")??>
+			<#assign actionElement = conditionElement>
+
+			<#include "action_element.ftl">
+		<#elseif conditionElement.attributeValue("macro")??>
+			<#assign macroElement = conditionElement>
+
+			<#include "macro_element.ftl">
+		</#if>
 	<#elseif ifElement.element("contains")??>
 		<#assign containsElement = ifElement.element("contains")>
 

@@ -120,8 +120,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -1514,7 +1512,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		serviceContext.setCompanyId(getCompanyId());
 		serviceContext.setScopeGroupId(getScopeGroupId());
-	
+
 		// Dates
 
 		if (classedModel instanceof AuditedModel) {
@@ -1693,11 +1691,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected long getUserId(AuditedModel auditedModel) {
 		try {
-			Class<?> clazz = auditedModel.getModelClass();
-
-			Method method = clazz.getMethod("getUserUuid");
-
-			String userUuid = (String)method.invoke(auditedModel);
+			String userUuid = auditedModel.getUserUuid();
 
 			return getUserId(userUuid);
 		}

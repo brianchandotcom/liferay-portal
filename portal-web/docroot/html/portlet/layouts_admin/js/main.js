@@ -12,7 +12,7 @@ AUI.add(
 		var STR_EMPTY = '';
 
 		var defaultConfig = {
-			setter: A.one
+			setter: '_setNode'
 		};
 
 		var ExportLayouts = A.Component.create(
@@ -25,7 +25,7 @@ AUI.add(
 					rangeAllNode: defaultConfig,
 					rangeDateRangeNode: defaultConfig,
 					rangeLastNode: defaultConfig,
-					rangeLastPublishNode:defaultConfig,
+					rangeLastPublishNode: defaultConfig,
 					themeNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
 					userPreferencesNode: defaultConfig
@@ -41,7 +41,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance._attachChangeLinks();
+						instance._bindUI();
 					},
 
 					destructor: function() {
@@ -55,7 +55,7 @@ AUI.add(
 							instance._globalConfigurationDialog.destroy();
 						}
 
-						if (instance._globalContentDialog ) {
+						if (instance._globalContentDialog) {
 							instance._globalContentDialog.destroy();
 						}
 
@@ -68,7 +68,7 @@ AUI.add(
 						}
 					},
 
-					_attachChangeLinks: function() {
+					_bindUI: function() {
 						var instance = this;
 
 						instance.byId('fm1').delegate(
@@ -130,8 +130,6 @@ AUI.add(
 
 							contentNode.show();
 
-							var contentBox;
-
 							contentDialog = new A.Dialog(
 								{
 									align: Liferay.Util.Window.ALIGN_CENTER,
@@ -143,21 +141,7 @@ AUI.add(
 									buttons: [
 										{
 											handler: function() {
-												var inputs = contentBox.all('.aui-field-input-choice');
-
-												var selectedContent = [];
-
-												inputs.each(
-													function(item, index, collection) {
-														var checked = item.attr(STR_CHECKED);
-
-														if (checked) {
-															selectedContent.push(item.attr('data-name'));
-														}
-													}
-												);
-
-												instance._refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
+												instance._handleContent(portletId);
 
 												this.hide();
 											},
@@ -172,8 +156,6 @@ AUI.add(
 									]
 								}
 							).render();
-
-							contentBox = contentDialog.get('contentBox');
 
 							instance._contentDialog = contentDialog;
 						}
@@ -198,17 +180,7 @@ AUI.add(
 									buttons: [
 										{
 											handler: function() {
-												var selectedGlobalConfiguration = [];
-
-												if (instance.get('archivedSetupsNode').attr(STR_CHECKED)) {
-													selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
-												}
-
-												if (instance.get('userPreferencesNode').attr(STR_CHECKED)) {
-													selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
-												}
-
-												instance._refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+												instance._handleGlobalConfiguration();
 
 												this.hide();
 											},
@@ -250,13 +222,7 @@ AUI.add(
 									buttons: [
 										{
 											handler: function() {
-												var selectedGlobalContent = STR_EMPTY;
-
-												if (instance.get('categoriesNode').attr(STR_CHECKED)) {
-													selectedGlobalContent = Liferay.Language.get('categories');
-												}
-
-												instance._refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
+												instance._handleGlobalContent();
 
 												this.hide();
 											},
@@ -300,67 +266,7 @@ AUI.add(
 									buttons: [
 										{
 											handler: function() {
-												var selectedPages = [];
-
-												var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
-
-												if (layoutsExportTreeOutput) {
-													var layoutIdsInput = instance.byId('layoutIds');
-
-													var treeView = layoutsExportTreeOutput.getData('treeInstance');
-													var rootNode = treeView.item(0);
-
-													if (rootNode.isChecked()) {
-														layoutIdsInput.val(STR_EMPTY);
-
-														selectedPages.push(Liferay.Language.get('all-pages'));
-													}
-													else {
-														var layoutIds = [];
-
-														treeView.eachChildren(
-															function(item, index, collection) {
-																if (item.isChecked()) {
-																	var match = REGEX_LAYOUT_ID.exec(item.get('id'));
-
-																	if (match) {
-																		layoutIds.push(
-																			{
-																				includeChildren: !item.hasChildNodes(),
-																				layoutId: match[1]
-																			}
-																		);
-																	}
-																}
-															},
-															true
-														);
-
-														if (layoutIdsInput) {
-															layoutIdsInput.val(A.JSON.stringify(layoutIds));
-														}
-
-														selectedPages.push(Liferay.Language.get('selected-pages'));
-													}
-
-													if (instance.get('layoutSetSettingsNode').attr(STR_CHECKED)) {
-														selectedPages.push(Liferay.Language.get('site-pages-settings'));
-													}
-
-													if (instance.get('themeNode').attr(STR_CHECKED)) {
-														selectedPages.push(Liferay.Language.get('theme'));
-													}
-
-													if (instance.get('themeReferenceNode').attr(STR_CHECKED)) {
-														selectedPages.push(Liferay.Language.get('theme-settings'));
-													}
-
-													if (instance.get('logoNode').attr(STR_CHECKED)) {
-														selectedPages.push(Liferay.Language.get('logo'));
-													}
-
-													instance._refreshSelectedLabel('selectedPages', selectedPages.join(', '));
-												}
+												instance._handlePages();
 
 												this.hide();
 											},
@@ -402,22 +308,7 @@ AUI.add(
 									buttons: [
 										{
 											handler: function() {
-												var selectedRange = STR_EMPTY;
-
-												if (instance.get('rangeAllNode').attr(STR_CHECKED)) {
-													selectedRange = Liferay.Language.get('all');
-												}
-												else if (instance.get('rangeLastPublishNode').attr(STR_CHECKED)) {
-													selectedRange = Liferay.Language.get('from-last-publish-date');
-												}
-												else if (instance.get('rangeDateRangeNode').attr(STR_CHECKED)) {
-													selectedRange = Liferay.Language.get('date-range');
-												}
-												else if (instance.get('rangeLastNode').attr(STR_CHECKED)) {
-													selectedRange = Liferay.Language.get('last');
-												}
-
-												instance._refreshSelectedLabel('selectedRange', selectedRange);
+												instance._handleRange();
 
 												this.hide();
 											},
@@ -443,6 +334,144 @@ AUI.add(
 						return rangeDialog;
 					},
 
+					_handleContent: function(portletId) {
+						var instance = this;
+
+						var contentDialog = instance._getContentDialog();
+
+						var inputs = contentDialog.get('boundingBox').all('.aui-field-input-choice');
+
+						var selectedContent = [];
+
+						inputs.each(
+							function(item, index, collection) {
+								var checked = item.attr(STR_CHECKED);
+
+								if (checked) {
+									selectedContent.push(item.attr('data-name'));
+								}
+							}
+						);
+
+						instance._refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
+					},
+
+					_handleGlobalConfiguration: function() {
+						var instance = this;
+
+						var selectedGlobalConfiguration = [];
+
+						if (instance.get('archivedSetupsNode').attr(STR_CHECKED)) {
+							selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
+						}
+
+						if (instance.get('userPreferencesNode').attr(STR_CHECKED)) {
+							selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
+						}
+
+						instance._refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+					},
+
+					_handleGlobalContent: function() {
+						var instance = this;
+
+						var selectedGlobalContent = STR_EMPTY;
+
+						if (instance.get('categoriesNode').attr(STR_CHECKED)) {
+							selectedGlobalContent = Liferay.Language.get('categories');
+						}
+
+						instance._refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent);
+					},
+
+					_handlePages: function() {
+						var instance = this;
+
+						var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
+
+						if (layoutsExportTreeOutput) {
+							var selectedPages = [];
+
+							var layoutIdsInput = instance.byId('layoutIds');
+
+							var treeView = layoutsExportTreeOutput.getData('treeInstance');
+
+							var rootNode = treeView.item(0);
+
+							if (rootNode.isChecked()) {
+								layoutIdsInput.val(STR_EMPTY);
+
+								selectedPages.push(Liferay.Language.get('all-pages'));
+							}
+							else {
+								var layoutIds = [];
+
+								treeView.eachChildren(
+									function(item, index, collection) {
+										if (item.isChecked()) {
+											var match = REGEX_LAYOUT_ID.exec(item.get('id'));
+
+											if (match) {
+												layoutIds.push(
+													{
+														includeChildren: !item.hasChildNodes(),
+														layoutId: match[1]
+													}
+												);
+											}
+										}
+									},
+									true
+								);
+
+								if (layoutIdsInput) {
+									layoutIdsInput.val(A.JSON.stringify(layoutIds));
+								}
+
+								selectedPages.push(Liferay.Language.get('selected-pages'));
+							}
+
+							if (instance.get('layoutSetSettingsNode').attr(STR_CHECKED)) {
+								selectedPages.push(Liferay.Language.get('site-pages-settings'));
+							}
+
+							if (instance.get('themeNode').attr(STR_CHECKED)) {
+								selectedPages.push(Liferay.Language.get('theme'));
+							}
+
+							if (instance.get('themeReferenceNode').attr(STR_CHECKED)) {
+								selectedPages.push(Liferay.Language.get('theme-settings'));
+							}
+
+							if (instance.get('logoNode').attr(STR_CHECKED)) {
+								selectedPages.push(Liferay.Language.get('logo'));
+							}
+
+							instance._refreshSelectedLabel('selectedPages', selectedPages.join(', '));
+						}
+					},
+
+					_handleRange: function() {
+						var instance = this;
+
+						var selectedRange = STR_EMPTY;
+
+						if (instance.get('rangeAllNode').attr(STR_CHECKED)) {
+							selectedRange = Liferay.Language.get('all');
+						}
+						else if (instance.get('rangeLastPublishNode').attr(STR_CHECKED)) {
+							selectedRange = Liferay.Language.get('from-last-publish-date');
+						}
+						else if (instance.get('rangeDateRangeNode').attr(STR_CHECKED)) {
+							selectedRange = Liferay.Language.get('date-range');
+						}
+						else if (instance.get('rangeLastNode').attr(STR_CHECKED)) {
+							selectedRange = Liferay.Language.get('last');
+						}
+
+						instance._refreshSelectedLabel('selectedRange', selectedRange);
+					},
+
 					_refreshSelectedLabel: function(labelDivId, label) {
 						var instance = this;
 
@@ -451,6 +480,16 @@ AUI.add(
 						if (labelNode) {
 							labelNode.html(label);
 						}
+					},
+
+					_setNode: function(val) {
+						var instance = this;
+
+						if (Lang.isString(val)) {
+							val = instance.one(val);
+						}
+
+						return val;
 					}
 				}
 			}

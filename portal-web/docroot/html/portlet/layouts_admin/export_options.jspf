@@ -438,18 +438,18 @@
 <aui:script use="export-layouts">
 	new Liferay.ExportLayouts(
 		{
-			archivedSetupsNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			categoriesNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
-			layoutSetSettingsNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
-			logoNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.LOGO %>Checkbox',
-			namespace: '<portlet:namespace />',
-			rangeAllNode: '#<portlet:namespace />rangeAll',
-			rangeDateRangeNode: '#<portlet:namespace />rangeDateRange',
-			rangeLastNode: '#<portlet:namespace />rangeLast',
-			rangeLastPublishNode: '#<portlet:namespace />rangeLastPublish',
-			themeNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.THEME %>Checkbox',
-			themeReferenceNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			userPreferencesNode: '#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
+			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
+			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			namespace: '',
+			rangeAllNode: '#rangeAll',
+			rangeDateRangeNode: '#rangeDateRange',
+			rangeLastNode: '#rangeLast',
+			rangeLastPublishNode: '#rangeLastPublish',
+			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
+			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
 </aui:script>

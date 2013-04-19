@@ -913,7 +913,7 @@ AUI.add(
 				templateIdInput.val('');
 				contentInput.val('');
 
-				submitForm(form);
+				submitForm(form, null, false, false);
 			},
 
 			loadEditFieldOptions: function(source) {

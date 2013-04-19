@@ -918,6 +918,25 @@ AUI.add(
 
 							instance._showCateroryMessage();
 						}
+
+						var vocabularyList = A.one(instance._vocabularyListSelector);
+
+						var listLinks = vocabularyList.all('li');
+
+						listLinks.unplug(A.Plugin.Drop);
+
+						var bubbleTargets = [instance];
+
+						if (instance._categoriesTreeView) {
+							bubbleTargets.push(instance._categoriesTreeView);
+						}
+
+						listLinks.plug(
+							A.Plugin.Drop,
+							{
+								bubbleTargets: bubbleTargets
+							}
+						);
 					},
 
 					_displayList: function(callback) {
@@ -1017,25 +1036,6 @@ AUI.add(
 						var instance = this;
 
 						instance._createCategoryFlatView(categories);
-
-						var vocabularyList = A.one(instance._vocabularyListSelector);
-
-						var listLinks = vocabularyList.all('li');
-
-						listLinks.unplug(A.Plugin.Drop);
-
-						var bubbleTargets = [instance];
-
-						if (instance._categoriesTreeView) {
-							bubbleTargets.push(instance._categoriesTreeView);
-						}
-
-						listLinks.plug(
-							A.Plugin.Drop,
-							{
-								bubbleTargets: bubbleTargets
-							}
-						);
 
 						if (callback) {
 							callback();

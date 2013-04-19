@@ -245,6 +245,9 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		else if (t == Types.LONGVARBINARY) {
 			value = _resultSet.getBytes(name);
 		}
+		else if (t == Types.LONGVARCHAR) {
+			value = GetterUtil.getString(_resultSet.getString(name));
+		}
 		else if (t == Types.NCHAR) {
 			value = GetterUtil.getString(_resultSet.getString(name));
 		}

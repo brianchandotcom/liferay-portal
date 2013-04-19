@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,7 +28,6 @@ import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.util.xml.DocUtil;
-
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;
 import com.thoughtworks.qdox.model.AbstractJavaEntity;
@@ -42,15 +42,20 @@ import com.thoughtworks.qdox.model.Type;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
-
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -156,6 +161,14 @@ public class JavadocFormatter {
 			System.out.println(sb.toString());
 		}
 
+		File propertiesFile = new File(_LANGUAGE_PROPERTIES_PATH);
+		if (propertiesFile.exists()) {
+			_portalLanguageKeysProperties = new Properties();
+
+			_portalLanguageKeysProperties.load(
+				new FileInputStream(propertiesFile.getAbsolutePath()));
+		}
+
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(fileName, "\\", "/");
 
@@ -208,7 +221,7 @@ public class JavadocFormatter {
 	}
 
 	private void _addClassCommentElement(
-		Element rootElement, JavaClass javaClass) {
+		Element rootElement, JavaClass javaClass) throws IOException {
 
 		String comment = _getCDATA(javaClass);
 
@@ -1478,6 +1491,8 @@ public class JavadocFormatter {
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(javadocLessContent));
 
+		_writeClassCommentToLanguageProperties(document, javaClass.getName());
+
 		List<JavaClass> ancestorJavaClasses = _getAncestorJavaClasses(
 			javaClass);
 
@@ -1617,6 +1632,104 @@ public class JavadocFormatter {
 		return text;
 	}
 
+	private void _writeClassCommentToLanguageProperties(Document document, String className)
+		throws IOException {
+
+		File propertiesFile = new File(_LANGUAGE_PROPERTIES_PATH);
+		if (!propertiesFile.exists()) {
+			return;
+		}
+
+		int pos = className.indexOf("ServiceImpl");
+		if (pos > 0) {
+
+			StringBundler sb = new StringBundler();
+			sb.append(Character.toLowerCase(className.charAt(0)));
+
+			for (int i = 1; i < pos; i++) {
+				char ch = className.charAt(i);
+
+				if (Character.isUpperCase(ch)) {
+					sb.append("-");
+					sb.append(Character.toLowerCase(ch));
+				}
+				else {
+					sb.append(ch);
+				}
+			}
+
+			String key = sb.toString() + "-service-help";
+			String currValue = _portalLanguageKeysProperties.getProperty(key);
+
+			if (currValue != null) {
+				String comment = document.getRootElement().elementText("comment");
+
+				if (comment != null && !currValue.equals(comment)) {
+					int endPos = comment.indexOf("\n\n");
+
+					String value;
+					if (endPos != -1) {
+						value = comment.substring(0, endPos);
+					}
+					else {
+						value = comment;
+					}
+
+					_writeLanguageProperty(propertiesFile, key, value);
+				}
+			}
+		}
+	}
+
+	private void _writeLanguageProperty(File propertiesFile, String key, String value)
+		throws IOException {
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new FileReader(propertiesFile));
+
+		StringBundler sb = new StringBundler();
+
+		boolean begin = false;
+		boolean firstLine = true;
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+
+			if (line.equals("")) {
+				begin = !begin;
+			}
+
+			if (firstLine) {
+				firstLine = false;
+			}
+			else {
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			if (line.startsWith(key)) {
+				String newLine = key + "=" + value;
+				sb.append(newLine);
+			}
+			else {
+				sb.append(line);
+			}
+		}
+
+		unsyncBufferedReader.close();
+
+		Writer writer = new OutputStreamWriter(
+			new FileOutputStream(propertiesFile, false), StringPool.UTF8);
+
+		writer.write(sb.toString());
+
+		writer.close();
+
+		System.out.println("Writing " + key + " property to " + propertiesFile);
+	}
+
+	private static final String _LANGUAGE_PROPERTIES_PATH = "src/content/Language.properties";
+
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
@@ -1626,6 +1739,7 @@ public class JavadocFormatter {
 	private Map<String, Tuple> _javadocxXmlTuples =
 		new HashMap<String, Tuple>();
 	private String _outputFilePrefix;
+	private Properties _portalLanguageKeysProperties;
 	private boolean _updateJavadocs;
 
 }

@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr/td[1]/a[contains(.,'Organization User')]</td>
+	<td>//tr[contains(.,'Organization User')]/td[1]/a</td>
 	<td>Organization User</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//tr/td[1]/a[contains(.,'Organization User')]</td>
+	<td>//tr[contains(.,'Organization User')]/td[1]/a</td>
 	<td>Organization User</td>
 </tr>
 <tr>
@@ -79,29 +79,34 @@
 	<td>Blogs</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[4]/td[2]</td>
-	<td>Add Entry</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[2]</td>
-	<td>Add Entry</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
-	<td>Add Entry</td>
+	<td>Blogs: Add Entry</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
-	<td>Add Entry</td>
+	<td>blogsAddEntryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogsAddEntryChecked}</td>
+	<td>BlogsAddEntryChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>Blogs: Add Entry</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BlogsAddEntryChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
-	<td>Add Entry</td>
+	<td>Blogs: Add Entry</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -124,29 +129,34 @@
 	<td>Organization Administration</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[14]/td[2]</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[14]/td[2]</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
-	<td>Manage Layouts</td>
+	<td>Site: Manage Pages</td>
 </tr>
 <tr>
-	<td>check</td>
+	<td>storeChecked</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
-	<td>Manage Layouts</td>
+	<td>siteManagePagesChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${siteManagePagesChecked}</td>
+	<td>SiteManagePagesChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>Site: Manage Pages</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SiteManagePagesChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
-	<td>Manage Layouts</td>
+	<td>Site: Manage Pages</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -165,6 +175,11 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//tr[contains(.,'Blogs')]/td[2]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//tr[contains(.,'Blogs')]/td[3]</td>
 	<td>Add Entry</td>
 </tr>
@@ -172,6 +187,11 @@
 	<td>assertText</td>
 	<td>//tr[contains(.,'Sites')]/td[1]/a</td>
 	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Sites')]/td[2]</td>
+	<td>Site</td>
 </tr>
 <tr>
 	<td>assertText</td>

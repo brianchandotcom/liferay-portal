@@ -79,24 +79,29 @@
 	<td>Blogs</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[4]/td[2]</td>
-	<td>Add Entry</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[4]/td[2]</td>
-	<td>Add Entry</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
-	<td>uncheck</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td>blogsAddEntryChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${blogsAddEntryChecked}</td>
+	<td>BlogsAddEntryNotChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
 	<td>Add Entry</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BlogsAddEntryNotChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -124,24 +129,29 @@
 	<td>Organization Administration</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[14]/td[2]</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[14]/td[2]</td>
-	<td>Manage Pages</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
+	<td>waitForVisible</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
 	<td>Manage Layouts</td>
 </tr>
 <tr>
-	<td>uncheck</td>
+	<td>storeChecked</td>
+	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td>siteManageLayoutsChecked</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${siteManageLayoutsChecked}</td>
+	<td>siteManageLayoutsChecked</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
 	<td>Manage Layouts</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>siteManageLayoutsChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
@@ -154,9 +164,24 @@
 	<td>Save</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>The role permissions were updated.</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>The role permissions were updated.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>This role does not have any permissions.</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>

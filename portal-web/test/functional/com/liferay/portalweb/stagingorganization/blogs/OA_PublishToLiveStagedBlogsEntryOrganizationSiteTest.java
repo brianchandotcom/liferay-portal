@@ -31,7 +31,7 @@ public class OA_PublishToLiveStagedBlogsEntryOrganizationSiteTest
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/web/selenium/home/");
+				selenium.open("/web/organization-name/home/");
 				assertTrue(selenium.isElementPresent(
 						"//div[@class='staging-bar']"));
 				assertEquals(RuntimeVariables.replace("Live"),

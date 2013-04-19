@@ -26,7 +26,7 @@ public class Guest_AssertNoBlogsEntryPrePublishOrganizationSiteTest
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/selenium/home/");
+		selenium.open("/web/organization-name/home/");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");

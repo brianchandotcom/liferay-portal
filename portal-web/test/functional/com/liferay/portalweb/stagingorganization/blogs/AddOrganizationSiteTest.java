@@ -39,8 +39,8 @@ public class AddOrganizationSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("Organization*"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");

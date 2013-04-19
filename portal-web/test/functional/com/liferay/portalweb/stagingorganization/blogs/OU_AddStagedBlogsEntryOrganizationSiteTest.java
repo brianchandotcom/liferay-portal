@@ -25,7 +25,7 @@ public class OU_AddStagedBlogsEntryOrganizationSiteTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/selenium/home/");
+		selenium.open("/web/organization-name/home/");
 		assertTrue(selenium.isElementPresent("//div[@class='staging-bar']"));
 		assertEquals(RuntimeVariables.replace("Live"),
 			selenium.getText("//li[1]/span/span"));
@@ -41,6 +41,8 @@ public class OU_AddStagedBlogsEntryOrganizationSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_33_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.waitForVisible(
+			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");
 		selenium.waitForVisible("//iframe[contains(@title,'Rich Text Editor')]");
 		selenium.typeFrame("//iframe[contains(@title,'Rich Text Editor')]",
 			RuntimeVariables.replace("Blogs Entry Content"));

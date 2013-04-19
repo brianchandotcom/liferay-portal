@@ -30,7 +30,7 @@ public class TearDownBlogsEntryOrganizationSiteTest extends BaseTestCase {
 			case 1:
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
-				selenium.open("/web/selenium/home/");
+				selenium.open("/web/organization-name/home/");
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -105,7 +105,7 @@ public class TearDownBlogsEntryOrganizationSiteTest extends BaseTestCase {
 			case 4:
 			case 5:
 			case 6:
-				selenium.open("/web/selenium/home/");
+				selenium.open("/web/organization-name/home/");
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				selenium.waitForElementPresent(

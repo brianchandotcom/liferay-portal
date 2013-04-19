@@ -26,7 +26,7 @@ public class OCR_AssignToMeStagedBlogsEntryOrganizationSiteActionsTest
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/selenium/home/");
+		selenium.open("/web/organization-name/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(

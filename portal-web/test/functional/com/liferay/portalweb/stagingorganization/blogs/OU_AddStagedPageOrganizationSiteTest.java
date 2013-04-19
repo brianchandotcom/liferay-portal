@@ -25,19 +25,19 @@ public class OU_AddStagedPageOrganizationSiteTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/selenium/home/");
+		selenium.open("/web/organization-name/home/");
 		assertTrue(selenium.isElementPresent("//div[@class='staging-bar']"));
 		assertEquals(RuntimeVariables.replace("Live"),
 			selenium.getText("//li[1]/span/span"));
 		assertEquals(RuntimeVariables.replace(
-				"You are viewing the live version of Selenium and cannot make changes here. Make your changes in staging and publish them to Live afterwards to make them public."),
+				"You are viewing the live version of Organization Name and cannot make changes here. Make your changes in staging and publish them to Live afterwards to make them public."),
 			selenium.getText("//span[@class='staging-live-help']"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//li[2]/span/a"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
-				"You are viewing the staged version of Selenium. You can make changes here and publish them to Live afterwards to make them public."),
+				"You are viewing the staged version of Organization Name. You can make changes here and publish them to Live afterwards to make them public."),
 			selenium.getText("//span[@class='staging-live-help']"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));

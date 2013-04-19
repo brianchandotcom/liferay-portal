@@ -30,6 +30,9 @@ public class OCR_LoginTest extends BaseTestCase {
 				selenium.selectWindow("null");
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Welcome",
+					RuntimeVariables.replace("Welcome"));
+				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace(
 						"organizationcontentreviewer@selenium.com"));

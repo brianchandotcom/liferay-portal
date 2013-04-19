@@ -118,22 +118,31 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 					selenium.getText("//div/span/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(5000);
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
+				selenium.waitForVisible(
+					"//iframe[contains(@id,'selectOrganization')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'selectOrganization')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
+				selenium.waitForVisible("//input[@name='_125_keywords']");
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("Selenium"));
+					RuntimeVariables.replace("Organization"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				selenium.waitForText("//td[@id='_125_organizationsSearchContainer_col-name_row-1']",
-					"Selenium");
-				assertEquals(RuntimeVariables.replace("Selenium"),
+				selenium.waitForVisible(
+					"//tr[contains(.,'Organization Name')]/td[1]");
+				assertEquals(RuntimeVariables.replace("Organization Name"),
 					selenium.getText(
-						"//td[@id='_125_organizationsSearchContainer_col-name_row-1']"));
-				selenium.clickAt("//input[@value='Choose']",
+						"//tr[contains(.,'Organization Name')]/td[1]"));
+				selenium.clickAt("//tr[contains(.,'Organization Name')]/td[7]/span/span/input[@value='Choose']",
 					RuntimeVariables.replace("Choose"));
 				selenium.selectFrame("relative=top");
+				selenium.waitForVisible(
+					"//tr[contains(.,'Organization Name')]/td[1]");
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Organization Name')]/td[1]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
@@ -141,11 +150,9 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace("Save"));
-				selenium.waitForPageToLoad("30000");
-				assertEquals(RuntimeVariables.replace("Selenium"),
-					selenium.getText("//tr[contains(.,'Selenium')]/td[1]"));
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Organization Name')]/td[1]"));
 				assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']",
 						"Roles"));
 				selenium.clickAt("//a[@id='_125_rolesLink']",
@@ -157,35 +164,48 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 						"//div/span[2]/a/span[contains(.,'Select')]"));
 				selenium.clickAt("//div/span[2]/a/span[contains(.,'Select')]",
 					RuntimeVariables.replace("Select"));
-				Thread.sleep(5000);
-				selenium.waitForVisible("//iframe");
-				selenium.selectFrame("//iframe");
-				Thread.sleep(1000);
 				selenium.waitForVisible(
-					"//td[@id='_125_rolesSearchContainer_col-title_row-1']");
+					"//iframe[contains(@id,'selectOrganizationRole')]");
+				selenium.selectFrame(
+					"//iframe[contains(@id,'selectOrganizationRole')]");
+				selenium.waitForElementPresent(
+					"//script[contains(@src,'/liferay/search_container.js')]");
+				selenium.waitForVisible(
+					"//tr[contains(.,'Organization Administrator')]/td[1]");
 				assertEquals(RuntimeVariables.replace(
 						"Organization Administrator"),
 					selenium.getText(
-						"//td[@id='_125_rolesSearchContainer_col-title_row-1']"));
-				selenium.clickAt("//input[@value='Choose']",
-					RuntimeVariables.replace("Organization Administrator"));
+						"//tr[contains(.,'Organization Administrator')]/td[1]"));
+				selenium.clickAt("//tr[contains(.,'Organization Administrator')]/td[2]/span/span/input[@value='Choose']",
+					RuntimeVariables.replace("Choose"));
 				selenium.selectFrame("relative=top");
+				selenium.waitForVisible(
+					"//tr[contains(.,'Organization Administrator')]/td[1]");
+				assertEquals(RuntimeVariables.replace(
+						"Organization Administrator"),
+					selenium.getText(
+						"//tr[contains(.,'Organization Administrator')]/td[1]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//div[@class='portlet-msg-success']");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertEquals(RuntimeVariables.replace(
 						"Organization Administrator"),
 					selenium.getText(
-						"//tr/td[contains(.,'Organization Administrator')]"));
+						"xpath=(//tr[contains(.,'Organization Administrator')]/td[1])[2]"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//input[@value='Sign In']");
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Welcome",
+					RuntimeVariables.replace("Welcome"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace(
@@ -254,8 +274,12 @@ public class AddUserOrganizationAdministratorTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible("//input[@value='Sign In']");
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
+				selenium.clickAt("link=Welcome",
+					RuntimeVariables.replace("Welcome"));
+				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//input[@id='_58_login']");
 				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));

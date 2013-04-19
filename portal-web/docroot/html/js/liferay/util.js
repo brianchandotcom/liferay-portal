@@ -1660,13 +1660,16 @@
 		function(config, callback) {
 			var dialog = Util.getWindow(config.id);
 
-			if (!dialog) {
-				var eventName = config.eventName || config.id;
+			var eventName = config.eventName || config.id;
 
-				Liferay.on(eventName, callback);
-			}
+			var selectionEvent = Liferay.on(eventName, callback);
 
-			Util.openWindow(config);
+			Util.openWindow(
+				config,
+				function(dialogWindow) {
+					dialogWindow.after('close', selectionEvent.detach, selectionEvent);
+				}
+			);
 		},
 		['aui-base']
 	);

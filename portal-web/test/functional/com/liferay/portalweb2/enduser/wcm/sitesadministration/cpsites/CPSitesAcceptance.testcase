@@ -1,0 +1,25 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddSite">
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Site#cpAddBlank" />
+	</command>
+
+	<command name="DeleteSite">
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="Site#cpDelete" />
+	</command>
+
+	<tear-down>
+		<execute macro="Site#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

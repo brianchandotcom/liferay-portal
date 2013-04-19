@@ -1,5 +1,8 @@
 <definition>
 	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="No sites were found." />
+		</case>
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
 		</case>

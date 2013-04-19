@@ -15,8 +15,9 @@
 --%>
 
 <%
-String emailFromName = ParamUtil.getString(request, "emailFromName", AssetPublisherUtil.getEmailFromName(preferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", AssetPublisherUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", AssetPublisherUtil.getEmailFromName(preferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(preferences));
 
 String emailParam = (String)request.getAttribute("configuration.jsp-emailParam");
 String defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
@@ -29,8 +30,6 @@ String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "
 
 String editorParam = (String)request.getAttribute("configuration.jsp-editorParam");
 String editorContent = emailBody;
-
-boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAddedEnabled(preferences);
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />

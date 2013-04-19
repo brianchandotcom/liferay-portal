@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.lang.reflect.Array;
 
@@ -27,6 +28,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -1273,6 +1275,12 @@ public class ArrayUtil {
 	public static String toString(
 		Object[] array, String param, String delimiter) {
 
+		return toString(array, param, delimiter, null);
+	}
+
+	public static String toString(
+		Object[] array, String param, String delimiter, Locale locale) {
+
 		if ((array == null) || (array.length == 0)) {
 			return StringPool.BLANK;
 		}
@@ -1285,7 +1293,12 @@ public class ArrayUtil {
 			Object value = BeanPropertiesUtil.getObject(bean, param);
 
 			if (value != null) {
-				sb.append(value);
+				if (locale != null) {
+					sb.append(LanguageUtil.get(locale, value.toString()));
+				}
+				else {
+					sb.append(value);
+				}
 			}
 
 			if ((i + 1) != array.length) {
@@ -1309,6 +1322,12 @@ public class ArrayUtil {
 	public static <T, V> String toString(
 		T[] list, Accessor<T, V> accessor, String delimiter) {
 
+		return toString(list, accessor, delimiter, null);
+	}
+
+	public static <T, V> String toString(
+		T[] list, Accessor<T, V> accessor, String delimiter, Locale locale) {
+
 		if ((list == null) || (list.length == 0)) {
 			return StringPool.BLANK;
 		}
@@ -1321,7 +1340,12 @@ public class ArrayUtil {
 			V value = accessor.get(bean);
 
 			if (value != null) {
-				sb.append(value);
+				if (locale != null) {
+					sb.append(LanguageUtil.get(locale, value.toString()));
+				}
+				else {
+					sb.append(value);
+				}
 			}
 
 			if ((i + 1) != list.length) {

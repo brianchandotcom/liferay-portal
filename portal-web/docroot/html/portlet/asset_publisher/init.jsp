@@ -92,6 +92,7 @@ String customUserAttributes = GetterUtil.getString(preferences.getValue("customU
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+long[] allAssetCategoryIds = new long[0];
 String[] allAssetTagNames = new String[0];
 
 String ddmStructureFieldLabel = StringPool.BLANK;
@@ -139,7 +140,7 @@ String assetCategoryTitle = null;
 String assetVocabularyTitle = null;
 
 if (assetCategoryId > 0) {
-	long[] allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
+	allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
 
 	if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
 		assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));

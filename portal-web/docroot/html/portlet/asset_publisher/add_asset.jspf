@@ -15,7 +15,7 @@
 --%>
 
 <%
-addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, classNameIds, classTypeIds, assetEntryQuery.getAllCategoryIds(), allAssetTagNames);
+addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames);
 %>
 
 <c:if test="<%= !addPortletURLs.isEmpty() %>">

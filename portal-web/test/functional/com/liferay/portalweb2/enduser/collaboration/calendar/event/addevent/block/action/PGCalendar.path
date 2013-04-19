@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>PGCalendar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendar</td>
+</tr>
+<!---->
+<!--VIEW-->
+<tr>
+	<td>VIEW_TODAY_BUTTON</td>
+	<td>//button[contains(@class, 'aui-scheduler-base-today')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_DAY_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div/div/div/div[2]/div/button[.='Day']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_WEEK_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div/div/div/div[2]/div/button[.='Week']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_MONTH_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div/div/div/div[2]/div/button[.='Month']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_AGENDA_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div/div/div/div[2]/div/button[.='Agenda']</td>
+	<td></td>
+</tr>
+<!---->
+<!--CALENDER_DAY-->
+<tr>
+	<td>CALENDER_DAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CALENDER_WEEK-->
+<tr>
+	<td>CALENDER_WEEK_SUNDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[2]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_MONDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_TUESDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[4]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_WEDNESDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[5]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_THURSDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[6]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_FRIDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[7]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDER_WEEK_SATURDAY</td>
+	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[8]/div</td>
+	<td></td>
+</tr>
+<!---->
+<!--EVENT_SCHEDULER-->
+<tr>
+	<td>EVENT_SCHEDULER_TITLE_FIELD</td>
+	<td>//div[@class='calendar-portlet-event-recorder']/div[3]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_SCHEDULER_SAVE_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div[2]/div/div[2]/span/span/button[@id='saveBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_SCHEDULER_EDIT_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div[2]/div/div[2]/span/span/button[@id='editBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EVENT_EDITOR-->
+<tr>
+	<td>EVENT_EDITOR_TITLE_FIELD</td>
+	<td>//div[@class='calendar-portlet-event-recorder']/div[3]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_EDITOR_SAVE_BUTTON</td>
+	<td>//div[contains(@class, 'calendar-portlet-event-recorder-editing')]/div/div[2]/span/span/button[@id='saveBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_EDITOR_EDIT_BUTTON</td>
+	<td>//div[contains(@class, 'calendar-portlet-event-recorder-editing')]/div/div[2]/span/span/button[@id='editBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_EDITOR_DELETE_BUTTON</td>
+	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div[2]/div/div[2]/span/span/button[@id='deleteBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_EDITOR_MAYBE_BUTTON</td>
+	<td>//div[contains(@class, 'calendar-portlet-event-recorder-editing')]/div/div[2]/span/span/button[@id='maybeBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_EDITOR_DECLINE_BUTTON</td>
+	<td>//div[contains(@class, 'calendar-portlet-event-recorder-editing')]/div/div[2]/span/span/button[@id='declineBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EVENT-->
+<tr>
+	<td>EVENT_BODY</td>
+	<td>//div[@class='aui-scheduler-event calendar-portlet-event-approved']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_TITLE</td>
+	<td>//div[@class='aui-scheduler-event calendar-portlet-event-approved']/div[@class='aui-scheduler-event-title']</td>
+	<td>12 – 1</td>
+</tr>
+<tr>
+	<td>EVENT_CONTENT</td>
+	<td>//div[@class='aui-scheduler-event calendar-portlet-event-approved']/div[@class='aui-scheduler-event-content']</td>
+	<td>Test Event</td>
+</tr>
+<!---->
+<!--MINI_CALENDAR-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_CALENDARS-->
+<tr>
+	<td>MY_CALENDARS_EXPAND</td>
+	<td>//div[@id='_1_WAR_calendarportlet_calendarListContainer']/a[1]/span[@class='aui-calendar-list-item-arrow']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_CALENDARS_EXPAND_ADD_CALENDAR</td>
+	<td>//li[contains(., 'Add Calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_CALENDARS_EXPAND_MANAGE_CALENDAR</td>
+	<td>//li[contains(., 'Manage Calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_CALENDARS_CALENDAR-->
+<tr>
+	<td>MY_CALENDARS_CALENDAR_1</td>
+	<td>//div[@id='_1_WAR_calendarportlet_calendarListContainer']//div[@class='aui-calendar-list-item']/span[@class='aui-calendar-list-item-label']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_CALENDARS_CALENDAR_2</td>
+	<td>xpath=(//div[@id='_1_WAR_calendarportlet_calendarListContainer']//div[@class='aui-calendar-list-item']/span[@class='aui-calendar-list-item-label'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_CALENDARS_CALENDAR_EXPAND</td>
+	<td>//div[@id='_1_WAR_calendarportlet_calendarListContainer']//div[@class='aui-calendar-list-item']/div[@class='aui-calendar-list-item-arrow']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OTHER_CALENDARS-->
+<tr>
+	<td>OTHER_CALENDARS_FIELD</td>
+	<td>//input[@id='_1_WAR_calendarportlet_addOtherCalendar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OTHER_CALENDARS_ENTRY-->
+<!--CURRENT_SITE_CALENDARS-->
+<!--CURRENT_SITE_CALENDARS_ENTRY-->
+</tbody>
+</table>
+</body>
+</html>

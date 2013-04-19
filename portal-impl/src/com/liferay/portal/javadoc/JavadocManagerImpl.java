@@ -222,7 +222,6 @@ public class JavadocManagerImpl implements JavadocManager {
 
 		if (typeComment != null) {
 			javadocClass.setComment(typeComment);
-			System.out.println("--> " + javadocClass.getClazz().toString());
 		}
 
 		List<Element> authorElements = javadocElement.elements("author");

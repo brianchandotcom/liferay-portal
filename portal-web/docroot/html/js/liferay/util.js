@@ -725,7 +725,7 @@
 
 			var hasErrors = false;
 
-			if (!event.skipValidation) {
+			if (event.validate) {
 				var liferayForm = Liferay.Form.get(form.attr('id'));
 
 				if (liferayForm) {
@@ -1945,7 +1945,7 @@
 	Liferay.provide(
 		window,
 		'submitForm',
-		function(form, action, singleSubmit, skipValidation) {
+		function(form, action, singleSubmit, validate) {
 			if (!Util._submitLocked) {
 				Liferay.fire(
 					'submitForm',
@@ -1953,7 +1953,7 @@
 						form: A.one(form),
 						action: action,
 						singleSubmit: singleSubmit,
-						skipValidation: skipValidation
+						validate: validate !== false
 					}
 				);
 			}

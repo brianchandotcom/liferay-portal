@@ -15,8 +15,9 @@
 --%>
 
 <%@ include file="/html/portal/init.jsp" %>
-
-<%@ page import="com.liferay.portal.kernel.javadoc.JavadocManagerUtil" %><%@
+<%@ page import="com.liferay.portal.javadoc.JavadocUtil" %><%@
+page import="com.liferay.portal.kernel.javadoc.JavadocClass" %><%@
+page import="com.liferay.portal.kernel.javadoc.JavadocManagerUtil" %><%@
 page import="com.liferay.portal.kernel.javadoc.JavadocMethod" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" %><%@

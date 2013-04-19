@@ -2463,8 +2463,8 @@
 		<if>
 			<os family="windows" />
 			<then>
-				<exec executable="${shell.executable}">
-					<arg line="/c jps -l > java-processes" />
+				<exec executable="${shell.executable}" output="java-processes">
+					<arg line="/c jps -l" />
 				</exec>
 			</then>
 			<else>
@@ -3707,8 +3707,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<os family="windows" />
 			<then>
-				<exec executable="${shell.executable}">
-					<arg line="/c jps -q > java-processes" />
+				<exec executable="${shell.executable}" output="java-processes">
+					<arg line="/c jps -q" />
 				</exec>
 			</then>
 			<else>

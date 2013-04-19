@@ -28,14 +28,14 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl">
-		<property name="portal" ref="com.liferay.portal.util.Portal" />
-	</bean>
 	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
-		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
+		<property name="resourceActions">
+			<bean class="com.liferay.portal.security.permission.ResourceActionsImpl" />
+		</property>
 	</bean>
-	<bean id="com.liferay.portal.util.Portal" class="com.liferay.portal.util.PortalImpl" />
 	<bean id="com.liferay.portal.util.PortalUtil" class="com.liferay.portal.util.PortalUtil">
-		<property name="portal" ref="com.liferay.portal.util.Portal" />
+		<property name="portal">
+			<bean class="com.liferay.portal.util.PortalImpl" />
+		</property>
 	</bean>
 </beans>

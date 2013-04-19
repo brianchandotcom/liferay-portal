@@ -5373,10 +5373,6 @@ public class JournalArticleLocalServiceImpl
 			long imageId = journalArticleImageLocalService.getArticleImageId(
 				groupId, articleId, version, elInstanceId, elName, elLanguage);
 
-			String elContent =
-				"/image/journal/article?img_id=" + imageId + "&t=" +
-					WebServerServletTokenUtil.getToken(imageId);
-
 			if (dynamicContent.getText().equals("delete") ||
 				Validator.isNull(dynamicContent.getText())) {
 
@@ -5386,7 +5382,7 @@ public class JournalArticleLocalServiceImpl
 
 				String defaultElLanguage = "";
 
-				if (!Validator.isNotNull(elLanguage)) {
+				if (Validator.isNull(elLanguage)) {
 					defaultElLanguage =
 						"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
 				}
@@ -5400,6 +5396,10 @@ public class JournalArticleLocalServiceImpl
 
 				continue;
 			}
+
+			String elContent =
+				"/image/journal/article?img_id=" + imageId + "&t=" +
+					WebServerServletTokenUtil.getToken(imageId);
 
 			byte[] bytes = images.get(elInstanceId + "_" + elName + elLanguage);
 
@@ -5420,9 +5420,10 @@ public class JournalArticleLocalServiceImpl
 				long oldImageId = 0;
 
 				if ((oldVersion >= 1) && incrementVersion) {
-					oldImageId = journalArticleImageLocalService.getArticleImageId(
-						groupId, articleId, oldVersion, elInstanceId, elName,
-						elLanguage);
+					oldImageId =
+						journalArticleImageLocalService.getArticleImageId(
+							groupId, articleId, oldVersion, elInstanceId,
+							elName, elLanguage);
 				}
 
 				Image oldImage = null;
@@ -5474,7 +5475,7 @@ public class JournalArticleLocalServiceImpl
 
 			String defaultElLanguage = "";
 
-			if (!Validator.isNotNull(elLanguage)) {
+			if (Validator.isNull(elLanguage)) {
 				defaultElLanguage =
 					"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
 			}

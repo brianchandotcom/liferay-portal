@@ -14,22 +14,26 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.io.Closeable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * @author Shuyang Zhou
  */
 public class ThreadLocalFacadeHttpServletRequestWrapper
-	extends HttpServletRequestWrapper implements Closeable {
+	extends PersistentHttpServletRequestWrapper implements Closeable {
 
 	public ThreadLocalFacadeHttpServletRequestWrapper(
 		ServletRequestWrapper servletRequestWrapper,
@@ -40,6 +44,14 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 		_servletRequestWrapper = servletRequestWrapper;
 
 		_nextHttpServletRequestThreadLocal.set(httpServletRequest);
+
+		_locales = new ArrayList<Locale>();
+
+		Enumeration<Locale> enumeration = httpServletRequest.getLocales();
+
+		while (enumeration.hasMoreElements()) {
+			_locales.add(enumeration.nextElement());
+		}
 	}
 
 	public void close() {
@@ -63,6 +75,11 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 		ServletRequest servletRequest = getRequest();
 
 		return servletRequest.getAttributeNames();
+	}
+
+	@Override
+	public Enumeration<Locale> getLocales() {
+		return Collections.enumeration(_locales);
 	}
 
 	@Override
@@ -105,6 +122,7 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 
 			};
 
+	private List<Locale> _locales;
 	private ServletRequestWrapper _servletRequestWrapper;
 
 }

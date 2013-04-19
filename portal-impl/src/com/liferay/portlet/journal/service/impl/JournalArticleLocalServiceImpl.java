@@ -5373,17 +5373,13 @@ public class JournalArticleLocalServiceImpl
 			long imageId = journalArticleImageLocalService.getArticleImageId(
 				groupId, articleId, version, elInstanceId, elName, elLanguage);
 
-			if (Validator.isNull(dynamicContent.getText())) {
-				imageLocalService.deleteImage(imageId);
-
-				continue;
-			}
-
 			String elContent =
 				"/image/journal/article?img_id=" + imageId + "&t=" +
 					WebServerServletTokenUtil.getToken(imageId);
 
-			if (dynamicContent.getText().equals("delete")) {
+			if (dynamicContent.getText().equals("delete") ||
+				Validator.isNull(dynamicContent.getText())) {
+
 				dynamicContent.setText(StringPool.BLANK);
 
 				imageLocalService.deleteImage(imageId);

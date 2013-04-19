@@ -81,7 +81,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 
 		String agentLine = System.getProperty("junit.cobertura.agent");
 
-		if (!Validator.isNull(agentLine)) {
+		if (Validator.isNotNull(agentLine)) {
 			arguments.add(agentLine);
 			arguments.add("-Djunit.cobertura.agent=" + agentLine);
 		}

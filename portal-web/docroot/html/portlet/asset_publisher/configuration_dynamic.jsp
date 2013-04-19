@@ -444,14 +444,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 </aui:button-row>
 
 <aui:script use="aui-base">
+	var MAP_DDM_STRUCTURES = {};
+
 	var assetSelector = A.one('#<portlet:namespace />anyAssetType');
 	var assetMultipleSelector = A.one('#<portlet:namespace />currentClassNameIds');
 	var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 	var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = A.one('#<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = A.one('#<portlet:namespace />orderByColumn2');
-	var MAP_DDM_STRUCTURES = {};
-
 	var sourcePanel = A.one('#assetPublisherSourcePanel');
 
 	var ddmStructureFieldValue = ddmStructureFieldValueContainer.one('#<portlet:namespace />ddmStructureFieldValue');
@@ -509,11 +509,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			}
 		%>
 
-			var orderGroupColumn1<%= className %>_<%= subTypeId %> = '<%= className %>_<%= subTypeId %>_optTextOrderByColumn1';
-			var orderGroupColumn2<%= className %>_<%= subTypeId %> = '<%= className %>_<%= subTypeId %>_optTextOrderByColumn2';
+			var optgroupClose = '</optgroup>';
+			var optgroupOpen = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId)) %>">';
 
-			MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId)) %>">';
-			MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] = '<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId)) %>">';
+			var columnBuffer1 = [optgroupOpen];
+			var columnBuffer2 = [optgroupOpen];
 
 			<%
 			for (Tuple classTypeFieldName : classTypeFieldNames) {
@@ -530,15 +530,18 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			%>
 
-				MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] += '<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>';
-				MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] += '<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>';
+				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
+				columnBuffer1.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
 
 			<%
 			}
 			%>
 
-			MAP_DDM_STRUCTURES[orderGroupColumn1<%= className %>_<%= subTypeId %>] += '</optgroup>';
-			MAP_DDM_STRUCTURES[orderGroupColumn2<%= className %>_<%= subTypeId %>] += '</optgroup>';
+			columnBuffer1.push(optgroupClose);
+			columnBuffer1.push(optgroupClose);
+
+			MAP_DDM_STRUCTURES['<%= className %>_<%= subTypeId %>_optTextOrderByColumn1'] = columnBuffer1.join('');
+			MAP_DDM_STRUCTURES['<%= className %>_<%= subTypeId %>_optTextOrderByColumn2'] = columnBuffer2.join('');
 
 		<%
 		}

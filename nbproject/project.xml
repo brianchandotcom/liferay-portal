@@ -34,12 +34,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>osgi\modules\log-bridge\src</label>
-                    <type>java</type>
-                    <location>osgi/modules/log-bridge/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>portal-impl\src</label>
                     <type>java</type>
                     <location>portal-impl/src</location>
@@ -164,10 +158,6 @@
                     <source-folder style="packages">
                         <label>osgi\modules\http-service\test\unit</label>
                         <location>osgi/modules/http-service/test/unit</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>osgi\modules\log-bridge\src</label>
-                        <location>osgi/modules/log-bridge/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>portal-impl\src</label>

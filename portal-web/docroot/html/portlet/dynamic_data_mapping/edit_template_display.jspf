@@ -360,26 +360,22 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	function setEditorPlugins(event) {
 		var selectedOptionValue = getSelectedLanguage();
 
-		var processor;
+		var AutoComplete;
 
 		<c:choose>
 			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_FTL )%>">
-				processor = new A.AceEditor.AutoCompleteFreemarker(
-					{
-						variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
-					}
-				);
-
+				AutoComplete = A.AceEditor.AutoCompleteFreemarker;
 			</c:when>
 			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_VM )%>">
-				processor = new A.AceEditor.AutoCompleteVelocity(
-					{
-						variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
-					}
-				);
-
+				AutoComplete = new A.AceEditor.AutoCompleteVelocity;
 			</c:when>
 		</c:choose>
+
+		var processor = new AutoComplete(
+			{
+				variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
+			}
+		);
 
 		if (processor) {
 			richEditor.unplug(ACPlugin);

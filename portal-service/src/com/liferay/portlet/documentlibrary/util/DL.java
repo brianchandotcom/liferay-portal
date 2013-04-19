@@ -40,7 +40,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Eudaldo Alnso
+ * @author Eudaldo Alonso
  */
 public interface DL {
 

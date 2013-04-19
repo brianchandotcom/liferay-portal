@@ -279,8 +279,10 @@
 		margin-left: 2em;
 	}
 
-	.asset-subtypefields {
-		margin-left: 4em;
+	.asset-subtypefields-popup {
+		color: #5B677D;
+		cursor: pointer;
+		text-decoration: underline;
 	}
 
 	.asset-subtypefield-selected {

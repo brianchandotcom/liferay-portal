@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,8 +59,7 @@ public interface AssetRendererFactory {
 
 	public long getClassNameId();
 
-	public Map<String, Map<String, String>> getClassTypeFieldNames(
-			long classTypeId, Locale locale)
+	public List<Tuple> getClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception;
 
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)

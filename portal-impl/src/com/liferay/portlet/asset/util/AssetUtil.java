@@ -381,7 +381,8 @@ public class AssetUtil {
 			searchContext.setAttribute(
 				"ddmStructureFieldName", ddmStructureFieldName);
 			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
+				"ddmStructureFieldValue",
+				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());

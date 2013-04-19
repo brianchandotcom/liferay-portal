@@ -279,6 +279,8 @@
 
 		<action path="/asset_publisher/rss" type="com.liferay.portlet.assetpublisher.action.RSSAction" />
 
+		<action path="/asset_publisher/select_structure_field" forward="portlet.asset_publisher.select_structure_field" />
+
 		<action path="/asset_publisher/view" type="com.liferay.portlet.assetpublisher.action.ViewAction">
 			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
 		</action>
@@ -1612,6 +1614,8 @@
 		<action path="/portlet_configuration/get_look_and_feel" type="com.liferay.portlet.portletconfiguration.action.GetLookAndFeelAction" />
 
 		<action path="/portlet_configuration/select_organization" forward="portlet.users_admin.select_organization" />
+
+		<action path="/portlet_configuration/select_structure_field" forward="portlet.asset_publisher.select_structure_field" />
 
 		<action path="/portlet_configuration/update_look_and_feel" type="com.liferay.portlet.portletconfiguration.action.UpdateLookAndFeelAction" />
 

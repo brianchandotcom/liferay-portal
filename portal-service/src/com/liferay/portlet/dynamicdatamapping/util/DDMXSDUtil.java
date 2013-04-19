@@ -62,6 +62,17 @@ public class DDMXSDUtil {
 			portletNamespace, namespace, mode, readOnly, locale);
 	}
 
+	public static String getFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			String fieldName, String portletNamespace, String namespace,
+			String mode, boolean readOnly, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getFieldHTMLByName(
+			pageContext, classNameId, classPK, fieldName, portletNamespace,
+			namespace, mode, readOnly, locale);
+	}
+
 	public static String getHTML(
 			PageContext pageContext, DDMStructure ddmStructure, Fields fields,
 			String portletNamespace, String namespace, boolean readOnly,

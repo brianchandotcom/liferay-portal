@@ -16,7 +16,7 @@
 
 <#assign repeatable = false>
 
-<#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true")>
+<#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true") && (!ignoreRepeatable?? || !ignoreRepeatable)>
 	<#assign repeatable = true>
 </#if>
 

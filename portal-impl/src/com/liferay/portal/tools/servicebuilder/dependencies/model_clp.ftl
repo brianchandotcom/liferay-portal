@@ -217,6 +217,19 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 		public void set${column.methodName}(${column.type} ${column.name}) {
 			_${column.name} = ${column.name};
+
+			if (_${entity.varName}RemoteModel != null) {
+				try {
+					Class<?> clazz = _${entity.varName}RemoteModel.getClass();
+
+					java.lang.reflect.Method method = clazz.getMethod("set${column.methodName}", ${column.type}.class);
+
+					method.invoke(_${entity.varName}RemoteModel, ${column.name});
+				}
+				catch (Exception e) {
+					throw new UnsupportedOperationException(e);
+				}
+			}
 		}
 
 		<#if column.localized>
@@ -320,7 +333,41 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			</#list>-->
 
 			{
-				throw new UnsupportedOperationException();
+				try {
+					String methodName = "${method.name}";
+					Class<?>[] parameterTypes = new Class<?>[] {
+						<#list parameters as parameter>
+							${parameter.type.getValue()}.class
+							<#if parameter_has_next>
+								,
+							</#if>
+						</#list>
+					};
+
+					Object[] parameterValues = new Object[] {
+						<#list parameters as parameter>
+							${parameter.name}
+							<#if parameter_has_next>
+								,
+							</#if>
+						</#list>
+					};
+
+					<#if serviceBuilder.getTypeGenericsName(method.returns) != "void">
+						<#assign returnTypeObj = serviceBuilder.getPrimitiveObj(serviceBuilder.getTypeGenericsName(method.returns))>
+
+						${returnTypeObj} returnObj = (${returnTypeObj})
+					</#if>
+
+					invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+
+					<#if serviceBuilder.getTypeGenericsName(method.returns) != "void">
+						return returnObj;
+					</#if>
+				}
+				catch (Exception e) {
+					throw new UnsupportedOperationException(e);
+				}
 			}
 		</#if>
 	</#list>
@@ -466,6 +513,44 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 	public void set${entity.name}RemoteModel(BaseModel<?> ${entity.varName}RemoteModel) {
 		_${entity.varName}RemoteModel = ${entity.varName}RemoteModel;
+	}
+
+	public Object invokeOnRemoteModel(String methodName, Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ${packagePath}.service.ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _${entity.varName}RemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		java.lang.reflect.Method method = remoteModelClass.getMethod(methodName, remoteParameterTypes);
+
+		Object returnValue = method.invoke(_${entity.varName}RemoteModel, remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ${packagePath}.service.ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
 	}
 
 	<#if entity.hasLocalService() && entity.hasColumns()>

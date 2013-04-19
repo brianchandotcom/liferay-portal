@@ -34,6 +34,10 @@
 
 		liferaySelenium.fail("${message}");
 	<#elseif name == "if">
+		executeScopeVariables = new HashMap<String, String>();
+
+		executeScopeVariables.putAll(commandScopeVariables);
+
 		<#assign ifElement = element>
 
 		<#include "macro_if_element.ftl">
@@ -68,16 +72,12 @@
 
 		commandScopeVariables.put("${varName}", "${varValue}");
 	<#elseif name == "while">
-		while (
-			<#assign actionElement = element.element("condition")>
+		executeScopeVariables = new HashMap<String, String>();
 
-			<#include "action_element.ftl">
-		) {
-			<#assign thenElement = element.element("then")>
+		executeScopeVariables.putAll(commandScopeVariables);
 
-			<#assign blockElement = thenElement>
+		<#assign ifElement = element>
 
-			<#include "macro_block_element.ftl">
-		}
+		<#include "macro_if_element.ftl">
 	</#if>
 </#list>

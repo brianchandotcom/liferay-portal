@@ -1,7 +1,7 @@
 <definition>
 	<command name="name">
 		<execute macro="macro">
-			<fail />
+			<var name="name" value="value" />
 		</execute>
 	</command>
 </definition>

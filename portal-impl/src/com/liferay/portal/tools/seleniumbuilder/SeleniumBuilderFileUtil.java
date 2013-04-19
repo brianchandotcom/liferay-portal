@@ -900,8 +900,15 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 		else {
+			String executeElementName = executeElement.getName();
+
 			for (Element element : elements) {
 				String elementName = element.getName();
+
+				if (executeElementName.equals("condition")) {
+					throwValidationException(
+						1002, fileName, element, elementName);
+				}
 
 				if (elementName.equals("var")) {
 					validateSimpleElement(

@@ -23,6 +23,8 @@ public interface JavadocManager {
 
 	public void load(String servletContextName, ClassLoader classLoader);
 
+	public JavadocClass lookupJavadocClass(Class clazz);
+
 	public JavadocMethod lookupJavadocMethod(Method method);
 
 	public void unload(String servletContextName);

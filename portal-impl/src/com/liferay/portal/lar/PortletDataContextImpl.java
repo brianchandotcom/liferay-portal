@@ -1695,7 +1695,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			return getUserId(userUuid);
 		}
-		catch (Exception e) {
+		catch (SystemException e) {
+			if (_log.isErrorEnabled()) {
+				_log.error(e, e);
+			}
 		}
 
 		return 0;

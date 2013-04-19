@@ -50,12 +50,12 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletResourceBundles;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.util.JS;
 
 import java.io.InputStream;
 
@@ -621,10 +621,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(servletContextName, document);
 	}
 
-	public void setPortal(Portal portal) {
-		this.portal = portal;
-	}
-
 	protected void checkGuestUnsupportedActions(
 		List<String> guestUnsupportedActions,
 		List<String> guestDefaultActions) {
@@ -951,7 +947,7 @@ public class ResourceActionsImpl implements ResourceActions {
 					PortletConstants.WAR_SEPARATOR).concat(servletContextName);
 			}
 
-			portletName = portal.getJsSafePortletId(portletName);
+			portletName = JS.getSafeName(portletName);
 
 			// Reference for a portlet to child models
 
@@ -1032,7 +1028,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				servletContextName);
 		}
 
-		name = portal.getJsSafePortletId(name);
+		name = JS.getSafeName(name);
 
 		List<String> supportsActions = readSupportsActions(
 			portletResourceElement, _portletResourceActions, name);
@@ -1089,8 +1085,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		return actions;
 	}
-
-	protected Portal portal;
 
 	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;

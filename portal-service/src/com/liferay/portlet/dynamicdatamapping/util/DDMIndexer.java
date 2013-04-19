@@ -25,6 +25,8 @@ import java.util.Locale;
  */
 public interface DDMIndexer {
 
+	public static final String DDM_FIELD_NAMESPACE = "ddm";
+
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure, Fields fields);
 

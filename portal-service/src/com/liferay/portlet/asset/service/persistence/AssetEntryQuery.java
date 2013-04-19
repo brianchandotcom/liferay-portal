@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,6 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
 
 import java.io.Serializable;
 
@@ -56,7 +58,10 @@ public class AssetEntryQuery {
 	};
 
 	public static String checkOrderByCol(String orderByCol) {
-		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol)) {
+		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
+			orderByCol.startsWith(
+				DDMIndexer.DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH )) {
+
 			return orderByCol;
 		}
 

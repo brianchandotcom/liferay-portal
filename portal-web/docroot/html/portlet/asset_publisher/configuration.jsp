@@ -31,7 +31,8 @@ String emailParam = "emailAssetEntryAdded";
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String editorParam = emailParam + "Body_" + currentLanguageId;
+String bodyParam = emailParam + "Body_" + currentLanguageId;
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -268,14 +269,15 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 	</liferay-util:buffer>
 
 	<%
+	request.setAttribute("configuration.jsp-bodyParam", bodyParam);
 	request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
 	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
-	request.setAttribute("configuration.jsp-editorParam", editorParam);
 	request.setAttribute("configuration.jsp-emailParam", emailParam);
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	request.setAttribute("configuration.jsp-rootPortletId", rootPortletId);
 	request.setAttribute("configuration.jsp-selectScope", selectScope);
 	request.setAttribute("configuration.jsp-selectStyle", selectStyle);
+	request.setAttribute("configuration.jsp-subjectParam", subjectParam);
 	%>
 
 	<c:choose>
@@ -346,7 +348,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 			%>
 
 			document.<portlet:namespace />fm.<portlet:namespace />metadataFields.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentMetadataFields);
-			document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+			document.<portlet:namespace />fm.<portlet:namespace /><%= bodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 
 			submitForm(document.<portlet:namespace />fm);
 		},

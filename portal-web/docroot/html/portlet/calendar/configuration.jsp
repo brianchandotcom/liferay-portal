@@ -29,8 +29,7 @@ Boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--
 String emailSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
 String emailBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
 
-String editorParam = "emailEventReminderBody";
-String editorContent = emailBody;
+String bodyParam = "emailEventReminderBody";
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -73,7 +72,7 @@ String editorContent = emailBody;
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
-					<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
+					<aui:input name='<%= "preferences--" + emailBody + "--" %>' type="hidden" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 
@@ -187,12 +186,12 @@ String editorContent = emailBody;
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />saveConfiguration() {
 		<c:if test='<%= tabs2.equals("event-reminder-email") %>'>
-			document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+			document.<portlet:namespace />fm.<portlet:namespace /><%= bodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 		</c:if>
 
 		submitForm(document.<portlet:namespace />fm);

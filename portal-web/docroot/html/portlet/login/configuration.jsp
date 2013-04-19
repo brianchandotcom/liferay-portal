@@ -24,6 +24,28 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", LoginUtil.getEmailFromName(preferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", LoginUtil.getEmailFromAddress(preferences, company.getCompanyId()));
+
+String emailParam = "emailPasswordSent";
+String defaultEmailSubject = StringPool.BLANK;
+String defaultEmailBody = StringPool.BLANK;
+
+if (tabs2.equals("password-reset-notification")) {
+	emailParam = "emailPasswordReset";
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+}
+else if (tabs2.equals("password-changed-notification")) {
+	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
+	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+}
+
+String currentLanguageId = LanguageUtil.getLanguageId(request);
+
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
+String bodyParam = emailParam + "Body_" + currentLanguageId;
+
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, bodyParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -49,11 +71,6 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	<c:choose>
 		<c:when test='<%= tabs1.equals("email-notifications") %>'>
 
-			<%
-			String editorParam = StringPool.BLANK;
-			String editorContent = StringPool.BLANK;
-			%>
-
 			<liferay-ui:tabs
 				names="general,password-changed-notification,password-reset-notification"
 				param="tabs2"
@@ -68,30 +85,6 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 					<div class="alert alert-info">
 						<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
 					</div>
-
-					<%
-					String emailParam = "emailPasswordSent";
-					String defaultEmailSubject = StringPool.BLANK;
-					String defaultEmailBody = StringPool.BLANK;
-
-					if (tabs2.equals("password-reset-notification")) {
-						emailParam = "emailPasswordReset";
-						defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
-						defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY));
-					}
-					else if (tabs2.equals("password-changed-notification")) {
-						defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
-						defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY));
-					}
-
-					String currentLanguageId = LanguageUtil.getLanguageId(request);
-
-					String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
-					String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
-
-					editorParam = emailParam + "Body_" + currentLanguageId;
-					editorContent = emailBody;
-					%>
 
 					<aui:fieldset>
 						<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
@@ -117,12 +110,12 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 						</aui:select>
 
-						<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject_" + currentLanguageId + "--" %>' value="<%= emailSubject %>" />
+						<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 						<aui:field-wrapper label="body">
 							<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
-							<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
+							<aui:input name='<%= "preferences--" + bodyParam + "--" %>' type="hidden" />
 						</aui:field-wrapper>
 					</aui:fieldset>
 
@@ -227,12 +220,12 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 			<aui:script>
 				function <portlet:namespace />initEditor() {
-					return "<%= UnicodeFormatter.toString(editorContent) %>";
+					return "<%= UnicodeFormatter.toString(emailBody) %>";
 				}
 
 				function <portlet:namespace />saveConfiguration() {
 					<c:if test='<%= tabs2.endsWith("-notification") %>'>
-						document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+						document.<portlet:namespace />fm.<portlet:namespace /><%= bodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 					</c:if>
 
 					submitForm(document.<portlet:namespace />fm);

@@ -44,11 +44,11 @@ else if (tabs2.equals("entry-updated-email")) {
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailParam + "Subject_" + currentLanguageId, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailParam + "Body_" + currentLanguageId, defaultEmailBody);
+String subjectParam = emailParam + "Subject_" + currentLanguageId;
+String bodyParam = emailParam + "Body_" + currentLanguageId;
 
-String editorParam = emailParam + "Body_" + currentLanguageId;
-String editorContent = emailBody;
+String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(preferences, request, bodyParam, defaultEmailBody);
 
 String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES)));
 %>
@@ -185,12 +185,12 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 
 				</aui:select>
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + emailParam + "Subject_" + currentLanguageId + "--" %>' value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
-					<aui:input name='<%= "preferences--" + editorParam + "--" %>' type="hidden" />
+					<aui:input name='<%= "preferences--" + bodyParam + "--" %>' type="hidden" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 
@@ -300,7 +300,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(editorContent) %>";
+		return "<%= UnicodeFormatter.toString(emailBody) %>";
 	}
 
 	function <portlet:namespace />updateLanguage() {
@@ -313,7 +313,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 		'<portlet:namespace />saveConfiguration',
 		function() {
 			<c:if test='<%= tabs2.startsWith("entry-") %>'>
-				document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+				document.<portlet:namespace />fm.<portlet:namespace /><%= bodyParam %>.value = window.<portlet:namespace />editor.getHTML();
 			</c:if>
 
 			submitForm(document.<portlet:namespace />fm);

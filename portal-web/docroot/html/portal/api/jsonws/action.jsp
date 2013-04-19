@@ -194,10 +194,20 @@ String signature = ParamUtil.getString(request, "signature");
 
 				<%
 				Class<?> returnTypeClass = actionMethod.getReturnType();
+
+				String returnTypeName = "";
+
+				while (returnTypeClass.isArray()) {
+					returnTypeClass = returnTypeClass.getComponentType();
+
+					returnTypeName += "[]";
+				}
+
+				returnTypeName = returnTypeClass.getName() + returnTypeName;
 				%>
 
 				<span class="lfr-api-param-name">
-					<%= returnTypeClass.getName() %>
+					<%= returnTypeName %>
 				</span>
 
 				<%

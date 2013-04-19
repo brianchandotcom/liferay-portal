@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portalweb.portal.util.liferayselenium.BaseWebDriverLogging;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
@@ -84,7 +85,10 @@ public class SeleniumUtil extends TestPropsValues {
 			if (BROWSER_TYPE.equals("*chrome") ||
 				BROWSER_TYPE.equals("*firefox")) {
 
-				_selenium = new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
+				FirefoxWebDriverImpl firefoxDriver = new FirefoxWebDriverImpl(
+					projectDir, PORTAL_URL);
+
+				_selenium = new BaseWebDriverLogging(firefoxDriver);
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
 				_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);

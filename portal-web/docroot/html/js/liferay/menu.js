@@ -349,6 +349,8 @@ AUI.add(
 				if (buffer.length) {
 					var nodes = A.all(buffer);
 
+					nodes.on(EVENT_CLICK, A.bind('_registerMenu', Menu));
+
 					buffer.length = 0;
 				}
 			},

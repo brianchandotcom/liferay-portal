@@ -1753,7 +1753,6 @@ public class ServicePreAction extends Action {
 			layouts = null;
 
 			if (!isLoginRequest(request) && !hasViewLayoutPermission) {
-
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
 

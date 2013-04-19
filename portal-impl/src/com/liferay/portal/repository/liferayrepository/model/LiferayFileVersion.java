@@ -149,12 +149,12 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	public Class<?> getModelClass() {
-		return DLFileVersion.class;
+		return LiferayFileVersion.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return DLFileVersion.class.getName();
+		return LiferayFileVersion.class.getName();
 	}
 
 	public Date getModifiedDate() {

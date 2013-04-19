@@ -173,12 +173,12 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	public Class<?> getModelClass() {
-		return DLFolder.class;
+		return CMISFolder.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return DLFolder.class.getName();
+		return CMISFolder.class.getName();
 	}
 
 	public Date getModifiedDate() {

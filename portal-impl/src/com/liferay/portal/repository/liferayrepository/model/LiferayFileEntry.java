@@ -216,12 +216,12 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	public Class<?> getModelClass() {
-		return DLFileEntry.class;
+		return LiferayFileEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return DLFileEntry.class.getName();
+		return LiferayFileEntry.class.getName();
 	}
 
 	public Date getModifiedDate() {

@@ -140,7 +140,7 @@ import jodd.bean.BeanUtil;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Bruno Farache
- * @author Alex Chow
+ * @author Alexander Chow
  */
 public class PortletDataContextImpl implements PortletDataContext {
 
@@ -1518,6 +1518,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		if (classedModel instanceof AuditedModel) {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
+			serviceContext.setUserId(getUserId(auditedModel));
 			serviceContext.setCreateDate(auditedModel.getCreateDate());
 			serviceContext.setModifiedDate(auditedModel.getModifiedDate());
 		}
@@ -1686,6 +1687,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
 		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
+	}
+
+	protected long getUserId(AuditedModel auditedModel) {
+		try {
+			String userUuid = auditedModel.getUserUuid();
+
+			return getUserId(userUuid);
+		}
+		catch (SystemException e) {
+			if (_log.isErrorEnabled()) {
+				_log.error(e, e);
+			}
+		}
+
+		return 0;
 	}
 
 	protected void initXStream() {

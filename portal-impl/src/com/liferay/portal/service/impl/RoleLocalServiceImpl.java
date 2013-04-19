@@ -845,8 +845,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *         search
 	 * @return <code>true</code> if the user is associated with the regular
 	 *         role; <code>false</code> otherwise
-	 * @throws PortalException if a role with the name could not be found in the
-	 *         company or if a default user for the company could not be found
+	 * @throws PortalException if a default user for the company could not be
+	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@ThreadLocalCachable
@@ -854,7 +854,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			long userId, long companyId, String name, boolean inherited)
 		throws PortalException, SystemException {
 
-		Role role = rolePersistence.findByC_N(companyId, name);
+		Role role = rolePersistence.fetchByC_N(companyId, name);
+
+		if (role == null) {
+			return false;
+		}
 
 		if (role.getType() != RoleConstants.TYPE_REGULAR) {
 			throw new IllegalArgumentException(name + " is not a regular role");

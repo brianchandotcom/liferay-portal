@@ -518,6 +518,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="format-javadoc">
+		<echo message="Run format-javadoc within portal-impl for ServiceImpl classes, to update Language.properties service help." />
 		<echo message="Run &quot;ant compile compile-test&quot; before using format-javadoc to generate @Override tags." />
 
 		<java

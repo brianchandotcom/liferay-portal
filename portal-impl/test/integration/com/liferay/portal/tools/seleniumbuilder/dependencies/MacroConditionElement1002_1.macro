@@ -2,7 +2,7 @@
 	<command name="name">
 		<if>
 			<condition action="isAction">
-				<fail />
+				<var name="name" value="value" />
 			</condition>
 			<then>
 				<execute action="action" />

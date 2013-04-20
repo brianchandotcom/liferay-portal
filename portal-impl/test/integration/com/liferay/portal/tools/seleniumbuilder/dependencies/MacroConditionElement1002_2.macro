@@ -2,7 +2,7 @@
 	<command name="name">
 		<if>
 			<condition macro="isMacro">
-				<fail />
+				<var name="name" value="value" />
 			</condition>
 			<then>
 				<execute macro="macro" />

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.engines.WikiEngine;
 import com.liferay.portlet.wiki.engines.mediawiki.matchers.DirectTagMatcher;
@@ -144,12 +145,22 @@ public class MediaWikiEngine implements WikiEngine {
 
 		ParserOutput parserOutput = null;
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			ClassLoaderUtil.getPortalClassLoader());
+
 		try {
 			parserOutput = ParserUtil.parseMetadata(
 				parserInput, page.getContent());
 		}
 		catch (ParserException pe) {
 			throw new PageContentException(pe);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		return parserOutput;
@@ -164,6 +175,13 @@ public class MediaWikiEngine implements WikiEngine {
 			page.getNodeId(), page.getTitle());
 
 		String content = StringPool.BLANK;
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			ClassLoaderUtil.getPortalClassLoader());
 
 		try {
 			content = page.getContent();
@@ -180,6 +198,9 @@ public class MediaWikiEngine implements WikiEngine {
 		}
 		catch (ParserException pe) {
 			throw new PageContentException(pe);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		// Post parse

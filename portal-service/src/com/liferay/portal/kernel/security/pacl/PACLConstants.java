@@ -96,9 +96,6 @@ public interface PACLConstants {
 	public static final String PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR =
 		"threadPoolExecutor";
 
-	public static final String PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY =
-		"dynamicQuery";
-
 	public static final String PORTAL_SERVICE_PERMISSION_SERVICE = "service";
 
 	public static final String RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE =

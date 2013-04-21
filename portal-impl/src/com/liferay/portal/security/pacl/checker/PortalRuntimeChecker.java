@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
+import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -76,22 +77,20 @@ public class PortalRuntimeChecker extends BaseChecker {
 		PortalRuntimePermission portalRuntimePermission =
 			(PortalRuntimePermission)arguments[0];
 
-		String name = portalRuntimePermission.getName();
+		String name = portalRuntimePermission.getShortName();
 		String servletContextName =
 			portalRuntimePermission.getServletContextName();
-		Object subject = portalRuntimePermission.getSubject();
+		String subject = portalRuntimePermission.getSubject();
 		String property = portalRuntimePermission.getProperty();
 
 		String key = null;
-		String value = null;
+		String value = subject;
 
 		if (name.startsWith(PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			key = "security-manager-class-loader-reference-ids";
-			value = (String)subject;
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
 			key = "security-manager-expando-bridge";
-			value = (String)subject;
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
 			StringBundler sb = new StringBundler(4);
@@ -103,21 +102,15 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			key = sb.toString();
 
-			Class<?> clazz = (Class<?>)subject;
-
-			value = clazz.getName();
-
 			if (Validator.isNotNull(property)) {
 				value = value + StringPool.POUND + property;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL)) {
 			key = "security-manager-portlet-bag-pool-portlet-ids";
-			value = (String)subject;
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
 			key = "security-manager-search-engine-ids";
-			value = (String)subject;
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
 			StringBundler sb = new StringBundler(4);
@@ -129,17 +122,12 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 			key = sb.toString();
 
-			Class<?> clazz = (Class<?>)subject;
-
-			value = clazz.getName();
-
 			if (Validator.isNotNull(property)) {
 				value = value + StringPool.POUND + property;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
 			key = "security-manager-thread-pool-executor-names";
-			value = (String)subject;
 		}
 		else {
 			return null;
@@ -158,38 +146,34 @@ public class PortalRuntimeChecker extends BaseChecker {
 		PortalRuntimePermission portalRuntimePermission =
 			(PortalRuntimePermission)permission;
 
-		String name = portalRuntimePermission.getName();
-		Object subject = portalRuntimePermission.getSubject();
+		String name = portalRuntimePermission.getShortName();
+		String subject = portalRuntimePermission.getSubject();
 		String servletContextName =
 			portalRuntimePermission.getServletContextName();
 		String property = GetterUtil.getString(
 			portalRuntimePermission.getProperty());
 
 		if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
-			String className = (String)subject;
-
-			if (!_expandoBridgeClassNames.contains(className)) {
+			if (!_expandoBridgeClassNames.contains(subject)) {
 				logSecurityException(
-					_log, "Attempted to get Expando bridge on " + className);
+					_log, "Attempted to get Expando bridge on " + subject);
 
 				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
-			Class<?> clazz = (Class<?>)subject;
-
 			if (!hasGetBeanProperty(
-					servletContextName, clazz, property, permission)) {
+					servletContextName, subject, property, permission)) {
 
 				if (Validator.isNotNull(property)) {
 					logSecurityException(
 						_log,
 						"Attempted to get bean property " + property + " on " +
-							clazz + " from " + servletContextName);
+							subject + " from " + servletContextName);
 				}
 				else {
 					logSecurityException(
-						_log, "Attempted to get bean property on " + clazz +
+						_log, "Attempted to get bean property on " + subject +
 							" from " + servletContextName);
 				}
 
@@ -197,51 +181,42 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.startsWith(PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			String classLoaderReferenceId = (String)subject;
-
-			if (!hasGetClassLoader(classLoaderReferenceId, permission)) {
+			if (!hasGetClassLoader(subject, permission)) {
 				logSecurityException(
-					_log, "Attempted to get class loader " +
-						classLoaderReferenceId);
+					_log, "Attempted to get class loader " + subject);
 
 				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL)) {
-			String portletId = (String)subject;
-
-			if (!hasPortletBagPoolPortletId(portletId)) {
+			if (!hasPortletBagPoolPortletId(subject)) {
 				logSecurityException(
 					_log,
 					"Attempted to handle portlet bag pool portlet ID " +
-						portletId);
+						subject);
 
 				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
-			String searchEngineId = (String)subject;
-
-			if (!_searchEngineIds.contains(searchEngineId)) {
+			if (!_searchEngineIds.contains(subject)) {
 				logSecurityException(
-					_log, "Attempted to get search engine " + searchEngineId);
+					_log, "Attempted to get search engine " + subject);
 
 				return false;
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
-			Class<?> clazz = (Class<?>)subject;
-
-			if (!hasSetBeanProperty(servletContextName, clazz, property)) {
+			if (!hasSetBeanProperty(servletContextName, subject, property)) {
 				if (Validator.isNotNull(property)) {
 					logSecurityException(
 						_log,
 						"Attempted to set bean property " + property + " on " +
-							clazz + " from " + servletContextName);
+							subject + " from " + servletContextName);
 				}
 				else {
 					logSecurityException(
-						_log, "Attempted to set bean property on " + clazz +
+						_log, "Attempted to set bean property on " + subject +
 							" from " + servletContextName);
 				}
 
@@ -249,13 +224,10 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
-			String threadPoolExecutorName = (String)subject;
-
-			if (!hasThreadPoolExecutorNames(threadPoolExecutorName)) {
+			if (!hasThreadPoolExecutorNames(subject)) {
 				logSecurityException(
 					_log,
-					"Attempted to modify thread pool executor " +
-						threadPoolExecutorName);
+					"Attempted to modify thread pool executor " + subject);
 
 				return false;
 			}
@@ -265,7 +237,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetBeanProperty(
-		String servletContextName, Class<?> clazz, String property,
+		String servletContextName, String className, String property,
 		Permission permission) {
 
 		if (servletContextName.equals(getServletContextName())) {
@@ -299,8 +271,6 @@ public class PortalRuntimeChecker extends BaseChecker {
 			return false;
 		}
 
-		String className = clazz.getName();
-
 		if (getBeanPropertyClassNames.contains(className)) {
 			return true;
 		}
@@ -333,6 +303,11 @@ public class PortalRuntimeChecker extends BaseChecker {
 				PortletClassLoaderUtil.class.getName())) {
 
 			callerClass = Reflection.getCallerClass(stackIndex + 1);
+		}
+		else if (callerClass.getName().equals(
+					DynamicQueryFactoryImpl.class.getName())) {
+
+			callerClass = Reflection.getCallerClass(stackIndex + 3);
 		}
 
 		if (isTrustedCaller(callerClass, permission)) {
@@ -369,7 +344,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasSetBeanProperty(
-		String servletContextName, Class<?> clazz, String property) {
+		String servletContextName, String className, String property) {
 
 		if (servletContextName.equals(getServletContextName())) {
 			return true;
@@ -381,8 +356,6 @@ public class PortalRuntimeChecker extends BaseChecker {
 		if (setBeanPropertyClassNames == null) {
 			return false;
 		}
-
-		String className = clazz.getName();
 
 		if (setBeanPropertyClassNames.contains(className)) {
 			return true;

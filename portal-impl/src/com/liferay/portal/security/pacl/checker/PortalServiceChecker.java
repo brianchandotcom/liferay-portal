@@ -18,14 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
-import com.liferay.portal.security.pacl.PACLUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
-
-import java.lang.reflect.Method;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.security.Permission;
 
@@ -51,55 +47,31 @@ public class PortalServiceChecker extends BaseChecker {
 	public AuthorizationProperty generateAuthorizationProperty(
 		Object... arguments) {
 
-		if ((arguments == null) || (arguments.length == 0)) {
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof Permission)) {
+
 			return null;
 		}
 
-		Object object = null;
-		Method method = null;
+		PortalServicePermission portalServicePermission =
+			(PortalServicePermission)arguments[0];
 
-		if (arguments[0] instanceof Permission) {
-			PortalServicePermission portalServicePermission =
-				(PortalServicePermission)arguments[0];
+		String servletContextName =
+			portalServicePermission.getServletContextName();
+		String className = portalServicePermission.getClassName();
+		String methodName = portalServicePermission.getMethodName();
 
-			object = portalServicePermission.getObject();
-			method = portalServicePermission.getMethod();
-		}
-		else {
-			object = arguments[0];
-			method = (Method)arguments[1];
-		}
+		StringBundler sb = new StringBundler(4);
 
-		Class<?> clazz = PACLUtil.getClass(object);
-
-		if (clazz == null) {
-			return null;
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		String filter = "[portal]";
-
-		if (paclPolicy != null) {
-			filter =
-				StringPool.OPEN_BRACKET + paclPolicy.getServletContextName() +
-					StringPool.CLOSE_BRACKET;
-		}
-
-		String className = getInterfaceName(clazz.getName());
-
-		String methodName = method.getName();
-
-		if (methodName.equals("invokeMethod")) {
-			methodName = (String)arguments[0];
-		}
+		sb.append("security-manager-services");
+		sb.append(StringPool.OPEN_BRACKET);
+		sb.append(servletContextName);
+		sb.append(StringPool.CLOSE_BRACKET);
 
 		AuthorizationProperty authorizationProperty =
 			new AuthorizationProperty();
 
-		authorizationProperty.setKey("security-manager-services" + filter);
+		authorizationProperty.setKey(sb.toString());
 		authorizationProperty.setValue(
 			className + StringPool.POUND + methodName);
 
@@ -110,25 +82,16 @@ public class PortalServiceChecker extends BaseChecker {
 		PortalServicePermission portalServicePermission =
 			(PortalServicePermission)permission;
 
-		String name = portalServicePermission.getName();
-		Object object = portalServicePermission.getObject();
+		String name = portalServicePermission.getShortName();
+		String servletContextName =
+			portalServicePermission.getServletContextName();
+		String className = portalServicePermission.getClassName();
+		String methodName = portalServicePermission.getMethodName();
 
-		if (name.equals(PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY)) {
-			Class<?> implClass = (Class<?>)object;
+		if (name.equals(PORTAL_SERVICE_PERMISSION_SERVICE)) {
+			if (!hasService(
+					servletContextName, className, methodName, permission)) {
 
-			if (!hasDynamicQuery(implClass)) {
-				logSecurityException(
-					_log,
-					"Attempted to create a dynamic query for " + implClass);
-
-				return false;
-			}
-		}
-		else if (name.equals(PORTAL_SERVICE_PERMISSION_SERVICE)) {
-			Method method = portalServicePermission.getMethod();
-			Object[] arguments = portalServicePermission.getArguments();
-
-			if (!hasService(object, method, arguments, permission)) {
 				return false;
 			}
 		}
@@ -136,29 +99,14 @@ public class PortalServiceChecker extends BaseChecker {
 		return true;
 	}
 
-	protected String getInterfaceName(String className) {
-		int pos = className.indexOf(".impl.");
-
-		if (pos != -1) {
-			className =
-				className.substring(0, pos + 1) + className.substring(pos + 6);
-		}
-
-		if (className.endsWith("Impl")) {
-			className = className.substring(0, className.length() - 4);
-		}
-
-		return className;
-	}
-
-	protected Set<String> getServices(PACLPolicy paclPolicy) {
+	protected Set<String> getServices(String servletContextName) {
 		Set<String> services = null;
 
-		if (paclPolicy == null) {
+		if (servletContextName.equals("portal")) {
 			services = _portalServices;
 		}
 		else {
-			services = _pluginServices.get(paclPolicy.getServletContextName());
+			services = _pluginServices.get(servletContextName);
 
 			if (services == null) {
 				return Collections.emptySet();
@@ -168,28 +116,8 @@ public class PortalServiceChecker extends BaseChecker {
 		return services;
 	}
 
-	protected boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		if (paclPolicy == getPACLPolicy()) {
-			return true;
-		}
-
-		/*Set<String> services = getServices(paclPolicy);
-
-		String className = getInterfaceName(clazz.getName());
-
-		if (services.contains(className)) {
-			return true;
-		}*/
-
-		return false;
-	}
-
 	protected boolean hasService(
-		Object object, Method method, Object[] arguments,
+		String servletContextName, String className, String methodName,
 		Permission permission) {
 
 		int stackIndex = getStackIndex(15, 14);
@@ -204,36 +132,14 @@ public class PortalServiceChecker extends BaseChecker {
 			}
 		}
 
-		Class<?> clazz = PACLUtil.getClass(object);
-
-		if (clazz == null) {
-			return false;
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getClassLoader(clazz);
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		if (paclPolicy == getPACLPolicy()) {
-			return true;
-		}
-
-		Set<String> services = getServices(paclPolicy);
-
-		String className = getInterfaceName(clazz.getName());
+		Set<String> services = getServices(servletContextName);
 
 		if (services.contains(className)) {
 			return true;
 		}
 
-		if (method == null) {
+		if (Validator.isNull(methodName)) {
 			return false;
-		}
-
-		String methodName = method.getName();
-
-		if (methodName.equals("invokeMethod")) {
-			methodName = (String)arguments[0];
 		}
 
 		if (services.contains(

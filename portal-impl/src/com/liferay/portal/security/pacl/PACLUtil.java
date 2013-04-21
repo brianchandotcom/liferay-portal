@@ -55,6 +55,23 @@ public class PACLUtil {
 		return clazz;
 	}
 
+	public static String getServiceInterfaceName(String serviceClassName) {
+		int pos = serviceClassName.indexOf(".impl.");
+
+		if (pos != -1) {
+			serviceClassName =
+				serviceClassName.substring(0, pos + 1) +
+					serviceClassName.substring(pos + 6);
+		}
+
+		if (serviceClassName.endsWith("Impl")) {
+			serviceClassName = serviceClassName.substring(
+				0, serviceClassName.length() - 4);
+		}
+
+		return serviceClassName;
+	}
+
 	public static PACLPolicy getPACLPolicy() {
 		if (!PACLPolicyManager.isActive()) {
 			return null;

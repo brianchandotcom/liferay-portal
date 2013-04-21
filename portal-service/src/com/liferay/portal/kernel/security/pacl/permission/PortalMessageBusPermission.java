@@ -35,6 +35,11 @@ public class PortalMessageBusPermission extends BasicPermission {
 		_destinationName = destinationName;
 	}
 
+	@Override
+	public String getActions() {
+		return _destinationName;
+	}
+
 	public String getDestinationName() {
 		return _destinationName;
 	}

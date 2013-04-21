@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.security.pacl.permission;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
@@ -26,84 +28,94 @@ import java.security.BasicPermission;
  */
 public class PortalServicePermission extends BasicPermission {
 
-	public static void checkDynamicQuery(Class<?> implClass) {
-		_pacl.checkDynamicQuery(implClass);
-	}
-
 	public static void checkService(
 		Object object, Method method, Object[] arguments) {
 
 		_pacl.checkService(object, method, arguments);
 	}
 
-	public PortalServicePermission(String name, Object object, Method method) {
-		this(name, object, method, null);
+	public PortalServicePermission(String name, String methodName) {
+		super(name);
+
+		_init();
+		_methodName = methodName;
 	}
 
 	public PortalServicePermission(
-		String name, Object object, Method method, Object[] arguments) {
+		String name, String servletContextName, String className,
+		String methodName) {
 
-		super(name);
+		super(_createLongName(name, servletContextName, className));
 
-		_object = object;
-		_method = method;
-		_arguments = arguments;
-	}
-
-	public Object[] getArguments() {
-		return _arguments;
-	}
-
-	public Method getMethod() {
-		return _method;
-	}
-
-	public Object getObject() {
-		return _object;
+		_init();
+		_methodName = methodName;
 	}
 
 	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
+	public String getActions() {
+		return _methodName;
+	}
 
-		if (_arguments != null) {
-			sb.append("{arguments=[");
-			sb.append(StringUtil.merge(_arguments, ", "));
-			sb.append("]");
-			sb.append(", class=");
+	public String getClassName() {
+		return _className;
+	}
+
+	public String getMethodName() {
+		return _methodName;
+	}
+
+	public String getServletContextName() {
+		return _servletContextName;
+	}
+
+	public String getShortName() {
+		return _shortName;
+	}
+
+	private void _init() {
+		String[] nameParts = StringUtil.split(getName(), StringPool.POUND);
+
+		if (nameParts.length != 3) {
+			throw new IllegalArgumentException(
+				"The format for name is: " +
+					"[name]#[servletContextName]#[className], was " +
+						getName());
+		}
+
+		_shortName = nameParts[0];
+		_servletContextName = nameParts[1];
+		_className = nameParts[2];
+	}
+
+	private static String _createLongName(
+		String name, String servletContextName, String className) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(name);
+		sb.append(StringPool.POUND);
+
+		if (Validator.isNull(servletContextName)) {
+			sb.append("portal");
 		}
 		else {
-			sb.append("{class=");
+			sb.append(servletContextName);
 		}
 
-		Class<?> clazz = getClass();
-
-		sb.append(clazz.getName());
-
-		if (_method != null) {
-			sb.append(", method=");
-			sb.append(_method.getName());
-		}
-
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", object=");
-		sb.append(getObject());
-		sb.append("}");
+		sb.append(StringPool.POUND);
+		sb.append(className);
 
 		return sb.toString();
 	}
 
 	private static PACL _pacl = new NoPACL();
 
-	private transient Object[] _arguments;
-	private transient Method _method;
-	private transient Object _object;
+	private String _className;
+	private String _methodName;
+	private String _servletContextName;
+	private String _shortName;
 
 	private static class NoPACL implements PACL {
-
-		public void checkDynamicQuery(Class<?> implClass) {
-		}
 
 		public void checkService(
 			Object object, Method method, Object[] arguments) {
@@ -112,8 +124,6 @@ public class PortalServicePermission extends BasicPermission {
 	}
 
 	public static interface PACL {
-
-		public void checkDynamicQuery(Class<?> implClass);
 
 		public void checkService(
 			Object object, Method method, Object[] arguments);

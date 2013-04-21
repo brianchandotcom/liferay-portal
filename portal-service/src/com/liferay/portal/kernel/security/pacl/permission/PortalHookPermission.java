@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.security.pacl.permission;
 import java.security.BasicPermission;
 
 /**
+ * This permission implementation is only tested directly against the PACLPolicy
+ * and so it never passes through the security API.
+ *
  * @author Raymond Augé
  */
 public class PortalHookPermission extends BasicPermission {

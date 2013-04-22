@@ -77,37 +77,37 @@ public class NonSerializableObjectRequestWrapper
 	}
 
 	private boolean _wrapObject(Object object) {
-		if (_WEBLOGIC_WRAP_NONSERIALIZABLE.equals("ALL")) {
+		if (_WEBLOGIC_WRAP_NON_SERIALIZABLE.equals("all")) {
 			return true;
 		}
 
-		if (_WEBLOGIC_WRAP_NONSERIALIZABLE.equals("UNSERIALIZABLE_ONLY")) {
-			if (!(object instanceof Serializable)) {
-				return true;
-			}
-
-			try {
-				ByteArrayOutputStream byteArrayOutputStream =
-					new ByteArrayOutputStream();
-
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					byteArrayOutputStream);
-
-				objectOutputStream.writeObject(object);
-
-				objectOutputStream.close();
-
-				return false;
-			}
-			catch (Exception e) {
-				return true;
-			}
+		if (_WEBLOGIC_WRAP_NON_SERIALIZABLE.equals("none")) {
+			return false;
 		}
 
-		return false;
+		if (!(object instanceof Serializable)) {
+			return true;
+		}
+
+		try {
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				byteArrayOutputStream);
+
+			objectOutputStream.writeObject(object);
+
+			objectOutputStream.close();
+
+			return false;
+		}
+		catch (Exception e) {
+			return true;
+		}
 	}
 
-	private static final String _WEBLOGIC_WRAP_NONSERIALIZABLE = PropsUtil.get(
-		PropsKeys.WEBLOGIC_WRAP_NONSERIALIZABLE).toUpperCase();
+	private static final String _WEBLOGIC_WRAP_NON_SERIALIZABLE = PropsUtil.get(
+		PropsKeys.WEBLOGIC_WRAP_NON_SERIALIZABLE);
 
 }

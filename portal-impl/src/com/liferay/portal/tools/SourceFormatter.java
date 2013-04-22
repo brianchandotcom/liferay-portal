@@ -1624,6 +1624,11 @@ public class SourceFormatter {
 				_processErrorMessage(fileName, "Proxy: " + fileName);
 			}
 
+			if (newContent.contains("import edu.emory.mathcs.backport.java")) {
+				_processErrorMessage(
+					fileName, "edu.emory.mathcs.backport.java: " + fileName);
+			}
+
 			// LPS-28266
 
 			for (int pos1 = -1;;) {

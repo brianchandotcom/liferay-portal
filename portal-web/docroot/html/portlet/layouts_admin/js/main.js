@@ -155,7 +155,7 @@ AUI.add(
 										}
 									]
 								}
-							).render();
+							).render(instance.rootNode);
 
 							instance._contentDialog = contentDialog;
 						}
@@ -198,7 +198,7 @@ AUI.add(
 									title: Liferay.Language.get('application-configuration'),
 									width: 400
 								}
-							).render();
+							).render(instance.rootNode);
 
 							instance._globalConfigurationDialog = globalConfigurationDialog;
 						}
@@ -241,7 +241,7 @@ AUI.add(
 									title: Liferay.Language.get('content-to-export'),
 									width: 400
 								}
-							).render();
+							).render(instance.rootNode);
 
 							instance._globalContentDialog = globalContentDialog;
 						}
@@ -283,7 +283,7 @@ AUI.add(
 									title: Liferay.Language.get('pages'),
 									width: 400
 								}
-							).render();
+							).render(instance.rootNode);
 
 							instance._pagesDialog = pagesDialog;
 						}
@@ -326,7 +326,7 @@ AUI.add(
 									title: Liferay.Language.get('content-to-export'),
 									width: 400
 								}
-							).render();
+							).render(instance.rootNode);
 
 							instance._rangeDialog = rangeDialog;
 						}
@@ -488,7 +488,6 @@ AUI.add(
 						if (Lang.isString(val)) {
 							val = instance.one(val);
 						}
-
 						return val;
 					}
 				}

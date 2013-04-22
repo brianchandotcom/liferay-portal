@@ -242,7 +242,9 @@ public class PluginsEnvironmentBuilder {
 			gitIgnores[i] = ("/lib/" + gitIgnore).replace(".jar", "-*.jar");
 		}
 
-		_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		if (gitIgnores.length > 0) {
+			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		}
 	}
 
 	protected void setupWarProject(String dirName, String fileName)

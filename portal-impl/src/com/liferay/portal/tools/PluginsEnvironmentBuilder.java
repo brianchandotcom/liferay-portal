@@ -225,6 +225,24 @@ public class PluginsEnvironmentBuilder {
 		List<String> dependencyJars = Collections.emptyList();
 
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
+
+		List<String> importSharedJars = getImportSharedJars(projectDir);
+
+		File gitignoreFile = new File(
+			projectDir.getCanonicalPath() + "/.gitignore");
+
+		System.out.println("Updating " + gitignoreFile);
+
+		String[] gitIgnores = importSharedJars.toArray(
+			new String[importSharedJars.size()]);
+
+		for (int i = 0; i < gitIgnores.length; i++) {
+			String gitIgnore = gitIgnores[i];
+
+			gitIgnores[i] = ("/lib/" + gitIgnore).replace(".jar", "-*.jar");
+		}
+
+		_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
 	}
 
 	protected void setupWarProject(String dirName, String fileName)

@@ -231,8 +231,6 @@ public class PluginsEnvironmentBuilder {
 		File gitignoreFile = new File(
 			projectDir.getCanonicalPath() + "/.gitignore");
 
-		System.out.println("Updating " + gitignoreFile);
-
 		String[] gitIgnores = importSharedJars.toArray(
 			new String[importSharedJars.size()]);
 
@@ -242,7 +240,11 @@ public class PluginsEnvironmentBuilder {
 			gitIgnores[i] = ("/lib/" + gitIgnore).replace(".jar", "-*.jar");
 		}
 
-		_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		if (gitIgnores.length > 0) {
+			System.out.println("Updating " + gitignoreFile);
+
+			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		}
 	}
 
 	protected void setupWarProject(String dirName, String fileName)

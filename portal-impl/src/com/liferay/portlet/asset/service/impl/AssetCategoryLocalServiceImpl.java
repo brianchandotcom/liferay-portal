@@ -50,6 +50,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
+ * Provides the local service for accessing, adding, deleting, merging, moving,
+ * and updating asset categories.
+ *
  * @author Brian Wing Shun Chan
  * @author Alvaro del Castillo
  * @author Jorge Ferrer

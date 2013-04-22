@@ -51,7 +51,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The implementation of the organization remote service.
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * organizations. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer

@@ -28,6 +28,10 @@ import java.io.InputStream;
 import java.util.Map;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, importing,
+ * subscription handling of, trash handling of, and updating wiki nodes. Its
+ * methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Charles May
  */

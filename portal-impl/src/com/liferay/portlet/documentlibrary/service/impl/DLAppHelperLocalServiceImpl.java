@@ -80,7 +80,7 @@ import java.util.concurrent.Callable;
 import javax.portlet.PortletPreferences;
 
 /**
- * The implementation the document library application helper local service.
+ * Provides the local service helper for the document library application.
  *
  * @author Alexander Chow
  */

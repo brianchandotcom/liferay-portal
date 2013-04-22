@@ -56,6 +56,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Provides the local service for accessing, adding, deleting, importing,
+ * subscription handling of, trash handling of, and updating wiki nodes.
+ *
  * @author Brian Wing Shun Chan
  * @author Charles May
  * @author Raymond Augé

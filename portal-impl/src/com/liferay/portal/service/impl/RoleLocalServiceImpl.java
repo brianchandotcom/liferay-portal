@@ -70,7 +70,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the role local service.
+ * Provides the local service for accessing, adding, checking, deleting, and
+ * updating roles.
  *
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares

@@ -79,8 +79,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 /**
- * The implementation of the company local service. Each company refers to a
- * separate portal instance.
+ * Provides the local service for adding, checking, and updating companies. Each
+ * company refers to a separate portal instance.
  *
  * @author Brian Wing Shun Chan
  * @author Julio Camarero

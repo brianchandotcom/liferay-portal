@@ -55,6 +55,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, subscription
+ * handling of, trash handling of, and updating blog entries. Its methods
+ * include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */

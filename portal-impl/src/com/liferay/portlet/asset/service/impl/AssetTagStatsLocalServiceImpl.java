@@ -25,7 +25,8 @@ import com.liferay.portlet.asset.service.base.AssetTagStatsLocalServiceBaseImpl;
 import java.util.List;
 
 /**
- * The implementation of the asset tag statistics local service.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * asset tag statistics.
  *
  * @author Jorge Ferrer
  */

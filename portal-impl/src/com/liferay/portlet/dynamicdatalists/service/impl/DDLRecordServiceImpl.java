@@ -29,6 +29,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * dynamic data list (DDL) records. Its methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */

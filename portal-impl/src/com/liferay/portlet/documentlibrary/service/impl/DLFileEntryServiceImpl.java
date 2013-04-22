@@ -46,6 +46,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Provides the remote service for accessing, adding, checking in/out, deleting,
+ * locking/unlocking, moving, reverting, updating, and verifying document
+ * library file entries. Its methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */

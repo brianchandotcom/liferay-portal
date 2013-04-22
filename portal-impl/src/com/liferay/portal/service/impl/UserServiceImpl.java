@@ -69,7 +69,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * The implementation of the user remote service.
+ * Provides the remote service for accessing, adding, authenticating, deleting,
+ * and updating users. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim

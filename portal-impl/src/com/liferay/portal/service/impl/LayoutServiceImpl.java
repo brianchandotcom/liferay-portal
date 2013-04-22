@@ -54,7 +54,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the layout service.
+ * Provides the remote service for accessing, adding, deleting, exporting,
+ * importing, scheduling publishing of, and updating layouts. Its methods
+ * include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Wesley Gong

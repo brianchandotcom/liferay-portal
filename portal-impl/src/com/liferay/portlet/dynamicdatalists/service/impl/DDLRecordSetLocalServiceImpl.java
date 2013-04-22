@@ -36,6 +36,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Provides the local service for accessing, adding, deleting, and updating
+ * dynamic data list (DDL) record sets.
+ *
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */

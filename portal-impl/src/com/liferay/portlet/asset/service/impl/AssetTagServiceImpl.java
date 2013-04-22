@@ -42,6 +42,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * Provides the remote service for accessing, adding, checking, deleting,
+ * merging, and updating asset tags. Its methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Alvaro del Castillo

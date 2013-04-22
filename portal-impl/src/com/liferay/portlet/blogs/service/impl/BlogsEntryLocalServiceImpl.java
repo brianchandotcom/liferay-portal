@@ -86,7 +86,8 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
 /**
- * The implementation of the blogs entry local service.
+ * Provides the local service for accessing, adding, checking, deleting,
+ * subscription handling of, trash handling of, and updating blog entries.
  *
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man

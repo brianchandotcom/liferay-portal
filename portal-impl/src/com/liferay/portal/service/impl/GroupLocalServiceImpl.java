@@ -98,14 +98,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The group local service is responsible for accessing, creating, modifying and
- * deleting groups.
- *
- * <p>
- * Groups are mostly used in Liferay as a resource container for permissioning
- * and content scoping purposes as described in {@link
- * com.liferay.portal.model.impl.GroupImpl}.
- * </p>
+ * Provides the local service for accessing, adding, deleting, and updating
+ * groups. Groups are mostly used in Liferay as a resource container for
+ * permissioning and content scoping purposes.
  *
  * <p>
  * Groups are also the entity to which LayoutSets are generally associated.
@@ -174,6 +169,7 @@ import java.util.Map;
  * @author Alexander Chow
  * @author Bruno Farache
  * @author Wesley Gong
+ * @see    com.liferay.portal.model.impl.GroupImpl
  */
 public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 

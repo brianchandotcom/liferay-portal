@@ -25,7 +25,8 @@ import com.liferay.portal.service.base.ResourceTypePermissionLocalServiceBaseImp
 import java.util.List;
 
 /**
- * Manages resource type permissions.
+ * Provides the local service for accessing and updating resource type
+ * permissions.
  *
  * <p>
  * Never call the update methods of this service directly, always go through the

@@ -62,6 +62,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, moving,
+ * subscription handling of, trash handling of, and updating wiki pages and wiki
+ * page attachments. Its methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Raymond Augé

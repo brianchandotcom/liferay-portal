@@ -65,6 +65,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Provides the local service for accessing, deleting, updating, and validating
+ * asset entries.
+ *
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Zsolt Berentey

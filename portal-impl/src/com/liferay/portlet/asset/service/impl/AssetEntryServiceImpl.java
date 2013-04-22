@@ -42,6 +42,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Provides the remote service for accessing and updating asset entries. Its
+ * methods include permission checks.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Bruno Farache

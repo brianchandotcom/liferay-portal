@@ -952,9 +952,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			companyId, workflowUserId, User.class.getName(), userId, user,
-			workflowServiceContext);
+		startWorkflowInstance(
+			companyId, workflowUserId, userId, user, workflowServiceContext);
 
 		if (serviceContext != null) {
 			String passwordUnencrypted = (String)serviceContext.getAttribute(
@@ -5502,6 +5501,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setEmailAddress(emailAddress);
 		user.setDigest(StringPool.BLANK);
+	}
+
+	protected void startWorkflowInstance(
+		final long companyId, final long workflowUserId, final long userId,
+		final User user, final ServiceContext workflowServiceContext) {
+
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
+
+			@Override
+			protected Void doCall() throws Exception {
+				WorkflowHandlerRegistryUtil.startWorkflowInstance(
+					companyId, workflowUserId, User.class.getName(), userId,
+					user, workflowServiceContext);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
 	protected void updateGroups(

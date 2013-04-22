@@ -42,7 +42,10 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 
-ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
+int entryStart = ParamUtil.getInteger(request, "entryStart");
+int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
+
+ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEnd / (entryEnd - entryStart), entryEnd - entryStart, portletURL);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -177,9 +180,6 @@ boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEA
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-int entryStart = ParamUtil.getInteger(request, "entryStart", searchContainer.getStart());
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", searchContainer.getEnd());
-
 List results = null;
 int total = 0;
 %>
@@ -193,76 +193,70 @@ int total = 0;
 		if (displayTerms.getNavigation().equals("mine")) {
 			userId = themeDisplay.getUserId();
 		}
-
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId);
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 
 		<%
-		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getArticlesCountByStructureId(scopeGroupId, searchTerms.getStructureId());
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
 
 		<%
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate());
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
 	<c:otherwise>
 
 		<%
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
 
-		searchContainer.setResults(results);
 		searchContainer.setTotal(total);
+
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>
 </c:choose>
 
 <%
+searchContainer.setResults(results);
+
 request.setAttribute("view.jsp-total", String.valueOf(total));
+
+request.setAttribute("view_entries.jsp-entryStart", String.valueOf(searchContainer.getStart()));
+request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer.getEnd()));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="entries-empty portlet-msg-info">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
-				<c:choose>
-					<c:when test="<%= total == 0 %>">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x-on-this-page" />
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= total == 0 %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" />
+				</c:if>
 			</c:when>
 			<c:otherwise>
-				<c:choose>
-					<c:when test="<%= total == 0 %>">
-						<liferay-ui:message key="no-web-content-were-found" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="there-is-no-web-content-on-this-page" />
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= total == 0 %>">
+					<liferay-ui:message key="no-web-content-were-found" />
+				</c:if>
 			</c:otherwise>
 		</c:choose>
 	</div>
@@ -474,8 +468,8 @@ for (int i = 0; i < results.size(); i++) {
 			paginator: {
 				name: 'entryPaginator',
 				state: {
-					page: <%= (total == 0) ? 0 : (entryEnd / (entryEnd - entryStart)) %>,
-					rowsPerPage: <%= (entryEnd - entryStart) %>,
+					page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
+					rowsPerPage: <%= searchContainer.getDelta() %>,
 					total: <%= total %>
 				}
 			}

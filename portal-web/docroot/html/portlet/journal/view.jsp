@@ -45,12 +45,8 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT_DELTA);
 
-int entryRowsPerPage = entryEnd - entryStart;
-
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
-
-int folderRowsPerPage = folderEnd - folderStart;
 
 request.setAttribute("view.jsp-folder", folder);
 
@@ -117,6 +113,12 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 <%
 int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
+
+entryEnd = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryEnd"), entryEnd);
+entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryStart"), entryStart);
+
+folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
+folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 %>
 
 <span id="<portlet:namespace />displayStyleButtonsContainer">
@@ -176,12 +178,12 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 			paginator: {
 				entriesTotal: <%= entriesTotal %>,
 				entryEnd: <%= entryEnd %>,
-				entryRowsPerPage: <%= entryRowsPerPage %>,
+				entryRowsPerPage: <%= entryEnd - entryStart %>,
 				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 				entryStart: <%= entryStart %>,
 				folderEnd: <%= folderEnd %>,
 				folderId: <%= folderId %>,
-				folderRowsPerPage: <%= folderRowsPerPage %>,
+				folderRowsPerPage: <%= folderEnd - folderStart %>,
 				folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 				folderStart: <%= folderStart %>,
 				foldersTotal: <%= foldersTotal %>

@@ -74,10 +74,10 @@ if (folder != null) {
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= JournalFolderServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folderId) %>"
 		/>
 
 		<liferay-ui:search-container-row

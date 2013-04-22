@@ -48,15 +48,21 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", SearchContainer.DEFAULT
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, folderStart, folderEnd);
-
 int total = 0;
 
-if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) || expandFolder) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
 
-request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+portletURL.setParameter("struts_action", "/journal/view");
+
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", folderEnd / (folderEnd - folderStart), (folderEnd - folderStart), portletURL, null, null);
+
+searchContainer.setTotal(total);
+
+List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, searchContainer.getStart(), searchContainer.getEnd());
 
 String parentTitle = StringPool.BLANK;
 
@@ -324,6 +330,13 @@ else {
 		</c:choose>
 	</ul>
 
+	<%
+	request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+
+	request.setAttribute("view_folders.jsp-folderEnd", searchContainer.getEnd());
+	request.setAttribute("view_folders.jsp-folderStart", searchContainer.getStart());
+	%>
+
 	<aui:script>
 		Liferay.fire(
 			'<portlet:namespace />pageLoaded',
@@ -331,8 +344,8 @@ else {
 				paginator: {
 					name: 'folderPaginator',
 					state: {
-						page: <%= folderEnd / (folderEnd - folderStart) %>,
-						rowsPerPage: <%= (folderEnd - folderStart) %>,
+						page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
+						rowsPerPage: <%= searchContainer.getDelta() %>,
 						total: <%= total %>
 					}
 				}

@@ -59,8 +59,9 @@ public class AssetEntryQuery {
 
 	public static String checkOrderByCol(String orderByCol) {
 		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
-			orderByCol.startsWith(
-				DDMIndexer.DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH )) {
+			((orderByCol != null) &&
+			 orderByCol.startsWith(
+				DDMIndexer.DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH))) {
 
 			return orderByCol;
 		}

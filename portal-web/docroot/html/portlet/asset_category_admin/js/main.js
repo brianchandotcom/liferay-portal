@@ -1106,10 +1106,21 @@ AUI.add(
 							function(item, index, collection) {
 								var checked = false;
 
+								var paginatorConfig = {
+									offsetParam: 'start'
+								};
+
+								paginatorConfig.limit = 10;
+
+								paginatorConfig.moreResultsLabel = Liferay.Language.get('load-more-results');
+
+								paginatorConfig.total = item.numChildren;
+
 								return {
 									alwaysShowHitArea: item.hasChildren,
 									id: STR_CATEGORY_NODE + item.categoryId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
+									paginator: paginatorConfig,
 									type: 'check',
 									on: {
 										checkedChange: function(event) {

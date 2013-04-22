@@ -531,14 +531,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			%>
 
 				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
-				columnBuffer1.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
+				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
 
 			<%
 			}
 			%>
 
 			columnBuffer1.push(optgroupClose);
-			columnBuffer1.push(optgroupClose);
+			columnBuffer2.push(optgroupClose);
 
 			MAP_DDM_STRUCTURES['<%= className %>_<%= subTypeId %>_optTextOrderByColumn1'] = columnBuffer1.join('');
 			MAP_DDM_STRUCTURES['<%= className %>_<%= subTypeId %>_optTextOrderByColumn2'] = columnBuffer2.join('');

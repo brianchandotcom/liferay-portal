@@ -18,7 +18,7 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String eventName = ParamUtil.getString(request, "eventName", "selectRegularRole");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRegularRole");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -117,7 +117,7 @@ portletURL.setParameter("eventName", eventName);
 		function(event) {
 			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 			Util.getWindow().close();
 		},

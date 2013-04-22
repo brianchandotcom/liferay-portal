@@ -19,7 +19,7 @@
 <%
 String className = ParamUtil.getString(request, "className");
 long classTypeId = ParamUtil.getLong(request, "classTypeId");
-String eventName = ParamUtil.getString(request, "eventName", "selectDDMStructureField");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectDDMStructureField");
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
@@ -123,7 +123,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 							result['value'] = jsonArray.value;
 
-							Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 							Util.getWindow().close();
 						}

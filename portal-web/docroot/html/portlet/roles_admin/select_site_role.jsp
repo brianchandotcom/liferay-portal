@@ -19,7 +19,7 @@
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step");
-String eventName = ParamUtil.getString(request, "eventName", "selectSiteRole");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -249,7 +249,7 @@ if (step == 1) {
 					function(event) {
 						var result = Util.getAttributes(event.currentTarget, 'data-');
 
-						Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 						Util.getWindow().close();
 					},

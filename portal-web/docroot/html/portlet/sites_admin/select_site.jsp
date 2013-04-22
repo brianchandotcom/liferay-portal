@@ -21,7 +21,7 @@ String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
-String eventName = ParamUtil.getString(request, "eventName", "selectGroup");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectGroup");
 String target = ParamUtil.getString(request, "target");
 
 User selUser = PortalUtil.getSelectedUser(request);
@@ -160,7 +160,7 @@ portletURL.setParameter("target", target);
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("groupid", group.getGroupId());
-					data.put("groupname", HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+					data.put("groupname", HtmlUtil.escape(group.getDescriptiveName(locale)));
 					data.put("grouptarget", target);
 					data.put("grouptype", LanguageUtil.get(pageContext, group.getTypeLabel()));
 					%>
@@ -186,7 +186,7 @@ portletURL.setParameter("target", target);
 		function(event) {
 			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 			Util.getWindow().close();
 		},

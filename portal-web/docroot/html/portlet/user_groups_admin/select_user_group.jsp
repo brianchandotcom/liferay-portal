@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
 
 <%
-String eventName = ParamUtil.getString(request, "eventName", "selectUserGroup");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -117,7 +117,7 @@ portletURL.setParameter("eventName", eventName);
 		function(event) {
 			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 			Util.getWindow().close();
 		},

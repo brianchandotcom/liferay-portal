@@ -20,7 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 long groupId = ParamUtil.getLong(request, "groupId");
-String eventName = ParamUtil.getString(request, "eventName", "selectTeam");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTeam");
 %>
 
 <liferay-ui:header
@@ -100,7 +100,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectTeam");
 		function(event) {
 			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			Util.getOpener().Liferay.fire('<portlet:namespace /><%= eventName %>', result);
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
 			Util.getWindow().close();
 		},

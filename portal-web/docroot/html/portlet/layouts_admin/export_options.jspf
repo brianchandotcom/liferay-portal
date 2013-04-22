@@ -442,7 +442,7 @@
 			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
-			namespace: '',
+			namespace: '<portlet:namespace />',
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',

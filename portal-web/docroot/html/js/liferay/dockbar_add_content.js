@@ -113,12 +113,12 @@ AUI.add(
 						instance._loadPreviewTask = A.debounce('_loadPreviewFn', 200, instance);
 
 						Liferay.on(
-							'AddContent:addPortletFromApplication',
+							'AddContent:addPortlet',
 							function(event) {
 								var portlet = event.node;
 								var options = event.options;
 
-								instance._addPortletFromApplicationPanel(portlet, options);
+								instance._addPortlet(portlet, options);
 							}
 						);
 
@@ -130,16 +130,17 @@ AUI.add(
 
 						var portlet = event.currentTarget;
 
-						instance._addPortletFromApplicationPanel(portlet);
+						instance._addPortlet(portlet);
 					},
 
-					_addPortletFromApplicationPanel: function(portlet, options) {
+					_addPortlet: function(portlet, options) {
 						var instance = this;
 
 						var portletMetaData = instance._getPortletMetaData(portlet);
 
 						if (!portletMetaData.portletUsed) {
 							var plid = portletMetaData.plid;
+							var portletData = portletMetaData.portletData;
 							var portletId = portletMetaData.portletId;
 							var portletItemId = portletMetaData.portletItemId;
 							var isInstanceable = portletMetaData.instanceable;
@@ -183,25 +184,13 @@ AUI.add(
 								beforePortletLoaded: beforePortletLoaded,
 								plid: plid,
 								placeHolder: placeHolder,
+								portletData: portletData,
 								portletId: portletId,
 								portletItemId: portletItemId
 							};
 
 							Portlet.add(portletOptions);
 						}
-					},
-
-					_addPortletFromContentPanel: function(event) {
-						var item = event.currentTarget;
-
-						var portletData = item.attr('data-class-pk') + ',' + item.attr('data-class-name');
-
-						Portlet.add(
-							{
-								portletData: portletData,
-								portletId: item.attr('data-portlet-id')
-							}
-						);
 					},
 
 					_afterPreviewFailure: function(event) {
@@ -222,7 +211,7 @@ AUI.add(
 
 						tooltip.set(BODY_CONTENT, event.currentTarget.get(RESPONSE_DATA));
 
-						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortletFromContentPanel, instance);
+						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addApplication, instance);
 					},
 
 					_afterSuccess: function(event) {
@@ -240,9 +229,7 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._addApplicationForm.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
-
-						instance._entriesContainer.delegate(STR_CLICK, instance._addPortletFromContentPanel, '.add-content-item', instance);
+						instance._addPanel.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
 
@@ -394,8 +381,18 @@ AUI.add(
 						var portletMetaData = portlet._LFR_portletMetaData;
 
 						if (!portletMetaData) {
+							var classPK = portlet.attr('data-class-pk');
+							var className = portlet.attr('data-class-name');
+
 							var instanceable = (portlet.attr('data-instanceable') == 'true');
 							var plid = portlet.attr('data-plid');
+
+							var portletData = '';
+
+							if ((className != '') && (classPK != '')) {
+								portletData = classPK + ',' + className;
+							}
+
 							var portletId = portlet.attr('data-portlet-id');
 							var portletItemId = portlet.attr('data-portlet-item-id');
 							var portletUsed = portlet.hasClass(STR_LFR_PORTLET_USED);
@@ -403,6 +400,7 @@ AUI.add(
 							portletMetaData = {
 								instanceable: instanceable,
 								plid: plid,
+								portletData: portletData,
 								portletId: portletId,
 								portletItemId: portletItemId,
 								portletUsed: portletUsed
@@ -618,7 +616,7 @@ AUI.add(
 						var instance = this;
 
 						Liferay.fire(
-							'AddContent:addPortletFromApplication',
+							'AddContent:addPortlet',
 							{
 								node: portletNode,
 								options: options

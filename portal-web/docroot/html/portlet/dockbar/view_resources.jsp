@@ -107,6 +107,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 					data.put("class-name", assetEntry.getClassName());
 					data.put("class-pk", assetEntry.getClassPK());
+					data.put("instanceable", true);
 					data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 					data.put("title", title);
 				%>

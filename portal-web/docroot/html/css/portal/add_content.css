@@ -121,6 +121,10 @@
 			right: 0;
 			z-index: 1;
 		}
+
+		.app-view-entry {
+			cursor: move;
+		}
 	}
 
 	.search-panel {

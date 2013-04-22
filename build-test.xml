@@ -2751,6 +2751,45 @@
 		<echo file="${basedir}/test.run.properties">${test.properties.expanded}</echo>
 	</target>
 
+	<target name="generate-tests">
+		<script classpathref="project.classpath" language="beanshell">
+			String testClass = project.getProperty("test.class");
+			String testName = "";
+
+			if (testClass.endsWith("TestCase")) {
+				testName = testClass.replaceAll("TestCase", ".testcase");
+			}
+			else if (testClass.endsWith("TestSuite")) {
+				testName = testClass.replaceAll("TestSuite", ".testsuite");
+			}
+
+			project.setProperty("test.name", testName);
+		</script>
+
+		<if>
+			<available file="portal-web/test/functional" type="dir" />
+			<then>
+				<resourcecount property="test.count">
+					<fileset dir="portal-web/test/functional" includes="**/${test.name}" />
+				</resourcecount>
+			</then>
+		</if>
+
+		<delete dir="portal-web/test/functional-generated" failonerror="false" />
+
+		<if>
+			<and>
+				<isset property="test.count"/>
+				<not>
+					<equals arg1="${test.count}" arg2="0" />
+				</not>
+			</and>
+			<then>
+				<ant dir="portal-web" target="build-selenium-new" inheritAll="false" />
+			</then>
+		</if>
+	</target>
+
 	<target name="install-vm-java">
 		<if>
 			<not>
@@ -3811,6 +3850,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				/>
 			</else>
 		</if>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.class}" />
+		</antcall>
 
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 

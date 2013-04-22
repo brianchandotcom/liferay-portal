@@ -65,7 +65,7 @@ public class TearDownSettingsAddressTest extends BaseTestCase {
 				boolean addressStreet2Present = selenium.isElementPresent(
 						"//input[@id='_130_addressStreet1_1']");
 
-				if (!addressStreet1Present) {
+				if (!addressStreet2Present) {
 					label = 3;
 
 					continue;

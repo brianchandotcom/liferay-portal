@@ -23,7 +23,6 @@ page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><
 page import="com.liferay.portal.kernel.xml.Document" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
-page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.NoSuchEntryException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
@@ -47,12 +46,10 @@ page import="com.liferay.portlet.assetpublisher.search.AssetDisplayTerms" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %><%@
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" %><%@
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" %><%@
-page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
@@ -95,6 +92,7 @@ String customUserAttributes = GetterUtil.getString(preferences.getValue("customU
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+long[] allAssetCategoryIds = new long[0];
 String[] allAssetTagNames = new String[0];
 
 String ddmStructureFieldLabel = StringPool.BLANK;
@@ -142,7 +140,7 @@ String assetCategoryTitle = null;
 String assetVocabularyTitle = null;
 
 if (assetCategoryId > 0) {
-	long[] allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
+	allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
 
 	if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
 		assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));

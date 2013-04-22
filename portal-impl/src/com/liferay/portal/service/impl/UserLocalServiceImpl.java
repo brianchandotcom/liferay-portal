@@ -952,7 +952,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		workflowServiceContext.setAttribute("autoPassword", autoPassword);
 		workflowServiceContext.setAttribute("sendEmail", sendEmail);
 
-		startWorkflowInstance(workflowUserId, user, workflowServiceContext);
+		startWorkflowInstance(
+			companyId, workflowUserId, userId, user, workflowServiceContext);
 
 		if (serviceContext != null) {
 			String passwordUnencrypted = (String)serviceContext.getAttribute(
@@ -5503,17 +5504,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void startWorkflowInstance(
-		final long workflowUserId, final User user,
-		final ServiceContext workflowServiceContext) {
+		final long companyId, final long workflowUserId, final long userId,
+		final User user, final ServiceContext workflowServiceContext) {
 
-		Callable<Void> callable = new PortalCallable<Void>(
-			user.getCompanyId()) {
+		Callable<Void> callable = new PortalCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
-				long companyId = user.getCompanyId();
-				long userId = user.getUserId();
-
 				WorkflowHandlerRegistryUtil.startWorkflowInstance(
 					companyId, workflowUserId, User.class.getName(), userId,
 					user, workflowServiceContext);

@@ -80,9 +80,13 @@ public class PluginsEnvironmentBuilder {
 		for (String fileName : ds.getIncludedFiles()) {
 			String content = _fileUtil.read(dirName + "/" + fileName);
 
-			if (!content.contains(
-					"<import file=\"../build-common-shared.xml\" />")) {
+			boolean isOsgiProject = content.contains(
+				"<import file=\"../../build-common-osgi-plugin.xml\" />");
 
+			boolean isSharedProject = content.contains(
+				"<import file=\"../build-common-shared.xml\" />");
+
+			if (!isOsgiProject && !isSharedProject) {
 				continue;
 			}
 
@@ -221,6 +225,26 @@ public class PluginsEnvironmentBuilder {
 		List<String> dependencyJars = Collections.emptyList();
 
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
+
+		List<String> importSharedJars = getImportSharedJars(projectDir);
+
+		File gitignoreFile = new File(
+			projectDir.getCanonicalPath() + "/.gitignore");
+
+		System.out.println("Updating " + gitignoreFile);
+
+		String[] gitIgnores = importSharedJars.toArray(
+			new String[importSharedJars.size()]);
+
+		for (int i = 0; i < gitIgnores.length; i++) {
+			String gitIgnore = gitIgnores[i];
+
+			gitIgnores[i] = ("/lib/" + gitIgnore).replace(".jar", "-*.jar");
+		}
+
+		if (gitIgnores.length > 0) {
+			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		}
 	}
 
 	protected void setupWarProject(String dirName, String fileName)
@@ -447,6 +471,8 @@ public class PluginsEnvironmentBuilder {
 			}
 		}
 
+		writeOsgiBundleDependencies(sb, projectDirName);
+
 		sb.append("\t<classpathentry kind=\"output\" path=\"bin\" />\n");
 		sb.append("</classpath>");
 
@@ -536,6 +562,39 @@ public class PluginsEnvironmentBuilder {
 		}
 		else {
 			_fileUtil.delete(projectDirName + "/.gitignore");
+		}
+	}
+
+	protected void writeOsgiBundleDependencies(
+			StringBundler sb, String projectDir)
+		throws Exception {
+
+		String content = _fileUtil.read(projectDir + "/build.xml");
+
+		int index = content.indexOf("plugin-lib.classpath");
+
+		if (index == -1) {
+			return;
+		}
+
+		int start = content.indexOf("includes=\"", index);
+		start = content.indexOf("\"", start);
+
+		int end = content.indexOf("\"", start + 1);
+
+		if ((start == -1) || (end == -1)) {
+			return;
+		}
+
+		DirectoryScanner ds = new DirectoryScanner();
+
+		ds.setBasedir(projectDir + "/../../lib/");
+		ds.setIncludes(StringUtil.split(content.substring(start + 1, end)));
+
+		ds.scan();
+
+		for (String file : ds.getIncludedFiles()) {
+			addClasspathEntry(sb, "../../lib/" + file);
 		}
 	}
 

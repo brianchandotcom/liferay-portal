@@ -187,8 +187,13 @@ public class MDRRuleGroupLocalServiceImpl
 			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
 
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
 		return mdrRuleGroupFinder.findByG_N(
-			groupId, name, andOperator, start, end);
+			groupId, name, params, andOperator, start, end);
 	}
 
 	public List<MDRRuleGroup> search(
@@ -209,8 +214,13 @@ public class MDRRuleGroupLocalServiceImpl
 			int end)
 		throws SystemException {
 
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
 		return mdrRuleGroupFinder.findByKeywords(
-			groupId, keywords, start, end);
+			groupId, keywords, params, start, end);
 	}
 
 	public List<MDRRuleGroup> searchByKeywords(
@@ -230,7 +240,12 @@ public class MDRRuleGroupLocalServiceImpl
 			long groupId, String keywords, boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
 	}
 
 	public int searchByKeywordsCount(
@@ -238,7 +253,7 @@ public class MDRRuleGroupLocalServiceImpl
 			boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByKeywords(groupId, params, keywords);
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
 	}
 
 	/**
@@ -248,7 +263,13 @@ public class MDRRuleGroupLocalServiceImpl
 	public int searchCount(long groupId, String name, boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return mdrRuleGroupFinder.countByG_N(
+			groupId, name, params, andOperator);
 	}
 
 	public int searchCount(

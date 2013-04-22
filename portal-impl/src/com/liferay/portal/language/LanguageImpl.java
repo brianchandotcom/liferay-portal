@@ -599,10 +599,10 @@ public class LanguageImpl implements Language {
 			try {
 				localesArray = PrefsPropsUtil.getStringArray(
 					companyId, PropsKeys.LOCALES, StringPool.COMMA,
-					PropsValues.LOCALES);
+					PropsValues.LOCALES_ENABLED);
 			}
 			catch (SystemException se) {
-				localesArray = PropsValues.LOCALES;
+				localesArray = PropsValues.LOCALES_ENABLED;
 			}
 		}
 

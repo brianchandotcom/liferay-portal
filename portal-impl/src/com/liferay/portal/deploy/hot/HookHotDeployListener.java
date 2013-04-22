@@ -2458,6 +2458,13 @@ public class HookHotDeployListener
 			LanguageUtil.init();
 		}
 
+		if (containsKey(portalProperties, LOCALES_ENABLED)) {
+
+			PropsValues.LOCALES_ENABLED = PropsUtil.getArray(LOCALES_ENABLED);
+
+			LanguageUtil.init();
+		}
+
 		if (containsKey(
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {

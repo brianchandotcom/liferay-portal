@@ -1389,6 +1389,8 @@ public interface PropsKeys {
 
 	public static final String LOCALES_BETA = "locales.beta";
 
+	public static final String LOCALES_ENABLED = "locales.enabled";
+
 	public static final String LOCK_LISTENERS = "lock.listeners";
 
 	public static final String LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD = "login.create.account.allow.custom.password";

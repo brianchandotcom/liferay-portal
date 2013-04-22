@@ -80,6 +80,10 @@ public class EvaluateLogTest extends BaseTestCase {
 
 					continue;
 				}
+
+				if (line.matches(".*\\[Thread-[0-9]+\\].*")) {
+					continue;
+				}
 			}
 
 			// LPS-17639

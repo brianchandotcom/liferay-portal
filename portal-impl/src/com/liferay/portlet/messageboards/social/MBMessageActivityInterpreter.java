@@ -109,18 +109,18 @@ public class MBMessageActivityInterpreter
 		if (activityType == MBActivityKeys.ADD_MESSAGE) {
 			if (receiverUserId == 0) {
 				if (Validator.isNull(groupName)) {
-					return "activity-message-boards-add-message";
+					return "activity-message-boards-message-add-message";
 				}
 				else {
-					return "activity-message-boards-add-message-in";
+					return "activity-message-boards-message-add-message-in";
 				}
 			}
 			else {
 				if (Validator.isNull(groupName)) {
-					return "activity-message-boards-reply-message";
+					return "activity-message-boards-message-reply-message";
 				}
 				else {
-					return "activity-message-boards-reply-message-in";
+					return "activity-message-boards-message-reply-message-in";
 				}
 			}
 		}
@@ -128,10 +128,10 @@ public class MBMessageActivityInterpreter
 				 (receiverUserId > 0)) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-reply-message";
+				return "activity-message-boards-message-reply-message";
 			}
 			else {
-				return "activity-message-boards-reply-message-in";
+				return "activity-message-boards-message-reply-message-in";
 			}
 		}
 

@@ -94,10 +94,10 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-blogs-add-comment";
+				return "activity-blogs-entry-add-comment";
 			}
 			else {
-				return "activity-blogs-add-comment-in";
+				return "activity-blogs-entry-add-comment-in";
 			}
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
@@ -106,45 +106,45 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
 				if (Validator.isNull(groupName)) {
-					return "activity-blogs-scheduled-entry";
+					return "activity-blogs-entry-schedule-entry";
 				}
 				else {
-					return "activity-blogs-scheduled-entry-in";
+					return "activity-blogs-entry-schedule-entry-in";
 				}
 			}
 			else {
 				if (Validator.isNull(groupName)) {
-					return "activity-blogs-add-entry";
+					return "activity-blogs-entry-add-entry";
 				}
 				else {
-					return "activity-blogs-add-entry-in";
+					return "activity-blogs-entry-add-entry-in";
 				}
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
-				return "activity-blogs-move-to-trash";
+				return "activity-blogs-entry-move-to-trash";
 			}
 			else {
-				return "activity-blogs-move-to-trash-in";
+				return "activity-blogs-entry-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-blogs-restore-from-trash";
+				return "activity-blogs-entry-restore-from-trash";
 			}
 			else {
-				return "activity-blogs-restore-from-trash-in";
+				return "activity-blogs-entry-restore-from-trash-in";
 			}
 		}
 		else if (activityType == BlogsActivityKeys.UPDATE_ENTRY) {
 			if (Validator.isNull(groupName)) {
-				return "activity-blogs-update-entry";
+				return "activity-blogs-entry-update-entry";
 			}
 			else {
-				return "activity-blogs-update-entry-in";
+				return "activity-blogs-entry-update-entry-in";
 			}
 		}
 

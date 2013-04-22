@@ -69,18 +69,18 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		if (activityType == CalendarActivityKeys.ADD_EVENT) {
 			if (Validator.isNull(groupName)) {
-				return "activity-calendar-add-event";
+				return "activity-calendar-event-add-event";
 			}
 			else {
-				return "activity-calendar-add-event-in";
+				return "activity-calendar-event-add-event-in";
 			}
 		}
 		else if (activityType == CalendarActivityKeys.UPDATE_EVENT) {
 			if (Validator.isNull(groupName)) {
-				return "activity-calendar-update-event";
+				return "activity-calendar-event-update-event";
 			}
 			else {
-				return "activity-calendar-update-event-in";
+				return "activity-calendar-event-update-event-in";
 			}
 		}
 

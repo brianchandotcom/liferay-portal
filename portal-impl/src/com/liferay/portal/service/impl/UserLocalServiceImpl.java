@@ -155,7 +155,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The implementation of the user local service.
+ * Provides the local service for accessing, adding, authenticating, deleting,
+ * and updating users.
  *
  * @author Brian Wing Shun Chan
  * @author Scott Lee

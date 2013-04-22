@@ -60,8 +60,8 @@ import java.util.concurrent.Callable;
 import javax.sql.DataSource;
 
 /**
- * Manages the creation and upkeep of resource blocks and the resources they
- * contain.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * resource blocks.
  *
  * @author Connor McKay
  * @author Shuyang Zhou

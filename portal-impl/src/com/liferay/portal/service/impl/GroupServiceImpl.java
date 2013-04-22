@@ -57,11 +57,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The group remote service is responsible for accessing, creating, modifying
- * and deleting groups. For more information on group services and Group, see
- * {@link com.liferay.portal.service.impl.GroupLocalServiceImpl}.
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * groups. Its methods include permission checks. Groups are mostly used in
+ * Liferay as a resource container for permissioning and content scoping
+ * purposes.
  *
  * @author Brian Wing Shun Chan
+ * @see    com.liferay.portal.service.impl.GroupLocalServiceImpl
  */
 public class GroupServiceImpl extends GroupServiceBaseImpl {
 

@@ -67,8 +67,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The Dynamic Data Mapping (DDM) Structure local service is responsible for
- * accessing, creating, modifying, and deleting structures.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * dynamic data mapping (DDM) structures.
  *
  * <p>
  * DDM structures (structures) are used in Liferay to store structured content

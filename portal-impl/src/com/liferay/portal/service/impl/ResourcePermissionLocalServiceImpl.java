@@ -56,8 +56,8 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 
 /**
- * Manages the creation and upkeep of resource permissions, and provides methods
- * for granting, revoking, and checking permissions.
+ * Provides the local service for accessing, adding, checking, deleting,
+ * granting, and revoking resource permissions.
  *
  * <p>
  * Before attempting to read any of the documentation for this class, first read

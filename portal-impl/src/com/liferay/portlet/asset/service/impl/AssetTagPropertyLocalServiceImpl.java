@@ -27,7 +27,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The implementation of the asset tag property local service.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * asset tag properties.
  *
  * @author Brian Wing Shun Chan
  */

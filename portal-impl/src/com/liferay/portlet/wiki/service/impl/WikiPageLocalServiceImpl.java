@@ -98,6 +98,10 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 /**
+ * Provides the local service for accessing, adding, deleting, moving,
+ * subscription handling of, trash handling of, updating, and validating wiki
+ * pages.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Raymond Augé

@@ -30,6 +30,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * file and folder file entry types. Its methods include permission checks.
+ *
  * @author Alexander Chow
  */
 public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {

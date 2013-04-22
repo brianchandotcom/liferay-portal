@@ -40,6 +40,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * asset vocabularies. Its methods include permission checks.
+ *
  * @author Alvaro del Castillo
  * @author Eduardo Lundgren
  * @author Jorge Ferrer

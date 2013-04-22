@@ -115,7 +115,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The document library file entry local service.
+ * Provides the local service for accessing, adding, checking in/out, deleting,
+ * locking/unlocking, moving, reverting, updating, and verifying document
+ * library file entries.
  *
  * <p>
  * Due to legacy code, the names of some file entry properties are not

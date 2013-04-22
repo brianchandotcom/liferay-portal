@@ -24,7 +24,8 @@ import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import java.util.List;
 
 /**
- * The implementation of the asset tag property service.
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * asset tag properties. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  */

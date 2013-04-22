@@ -56,7 +56,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The implementation of the user group local service.
+ * Provides the local service for accessing, adding, deleting, and updating user
+ * groups.
  *
  * @author Charles May
  */

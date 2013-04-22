@@ -23,8 +23,8 @@ import com.liferay.portal.service.base.ResourcePermissionServiceBaseImpl;
 import java.util.Map;
 
 /**
- * Manages the creation and upkeep of resource permissions, and provides methods
- * for granting, revoking, and checking permissions.
+ * Provides the remote service for adding, granting, and revoking resource
+ * permissions. Its methods include permission checks.
  *
  * <p>
  * Before attempting to read any of the documentation for this class, first read

@@ -56,8 +56,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Dynamic Data Mapping (DDM) Template local service is responsible for
- * accessing, creating, modifying, and deleting templates.
+ * Provides the local service for accessing, adding, copying, deleting, and
+ * updating dynamic data mapping (DDM) templates.
  *
  * <p>
  * DDM templates (templates) are used in Liferay to render templated content

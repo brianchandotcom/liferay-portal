@@ -78,7 +78,7 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 import java.util.List;
 
 /**
- * The implementation of the permission remote service.
+ * Provides the remote service for checking permissions.
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé

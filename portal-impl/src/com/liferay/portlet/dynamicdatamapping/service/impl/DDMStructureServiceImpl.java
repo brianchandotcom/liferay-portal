@@ -30,8 +30,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Dynamic Data Mapping (DDM) Structure service is responsible for
- * accessing, creating, modifying, and deleting structures.
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * dynamic data mapping (DDM) structures. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Bruno Basto

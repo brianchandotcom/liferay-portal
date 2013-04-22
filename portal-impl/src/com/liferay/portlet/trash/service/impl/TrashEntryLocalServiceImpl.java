@@ -43,8 +43,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The trash local service is responsible for accessing, creating, modifying and
- * deleting trash entries in the Recycle Bin.
+ * Provides the local service for accessing, adding, checking, and deleting
+ * trash entries in the Recycle Bin.
  *
  * @author Zsolt Berentey
  */

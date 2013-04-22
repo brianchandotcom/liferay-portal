@@ -39,7 +39,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the role remote service.
+ * Provides the remote service for accessing, adding, unassigning, checking,
+ * deleting, and updating roles. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  */

@@ -41,9 +41,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the web content remote service is responsible for
- * accessing, creating, modifying, searching, and deleting web content articles
- * remotely.
+ * Provides the remote service for accessing, adding, deleting, and updating web
+ * content articles. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé

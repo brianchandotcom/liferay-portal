@@ -95,7 +95,8 @@ import java.util.Set;
 import javax.portlet.PortletException;
 
 /**
- * The implementation of the layout local service.
+ * Provides the local service for accessing, adding, deleting, exporting,
+ * importing, and updating layouts.
  *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer

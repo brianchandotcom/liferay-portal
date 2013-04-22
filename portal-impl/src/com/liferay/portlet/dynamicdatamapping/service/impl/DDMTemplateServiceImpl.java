@@ -33,8 +33,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The Dynamic Data Mapping (DDM) Template service is responsible for
- * accessing, creating, modifying, and deleting templates.
+ * Provides the remote service for accessing, adding, copying, deleting, and
+ * updating dynamic data mapping (DDM) templates. Its methods include security
+ * checks.
  *
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren

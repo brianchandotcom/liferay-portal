@@ -45,8 +45,7 @@ import java.util.List;
 import org.apache.commons.lang.time.StopWatch;
 
 /**
- * The Resource local service is responsible for accessing, creating, modifying,
- * and deleting resources.
+ * Provides the local service for accessing, adding, and updating resources.
  *
  * <p>
  * Permissions in Liferay are defined for resource/action pairs. Some resources,
@@ -127,6 +126,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * com.liferay.portal.service.ServiceContext#setGuesPermissions(String[])}.
 	 * </li>
 	 * </ol>
+	 *
 	 * </li>
 	 * </ol>
 	 *

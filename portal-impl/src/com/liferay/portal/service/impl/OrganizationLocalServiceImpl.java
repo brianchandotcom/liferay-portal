@@ -71,7 +71,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The implementation of the organization local service.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * organizations.
  *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer

@@ -140,9 +140,8 @@ import java.util.Set;
 import javax.portlet.PortletPreferences;
 
 /**
- * The implementation of the web content local service is responsible for
- * accessing, creating, modifying, searching, and deleting web content articles
- * locally.
+ * Provides the local service for accessing, adding, deleting, and updating web
+ * content articles.
  *
  * <p>
  * The web content articles hold HTML content wrapped in XML. The XML lets you

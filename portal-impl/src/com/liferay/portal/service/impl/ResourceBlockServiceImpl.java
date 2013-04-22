@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Provides the remote service for accessing and updating resource blocks. Its
+ * methods include permission checks.
+ *
  * @author Connor McKay
  */
 public class ResourceBlockServiceImpl extends ResourceBlockServiceBaseImpl {

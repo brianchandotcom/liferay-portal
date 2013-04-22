@@ -36,7 +36,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The implementation of the user group remote service.
+ * Provides the remote service for accessing, adding, deleting, and updating
+ * user groups. Its methods include permission checks.
  *
  * @author Charles May
  */

@@ -35,7 +35,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * The implementation of the company remote service. Each company refers to a
+ * Provides the local service for accessing, adding, checking, and updating
+ * companies. Its methods include permission checks. Each company refers to a
  * separate portal instance.
  *
  * @author Brian Wing Shun Chan

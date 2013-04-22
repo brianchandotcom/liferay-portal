@@ -51,6 +51,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Provides the local service for accessing, adding, cascading, deleting, and
+ * updating file and folder file entry types.
+ *
  * @author Alexander Chow
  * @author Sergio González
  */

@@ -57,9 +57,9 @@ public class MDRRuleGroupLocalServiceTest {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			TestPropsValues.getCompanyId());
 
-		_globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
-		_globalRuleGroup = MDRTestUtil.addRuleGroup(_globalGroup.getGroupId());
+		_companyRuleGroup = MDRTestUtil.addRuleGroup(companyGroup.getGroupId());
 	}
 
 	@Test
@@ -93,14 +93,13 @@ public class MDRRuleGroupLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (includeGlobalGroup) {
-			Assert.assertTrue(ruleGroups.contains(_globalRuleGroup));
+			Assert.assertTrue(ruleGroups.contains(_companyRuleGroup));
 		}
 		else {
-			Assert.assertFalse(ruleGroups.contains(_globalRuleGroup));
+			Assert.assertFalse(ruleGroups.contains(_companyRuleGroup));
 		}
 	}
 
-	private Group _globalGroup;
-	private MDRRuleGroup _globalRuleGroup;
+	private MDRRuleGroup _companyRuleGroup;
 
 }

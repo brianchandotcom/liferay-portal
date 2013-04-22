@@ -54,22 +54,8 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	public static final String FIND_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".findByG_N";
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #countByKeywords(long,
-	 *             java.util.LinkedHashMap, String)}
-	 */
-	public int countByKeywords(long groupId, String keywords)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
-
-		return countByKeywords(groupId, params, keywords);
-	}
-
 	public int countByKeywords(
-			long groupId, LinkedHashMap<String, Object> params, String keywords)
+			long groupId, String keywords, LinkedHashMap<String, Object> params)
 		throws SystemException {
 
 		String[] names = null;
@@ -85,40 +71,12 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return countByG_N(groupId, names, params, andOperator);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #countByG_N(long, String,
-	 *             java.util.LinkedHashMap, boolean)}
-	 */
-	public int countByG_N(long groupId, String name, boolean andOperator)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
-
-		return countByG_N(groupId, name, params, andOperator);
-	}
-
 	public int countByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-
-		return countByG_N(groupId, names, params, andOperator);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #countByG_N(long, String[],
-	 *             java.util.LinkedHashMap, boolean)}
-	 */
-	public int countByG_N(long groupId, String[] names, boolean andOperator)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
 
 		return countByG_N(groupId, names, params, andOperator);
 	}
@@ -179,7 +137,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			qPos.add(groupId);
 
-			setParameterValues(qPos, params1);
+			setParams(qPos, params1);
 
 			qPos.add(names, 2);
 
@@ -203,21 +161,6 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #findByKeywords(long, String,
-	 *             java.util.LinkedHashMap, int, int)}
-	 */
-	public List<MDRRuleGroup> findByKeywords(
-			long groupId, String keywords, int start, int end)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
-
-		return findByKeywords(groupId, keywords, params, start, end);
-	}
-
 	public List<MDRRuleGroup> findByKeywords(
 			long groupId, String keywords, LinkedHashMap<String, Object> params,
 			int start, int end)
@@ -236,21 +179,6 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #findByG_N(long, String,
-	 *             java.util.LinkedHashMap, boolean)}
-	 */
-	public List<MDRRuleGroup> findByG_N(
-			long groupId, String name, boolean andOperator)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
-
-		return findByG_N(groupId, name, params, andOperator);
-	}
-
 	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator)
@@ -261,45 +189,12 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			QueryUtil.ALL_POS);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #findByG_N(long, String,
-	 *             java.util.LinkedHashMap, boolean, int, int)}
-	 */
-	public List<MDRRuleGroup> findByG_N(
-			long groupId, String name, boolean andOperator, int start, int end)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
-
-		return findByG_N(groupId, name, params, andOperator, start, end);
-	}
-
 	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, LinkedHashMap<String, Object> params,
 			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
-
-		return findByG_N(groupId, names, params, andOperator, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #findByG_N(long, String,
-	 *             java.util.LinkedHashMap, boolean, int, int)}
-	 */
-	public List<MDRRuleGroup> findByG_N(
-			long groupId, String[] names, boolean andOperator, int start,
-			int end)
-		throws SystemException {
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("includeGlobalScope", true);
 
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
@@ -360,7 +255,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			qPos.add(groupId);
 
-			setParameterValues(qPos, params1);
+			setParams(qPos, params1);
 
 			qPos.add(names, 2);
 
@@ -378,11 +273,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	protected String getGroupIdComparator(
 		LinkedHashMap<String, Object> params) {
 
-		if ((params == null) || params.isEmpty()) {
-			return "(groupId = ?)";
-		}
-
-		StringBundler sb = new StringBundler(params.size());
+		StringBundler sb = new StringBundler(5);
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
@@ -432,7 +323,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return resultSQL;
 	}
 
-	protected void setParameterValues(
+	protected void setParams(
 			QueryPos qPos, LinkedHashMap<String, Object> params)
 		throws PortalException, SystemException {
 
@@ -444,7 +335,6 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			String key = entry.getKey();
 
 			if (key.equals("includeGlobalScope")) {
-
 				boolean includeGlobalScope = (Boolean)entry.getValue();
 
 				if (includeGlobalScope) {
@@ -458,57 +348,14 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 					qPos.add(globalGroup.getGroupId());
 				}
 			}
-			else {
-				Object value = entry.getValue();
-
-				if (value instanceof Integer) {
-					Integer valueInteger = (Integer)value;
-
-					if (Validator.isNotNull(valueInteger)) {
-						qPos.add(valueInteger);
-					}
-				}
-				else if (value instanceof Long) {
-					Long valueLong = (Long)value;
-
-					if (Validator.isNotNull(valueLong)) {
-						qPos.add(valueLong);
-					}
-				}
-				else if (value instanceof String) {
-					String valueString = (String)value;
-
-					if (Validator.isNotNull(valueString)) {
-						qPos.add(valueString);
-					}
-				}
-			}
 		}
 	}
 
 	private String _buildSQLKey(LinkedHashMap<String, Object> param1) {
-
 		StringBundler sb = new StringBundler(param1.size() + 1);
 
 		for (Map.Entry<String, Object> entry : param1.entrySet()) {
-			String key = entry.getKey();
-
-			Object value = entry.getValue();
-
-			if (value instanceof List<?>) {
-				List<Object> values = (List<Object>)value;
-
-				if (!values.isEmpty()) {
-					for (int i = 0; i < values.size(); i++) {
-						sb.append(key);
-						sb.append(StringPool.DASH);
-						sb.append(i);
-					}
-				}
-			}
-			else {
-				sb.append(key);
-			}
+			sb.append(entry.getKey());
 		}
 
 		return sb.toString();

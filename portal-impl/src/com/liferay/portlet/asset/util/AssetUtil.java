@@ -337,8 +337,9 @@ public class AssetUtil {
 						allAssetTagNames, redirectURL.toString());
 
 					if (addPortletURL != null) {
-						String mesage = className + CLASSNAME_SEPARATOR +
-							classTypes.get(classTypeId);
+						String mesage =
+							className + CLASSNAME_SEPARATOR +
+								classTypes.get(classTypeId);
 
 						addPortletURLs.put(mesage, addPortletURL);
 					}

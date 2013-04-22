@@ -66,7 +66,7 @@ if (showLinkTitle) {
 
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
-					<div class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> title="<%= linkTitle %>">
+					<span class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> title="<%= linkTitle %>">
 				</c:when>
 				<c:otherwise>
 					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" <%= folder ? "data-folder-id=\"" + rowCheckerId + "\"" : StringPool.BLANK %> href="<%= url %>" title="<%= linkTitle %>">
@@ -105,7 +105,7 @@ if (showLinkTitle) {
 				</span>
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
-					</div>
+					</span>
 				</c:when>
 				<c:otherwise>
 					</a>
@@ -117,7 +117,7 @@ if (showLinkTitle) {
 		<div class="app-view-entry app-view-entry-taglib entry-display-style display-<%= displayStyle %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %> data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
-					<div class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" title="<%= linkTitle %>">
+					<span class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" title="<%= linkTitle %>">
 				</c:when>
 				<c:otherwise>
 					<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= linkTitle %>">
@@ -177,7 +177,7 @@ if (showLinkTitle) {
 				</span>
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
-					</div>
+					</span>
 				</c:when>
 				<c:otherwise>
 					</a>

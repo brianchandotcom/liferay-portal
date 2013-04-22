@@ -44,14 +44,20 @@ public class ActivateStagingOrganizationSiteTest extends BaseTestCase {
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@name='_134_keywords']",
-					RuntimeVariables.replace("Selenium"));
+					RuntimeVariables.replace("Organization"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
+				selenium.waitForVisible(
+					"//tr[contains(.,'Organization Name')]/td[2]/a");
+				assertEquals(RuntimeVariables.replace("Organization Name"),
+					selenium.getText(
+						"//tr[contains(.,'Organization Name')]/td[2]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
+						"//tr[contains(.,'Organization Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//tr[contains(.,'Organization Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
 					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
 				assertEquals(RuntimeVariables.replace("Edit Settings"),

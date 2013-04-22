@@ -51,7 +51,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='_134_keywords']</td>
-	<td>Selenium</td>
+	<td>Organization</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -59,13 +59,23 @@
 	<td>Search</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'Organization Name')]/td[2]/a</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Organization Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>//tr[contains(.,'Organization Name')]/td[8]/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>

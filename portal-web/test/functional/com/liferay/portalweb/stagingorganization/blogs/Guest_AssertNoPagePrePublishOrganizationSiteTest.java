@@ -25,7 +25,7 @@ public class Guest_AssertNoPagePrePublishOrganizationSiteTest
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/selenium/home/");
+		selenium.open("/web/organization-name/home/");
 		assertTrue(selenium.isElementNotPresent("link=Blogs Test Page"));
 	}
 }

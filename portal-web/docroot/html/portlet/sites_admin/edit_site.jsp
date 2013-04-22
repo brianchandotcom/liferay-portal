@@ -182,7 +182,7 @@ else if (layoutSetPrototype != null) {
 		<c:if test="<%= liveGroup != null %>">
 			A = AUI();
 
-			var selectEl = A.all('input[name=<portlet:namespace />stagingType]:checked');
+			var selectEl = A.one('input[name=<portlet:namespace />stagingType]:checked');
 
 			<c:choose>
 				<c:when test="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>">

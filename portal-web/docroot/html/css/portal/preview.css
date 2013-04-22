@@ -260,3 +260,7 @@
 		line-height: 1;
 	}
 }
+
+.firefox .lfr-preview-video-content div.aui-video-node {
+	height: 100%;
+}

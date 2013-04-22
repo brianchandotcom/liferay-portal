@@ -102,11 +102,11 @@ public class MailboxUtil {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE));
 
-	private static Map<Long, ByteBuffer> _mailMap =
+	private final static Map<Long, ByteBuffer> _mailMap =
 		new ConcurrentHashMap<Long, ByteBuffer>();
-	private static BlockingQueue<ReceiptStub> _overdueMailQueue =
+	private final static BlockingQueue<ReceiptStub> _overdueMailQueue =
 		new DelayQueue<ReceiptStub>();
-	private static AtomicLong _receiptGenerator = new AtomicLong();
+	private final static AtomicLong _receiptGenerator = new AtomicLong();
 
 	private static class OverdueMailReaperThread extends Thread {
 

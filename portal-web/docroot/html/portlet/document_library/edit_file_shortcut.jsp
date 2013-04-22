@@ -199,7 +199,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 						stack: true,
 						width: 680
 					},
-					id: '<portlet:namespace />selectFileEntry',
+					id: <portlet:namespace />createSelectFileEntryId(),
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "file") %>',
 					uri: <portlet:namespace />createSelectFileEntryURL('<%= selectFileEntryURL.toString() %>')
 				},
@@ -212,6 +212,10 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 </aui:script>
 
 <aui:script>
+	function <portlet:namespace />createSelectFileEntryId() {
+		return '<portlet:namespace />selectFileEntry_' + document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value;
+	}
+
 	function <portlet:namespace />createSelectFileEntryURL(url) {
 		url += '&<portlet:namespace />groupId=' + document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value;
 		url += '&<portlet:namespace />fileEntryId=' + document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value;

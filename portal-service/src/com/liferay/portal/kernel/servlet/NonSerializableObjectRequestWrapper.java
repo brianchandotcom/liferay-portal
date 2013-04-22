@@ -14,6 +14,13 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -62,9 +69,45 @@ public class NonSerializableObjectRequestWrapper
 
 	@Override
 	public void setAttribute(String name, Object object) {
-		object = new NonSerializableObjectHandler(object);
+		if (_wrapObject(object)) {
+			object = new NonSerializableObjectHandler(object);
+		}
 
 		super.setAttribute(name, object);
 	}
+
+	private boolean _wrapObject(Object object) {
+		if (_WEBLOGIC_WRAP_NONSERIALIZABLE.equals("ALL")) {
+			return true;
+		}
+
+		if (_WEBLOGIC_WRAP_NONSERIALIZABLE.equals("UNSERIALIZABLE_ONLY")) {
+			if (!(object instanceof Serializable)) {
+				return true;
+			}
+
+			try {
+				ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream();
+
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					byteArrayOutputStream);
+
+				objectOutputStream.writeObject(object);
+
+				objectOutputStream.close();
+
+				return false;
+			}
+			catch (Exception e) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String _WEBLOGIC_WRAP_NONSERIALIZABLE = PropsUtil.get(
+		PropsKeys.WEBLOGIC_WRAP_NONSERIALIZABLE).toUpperCase();
 
 }

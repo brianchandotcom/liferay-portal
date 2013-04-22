@@ -44,8 +44,6 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +54,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -667,19 +666,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
-		Enumeration<URL> enu = Collections.enumeration(Collections.emptyList());
-
 		try {
-			enu = classLoader.getResources("META-INF/MANIFEST.MF");
+			Enumeration<URL> enu = classLoader.getResources(
+				"META-INF/MANIFEST.MF");
+
+			while (enu.hasMoreElements()) {
+				URL url = enu.nextElement();
+
+				urls.add(url);
+			}
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
-		}
-
-		while (enu.hasMoreElements()) {
-			URL url = enu.nextElement();
-
-			urls.add(url);
 		}
 
 		for (URL url : urls) {

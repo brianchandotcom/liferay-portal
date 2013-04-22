@@ -339,6 +339,10 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupId);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
+	java.util.LinkedHashMap, boolean, int, int)}
+	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
 		long groupId, java.lang.String name, boolean andOperator, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -346,6 +350,19 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
+		long groupId, java.lang.String name,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.search(groupId, name, params,
+			andOperator, start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
+	String, java.util.LinkedHashMap, boolean, int, int)}
+	*/
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords, boolean andOperator,
 		int start, int end)
@@ -354,6 +371,19 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			andOperator, start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
+		long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
+			params, andOperator, start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
+	String, java.util.LinkedHashMap, boolean)}
+	*/
 	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -361,10 +391,30 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			keywords, andOperator);
 	}
 
+	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.searchByKeywordsCount(groupId,
+			keywords, params, andOperator);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long,
+	String, java.util.LinkedHashMap, boolean)}
+	*/
 	public int searchCount(long groupId, java.lang.String name,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mdrRuleGroupLocalService.searchCount(groupId, name, andOperator);
+	}
+
+	public int searchCount(long groupId, java.lang.String name,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.searchCount(groupId, name, params,
+			andOperator);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(

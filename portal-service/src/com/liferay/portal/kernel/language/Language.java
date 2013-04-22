@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.language;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
@@ -27,6 +28,8 @@ import javax.servlet.jsp.PageContext;
  * @author Brian Wing Shun Chan
  */
 public interface Language {
+
+	public String format(Locale locale, String pattern, List<Object> arguments);
 
 	public String format(Locale locale, String pattern, Object argument);
 

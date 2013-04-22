@@ -70,6 +70,12 @@ import javax.servlet.jsp.PageContext;
 @DoPrivileged
 public class LanguageImpl implements Language {
 
+	public String format(
+		Locale locale, String pattern, List<Object> arguments) {
+
+		return format(locale, pattern, arguments.toArray(), true);
+	}
+
 	public String format(Locale locale, String pattern, Object argument) {
 		return format(locale, pattern, new Object[] {argument}, true);
 	}

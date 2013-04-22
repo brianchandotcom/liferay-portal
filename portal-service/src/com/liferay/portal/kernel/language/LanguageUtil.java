@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.language;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
@@ -29,6 +30,12 @@ import javax.servlet.jsp.PageContext;
  * @author Brian Wing Shun Chan
  */
 public class LanguageUtil {
+
+	public static String format(
+			Locale locale, String pattern, List<Object> arguments) {
+
+		return getLanguage().format(locale, pattern, arguments);
+	}
 
 	public static String format(
 		Locale locale, String pattern, Object argument) {

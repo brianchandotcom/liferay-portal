@@ -156,35 +156,50 @@
 													continue;
 												}
 
+												boolean portletInstanceable = portlet.isInstanceable();
+
+												boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
+
+												boolean portletLocked = (!portletInstanceable && portletUsed);
+
 												Map<String, Object> data = new HashMap<String, Object>();
 
-												data.put("draggable", Boolean.TRUE.toString());
 												data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
-												data.put("instanceable", portlet.isInstanceable());
+												data.put("instanceable", portletInstanceable);
 												data.put("plid", plid);
 												data.put("portlet-id", portlet.getPortletId());
 												data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
 
 												String cssClass = "lfr-portlet-item";
 
-												if (!portlet.isInstanceable() && layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
+												if (portletLocked) {
 													cssClass += " lfr-portlet-used";
 												}
 
-												if (portlet.isInstanceable()) {
+												if (portletInstanceable) {
 													cssClass += " lfr-instanceable";
 												}
 											%>
 
-												<liferay-ui:app-view-entry
-													cssClass="<%= cssClass %>"
-													data="<%= data %>"
-													displayStyle="list"
-													showCheckbox="<%= false %>"
-													showLinkTitle="<%= false %>"
-													thumbnailSrc='<%= "" %>'
-													title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-												/>
+												<div class="content-item">
+													<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+														<liferay-ui:message key="add" />
+													</span>
+
+													<%
+													data.put("draggable", Boolean.TRUE.toString());
+													%>
+
+													<liferay-ui:app-view-entry
+														cssClass="<%= cssClass %>"
+														data="<%= data %>"
+														displayStyle="list"
+														showCheckbox="<%= false %>"
+														showLinkTitle="<%= false %>"
+														thumbnailSrc="<%= StringPool.BLANK %>"
+														title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+													/>
+												</div>
 
 											<%
 											}

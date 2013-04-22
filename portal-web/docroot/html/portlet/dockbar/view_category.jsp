@@ -123,12 +123,10 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						data.put("draggable", Boolean.TRUE.toString());
 						data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
 						data.put("instanceable", portletInstanceable);
 						data.put("plid", plid);
 						data.put("portlet-id", portlet.getPortletId());
-						data.put("search", divId.toString().replace(':', '-'));
 						data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
 
 						String cssClass = "lfr-portlet-item";
@@ -142,15 +140,25 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 						}
 						%>
 
-						<liferay-ui:app-view-entry
-							cssClass="<%= cssClass %>"
-							data="<%= data %>"
-							displayStyle="list"
-							showCheckbox="<%= false %>"
-							showLinkTitle="<%= false %>"
-							thumbnailSrc=""
-							title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-						/>
+						<div class="content-item" data-search="<%= divId.toString().replace(':', '-') %>">
+							<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+								<liferay-ui:message key="add" />
+							</span>
+
+							<%
+							data.put("draggable", Boolean.TRUE.toString());
+							%>
+
+							<liferay-ui:app-view-entry
+								cssClass="<%= cssClass %>"
+								data="<%= data %>"
+								displayStyle="list"
+								showCheckbox="<%= false %>"
+								showLinkTitle="<%= false %>"
+								thumbnailSrc="<%= StringPool.BLANK %>"
+								title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+							/>
+						</div>
 
 						<%
 						List<PortletItem> portletItems = PortletItemLocalServiceUtil.getPortletItems(themeDisplay.getScopeGroupId(), portlet.getPortletId(), com.liferay.portal.model.PortletPreferences.class.getName());
@@ -171,25 +179,33 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 							Map<String, Object> portletItemData = new HashMap<String, Object>();
 
-							portletItemData.put("draggable", Boolean.TRUE.toString());
 							portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
 							portletItemData.put("instanceable", portletInstanceable);
 							portletItemData.put("plid", plid);
 							portletItemData.put("portlet-id", portlet.getPortletId());
 							portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
-							portletItemData.put("search", divId.toString().replace(':', '-'));
 							portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
 						%>
 
-							<liferay-ui:app-view-entry
-								cssClass="lfr-portlet-item lfr-archived-setup"
-								data="<%= portletItemData %>"
-								displayStyle="list"
-								showCheckbox="<%= false %>"
-								showLinkTitle="<%= false %>"
-								thumbnailSrc=""
-								title="<%= HtmlUtil.escape(portletItem.getName()) %>"
-							/>
+							<div class="content-item" data-search="<%= divId.toString().replace(':', '-') %>">
+								<span <%= AUIUtil.buildData(data) %> class="add-content-item">
+									<liferay-ui:message key="add" />
+								</span>
+
+								<%
+								portletItemData.put("draggable", Boolean.TRUE.toString());
+								%>
+
+								<liferay-ui:app-view-entry
+									cssClass="lfr-portlet-item lfr-archived-setup"
+									data="<%= portletItemData %>"
+									displayStyle="list"
+									showCheckbox="<%= false %>"
+									showLinkTitle="<%= false %>"
+									thumbnailSrc="<%= StringPool.BLANK %>"
+									title="<%= HtmlUtil.escape(portletItem.getName()) %>"
+								/>
+							</div>
 
 						<%
 						}

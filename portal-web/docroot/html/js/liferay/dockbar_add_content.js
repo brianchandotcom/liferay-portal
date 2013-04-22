@@ -66,7 +66,7 @@ AUI.add(
 						instance._searchApplicationInput = instance.byId('searchApplication');
 						instance._styleButtonsList = instance.byId('styleButtons');
 
-						instance._portlets = instance._addPanel.all('.lfr-portlet-item');
+						instance._portlets = instance._addPanel.all('.content-item');
 						instance._categories = instance._addPanel.all('.lfr-content-category');
 						instance._categoryContainers = instance._addPanel.all('.lfr-add-content');
 
@@ -130,9 +130,7 @@ AUI.add(
 
 						var portlet = event.currentTarget;
 
-						if (!portlet.hasClass(STR_LFR_PORTLET_USED)) {
-							instance._addPortletFromApplicationPanel(portlet);
-						}
+						instance._addPortletFromApplicationPanel(portlet);
 					},
 
 					_addPortletFromApplicationPanel: function(portlet, options) {
@@ -242,9 +240,9 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._addApplicationForm.delegate(STR_CLICK, instance._addApplication, '.lfr-portlet-item', instance);
+						instance._addApplicationForm.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
 
-						instance._entriesContainer.delegate(STR_CLICK, instance._addPortletFromContentPanel, '.content-shortcut');
+						instance._entriesContainer.delegate(STR_CLICK, instance._addPortletFromContentPanel, '.add-content-item', instance);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
 

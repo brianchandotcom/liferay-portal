@@ -96,6 +96,33 @@
 		width: 16px;
 	}
 
+	.content-item {
+		&:hover {
+			.add-content-item {
+				display: block;
+
+				&.lfr-portlet-used {
+					display: none;
+				}
+			}
+		}
+
+		&.display-style-icon {
+			float: left;
+		}
+
+		.add-content-item {
+			cursor: pointer;
+			display: none;
+			font-size: 10px;
+			font-weight: bold;
+			padding: 7px 5px;
+			position: absolute;
+			right: 0;
+			z-index: 1;
+		}
+	}
+
 	.search-panel {
 		padding: 5px;
 		overflow: hidden;

@@ -107,21 +107,32 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 					data.put("class-name", assetEntry.getClassName());
 					data.put("class-pk", assetEntry.getClassPK());
-					data.put("draggable", Boolean.TRUE.toString());
 					data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 					data.put("title", title);
 				%>
 
-					<liferay-ui:app-view-entry
-						cssClass='<%= !displayStyle.equals("icon") ? "has-preview content-shortcut" : "content-shortcut" %>'
-						data="<%= data %>"
-						description="<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>"
-						displayStyle="<%= displayStyle %>"
-						showCheckbox="<%= false %>"
-						showLinkTitle="<%= false %>"
-						thumbnailSrc='<%= displayStyle.equals("list") ? assetRenderer.getIconPath(liferayPortletRequest) : assetRenderer.getThumbnailPath(liferayPortletRequest) %>'
-						title="<%= title %>"
-					/>
+					<div class="content-item display-style-<%= displayStyle %>">
+						<c:if test='<%= !displayStyle.equals("icon") %>'>
+							<span <%= AUIUtil.buildData(data) %> class="add-content-item">
+								<liferay-ui:message key="add" />
+							</span>
+						</c:if>
+
+						<%
+						data.put("draggable", Boolean.TRUE.toString());
+						%>
+
+						<liferay-ui:app-view-entry
+							cssClass='<%= !displayStyle.equals("icon") ? "has-preview content-shortcut" : "content-shortcut" %>'
+							data="<%= data %>"
+							description="<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>"
+							displayStyle="<%= displayStyle %>"
+							showCheckbox="<%= false %>"
+							showLinkTitle="<%= false %>"
+							thumbnailSrc='<%= displayStyle.equals("list") ? assetRenderer.getIconPath(liferayPortletRequest) : assetRenderer.getThumbnailPath(liferayPortletRequest) %>'
+							title="<%= title %>"
+						/>
+					</div>
 
 				<%
 				}

@@ -210,7 +210,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="language"
-					value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
+					value='<%= LanguageUtil.get(pageContext, template.getLanguage() + "[stands-for]") %>'
 				/>
 			</c:if>
 

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import edu.emory.mathcs.backport.java.util.Collections;
+import java.util.Collections;
 
 import java.util.Date;
 import java.util.Iterator;

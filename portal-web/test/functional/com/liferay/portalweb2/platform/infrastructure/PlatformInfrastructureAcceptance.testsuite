@@ -1,3 +1,0 @@
-<definition>
-	<execute test-case="PGLoginAcceptance" />
-</definition>

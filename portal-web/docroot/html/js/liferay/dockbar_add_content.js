@@ -5,7 +5,6 @@ AUI.add(
 		var Dockbar = Liferay.Dockbar;
 		var Lang = A.Lang;
 		var Layout = Liferay.Layout;
-		var LayoutConfiguration = Liferay.LayoutConfiguration;
 		var Portlet = Liferay.Portlet;
 
 		var BODY_CONTENT = 'bodyContent';
@@ -16,11 +15,23 @@ AUI.add(
 
 		var CSS_OVER = 'over';
 
+		var DATA_CLASS_NAME = 'data-class-name';
+
+		var DATA_CLASS_PK = 'data-class-pk';
+
+		var DATA_PORTLET_ID = 'data-portlet-id';
+
+		var DATA_STYLE = 'data-style';
+
+		var SELECTOR_BUTTON = '.button';
+
 		var STR_ACTION = 'action';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 
 		var STR_CLICK = 'click';
+
+		var STR_CURRENT_NODE = 'currentNode';
 
 		var STR_EMPTY = '';
 
@@ -60,7 +71,7 @@ AUI.add(
 						instance._categories = instance._addPanel.all('.lfr-content-category');
 						instance._categoryContainers = instance._addPanel.all('.lfr-add-content');
 
-						instance._styleButtons = instance._styleButtonsList.all('.button');
+						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
 
 						var results = [];
 
@@ -214,7 +225,7 @@ AUI.add(
 
 						instance._addPanel.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
 
-						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
+						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
 						instance._addApplicationSearch.on(
 							'results',
@@ -287,7 +298,7 @@ AUI.add(
 								on: {
 									show: A.bind('_onTooltipShow', instance),
 									hide: function() {
-										var currentNode = this.get('currentNode');
+										var currentNode = this.get(STR_CURRENT_NODE);
 
 										currentNode.removeClass(CSS_OVER);
 									}
@@ -362,8 +373,8 @@ AUI.add(
 						var portletMetaData = portlet._LFR_portletMetaData;
 
 						if (!portletMetaData) {
-							var classPK = portlet.attr('data-class-pk');
-							var className = portlet.attr('data-class-name');
+							var classPK = portlet.attr(DATA_CLASS_PK);
+							var className = portlet.attr(DATA_CLASS_NAME);
 
 							var instanceable = (portlet.attr('data-instanceable') == 'true');
 							var plid = portlet.attr('data-plid');
@@ -374,7 +385,7 @@ AUI.add(
 								portletData = classPK + ',' + className;
 							}
 
-							var portletId = portlet.attr('data-portlet-id');
+							var portletId = portlet.attr(DATA_PORTLET_ID);
 							var portletItemId = portlet.attr('data-portlet-item-id');
 							var portletUsed = portlet.hasClass(CSS_LFR_PORTLET_USED);
 
@@ -413,7 +424,7 @@ AUI.add(
 
 						currentTarget.radioClass('selected');
 
-						var displayStyle = currentTarget.attr('data-style');
+						var displayStyle = currentTarget.attr(DATA_STYLE);
 
 						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
 
@@ -451,7 +462,7 @@ AUI.add(
 
 						tooltip.set(BODY_CONTENT, TPL_LOADING);
 
-						var currentNode = tooltip.get('currentNode');
+						var currentNode = tooltip.get(STR_CURRENT_NODE);
 
 						if (instance._previousNode && (instance._previousNode != currentNode)) {
 							currentNode.addClass(CSS_OVER);
@@ -461,7 +472,7 @@ AUI.add(
 
 						instance._previousNode = currentNode;
 
-						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+						instance._loadPreviewTask(currentNode.attr(DATA_CLASS_NAME), currentNode.attr(DATA_CLASS_PK));
 
 						tooltip.get(STR_BOUNDING_BOX).show();
 					},
@@ -472,7 +483,7 @@ AUI.add(
 						var item = instance._addPanel.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
 						if (item && item.hasClass(CSS_LFR_PORTLET_USED)) {
-							var portletId = item.attr('data-portlet-id');
+							var portletId = item.attr(DATA_PORTLET_ID);
 
 							instance._enablePortletEntry(portletId);
 						}
@@ -532,7 +543,7 @@ AUI.add(
 
 						var styleButton = instance._styleButtonsList.one('.selected');
 
-						var displayStyle = styleButton.attr('data-style');
+						var displayStyle = styleButton.attr(DATA_STYLE);
 
 						A.io.request(
 							instance._addContentForm.getAttribute(STR_ACTION),

@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>PGDocumentsandmediaEditfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaEditfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaEditfolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>link=« Back</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>NAME</td>
+	<td>//input[@id='_20_name']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_USE_PARENT</td>
+	<td>//input[@id='_20_useFileEntryTypes']</td>
+	<td>Use Parent Document Types</td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_OVERRIDE_PARENT</td>
+	<td>//input[@id='_20_overrideFileEntryTypes']</td>
+	<td>Override Parent Document Types</td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_SELECT</td>
+	<td>//div[@id='_20_overrideParentSettings']/span/a/span</td>
+	<td>Select Document Type</td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

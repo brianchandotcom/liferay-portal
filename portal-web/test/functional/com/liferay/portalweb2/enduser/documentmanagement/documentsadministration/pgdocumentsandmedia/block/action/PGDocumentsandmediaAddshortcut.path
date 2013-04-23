@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>PGDocumentsandmediaAddshortcut</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaAddshortcut</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaAddshortcut</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>link=« Back</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>SITE</td>
+	<td>//input[@id='_20_selectGroupButton']</td>
+	<td>Site</td>
+</tr>
+<tr>
+	<td>DOCUMENT</td>
+	<td>//input[@id='_20_selectToFileEntryButton']</td>
+	<td>Document</td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>CANCEL</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_SELECT</td>
+	<td>//select[@id='_20_inputPermissionsViewRole']</td>
+	<td>Permissions Viewable by</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_MORE_OPTIONS</td>
+	<td>link=More Options »</td>
+	<td>More Options</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_HIDE_OPTIONS</td>
+	<td>link=« Hide Options</td>
+	<td>Hide Options</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_ADD_DISCUSSION</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[2]/input</td>
+	<td>Add Discussion</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_DELETE</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[3]/input</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_DELETE_DISCUSSION</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[4]/input</td>
+	<td>Delete Discussion</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_PERMISSIONS</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[5]/input</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_UPDATE</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[6]/input</td>
+	<td>Update</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX_UPDATE_DISCUSSION</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[7]/input</td>
+	<td>Update Discussion</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

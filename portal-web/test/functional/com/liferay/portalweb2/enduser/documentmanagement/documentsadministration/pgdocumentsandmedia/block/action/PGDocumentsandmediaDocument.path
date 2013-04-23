@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>PGDocumentsandmediaDocument</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaDocument</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmedia</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_DOWNLOAD</td>
+	<td>//span[@class='aui-toolbar-content']/button[1]</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT</td>
+	<td>//span[@class='aui-toolbar-content']/button[2]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE</td>
+	<td>//span[@class='aui-toolbar-content']/button[3]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKOUT</td>
+	<td>//span[@class='aui-toolbar-content']/button[4]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS</td>
+	<td>//span[@class='aui-toolbar-content']/button[5]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//span[@class='aui-toolbar-content']/button[6]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_INFO-->
+<tr>
+	<td>DOCUMENT_INFO_TITLE</td>
+	<td>//div[@class='document-info']/h2[@class='document-title']</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_RATING</td>
+	<td>//div[@class='document-info']/span[@class='lfr-asset-ratings']</td>
+	<td>Rating</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_LINKS</td>
+	<td>//div[@class='document-info']/div[@class='entry-links']</td>
+	<td>Links</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DESCRIPTION</td>
+	<td>//div[@class='document-info']/span[@class='document-description']</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_CATEGORIES</td>
+	<td>//div[@class='document-info']/div[@class='lfr-asset-categories']</td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_TAGS</td>
+	<td>//div[@class='document-info']/div[@class='lfr-asset-tags']</td>
+	<td>Tags</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_BE_THE_FIRST</td>
+	<td>link=Be the first</td>
+	<td>Be the first</td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD_COMMENT</td>
+	<td>link=Add Comment</td>
+	<td>Add Comment</td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS</td>
+	<td>link=Subscribe to Comments</td>
+	<td>Subscribe to Comments</td>
+</tr>
+<tr>
+	<td>COMMENTS_UNSUBSCRIBE_FROM_COMMENTS</td>
+	<td>link=Unsubscribe from Comments</td>
+	<td>Unsubscribe from Comments</td>
+</tr>
+<tr>
+	<td>COMMENTS_POST_REPLY_BODY</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div/span/span/span/textarea</td>
+	<td>Post Reply Body</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div/div/span/span/input</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div/div/span[2]/span/input</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BODY</td>
+	<td>//div[@class='taglib-discussion']/form/div/div/div/div[3]/div/div</td>
+	<td>Reply Body</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

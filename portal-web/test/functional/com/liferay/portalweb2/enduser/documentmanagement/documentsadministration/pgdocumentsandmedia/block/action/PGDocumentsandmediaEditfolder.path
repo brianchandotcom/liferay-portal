@@ -30,16 +30,16 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>link=« Back</td>
+	<td>//a[@id='_20_TabsBack']</td>
 	<td>Back</td>
 </tr>
 <tr>
-	<td>NAME</td>
+	<td>NAME_FIELD</td>
 	<td>//input[@id='_20_name']</td>
 	<td>Name</td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
+	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_20_description']</td>
 	<td>Description</td>
 </tr>
@@ -54,17 +54,17 @@
 	<td>Override Parent Document Types</td>
 </tr>
 <tr>
-	<td>DOCUMENT_TYPE_SELECT</td>
+	<td>SELECT_DOCUMENT_TYPE</td>
 	<td>//div[@id='_20_overrideParentSettings']/span/a/span</td>
 	<td>Select Document Type</td>
 </tr>
 <tr>
-	<td>SAVE</td>
+	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
 </tr>

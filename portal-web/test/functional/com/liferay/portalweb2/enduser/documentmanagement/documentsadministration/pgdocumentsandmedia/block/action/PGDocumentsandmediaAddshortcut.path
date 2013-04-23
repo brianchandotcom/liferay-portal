@@ -30,26 +30,26 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>link=« Back</td>
+	<td>//a[@id='_20_TabsBack']</td>
 	<td>Back</td>
 </tr>
 <tr>
-	<td>SITE</td>
+	<td>SITE_BUTTON</td>
 	<td>//input[@id='_20_selectGroupButton']</td>
 	<td>Site</td>
 </tr>
 <tr>
-	<td>DOCUMENT</td>
+	<td>DOCUMENT_BUTTON</td>
 	<td>//input[@id='_20_selectToFileEntryButton']</td>
 	<td>Document</td>
 </tr>
 <tr>
-	<td>SAVE</td>
+	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
 </tr>

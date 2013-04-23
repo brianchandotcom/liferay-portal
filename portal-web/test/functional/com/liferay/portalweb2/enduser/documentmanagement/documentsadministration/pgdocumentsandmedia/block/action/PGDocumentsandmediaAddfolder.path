@@ -30,26 +30,26 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>link=« Back</td>
+	<td>//a[@id='_20_TabsBack']</td>
 	<td>Back</td>
 </tr>
 <tr>
-	<td>NAME</td>
+	<td>NAME_FIELD</td>
 	<td>//input[@id='_20_name']</td>
 	<td>Name</td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
+	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_20_description']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE</td>
+	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
 </tr>

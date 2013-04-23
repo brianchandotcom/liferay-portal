@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>link=« Back</td>
+	<td>//a[@id='_20_TabsBack']</td>
 	<td>Back</td>
 </tr>
 <tr>
@@ -39,27 +39,27 @@
 	<td>Folder</td>
 </tr>
 <tr>
-	<td>FILE</td>
+	<td>FILE_FIELD</td>
 	<td>//input[@id='_20_file']</td>
 	<td>File</td>
 </tr>
 <tr>
-	<td>TITLE</td>
+	<td>TITLE_FIELD</td>
 	<td>//input[@id='_20_title']</td>
 	<td>Title</td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
+	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_20_description']</td>
 	<td>Description</td>
 </tr>
 <tr>
-	<td>PUBLISH</td>
+	<td>PUBLISH_BUTTON</td>
 	<td>//input[@value='Publish']</td>
 	<td>Save</td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
 </tr>

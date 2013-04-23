@@ -82,9 +82,24 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
+	<td>TOOLBAR_SEARCH_FIELD</td>
+	<td>//div[@id='_20_fileEntrySearchContainer']/form/span[1]/span/span/input</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_BUTTON</td>
+	<td>//div[@id='_20_fileEntrySearchContainer']/form/span[2]/span/input</td>
+	<td>Search Button</td>
+</tr>
+<tr>
 	<td>TOOLBAR_SELECT_ALL</td>
 	<td>//div[@class='toolbar']/span[1]/span/span/input[2]</td>
 	<td>Select All</td>
+</tr>
+<tr>
+	<td>TOOLBAR_ACTIONS</td>
+	<td>//div[@class='toolbar']/span[2]/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
@@ -117,14 +132,35 @@
 	<td>List Display</td>
 </tr>
 <tr>
-	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//div[@id='_20_fileEntrySearchContainer']/form/span[1]/span/span/input</td>
-	<td>Search Field</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_CANCEL_CHECKOUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Cancel Checkout')]</td>
+	<td>Cancel Checkout</td>
 </tr>
 <tr>
-	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//div[@id='_20_fileEntrySearchContainer']/form/span[2]/span/input</td>
-	<td>Search Button</td>
+	<td>ACTIONS_MENULIST_CHECKIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkin')]</td>
+	<td>Checkin</td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_CHECKOUT</td>
+	<td>xpath=(//a[@role='menuitem' and contains(.,'Checkout')])[2]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td></td>

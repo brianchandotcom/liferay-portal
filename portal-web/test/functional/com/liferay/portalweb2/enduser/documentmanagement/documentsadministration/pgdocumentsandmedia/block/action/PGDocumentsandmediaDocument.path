@@ -20,33 +20,33 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
-	<td>TOOLBAR_DOWNLOAD</td>
-	<td>//span[@class='aui-toolbar-content']/button[1]</td>
+	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Download']</td>
 	<td>Download</td>
 </tr>
 <tr>
-	<td>TOOLBAR_EDIT</td>
-	<td>//span[@class='aui-toolbar-content']/button[2]</td>
+	<td>TOOLBAR_EDIT_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Edit']</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>TOOLBAR_MOVE</td>
-	<td>//span[@class='aui-toolbar-content']/button[3]</td>
+	<td>TOOLBAR_MOVE_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Move']</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>TOOLBAR_CHECKOUT</td>
-	<td>//span[@class='aui-toolbar-content']/button[4]</td>
+	<td>TOOLBAR_CHECKOUT_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Checkout']</td>
 	<td>Checkout</td>
 </tr>
 <tr>
-	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//span[@class='aui-toolbar-content']/button[5]</td>
+	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Permissions']</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//span[@class='aui-toolbar-content']/button[6]</td>
+	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
+	<td>//span[@class='aui-toolbar-content']/button[.='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
@@ -93,8 +93,8 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_BE_THE_FIRST</td>
-	<td>link=Be the first</td>
-	<td>Be the first</td>
+	<td>link=Be the first.</td>
+	<td>Be the first.</td>
 </tr>
 <tr>
 	<td>COMMENTS_ADD_COMMENT</td>

@@ -18,6 +18,8 @@ AUI.add(
 
 		var STR_ACTION = 'action';
 
+		var STR_BOUNDING_BOX = 'boundingBox';
+
 		var STR_CLICK = 'click';
 
 		var STR_EMPTY = '';
@@ -29,20 +31,6 @@ AUI.add(
 		var TPL_MESSAGE_ERROR = '<div class="portlet-msg-error">{0}</div>';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
-
-		var AddApplicationSearch = A.Component.create(
-			{
-				AUGMENTS: [A.AutoCompleteBase],
-				EXTENDS: A.Base,
-				NAME: 'addapplicationsearch',
-				prototype: {
-					initializer: function() {
-						this._bindUIACBase();
-						this._syncUIACBase();
-					}
-				}
-			}
-		);
 
 		var AddContent = A.Component.create(
 			{
@@ -110,8 +98,6 @@ AUI.add(
 
 						instance._addContentSearch = addContentSearch;
 
-						instance._createToolTip();
-
 						instance._loadPreviewTask = A.debounce('_loadPreviewFn', 200, instance);
 
 						Liferay.on(
@@ -122,6 +108,8 @@ AUI.add(
 						);
 
 						instance._bindUI();
+
+						instance._createToolTip();
 					},
 
 					_addApplication: function(event) {
@@ -206,7 +194,7 @@ AUI.add(
 
 						tooltip.set(BODY_CONTENT, event.currentTarget.get(STR_RESPONSE_DATA));
 
-						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addApplication, instance);
+						tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview input').on(STR_CLICK, instance._addApplication, instance);
 					},
 
 					_afterSuccess: function(event) {
@@ -288,7 +276,7 @@ AUI.add(
 							instance._tooltip.destroy();
 						}
 
-						instance._tooltip = new A.Tooltip(
+						instance._tooltip = new AddContentTooltip(
 							{
 								align: {
 									points: ['lc', 'rc']
@@ -474,6 +462,8 @@ AUI.add(
 						instance._previousNode = currentNode;
 
 						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+
+						tooltip.get(STR_BOUNDING_BOX).show();
 					},
 
 					_onPortletClose: function(event) {
@@ -564,6 +554,20 @@ AUI.add(
 			}
 		);
 
+		var AddApplicationSearch = A.Component.create(
+			{
+				AUGMENTS: [A.AutoCompleteBase],
+				EXTENDS: A.Base,
+				NAME: 'addapplicationsearch',
+				prototype: {
+					initializer: function() {
+						this._bindUIACBase();
+						this._syncUIACBase();
+					}
+				}
+			}
+		);
+
 		var AddContentSearch = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
@@ -573,6 +577,26 @@ AUI.add(
 					initializer: function() {
 						this._bindUIACBase();
 						this._syncUIACBase();
+					}
+				}
+			}
+		);
+
+		var AddContentTooltip = A.Component.create(
+			{
+				EXTENDS: A.Tooltip,
+				NAME: 'addcontenttooltip',
+				prototype: {
+					_setShowOn: function(eventType) {
+						var instance = this;
+
+						AddContentTooltip.superclass._setShowOn.call(instance, eventType);
+
+						var trigger = instance.get('trigger');
+
+						trigger.detach('mousedown', instance._stopTriggerEventPropagation);
+
+						instance.get(STR_BOUNDING_BOX).hide();
 					}
 				}
 			}
@@ -747,6 +771,7 @@ AUI.add(
 		Dockbar.AddApplicationSearch = AddApplicationSearch;
 		Dockbar.AddContent = AddContent;
 		Dockbar.AddContentSearch = AddContentSearch;
+		Dockbar.AddContentTooltip = AddContentTooltip;
 		Dockbar.FreeFormPortletItem = FreeFormPortletItem;
 		Dockbar.PortletItem = PortletItem;
 	},

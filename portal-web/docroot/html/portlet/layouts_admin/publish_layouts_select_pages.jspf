@@ -134,26 +134,25 @@ for (int i = 0; i < results.size(); i++) {
 </aui:button-row>
 
 <aui:script use="aui-io-request">
-	<%
-	String searchContainerNamespace = searchContainer.getId(request, renderResponse.getNamespace());
-	%>
-
 	var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
-	var searchContainer = A.one('#<portlet:namespace /><%= searchContainerNamespace %>');
+
+	var searchContainer = A.one('#<portlet:namespace /><%= searchContainer.getId(request, renderResponse.getNamespace()) %>');
 
 	if (searchContainer) {
 		searchContainer.delegate(
 			'click',
-			function(e) {
+			function(event) {
 				var node = this;
-				var state = node.get('checked');
+
+				var state = node.get('checked') ? 'layoutCheck' : 'layoutUncheck';
+
 				var data =
 					{
+						cmd: state,
 						groupId: <%= themeDisplay.getParentGroupId() %>,
+						plid: node.val(),
 						privateLayout: <%= privateLayout %>,
-						treeId: '<%= treeKey %>' + 'SelectedNode',
-						cmd: state ? 'layoutCheck' : 'layoutUncheck',
-						plid: node.val()
+						treeId: '<%= treeKey %>' + 'SelectedNode'
 					};
 
 				A.io.request(

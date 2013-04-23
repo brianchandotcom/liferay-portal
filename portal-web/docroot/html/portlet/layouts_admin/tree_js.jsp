@@ -179,20 +179,24 @@ if (!selectableTree) {
 							after: {
 								checkedChange: function(event) {
 									if (this === event.originalTarget) {
-										var plid = TreeUtil.extractPlid(event.target);
+										var target = event.target;
+
+										var plid = TreeUtil.extractPlid(target);
 
 										TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
 
-										TreeUtil.updateSelectedNodes(event.target, event.newVal);
+										TreeUtil.updateSelectedNodes(target, event.newVal);
 									}
 								},
 
 								childrenChange: function(event) {
-									if (event.target.get('checked')) {
-										TreeUtil.updateSelectedNodes(event.target, true);
+									var target = event.target;
+
+									if (target.get('checked')) {
+										TreeUtil.updateSelectedNodes(target, true);
 									}
 
-									TreeUtil.restoreNodeState(event.target);
+									TreeUtil.restoreNodeState(target);
 								},
 
 								expandedChange: function(event) {
@@ -444,8 +448,8 @@ if (!selectableTree) {
 					{
 						groupId: <%= groupId %>,
 						privateLayout: <%= privateLayout %>,
-						treeId: treeId,
-						recursive: true
+						recursive: true,
+						treeId: treeId
 					},
 					data
 				);

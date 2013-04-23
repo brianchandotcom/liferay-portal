@@ -1136,6 +1136,8 @@
 			<arg line="${arg.line}" />
 		</java>
 
+		<move file="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp.tmp" tofile="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp" />
+
 		<echo>${jspc.output}</echo>
 
 		<if>

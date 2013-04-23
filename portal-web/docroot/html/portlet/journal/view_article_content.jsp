@@ -19,19 +19,14 @@
 <html>
 
 <head>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/html/css/main.css") %>" rel="stylesheet" type="text/css" />
-	<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/main.css") %>" rel="stylesheet" type="text/css" />
-
-	<c:if test="<%= (layout != null) && Validator.isNotNull(layout.getCssText()) %>">
-		<style type="text/css">
-			<%= layout.getCssText() %>
-		</style>
-	</c:if>
+	<liferay-util:include page="/html/common/themes/top_head.jsp" />
 </head>
 
 <body>
 
 <%= request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT) %>
+
+<liferay-util:include page="/html/common/themes/bottom.jsp" />
 
 </body>
 

@@ -63,7 +63,9 @@ public class UpgradeProcessTestUtil {
 
 		String url = jdbcProperties.getProperty(PropsKeys.JDBC_DEFAULT_URL);
 
-		url = url.replace("lportal", DATABASE_NAME);
+		String currentDatabaseName = DBFactoryUtil.getDatabaseName();
+
+		url = url.replace(currentDatabaseName, DATABASE_NAME);
 
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 

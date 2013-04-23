@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import org.hibernate.dialect.DB2Dialect;
@@ -50,6 +53,53 @@ import org.hibernate.dialect.SybaseDialect;
 @DoPrivileged
 @SuppressWarnings("deprecation")
 public class DBFactoryImpl implements DBFactory {
+
+	public String getDatabaseName() {
+		String databaseName = "lportal";
+
+		String type = getDB().getType();
+
+		String jdbcDefaultURL = PropsUtil.get(PropsKeys.JDBC_DEFAULT_URL);
+
+		if (type.equals(DB.TYPE_DB2)) {
+			int pos = jdbcDefaultURL.lastIndexOf(StringPool.SLASH);
+
+			databaseName = jdbcDefaultURL.substring(pos + 1);
+
+			pos = databaseName.lastIndexOf(StringPool.COLON);
+
+			databaseName = databaseName.substring(0, pos);
+		}
+		else if (type.equals(DB.TYPE_DERBY)) {
+			int pos = jdbcDefaultURL.lastIndexOf(StringPool.COLON);
+
+			databaseName = jdbcDefaultURL.substring(pos + 1);
+		}
+		else if (type.equals(DB.TYPE_HYPERSONIC) ||
+				 type.equals(DB.TYPE_INGRES) ||
+				 type.equals(DB.TYPE_POSTGRESQL) ||
+				 type.equals(DB.TYPE_SQLSERVER) ||
+				 type.equals(DB.TYPE_SYBASE)) {
+
+			int pos = jdbcDefaultURL.lastIndexOf(StringPool.SLASH);
+
+			databaseName = jdbcDefaultURL.substring(pos + 1);
+		}
+		else if (type.equals(DB.TYPE_MYSQL)) {
+			int pos = jdbcDefaultURL.indexOf(StringPool.QUESTION);
+
+			databaseName = jdbcDefaultURL.substring(0, pos);
+
+			pos = databaseName.lastIndexOf(StringPool.SLASH);
+
+			databaseName = databaseName.substring(pos + 1);
+		}
+		else if (type.equals(DB.TYPE_ORACLE)) {
+			databaseName = PropsUtil.get(PropsKeys.JDBC_DEFAULT_USERNAME);
+		}
+
+		return databaseName;
+	}
 
 	@Override
 	public DB getDB() {

@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.dao.db;
  */
 public interface DBFactory {
 
+	public String getDatabaseName();
+
 	public DB getDB();
 
 	public DB getDB(Object dialect);

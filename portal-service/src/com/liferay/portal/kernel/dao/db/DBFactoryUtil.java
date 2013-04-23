@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class DBFactoryUtil {
 
+	public static String getDatabaseName() {
+		return getDBFactory().getDatabaseName();
+	}
+
 	public static DB getDB() {
 		return getDBFactory().getDB();
 	}

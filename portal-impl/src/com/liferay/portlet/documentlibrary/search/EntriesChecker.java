@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -55,10 +57,22 @@ public class EntriesChecker extends RowChecker {
 				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+			_isDocumentLibraryDisplayPortlet = true;
+		}
 	}
 
 	@Override
 	public String getAllRowsCheckBox() {
+		if (_isDocumentLibraryDisplayPortlet) {
+			return getAllRowsCheckbox(getAllRowIds(), getEntryRowIds());
+		}
+
 		return null;
 	}
 
@@ -158,7 +172,30 @@ public class EntriesChecker extends RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler();
+		String checkBoxRowIds = getEntryRowIds();
+
+		String checkBoxAllRowIds = StringPool.BLANK;
+		String checkBoxPostOnClick = StringPool.BLANK;
+
+		if (_isDocumentLibraryDisplayPortlet) {
+			checkBoxAllRowIds = "'" + getAllRowIds() + "'";
+		}
+		else {
+			checkBoxAllRowIds = "'#" + getAllRowIds() + "Checkbox'";
+			checkBoxPostOnClick =
+				_liferayPortletResponse.getNamespace() +
+					"toggleActionsButton();";
+		}
+
+		return getRowCheckBox(
+			checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
+				name + "Checkbox",
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+	}
+
+	protected String getEntryRowIds() {
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
@@ -174,16 +211,10 @@ public class EntriesChecker extends RowChecker {
 		sb.append(FileEntry.class.getSimpleName());
 		sb.append("Checkbox']");
 
-		String checkBoxRowIds = sb.toString();
-
-		return getRowCheckBox(
-			checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-				name + "Checkbox",
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();");
+		return sb.toString();
 	}
 
+	private boolean _isDocumentLibraryDisplayPortlet;
 	private LiferayPortletResponse _liferayPortletResponse;
 	private PermissionChecker _permissionChecker;
 

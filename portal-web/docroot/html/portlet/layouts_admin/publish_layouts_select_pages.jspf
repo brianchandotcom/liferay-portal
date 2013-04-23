@@ -133,4 +133,40 @@ for (int i = 0; i < results.size(); i++) {
 	<aui:button onClick="<%= taglibURL %>" value='<%= results.isEmpty() ? "select-pages" : "change-selection" %>' />
 </aui:button-row>
 
+<aui:script use="aui-io-request">
+	<%
+	String searchContainerNamespace = searchContainer.getId(request, renderResponse.getNamespace());
+	%>
+
+	var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
+	var searchContainer = A.one('#<portlet:namespace /><%= searchContainerNamespace %>');
+
+	if (searchContainer) {
+		searchContainer.delegate(
+			'click',
+			function(e) {
+				var node = this;
+				var state = node.get('checked');
+				var data =
+					{
+						groupId: <%= themeDisplay.getParentGroupId() %>,
+						privateLayout: <%= privateLayout %>,
+						treeId: '<%= treeKey %>' + 'SelectedNode',
+						cmd: state ? 'layoutCheck' : 'layoutUncheck',
+						plid: node.val()
+					};
+
+				A.io.request(
+					sessionClickURL,
+					{
+						data: data
+					}
+				);
+
+			},
+			'td.col-rowChecker input'
+		);
+	}
+</aui:script>
+
 <aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />

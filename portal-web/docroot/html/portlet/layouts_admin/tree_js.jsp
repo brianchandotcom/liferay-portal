@@ -188,7 +188,9 @@ if (!selectableTree) {
 								},
 
 								childrenChange: function(event) {
-									TreeUtil.updateSelectedNodes(event.target, event.target.get('checked'));
+									if (event.target.get('checked')) {
+										TreeUtil.updateSelectedNodes(event.target, true);
+									}
 
 									TreeUtil.restoreNodeState(event.target);
 								},
@@ -442,7 +444,8 @@ if (!selectableTree) {
 					{
 						groupId: <%= groupId %>,
 						privateLayout: <%= privateLayout %>,
-						treeId: treeId
+						treeId: treeId,
+						recursive: true
 					},
 					data
 				);

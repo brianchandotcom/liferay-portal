@@ -77,11 +77,14 @@ public class SessionTreeJSClickAction extends Action {
 					}
 				}
 				else {
+					boolean recursive = ParamUtil.getBoolean(
+						request, "recursive");
+
 					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 					SessionTreeJSClicks.openLayoutNodes(
 						request, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), true);
+						layout.getLayoutId(), recursive);
 				}
 			}
 			else if (cmd.equals("layoutCollapse")) {
@@ -105,11 +108,14 @@ public class SessionTreeJSClickAction extends Action {
 					}
 				}
 				else {
+					boolean recursive = ParamUtil.getBoolean(
+						request, "recursive");
+
 					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 					SessionTreeJSClicks.closeLayoutNodes(
 						request, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), true);
+						layout.getLayoutId(), recursive);
 				}
 			}
 			else if (cmd.equals("layoutUncollapse")) {

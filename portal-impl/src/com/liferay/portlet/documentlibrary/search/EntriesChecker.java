@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -47,20 +46,9 @@ public class EntriesChecker extends RowChecker {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		this (liferayPortletRequest, liferayPortletResponse, true,
-		"toggleActionsButton");
-	}
-
-	public EntriesChecker(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, boolean hasAllCheckBox,
-		String checkBoxPostOnClickMethodName) {
-
 		super(liferayPortletResponse);
 
-		_hasAllCheckBox = hasAllCheckBox;
 		_liferayPortletResponse = liferayPortletResponse;
-		_checkBoxPostOnClickMethodName = checkBoxPostOnClickMethodName;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -170,51 +158,32 @@ public class EntriesChecker extends RowChecker {
 			return StringPool.BLANK;
 		}
 
-		String allRowsIdsCheckBox = null;
-		String checkBoxRowIds = null;
+		StringBundler sb = new StringBundler();
 
-		if (_hasAllCheckBox) {
-			allRowsIdsCheckBox = "'#".concat(getAllRowIds()).concat(
-				"Checkbox'");
+		sb.append("['");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(Folder.class.getSimpleName());
+		sb.append("Checkbox', '");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(DLFileShortcut.class.getSimpleName());
+		sb.append("Checkbox', '");
+		sb.append(_liferayPortletResponse.getNamespace());
+		sb.append(RowChecker.ROW_IDS);
+		sb.append(FileEntry.class.getSimpleName());
+		sb.append("Checkbox']");
 
-			StringBundler sb = new StringBundler();
-
-			sb.append("['");
-			sb.append(_liferayPortletResponse.getNamespace());
-			sb.append(RowChecker.ROW_IDS);
-			sb.append(Folder.class.getSimpleName());
-			sb.append("Checkbox', '");
-			sb.append(_liferayPortletResponse.getNamespace());
-			sb.append(RowChecker.ROW_IDS);
-			sb.append(DLFileShortcut.class.getSimpleName());
-			sb.append("Checkbox', '");
-			sb.append(_liferayPortletResponse.getNamespace());
-			sb.append(RowChecker.ROW_IDS);
-			sb.append(FileEntry.class.getSimpleName());
-			sb.append("Checkbox']");
-
-			checkBoxRowIds = sb.toString();
-		}
-
-		String checkBoxPostOnClick = null;
-
-		if (Validator.isNotNull(_checkBoxPostOnClickMethodName)) {
-			StringBundler sb = new StringBundler();
-			sb.append(_liferayPortletResponse.getNamespace());
-			sb.append(_checkBoxPostOnClickMethodName);
-			sb.append("();");
-			checkBoxPostOnClick = sb.toString();
-		}
+		String checkBoxRowIds = sb.toString();
 
 		return getRowCheckBox(
 			checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-			name + "Checkbox", primaryKey, checkBoxRowIds, allRowsIdsCheckBox,
-			checkBoxPostOnClick);
+				name + "Checkbox",
+			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();");
 	}
 
-	private String _checkBoxPostOnClickMethodName;
-	private boolean _hasAllCheckBox;
 	private LiferayPortletResponse _liferayPortletResponse;
 	private PermissionChecker _permissionChecker;
 

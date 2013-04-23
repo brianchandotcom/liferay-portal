@@ -15,10 +15,13 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.LayoutSetVirtualHostException;
+import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -153,7 +156,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		if (group.isStagingGroup() || !group.isOrganization() ||
 			!group.isSite()) {
 
-			imageLocalService.deleteImage(layoutSet.getLogoId());
+			try {
+				imageLocalService.deleteImage(layoutSet.getLogoId());
+			}
+			catch (NoSuchImageException nsie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No image found for: " + layoutSet.getLogoId());
+				}
+			}
 		}
 
 		// Layout set
@@ -514,5 +524,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		return layoutSet;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LayoutSetLocalServiceImpl.class);
+
+
 
 }

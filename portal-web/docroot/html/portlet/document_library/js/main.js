@@ -31,8 +31,6 @@ AUI.add(
 
 		var STR_PAGINATOR_DATA = 'paginatorData';
 
-		var STR_PARENT_NODE = 'parentNode';
-
 		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcutCheckbox';
 
 		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolderCheckbox';
@@ -576,26 +574,17 @@ AUI.add(
 					_toggleTrashAction: function() {
 						var instance = this;
 
-						var isTrashEnabled = instance._config.isTrashEnabled;
-
 						var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
 
 						var scopeGroupId = themeDisplay.getScopeGroupId();
 
-						var deleteAction = A.one('#' + instance.ns('deleteAction'));
+						var trashEnabled = instance._config.trashEnabled && (scopeGroupId == repositoryId);
 
-						var moveToTrashAction = A.one('#' + instance.ns('moveToTrashAction'));
+						var deleteAction = instance.one('#deleteAction');
+						var moveToTrashAction = instance.one('#moveToTrashAction');
 
-						if ((scopeGroupId == repositoryId) && isTrashEnabled) {
-							deleteAction.get(STR_PARENT_NODE).hide();
-
-							moveToTrashAction.get(STR_PARENT_NODE).show();
-						}
-						else {
-							deleteAction.get(STR_PARENT_NODE).show();
-
-							moveToTrashAction.get(STR_PARENT_NODE).hide();
-						}
+						deleteAction.ancestor().toggle(!trashEnabled);
+						moveToTrashAction.ancestor().toggle(trashEnabled);
 					}
 				}
 			}

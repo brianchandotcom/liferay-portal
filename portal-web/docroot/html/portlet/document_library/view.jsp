@@ -217,7 +217,7 @@ if (folder != null) {
 				mainUrl: '<%= mainURL %>',
 				strutsAction: '/document_library/view'
 			},
-			isTrashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
+			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',

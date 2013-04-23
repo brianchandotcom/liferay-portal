@@ -1664,12 +1664,16 @@
 
 			var selectionEvent = Liferay.on(eventName, callback);
 
-			Util.openWindow(
-				config,
-				function(dialogWindow) {
-					dialogWindow.after('close', selectionEvent.detach, selectionEvent);
-				}
-			);
+			if (dialog) {
+				dialog.show();
+			} else {
+				Util.openWindow(
+					config,
+					function(dialogWindow) {
+						dialogWindow.after('close', selectionEvent.detach, selectionEvent);
+					}
+				);
+			}
 		},
 		['aui-base']
 	);

@@ -124,6 +124,10 @@
 
 		.app-view-entry {
 			cursor: move;
+
+			&.lfr-portlet-used {
+				cursor: default;
+			}
 		}
 	}
 
@@ -237,15 +241,8 @@
 	margin-bottom: 8px;
 }
 
-.portal-add-content {
-	.lfr-portlet-used {
-		cursor: auto !important;
 
-		.taglib-text {
-			color: #ccc !important;
-		}
-	}
-
+.portal-add-content {	
 	.portlet-msg-info {
 		color: #333;
 		margin-bottom: 0;
@@ -323,6 +320,13 @@
 					.taglib-text {
 						color: #2D2D2D;
 						font-weight: normal;
+					}
+
+					&.lfr-portlet-used {
+						.taglib-text {
+							color: #CCC;
+							cursor: default;
+						}
 					}
 
 					&:hover, &.over {
@@ -447,7 +451,6 @@
 				}
 
 				.taglib-text {
-					color: #2D2D2D;
 					font-size: 12px;
 					font-weight: normal;
 					text-decoration: none;
@@ -458,14 +461,14 @@
 }
 
 .lfr-install-more {
-	border-top: 1px solid transparent;
 	border-top-color: #ccc;
+	border-top: 1px solid transparent;
 	margin: 10px 0 0;
 	padding-top: 10px;
 
 	a {
-		display: block;
 		background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
+		display: block;
 		font-weight: bold;
 		padding-left: 20px;
 	}

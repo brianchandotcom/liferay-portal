@@ -31,7 +31,7 @@
 		%>
 
 		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
-			<div class="add-content-menu" id="<portlet:namespace />addApplicationAndContentPanel">
+			<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
 				<span class="close-add-panel" id="<portlet:namespace />closePanel">
 					<liferay-ui:message key="close" />
 				</span>

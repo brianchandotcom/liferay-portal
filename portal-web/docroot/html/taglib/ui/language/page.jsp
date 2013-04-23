@@ -84,7 +84,7 @@ for (int i = 0; i < locales.length; i++) {
 				for (int i = 0; i < locales.length; i++) {
 				%>
 
-					<aui:option cssClass="taglib-language-option" label="<%= LocaleUtil.getLongDisplayName(locales[i]) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>" selected="<%= (locale.getLanguage().equals(locales[i].getLanguage()) && locale.getCountry().equals(locales[i].getCountry())) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+					<aui:option cssClass="taglib-language-option" label="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>" selected="<%= (locale.getLanguage().equals(locales[i].getLanguage()) && locale.getCountry().equals(locales[i].getCountry())) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
 
 				<%
 				}
@@ -130,7 +130,7 @@ for (int i = 0; i < locales.length; i++) {
 				localeDisplayName = LocaleUtil.getShortDisplayName(locales[i], duplicateLanguages);
 			}
 			else {
-				localeDisplayName = LocaleUtil.getLongDisplayName(locales[i]);
+				localeDisplayName = LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages);
 			}
 		%>
 
@@ -149,7 +149,7 @@ for (int i = 0; i < locales.length; i++) {
 					<liferay-ui:icon
 						image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 						lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
-						message="<%= LocaleUtil.getLongDisplayName(locales[i]) %>"
+						message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
 						url='<%= currentLanguageId.equals(languageId) ? null : formAction + "&" + name + "=" + LocaleUtil.toLanguageId(locales[i]) %>'
 					/>
 				</c:otherwise>

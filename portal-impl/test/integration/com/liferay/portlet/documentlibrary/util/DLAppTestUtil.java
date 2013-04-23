@@ -24,16 +24,43 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 
 /**
  * @author Alexander Chow
  */
 public abstract class DLAppTestUtil {
+
+	public static DLFileEntryType addDLFileEntryType(
+			long groupId, long ddmStructureId)
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+		String name = ServiceTestUtil.randomString();
+		String description = ServiceTestUtil.randomString();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return addDLFileEntryType(
+			userId, groupId, name, description, new long[] {ddmStructureId},
+			serviceContext);
+	}
+
+	public static DLFileEntryType addDLFileEntryType(
+			long userId, long groupId, String name, String description,
+			long[] ddmStructureIds, ServiceContext serviceContext)
+		throws Exception {
+
+		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			userId, groupId, name, description, ddmStructureIds,
+			serviceContext);
+	}
 
 	public static DLFileRank addDLFileRank(long groupId, long fileEntryId)
 		throws Exception {

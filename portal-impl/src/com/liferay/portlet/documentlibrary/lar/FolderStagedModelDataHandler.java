@@ -210,13 +210,13 @@ public class FolderStagedModelDataHandler
 				name, folder.getDescription(), serviceContext);
 		}
 
-		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
-
 		importFolderFileEntryTypes(
 			portletDataContext, folderElement, folder, serviceContext);
 
 		portletDataContext.importClassedModel(
 			folder, importedFolder, DLPortletDataHandler.NAMESPACE);
+
+		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
 	}
 
 	protected void exportFolderFileEntryTypes(

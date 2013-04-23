@@ -25,12 +25,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutUtil;
 
 import java.util.Map;
@@ -57,20 +54,20 @@ public class DLFileShortcutStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, fileShortcut);
+				portletDataContext, fileShortcut.getFolder());
 		}
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			fileShortcut.getToFileEntryId());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, dlFileEntry);
+			portletDataContext, fileEntry);
 
 		Element fileShortcutElement =
 			portletDataContext.getExportDataStagedModelElement(fileShortcut);
 
 		fileShortcutElement.addAttribute(
-			"file-entry-uuid", dlFileEntry.getUuid());
+			"file-entry-uuid", fileEntry.getUuid());
 
 		portletDataContext.addClassedModel(
 			fileShortcutElement,
@@ -92,11 +89,11 @@ public class DLFileShortcutStagedModelDataHandler
 				portletDataContext, Folder.class.getName(),
 				fileShortcut.getFolderId());
 
-			DLFolder dlFolder =
-				(DLFolder)portletDataContext.getZipEntryAsObject(folderPath);
+			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
+				folderPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, dlFolder);
+				portletDataContext, folder);
 		}
 
 		Map<Long, Long> folderIds =
@@ -115,14 +112,14 @@ public class DLFileShortcutStagedModelDataHandler
 		}
 
 		String fileEntryPath = ExportImportPathUtil.getModelPath(
-			portletDataContext, DLFileEntry.class.getName(),
+			portletDataContext, FileEntry.class.getName(),
 			fileShortcut.getToFileEntryId());
 
-		DLFileEntry dlFileEntry =
-			(DLFileEntry)portletDataContext.getZipEntryAsObject(fileEntryPath);
+		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
+			fileEntryPath);
 
 		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, dlFileEntry);
+			portletDataContext, fileEntry);
 
 		Element fileShortcutElement =
 			portletDataContext.getImportDataStagedModelElement(fileShortcut);
@@ -130,10 +127,10 @@ public class DLFileShortcutStagedModelDataHandler
 		String fileEntryUuid = fileShortcutElement.attributeValue(
 			"file-entry-uuid");
 
-		FileEntry fileEntry = FileEntryUtil.fetchByUUID_R(
+		FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
 			fileEntryUuid, groupId);
 
-		if (fileEntry == null) {
+		if (importedFileEntry == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to fetch file entry {uuid=" + fileEntryUuid +
@@ -158,18 +155,18 @@ public class DLFileShortcutStagedModelDataHandler
 				serviceContext.setUuid(fileShortcut.getUuid());
 
 				importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-					userId, groupId, folderId, fileEntry.getFileEntryId(),
-					serviceContext);
+					userId, groupId, folderId,
+					importedFileEntry.getFileEntryId(), serviceContext);
 			}
 			else {
 				importedFileShortcut = DLAppLocalServiceUtil.updateFileShortcut(
 					userId, existingFileShortcut.getFileShortcutId(), folderId,
-					fileEntry.getFileEntryId(), serviceContext);
+					importedFileEntry.getFileEntryId(), serviceContext);
 			}
 		}
 		else {
 			importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-				userId, groupId, folderId, fileEntry.getFileEntryId(),
+				userId, groupId, folderId, importedFileEntry.getFileEntryId(),
 				serviceContext);
 		}
 

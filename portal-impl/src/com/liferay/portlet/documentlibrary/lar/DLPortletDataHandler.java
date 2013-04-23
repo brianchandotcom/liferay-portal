@@ -326,7 +326,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		if (rootFolderId > 0) {
 			Map<Long, Long> folderIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DLFolder.class);
+					Folder.class);
 
 			rootFolderId = MapUtil.getLong(
 				folderIds, rootFolderId, rootFolderId);

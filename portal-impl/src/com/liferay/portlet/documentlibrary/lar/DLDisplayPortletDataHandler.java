@@ -240,7 +240,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 		}
 
 		Element foldersElement = portletDataContext.getImportDataGroupElement(
-			DLFolder.class);
+			Folder.class);
 
 		List<Element> folderElements = foldersElement.elements();
 
@@ -250,7 +250,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 		}
 
 		Element fileEntriesElement =
-			portletDataContext.getImportDataGroupElement(DLFileEntry.class);
+			portletDataContext.getImportDataGroupElement(FileEntry.class);
 
 		List<Element> fileEntryElements = fileEntriesElement.elements();
 
@@ -302,7 +302,7 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 			if (defaultRepository) {
 				folderIds =
 					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						DLFolder.class);
+						Folder.class);
 			}
 			else {
 				folderIds =

@@ -158,6 +158,7 @@
 	.thread-body {
 		overflow: hidden;
 		padding: 15px;
+
 		td {
 			border: 1px solid #CCC;
 			padding: 0;

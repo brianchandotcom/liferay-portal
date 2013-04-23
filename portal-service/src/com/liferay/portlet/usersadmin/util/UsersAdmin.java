@@ -143,10 +143,19 @@ public interface UsersAdmin {
 	public List<Website> getWebsites(
 		ActionRequest actionRequest, List<Website> defaultWebsites);
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;
 
+	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;

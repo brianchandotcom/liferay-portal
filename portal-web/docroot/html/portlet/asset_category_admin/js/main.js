@@ -1104,14 +1104,11 @@ AUI.add(
 								var checked = false;
 
 								var paginatorConfig = {
-									offsetParam: 'start'
+									limit: 10,
+									moreResultsLabel: Liferay.Language.get('load-more-results'),
+									offsetParam: 'start',
+									total: item.numChildren
 								};
-
-								paginatorConfig.limit = 10;
-
-								paginatorConfig.moreResultsLabel = Liferay.Language.get('load-more-results');
-
-								paginatorConfig.total = item.numChildren;
 
 								return {
 									alwaysShowHitArea: item.hasChildren,

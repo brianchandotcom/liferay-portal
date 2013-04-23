@@ -57,7 +57,7 @@ public class HookTest {
 
 	@Test
 	public void testLanguage2() throws Exception {
-		Assert.assertEquals(LanguageUtil.get(Locale.ITALY, "stars"), "Stelle");
+		Assert.assertEquals(LanguageUtil.get(Locale.GERMAN, "stars"), "Sterne");
 	}
 
 	@Test

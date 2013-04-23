@@ -119,7 +119,7 @@
 		}
 
 		td {
-			border: 1px solid #CCC;
+			border-width: 0;
 		}
 	}
 
@@ -161,7 +161,6 @@
 
 		td {
 			border: 1px solid #CCC;
-			padding: 0;
 		}
 	}
 

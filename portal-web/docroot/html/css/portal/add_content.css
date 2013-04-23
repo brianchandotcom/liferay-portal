@@ -128,6 +128,61 @@
 			}
 		}
 	}
+
+	.add-content-tab {
+		.add-content-button {
+			display: block;
+			margin-top: 7px;
+			position: absolute;
+			right: 5px;
+
+			.lfr-actions {
+				background-image: none;
+				background-color: #336699;
+				border: 0;
+
+				.lfr-trigger {
+					padding-right: 0;
+
+					strong {
+						min-width: 20px;
+
+						a {
+							background-image: url("@theme_image_path@/common/add_white.png");
+							background-position: center center;
+							padding-right: 0;
+
+							img {
+								display: none;
+							}
+
+							.taglib-text {
+								color: #FFF;
+								display: none;
+								padding-left: 10px;
+								text-shadow: none;
+							}
+						}
+					}
+				}
+			}
+
+			&:hover .lfr-trigger {
+				strong {
+					min-width: 70px;
+
+					a {
+						background-position: 5% center;
+
+						.taglib-text {
+							display: inline-block;
+							padding-right: 5px;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 .lfr-add-content-preview {

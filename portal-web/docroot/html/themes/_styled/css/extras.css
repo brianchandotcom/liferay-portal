@@ -111,6 +111,12 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .lfr-add-panel {
+	.add-content-button {
+		.lfr-actions {
+			@include border-radius(2px);
+		}
+	}
+
 	.lfr-panel-content .app-view-entry-taglib {
 		&.display-list, &.display-descriptive {
 			&:hover, &.hover, &.over {

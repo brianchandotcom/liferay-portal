@@ -445,14 +445,11 @@ AUI.add(
 						instance._categoriesContainer.append(boundingBox);
 
 						var paginatorConfig = {
-							offsetParam: 'start'
+							limit: 10,
+							moreResultsLabel: Liferay.Language.get('load-more-results'),
+							offsetParam: 'start',
+							total: instance._getVocabularyCategoriesCount(instance._vocabularies, instance._selectedVocabularyId)
 						};
-
-						paginatorConfig.limit = 10;
-
-						paginatorConfig.moreResultsLabel = Liferay.Language.get('load-more-results');
-
-						paginatorConfig.total = instance._getVocabularyCategoriesCount(instance._vocabularies, instance._selectedVocabularyId);
 
 						instance._categoriesTreeView = new CategoriesTree(
 							{
@@ -1106,10 +1103,18 @@ AUI.add(
 							function(item, index, collection) {
 								var checked = false;
 
+								var paginatorConfig = {
+									limit: 10,
+									moreResultsLabel: Liferay.Language.get('load-more-results'),
+									offsetParam: 'start',
+									total: item.numChildren
+								};
+
 								return {
 									alwaysShowHitArea: item.hasChildren,
 									id: STR_CATEGORY_NODE + item.categoryId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
+									paginator: paginatorConfig,
 									type: 'check',
 									on: {
 										checkedChange: function(event) {

@@ -494,8 +494,31 @@ AUI.add(
 
 						var query = event.query;
 
+						if (!instance._openedCategories) {
+							instance._openedCategories = [];
+
+							instance._categories.each(
+								function(node) {
+									if (!node.hasClass(CSS_LFR_COLLAPSED)) {
+										instance._openedCategories.push(node);
+									}
+								}
+							);
+						}
+
 						if (!query) {
-							instance._categories.addClass(STR_LFR_COLLAPSED);
+							instance._categories.addClass(CSS_LFR_COLLAPSED);
+
+							if (instance._openedCategories) {
+								A.each(
+									instance._openedCategories,
+									function(node) {
+										node.removeClass(CSS_LFR_COLLAPSED);
+									}
+								);
+
+								instance._openedCategories = null;
+							}
 
 							instance._categoryContainers.show();
 
@@ -509,8 +532,6 @@ AUI.add(
 							instance._portlets.show();
 						}
 						else {
-							instance._categories.addClass(CSS_LFR_COLLAPSED);
-
 							instance._categoryContainers.hide();
 
 							instance._portlets.hide();

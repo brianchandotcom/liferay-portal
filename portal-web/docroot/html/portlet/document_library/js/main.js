@@ -323,7 +323,7 @@ AUI.add(
 
 						WIN[instance.ns('toggleActionsButton')]();
 
-						if (event.data[instance.ns('viewEntries')] == true) {
+						if (event.data[instance.ns('viewEntries')]) {
 							instance._toggleTrashAction();
 						}
 					},
@@ -577,18 +577,23 @@ AUI.add(
 						var instance = this;
 
 						var isTrashEnabled = instance._config.isTrashEnabled;
+
 						var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
+
 						var scopeGroupId = themeDisplay.getScopeGroupId();
 
-						var deleteAction = A.one('#' + instance.NS + 'deleteAction');
-						var moveToTrashAction = A.one('#' + instance.NS + 'moveToTrashAction');
+						var deleteAction = A.one('#' + instance.ns('deleteAction'));
+
+						var moveToTrashAction = A.one('#' + instance.ns('moveToTrashAction'));
 
 						if ((scopeGroupId == repositoryId) && isTrashEnabled) {
 							deleteAction.get(STR_PARENT_NODE).hide();
+
 							moveToTrashAction.get(STR_PARENT_NODE).show();
 						}
 						else {
 							deleteAction.get(STR_PARENT_NODE).show();
+
 							moveToTrashAction.get(STR_PARENT_NODE).hide();
 						}
 					}

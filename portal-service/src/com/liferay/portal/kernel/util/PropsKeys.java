@@ -815,15 +815,17 @@ public interface PropsKeys {
 
 	public static final String FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = "facebook.connect.verified.account.required";
 
-	public static final String FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS = "field.editable.com.liferay.portal.model.User.emailAddress";
-
-	public static final String FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME = "field.editable.com.liferay.portal.model.User.screenName";
-
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY = "field.enable.com.liferay.portal.model.Contact.birthday";
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE = "field.enable.com.liferay.portal.model.Contact.male";
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS = "field.enable.com.liferay.portal.model.Organization.status";
+
+	public static final String FIELDS_EDITABLE_DEFAULT_COM_LIFERAY_PORTAL_MODEL_USER = "fields.editable.default.com.liferay.portal.model.User";
+
+	public static final String FIELDS_EDITABLE_EXCEPTIONS_COM_LIFERAY_PORTAL_MODEL_USER = "fields.editable.exceptions.com.liferay.portal.model.User";
+
+	public static final String FIELDS_EDITABLE_WHITELIST_COM_LIFERAY_PORTAL_MODEL_USER = "fields.editable.whitelist.com.liferay.portal.model.User";
 
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED = "finalize.manager.thread.enabled";
 

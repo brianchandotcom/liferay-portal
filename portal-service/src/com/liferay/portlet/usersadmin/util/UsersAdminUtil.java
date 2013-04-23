@@ -253,6 +253,9 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getWebsites(actionRequest, defaultWebsites);
 	}
 
+	/**
+	* @deprecated As of 6.2.0
+	*/
 	public static boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
@@ -260,6 +263,15 @@ public class UsersAdminUtil {
 		return getUsersAdmin().hasUpdateEmailAddress(permissionChecker, user);
 	}
 
+	public static boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException {
+
+		return getUsersAdmin().hasUpdateFieldPermission(user, field);
+	}
+
+	/**
+	* @deprecated As of 6.2.0
+	*/
 	public static boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {

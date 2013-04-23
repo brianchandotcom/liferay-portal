@@ -419,6 +419,14 @@ public class VerifyProperties extends VerifyProcess {
 				"configuration.jsp"
 		},
 		new String[] {
+			"field.editable.com.liferay.portal.model.User.screenName",
+			"fields.editable.whitelist.com.liferay.portal.model.User"
+		},
+		new String[] {
+			"field.editable.com.liferay.portal.model.User.emailAddress",
+			"fields.editable.whitelist.com.liferay.portal.model.User"
+		},
+		new String[] {
 			"journal.error.template.freemarker", "journal.error.template[ftl]"
 		},
 		new String[] {

@@ -66,8 +66,10 @@ public class LocaleUtil {
 		return getInstance()._getISOLanguages(locale);
 	}
 
-	public static String getLongDisplayName(Locale locale) {
-		return getInstance()._getLongDisplayName(locale);
+	public static String getLongDisplayName(
+		Locale locale, Set<String> duplicateLanguages) {
+
+		return getInstance()._getLongDisplayName(locale, duplicateLanguages);
 	}
 
 	public static Locale getMostRelevantLocale() {
@@ -210,6 +212,28 @@ public class LocaleUtil {
 		return _locale;
 	}
 
+	private String _getDisplayName(
+		String language, String country, Locale locale,
+		Set<String> duplicateLanguages) {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(language);
+
+		if (duplicateLanguages.contains(locale.getLanguage())) {
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(country);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (LanguageUtil.isBetaLocale(locale)) {
+			sb.append(_BETA_SUFFIX);
+		}
+
+		return sb.toString();
+	}
+
 	private Map<String, String> _getISOLanguages(Locale locale) {
 		Map<String, String> isoLanguages = new TreeMap<String, String>(
 			String.CASE_INSENSITIVE_ORDER);
@@ -224,14 +248,12 @@ public class LocaleUtil {
 		return isoLanguages;
 	}
 
-	private String _getLongDisplayName(Locale locale) {
-		String displayName = locale.getDisplayName(locale);
+	private String _getLongDisplayName(
+		Locale locale, Set<String> duplicateLanguages) {
 
-		if (LanguageUtil.isBetaLocale(locale)) {
-			return displayName.concat(_BETA_SUFFIX);
-		}
-
-		return displayName;
+		return _getDisplayName(
+			locale.getDisplayLanguage(locale), locale.getDisplayCountry(locale),
+			locale, duplicateLanguages);
 	}
 
 	private Locale _getMostRelevantLocale() {
@@ -247,8 +269,6 @@ public class LocaleUtil {
 	private String _getShortDisplayName(
 		Locale locale, Set<String> duplicateLanguages) {
 
-		StringBundler sb = new StringBundler(6);
-
 		String language = locale.getDisplayLanguage(locale);
 
 		if (language.length() > 3) {
@@ -256,24 +276,10 @@ public class LocaleUtil {
 			language = language.toUpperCase();
 		}
 
-		sb.append(language);
+		String country = locale.getCountry();
 
-		if (duplicateLanguages.contains(locale.getLanguage())) {
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			String country = locale.getCountry();
-
-			sb.append(country.toUpperCase());
-
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-
-		if (LanguageUtil.isBetaLocale(locale)) {
-			sb.append(_BETA_SUFFIX);
-		}
-
-		return sb.toString();
+		return _getDisplayName(
+			language, country.toUpperCase(), locale, duplicateLanguages);
 	}
 
 	private void _setDefault(

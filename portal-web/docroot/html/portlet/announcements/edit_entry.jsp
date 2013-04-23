@@ -138,20 +138,6 @@ if (entry == null) {
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />toggleDisplayDate(date, checked) {
-		var A = AUI();
-
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
-		document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
-
-		var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
-
-		if (calendarWidget) {
-			calendarWidget.set('disabled', checked);
-		}
-	}
-
 	function <portlet:namespace />getContent() {
 		return window.<portlet:namespace />editor.getHTML();
 	}
@@ -175,6 +161,25 @@ if (entry == null) {
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleDisplayDate',
+		function(date, checked) {
+			var A = AUI();
+
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
+			document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
+
+			var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
+
+			if (calendarWidget) {
+				calendarWidget.set('disabled', checked);
+			}
+		},
+		['aui-base']
+	);
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);

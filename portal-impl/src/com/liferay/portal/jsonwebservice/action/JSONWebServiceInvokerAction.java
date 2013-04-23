@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.servlet.ServletUtil;
@@ -303,15 +304,16 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return (Map<String, Object>)object;
 		}
 
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		jsonSerializer.exclude("class");
-
-		String json = jsonSerializer.serialize(object);
-
 		Class<?> clazz = object.getClass();
 
-		object = JSONFactoryUtil.looseDeserialize(json, HashMap.class);
+		HashMap destinationMap = new HashMap();
+
+		BeanCopy
+			.beans(object, destinationMap)
+			.exclude(JSONIncludesManagerUtil.lookupExcludes(clazz))
+			.copy();
+
+		object = destinationMap;
 
 		String[] includes = JSONIncludesManagerUtil.lookupIncludes(clazz);
 

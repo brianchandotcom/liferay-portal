@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -63,7 +64,15 @@ public class UpgradeProcessTestUtil {
 
 		String url = jdbcProperties.getProperty(PropsKeys.JDBC_DEFAULT_URL);
 
-		url = url.replace("lportal", DATABASE_NAME);
+		int pos = url.indexOf("?");
+
+		String currentDatabaseName = url.substring(0, pos);
+
+		pos = currentDatabaseName.lastIndexOf(StringPool.SLASH);
+
+		currentDatabaseName = currentDatabaseName.substring(pos + 1);
+
+		url = url.replace(currentDatabaseName, DATABASE_NAME);
 
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 
@@ -94,7 +103,6 @@ public class UpgradeProcessTestUtil {
 		sb.append("'@'localhost' IDENTIFIED BY '");
 		sb.append(PropsValues.JDBC_DEFAULT_PASSWORD);
 		sb.append("' WITH GRANT OPTION;");
-		
 
 		return sb.toString();
 	}

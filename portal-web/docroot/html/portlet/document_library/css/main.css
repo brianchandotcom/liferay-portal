@@ -156,10 +156,6 @@
 		}
 	}
 
-	.taglib-search-iterator .results-header input {
-		display: none;
-	}
-
 	.aui-button-holder.toolbar {
 		display: inline;
 		margin: 0;
@@ -568,6 +564,10 @@
 }
 
 .portlet-document-library {
+	.taglib-search-iterator .results-header input {
+		display: none;
+	}
+
 	.lfr-asset-column-details .lfr-panel {
 		margin-bottom: 0.5em;
 		padding-bottom: 0;

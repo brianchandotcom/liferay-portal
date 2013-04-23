@@ -190,6 +190,8 @@ AUI.add(
 						}
 
 						instance._toggleSyncNotification();
+
+						instance._toggleTrashAction();
 					},
 
 					destructor: function() {
@@ -318,6 +320,10 @@ AUI.add(
 						Liferay.fire(instance._eventDataProcessed);
 
 						WIN[instance.ns('toggleActionsButton')]();
+
+						if (event.data[instance.ns('viewEntries')]) {
+							instance._toggleTrashAction();
+						}
 					},
 
 					_onPageLoaded: function(event) {
@@ -563,6 +569,22 @@ AUI.add(
 
 							syncMessageBoundingBox.toggleClass(CSS_SYNC_MESSAGE_HIDDEN, entriesPaginatorState.total <= 0);
 						}
+					},
+
+					_toggleTrashAction: function() {
+						var instance = this;
+
+						var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
+
+						var scopeGroupId = themeDisplay.getScopeGroupId();
+
+						var trashEnabled = instance._config.trashEnabled && (scopeGroupId == repositoryId);
+
+						var deleteAction = instance.one('#deleteAction');
+						var moveToTrashAction = instance.one('#moveToTrashAction');
+
+						deleteAction.ancestor().toggle(!trashEnabled);
+						moveToTrashAction.ancestor().toggle(trashEnabled);
 					}
 				}
 			}

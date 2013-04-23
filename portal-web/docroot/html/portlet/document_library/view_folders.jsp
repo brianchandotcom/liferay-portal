@@ -359,6 +359,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 				Map<String, Object> dataView = new HashMap<String, Object>();
 
 				dataView.put("folder-id", parentFolderId);
+				dataView.put("repository-id", repositoryId);
 				%>
 
 				<liferay-ui:app-view-navigation-entry

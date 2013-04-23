@@ -58,24 +58,7 @@ public class RowChecker {
 	}
 
 	public String getAllRowsCheckBox() {
-		if (Validator.isNull(_allRowIds)) {
-			return StringPool.BLANK;
-		}
-		else {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("<input name=\"");
-			sb.append(_allRowIds);
-			sb.append("\" type=\"checkbox\" ");
-			sb.append("onClick=\"Liferay.Util.checkAll(");
-			sb.append("AUI().one(this).ancestor('");
-			sb.append("table.taglib-search-iterator'), '");
-			sb.append(_rowIds);
-			sb.append("', this, '.results-row'");
-			sb.append(");\">");
-
-			return sb.toString();
-		}
+		return getAllRowsCheckbox(_allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -149,6 +132,27 @@ public class RowChecker {
 
 	public void setValign(String valign) {
 		_valign = valign;
+	}
+
+	protected String getAllRowsCheckbox(String name, String checkBoxRowIds) {
+		if (Validator.isNull(name)) {
+			return StringPool.BLANK;
+		}
+		else {
+			StringBuilder sb = new StringBuilder(9);
+
+			sb.append("<input name=\"");
+			sb.append(name);
+			sb.append("\" type=\"checkbox\" ");
+			sb.append("onClick=\"Liferay.Util.checkAll(");
+			sb.append("AUI().one(this).ancestor('");
+			sb.append("table.taglib-search-iterator'), ");
+			sb.append(checkBoxRowIds);
+			sb.append(", this, '.results-row'");
+			sb.append(");\">");
+
+			return sb.toString();
+		}
 	}
 
 	protected String getNamespacedValue(String value) {

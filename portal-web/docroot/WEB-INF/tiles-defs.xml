@@ -406,6 +406,10 @@
 
 	<definition name="portlet.dockbar" extends="portlet" />
 
+	<definition name="portlet.dockbar.add_content_redirect" extends="portlet.dockbar">
+		<put name="portlet_content" value="/portlet/dockbar/add_content_redirect.jsp" />
+	</definition>
+
 	<definition name="portlet.dockbar.add_page" extends="portlet.dockbar">
 		<put name="portlet_content" value="/portlet/dockbar/add_page.jsp" />
 	</definition>

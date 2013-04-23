@@ -472,6 +472,8 @@
 
 		<!-- Dockbar -->
 
+		<action path="/dockbar/add_content_redirect" forward="portlet.dockbar.add_content_redirect" />
+
 		<action path="/dockbar/add_panel" forward="portlet.dockbar.add_panel" />
 
 		<action path="/dockbar/edit_layouts" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">

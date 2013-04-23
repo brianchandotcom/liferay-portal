@@ -123,11 +123,11 @@ AUI.add(
 					_getContentDialog: function(portletId) {
 						var instance = this;
 
-						var contentDialog = instance._contentDialog;
+						var contentNode = instance.byId('content_' + portletId);
+
+						var contentDialog = contentNode.getData('contentDialog');
 
 						if (!contentDialog) {
-							var contentNode = instance.byId('content_' + portletId);
-
 							contentNode.show();
 
 							contentDialog = new A.Dialog(
@@ -157,7 +157,7 @@ AUI.add(
 								}
 							).render(instance.rootNode);
 
-							instance._contentDialog = contentDialog;
+							contentNode.setData('contentDialog', contentDialog);
 						}
 
 						return contentDialog;
@@ -337,9 +337,9 @@ AUI.add(
 					_handleContent: function(portletId) {
 						var instance = this;
 
-						var contentDialog = instance._getContentDialog();
+						var contentNode = instance.byId('content_' + portletId);
 
-						var inputs = contentDialog.get('boundingBox').all('.aui-field-input-choice');
+						var inputs = contentNode.all('.aui-field-input-choice');
 
 						var selectedContent = [];
 

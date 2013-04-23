@@ -264,7 +264,11 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapContext = PortalLDAPUtil.getContext(ldapServerId, companyId);
 
 			if (ldapContext == null) {
-				throw new SystemException("Failed to bind to the LDAP server");
+				if (_log.isErrorEnabled()) {
+					_log.error("Failed to bind to the LDAP server");
+				}
+
+				return null;
 			}
 
 			String filter = PrefsPropsUtil.getString(

@@ -36,6 +36,95 @@
 		<property name="portalExecutorFactory" ref="com.liferay.portal.kernel.executor.PortalExecutorFactory" />
 		<property name="portalExecutors">
 			<map>
+
+				<!-- IntraBand Mailbox Dispatching -->
+
+				<entry>
+					<key>
+						<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+							<constructor-arg value="com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler" />
+						</bean>
+					</key>
+					<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolExecutor">
+						<constructor-arg name="corePoolSize" value="0" />
+						<constructor-arg name="maxPoolSize" value="1" />
+						<constructor-arg name="keepAliveTime" value="60" />
+						<constructor-arg name="timeUnit">
+							<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS" />
+						</constructor-arg>
+						<constructor-arg name="allowCoreThreadTimeout" value="true" />
+						<constructor-arg name="maxQueueSize">
+							<util:constant static-field="java.lang.Integer.MAX_VALUE" />
+						</constructor-arg>
+						<constructor-arg name="rejectedExecutionHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.AbortPolicy" />
+						</constructor-arg>
+						<constructor-arg name="threadFactory">
+							<bean class="com.liferay.portal.kernel.util.NamedThreadFactory">
+								<constructor-arg name="name">
+									<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getSimpleClassName">
+										<constructor-arg value="com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler" />
+									</bean>
+								</constructor-arg>
+								<constructor-arg name="priority">
+									<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
+								</constructor-arg>
+								<constructor-arg name="contextClassLoader">
+									<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
+								</constructor-arg>
+							</bean>
+						</constructor-arg>
+						<constructor-arg name="threadPoolHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter" />
+						</constructor-arg>
+					</bean>
+				</entry>
+
+				<!-- IntraBand Message Bridging Dispatching -->
+
+				<entry>
+					<key>
+						<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+							<constructor-arg value="com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler" />
+						</bean>
+					</key>
+					<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolExecutor">
+						<constructor-arg name="corePoolSize" value="0" />
+						<constructor-arg name="maxPoolSize" value="1" />
+						<constructor-arg name="keepAliveTime" value="60" />
+						<constructor-arg name="timeUnit">
+							<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS" />
+						</constructor-arg>
+						<constructor-arg name="allowCoreThreadTimeout" value="true" />
+						<constructor-arg name="maxQueueSize">
+							<util:constant static-field="java.lang.Integer.MAX_VALUE" />
+						</constructor-arg>
+						<constructor-arg name="rejectedExecutionHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.AbortPolicy" />
+						</constructor-arg>
+						<constructor-arg name="threadFactory">
+							<bean class="com.liferay.portal.kernel.util.NamedThreadFactory">
+								<constructor-arg name="name">
+									<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getSimpleClassName">
+										<constructor-arg value="com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler" />
+									</bean>
+								</constructor-arg>
+								<constructor-arg name="priority">
+									<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
+								</constructor-arg>
+								<constructor-arg name="contextClassLoader">
+									<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
+								</constructor-arg>
+							</bean>
+						</constructor-arg>
+						<constructor-arg name="threadPoolHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter" />
+						</constructor-arg>
+					</bean>
+				</entry>
+
+				<!-- Server Side Parallel Rendering-->
+
 				<entry>
 					<key>
 						<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
@@ -67,7 +156,7 @@
 						<constructor-arg name="threadFactory">
 							<bean class="com.liferay.portal.kernel.util.NamedThreadFactory">
 								<constructor-arg name="name">
-									<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+									<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getSimpleClassName">
 										<constructor-arg value="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
 									</bean>
 								</constructor-arg>

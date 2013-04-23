@@ -955,6 +955,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_WITH_THREAD = "index.with.thread";
 
+	public static final String INTRABAND_DEFAULT_TIMEOUT = "intraband.default.timeout";
+
+	public static final String INTRABAND_IMPL = "intraband.impl";
+
 	public static final String INTRABAND_MAILBOX_REAPER_THREAD_ENABLED = "intraband.mailbox.reaper.thread.enabled";
 
 	public static final String INTRABAND_MAILBOX_STORAGE_LIFE = "intraband.mailbox.storage.life";

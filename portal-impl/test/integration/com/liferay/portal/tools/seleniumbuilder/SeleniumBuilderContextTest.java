@@ -525,9 +525,10 @@ public class SeleniumBuilderContextTest {
 	@Test
 	public void testTestSuiteFileName1008() throws Exception {
 		test(
-			"CollaborationAcceptance.testsuite",
-			"Error 1008: Duplicate file name CollaborationAcceptance at " +
-				_DIR_NAME + "/CollaborationAcceptance.testsuite");
+			"EndUserCollaborationAcceptance.testsuite",
+			"Error 1008: Duplicate file name EndUserCollaborationAcceptance " +
+				"at " + _DIR_NAME +
+				"/EndUserCollaborationAcceptance.testsuite");
 	}
 
 	protected void test(String fileName) throws Exception {

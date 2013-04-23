@@ -4415,14 +4415,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-integration">
-		<ant dir="osgi/modules" target="test-integration" inheritAll="false" />
 		<ant dir="portal-service" target="test-integration" inheritAll="false" />
 		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
 		<ant dir="util-java" target="test-integration" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">
-		<ant dir="osgi/modules" target="test-unit" inheritAll="false" />
 		<ant dir="portal-service" target="test-unit" inheritAll="false" />
 		<ant dir="portal-impl" target="test-unit" inheritAll="false" />
 		<ant dir="util-java" target="test-unit" inheritAll="false" />

@@ -23,13 +23,12 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-
-import java.lang.reflect.Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -260,12 +259,12 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _addVariableStatementList(
-			Statement variableStatement, List<Object> list,
+			Statement variableStatement, List<Object> resultList,
 			List<Object> results)
 		throws Exception {
 
-		for (Object object : list) {
-			List<Object> listObject = _convertIterableToList(object);
+		for (Object object : resultList) {
+			List<Object> listObject = _convertObjectToList(object);
 
 			if (listObject != null) {
 				Object value = _addVariableStatementList(
@@ -290,46 +289,33 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 	}
 
-	private List<Object> _convertIterableToList(Object result) {
-		if (result == null) {
+	private List<Object> _convertObjectToList(Object object) {
+		if (object == null) {
 			return null;
 		}
 
-		if (result instanceof List) {
-			return (List<Object>)result;
+		if (object instanceof List) {
+			return (List<Object>)object;
 		}
 
-		if (result instanceof Iterable) {
-			Iterable iterable = (Iterable)result;
+		if (object instanceof Iterable) {
+			List<Object> list = new ArrayList<Object>();
 
-			Iterator iterator = iterable.iterator();
+			Iterable<?> iterable = (Iterable<?>)object;
 
-			ArrayList list = new ArrayList();
+			Iterator<?> iterator = iterable.iterator();
 
 			while (iterator.hasNext()) {
-				Object element = iterator.next();
-
-				list.add(element);
-
+				list.add(iterator.next());
 			}
 
 			return list;
 		}
 
-		Class resultClass = result.getClass();
+		Class<?> clazz = object.getClass();
 
-		if (resultClass.isArray()) {
-			int len = Array.getLength(result);
-
-			ArrayList list = new ArrayList();
-
-			for (int i = 0; i < len; i++) {
-				Object element = Array.get(result, i);
-
-				list.add(element);
-			}
-
-			return list;
+		if (clazz.isArray()) {
+			return ListUtil.toList((Object[])object);
 		}
 
 		return null;
@@ -389,11 +375,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				result = variableStatement.push(result);
 			}
 
-			List<Object> listResult = _convertIterableToList(result);
+			List<Object> resultList = _convertObjectToList(result);
 
-			if (listResult != null) {
+			if (resultList != null) {
 				result = _addVariableStatementList(
-					variableStatement, listResult, new ArrayList<Object>());
+					variableStatement, resultList, new ArrayList<Object>());
 
 				variableStatement.setExecuted(true);
 
@@ -416,11 +402,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _filterResult(Statement statement, Object result) {
-		List<Object> listResult = _convertIterableToList(result);
+		List<Object> resultList = _convertObjectToList(result);
 
-		if (listResult != null) {
+		if (resultList != null) {
 			result = _filterResultList(
-				statement, listResult, new ArrayList<Object>());
+				statement, resultList, new ArrayList<Object>());
 		}
 		else {
 			result = _filterResultObject(statement, result);
@@ -430,9 +416,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _filterResultList(
-		Statement statement, List<Object> list, List<Object> results) {
+		Statement statement, List<Object> resultList, List<Object> results) {
 
-		for (Object object : list) {
+		for (Object object : resultList) {
 			Object value = _filterResultObject(statement, object);
 
 			results.add(value);
@@ -557,7 +543,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Object _populateFlags(Statement statement, Object result) {
-		List<Object> listResult = _convertIterableToList(result);
+		List<Object> listResult = _convertObjectToList(result);
 
 		if (listResult != null) {
 			result = _populateFlagsList(
@@ -574,7 +560,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		String name, List<Object> list, List<Object> results) {
 
 		for (Object object : list) {
-			List<Object> listObject = _convertIterableToList(object);
+			List<Object> listObject = _convertObjectToList(object);
 
 			if (listObject != null) {
 				Object value = _populateFlagsList(name, listObject, results);

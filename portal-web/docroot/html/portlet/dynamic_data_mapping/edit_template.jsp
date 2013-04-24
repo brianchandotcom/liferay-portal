@@ -432,7 +432,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
 						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 
-						refreshEditor();
+						Liferay.fire('<portlet:namespace />refreshEditor');
 					}
 				}
 			);

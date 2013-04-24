@@ -389,6 +389,8 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	String langType = ParamUtil.getString(request, "langType");
 	%>
 
+	var editorContentElement = A.one('#<portlet:namespace />scriptContent');
+
 	A.on(
 		'domready',
 		function(event) {
@@ -401,8 +403,6 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 				}
 			).render();
 
-			var editorContentElement = A.one('#<portlet:namespace />scriptContent');
-
 			if (editorContentElement) {
 				setEditorContent(editorContentElement.val());
 			}
@@ -414,7 +414,12 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 				}
 			);
 
-			selectLanguageNode.on('change', refreshEditor);
+			selectLanguageNode.on(
+				'change',
+				function(event) {
+					Liferay.fire('<portlet:namespace />refreshEditor');
+				}
+			);
 
 			setEditorPlugins();
 
@@ -448,10 +453,9 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 		'#<portlet:namespace />richEditor'
 	);
 
-	Liferay.provide(
-		window,
-		'refreshEditor',
-		function() {
+	Liferay.on(
+		'<portlet:namespace />refreshEditor',
+		function(event) {
 			document.<portlet:namespace />fm.<portlet:namespace />cmd.value = '';
 
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
@@ -459,7 +463,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 			}
 			<c:if test="<%= template == null %>">
 				else {
-					document.<portlet:namespace />fm.<portlet:namespace />scriptContent.value = '';
+					editorContentElement.val('');
 				}
 			</c:if>
 

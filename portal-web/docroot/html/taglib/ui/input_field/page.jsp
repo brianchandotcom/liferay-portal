@@ -358,7 +358,7 @@ if (hints != null) {
 				}
 			}
 			else {
-				value = BeanPropertiesUtil.getString(bean, field, defaultString);
+				value = BeanPropertiesUtil.getStringSilent(bean, field, defaultString);
 
 				if (!ignoreRequestValue) {
 					value = ParamUtil.getString(request, fieldParam, value);

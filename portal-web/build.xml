@@ -1112,6 +1112,8 @@
 	<target name="compile-common-jsp">
 		<delete dir="${jspc.classes.dir}" quiet="true" />
 
+		<property name="touch.jsp" value="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp" />
+
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -1125,6 +1127,13 @@
 			</else>
 		</if>
 
+		<if>
+			<available file="${touch.jsp}" />
+			<then>
+				<move file="${touch.jsp}" tofile="${touch.jsp}.tmp" quiet="true" failonerror="false" />
+			</then>
+		</if>
+
 		<java
 			classname="org.apache.jasper.JspC"
 			classpathref="jspc.classpath"
@@ -1135,6 +1144,13 @@
 		>
 			<arg line="${arg.line}" />
 		</java>
+
+		<if>
+			<available file="${touch.jsp}.tmp" />
+			<then>
+				<move file="${touch.jsp}.tmp" tofile="${touch.jsp}" quiet="true" failonerror="false" />
+			</then>
+		</if>
 
 		<echo>${jspc.output}</echo>
 

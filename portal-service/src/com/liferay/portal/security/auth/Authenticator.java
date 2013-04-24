@@ -25,6 +25,8 @@ public interface Authenticator {
 
 	public static final int FAILURE = -1;
 
+	public static final int SKIP_LIFERAY_CHECK = 2;
+
 	public static final int SUCCESS = 1;
 
 	public int authenticateByEmailAddress(

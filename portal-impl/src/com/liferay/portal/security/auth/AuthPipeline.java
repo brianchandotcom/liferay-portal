@@ -210,10 +210,12 @@ public class AuthPipeline {
 			Map<String, String[]> parameterMap)
 		throws AuthException {
 
+		boolean skipLiferayCheck = false;
+
 		Authenticator[] authenticators = _authenticators.get(key);
 
 		if ((authenticators == null) || (authenticators.length == 0)) {
-			return 1;
+			return Authenticator.SUCCESS;
 		}
 
 		for (Authenticator authenticator : authenticators) {
@@ -235,7 +237,10 @@ public class AuthPipeline {
 						companyId, userId, password, headerMap, parameterMap);
 				}
 
-				if (authResult != Authenticator.SUCCESS) {
+				if (authResult == Authenticator.SKIP_LIFERAY_CHECK) {
+					skipLiferayCheck = true;
+				}
+				else if (authResult != Authenticator.SUCCESS) {
 					return authResult;
 				}
 			}
@@ -245,6 +250,10 @@ public class AuthPipeline {
 			catch (Exception e) {
 				throw new AuthException(e);
 			}
+		}
+
+		if (skipLiferayCheck) {
+			return Authenticator.SKIP_LIFERAY_CHECK;
 		}
 
 		return Authenticator.SUCCESS;

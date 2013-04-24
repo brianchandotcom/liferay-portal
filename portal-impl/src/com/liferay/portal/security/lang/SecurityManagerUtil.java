@@ -14,9 +14,13 @@
 
 package com.liferay.portal.security.lang;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.security.pacl.PortalSecurityManagerImpl;
+import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,10 +46,22 @@ public class SecurityManagerUtil {
 			(_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.SMART)) {
 
-			_portalSecurityManager = new PortalSecurityManagerImpl();
+			loadPortalSecurityManager();
 		}
 
-		if (_portalSecurityManagerStrategy ==
+		if (_portalSecurityManager == null) {
+			_portalSecurityManagerStrategy =
+				PortalSecurityManagerStrategy.DEFAULT;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No portal security manager implementation was located. " +
+						"Continuing with the default security strategy.");
+			}
+
+			return;
+		}
+		else if (_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) {
 
 			System.setSecurityManager((SecurityManager)_portalSecurityManager);
@@ -55,6 +71,14 @@ public class SecurityManagerUtil {
 
 			System.setSecurityManager(null);
 		}
+	}
+
+	public static boolean isActive() {
+		if (_portalSecurityManager == null) {
+			return false;
+		}
+
+		return _portalSecurityManager.isActive();
 	}
 
 	public static boolean isDefault() {
@@ -113,6 +137,23 @@ public class SecurityManagerUtil {
 		return false;
 	}
 
+	private static void loadPortalSecurityManager() {
+		try {
+			List<PortalSecurityManager> portalSecurityManagers =
+				ServiceLoader.load(PortalSecurityManager.class);
+
+			if (portalSecurityManagers.isEmpty()) {
+				return;
+			}
+
+			_portalSecurityManager = portalSecurityManagers.get(0);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SecurityManagerUtil.class);
 	private static PortalSecurityManager _portalSecurityManager;
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;
 

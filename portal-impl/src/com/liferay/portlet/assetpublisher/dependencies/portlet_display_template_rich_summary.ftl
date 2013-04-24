@@ -5,6 +5,8 @@
 
 	<#assign assetRenderer = entry.getAssetRenderer() />
 
+	<#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) />
+
 	<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
 
 	<#if assetLinkBehavior != "showFullContent">
@@ -21,7 +23,7 @@
 		</div>
 
 		<h3 class="asset-title">
-			<a href="${viewURL}"><img alt="" src="${assetRenderer.getIconPath(renderRequest)}" />${entry.getTitle(locale)}</a>
+			<a href="${viewURL}"><img alt="" src="${assetRenderer.getIconPath(renderRequest)}" />${entryTitle}</a>
 		</h3>
 
 		<@getMetadataField fieldName="tags" />
@@ -38,7 +40,7 @@
 
 				${assetRenderer.getSummary(locale)}
 
-				<a href="${viewURL}"><@liferay.language key="read-more" /><span class="aui-helper-hidden-accessible"><@liferay.language key="about" />${entry.getTitle(locale)}</span> &raquo;</a>
+				<a href="${viewURL}"><@liferay.language key="read-more" /><span class="aui-helper-hidden-accessible"><@liferay.language key="about" />${entryTitle}</span> &raquo;</a>
 			</div>
 
 			<@getRatings />
@@ -66,7 +68,6 @@
 			formName="fm" + entry.getClassPK()
 			ratingsEnabled=enableCommentRatings == "true"
 			redirect=portalUtil.getCurrentURL(request)
-			subject=assetRenderer.getTitle(locale)
 			userId=assetRenderer.getUserId()
 		/>
 	</#if>
@@ -82,7 +83,7 @@
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL) />
 
 		<#if validator.isNotNull(editPortletURL)>
-			<#assign title = languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale))) />
+			<#assign title = languageUtil.format(locale, "edit-x", entryTitle) />
 
 			<@liferay_ui["icon"]
 				image="edit"
@@ -169,7 +170,7 @@
 		<@liferay_ui["icon"]
 			image="print"
 			message="print"
-			url="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["aui-helper-hidden-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))]) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+			url="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["aui-helper-hidden-accessible", entryTitle]) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
 		/>
 	</#if>
 </#macro>

@@ -174,6 +174,8 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	var AObject = A.Object;
 	var Util = Liferay.Util;
 
+	var STR_EMPTY = '';
+
 	var selectLanguageNode = A.one('#<portlet:namespace />language');
 
 	var panelScriptContainer = A.one('#templateScriptContainer');
@@ -456,18 +458,20 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	Liferay.on(
 		'<portlet:namespace />refreshEditor',
 		function(event) {
-			document.<portlet:namespace />fm.<portlet:namespace />cmd.value = '';
+			var form = A.one('#<portlet:namespace />fm');
+
+			form.one('#<portlet:namespace />cmd').val(STR_EMPTY);
 
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
 			<c:if test="<%= template == null %>">
 				else {
-					editorContentElement.val('');
+					editorContentElement.val(STR_EMPTY);
 				}
 			</c:if>
 
-			submitForm(document.<portlet:namespace />fm);
+			submitForm(form);
 		}
 	);
 </aui:script>

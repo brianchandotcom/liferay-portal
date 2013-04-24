@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,6 +27,10 @@ public class NonSerializableObjectRequestWrapper
 	extends PersistentHttpServletRequestWrapper {
 
 	public static boolean isWrapped(HttpServletRequest request) {
+		if (!_WEBLOGIC_WRAP_NONSERIALIZABLE) {
+			return false;
+		}
+
 		Class<?> clazz = request.getClass();
 
 		String className = clazz.getName();
@@ -62,9 +70,15 @@ public class NonSerializableObjectRequestWrapper
 
 	@Override
 	public void setAttribute(String name, Object object) {
-		object = new NonSerializableObjectHandler(object);
+		if (_WEBLOGIC_WRAP_NONSERIALIZABLE) {
+			object = new NonSerializableObjectHandler(object);
+		}
 
 		super.setAttribute(name, object);
 	}
+
+	private static final boolean _WEBLOGIC_WRAP_NONSERIALIZABLE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.WEBLOGIC_WRAP_NONSERIALIZABLE));
 
 }

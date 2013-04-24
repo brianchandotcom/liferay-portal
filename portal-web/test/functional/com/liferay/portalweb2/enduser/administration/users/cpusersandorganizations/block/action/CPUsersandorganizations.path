@@ -83,17 +83,17 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[2]/a/strong)[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[2]/a/strong)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_TYPE_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainerSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>

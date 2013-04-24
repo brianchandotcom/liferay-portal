@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>CPSitememberships</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitememberships</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitememberships</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_MEMBERS</td>
+	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'View Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MEMBERS</td>
+	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'Add Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SITE_ROLES_TO</td>
+	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'Add Site Roles to')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_TEAMS</td>
+	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'View Teams')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_SEARCH_FIELD</td>
+	<td>//input[@id='_174_keywords_users']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEARCH_BUTTON</td>
+	<td>//input[@id='_174_keywords_users']/../../../following-sibling::span//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TABLE-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION-->
+<tr>
+	<td>ORGANIZATION_SEARCH_FIELD</td>
+	<td>//input[@id='_174_keywords_organizations']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_SEARCH_BUTTON</td>
+	<td>//input[@id='_174_keywords_organizations']/../../../following-sibling::span//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP-->
+<tr>
+	<td>USER_GROUP_SEARCH_FIELD</td>
+	<td>//input[@id='_174_keywords_user_groups']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_SEARCH_BUTTON</td>
+	<td>//input[@id='_174_keywords_user_groups']/../../../following-sibling::span//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+</tbody>
+</table>
+</body>
+</html>

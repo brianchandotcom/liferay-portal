@@ -23,4 +23,6 @@ public interface PortalSecurityManager {
 
 	public Policy getPolicy();
 
+	public boolean isActive();
+
 }

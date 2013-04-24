@@ -468,7 +468,7 @@ private String _getAssignCode(String variableName, String code, String language)
 		return "<#assign " + variableName + " = " + code + ")>";
 	}
 	else if (language.equalsIgnoreCase("vm")) {
-		return "#set( $" + variableName + " = " + code + " )";
+		return "#set ($" + variableName + " = " + code + ")";
 	}
 
 	return variableName;
@@ -497,8 +497,8 @@ private String[] _getDateCodeArray(String variableName, String language) {
 		dateCodeArray[1] = "${dateUtil.getDate(" + variableName + "_DateObj, \"dd MMM yyyy - HH:mm:ss\", locale)}";
 	}
 	else if (language.equalsIgnoreCase("vm")) {
-		dateCodeArray[0] = "#set " + variableName + "_DateObj = dateUtil.newDate(getterUtil.getLong(" + variableName + ".getData()))>";
-		dateCodeArray[1] = "$dateUtil.getDate(" + variableName + "_DateObj, \"dd MMM yyyy - HH:mm:ss\", locale)";
+		dateCodeArray[0] = "#set ($" + variableName + "_DateObj = $dateUtil.newDate($getterUtil.getLong($" + variableName + ".getData())))";
+		dateCodeArray[1] = "$dateUtil.getDate($" + variableName + "_DateObj, \"dd MMM yyyy - HH:mm:ss\", $locale)";
 	}
 
 	return dateCodeArray;

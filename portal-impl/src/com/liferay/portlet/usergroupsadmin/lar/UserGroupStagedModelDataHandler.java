@@ -40,8 +40,8 @@ public class UserGroupStagedModelDataHandler
 			PortletDataContext portletDataContext, UserGroup userGroup)
 		throws Exception {
 
-		Element userGroupElement =
-			portletDataContext.getExportDataStagedModelElement(userGroup);
+		Element userGroupElement = portletDataContext.getExportDataElement(
+			userGroup);
 
 		portletDataContext.addClassedModel(
 			userGroupElement, ExportImportPathUtil.getModelPath(userGroup),

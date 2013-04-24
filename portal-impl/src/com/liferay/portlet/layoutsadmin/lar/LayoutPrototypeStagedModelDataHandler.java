@@ -43,7 +43,7 @@ public class LayoutPrototypeStagedModelDataHandler
 		throws Exception {
 
 		Element layoutPrototypeElement =
-			portletDataContext.getExportDataStagedModelElement(layoutPrototype);
+			portletDataContext.getExportDataElement(layoutPrototype);
 
 		portletDataContext.addClassedModel(
 			layoutPrototypeElement,

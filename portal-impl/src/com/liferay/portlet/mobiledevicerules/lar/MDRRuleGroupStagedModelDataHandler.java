@@ -41,8 +41,8 @@ public class MDRRuleGroupStagedModelDataHandler
 			PortletDataContext portletDataContext, MDRRuleGroup ruleGroup)
 		throws Exception {
 
-		Element ruleGroupElement =
-			portletDataContext.getExportDataStagedModelElement(ruleGroup);
+		Element ruleGroupElement = portletDataContext.getExportDataElement(
+			ruleGroup);
 
 		portletDataContext.addClassedModel(
 			ruleGroupElement, ExportImportPathUtil.getModelPath(ruleGroup),

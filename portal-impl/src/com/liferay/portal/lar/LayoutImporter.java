@@ -943,28 +943,20 @@ public class LayoutImporter {
 			return;
 		}
 
+		Element rootElement = layoutElement.getParent();
+
+		portletDataContext.setImportDataRootElement(rootElement);
+
 		JournalPortletDataHandler.importReferencedData(
-			portletDataContext, layoutElement);
+			portletDataContext, rootElement);
 
-		Element structureElement = layoutElement.element("structure");
+		List<Element> articleElements =
+			portletDataContext.getReferencedDataElements(
+				layoutElement, JournalArticle.class);
 
-		if (structureElement != null) {
+		if (!articleElements.isEmpty()) {
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, structureElement);
-		}
-
-		Element templateElement = layoutElement.element("template");
-
-		if (templateElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, templateElement);
-		}
-
-		Element articleElement = layoutElement.element("article");
-
-		if (articleElement != null) {
-			JournalPortletDataHandler.importArticle(
-				portletDataContext, articleElement);
+				portletDataContext, articleElements.get(0));
 		}
 
 		Map<String, String> articleIds =

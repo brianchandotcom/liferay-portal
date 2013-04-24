@@ -53,8 +53,7 @@ public class MDRRuleStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, ruleGroup);
 
-		Element ruleElement =
-			portletDataContext.getExportDataStagedModelElement(rule);
+		Element ruleElement = portletDataContext.getExportDataElement(rule);
 
 		portletDataContext.addClassedModel(
 			ruleElement, ExportImportPathUtil.getModelPath(rule), rule,

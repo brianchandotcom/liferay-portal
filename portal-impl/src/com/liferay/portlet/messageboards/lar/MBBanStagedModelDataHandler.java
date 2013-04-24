@@ -44,8 +44,7 @@ public class MBBanStagedModelDataHandler
 			PortletDataContext portletDataContext, MBBan ban)
 		throws Exception {
 
-		Element userBanElement =
-			portletDataContext.getExportDataStagedModelElement(ban);
+		Element userBanElement = portletDataContext.getExportDataElement(ban);
 
 		ban.setBanUserUuid(ban.getBanUserUuid());
 

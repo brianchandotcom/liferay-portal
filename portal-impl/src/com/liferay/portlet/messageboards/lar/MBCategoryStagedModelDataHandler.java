@@ -59,8 +59,8 @@ public class MBCategoryStagedModelDataHandler
 				portletDataContext, category.getParentCategory());
 		}
 
-		Element categoryElement =
-			portletDataContext.getExportDataStagedModelElement(category);
+		Element categoryElement = portletDataContext.getExportDataElement(
+			category);
 
 		portletDataContext.addClassedModel(
 			categoryElement, ExportImportPathUtil.getModelPath(category),

@@ -64,8 +64,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			portletDataContext, ruleGroup);
 
 		Element ruleGroupInstanceElement =
-			portletDataContext.getExportDataStagedModelElement(
-				ruleGroupInstance);
+			portletDataContext.getExportDataElement(ruleGroupInstance);
 
 		String className = ruleGroupInstance.getClassName();
 

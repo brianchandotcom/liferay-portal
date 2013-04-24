@@ -55,8 +55,7 @@ public class OrganizationStagedModelDataHandler
 			Organization exportedOrganization = organizations.remove();
 
 			Element organizationElement =
-				portletDataContext.getExportDataStagedModelElement(
-					exportedOrganization);
+				portletDataContext.getExportDataElement(exportedOrganization);
 
 			portletDataContext.addClassedModel(
 				organizationElement,

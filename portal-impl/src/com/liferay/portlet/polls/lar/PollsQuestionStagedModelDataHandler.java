@@ -45,8 +45,8 @@ public class PollsQuestionStagedModelDataHandler
 			PortletDataContext portletDataContext, PollsQuestion question)
 		throws Exception {
 
-		Element questionElement =
-			portletDataContext.getExportDataStagedModelElement(question);
+		Element questionElement = portletDataContext.getExportDataElement(
+			question);
 
 		portletDataContext.addClassedModel(
 			questionElement, ExportImportPathUtil.getModelPath(question),

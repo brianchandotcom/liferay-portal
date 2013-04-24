@@ -53,8 +53,7 @@ public class BookmarksFolderStagedModelDataHandler
 			exportStagedModel(portletDataContext, folder.getParentFolder());
 		}
 
-		Element folderElement =
-			portletDataContext.getExportDataStagedModelElement(folder);
+		Element folderElement = portletDataContext.getExportDataElement(folder);
 
 		portletDataContext.addClassedModel(
 			folderElement, ExportImportPathUtil.getModelPath(folder), folder,

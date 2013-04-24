@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -80,7 +81,6 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.util.ContentUtil;
@@ -641,28 +641,12 @@ public class LayoutExporter {
 			return;
 		}
 
-		String path = JournalPortletDataHandler.getArticlePath(
+		portletDataContext.setExportDataRootElement(layoutElement.getParent());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, article);
 
-		Element articleElement = layoutElement.addElement("article");
-
-		articleElement.addAttribute("path", path);
-
-		Element dlFileEntryTypesElement = layoutElement.addElement(
-			"dl-file-entry-types");
-		Element dlFoldersElement = layoutElement.addElement("dl-folders");
-		Element dlFilesElement = layoutElement.addElement("dl-file-entries");
-		Element dlFileRanksElement = layoutElement.addElement("dl-file-ranks");
-		Element dlRepositoriesElement = layoutElement.addElement(
-			"dl-repositories");
-		Element dlRepositoryEntriesElement = layoutElement.addElement(
-			"dl-repository-entries");
-
-		JournalPortletDataHandler.exportArticle(
-			portletDataContext, layoutElement, layoutElement, layoutElement,
-			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, dlRepositoriesElement,
-			dlRepositoryEntriesElement, article, false);
+		portletDataContext.addReferenceElement(layoutElement, article);
 	}
 
 	protected void exportLayout(

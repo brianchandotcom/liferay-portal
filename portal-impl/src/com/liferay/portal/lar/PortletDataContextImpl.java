@@ -610,6 +610,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element addReferenceElement(
 		Element element, ClassedModel referencedClassedModel) {
 
+		return addReferenceElement(
+			element, referencedClassedModel, StringPool.BLANK);
+	}
+
+	public Element addReferenceElement(
+		Element element, ClassedModel referencedClassedModel, String binPath) {
+
 		Element referencesElement = element.element("references");
 
 		if (referencesElement == null) {
@@ -625,6 +632,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		referenceElement.addAttribute(
 			"class-pk", String.valueOf(primaryKeyObj));
+
+		if (Validator.isNotNull(binPath)) {
+			referenceElement.addAttribute("bin-path", binPath);
+		}
 
 		return referenceElement;
 	}
@@ -800,6 +811,29 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _expandoColumnsMap;
 	}
 
+	public Element getExportDataElement(ClassedModel classedModel) {
+		Class<?> modelClass = classedModel.getModelClass();
+
+		Element groupElement = getExportDataGroupElement(
+			modelClass.getSimpleName());
+
+		Element element = null;
+
+		if (classedModel instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel)classedModel;
+
+			String path = ExportImportPathUtil.getModelPath(stagedModel);
+
+			element = getDataElement(groupElement, "path", path);
+		}
+
+		if (element == null) {
+			element = groupElement.addElement("staged-model");
+		}
+
+		return element;
+	}
+
 	public Element getExportDataGroupElement(
 		Class<? extends StagedModel> clazz) {
 
@@ -810,16 +844,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _exportDataRootElement;
 	}
 
-	public Element getExportDataStagedModelElement(StagedModel stagedModel) {
-		Class<?> clazz = stagedModel.getModelClass();
-
-		Element groupElement = getExportDataGroupElement(clazz.getSimpleName());
-
-		return groupElement.addElement("staged-model");
-	}
-
 	public long getGroupId() {
 		return _groupId;
+	}
+
+	public Element getImportDataElement(
+		String name, String attribute, String value) {
+
+		Element groupElement = getImportDataGroupElement(name);
+
+		return getDataElement(groupElement, attribute, value);
 	}
 
 	public Element getImportDataGroupElement(
@@ -837,29 +871,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		Class<?> clazz = stagedModel.getModelClass();
 
-		return getImportDataStagedModelElement(
-			clazz.getSimpleName(), "path", path);
-	}
-
-	public Element getImportDataStagedModelElement(
-		String name, String attribute, String value) {
-
-		Element groupElement = getImportDataGroupElement(name);
-
-		if (groupElement == null) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("staged-model");
-		sb.append("[@" + attribute + "='");
-		sb.append(value);
-		sb.append("']");
-
-		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-		return (Element)xPath.selectSingleNode(groupElement);
+		return getImportDataElement(clazz.getSimpleName(), "path", path);
 	}
 
 	public String getLayoutPath(long layoutId) {
@@ -915,37 +927,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public List<Element> getReferencedDataElements(
-		StagedModel parentStagedModel, Class<? extends StagedModel> clazz) {
+		Element parentElement, Class<?> clazz) {
 
-		List<Element> referencedElements = new ArrayList<Element>();
+		List<Element> referenceElements = getReferenceElements(
+			parentElement, clazz);
+
+		return getReferencedDataElements(referenceElements, clazz);
+	}
+
+	public List<Element> getReferencedDataElements(
+		StagedModel parentStagedModel, Class<?> clazz) {
 
 		List<Element> referenceElements = getReferenceElements(
 			parentStagedModel, clazz);
 
-		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StringBuilder sb = new StringBuilder(6);
-
-			sb.append("staged-model[contains(@path, '/");
-			sb.append(clazz.getName());
-			sb.append(StringPool.FORWARD_SLASH);
-			sb.append(classPK);
-			sb.append(".xml");
-			sb.append("')]");
-
-			XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-			Element groupElement = getImportDataGroupElement(clazz);
-
-			Element referencedElement = (Element)xPath.selectSingleNode(
-				groupElement);
-
-			referencedElements.add(referencedElement);
-		}
-
-		return referencedElements;
+		return getReferencedDataElements(referenceElements, clazz);
 	}
 
 	public String getRootPath() {
@@ -1611,6 +1607,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	protected Element getDataElement(
+		Element parentElement, String attribute, String value) {
+
+		if (parentElement == null) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("staged-model");
+		sb.append("[@" + attribute + "='");
+		sb.append(value);
+		sb.append("']");
+
+		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
+
+		return (Element)xPath.selectSingleNode(parentElement);
+	}
+
 	protected String getExpandoPath(String path) {
 		return ExportImportPathUtil.getExpandoPath(path);
 	}
@@ -1665,17 +1680,60 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return className.concat(StringPool.POUND).concat(primaryKey);
 	}
 
+	protected List<Element> getReferencedDataElements(
+		List<Element> referenceElements, Class<?> clazz) {
+
+		List<Element> referencedDataElements = new ArrayList<Element>();
+
+		for (Element referenceElement : referenceElements) {
+			Element referencedElement = null;
+
+			String binPath = referenceElement.attributeValue("bin-path");
+
+			if (Validator.isNotNull(binPath)) {
+				referencedElement = getImportDataElement(
+					clazz.getSimpleName(), "path", binPath);
+			}
+			else {
+				long classPK = GetterUtil.getLong(
+					referenceElement.attributeValue("class-pk"));
+
+				StringBuilder sb = new StringBuilder(7);
+
+				sb.append("staged-model[contains(@path, '/");
+				sb.append(clazz.getName());
+				sb.append(StringPool.FORWARD_SLASH);
+				sb.append(classPK);
+				sb.append(".xml");
+				sb.append("')]");
+
+				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
+
+				Element groupElement = getImportDataGroupElement(
+					clazz.getSimpleName());
+
+				referencedElement = (Element)xPath.selectSingleNode(
+					groupElement);
+			}
+
+			if (referencedElement == null) {
+				continue;
+			}
+
+			referencedDataElements.add(referencedElement);
+		}
+
+		return referencedDataElements;
+	}
+
 	protected List<Element> getReferenceElements(
-		StagedModel parentStagedModel, Class<? extends StagedModel> clazz) {
+		Element parentElement, Class<?> clazz) {
 
-		Element stagedModelElement = getImportDataStagedModelElement(
-			parentStagedModel);
-
-		if (stagedModelElement == null) {
+		if (parentElement == null) {
 			return Collections.emptyList();
 		}
 
-		Element referencesElement = stagedModelElement.element("references");
+		Element referencesElement = parentElement.element("references");
 
 		if (referencesElement == null) {
 			return Collections.emptyList();
@@ -1687,6 +1745,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
 		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
+	}
+
+	protected List<Element> getReferenceElements(
+		StagedModel parentStagedModel, Class<?> clazz) {
+
+		Element stagedModelElement = getImportDataStagedModelElement(
+			parentStagedModel);
+
+		return getReferenceElements(stagedModelElement, clazz);
 	}
 
 	protected long getUserId(AuditedModel auditedModel) {

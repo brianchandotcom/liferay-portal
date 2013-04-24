@@ -41,8 +41,8 @@ public class PasswordPolicyStagedModelDataHandler
 			PasswordPolicy passwordPolicy)
 		throws Exception {
 
-		Element passwordPolicyElement =
-			portletDataContext.getExportDataStagedModelElement(passwordPolicy);
+		Element passwordPolicyElement = portletDataContext.getExportDataElement(
+			passwordPolicy);
 
 		portletDataContext.addClassedModel(
 			passwordPolicyElement,

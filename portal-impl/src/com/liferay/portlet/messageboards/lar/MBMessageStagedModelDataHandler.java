@@ -72,8 +72,8 @@ public class MBMessageStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, message.getCategory());
 
-		Element messageElement =
-			portletDataContext.getExportDataStagedModelElement(message);
+		Element messageElement = portletDataContext.getExportDataElement(
+			message);
 
 		message.setPriority(message.getPriority());
 

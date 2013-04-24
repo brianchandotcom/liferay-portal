@@ -55,8 +55,8 @@ public class RepositoryStagedModelDataHandler
 			PortletDataContext portletDataContext, Repository repository)
 		throws Exception {
 
-		Element repositoryElement =
-			portletDataContext.getExportDataStagedModelElement(repository);
+		Element repositoryElement = portletDataContext.getExportDataElement(
+			repository);
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(
 			repository.getDlFolderId());

@@ -62,8 +62,7 @@ public class MDRActionStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, ruleGroupInstance);
 
-		Element actionElement =
-			portletDataContext.getExportDataStagedModelElement(action);
+		Element actionElement = portletDataContext.getExportDataElement(action);
 
 		String type = action.getType();
 

@@ -53,8 +53,7 @@ public class PollsChoiceStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, question);
 
-		Element choiceElement =
-			portletDataContext.getExportDataStagedModelElement(choice);
+		Element choiceElement = portletDataContext.getExportDataElement(choice);
 
 		portletDataContext.addClassedModel(
 			choiceElement, ExportImportPathUtil.getModelPath(choice), choice,

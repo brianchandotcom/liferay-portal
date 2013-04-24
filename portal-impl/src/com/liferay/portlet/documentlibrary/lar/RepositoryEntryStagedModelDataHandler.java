@@ -48,7 +48,7 @@ public class RepositoryEntryStagedModelDataHandler
 		throws Exception {
 
 		Element repositoryEntryElement =
-			portletDataContext.getExportDataStagedModelElement(repositoryEntry);
+			portletDataContext.getExportDataElement(repositoryEntry);
 
 		portletDataContext.addClassedModel(
 			repositoryEntryElement,

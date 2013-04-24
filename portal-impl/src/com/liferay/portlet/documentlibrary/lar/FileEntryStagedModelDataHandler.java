@@ -224,7 +224,7 @@ public class FileEntryStagedModelDataHandler
 			fileEntry.getFileEntryId());
 
 		Element fileEntryElement =
-			portletDataContext.getImportDataStagedModelElement(
+			portletDataContext.getImportDataElement(
 				FileEntry.class.getSimpleName(), "path", path);
 
 		Element referencesElement = fileEntryElement.element("references");

@@ -128,8 +128,8 @@ public class DDMTemplateStagedModelDataHandler
 		Element dlRepositoryEntriesElement =
 			portletDataContext.getExportDataGroupElement(RepositoryEntry.class);
 
-		Element templateElement =
-			portletDataContext.getExportDataStagedModelElement(template);
+		Element templateElement = portletDataContext.getExportDataElement(
+			template);
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageUtil.fetchByPrimaryKey(
@@ -234,6 +234,10 @@ public class DDMTemplateStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			template, DDMPortletDataHandler.NAMESPACE);
 
+		Map<String, String> ddmTemplateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
+
 		DDMTemplate importedTemplate = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
@@ -265,6 +269,9 @@ public class DDMTemplateStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			template, importedTemplate, DDMPortletDataHandler.NAMESPACE);
+
+		ddmTemplateKeys.put(
+			template.getTemplateKey(), importedTemplate.getTemplateKey());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

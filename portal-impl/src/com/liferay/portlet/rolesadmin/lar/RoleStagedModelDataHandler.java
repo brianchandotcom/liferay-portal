@@ -40,8 +40,7 @@ public class RoleStagedModelDataHandler
 			PortletDataContext portletDataContext, Role role)
 		throws Exception {
 
-		Element roleElement =
-			portletDataContext.getExportDataStagedModelElement(role);
+		Element roleElement = portletDataContext.getExportDataElement(role);
 
 		portletDataContext.addClassedModel(
 			roleElement, ExportImportPathUtil.getModelPath(role), role,

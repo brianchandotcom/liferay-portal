@@ -120,6 +120,27 @@ public class PluginsEnvironmentBuilder {
 		sb.append("\t\t</attributes>\n\t</classpathentry>\n");
 	}
 
+	protected void addJunitClasspathEntries(
+		StringBundler sb, String projectDir) {
+
+		addClasspathEntry(sb, "../../lib/junit.jar");
+		addClasspathEntry(sb, "../../lib/commons-io.jar");
+		addClasspathEntry(sb, "../../lib/mockito-all.jar");
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(projectDir + "/../../lib/");
+		directoryScanner.setIncludes(new String[] {"powermock-*"});
+
+		directoryScanner.scan();
+
+		for (String file : directoryScanner.getIncludedFiles()) {
+			addClasspathEntry(sb, "../../lib/" + file);
+		}
+
+		addClasspathEntry(sb, "../../lib/spring-test.jar");
+	}
+
 	protected void addOsgiClasspathEntries(StringBundler sb, String projectDir)
 		throws Exception {
 
@@ -452,12 +473,7 @@ public class PluginsEnvironmentBuilder {
 		}
 
 		if (addJunitJars) {
-			addClasspathEntry(sb, "/portal/lib/development/junit.jar");
-			addClasspathEntry(sb, "/portal/lib/development/mockito.jar");
-			addClasspathEntry(
-				sb, "/portal/lib/development/powermock-mockito.jar");
-			addClasspathEntry(sb, "/portal/lib/development/spring-test.jar");
-			addClasspathEntry(sb, "/portal/lib/portal/commons-io.jar");
+			addJunitClasspathEntries(sb, projectDirName);
 		}
 
 		addClasspathEntry(sb, "/portal/lib/development/activation.jar");

@@ -50,6 +50,7 @@ import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBDiscussionAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
+import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
@@ -114,6 +115,7 @@ public class PortalRegisterTestUtil {
 		TrashHandlerRegistryUtil.register(new DLFolderTrashHandler());
 		TrashHandlerRegistryUtil.register(new JournalArticleTrashHandler());
 		TrashHandlerRegistryUtil.register(new MBCategoryTrashHandler());
+		TrashHandlerRegistryUtil.register(new MBMessageTrashHandler());
 		TrashHandlerRegistryUtil.register(new MBThreadTrashHandler());
 		TrashHandlerRegistryUtil.register(new WikiNodeTrashHandler());
 		TrashHandlerRegistryUtil.register(new WikiPageTrashHandler());

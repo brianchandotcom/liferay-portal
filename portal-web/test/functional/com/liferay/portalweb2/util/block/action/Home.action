@@ -6,6 +6,9 @@
 		<case comparator="startsWith" locator1="link=">
 			<execute function="Click#clickAtAndWait" />
 		</case>
+		<case comparator="startsWith" locator1="//a[@role='menuitem' and contains(.,">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="confirm">

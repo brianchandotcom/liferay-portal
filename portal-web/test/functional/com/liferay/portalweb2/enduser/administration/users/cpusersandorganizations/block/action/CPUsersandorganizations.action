@@ -9,11 +9,38 @@
 		<case locator-key1="ADD">
 			<execute function="Click#textClickAt" value1="Add" />
 		</case>
+		<case locator-key1="ADD_REGULAR_ORGANIZATION">
+			<execute function="Click#textClickAtAndWait" value1="Regular Organization" />
+		</case>
 		<case locator-key1="ADD_USER">
 			<execute function="Click#textClickAtAndWait" value1="User" />
 		</case>
+		<case comparator="startsWith" locator-key1="ORGANIZATION_TABLE_ACTIONS_">
+			<execute function="Click#pauseTextClickAt" value1="Actions" />
+		</case>
+		<case locator-key1="ORGANIZATION_ACTIONS_ADD_REGULAR_ORGANIZATION">
+			<execute function="Click#textClickAtAndWait" value1="Add Regular Organization" />
+		</case>
+		<case locator-key1="ORGANIZATION_ACTIONS_ASSIGN_USERS">
+			<execute function="Click#textClickAtAndWait" value1="Assign Users" />
+		</case>
+		<case locator-key1="ORGANIZATION_ACTIONS_DELETE">
+			<execute function="Click#textClickAtAndWait" value1="Delete" />
+		</case>
+		<case locator-key1="ORGANIZATION_ACTIONS_EDIT">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
+		</case>
+		<case locator-key1="SEARCH_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Search" />
+		</case>
 		<case locator-key1="SEARCH_ALL_USERS">
 			<execute function="Click#textClickAtAndWait" value1="Search All Users" />
+		</case>
+	</command>
+
+	<command name="confirm">
+		<case locator-key1="CONFIRMATION">
+			<execute function="Confirm#waitForConfirmation" />
 		</case>
 	</command>
 </definition>

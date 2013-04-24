@@ -1,0 +1,34 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="No users were found." />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="AVAILABLE">
+			<execute function="Click#textClickAtAndWait" value1="Available" />
+		</case>
+		<case locator-key1="BACK">
+			<execute function="Click#partialTextClickAtAndWait" value1="Back" />
+		</case>
+		<case locator-key1="BASIC_SEARCH_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Search" />
+		</case>
+		<case locator-key1="CURRENT">
+			<execute function="Click#textClickAtAndWait" value1="Current" />
+		</case>
+		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Update Associations" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="USER_TABLE_ALL_CHECKBOX">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
+</definition>

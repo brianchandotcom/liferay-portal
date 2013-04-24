@@ -1,0 +1,10 @@
+<definition>
+	<command name="click">
+		<case locator-key1="MENU_ASSIGN_USERS">
+			<execute function="Click#textClickAtAndWait" value1="Assign Users" />
+		</case>
+		<case locator-key1="MENU_DELETE">
+			<execute function="Click#textClickAtAndWait" value1="Delete" />
+		</case>
+	</command>
+</definition>

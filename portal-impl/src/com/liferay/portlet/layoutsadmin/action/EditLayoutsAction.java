@@ -16,6 +16,9 @@ package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.InvalidSitemapChangeFrequencyException;
+import com.liferay.portal.InvalidSitemapIncludeException;
+import com.liferay.portal.InvalidSitemapPagePriorityException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
@@ -280,6 +283,9 @@ public class EditLayoutsAction extends PortletAction {
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
 			else if (e instanceof ImageTypeException ||
+					 e instanceof InvalidSitemapChangeFrequencyException ||
+					 e instanceof InvalidSitemapIncludeException ||
+					 e instanceof InvalidSitemapPagePriorityException ||
 					 e instanceof LayoutFriendlyURLException ||
 					 e instanceof LayoutNameException ||
 					 e instanceof LayoutParentLayoutIdException ||

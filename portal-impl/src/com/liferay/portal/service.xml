@@ -2563,6 +2563,9 @@
 		<exception>ImageType</exception>
 		<exception>InvalidLock</exception>
 		<exception>InvalidRepository</exception>
+		<exception>InvalidSitemapChangeFrequency</exception>
+		<exception>InvalidSitemapInclude</exception>
+		<exception>InvalidSitemapPagePriority</exception>
 		<exception>LARFile</exception>
 		<exception>LARFileSize</exception>
 		<exception>LARType</exception>

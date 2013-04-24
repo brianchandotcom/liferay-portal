@@ -237,6 +237,7 @@
                 <package-root>portal-impl/src</package-root>
                 <package-root>portal-impl/test/integration</package-root>
                 <package-root>portal-impl/test/unit</package-root>
+                <package-root>portal-pacl/src</package-root>
                 <package-root>portal-service/src</package-root>
                 <!--<package-root>portal-service/test/integration</package-root>-->
                 <package-root>portal-service/test/unit</package-root>

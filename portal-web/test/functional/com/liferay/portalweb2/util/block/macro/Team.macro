@@ -1,0 +1,23 @@
+<definition>
+	<command name="cpAdd">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute action="CPSitememberships#click" locator-key1="VIEW_TEAMS" />
+
+		<execute action="CPSitemembershipsViewteams#click" locator-key1="ADD_TEAM_BUTTON" />
+
+		<execute action="CPSitemembershipsViewteamsAddteam#type" locator-key1="NAME_FIELD" value1="${teamName}" />
+
+		<execute action="CPSitemembershipsViewteamsAddteam#type" locator-key1="DESCRIPTION_FIELD" value1="${teamDescription}" />
+
+		<execute action="CPSitemembershipsViewteamsAddteam#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="CPSitemembershipsViewteams#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPSitemembershipsViewteams#assertTextEquals" locator-key1="TEAM_TABLE_NAME_1" value1="${teamName}" />
+
+		<execute action="CPSitemembershipsViewteams#assertTextEquals" locator-key1="TEAM_TABLE_DESCRIPTION_1" value1="${teamDescription}" />
+	</command>
+</definition>

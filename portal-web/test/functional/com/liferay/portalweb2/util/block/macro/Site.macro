@@ -1,4 +1,7 @@
 <definition>
+	<var name="siteMember" value="User" />
+	<var name="siteType" value="Open" />
+
 	<command name="cpAdd">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Sites" />
@@ -35,30 +38,6 @@
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="HEADER" value1="${siteName}" />
-
-		<execute macro="Page#cpGoto">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-
-		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="Open" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 User" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
-
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
 	</command>
 
 	<command name="cpAddBlank">
@@ -120,5 +99,45 @@
 				<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
+	</command>
+
+	<command name="cpView">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
+
+		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
+
+		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
+
+		<if>
+			<equals arg1="${siteMember}" arg2="User" />
+			<then>
+				<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
+			</then>
+			<elseif>
+				<equals arg1="${siteMember}" arg2="Organization" />
+				<then>
+					<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_ORGS" value1="1 ${siteMember}" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var siteMember. Must be (Organization|User)." />
+			</else>
+		</if>
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
 	</command>
 </definition>

@@ -143,14 +143,14 @@ public class PluginsEnvironmentBuilder {
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(projectDir + "/../../lib/");
+		directoryScanner.setBasedir(projectDir + "/lib");
 		directoryScanner.setIncludes(
 			StringUtil.split(content.substring(x + 1, y)));
 
 		directoryScanner.scan();
 
 		for (String file : directoryScanner.getIncludedFiles()) {
-			addClasspathEntry(sb, "../../lib/" + file);
+			addClasspathEntry(sb, "lib/" + file);
 		}
 	}
 

@@ -573,7 +573,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/mockito.jar</file-name>
-		<version>1.9.0</version>
+		<version>1.9.5</version>
 		<project-name>Mockito</project-name>
 		<project-url>http://code.google.com/p/mockito</project-url>
 		<licenses>
@@ -674,7 +674,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/powermock-mockito.jar</file-name>
-		<version>1.4.11</version>
+		<version>1.5</version>
 		<project-name>Powermock</project-name>
 		<project-url>http://code.google.com/p/powermock</project-url>
 		<licenses>

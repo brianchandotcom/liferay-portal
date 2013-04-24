@@ -37,4 +37,23 @@ public class ClassNameUtil {
 		return clazz.getName();
 	}
 
+	public static String getSimpleClassName(String className)
+		throws ClassNotFoundException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		return getSimpleClassName(className, classLoader);
+	}
+
+	public static String getSimpleClassName(
+			String className, ClassLoader classLoader)
+		throws ClassNotFoundException {
+
+		Class<?> clazz = Class.forName(className, false, classLoader);
+
+		return clazz.getSimpleName();
+	}
+
 }

@@ -27,7 +27,7 @@ public class NonSerializableObjectRequestWrapper
 	extends PersistentHttpServletRequestWrapper {
 
 	public static boolean isWrapped(HttpServletRequest request) {
-		if (!_WEBLOGIC_WRAP_NONSERIALIZABLE) {
+		if (!_WEBLOGIC_WRAP_NON_SERIALIZABLE) {
 			return false;
 		}
 
@@ -70,15 +70,15 @@ public class NonSerializableObjectRequestWrapper
 
 	@Override
 	public void setAttribute(String name, Object object) {
-		if (_WEBLOGIC_WRAP_NONSERIALIZABLE) {
+		if (_WEBLOGIC_WRAP_NON_SERIALIZABLE) {
 			object = new NonSerializableObjectHandler(object);
 		}
 
 		super.setAttribute(name, object);
 	}
 
-	private static final boolean _WEBLOGIC_WRAP_NONSERIALIZABLE =
+	private static final boolean _WEBLOGIC_WRAP_NON_SERIALIZABLE =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.WEBLOGIC_WRAP_NONSERIALIZABLE));
+			PropsUtil.get(PropsKeys.WEBLOGIC_WRAP_NON_SERIALIZABLE));
 
 }

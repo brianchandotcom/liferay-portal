@@ -95,6 +95,13 @@ cobertura.ser
 /portal-impl/test/portal-test-ext.properties
 /portal-impl/test/test-portal-impl-ext.properties
 
+/portal-pacl/*.iml
+/portal-pacl/*.ipr
+/portal-pacl/*.iws
+/portal-pacl/classes
+/portal-pacl/portal-pacl*.asc
+/portal-pacl/portal-pacl*.jar
+
 /portal-service/*.iml
 /portal-service/*.ipr
 /portal-service/*.iws

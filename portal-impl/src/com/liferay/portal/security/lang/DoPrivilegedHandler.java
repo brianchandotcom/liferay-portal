@@ -22,6 +22,7 @@ import com.liferay.portal.security.pacl.PACLPolicyManager;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -69,6 +70,25 @@ public class DoPrivilegedHandler
 			methodName.equals("getActualBean")) {
 
 			return getActualBean();
+		}
+		else if (methodDeclaringClass.equals(Object.class) &&
+				 methodName.equals("equals")) {
+
+			Object object = arguments[0];
+
+			if (object instanceof Proxy) {
+				InvocationHandler invocationHandler =
+					Proxy.getInvocationHandler(object);
+
+				if (invocationHandler instanceof DoPrivilegedHandler) {
+					DoPrivilegedHandler doPrivilegedHandler =
+						(DoPrivilegedHandler)invocationHandler;
+
+					object = doPrivilegedHandler.getActualBean();
+				}
+			}
+
+			return _bean.equals(object);
 		}
 		else if (!PACLPolicyManager.isActive() || _isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);

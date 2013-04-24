@@ -4817,6 +4817,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Groups and organizations
 
+		List<UserGroupRole> previousUserGroupRoles =
+			userGroupRolePersistence.findByUserId(userId);
+
+		// See LPS-33205. Adding or removing groups may add or remove
+		// userGroupRoles depending on the Site Default User Associations.
+
 		updateGroups(userId, groupIds, serviceContext, false);
 		updateOrganizations(userId, organizationIds, false);
 
@@ -4830,7 +4836,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// User group roles
 
-		updateUserGroupRoles(user, groupIds, organizationIds, userGroupRoles);
+		updateUserGroupRoles(
+			user, groupIds, organizationIds, userGroupRoles,
+			previousUserGroupRoles);
 
 		// User groups
 
@@ -5616,15 +5624,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected void updateUserGroupRoles(
 			User user, long[] groupIds, long[] organizationIds,
-			List<UserGroupRole> userGroupRoles)
+			List<UserGroupRole> userGroupRoles,
+			List<UserGroupRole> previousUserGroupRoles)
 		throws PortalException, SystemException {
 
 		if (userGroupRoles == null) {
 			return;
 		}
-
-		List<UserGroupRole> previousUserGroupRoles =
-			userGroupRolePersistence.findByUserId(user.getUserId());
 
 		for (UserGroupRole userGroupRole : previousUserGroupRoles) {
 			if (userGroupRoles.contains(userGroupRole)) {

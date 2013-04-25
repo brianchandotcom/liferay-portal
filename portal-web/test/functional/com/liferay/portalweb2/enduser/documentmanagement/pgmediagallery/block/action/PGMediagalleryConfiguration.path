@@ -10,8 +10,13 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td></td>
+	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
 	<td>PGMediagalleryConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
@@ -97,7 +102,6 @@
 	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
 	<td>Enable Comment Ratings</td>
 </tr>
-
 </tbody>
 </table>
 </body>

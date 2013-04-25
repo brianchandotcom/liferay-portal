@@ -92,7 +92,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				data.put("name", name);
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				<aui:button cssClass="selector-button" data="<%= data %>" value="apply" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

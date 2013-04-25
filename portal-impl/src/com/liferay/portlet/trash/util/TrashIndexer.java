@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Locale;
@@ -61,9 +62,18 @@ public class TrashIndexer extends BaseIndexer {
 			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 
-			contextQuery.addTerm(
-				Field.COMPANY_ID, String.valueOf(searchContext.getCompanyId()),
-				false, BooleanClauseOccur.MUST);
+			contextQuery.addRequiredTerm(
+				Field.COMPANY_ID, searchContext.getCompanyId());
+
+			BooleanQuery excludeAttachmentsQuery =
+				BooleanQueryFactoryUtil.create(searchContext);
+
+			excludeAttachmentsQuery.addRequiredTerm(
+				Field.ENTRY_CLASS_NAME, DLFileEntryConstants.getClassName());
+			excludeAttachmentsQuery.addRequiredTerm(Field.HIDDEN, true);
+
+			contextQuery.add(
+				excludeAttachmentsQuery, BooleanClauseOccur.MUST_NOT);
 
 			BooleanQuery groupQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
@@ -76,9 +86,8 @@ public class TrashIndexer extends BaseIndexer {
 
 			contextQuery.add(groupQuery, BooleanClauseOccur.MUST);
 
-			contextQuery.addTerm(
-				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
-				false, BooleanClauseOccur.MUST);
+			contextQuery.addRequiredTerm(
+				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
 
 			BooleanQuery fullQuery = createFullQuery(
 				contextQuery, searchContext);

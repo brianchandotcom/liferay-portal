@@ -25,6 +25,7 @@ public class GroupTable {
 	public static final String TABLE_NAME = "Group_";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"uuid_", Types.VARCHAR},
 		{"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT},
 		{"creatorUserId", Types.BIGINT},
@@ -36,13 +37,13 @@ public class GroupTable {
 		{"name", Types.VARCHAR},
 		{"description", Types.VARCHAR},
 		{"type_", Types.INTEGER},
-		{"typeSettings", Types.VARCHAR},
+		{"typeSettings", Types.CLOB},
 		{"friendlyURL", Types.VARCHAR},
 		{"site", Types.BOOLEAN},
 		{"active_", Types.BOOLEAN}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table Group_ (groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings TEXT null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
@@ -58,7 +59,10 @@ public class GroupTable {
 		"create index IX_6C499099 on Group_ (companyId, parentGroupId, site)",
 		"create index IX_63A2AABD on Group_ (companyId, site)",
 		"create index IX_16218A38 on Group_ (liveGroupId)",
-		"create index IX_7B590A7A on Group_ (type_, active_)"
+		"create index IX_7B590A7A on Group_ (type_, active_)",
+		"create index IX_F981514E on Group_ (uuid_)",
+		"create index IX_26CC761A on Group_ (uuid_, companyId)",
+		"create unique index IX_754FBB1C on Group_ (uuid_, groupId)"
 	};
 
 }

@@ -768,7 +768,7 @@ create table Group_ (
 	name VARCHAR(150) null,
 	description STRING null,
 	type_ INTEGER,
-	typeSettings STRING null,
+	typeSettings TEXT null,
 	friendlyURL VARCHAR(255) null,
 	site BOOLEAN,
 	active_ BOOLEAN
@@ -971,7 +971,7 @@ create table Layout (
 	colorSchemeId VARCHAR(75) null,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
-	css STRING null,
+	css TEXT null,
 	priority INTEGER,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
@@ -1032,7 +1032,7 @@ create table LayoutRevision (
 	colorSchemeId VARCHAR(75) null,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
-	css STRING null,
+	css TEXT null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -1052,9 +1052,9 @@ create table LayoutSet (
 	colorSchemeId VARCHAR(75) null,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
-	css STRING null,
+	css TEXT null,
 	pageCount INTEGER,
-	settings_ STRING null,
+	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
 	layoutSetPrototypeLinkEnabled BOOLEAN
 );
@@ -1077,7 +1077,7 @@ create table LayoutSetBranch (
 	colorSchemeId VARCHAR(75) null,
 	wapThemeId VARCHAR(75) null,
 	wapColorSchemeId VARCHAR(75) null,
-	css STRING null,
+	css TEXT null,
 	settings_ STRING null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
 	layoutSetPrototypeLinkEnabled BOOLEAN

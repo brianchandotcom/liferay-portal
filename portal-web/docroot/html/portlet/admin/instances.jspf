@@ -83,7 +83,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// # of Users
 
-	int usersCount = UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_ANY, null);
+	int usersCount = UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, null);
 
 	row.addText(String.valueOf(usersCount), rowURL);
 

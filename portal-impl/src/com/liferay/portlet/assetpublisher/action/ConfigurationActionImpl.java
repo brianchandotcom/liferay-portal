@@ -519,10 +519,20 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] classNameIds = StringUtil.split(
 			getParameter(actionRequest, "classNameIds"));
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
+
+		String subTypeFieldsFilterEnabledString = getParameter(
+			actionRequest, "subTypeFieldsFilterEnabled");
+
+		boolean subTypeFieldsFilterEnabled = GetterUtil.getBoolean(
+			subTypeFieldsFilterEnabledString);
+
 		String[] extensions = actionRequest.getParameterValues("extensions");
 
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "classTypeIds", classTypeIds);
+		setPreference(
+			actionRequest, "subTypeFieldsFilterEnabled",
+			String.valueOf(subTypeFieldsFilterEnabled));
 		setPreference(actionRequest, "extensions", extensions);
 	}
 

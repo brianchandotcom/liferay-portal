@@ -275,8 +275,16 @@
 		margin-bottom: 1em;
 	}
 
-	.asset-subtype {
+	.asset-subtype, .asset-subtypefields-wrapper-enable {
 		margin-left: 2em;
+	}
+
+	.asset-subtypefields-wrapper {
+		display: inline;
+	}
+
+	.asset-subtypefields-message {
+		margin-left: 4em;
 	}
 
 	.asset-subtypefields-popup {
@@ -286,6 +294,7 @@
 	}
 
 	.asset-subtypefield-selected {
+		padding-top: 10px;
 		margin-left: 6em;
 	}
 

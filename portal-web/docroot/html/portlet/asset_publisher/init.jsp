@@ -102,6 +102,8 @@ String ddmStructureFieldName = StringPool.BLANK;
 Serializable ddmStructureFieldValue = null;
 String ddmStructureDisplayFieldValue = StringPool.BLANK;
 
+boolean subTypeFieldsFilterEnabled = GetterUtil.getBoolean(preferences.getValue("subTypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+
 DDMStructure ddmStructure = null;
 
 if (selectionStyle.equals("dynamic")) {
@@ -129,8 +131,10 @@ if (selectionStyle.equals("dynamic")) {
 			if (Validator.isNotNull(ddmStructureFieldName) && fieldNames.contains(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
 				ddmStructureFieldLabel = ddmStructure.getFieldProperty(ddmStructureFieldName, "label");
 
-				assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructure.getStructureId(), ddmStructureFieldName, locale));
-				assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+				if (subTypeFieldsFilterEnabled) {
+					assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructure.getStructureId(), ddmStructureFieldName, locale));
+					assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+				}
 			}
 		}
 	}

@@ -484,19 +484,16 @@ for (int i = 0; i < results.size(); i++) {
 		</c:when>
 
 		<c:when test="<%= curFolder != null %>">
-
-			<%
-			String folderImage = "folder_empty";
-
-			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
-				folderImage = "folder_full_document";
-			}
-			%>
-
 			<c:choose>
 				<c:when test='<%= !displayStyle.equals("list") %>'>
 
 					<%
+					String folderImage = "folder_empty_document";
+
+					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
+						folderImage = "folder_full_document";
+					}
+
 					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 					tempRowURL.setParameter("struts_action", "/document_library/view");
@@ -526,6 +523,12 @@ for (int i = 0; i < results.size(); i++) {
 					<liferay-util:buffer var="folderTitle">
 
 						<%
+						String folderImage = "folder_empty";
+
+						if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
+							folderImage = "folder_full_document";
+						}
+
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						data.put("folder", true);

@@ -317,10 +317,10 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 								<c:when test="<%= curFolder != null %>">
 
 									<%
-									String folderImage = "folder_empty";
+									String folderImage = "folder_empty_article";
 
 									if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
-										folderImage = "folder_full_document";
+										folderImage = "folder_full_article";
 									}
 
 									PortletURL rowURL = liferayPortletResponse.createRenderURL();

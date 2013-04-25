@@ -268,7 +268,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								status = WorkflowConstants.STATUS_ANY;
 							}
 
-							String folderImage = "folder_empty";
+							String folderImage = "folder_empty_document";
 
 							if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
 								folderImage = "folder_full_document";

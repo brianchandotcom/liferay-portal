@@ -205,7 +205,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 				<c:when test="<%= folder != null %>">
 
 					<%
-					String folderImage = "folder_empty";
+					String folderImage = "folder_empty_document";
 
 					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) {
 						folderImage = "folder_full_document";

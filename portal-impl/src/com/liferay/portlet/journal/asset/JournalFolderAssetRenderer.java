@@ -112,7 +112,7 @@ public class JournalFolderAssetRenderer
 		}
 
 		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty.png";
+			"/file_system/large/folder_empty_article.png";
 	}
 
 	public String getTitle(Locale locale) {

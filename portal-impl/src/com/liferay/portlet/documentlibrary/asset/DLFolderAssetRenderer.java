@@ -114,7 +114,7 @@ public class DLFolderAssetRenderer
 		}
 
 		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty.png";
+			"/file_system/large/folder_empty_document.png";
 	}
 
 	public String getTitle(Locale locale) {

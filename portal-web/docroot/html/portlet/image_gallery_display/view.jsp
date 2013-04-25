@@ -202,7 +202,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 							<div class="lfr-asset-summary">
 								<liferay-ui:icon
 									cssClass="lfr-asset-avatar"
-									image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty") %>'
+									image='<%= "../file_system/large/" + ((total > 0) ? "folder_full_image" : "folder_empty_image") %>'
 									message='<%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %>'
 								/>
 

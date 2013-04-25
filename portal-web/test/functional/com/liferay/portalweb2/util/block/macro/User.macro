@@ -135,21 +135,43 @@
 	</command>
 
 	<command name="pgFirstLogin">
-		<execute macro="User#pgLogin" />
+		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<if>
-			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE" />
+			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
 			<then>
-				<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE" />
+				<execute macro="User#pgLogout" />
+
+				<execute macro="User#pgLogin" />
+			</then>
+			<else>
+				<execute macro="User#pgLogin" />
+			</else>
+		</if>
+
+		<if>
+			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" />
+			<then>
+				<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="PGLoginPasswordreminder#isElementPresent" locator-key1="ANSWER" />
+			<condition action="PGLoginPasswordreminder#isElementPresent" locator-key1="ANSWER_FIELD" />
 			<then>
-				<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER" value1="test" />
+				<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
 
-				<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE" />
+				<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
+			</then>
+		</if>
+		<if>
+			<condition action="PGLoginNewpassword#isElementPresent" locator-key1="PASSWORD_FIELD" />
+			<then>
+				<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test" />
+
+				<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test" />
+
+				<execute action="PGLoginNewpassword#click" locator-key1="SAVE_BUTTON" />
 			</then>
 		</if>
 	</command>
@@ -157,11 +179,11 @@
 	<command name="pgLogin">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS" value1="${emailAddress}" />
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${emailAddress}" />
 
-		<execute action="PGLogin#type" locator-key1="PASSWORD" value1="${password}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
 
-		<execute action="PGLogin#click" locator-key1="SIGN_IN" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
 	</command>
 
 	<command name="pgLogout">

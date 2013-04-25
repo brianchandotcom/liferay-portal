@@ -58,11 +58,7 @@
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="BASIC_SEARCH_BUTTON" />
 
-		<execute action="CPUsersandorganizationsAssignmembers#assertNotChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
-
-		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="USER_TABLE_CHECKBOX_1" />
-
-		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX_1" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
 
@@ -94,9 +90,7 @@
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#click" locator-key1="ORGANIZATION_INFORMATION_ORGANIZATION_SITE" />
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#click" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
-
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#check" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#click" locator-key1="SAVE_BUTTON" />
 
@@ -148,11 +142,7 @@
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="BASIC_SEARCH_BUTTON" />
 
-		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
-
-		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="USER_TABLE_CHECKBOX_1" />
-
-		<execute action="CPUsersandorganizationsAssignmembers#assertNotChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignmembers#uncheck" locator-key1="USER_TABLE_CHECKBOX_1" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
 

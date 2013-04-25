@@ -19,12 +19,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>I_AGREE</td>
+	<td>I_AGREE_BUTTON</td>
 	<td>//input[@value='I Agree']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>I_DISAGREE</td>
+	<td>I_DISAGREE_BUTTON</td>
 	<td>//input[@value='I Disagree']</td>
 	<td></td>
 </tr>

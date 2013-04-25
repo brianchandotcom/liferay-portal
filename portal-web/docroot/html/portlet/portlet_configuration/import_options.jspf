@@ -213,6 +213,16 @@
 	</c:if>
 </ul>
 
+<aui:script use="liferay-export-import">
+	new Liferay.ExportImport(
+		{
+			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			namespace: '<portlet:namespace />',
+			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
+		}
+	);
+</aui:script>
+
 <aui:script>
 	<c:if test='<%= tabs2.equals("import") %>'>
 		Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />portletDataControls');

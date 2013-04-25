@@ -44,7 +44,7 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		CalEvent event = CalEventLocalServiceUtil.getEvent(
 			activity.getClassPK());
 
-		return getJSONValue(activity.getExtraData(), "title", event.getTitle());
+		return event.getTitle();
 	}
 
 	@Override

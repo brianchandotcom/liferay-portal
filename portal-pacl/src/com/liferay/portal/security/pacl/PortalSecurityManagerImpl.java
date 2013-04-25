@@ -101,7 +101,6 @@ import javax.sql.DataSource;
 import org.springframework.aop.framework.AdvisedSupport;
 
 import sun.reflect.Reflection;
-
 import sun.security.util.SecurityConstants;
 
 /**
@@ -291,6 +290,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				_checkMemberAccessClassLoader.set(null);
 			}
 		}
+	}
+
+	public boolean isActive() {
+		return PACLPolicyManager.isActive();
 	}
 
 	public Policy getPolicy() {

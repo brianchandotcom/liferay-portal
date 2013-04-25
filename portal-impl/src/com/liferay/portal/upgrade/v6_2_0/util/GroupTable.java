@@ -37,13 +37,13 @@ public class GroupTable {
 		{"name", Types.VARCHAR},
 		{"description", Types.VARCHAR},
 		{"type_", Types.INTEGER},
-		{"typeSettings", Types.VARCHAR},
+		{"typeSettings", Types.CLOB},
 		{"friendlyURL", Types.VARCHAR},
 		{"site", Types.BOOLEAN},
 		{"active_", Types.BOOLEAN}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table Group_ (uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings STRING null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath VARCHAR(75) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings TEXT null,friendlyURL VARCHAR(255) null,site BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 

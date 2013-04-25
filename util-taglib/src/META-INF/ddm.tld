@@ -9,6 +9,12 @@
 		<tag-class>com.liferay.taglib.ddm.HTMLTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>fieldName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>classNameId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -21,16 +27,70 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<name>fields</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portlet.dynamicdatamapping.storage.Fields</type>
+		</attribute>
+		<attribute>
+			<name>fieldsNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>readOnly</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>repeatable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>requestedLocale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Locale</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>html-field</name>
+		<tag-class>com.liferay.taglib.ddm.HTMLFieldTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
 			<name>fieldName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>fields</name>
+			<name>classNameId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>field</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portlet.dynamicdatamapping.storage.Fields</type>
+			<type>com.liferay.portlet.dynamicdatamapping.storage.Field</type>
 		</attribute>
 		<attribute>
 			<name>fieldsNamespace</name>

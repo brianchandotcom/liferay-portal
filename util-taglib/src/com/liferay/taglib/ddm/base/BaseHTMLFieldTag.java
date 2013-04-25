@@ -21,7 +21,7 @@ import javax.servlet.jsp.JspException;
  * @author Bruno Basto
  * @generated
  */
-public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
+public class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -38,8 +38,8 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.storage.Fields getFields() {
-		return _fields;
+	public com.liferay.portlet.dynamicdatamapping.storage.Field getField() {
+		return _field;
 	}
 
 	public java.lang.String getFieldsNamespace() {
@@ -74,10 +74,10 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("classPK", classPK);
 	}
 
-	public void setFields(com.liferay.portlet.dynamicdatamapping.storage.Fields fields) {
-		_fields = fields;
+	public void setField(com.liferay.portlet.dynamicdatamapping.storage.Field field) {
+		_field = field;
 
-		setScopedAttribute("fields", fields);
+		setScopedAttribute("field", field);
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
@@ -114,7 +114,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_classNameId = 0;
 		_classPK = 0;
-		_fields = null;
+		_field = null;
 		_fieldsNamespace = null;
 		_mode = null;
 		_readOnly = false;
@@ -136,7 +136,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "fields", _fields);
+		setNamespacedAttribute(request, "field", _field);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
 		setNamespacedAttribute(request, "mode", _mode);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
@@ -144,17 +144,17 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html:";
+	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html-field:";
 
 	private static final String _END_PAGE =
-		"/html/taglib/ddm/html/end.jsp";
+		"/html/taglib/ddm/html_field/end.jsp";
 
 	private static final String _START_PAGE =
-		"/html/taglib/ddm/html/start.jsp";
+		"/html/taglib/ddm/html_field/start.jsp";
 
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.portlet.dynamicdatamapping.storage.Fields _fields = null;
+	private com.liferay.portlet.dynamicdatamapping.storage.Field _field = null;
 	private java.lang.String _fieldsNamespace = null;
 	private java.lang.String _mode = null;
 	private boolean _readOnly = false;

@@ -96,6 +96,8 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_CHECKBOX = "checkbox";
 
+	public static final String TYPE_DDM_DATE = "ddm-date";
+
 	public static final String TYPE_DDM_DOCUMENTLIBRARY = "ddm-documentlibrary";
 
 	public static final String TYPE_DDM_FILEUPLOAD = "ddm-fileupload";

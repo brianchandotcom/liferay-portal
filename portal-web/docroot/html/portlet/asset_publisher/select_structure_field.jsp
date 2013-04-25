@@ -75,10 +75,29 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				</liferay-portlet:resourceURL>
 
 				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>'>
-					<liferay-ddm:html
+
+					<%
+					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();
+
+					ddmField.setDefaultLocale(themeDisplay.getLocale());
+					ddmField.setDDMStructureId(classTypeId);
+					ddmField.setName(name);
+
+					if ((ddmStructure != null) && name.equals(ddmStructureFieldName)) {
+						String fieldType = ddmStructure.getFieldType(name);
+
+						if (fieldType.equals(DDMImpl.TYPE_DDM_DATE)) {
+							ddmStructureFieldValue = GetterUtil.getDate(ddmStructureFieldValue, DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss"));
+						}
+
+						ddmField.setValue(themeDisplay.getLocale(), ddmStructureFieldValue);
+					}
+					%>
+
+					<liferay-ddm:html-field
 						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 						classPK="<%= classTypeId %>"
-						fieldName="<%= name %>"
+						field="<%= ddmField %>"
 						fieldsNamespace="<%= fieldsNamespace %>"
 					/>
 				</aui:form>

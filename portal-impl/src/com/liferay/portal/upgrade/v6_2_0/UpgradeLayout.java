@@ -15,25 +15,25 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v6_2_0.util.GroupTable;
+import com.liferay.portal.upgrade.v6_2_0.util.LayoutTable;
 
 import java.sql.SQLException;
 
 /**
- * @author Hugo Huijser
+ * @author Harrison Schueler
  */
-public class UpgradeGroup extends UpgradeProcess {
+public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
-			runSQL("alter_column_type Group_ friendlyURL VARCHAR(255) null");
-			runSQL("alter_column_type Group_ typeSettings TEXT null");
+			runSQL("alter_column_type Layout css TEXT null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(
-				GroupTable.TABLE_NAME, GroupTable.TABLE_COLUMNS,
-				GroupTable.TABLE_SQL_CREATE, GroupTable.TABLE_SQL_ADD_INDEXES);
+				LayoutTable.TABLE_NAME, LayoutTable.TABLE_COLUMNS,
+				LayoutTable.TABLE_SQL_CREATE,
+				LayoutTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

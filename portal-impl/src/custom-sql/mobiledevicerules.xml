@@ -8,7 +8,7 @@
 			FROM
 				MDRRuleGroup
 			WHERE
-				(groupId = ?) AND
+				[$GROUP_ID$] AND
 				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
@@ -19,7 +19,7 @@
 			FROM
 				MDRRuleGroup
 			WHERE
-				(groupId = ?) AND
+				[$GROUP_ID$] AND
 				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				MDRRuleGroup.name DESC

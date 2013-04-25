@@ -29,12 +29,14 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Edward C. Han
+ * @author Manuel de la Peña
  */
 public class MDRRuleGroupLocalServiceImpl
 	extends MDRRuleGroupLocalServiceBaseImpl {
@@ -177,33 +179,106 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupPersistence.countByGroupId(groupId);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #search(long, String,
+	 *             java.util.LinkedHashMap, boolean, int, int)}
+	 */
 	public List<MDRRuleGroup> search(
 			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
 
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
 		return mdrRuleGroupFinder.findByG_N(
-			groupId, name, andOperator, start, end);
+			groupId, name, params, andOperator, start, end);
 	}
 
+	public List<MDRRuleGroup> search(
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.findByG_N(
+			groupId, name, params, andOperator, start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
+	 *             String, java.util.LinkedHashMap, boolean, int, int)}
+	 */
 	public List<MDRRuleGroup> searchByKeywords(
 			long groupId, String keywords, boolean andOperator, int start,
 			int end)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.findByKeywords(groupId, keywords, start, end);
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return mdrRuleGroupFinder.findByKeywords(
+			groupId, keywords, params, start, end);
 	}
 
+	public List<MDRRuleGroup> searchByKeywords(
+			long groupId, String keywords, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.findByKeywords(
+			groupId, keywords, params, start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
+	 *             String, java.util.LinkedHashMap, boolean)}
+	 */
 	public int searchByKeywordsCount(
 			long groupId, String keywords, boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
 	}
 
+	public int searchByKeywordsCount(
+			long groupId, String keywords, LinkedHashMap<String, Object> params,
+			boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #searchCount(long,
+	 *             String, java.util.LinkedHashMap, boolean)}
+	 */
 	public int searchCount(long groupId, String name, boolean andOperator)
 		throws SystemException {
 
-		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", true);
+
+		return mdrRuleGroupFinder.countByG_N(
+			groupId, name, params, andOperator);
+	}
+
+	public int searchCount(
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator)
+		throws SystemException {
+
+		return mdrRuleGroupFinder.countByG_N(
+			groupId, name, params, andOperator);
 	}
 
 	public MDRRuleGroup updateRuleGroup(

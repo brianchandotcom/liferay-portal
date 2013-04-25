@@ -16,11 +16,15 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,6 +69,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -99,6 +105,40 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_RADIO = "radio";
 
 	public static final String TYPE_SELECT = "select";
+
+	public Serializable getDisplayFieldValue(
+			Serializable fieldValue, String type, Locale locale)
+		throws Exception {
+
+		if (fieldValue instanceof Date) {
+			Date valueDate = (Date)fieldValue;
+
+			DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
+
+			fieldValue = dateFormat.format(valueDate);
+		}
+		else if (type.equals(DDMImpl.TYPE_RADIO) ||
+				 type.equals(DDMImpl.TYPE_SELECT)) {
+
+			String valueString = String.valueOf(fieldValue);
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
+
+			fieldValue = stringArray[0];
+		}
+		else if (type.equals(DDMImpl.TYPE_CHECKBOX)) {
+			if ((Boolean)fieldValue) {
+				fieldValue = LanguageUtil.get(locale, "yes");
+			}
+			else {
+				fieldValue = LanguageUtil.get(locale, "no");
+			}
+		}
+
+		return fieldValue;
+	}
 
 	public Fields getFields(
 			long ddmStructureId, long ddmTemplateId,
@@ -216,6 +256,33 @@ public class DDMImpl implements DDM {
 		}
 
 		return sb.toString();
+	}
+
+	public Serializable getIndexedFieldValue(
+			Serializable fieldValue, String type)
+		throws Exception {
+
+		if (fieldValue instanceof Date) {
+			Date valueDate = (Date)fieldValue;
+
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyyMMddHHmmss");
+
+			fieldValue = dateFormat.format(valueDate);
+		}
+		else if (type.equals(DDMImpl.TYPE_RADIO) ||
+				 type.equals(DDMImpl.TYPE_SELECT)) {
+
+			String valueString = (String)fieldValue;
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+
+			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
+
+			fieldValue = stringArray[0];
+		}
+
+		return fieldValue;
 	}
 
 	public OrderByComparator getStructureOrderByComparator(

@@ -23,6 +23,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.Serializable;
+
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +39,13 @@ public class DDMUtil {
 		PortalRuntimePermission.checkGetBeanProperty(DDMUtil.class);
 
 		return _ddm;
+	}
+
+	public static Serializable getDisplayFieldValue(
+			Serializable fieldValue, String type, Locale locale)
+		throws Exception {
+
+		return getDDM().getDisplayFieldValue(fieldValue, type, locale);
 	}
 
 	public static Fields getFields(
@@ -79,6 +90,13 @@ public class DDMUtil {
 
 	public static String getFileUploadPath(BaseModel<?> baseModel) {
 		return getDDM().getFileUploadPath(baseModel);
+	}
+
+	public static Serializable getIndexedFieldValue(
+			Serializable fieldValue, String type)
+		throws Exception {
+
+		return getDDM().getIndexedFieldValue(fieldValue, type);
 	}
 
 	public static OrderByComparator getStructureOrderByComparator(

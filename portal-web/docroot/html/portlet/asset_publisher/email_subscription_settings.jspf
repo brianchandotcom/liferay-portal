@@ -46,7 +46,7 @@ boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAdded
 
 		<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
-		<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
+		<aui:select label="language" name="languageId">
 
 			<%
 			Locale[] locales = LanguageUtil.getAvailableLocales();
@@ -157,12 +157,6 @@ boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAdded
 	function <portlet:namespace />initEditor() {
 		return "<%= UnicodeFormatter.toString(editorContent) %>";
 	}
-
-	function <portlet:namespace />updateLanguage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
 </aui:script>
 
 <aui:script use="aui-base">
@@ -174,6 +168,26 @@ boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAdded
 			var emailSubscriptionSettings = A.one('#<portlet:namespace />emailSubscriptionSettings');
 
 			emailSubscriptionSettings.toggle();
+		}
+	);
+
+	var languageSelector = A.one('#<portlet:namespace />languageId');
+
+	var currentLanguageIndex = languageSelector.get('selectedIndex');
+
+	languageSelector.on(
+		'change',
+		function (event) {
+			if (CKEDITOR.instances.<portlet:namespace />editor.checkDirty()) {
+				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-switch-the-languages-view") %>')) {
+					languageSelector.set('selectedIndex', currentLanguageIndex);
+					return false;
+				}
+			}
+
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
+
+			submitForm(document.<portlet:namespace />fm);
 		}
 	);
 </aui:script>

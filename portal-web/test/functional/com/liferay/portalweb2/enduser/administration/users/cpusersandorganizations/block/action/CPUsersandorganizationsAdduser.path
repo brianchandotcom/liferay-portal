@@ -45,22 +45,22 @@
 </tr>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_SCREEN_NAME</td>
+	<td>DETAILS_SCREEN_NAME_FIELD</td>
 	<td>//input[@id='_125_screenName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_EMAIL_ADDRESS</td>
+	<td>DETAILS_EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_125_emailAddress']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_FIRST_NAME</td>
+	<td>DETAILS_FIRST_NAME_FIELD</td>
 	<td>//input[@id='_125_firstName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_LAST_NAME</td>
+	<td>DETAILS_LAST_NAME_FIELD</td>
 	<td>//input[@id='_125_lastName']</td>
 	<td></td>
 </tr>

@@ -136,35 +136,35 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ACTIONS-->
+<!--USER_GROUP_MENULIST-->
 <tr>
-	<td>ACTIONS_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>USER_GROUP_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_PERMISSIONS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td>USER_GROUP_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_SITE_PERMISSIONS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Permissions')]</td>
+	<td>USER_GROUP_MENULIST_SITE_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_MANAGE_SITE_PAGES</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Site Pages')]</td>
+	<td>USER_GROUP_MENULIST_MANAGE_SITE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site Pages')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_ASSIGN_MEMBERS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]</td>
+	<td>USER_GROUP_MENULIST_ASSIGN_MEMBERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIONS_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>USER_GROUP_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

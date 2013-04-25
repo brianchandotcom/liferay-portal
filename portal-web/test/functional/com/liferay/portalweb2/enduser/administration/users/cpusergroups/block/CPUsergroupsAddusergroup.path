@@ -44,7 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td></td>
 </tr>

@@ -18,16 +18,16 @@
 		<case comparator="startsWith" locator-key1="ORGANIZATION_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />
 		</case>
-		<case locator-key1="ORGANIZATION_ACTIONS_ADD_REGULAR_ORGANIZATION">
+		<case locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION">
 			<execute function="Click#textClickAtAndWait" value1="Add Regular Organization" />
 		</case>
-		<case locator-key1="ORGANIZATION_ACTIONS_ASSIGN_USERS">
+		<case locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS">
 			<execute function="Click#textClickAtAndWait" value1="Assign Users" />
 		</case>
-		<case locator-key1="ORGANIZATION_ACTIONS_DELETE">
+		<case locator-key1="ORGANIZATION_MENULIST_DELETE">
 			<execute function="Click#textClickAtAndWait" value1="Delete" />
 		</case>
-		<case locator-key1="ORGANIZATION_ACTIONS_EDIT">
+		<case locator-key1="ORGANIZATION_MENULIST_EDIT">
 			<execute function="Click#textClickAtAndWait" value1="Edit" />
 		</case>
 		<case locator-key1="SEARCH_BUTTON">

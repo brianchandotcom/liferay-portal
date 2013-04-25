@@ -12,7 +12,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_ADD_REGULAR_ORGANIZATION" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" />
 
 		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
 

@@ -101,40 +101,40 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ORGANIZATION_ACTIONS-->
+<!--ORGANIZATION_MENULIST-->
 <tr>
-	<td>ORGANIZATION_ACTIONS_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>ORGANIZATION_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_ASSIGN_ORGANIZATION_ROLES</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Roles')]</td>
+	<td>ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Organization Roles')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_ASSIGN_USERS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]</td>
+	<td>ORGANIZATION_MENULIST_ASSIGN_USERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Users')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_ADD_USER</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add User')]</td>
+	<td>ORGANIZATION_MENULIST_ADD_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add User')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_ADD_REGULAR_ORGANIZATION</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]</td>
+	<td>ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Regular Organization')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_ADD_LOCATION</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Location')]</td>
+	<td>ORGANIZATION_MENULIST_ADD_LOCATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Location')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_ACTIONS_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>ORGANIZATION_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -143,7 +143,7 @@
 	<td></td>
 </tr>
 <!--USER_TABLE-->
-<!--USER_ACTIONS-->
+<!--USER_MENULIST-->
 <tr>
 	<td></td>
 	<td></td>

@@ -48,7 +48,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_ASSIGN_USERS" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="AVAILABLE" />
 
@@ -90,7 +90,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_EDIT" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_EDIT" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#click" locator-key1="ORGANIZATION_INFORMATION_ORGANIZATION_SITE" />
 
@@ -116,7 +116,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_DELETE" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_DELETE" />
 
 		<execute action="CPUsersandorganizations#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -138,7 +138,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_ASSIGN_USERS" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="AVAILABLE" />
 
@@ -220,7 +220,7 @@
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
 
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_ACTIONS_EDIT" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_EDIT" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="TITLE" value1="${orgName}" />
 

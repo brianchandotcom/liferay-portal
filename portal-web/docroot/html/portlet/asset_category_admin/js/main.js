@@ -415,6 +415,10 @@ AUI.add(
 							var buffer = AArray.map(
 								categories,
 								function(item, index, collection) {
+									if (item.parentCategoryId == 0) {
+										instance._vocabularyRootCategories[item.categoryId] = 1;
+									}
+
 									return Lang.sub(TPL_CATEGORY_ITEM, item);
 								}
 							);
@@ -854,7 +858,7 @@ AUI.add(
 										}
 									)
 								},
-								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, categoryIds.length)
+								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, categoryIds)
 							);
 						}
 					},
@@ -1009,6 +1013,8 @@ AUI.add(
 
 						instance._checkAllCategoriesCheckbox.attr(STR_CHECKED, false);
 
+						instance._vocabularyRootCategories = {};
+
 						if (renderMode == MODE_RENDER_FLAT) {
 							instance._getVocabularyCategoriesFlat(
 								vocabularyId,
@@ -1102,6 +1108,10 @@ AUI.add(
 							json,
 							function(item, index, collection) {
 								var checked = false;
+
+								if (item.parentCategoryId == 0) {
+									instance._vocabularyRootCategories[item.categoryId] = 1;
+								}
 
 								var paginatorConfig = {
 									limit: 10,
@@ -1842,7 +1852,9 @@ AUI.add(
 						if (!exception && response.categoryId) {
 							var vocabulary = instance._getVocabularyById(instance._selectedVocabularyId);
 
-							vocabulary.categoriesCount++;
+							if (response.parentCategoryId == 0) {
+								vocabulary.categoriesCount++;
+							}
 
 							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 
@@ -1900,7 +1912,7 @@ AUI.add(
 						if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-category'))) {
 							instance._deleteCategory(
 								instance._selectedCategoryId,
-								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, 1)
+								A.bind('_processCategoryDeletion', instance, instance._selectedVocabularyId, [instance._selectedCategoryId])
 							);
 						}
 					},
@@ -2314,7 +2326,7 @@ AUI.add(
 					_processCategoryDeletion: function() {
 						var instance = this;
 
-						var categories = arguments[1];
+						var categoryIds = arguments[1];
 						var vocabularyId = arguments[0];
 
 						var exception;
@@ -2334,7 +2346,32 @@ AUI.add(
 						var vocabulary = instance._getVocabularyById(vocabularyId);
 
 						if (!exception) {
-							vocabulary.categoriesCount -= categories;
+							var deletedRootCategories = AArray.filter(
+								categoryIds,
+								function(item, index, collection) {
+									var categoryId = item;
+
+									var isRoot = instance._vocabularyRootCategories[categoryId] === 1;
+
+									var isDeleted = !AArray.find(
+										result,
+										function(item, index, collection) {
+											return item == categoryId;
+										}
+									);
+
+									return (isRoot && isDeleted);
+								}
+							);
+
+							AArray.each(
+								deletedRootCategories,
+								function(item, index, collection) {
+									instance._vocabularyRootCategories[item] = null;
+								}
+							);
+
+							vocabulary.categoriesCount -= deletedRootCategories.length;
 
 							instance._closeEditSection();
 							instance._hidePanels();

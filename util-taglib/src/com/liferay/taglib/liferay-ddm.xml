@@ -19,14 +19,57 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
-				<name>fieldName</name>
+				<name>fields</name>
+				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</inputType>
+				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</outputType>
+			</attribute>
+			<attribute>
+				<name>fieldsNamespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>fields</name>
-				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</inputType>
-				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</outputType>
+				<name>mode</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>readOnly</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>repeatable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>requestedLocale</name>
+				<inputType>java.util.Locale</inputType>
+				<outputType>java.util.Locale</outputType>
+				<required>false</required>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="HTMLField" bodyContent="true" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>classNameId</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>classPK</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>field</name>
+				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Field</inputType>
+				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Field</outputType>
 			</attribute>
 			<attribute>
 				<name>fieldsNamespace</name>

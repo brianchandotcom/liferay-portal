@@ -101,8 +101,9 @@ public class MBThreadFlagStagedModelDataHandler
 			String rootMessagePath = ExportImportPathUtil.getModelPath(
 				portletDataContext, MBMessage.class.getName(), rootMessageId);
 
-			MBMessage rootMessage = (MBMessage)portletDataContext.
-				getZipEntryAsObject(rootMessagePath);
+			MBMessage rootMessage =
+				(MBMessage)portletDataContext.getZipEntryAsObject(
+					rootMessagePath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, rootMessage);

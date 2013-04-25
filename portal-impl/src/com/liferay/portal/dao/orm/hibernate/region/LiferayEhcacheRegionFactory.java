@@ -128,8 +128,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 	public void reconfigureCaches(URL cacheConfigFile) {
 		synchronized (manager) {
-			Configuration configuration = EhcacheConfigurationUtil.
-				getConfiguration(cacheConfigFile, true, _usingDefault);
+			Configuration configuration =
+				EhcacheConfigurationUtil.getConfiguration(
+					cacheConfigFile, true, _usingDefault);
 
 			Map<String, CacheConfiguration> cacheConfigurations =
 				configuration.getCacheConfigurations();

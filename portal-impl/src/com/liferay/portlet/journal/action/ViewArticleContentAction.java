@@ -230,10 +230,11 @@ public class ViewArticleContentAction extends Action {
 				}
 				else {
 					if (Validator.isNotNull(articleId)) {
-						long imageId = JournalArticleImageLocalServiceUtil.
-							getArticleImageId(
-								groupId, articleId, version, elInstanceId,
-								elName, elLanguage);
+						long imageId =
+							JournalArticleImageLocalServiceUtil.
+								getArticleImageId(
+									groupId, articleId, version, elInstanceId,
+									elName, elLanguage);
 
 						String token = WebServerServletTokenUtil.getToken(
 							imageId);

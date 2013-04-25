@@ -119,8 +119,9 @@ public class PortletPreferencesImpl
 
 		if ((_defaultPreferences == null) && (_portletId != null)) {
 			try {
-				_defaultPreferences = PortletPreferencesLocalServiceUtil.
-					getDefaultPreferences(getCompanyId(), _portletId);
+				_defaultPreferences =
+					PortletPreferencesLocalServiceUtil.getDefaultPreferences(
+						getCompanyId(), _portletId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

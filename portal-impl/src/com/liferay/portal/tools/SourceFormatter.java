@@ -2041,6 +2041,13 @@ public class SourceFormatter {
 					_processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
+
+				if (line.endsWith(StringPool.PERIOD) &&
+					line.contains(StringPool.EQUAL)) {
+
+					_processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
 			}
 
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {

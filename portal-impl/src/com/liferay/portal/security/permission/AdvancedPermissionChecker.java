@@ -824,8 +824,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			// Check unsupported model actions
 
-			List<String> actions = ResourceActionsUtil.
-				getModelResourceGuestUnsupportedActions(name);
+			List<String> actions =
+				ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+					name);
 
 			if (actions.contains(actionId)) {
 				return false;
@@ -835,8 +836,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			// Check unsupported portlet actions
 
-			List<String> actions = ResourceActionsUtil.
-				getPortletResourceGuestUnsupportedActions(name);
+			List<String> actions =
+				ResourceActionsUtil.getPortletResourceGuestUnsupportedActions(
+					name);
 
 			if (actions.contains(actionId)) {
 				return false;

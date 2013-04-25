@@ -48,6 +48,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -58,6 +59,8 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -127,13 +130,28 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		String structureField = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
-		String structureValue = (String)searchContext.getAttribute(
+		Serializable structureValue = searchContext.getAttribute(
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(structureField) &&
 			Validator.isNotNull(structureValue)) {
 
-			contextQuery.addRequiredTerm(structureField, structureValue);
+			String[] split = StringUtil.split(structureField, StringPool.SLASH);
+
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+				GetterUtil.getLong(split[1]));
+
+			String fieldName = StringUtil.replaceLast(
+				split[2],
+				StringPool.UNDERLINE.concat(
+					LocaleUtil.toLanguageId(searchContext.getLocale())),
+				StringPool.BLANK);
+
+			structureValue = DDMUtil.getIndexedFieldValue(
+				structureValue, structure.getFieldType(fieldName));
+
+			contextQuery.addRequiredTerm(
+				structureField, (String)structureValue);
 		}
 
 		long[] folderIds = searchContext.getFolderIds();

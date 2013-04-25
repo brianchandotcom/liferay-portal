@@ -97,7 +97,8 @@ String[] allAssetTagNames = new String[0];
 
 String ddmStructureFieldLabel = StringPool.BLANK;
 String ddmStructureFieldName = StringPool.BLANK;
-String ddmStructureFieldValue = StringPool.BLANK;
+Serializable ddmStructureFieldValue = null;
+String ddmStructureDisplayFieldValue = StringPool.BLANK;
 
 if (selectionStyle.equals("dynamic")) {
 	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
@@ -116,7 +117,8 @@ if (selectionStyle.equals("dynamic")) {
 
 		if (ddmStructure != null) {
 			ddmStructureFieldName = GetterUtil.getString(preferences.getValue("ddmStructureFieldName", StringPool.BLANK));
-			ddmStructureFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureFieldValue", StringPool.BLANK));
+			ddmStructureFieldValue = preferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+			ddmStructureDisplayFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureDisplayFieldValue", StringPool.BLANK));
 
 			Set<String> fieldNames = ddmStructure.getFieldNames();
 

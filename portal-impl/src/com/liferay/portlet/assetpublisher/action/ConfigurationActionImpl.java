@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -52,7 +51,6 @@ import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.Serializable;
@@ -215,29 +213,25 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		String type = ddmStructure.getFieldType(fieldName);
 
-		if (fieldValue instanceof Date) {
-			Date valueDate = (Date)fieldValue;
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		if (fieldValue instanceof Boolean) {
+			jsonObject.put("value", (Boolean)fieldValue);
+		}
+		else if (fieldValue instanceof Date) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 
-			fieldValue = dateFormat.format(valueDate);
+			jsonObject.put("value", dateFormat.format(fieldValue));
 		}
-		else if (type.equals(DDMImpl.TYPE_RADIO) ||
-				 type.equals(DDMImpl.TYPE_SELECT)) {
-
-			String valueString = String.valueOf(fieldValue);
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
-
-			String[] stringArray = ArrayUtil.toStringArray(jsonArray);
-
-			fieldValue = stringArray[0];
+		else {
+			jsonObject.put("value", (String)fieldValue);
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		Serializable displayValue = DDMUtil.getDisplayFieldValue(
+			fieldValue, type, themeDisplay.getLocale());
 
-		jsonObject.put("value", String.valueOf(fieldValue));
+		jsonObject.put("displayValue", String.valueOf(displayValue));
 
 		resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

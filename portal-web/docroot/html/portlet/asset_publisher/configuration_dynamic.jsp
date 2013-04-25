@@ -219,6 +219,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= ddmStructureFieldValue %>" />
 
+						<aui:input name='<%= "preferences--ddmStructureDisplayFieldValue--" %>' type="hidden" value="<%= ddmStructureDisplayFieldValue %>" />
+
 						<span id="<portlet:namespace />ddmStructureFieldMessage">
 							<c:if test="<%= Validator.isNotNull(ddmStructureFieldLabel) %>">
 								<%= ddmStructureFieldLabel + StringPool.RAQUO + ddmStructureFieldValue %>
@@ -657,11 +659,15 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					ddmStructureFieldvalue.val(event.value);
 
+					var ddmStructureDisplayFieldvalue = A.one('#<portlet:namespace />ddmStructureDisplayFieldValue');
+
+					ddmStructureDisplayFieldvalue.val(event.displayValue);
+
 					var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 
 					var ddmStructureFieldMessage = A.one('#<portlet:namespace />ddmStructureFieldMessage');
 
-					ddmStructureFieldMessage.html(event.label + ' <%= StringPool.RAQUO %> ' + event.value);
+					ddmStructureFieldMessage.html(event.label + ' <%= StringPool.RAQUO %> ' + event.displayValue);
 
 					ddmStructureFieldValueContainer.show();
 				}

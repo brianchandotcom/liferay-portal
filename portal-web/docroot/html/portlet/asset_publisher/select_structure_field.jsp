@@ -126,6 +126,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 							var jsonArray = this.get('responseData');
 
 							result['value'] = jsonArray.value;
+							result['displayValue'] = jsonArray.displayValue;
 
 							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 

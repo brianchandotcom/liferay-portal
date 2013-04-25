@@ -427,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="6" />
+		<property name="build-test-ant-scripts.version" value="7" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1344,7 +1344,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-upgrade-acceptance" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
-			<param name="test.ant.script.suite" value="PlatformUpgradeAcceptanceTestSuite" />
+			<param name="test.ant.script.suite" value="PlatformUpgradesAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

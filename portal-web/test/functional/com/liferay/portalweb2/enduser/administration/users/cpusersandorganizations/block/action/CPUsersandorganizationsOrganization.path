@@ -60,9 +60,89 @@
 	<td></td>
 </tr>
 <!--SUBORGANIZATION-->
+<tr>
+	<td>SUBORGANIZATION_DELETE_BUTTON</td>
+	<td>//input[@value='Delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUBORGANIZATION_TABLE-->
+<tr>
+	<td>SUBORGANIZATION_TABLE_ALL_CHECKBOX</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//input[@name='_125_allRowIds'])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_CHECKBOX_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[1]//input[@name='_125_rowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_NAME_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[2]/a/strong)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_TYPE_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBORGANIZATION_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER-->
+<tr>
+	<td>USER_DEACTIVATE_BUTTON</td>
+	<td>//input[@value='Deactivate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_TABLE-->
+<tr>
+	<td>USER_TABLE_ALL_CHECKBOX</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//input[@name='_125_allRowIds'])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_CHECKBOX_1</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[1]/input[@name='_125_rowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_FIRST_NAME_1</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_LAST_NAME_1</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_SCREEN_NAME_1</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

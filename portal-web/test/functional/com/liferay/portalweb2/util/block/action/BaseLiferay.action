@@ -53,6 +53,12 @@
 		</default>
 	</command>
 
+	<command name="check">
+		<default>
+			<execute function="Check#clickAt" />
+		</default>
+	</command>
+
 	<command name="click">
 		<default>
 			<execute function="Click#clickAt" />
@@ -149,6 +155,12 @@
 	<command name="type">
 		<default>
 			<execute function="Type#type" />
+		</default>
+	</command>
+
+	<command name="uncheck">
+		<default>
+			<execute function="Uncheck#clickAt" />
 		</default>
 	</command>
 </definition>

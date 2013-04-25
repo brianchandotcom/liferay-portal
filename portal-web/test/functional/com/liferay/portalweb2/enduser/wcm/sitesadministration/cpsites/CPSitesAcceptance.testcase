@@ -7,6 +7,8 @@
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="Site#cpView" />
 	</command>
 
 	<command name="DeleteSite">

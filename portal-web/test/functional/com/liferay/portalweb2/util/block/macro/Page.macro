@@ -7,6 +7,15 @@
 		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
 
 		<if>
+			<isset var="siteScopeName" />
+			<then>
+				<execute action="Home#click" locator1="//a[@id='_160_groupSelectorButton']" />
+
+				<execute action="Home#click" locator1="//a[@role='menuitem' and contains(.,'${siteScopeName}')]" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${portletName}" arg2="Wiki" />
 			<then>
 				<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />

@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE</td>
+	<td>DELETE_BUTTON</td>
 	<td>//input[@value='Delete']</td>
 	<td></td>
 </tr>

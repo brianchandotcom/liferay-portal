@@ -2,4 +2,6 @@
 	<execute test-case="CPRolesAcceptance" />
 
 	<execute test-case="CPUsersandorganizationsAcceptance" />
+
+	<execute test-case="CPUserGroupsAcceptance" />
 </definition>

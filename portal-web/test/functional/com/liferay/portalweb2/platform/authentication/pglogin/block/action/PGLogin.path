@@ -19,22 +19,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_ADDRESS</td>
+	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_58_login']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PASSWORD</td>
+	<td>PASSWORD_FIELD</td>
 	<td>//input[@id='_58_password']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REMEMBER_ME</td>
+	<td>REMEMBER_ME_CHECKBOX</td>
 	<td>//input[@id='_58_rememberMeCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SIGN_IN</td>
+	<td>SIGN_IN_BUTTON</td>
 	<td>//input[@value='Sign In']</td>
 	<td></td>
 </tr>

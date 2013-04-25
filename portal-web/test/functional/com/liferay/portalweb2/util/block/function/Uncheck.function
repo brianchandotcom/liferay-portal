@@ -1,0 +1,14 @@
+<definition>
+	<command name="clickAt">
+		<execute selenium="waitForVisible" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotChecked" />
+	</command>
+</definition>

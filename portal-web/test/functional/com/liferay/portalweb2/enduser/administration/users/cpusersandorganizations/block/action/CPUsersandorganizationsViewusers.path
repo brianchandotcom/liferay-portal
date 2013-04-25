@@ -76,7 +76,7 @@
 </tr>
 <!--ADVANCED_SEARCH-->
 <tr>
-	<td>ADVANCED_SEARCH_MATCH</td>
+	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
 	<td>//select[@id='_125_andOperator']</td>
 	<td></td>
 </tr>

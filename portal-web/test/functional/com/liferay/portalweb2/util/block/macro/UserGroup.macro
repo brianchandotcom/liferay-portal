@@ -1,0 +1,40 @@
+<definition>
+	<command name="cpAdd">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute action="CPUsergroups#click" locator-key1="ADD" />
+
+		<execute action="CPUsergroupsAddusergroup#type" locator-key1="NAME_FIELD" value1="${name}" />
+
+		<execute action="CPUsergroupsAddusergroup#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${name}" />
+	</command>
+
+	<command name="cpTearDown">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<while>
+			<condition action="CPUsergroups#isElementPresent" locator-key1="USER_GROUP_TABLE_CHECKBOX_1" />
+			<then>
+				<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
+
+				<execute action="CPUsergroups#assertChecked" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
+
+				<execute action="CPUsergroups#click" locator-key1="DELETE_BUTTON" />
+
+				<execute action="CPUsergroups#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+				<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+				<execute action="CPUsergroups#assertTextEquals" locator-key1="INFO_MESSAGE" />
+			</then>
+		</while>
+	</command>
+</definition>

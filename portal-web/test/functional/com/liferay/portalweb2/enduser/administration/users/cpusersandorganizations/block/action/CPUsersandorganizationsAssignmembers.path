@@ -29,8 +29,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>UPDATE_ASSOCIATIONS</td>
+	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
 	<td>//input[@value='Update Associations']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,37 +76,37 @@
 </tr>
 <!--ADVANCED_SEARCH-->
 <tr>
-	<td>ADVANCED_SEARCH_MATCH</td>
+	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
 	<td>//select[@id='_125_andOperator']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_FIRST_NAME</td>
+	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
 	<td>//input[@id='_125_firstName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_MIDDLE_NAME</td>
+	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
 	<td>//input[@id='_125_middleName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_LAST_NAME</td>
+	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
 	<td>//input[@id='_125_lastName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_SCREEN_NAME</td>
+	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
 	<td>//input[@id='_125_screenName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_EMAIL_ADDRESS</td>
+	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_125_emailAddress']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_STATUS</td>
+	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
 	<td>//select[@id='_125_status']</td>
 	<td></td>
 </tr>
@@ -119,6 +134,16 @@
 <tr>
 	<td>USER_TABLE_CHECKBOX_1</td>
 	<td>xpath=(//tr/td[1]/input[@name='_125_rowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_USER_NAME_1</td>
+	<td>xpath=(//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_SCREEN_NAME_1</td>
+	<td>xpath=(//tr/td[3])[1]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -7,7 +7,7 @@
 			</then>
 		</if>
 
-		<execute action="CPUsersandorganizationsViewusers#assertElementPresent" locator-key1="ADVANCED_SEARCH_MATCH" />
+		<execute action="CPUsersandorganizationsViewusers#assertElementPresent" locator-key1="ADVANCED_SEARCH_MATCH_SELECT" />
 	</command>
 
 	<command name="showBasicSearch">

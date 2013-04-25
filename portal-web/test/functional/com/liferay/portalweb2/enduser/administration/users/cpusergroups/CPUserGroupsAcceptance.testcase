@@ -1,0 +1,17 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddUserGroup">
+		<var name="name" value="UG UserGroup Name" />
+
+		<execute macro="UserGroup#cpAdd" />
+	</command>
+
+	<tear-down>
+		<execute macro="UserGroup#cpTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

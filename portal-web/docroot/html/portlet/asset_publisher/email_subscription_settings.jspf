@@ -23,9 +23,10 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 String defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
 String defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
 
-String bodyParam = (String)request.getAttribute("configuration.jsp-bodyParam");
 String emailParam = (String)request.getAttribute("configuration.jsp-emailParam");
 String subjectParam = (String)request.getAttribute("configuration.jsp-subjectParam");
+
+String bodyParam = (String)request.getAttribute("configuration.jsp-bodyParam");
 
 String emailSubject = PrefsParamUtil.getString(preferences, request, subjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(preferences, request, bodyParam, defaultEmailBody);

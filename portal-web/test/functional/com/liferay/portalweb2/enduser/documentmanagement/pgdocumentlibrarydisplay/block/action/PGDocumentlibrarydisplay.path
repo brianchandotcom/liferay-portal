@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>PGDocumentlibrarydisplayFolder</title>
+<title>PGDocumentlibrarydisplay</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGDocumentlibrarydisplayFolder</td></tr>
+<tr><td rowspan="1" colspan="3">PGDocumentlibrarydisplay</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -49,24 +49,24 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBFOLDERS_TABLE-->
+<!--FOLDERS_TABLE-->
 <tr>
-	<td>SUBFOLDERS_TABLE_NAME</td>
+	<td>FOLDERS_TABLE_NAME</td>
 	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[1]/a</td>
 	<td>Name</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_TABLE_NUMBER_OF_SUBFOLDERS</td>
+	<td>FOLDERS_TABLE_NUMBER_OF_FOLDERS</td>
 	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[2]/a</td>
 	<td># of Folders</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_TABLE_NUMBER_OF_DOCUMENTS</td>
+	<td>FOLDERS_TABLE_NUMBER_OF_DOCUMENTS</td>
 	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[3]/a</td>
 	<td># of Documents</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_TABLE_ACTIONS_BUTTON</td>
+	<td>FOLDERS_TABLE_ACTIONS_BUTTON</td>
 	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[4]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
@@ -75,49 +75,49 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBFOLDERS_MENULIST-->
+<!--FOLDERS_MENULIST-->
 <tr>
-	<td>SUBFOLDERS_MENULIST_EDIT</td>
+	<td>FOLDERS_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_MOVE</td>
+	<td>FOLDERS_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_PERMISSIONS</td>
+	<td>FOLDERS_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>FOLDERS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_ADD_SUBSUBFOLDER</td>
+	<td>FOLDERS_MENULIST_ADD_SUBFOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_MULTIPLE_DOCUMENTS</td>
+	<td>FOLDERS_MENULIST_MULTIPLE_DOCUMENTS</td>
 	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
 	<td>Multiple Documents</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_ADD_DOCUMENT</td>
+	<td>FOLDERS_MENULIST_ADD_DOCUMENT</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Document')]</td>
 	<td>Add Document</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_ADD_SHORTCUT</td>
+	<td>FOLDERS_MENULIST_ADD_SHORTCUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
-	<td>SUBFOLDERS_MENULIST_ACCESS_FROM_DESKTOP</td>
+	<td>FOLDERS_MENULIST_ACCESS_FROM_DESKTOP</td>
 	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>
@@ -126,6 +126,7 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DOCUMENTS-->
 <tr>
 	<td>DOCUMENTS_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//input[@value='Move to the Recycle Bin']</td>
@@ -138,8 +139,13 @@
 </tr>
 <!--DOCUMENTS_TABLE-->
 <tr>
+	<td>DOCUMENTS_TABLE_ALL_CHECKBOX</td>
+	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/th/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENTS_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[1]/a</td>
+	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[1]/input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>
@@ -149,7 +155,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_SIZE</td>
-	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[2]/a</td>
+	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[3]/a</td>
 	<td>Size</td>
 </tr>
 <tr>
@@ -198,49 +204,39 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBFOLDER_MENU-->
+<!--FOLDER_MENU-->
 <tr>
-	<td>SUBFOLDER_MENU_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>SUBFOLDER_MENU_MOVE</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Move')]</td>
-	<td>Move</td>
-</tr>
-<tr>
-	<td>SUBFOLDER_MENU_PERMISSIONS</td>
+	<td>FOLDER_MENU_PERMISSIONS</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions </td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_ADD_SUBFOLDER</td>
+	<td>FOLDER_MENU_ADD_FOLDER</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Folder')]</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_ADD_REPOSITORY</td>
+	<td>FOLDER_MENU_ADD_REPOSITORY</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Repository')]</td>
 	<td>Add Repository</td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_MULTIPLE_DOCUMENTS</td>
+	<td>FOLDER_MENU_MULTIPLE_DOCUMENTS</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Multiple Documents')]</td>
 	<td>Multiple Documents</td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_ADD_DOCUMENT</td>
+	<td>FOLDER_MENU_ADD_DOCUMENT</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Document')]</td>
 	<td>Add Document</td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_ADD_SHORTCUT</td>
+	<td>FOLDER_MENU_ADD_SHORTCUT</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
-	<td>SUBFOLDER_MENU_ACCESS_FROM_DESKTOP</td>
+	<td>FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>

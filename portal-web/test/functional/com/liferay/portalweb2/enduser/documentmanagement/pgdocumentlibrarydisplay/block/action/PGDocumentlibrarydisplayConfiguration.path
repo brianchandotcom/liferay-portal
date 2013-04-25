@@ -10,8 +10,13 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td></td>
+	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
 	<td>PGDocumentlibrarydisplayConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>

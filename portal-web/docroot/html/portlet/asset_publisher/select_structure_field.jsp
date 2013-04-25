@@ -54,8 +54,10 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 			<liferay-ui:search-container-column-text
 				name="name"
-				value="<%= HtmlUtil.escapeAttribute(label) %>"
-			/>
+			>
+
+				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
+			</liferay-ui:search-container-column-text>
 
 			<%
 			String fieldsNamespace = PwdGenerator.getPassword(4);
@@ -92,7 +94,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				data.put("name", name);
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" value="apply" />
+				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= name.equals(ddmStructureFieldName) ? false : true %>" id='<%= renderResponse.getNamespace() + "applyButton" + name %>' value="apply" />
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -103,7 +105,9 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 <aui:script use="aui-base,aui-io">
 	var Util = Liferay.Util;
 
-	A.one('#<portlet:namespace />selectDDMStructureFieldForm').delegate(
+	var selectDDMStructureFieldForm = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
+
+	selectDDMStructureFieldForm.delegate(
 		'click',
 		function(event) {
 			var result = Util.getAttributes(event.currentTarget, 'data-');
@@ -132,5 +136,17 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			);
 		},
 		'.selector-button input'
+	);
+
+	A.one('#<portlet:namespace />tuplesSearchContainer').delegate(
+		'click',
+		function(event) {
+			var buttonId = event.target.attr('data-button-id');
+
+			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.aui-button-input'), true);
+
+			Liferay.Util.toggleDisabled('#' + buttonId, false);
+		},
+		'input[name=<portlet:namespace />selectStructureFieldSubtype]'
 	);
 </aui:script>

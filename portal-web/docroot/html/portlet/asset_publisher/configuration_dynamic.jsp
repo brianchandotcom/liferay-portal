@@ -223,7 +223,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 						<span id="<portlet:namespace />ddmStructureFieldMessage">
 							<c:if test="<%= Validator.isNotNull(ddmStructureFieldLabel) %>">
-								<%= ddmStructureFieldLabel + StringPool.RAQUO + ddmStructureFieldValue %>
+								<%= ddmStructureFieldLabel + ": " + ddmStructureDisplayFieldValue %>
 							</c:if>
 						</span>
 					</div>
@@ -667,7 +667,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					var ddmStructureFieldMessage = A.one('#<portlet:namespace />ddmStructureFieldMessage');
 
-					ddmStructureFieldMessage.html(event.label + ' <%= StringPool.RAQUO %> ' + event.displayValue);
+					ddmStructureFieldMessage.html(event.label + ': ' + event.displayValue);
 
 					ddmStructureFieldValueContainer.show();
 				}

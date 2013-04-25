@@ -489,6 +489,15 @@ public class AssetUtil {
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
+		String paginationType = GetterUtil.getString(
+			assetEntryQuery.getPaginationType(), "more");
+
+		if (!paginationType.equals("none") &&
+			!paginationType.equals("simple")) {
+
+			searchContext.setAttribute("paginationType", paginationType);
+		}
+
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());

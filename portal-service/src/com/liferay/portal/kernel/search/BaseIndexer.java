@@ -1270,6 +1270,8 @@ public abstract class BaseIndexer implements Indexer {
 
 		Document[] documents = hits.getDocs();
 
+		int excludeDocsSize = 0;
+
 		for (int i = 0; i < documents.length; i++) {
 			try {
 				Document document = documents[i];
@@ -1291,8 +1293,12 @@ public abstract class BaseIndexer implements Indexer {
 					docs.add(document);
 					scores.add(hits.score(i));
 				}
+				else {
+					excludeDocsSize++;
+				}
 			}
 			catch (Exception e) {
+				excludeDocsSize++;
 			}
 
 			if (paginationType.equals("more") && (end > 0) &&
@@ -1307,7 +1313,7 @@ public abstract class BaseIndexer implements Indexer {
 		int length = docs.size();
 
 		if (hasMore) {
-			length = length + (end - start);
+			length = documents.length - excludeDocsSize;
 		}
 
 		hits.setLength(length);

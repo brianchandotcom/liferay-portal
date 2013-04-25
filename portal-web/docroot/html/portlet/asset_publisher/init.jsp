@@ -211,6 +211,9 @@ if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
 }
 
 String paginationType = GetterUtil.getString(preferences.getValue("paginationType", "none"));
+
+assetEntryQuery.setPaginationType(paginationType);
+
 boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);
 

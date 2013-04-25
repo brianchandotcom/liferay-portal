@@ -110,6 +110,7 @@ public class AssetEntryQuery {
 		setOrderByCol2(assetEntryQuery.getOrderByCol2());
 		setOrderByType1(assetEntryQuery.getOrderByType1());
 		setOrderByType2(assetEntryQuery.getOrderByType2());
+		setPaginationType(assetEntryQuery.getPaginationType());
 		setPublishDate(assetEntryQuery.getPublishDate());
 		setStart(assetEntryQuery.getStart());
 		setTitle(assetEntryQuery.getTitle());
@@ -296,6 +297,10 @@ public class AssetEntryQuery {
 
 	public String getOrderByType2() {
 		return checkOrderByType(_orderByType2);
+	}
+
+	public String getPaginationType() {
+		return _paginationType;
 	}
 
 	public Date getPublishDate() {
@@ -495,6 +500,12 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
+	public void setPaginationType(String paginationType) {
+		_paginationType = paginationType;
+
+		_toString = null;
+	}
+
 	public void setPublishDate(Date publishDate) {
 		_publishDate = publishDate;
 
@@ -523,7 +534,7 @@ public class AssetEntryQuery {
 			return _toString;
 		}
 
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{allCategoryIds=");
 		sb.append(StringUtil.merge(_allCategoryIds));
@@ -573,6 +584,8 @@ public class AssetEntryQuery {
 		sb.append(_orderByType1);
 		sb.append(", orderByType2=");
 		sb.append(_orderByType2);
+		sb.append(", paginationType=");
+		sb.append(_paginationType);
 		sb.append(", publishDate=");
 		sb.append(_publishDate);
 		sb.append(", start=");
@@ -666,6 +679,7 @@ public class AssetEntryQuery {
 	private String _orderByCol2;
 	private String _orderByType1;
 	private String _orderByType2;
+	private String _paginationType;
 	private Date _publishDate;
 	private int _start = QueryUtil.ALL_POS;
 	private String _title;

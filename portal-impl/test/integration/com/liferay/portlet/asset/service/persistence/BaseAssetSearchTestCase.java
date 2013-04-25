@@ -795,6 +795,39 @@ public abstract class BaseAssetSearchTestCase {
 		testOrderByTitle(assetEntryQuery, "desc", titles, orderedTitles);
 	}
 
+	@Test
+	public void testPaginationTypeNone() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		assetEntryQuery.setPaginationType("none");
+
+		testPaginationType(assetEntryQuery, 5);
+	}
+
+	@Test
+	public void testPaginationTypeRegular() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		assetEntryQuery.setPaginationType("regular");
+
+		testPaginationType(assetEntryQuery, 5);
+	}
+
+	@Test
+	public void testPaginationTypeSimple() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		assetEntryQuery.setPaginationType("simple");
+
+		testPaginationType(assetEntryQuery, 5);
+	}
+
 	protected abstract BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, String keywords,
 			ServiceContext serviceContext)
@@ -844,9 +877,18 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+		return searchCount(
+			assetEntryQuery, searchContext, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
+	}
+
+	protected int searchCount(
+			AssetEntryQuery assetEntryQuery, SearchContext searchContext,
+			int start, int end)
+		throws Exception {
+
+		Hits results = AssetUtil.search(
+			searchContext, assetEntryQuery, start, end);
 
 		return results.getLength();
 	}
@@ -970,6 +1012,29 @@ public abstract class BaseAssetSearchTestCase {
 
 			Assert.assertEquals(field, orderedTitles[i]);
 		}
+	}
+
+	protected void testPaginationType(AssetEntryQuery assetEntryQuery, int size)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			_group, serviceContext);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+
+		for (int i = 0; i < size; i++) {
+			addBaseModel(
+				parentBaseModel, ServiceTestUtil.randomString(),
+				serviceContext);
+		}
+
+		Assert.assertEquals(
+			size, searchCount(assetEntryQuery, searchContext, 0, 1));
 	}
 
 	private long[] _assetCategoryIds1;

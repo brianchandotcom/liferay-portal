@@ -92,20 +92,14 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			params = _emptyLinkedHashMap;
 		}
 
-		LinkedHashMap<String, Object> params1 = params;
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = null;
+			String cacheKey = _buildCacheKey(COUNT_BY_G_N, params);
 
-			if (params1.size() > 0) {
-				String sqlKey = _buildSQLKey(params1);
-
-				sql = _countByG_NCache.get(sqlKey);
-			}
+			String sql = _countByG_NCache.get(cacheKey);
 
 			if (sql == null) {
 				String countByG_N = CustomSQLUtil.get(COUNT_BY_G_N);
@@ -113,16 +107,13 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 				StringBundler sb = new StringBundler();
 
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(replaceGroupIdComparator(countByG_N, params1));
+				sb.append(
+					replaceGroupIdComparator(countByG_N, cacheKey, params));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				if (params1.size() > 0) {
-					String sqlKey = _buildSQLKey(params1);
-
-					_countByG_NCache.put(sqlKey, sb.toString());
-				}
-
 				sql = sb.toString();
+
+				_countByG_NCache.put(cacheKey, sql);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -137,7 +128,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			qPos.add(groupId);
 
-			setParams(qPos, params1);
+			setParams(qPos, params);
 
 			qPos.add(names, 2);
 
@@ -210,20 +201,14 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			params = _emptyLinkedHashMap;
 		}
 
-		LinkedHashMap<String, Object> params1 = params;
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = null;
+			String cacheKey = _buildCacheKey(FIND_BY_G_N, params);
 
-			if (params1.size() > 0) {
-				String sqlKey = _buildSQLKey(params1);
-
-				sql = _findByG_NCache.get(sqlKey);
-			}
+			String sql = _findByG_NCache.get(cacheKey);
 
 			if (sql == null) {
 				String findByG_N = CustomSQLUtil.get(FIND_BY_G_N);
@@ -231,16 +216,13 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 				StringBundler sb = new StringBundler();
 
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(replaceGroupIdComparator(findByG_N, params1));
+				sb.append(
+					replaceGroupIdComparator(findByG_N, cacheKey, params));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				if (params1.size() > 0) {
-					String sqlKey = _buildSQLKey(params1);
-
-					_findByG_NCache.put(sqlKey, sb.toString());
-				}
-
 				sql = sb.toString();
+
+				_findByG_NCache.put(cacheKey, sql);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -255,7 +237,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			qPos.add(groupId);
 
-			setParams(qPos, params1);
+			setParams(qPos, params);
 
 			qPos.add(names, 2);
 
@@ -270,8 +252,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		}
 	}
 
-	protected String getGroupIdComparator(
-		LinkedHashMap<String, Object> params) {
+	protected String getGroupIdComparator(Map<String, Object> params) {
 
 		StringBundler sb = new StringBundler(5);
 
@@ -296,7 +277,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	}
 
 	protected String replaceGroupIdComparator(
-		String sql, LinkedHashMap<String, Object> params) {
+		String sql, String cacheKey, Map<String, Object> params) {
 
 		if (params.isEmpty()) {
 			return StringUtil.replace(
@@ -308,8 +289,6 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 					"(groupId = ?)"
 				});
 		}
-
-		String cacheKey = _getCacheKey(sql, params);
 
 		String resultSQL = _replaceWhereSQLCache.get(cacheKey);
 
@@ -323,8 +302,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return resultSQL;
 	}
 
-	protected void setParams(
-			QueryPos qPos, LinkedHashMap<String, Object> params)
+	protected void setParams(QueryPos qPos, Map<String, Object> params)
 		throws PortalException, SystemException {
 
 		if ((params == null) || params.isEmpty()) {
@@ -351,23 +329,16 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		}
 	}
 
-	private String _buildSQLKey(LinkedHashMap<String, Object> param1) {
-		StringBundler sb = new StringBundler(param1.size() + 1);
+	private String _buildCacheKey(
+		String keyPrefix, Map<String, Object> param1) {
+
+		StringBundler sb = new StringBundler(param1.size() + 2);
+
+		sb.append(keyPrefix);
 
 		for (Map.Entry<String, Object> entry : param1.entrySet()) {
 			sb.append(entry.getKey());
 		}
-
-		return sb.toString();
-	}
-
-	private String _getCacheKey(
-		String sql, LinkedHashMap<String, Object> params) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(sql);
-		sb.append(_buildSQLKey(params));
 
 		return sb.toString();
 	}

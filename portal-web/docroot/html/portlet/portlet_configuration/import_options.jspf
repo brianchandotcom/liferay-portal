@@ -20,19 +20,31 @@
 
 <ul class="lfr-tree lfr-component">
 	<c:if test="<%= supportsSetup %>">
-		<li class="tree-item">
+		<aui:fieldset cssClass="options-group" label="application">
 			<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
-		</li>
 
-		<c:if test='<%= tabs2.equals("import") || !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>'>
 			<li class="tree-item">
-				<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
-			</li>
-		</c:if>
+				<div class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
+						<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
 
-		<li class="tree-item">
-			<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
-		</li>
+						<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
+				</div>
+			</li>
+
+			<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
+				<aui:fieldset cssClass="portlet-data-section" label="application">
+					<c:if test='<%= tabs2.equals("import") || !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>'>
+						<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
+					</c:if>
+
+					<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
+				</aui:fieldset>
+			</div>
+
+			<aui:script>
+				Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showChangeGlobalConfiguration');
+			</aui:script>
+		</aui:fieldset>
 	</c:if>
 
 	<c:if test="<%= supportsLAR %>">

@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>PGMediagalleryConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMediagalleryConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMediagalleryConfiguration</td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[@title='Close dialog']</td>
+	<td>Close</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_DISPLAY_SETTINGS-->
+<tr>
+	<td>SETUP_DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX</td>
+	<td>//input[@id='_86_showActionsCheckbox']</td>
+	<td>Show Actions</td>
+</tr>
+<tr>
+	<td>SETUP_DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX</td>
+	<td>//input[@id='_86_showFolderMenuCheckbox']</td>
+	<td>Show Folder Menu</td>
+</tr>
+<tr>
+	<td>SETUP_DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX</td>
+	<td>//input[@id='_86_showTabsCheckbox']</td>
+	<td>Show Navigation Links</td>
+</tr>
+<tr>
+	<td>SETUP_DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
+	<td>//input[@id='_86_showFoldersSearchCheckbox']</td>
+	<td>Show Search</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_DISPLAY_TEMPLATE-->
+<tr>
+	<td>SETUP_DISPLAY_TEMPLATE_SELECT</td>
+	<td>//div[@class='display-template']/span/span/span/select</td>
+	<td>Select Display Template</td>
+</tr>
+<tr>
+	<td>SETUP_DISPLAY_TEMPLATE_MANAGE</td>
+	<td>//div[@class='display-template']/span/a</td>
+	<td>Manage Display Templates for Liferay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_FOLDERS_LISTING-->
+<tr>
+	<td>SETUP_FOLDERS_LISTING_ROOT_FOLDER_SELECT_BUTTON</td>
+	<td>//input[@id='_86_openFolderSelectorButton']</td>
+	<td>Select Root Folder</td>
+</tr>
+<tr>
+	<td>SETUP_FOLDERS_LISTING_ROOT_FOLDER_REMOVE_BUTTON</td>
+	<td>//input[@id='_86_removeFolderButton']</td>
+	<td>Remove Root Folder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_RATINGS-->
+<tr>
+	<td>SETUP_RATINGS_ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>SETUP_RATINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td>Enable Comment Ratings</td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

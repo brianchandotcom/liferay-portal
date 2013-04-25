@@ -46,17 +46,7 @@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGro
 page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
-
-String category = PortalUtil.getControlPanelCategory(portletDisplay.getId(), themeDisplay);
-
-if ((groupId == 0) && !category.equals(PortletCategoryKeys.CONTENT)) {
-	groupId = themeDisplay.getCompanyGroupId();
-}
-
-if (groupId == 0) {
-	groupId = themeDisplay.getScopeGroupId();
-}
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 %>
 
 <%@ include file="/html/portlet/mobile_device_rules/init-ext.jsp" %>

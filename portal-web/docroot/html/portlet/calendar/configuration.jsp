@@ -24,12 +24,13 @@ String redirect = ParamUtil.getString(request, "redirect");
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", CalUtil.getEmailFromName(preferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", CalUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
-Boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--emailEventReminderEnabled--", CalUtil.getEmailEventReminderEnabled(preferences));
+boolean emailEventReminderEnabled = ParamUtil.getBoolean(request, "preferences--emailEventReminderEnabled--", CalUtil.getEmailEventReminderEnabled(preferences));
 
-String emailSubject = ParamUtil.getString(request, "preferences--emailEventReminderSubject--", CalUtil.getEmailEventReminderSubject(preferences));
-String emailBody = ParamUtil.getString(request, "preferences--emailEventReminderBody--", CalUtil.getEmailEventReminderBody(preferences));
-
+String subjectParam = "emailEventReminderSubject";
 String bodyParam = "emailEventReminderBody";
+
+String emailSubject = ParamUtil.getString(request, "preferences--" + subjectParam + "--", CalUtil.getEmailEventReminderSubject(preferences));
+String emailBody = ParamUtil.getString(request, "preferences--" + bodyParam + "--", CalUtil.getEmailEventReminderBody(preferences));
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -67,7 +68,7 @@ String bodyParam = "emailEventReminderBody";
 			<aui:fieldset>
 				<aui:input label="enabled" name="preferences--emailEventReminderEnabled--" type="checkbox" value="<%= emailEventReminderEnabled %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailEventReminderSubject--" type="text" value="<%= emailSubject %>" />
+				<aui:input cssClass="lfr-input-text-container" label="subject" name='<%= "preferences--" + subjectParam + "--" %>' type="text" value="<%= emailSubject %>" />
 
 				<aui:field-wrapper label="body">
 					<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />

@@ -2614,6 +2614,9 @@
 		<exception>RoleName</exception>
 		<exception>RolePermissions</exception>
 		<exception>SendPassword</exception>
+		<exception>SitemapChangeFrequency</exception>
+		<exception>SitemapInclude</exception>
+		<exception>SitemapPagePriority</exception>
 		<exception>TeamName</exception>
 		<exception>UserActive</exception>
 		<exception>UserEmailAddress</exception>

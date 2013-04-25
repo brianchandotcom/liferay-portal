@@ -27,6 +27,9 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredLayoutException;
+import com.liferay.portal.SitemapChangeFrequencyException;
+import com.liferay.portal.SitemapIncludeException;
+import com.liferay.portal.SitemapPagePriorityException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -286,6 +289,9 @@ public class EditLayoutsAction extends PortletAction {
 					 e instanceof LayoutSetVirtualHostException ||
 					 e instanceof LayoutTypeException ||
 					 e instanceof RequiredLayoutException ||
+					 e instanceof SitemapChangeFrequencyException ||
+					 e instanceof SitemapIncludeException ||
+					 e instanceof SitemapPagePriorityException ||
 					 e instanceof UploadException) {
 
 				if (e instanceof LayoutFriendlyURLException) {

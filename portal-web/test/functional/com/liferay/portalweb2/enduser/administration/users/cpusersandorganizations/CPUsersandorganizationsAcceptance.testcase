@@ -3,6 +3,24 @@
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
 
+	<command name="AddMember">
+		<var name="emailAddress" value="userea@liferay.com" />
+		<var name="firstName" value="userfn" />
+		<var name="lastName" value="userln" />
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="searchName" value="Organization" />
+		<var name="screenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpAddMember" />
+
+		<execute macro="Organization#cpViewAssignMember" />
+	</command>
+
 	<command name="AddUser">
 		<var name="emailAddress" value="userea@liferay.com" />
 		<var name="firstName" value="userfn" />
@@ -12,6 +30,59 @@
 		<execute macro="User#cpAdd" />
 
 		<execute macro="User#cpView" />
+	</command>
+
+	<command name="AddOrganization">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="searchName" value="Organization" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpView" />
+	</command>
+
+	<command name="AddOrganizationTeam">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamDescription" value="Site Team Description" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpAddSite" />
+
+		<execute macro="Team#cpAdd"> 
+			<var name="siteScopeName" value="Organization Name" />
+		</execute>
+	</command>
+
+	<command name="AddSite">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="siteMember" value="Organization" />
+		<var name="siteName" value="Organization Name" />
+		<var name="siteType" value="Private" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpAddSite" />
+
+		<execute macro="Site#cpView" />
+	</command>
+
+	<command name="AddSuborganization">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="suborgName" value="Suborganization Name" />
+		<var name="suborgSearchName" value="Suborganization" />
+		<var name="suborgType" value="Regular Organization" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Suborganization#cpAdd" />
+
+		<execute macro="Suborganization#cpView" />
 	</command>
 
 	<command name="DeleteUser">
@@ -27,7 +98,37 @@
 		<execute macro="User#cpDelete" />
 	</command>
 
+	<command name="DeleteOrganization">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpDelete" />
+	</command>
+
+	<command name="RemoveMember">
+		<var name="emailAddress" value="userea@liferay.com" />
+		<var name="firstName" value="userfn" />
+		<var name="lastName" value="userln" />
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="screenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="Organization#cpAdd" />
+
+		<execute macro="Organization#cpAddMember" />
+
+		<execute macro="Organization#cpRemoveMember" />
+	</command>
+
 	<tear-down>
+		<execute macro="Suborganization#cpTearDown" />
+
+		<execute macro="Organization#cpTearDown" />
+
 		<execute macro="User#cpTearDown" />
 
 		<execute macro="User#pgLogout" />

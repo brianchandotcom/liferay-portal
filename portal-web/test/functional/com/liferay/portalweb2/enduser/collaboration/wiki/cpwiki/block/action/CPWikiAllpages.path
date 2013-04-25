@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>CPWikiAllpages</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWikiAllpages</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWikiAllpages</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
+	<td>//form[@id='_154_undoForm']</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_TABLE-->
+<tr>
+	<td>WIKI_PAGE_TABLE_PAGE_1</td>
+	<td>//tr[2]/td/a</td>
+	<td>FrontPage</td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS_1</td>
+	<td>//tr[2]/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>FrontPage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_MENULIST-->
+<tr>
+	<td>WIKI_PAGE_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_MENULIST_COPY</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_MENULIST_SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

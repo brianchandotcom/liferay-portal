@@ -21,6 +21,9 @@
 		<case locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
+		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_WIKI_">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="isElementPresent">

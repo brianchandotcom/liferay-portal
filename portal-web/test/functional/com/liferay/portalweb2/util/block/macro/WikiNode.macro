@@ -75,11 +75,18 @@
 			</then>
 		</while>
 
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_1" />
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_WIKI_1" />
 
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_ACTIONS_RECYCLE_BIN" />
+		<while>
+			<condition action="CPWikiAllpages#isElementPresent" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" />
+			<then>
+				<execute action="CPWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" />
 
-		<execute action="CPWiki#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+				<execute action="CPWikiAllpages#click" locator-key1="WIKI_PAGE_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+
+				<execute action="CPWikiAllpages#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" />
+			</then>
+		</while>
 
 		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>

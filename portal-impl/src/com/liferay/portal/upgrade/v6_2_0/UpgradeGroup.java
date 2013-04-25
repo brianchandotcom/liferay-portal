@@ -27,8 +27,8 @@ public class UpgradeGroup extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
-			runSQL("alter_column_type Group_ friendlyURL VARCHAR(255) null");
 			runSQL("alter_column_type Group_ typeSettings TEXT null");
+			runSQL("alter_column_type Group_ friendlyURL VARCHAR(255) null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

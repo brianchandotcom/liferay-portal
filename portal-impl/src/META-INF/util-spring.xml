@@ -264,6 +264,11 @@
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRuntimeMappingUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRuntimeMappingUtil">
+		<property name="sPIRuntimeMapping">
+			<bean class="com.liferay.portal.resiliency.spi.SPIRuntimeMappingImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" class="com.liferay.portal.kernel.sanitizer.SanitizerUtil">
 		<property name="sanitizer">
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />

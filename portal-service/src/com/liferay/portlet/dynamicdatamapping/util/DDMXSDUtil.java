@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.Locale;
@@ -40,17 +41,6 @@ public class DDMXSDUtil {
 		return _ddmXSD;
 	}
 
-	public static String getFieldHTML(
-			PageContext pageContext, Element element, Fields fields,
-			String portletNamespace, String namespace, String mode,
-			boolean readOnly, Locale locale)
-		throws Exception {
-
-		return getDDMXSD().getFieldHTML(
-			pageContext, element, fields, portletNamespace, namespace, mode,
-			readOnly, locale);
-	}
-
 	public static String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, Fields fields, String portletNamespace,
@@ -60,17 +50,6 @@ public class DDMXSDUtil {
 		return getDDMXSD().getFieldHTMLByName(
 			pageContext, classNameId, classPK, fieldName, fields,
 			portletNamespace, namespace, mode, readOnly, locale);
-	}
-
-	public static String getFieldHTMLByName(
-			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, String portletNamespace, String namespace,
-			String mode, boolean readOnly, Locale locale)
-		throws Exception {
-
-		return getDDMXSD().getFieldHTMLByName(
-			pageContext, classNameId, classPK, fieldName, portletNamespace,
-			namespace, mode, readOnly, locale);
 	}
 
 	public static String getHTML(
@@ -154,6 +133,28 @@ public class DDMXSDUtil {
 		throws PortalException, SystemException {
 
 		return getDDMXSD().getJSONArray(xml);
+	}
+
+	public static String getSimpleFieldHTML(
+			PageContext pageContext, Element element, Field field,
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getSimpleFieldHTML(
+			pageContext, element, field, portletNamespace, namespace, mode,
+			readOnly, locale);
+	}
+
+	public static String getSimpleFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			Field field, String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getSimpleFieldHTMLByName(
+			pageContext, classNameId, classPK, field, portletNamespace,
+			namespace, mode, readOnly, locale);
 	}
 
 	public static String getXSD(long classNameId, long classPK)

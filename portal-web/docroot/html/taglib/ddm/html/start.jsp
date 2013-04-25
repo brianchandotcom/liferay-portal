@@ -18,14 +18,7 @@
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
 	<c:if test="<%= Validator.isNotNull(xsd) %>">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(fieldName) %>">
-				<%= DDMXSDUtil.getFieldHTMLByName(pageContext, classNameId, classPK, fieldName, portletResponse.getNamespace(), fieldsNamespace, null, readOnly, requestedLocale) %>
-			</c:when>
-			<c:otherwise>
-				<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, readOnly, requestedLocale) %>
-			</c:otherwise>
-		</c:choose>
+		<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, readOnly, requestedLocale) %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

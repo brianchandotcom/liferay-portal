@@ -14,16 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
+<%@ include file="/html/taglib/ddm/html_field/init.jsp" %>
 
-<%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");
-
-String fieldsDisplayInputName = fieldsNamespace + "_fieldsDisplay";
-
-String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
-
-if (requestedLocale == null) {
-	requestedLocale = locale;
-}
-%>
+</div>

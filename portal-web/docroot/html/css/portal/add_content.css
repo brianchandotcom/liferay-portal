@@ -150,7 +150,6 @@
 						a {
 							background-image: url("@theme_image_path@/common/add_white.png");
 							background-position: center center;
-							padding-right: 0;
 
 							img {
 								display: none;
@@ -172,11 +171,11 @@
 					min-width: 70px;
 
 					a {
-						background-position: 5% center;
+						background-position: 2px 0;
+						padding-right: 5px;
 
 						.taglib-text {
 							display: inline-block;
-							padding-right: 5px;
 						}
 					}
 				}

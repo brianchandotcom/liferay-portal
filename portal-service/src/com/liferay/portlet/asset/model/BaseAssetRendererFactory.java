@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -77,10 +78,17 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return PortalUtil.getClassNameId(_className);
 	}
 
-	public List<Tuple> getClassTypeFieldNames(long classTypeId, Locale locale)
+	public List<Tuple> getClassTypeFieldNames(
+			long classTypeId, Locale locale, int start, int end)
 		throws Exception {
 
 		return Collections.emptyList();
+	}
+
+	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
+		throws Exception {
+
+		return 0;
 	}
 
 	public Map<Long, String> getClassTypes(long[] groupId, Locale locale)
@@ -117,7 +125,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		throws Exception {
 
 		List<Tuple> classTypeFieldNames = getClassTypeFieldNames(
-			classTypeId, locale);
+			classTypeId, locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return !classTypeFieldNames.isEmpty();
 	}

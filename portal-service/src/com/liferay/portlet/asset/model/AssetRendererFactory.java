@@ -59,7 +59,11 @@ public interface AssetRendererFactory {
 
 	public long getClassNameId();
 
-	public List<Tuple> getClassTypeFieldNames(long classTypeId, Locale locale)
+	public List<Tuple> getClassTypeFieldNames(
+			long classTypeId, Locale locale, int start, int end)
+		throws Exception;
+
+	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
 		throws Exception;
 
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)

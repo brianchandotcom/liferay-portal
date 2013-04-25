@@ -180,9 +180,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								<%
 								for (long assetAvailableClassTypeId : assetAvailableClassTypeIds) {
-									List<Tuple> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(assetAvailableClassTypeId, locale);
-
-									if (classTypeFieldNames.isEmpty()) {
+									if (assetRendererFactory.getClassTypeFieldNamesCount(assetAvailableClassTypeId, locale) == 0) {
 										continue;
 									}
 								%>
@@ -509,7 +507,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		Set<Long> assetAvailableClassTypeIdsSet = assetAvailableClassTypes.keySet();
 
 		for (long subTypeId : assetAvailableClassTypeIdsSet) {
-			List<Tuple> classTypeFieldNames = curRendererFactory.getClassTypeFieldNames(subTypeId, locale);
+			List<Tuple> classTypeFieldNames = curRendererFactory.getClassTypeFieldNames(subTypeId, locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			if (classTypeFieldNames.isEmpty()) {
 				continue;

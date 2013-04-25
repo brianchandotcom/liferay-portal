@@ -23,8 +23,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-List<Tuple> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(classTypeId, locale);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_publisher/select_structure_field");
@@ -38,8 +36,8 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= classTypeFieldNames %>"
-			total="<%= classTypeFieldNames.size() %>"
+			results="<%= assetRendererFactory.getClassTypeFieldNames(classTypeId, locale, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			total="<%= assetRendererFactory.getClassTypeFieldNamesCount(classTypeId, locale) %>"
 		/>
 
 		<liferay-ui:search-container-row

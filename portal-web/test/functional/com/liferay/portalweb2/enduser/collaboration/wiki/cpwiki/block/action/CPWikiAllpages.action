@@ -1,0 +1,16 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="WIKI_PAGE_MENULIST_EDIT">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
+		</case>
+		<case locator-key1="WIKI_PAGE_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+	</command>
+</definition>

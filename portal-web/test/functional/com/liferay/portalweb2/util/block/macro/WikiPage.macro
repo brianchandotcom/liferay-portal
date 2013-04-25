@@ -63,7 +63,5 @@
 
 	<command name="cpTearDown">
 		<execute macro="WikiNode#cpTearDown" />
-
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>
 </definition>

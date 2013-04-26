@@ -40,6 +40,7 @@
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-versioned-glassfish">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -81,6 +82,7 @@
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-versioned-jboss">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -120,6 +122,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-versioned-tomcat">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -166,6 +169,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-versioned-tomcat">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -206,36 +210,7 @@
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-geronimo-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -265,36 +240,7 @@
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-glassfish-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -324,36 +270,7 @@
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-jboss-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -383,36 +300,7 @@
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-jetty-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -442,36 +330,7 @@
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-jonas-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -508,47 +367,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-db2-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="db2" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="db2-9.7" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="db2" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -582,36 +401,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-hsql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="hsql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="hsql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -641,6 +431,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -670,6 +461,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -700,98 +492,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.browser" value="iehta" />
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-mysql-minimal-google-chrome">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.browser" value="googlechrome" />
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-mysql-minimal-internet-explorer">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -829,47 +530,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-oracle-10-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="oracle-10" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="oracle-10.2.0.1.0" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="oracle-10" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -910,47 +571,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-oracle-11-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="oracle-11" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="oracle-11.2.0.1.0" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="oracle-11" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -991,47 +612,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="postgresql-8.4" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="postgresql-8.4.2-1" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="postgresql-8.4" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1072,47 +653,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.0-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="postgresql-9.0" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="postgresql-9.0.4-1" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="postgresql-9.0" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1153,47 +694,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-sql-server-2005-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="sql-server-2005" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="sql-server-2005-sp2" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="sql-server-2005" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1234,47 +735,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="sql-server-2008" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="sql-server-2008-r2" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="sql-server-2008" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1315,47 +776,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-	</target>
-
-	<target name="test-${test.ant.script.command}-tomcat-sybase-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="sybase" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-vm-server">
-			<param name="build.war" value="false" />
-			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
-
-		<antcall target="prepare-common">
-			<param name="database" value="sybase" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1389,36 +810,7 @@
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-weblogic-10.3-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1449,6 +841,7 @@
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1459,36 +852,6 @@
 			${test.ant.script.file.selenium.implementation}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-websphere-6.1-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-			<param name="vm.vmdk.suffix" value="websphere-6.1.0.27" />
-		</antcall>
-
-		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -1508,6 +871,7 @@
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}
@@ -1538,67 +902,7 @@
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-websphere-7.0-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-		</antcall>
-
-		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
-			${test.ant.script.file.evaluate.logs}
-			${test.ant.script.file.plugin.hooks}
-			${test.ant.script.file.plugin.layouttpls}
-			${test.ant.script.file.plugin.portlets}
-			${test.ant.script.file.plugin.portlets.properties}
-			${test.ant.script.file.plugin.themes}
-			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.implementation}
-			<property name="test.name" value="${test.ant.script.suite}" />
-			<property name="test.pacl" value="$${test.pacl}" />
-		</ant>
-	</target>
-
-	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-minimal-firefox">
-		<antcall target="generate-test-properties">
-			<param name="database" value="mysql" />
-		</antcall>
-
-		<antcall target="print-scm-revision" />
-
-		<antcall target="clean-up-test-properties" />
-
-		<antcall target="prepare-common">
-			<param name="database" value="mysql" />
-			${test.ant.script.file.properties}
-			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
-		</antcall>
-
-		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
-			<property name="test.database.minimal" value="true" />
-			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.hooks}
 			${test.ant.script.file.plugin.layouttpls}

@@ -427,7 +427,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="8" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -986,108 +986,126 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-apis-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentAPIsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-configuration-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentConfigurationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-frameworks-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentFrameworksAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-sample-portlet-plugins-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentSamplePortletPluginsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-theme-development-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentThemeDevelopmentAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="development-tools-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="DevelopmentToolsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-administration-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserAdministrationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-business-productivity-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserBusinessProductivityAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-collaboration-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserCollaborationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-document-management-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserDocumentManagementAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-legacy-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserLegacyAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-personalization-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserPersonalizationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-search-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserSearchAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-social-networking-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserSocialNetworkingAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-util-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserUtilAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-wcm-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserWCMAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-web-forms-and-data-lists-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserWebFormsAndDataListsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-workflow-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="EndUserWorkflowAcceptanceTestSuite" />
@@ -1307,42 +1325,49 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-application-standard-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformApplicationStandardAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-authentication-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformAuthenticationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-deployment-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformDeploymentAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-infrastructure-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformInfrastructureAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-operations-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformOperationsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-security-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformSecurityAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-upgrade-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformUpgradesAcceptanceTestSuite" />
 		</antcall>

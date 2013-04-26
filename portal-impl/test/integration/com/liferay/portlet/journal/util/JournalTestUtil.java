@@ -21,15 +21,24 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalFeed;
+import com.liferay.portlet.journal.model.JournalFeedConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.util.RSSUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -338,6 +347,59 @@ public class JournalTestUtil {
 		dynamicElementElement.addAttribute("type", type);
 
 		return dynamicElementElement;
+	}
+
+	public static JournalFeed addFeed(
+			long groupId, long plid, String name, String ddmStructureKey,
+			String ddmTemplateKey, String rendererTemplateKey)
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+		String feedId = StringPool.BLANK;
+		boolean autoFeedId = true;
+		String description = StringPool.BLANK;
+		String type = StringPool.BLANK;
+		int delta = 0;
+		String orderByCol = "modified-date";
+		String orderByType = "asc";
+		String targetPortletId = StringPool.BLANK;
+		String contentField = JournalFeedConstants.WEB_CONTENT_DESCRIPTION;
+		String feedFormat = RSSUtil.getFeedTypeFormat(
+			RSSUtil.FEED_TYPE_DEFAULT);
+		double feedVersion = RSSUtil.getFeedTypeVersion(
+			RSSUtil.FEED_TYPE_DEFAULT);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		String friendlyURL = StringPool.BLANK;
+
+		if (layout.isPrivateLayout()) {
+			if (group.isUser()) {
+				friendlyURL = friendlyURL.concat(
+					PortalUtil.getPathFriendlyURLPrivateUser());
+			}
+			else {
+				friendlyURL = friendlyURL.concat(
+					PortalUtil.getPathFriendlyURLPrivateGroup());
+			}
+		}
+		else {
+			friendlyURL = friendlyURL.concat(
+				PortalUtil.getPathFriendlyURLPublic());
+		}
+
+		friendlyURL = friendlyURL.concat(group.getFriendlyURL());
+		friendlyURL = friendlyURL.concat(layout.getFriendlyURL());
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return JournalFeedLocalServiceUtil.addFeed(
+			userId, groupId, feedId, autoFeedId, name, description, type,
+			ddmStructureKey, ddmTemplateKey, rendererTemplateKey, delta,
+			orderByCol, orderByType, friendlyURL, targetPortletId, contentField,
+			feedFormat, feedVersion, serviceContext);
 	}
 
 	public static JournalFolder addFolder(

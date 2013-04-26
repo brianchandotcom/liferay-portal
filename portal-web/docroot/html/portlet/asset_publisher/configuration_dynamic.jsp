@@ -647,11 +647,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	subTypeFieldsFilterEnableWrapper.delegate(
 		'click',
 		function(event) {
-			var assetSubTypeFieldsPopupNodes = A.all('.asset-subtypefields-popup input');
+			var assetSubTypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .aui-button-input');
 
 			Liferay.Util.toggleDisabled(assetSubTypeFieldsPopupNodes, !event.target.attr('checked'));
 		},
-		'input.aui-field-input'
+		'.aui-field-input'
 	);
 
 	Liferay.after(

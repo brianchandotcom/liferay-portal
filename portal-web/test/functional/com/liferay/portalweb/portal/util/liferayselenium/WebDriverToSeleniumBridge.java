@@ -33,8 +33,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -993,8 +991,6 @@ public class WebDriverToSeleniumBridge
 
 			if (value.startsWith("regexp:")) {
 				String regexp = value.substring(7);
-
-				regexp = StringEscapeUtils.unescapeHtml4(regexp);
 
 				Pattern pattern = Pattern.compile(regexp);
 

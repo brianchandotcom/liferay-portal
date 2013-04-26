@@ -50,6 +50,14 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
 
+	<command name="pgAddNoPermission">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY" />
+	</command>
+
 	<command name="pgEdit">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />

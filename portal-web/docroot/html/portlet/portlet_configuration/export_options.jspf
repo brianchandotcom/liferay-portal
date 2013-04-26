@@ -20,19 +20,41 @@
 
 <ul class="lfr-tree lfr-component">
 	<c:if test="<%= supportsSetup %>">
-		<li class="tree-item">
-			<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
-		</li>
+		<aui:fieldset cssClass="options-group" label="application">
+			<aui:input label="application" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 
-		<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
-			<li class="tree-item">
-				<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
-			</li>
-		</c:if>
+			<ul id="<portlet:namespace />showGlobalConfiguration">
+				<li class="tree-item">
+					<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
+						<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
+							<liferay-ui:message key="archived-setups"></liferay-ui:message>,
+						</c:if>
 
-		<li class="tree-item">
-			<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= false %>" />
-		</li>
+						<liferay-ui:message key="user-preferences"></liferay-ui:message>
+					</div>
+
+					<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
+				</li>
+			</ul>
+
+			<aui:script>
+				Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
+			</aui:script>
+
+			<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
+				<aui:fieldset cssClass="portlet-data-section" label="application">
+					<ul class="lfr-tree lfr-component">
+						<li class="tree-item">
+							<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
+								<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
+							</c:if>
+
+							<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
+						</li>
+					</ul>
+				</aui:fieldset>
+			</div>
+		</aui:fieldset>
 	</c:if>
 
 	<c:if test="<%= supportsLAR %>">

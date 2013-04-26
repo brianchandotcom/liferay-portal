@@ -32,18 +32,43 @@ public class ViewContactMyContactsCCTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible(
 				"//input[@id='_1_WAR_contactsportlet_name']"));
+		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
+			RuntimeVariables.replace("social"));
+		selenium.waitForText("//div[contains(@class,'lfr-contact-name')]/a",
+			"Social01 Office01 Contact01");
+		assertEquals(RuntimeVariables.replace("Social01 Office01 Contact01"),
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-name')]/a)[contains(.,'Social01 Office01 Contact01')]"));
+		assertEquals(RuntimeVariables.replace(
+				"socialofficecontact01@liferay.com"),
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-extra')])[contains(.,'socialofficecontact01@liferay.com')]"));
+		assertEquals(RuntimeVariables.replace("User01, Social01"),
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"));
+		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-extra')])[contains(.,'socialoffice01@liferay.com')]"));
 		assertTrue(selenium.isVisible(
 				"//select[@id='_1_WAR_contactsportlet_filterBy']"));
 		selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
 			RuntimeVariables.replace("My Contacts"));
 		Thread.sleep(1000);
-		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
-			"Social01 Office01 Contact01");
+		selenium.waitForElementNotPresent(
+			"xPath=(//div[contains(@class,'lfr-contact-name')]/a)[contains(.,'User01, Social01')]");
 		assertEquals(RuntimeVariables.replace("Social01 Office01 Contact01"),
-			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-name')]/a)[contains(.,'Social01 Office01 Contact01')]"));
 		assertEquals(RuntimeVariables.replace(
 				"socialofficecontact01@liferay.com"),
-			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
+			selenium.getText(
+				"xPath=(//div[contains(@class,'lfr-contact-extra')])[contains(.,'socialofficecontact01@liferay.com')]"));
+		assertTrue(selenium.isElementNotPresent(
+				"xPath=(//div[contains(@class,'lfr-contact-name')]/a)[contains(.,'User01, Social01')]"));
+		assertTrue(selenium.isElementNotPresent(
+				"xPath=(//div[contains(@class,'lfr-contact-extra')])[contains(.,'socialoffice01@liferay.com')]"));
+		assertFalse(selenium.isTextPresent("User01, Social01"));
+		assertFalse(selenium.isTextPresent("socialoffice01@liferay.com"));
 		assertEquals(RuntimeVariables.replace("View my 1 contacts."),
 			selenium.getText("link=View my 1 contacts."));
 	}

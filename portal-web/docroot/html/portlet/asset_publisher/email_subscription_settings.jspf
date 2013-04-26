@@ -181,10 +181,11 @@ boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAdded
 
 	languageSelector.on(
 		'change',
-		function (event) {
-			if (CKEDITOR.instances.<portlet:namespace />editor.checkDirty() || originalEmailSubject != subjectInput.get('value')) {
+		function(event) {
+			if (CKEDITOR.instances.<portlet:namespace />editor.checkDirty() || originalEmailSubject !== subjectInput.val()) {
 				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-switch-the-languages-view") %>')) {
 					languageSelector.set('selectedIndex', currentLanguageIndex);
+
 					return false;
 				}
 			}

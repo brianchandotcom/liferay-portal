@@ -450,6 +450,7 @@
 		<friendly-url-mapping>blogs</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/blogs/blogs-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.blogs.lar.BlogsPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.blogs.lar.BlogsEntryStagedModelDataHandler</staged-model-data-handler-class>
 		<template-handler>com.liferay.portlet.blogs.template.BlogsPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.portlet.blogs.social.BlogsActivityInterpreter</social-activity-interpreter-class>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>

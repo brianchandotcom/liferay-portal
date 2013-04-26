@@ -254,6 +254,7 @@
 			</aui:script>
 		</aui:fieldset>
 
+		<aui:fieldset cssClass="options-group" label="permissions">
 			<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 
 			<ul id="<portlet:namespace />permissionsUl">
@@ -261,10 +262,7 @@
 					<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
 				</li>
 			</ul>
-		</li>
-		<li class="tree-item">
-			<aui:input helpMessage="export-import-referenced-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
-		</li>
+		</aui:fieldset>
 	</c:if>
 </ul>
 

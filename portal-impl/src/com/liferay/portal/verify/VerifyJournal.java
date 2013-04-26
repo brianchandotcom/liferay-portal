@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,6 +65,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
+		verifyURLTitle();
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -91,6 +93,26 @@ public class VerifyJournal extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for folders");
+		}
+	}
+
+	protected void updateURLTitle(String urlTitle) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update JournalArticle set urlTitle = ? where urlTitle = ?");
+
+			ps.setString(1, FriendlyURLNormalizerUtil.normalize(urlTitle));
+			ps.setString(2, urlTitle);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -310,6 +332,32 @@ public class VerifyJournal extends VerifyProcess {
 				String portletId = rs.getString("portletId");
 
 				verifyContentSearch(groupId, portletId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyURLTitle() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select distinct urlTitle from JournalArticle where urlTitle " +
+					"like '%\u2018%' or urlTitle like '%\u2019%' or urlTitle " +
+						"like '%\u201c%' or urlTitle like '%\u201d%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String urlTitle = rs.getString("urlTitle");
+
+				updateURLTitle(urlTitle);
 			}
 		}
 		finally {

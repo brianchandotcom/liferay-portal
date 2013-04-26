@@ -3654,6 +3654,17 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>osgi/lib/common/portal/org.apache.felix.scr.jar</file-name>
+		<version>1.6.2</version>
+		<project-name>Apache Felix</project-name>
+		<project-url>http://felix.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>osgi/lib/common/portal/org.eclipse.gemini.mgmt.jar</file-name>
 		<version>1.0.1.RELEASE</version>
 		<project-name>Jetty</project-name>
@@ -3733,17 +3744,6 @@
 	<library>
 		<file-name>osgi/lib/felix/portal/org.apache.felix.log.jar</file-name>
 		<version>1.0.1</version>
-		<project-name>Apache Felix</project-name>
-		<project-url>http://felix.apache.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>osgi/lib/felix/portal/org.apache.felix.scr.jar</file-name>
-		<version>1.6.2</version>
 		<project-name>Apache Felix</project-name>
 		<project-url>http://felix.apache.org</project-url>
 		<licenses>

@@ -77,6 +77,7 @@ import javax.portlet.PortletURL;
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Hugo Huijser
+ * @author Tibor Lipusz
  */
 public class JournalArticleIndexer extends BaseIndexer {
 
@@ -329,9 +330,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addUID(
 			PORTLET_ID, article.getGroupId(), article.getArticleId());
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		String articleDefaultLanguageId = LocalizationUtil.getDefaultLocale(
+			article.getContent());
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
 
 		String[] languageIds = getLanguageIds(
 			defaultLanguageId, article.getContent());
@@ -339,20 +342,29 @@ public class JournalArticleIndexer extends BaseIndexer {
 		for (String languageId : languageIds) {
 			String content = extractContent(article, languageId);
 
-			if (languageId.equals(defaultLanguageId)) {
+			String description = article.getDescription(languageId);
+
+			String title = article.getTitle(languageId);
+
+			if (languageId.equals(articleDefaultLanguageId)) {
 				document.addText(Field.CONTENT, content);
+				document.addText(Field.DESCRIPTION, description);
+				document.addText(Field.TITLE, title);
 			}
 
 			document.addText(
 				Field.CONTENT.concat(StringPool.UNDERLINE).concat(languageId),
 				content);
+			document.addText(
+				Field.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
+					languageId), description);
+			document.addText(
+				Field.TITLE.concat(StringPool.UNDERLINE).concat(languageId),
+				title);
 		}
 
-		document.addLocalizedText(
-			Field.DESCRIPTION, article.getDescriptionMap());
 		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
-		document.addLocalizedText(Field.TITLE, article.getTitleMap());
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 

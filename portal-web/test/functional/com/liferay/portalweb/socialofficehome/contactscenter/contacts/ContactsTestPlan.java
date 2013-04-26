@@ -35,6 +35,7 @@ import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccu
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccusermultiple.UnblockCCUserMultipleTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unfollowccusermultiple.UnfollowCCUserMultipleTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccuserprofile.ViewCCUserProfileTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewcontactmycontactscc.ViewContactMyContactsCCTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -67,6 +68,7 @@ public class ContactsTestPlan extends BaseTestSuite {
 		testSuite.addTest(UnblockCCUserMultipleTests.suite());
 		testSuite.addTest(UnfollowCCUserMultipleTests.suite());
 		testSuite.addTest(ViewCCUserProfileTests.suite());
+		testSuite.addTest(ViewContactMyContactsCCTests.suite());
 
 		return testSuite;
 	}

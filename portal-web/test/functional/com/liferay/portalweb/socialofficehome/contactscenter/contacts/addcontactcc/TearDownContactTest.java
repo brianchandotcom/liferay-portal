@@ -35,10 +35,8 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 					RuntimeVariables.replace("Contacts Center"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.isVisible(
-						"//input[@id='_1_WAR_contactsportlet_name']"));
-				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
-					RuntimeVariables.replace("social"));
+				selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
+					RuntimeVariables.replace("My Contacts"));
 				Thread.sleep(1000);
 
 				boolean contact1Present = selenium.isElementPresent(
@@ -66,8 +64,8 @@ public class TearDownContactTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete ${contact1Name} from your contacts[\\s\\S]$"));
 
 			case 2:
-				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
-					RuntimeVariables.replace("social"));
+				selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
+					RuntimeVariables.replace("My Contacts"));
 				Thread.sleep(1000);
 
 				boolean contact2Present = selenium.isElementPresent(
@@ -95,8 +93,8 @@ public class TearDownContactTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete ${contact2Name} from your contacts[\\s\\S]$"));
 
 			case 3:
-				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
-					RuntimeVariables.replace("social"));
+				selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
+					RuntimeVariables.replace("My Contacts"));
 				Thread.sleep(1000);
 
 				boolean contact3Present = selenium.isElementPresent(
@@ -124,8 +122,8 @@ public class TearDownContactTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete ${contact3Name} from your contacts[\\s\\S]$"));
 
 			case 4:
-				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
-					RuntimeVariables.replace("social"));
+				selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
+					RuntimeVariables.replace("My Contacts"));
 				Thread.sleep(1000);
 
 				boolean contact4Present = selenium.isElementPresent(
@@ -153,8 +151,8 @@ public class TearDownContactTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete ${contact4Name} from your contacts[\\s\\S]$"));
 
 			case 5:
-				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
-					RuntimeVariables.replace("social"));
+				selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
+					RuntimeVariables.replace("My Contacts"));
 				Thread.sleep(1000);
 
 				boolean contact5Present = selenium.isElementPresent(

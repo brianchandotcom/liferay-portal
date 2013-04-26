@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="This role does not have any permissions." />
+		</case>
+	</command>
+</definition>

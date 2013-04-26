@@ -9,14 +9,26 @@
 		<case locator-key1="ADD">
 			<execute function="Click#pauseTextClickAt" value1="Add" />
 		</case>
-		<case locator-key1="ADD_ORGANIZATION_ROLE">
+		<case locator-key1="ADD_MENU_LIST_ORGANIZATION_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Organization Role" />
 		</case>
-		<case locator-key1="ADD_REGULAR_ROLE">
+		<case locator-key1="ADD_MENU_LIST_REGULAR_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Regular Role" />
 		</case>
-		<case locator-key1="ADD_SITE_ROLE">
+		<case locator-key1="ADD_MENU_LIST_SITE_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Site Role" />
+		</case>
+		<case locator-key1="ROLE_MENU_LIST_ASSIGN_MEMBERS">
+			<execute function="Click#textClickAtAndWait" value1="Assign Members" />
+		</case>
+		<case locator-key1="ROLE_MENU_LIST_DEFINE_PERMISSIONS">
+			<execute function="Click#textClickAtAndWait" value1="Define Permissions" />
+		</case>
+		<case locator-key1="ROLE_MENU_LIST_DELETE">
+			<execute function="Click#textClickAtAndWait" value1="Delete" />
+		</case>
+		<case locator-key1="ROLE_MENU_LIST_EDIT">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
 		</case>
 		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />

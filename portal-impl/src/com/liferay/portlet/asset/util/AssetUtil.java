@@ -69,6 +69,8 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -476,7 +478,7 @@ public class AssetUtil {
 
 		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
 			"ddmStructureFieldName");
-		String ddmStructureFieldValue = (String)assetEntryQuery.getAttribute(
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(ddmStructureFieldName) &&
@@ -485,8 +487,7 @@ public class AssetUtil {
 			searchContext.setAttribute(
 				"ddmStructureFieldName", ddmStructureFieldName);
 			searchContext.setAttribute(
-				"ddmStructureFieldValue",
-				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
 
 		String paginationType = GetterUtil.getString(

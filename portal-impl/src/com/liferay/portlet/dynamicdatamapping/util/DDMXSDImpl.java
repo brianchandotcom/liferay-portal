@@ -175,52 +175,6 @@ public class DDMXSDImpl implements DDMXSD {
 		return sb.toString();
 	}
 
-	public String getFieldHTML(
-			PageContext pageContext, Element element, String portletNamespace,
-			String namespace, String mode, boolean readOnly, Locale locale)
-		throws Exception {
-
-		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
-			pageContext, portletNamespace, namespace, element, locale);
-
-		freeMarkerContext.put("ignoreRepeatable", Boolean.TRUE);
-
-		Map<String, Object> fieldStructure =
-			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
-
-		DDMFieldsCounter ddmFieldsCounter = getFieldsCounter(
-			pageContext, null, portletNamespace, namespace);
-
-		String name = element.attributeValue("name");
-
-		fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
-		fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
-
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		StringBundler sb = new StringBundler(dynamicElementElements.size());
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			String type = dynamicElementElement.attributeValue("type");
-
-			if (!type.equals("option")) {
-				sb.append(StringPool.BLANK);
-			}
-			else {
-				sb.append(
-					getFieldHTML(
-						pageContext, dynamicElementElement, portletNamespace,
-						namespace, mode, readOnly, locale));
-			}
-		}
-
-		fieldStructure.put("children", sb.toString());
-
-		return processFTL(
-			pageContext, element, mode, readOnly, freeMarkerContext);
-	}
-
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, Fields fields, String portletNamespace,
@@ -244,31 +198,6 @@ public class DDMXSDImpl implements DDMXSD {
 		return getFieldHTML(
 			pageContext, element, fields, portletNamespace, namespace, mode,
 			readOnly, locale);
-	}
-
-	public String getFieldHTMLByName(
-			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, String portletNamespace, String namespace,
-			String mode, boolean readOnly, Locale locale)
-		throws Exception {
-
-		String xsd = getXSD(classNameId, classPK);
-
-		Document document = SAXReaderUtil.read(xsd);
-
-		String xPathExpression =
-			"//dynamic-element[@name=".concat(
-				HtmlUtil.escapeXPathAttribute(fieldName)).concat("]");
-
-		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
-
-		Node node = xPathSelector.selectSingleNode(document.getRootElement());
-
-		Element element = (Element)node.asXPathResult(node.getParent());
-
-		return getFieldHTML(
-			pageContext, element, portletNamespace, namespace, mode, readOnly,
-			locale);
 	}
 
 	public String getHTML(
@@ -503,6 +432,86 @@ public class DDMXSDImpl implements DDMXSD {
 		catch (DocumentException de) {
 			throw new SystemException();
 		}
+	}
+
+	public String getSimpleFieldHTML(
+			PageContext pageContext, Element element, Field field,
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception {
+
+		Map<String, Object> freeMarkerContext = getFreeMarkerContext(
+			pageContext, portletNamespace, namespace, element, locale);
+
+		freeMarkerContext.put("ignoreRepeatable", Boolean.TRUE);
+
+		Map<String, Object> fieldStructure =
+			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
+
+		DDMFieldsCounter ddmFieldsCounter = getFieldsCounter(
+			pageContext, null, portletNamespace, namespace);
+
+		String name = element.attributeValue("name");
+
+		if ((field != null) && Validator.isNotNull(field.getValue())) {
+			Fields fields = new Fields();
+
+			fields.put(field);
+
+			freeMarkerContext.put("fields", fields);
+		}
+
+		fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
+		fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
+
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		StringBundler sb = new StringBundler(dynamicElementElements.size());
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String type = dynamicElementElement.attributeValue("type");
+
+			if (!type.equals("option")) {
+				sb.append(StringPool.BLANK);
+			}
+			else {
+				sb.append(
+					getSimpleFieldHTML(
+						pageContext, dynamicElementElement, field,
+						portletNamespace, namespace, mode, readOnly, locale));
+			}
+		}
+
+		fieldStructure.put("children", sb.toString());
+
+		return processFTL(
+			pageContext, element, mode, readOnly, freeMarkerContext);
+	}
+
+	public String getSimpleFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			Field field, String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception {
+
+		String xsd = getXSD(classNameId, classPK);
+
+		Document document = SAXReaderUtil.read(xsd);
+
+		String xPathExpression =
+			"//dynamic-element[@name=".concat(
+				HtmlUtil.escapeXPathAttribute(field.getName())).concat("]");
+
+		XPath xPathSelector = SAXReaderUtil.createXPath(xPathExpression);
+
+		Node node = xPathSelector.selectSingleNode(document.getRootElement());
+
+		Element element = (Element)node.asXPathResult(node.getParent());
+
+		return getSimpleFieldHTML(
+			pageContext, element, field, portletNamespace, namespace, mode,
+			readOnly, locale);
 	}
 
 	public String getXSD(long classNameId, long classPK)

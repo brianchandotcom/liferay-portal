@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ddm/html/init.jsp" %>
+<%@ include file="/html/taglib/ddm/html_field/init.jsp" %>
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
 	<c:if test="<%= Validator.isNotNull(xsd) %>">
-		<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, readOnly, requestedLocale) %>
+		<%= DDMXSDUtil.getSimpleFieldHTMLByName(pageContext, classNameId, classPK, field, portletResponse.getNamespace(), fieldsNamespace, null, readOnly, requestedLocale) %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

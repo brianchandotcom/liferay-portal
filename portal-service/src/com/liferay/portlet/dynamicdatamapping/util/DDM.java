@@ -22,6 +22,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.Serializable;
+
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +33,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo Lundgren
  */
 public interface DDM {
+
+	public Serializable getDisplayFieldValue(
+			Serializable fieldValue, String type, Locale locale)
+		throws Exception;
 
 	public Fields getFields(
 			long ddmStructureId, long ddmTemplateId,
@@ -52,6 +60,10 @@ public interface DDM {
 		throws Exception;
 
 	public String getFileUploadPath(BaseModel<?> baseModel);
+
+	public Serializable getIndexedFieldValue(
+			Serializable fieldValue, String type)
+		throws Exception;
 
 	public OrderByComparator getStructureOrderByComparator(
 		String orderByCol, String orderByType);

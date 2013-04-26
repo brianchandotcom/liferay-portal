@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.Locale;
@@ -39,21 +40,10 @@ public interface DDMXSD {
 			boolean readOnly, Locale locale)
 		throws Exception;
 
-	public String getFieldHTML(
-			PageContext pageContext, Element element, String portletNamespace,
-			String namespace, String mode, boolean readOnly, Locale locale)
-		throws Exception;
-
 	public String getFieldHTMLByName(
 			PageContext pageContext, long classNameId, long classPK,
 			String fieldName, Fields fields, String portletNamespace,
 			String namespace, String mode, boolean readOnly, Locale locale)
-		throws Exception;
-
-	public String getFieldHTMLByName(
-			PageContext pageContext, long classNameId, long classPK,
-			String fieldName, String portletNamespace, String namespace,
-			String mode, boolean readOnly, Locale locale)
 		throws Exception;
 
 	public String getHTML(
@@ -98,6 +88,18 @@ public interface DDMXSD {
 
 	public JSONArray getJSONArray(String xml)
 		throws PortalException, SystemException;
+
+	public String getSimpleFieldHTML(
+			PageContext pageContext, Element element, Field field,
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception;
+
+	public String getSimpleFieldHTMLByName(
+			PageContext pageContext, long classNameId, long classPK,
+			Field field, String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception;
 
 	public String getXSD(long classNameId, long classPK)
 		throws PortalException, SystemException;

@@ -33,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -976,12 +978,12 @@ public class WebDriverToSeleniumBridge
 
 		String label = optionLocator;
 
+		int index = -1;
+
 		if (optionLocator.startsWith("index=")) {
-			String index = optionLocator.substring(6);
+			String indexString = optionLocator.substring(6);
 
-			int optionIndex = GetterUtil.getInteger(index);
-
-			label = options.get(optionIndex).getText();
+			index = GetterUtil.getInteger(indexString);
 		}
 		else if (optionLocator.startsWith("label=")) {
 			label = optionLocator.substring(6);
@@ -992,6 +994,8 @@ public class WebDriverToSeleniumBridge
 			if (value.startsWith("regexp:")) {
 				String regexp = value.substring(7);
 
+				regexp = StringEscapeUtils.unescapeHtml4(regexp);
+
 				Pattern pattern = Pattern.compile(regexp);
 
 				for (WebElement option : options) {
@@ -1000,7 +1004,7 @@ public class WebDriverToSeleniumBridge
 					Matcher matcher = pattern.matcher(optionValue);
 
 					if (matcher.matches()) {
-						label = option.getText();
+						index = options.indexOf(option);
 
 						break;
 					}
@@ -1019,9 +1023,14 @@ public class WebDriverToSeleniumBridge
 			}
 		}
 
-		webElement.sendKeys(label);
+		if (index > -1) {
+			select.selectByIndex(index);
+		}
+		else {
+			webElement.sendKeys(label);
 
-		keyPress(selectLocator, "\\13");
+			keyPress(selectLocator, "\\13");
+		}
 	}
 
 	public void selectFrame(String locator) {

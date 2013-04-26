@@ -59,7 +59,7 @@ public class AddPageWCDTest extends BaseTestCase {
 			selenium.getText("//div/span/button[contains(.,'Add Page')]"));
 		selenium.clickAt("//div/span/button[contains(.,'Add Page')]",
 			RuntimeVariables.replace("Add Page"));
-		selenium.type("//input[@id='_156_name_en_US']",
+		selenium.type("//input[@name='_156_name_en_US']",
 			RuntimeVariables.replace("Web Content Display Page"));
 		selenium.clickAt("//input[@value='Add Page']",
 			RuntimeVariables.replace("Add Page"));

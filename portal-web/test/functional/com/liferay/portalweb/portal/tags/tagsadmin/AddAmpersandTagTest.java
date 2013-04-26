@@ -35,13 +35,13 @@ public class AddAmpersandTagTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Tag"));
 		selenium.waitForVisible("//input[@id='_99_name']");
 		selenium.type("//input[@id='_99_name']",
-			RuntimeVariables.replace("&amp;test"));
+			RuntimeVariables.replace("&test"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible("//div[@id='portletMessages']");
 		assertEquals(RuntimeVariables.replace(
 				"Tag names cannot be an empty string or contain characters such as: \n , = > / < [ { % | + # ? \" ; / * ~."),
 			selenium.getText("//div[@id='portletMessages']"));
-		assertTrue(selenium.isElementNotPresent("link=&amp;test"));
+		assertTrue(selenium.isElementNotPresent("link=&test"));
 	}
 }

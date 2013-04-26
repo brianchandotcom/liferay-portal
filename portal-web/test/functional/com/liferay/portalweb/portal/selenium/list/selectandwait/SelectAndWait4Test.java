@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectAndWait3Test extends BaseTestCase {
-	public void testSelectAndWait3() throws Exception {
+public class SelectAndWait4Test extends BaseTestCase {
+	public void testSelectAndWait4() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
@@ -51,8 +51,8 @@ public class SelectAndWait3Test extends BaseTestCase {
 		selenium.clickAt("link=Define Permissions",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("Catherine"));
+		selenium.select("//select[@id='Catherine']",
+			RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 	}
 }

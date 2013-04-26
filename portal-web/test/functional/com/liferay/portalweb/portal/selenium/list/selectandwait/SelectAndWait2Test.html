@@ -49,34 +49,59 @@
 	<td>Roles</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//input[@id='_128_keywords']</td>
-	<td>Power</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Guest')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Search']</td>
-	<td>Search</td>
+	<td>clickAt</td>
+	<td>//tr[contains(.,'Guest')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
+	<td>Define Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Power')]/td[1]/a</td>
-	<td>Power User</td>
+	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
+	<td>Define Permissions</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//tr[contains(.,'Power')]/td[1]/a</td>
-	<td>Power User</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Define Permissions</td>
+	<td>clickAndWait</td>
+	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
 	<td>Define Permissions</td>
 </tr>
 <tr>
 	<td>selectAndWait</td>
 	<td>//select[@id='_128_add-permissions']</td>
-	<td>Catherine</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']</td>
+	<td>Add Discussion</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//input[@value='15ADD_TO_PAGE']</td>
+	<td>Add to Page</td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>value=regexp:.*portletResource=15&.*showModelResources=0</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']</td>
+	<td>Add Discussion</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//input[@value='15ADD_TO_PAGE']</td>
+	<td>Add to Page</td>
 </tr>
 </tbody>
 </table>

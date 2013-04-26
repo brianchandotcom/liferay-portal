@@ -976,12 +976,12 @@ public class WebDriverToSeleniumBridge
 
 		String label = optionLocator;
 
+		int index = -1;
+
 		if (optionLocator.startsWith("index=")) {
-			String index = optionLocator.substring(6);
+			String indexString = optionLocator.substring(6);
 
-			int optionIndex = GetterUtil.getInteger(index);
-
-			label = options.get(optionIndex).getText();
+			index = GetterUtil.getInteger(indexString);
 		}
 		else if (optionLocator.startsWith("label=")) {
 			label = optionLocator.substring(6);
@@ -1000,7 +1000,7 @@ public class WebDriverToSeleniumBridge
 					Matcher matcher = pattern.matcher(optionValue);
 
 					if (matcher.matches()) {
-						label = option.getText();
+						index = options.indexOf(option);
 
 						break;
 					}
@@ -1019,9 +1019,14 @@ public class WebDriverToSeleniumBridge
 			}
 		}
 
-		webElement.sendKeys(label);
+		if (index > -1) {
+			select.selectByIndex(index);
+		}
+		else {
+			webElement.sendKeys(label);
 
-		keyPress(selectLocator, "\\13");
+			keyPress(selectLocator, "\\13");
+		}
 	}
 
 	public void selectFrame(String locator) {

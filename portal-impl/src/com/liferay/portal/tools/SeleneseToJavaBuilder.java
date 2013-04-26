@@ -491,6 +491,12 @@ public class SeleneseToJavaBuilder {
 			System.out.println(testName + " has an invalid test name");
 		}
 
+		if (content.contains("&amp;")) {
+			content = StringUtil.replace(content, "&amp;", "&");
+
+			writeFile(fileName, content, false);
+		}
+
 		if (content.contains("&gt;")) {
 			content = StringUtil.replace(content, "&gt;", ">");
 

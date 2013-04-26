@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<project name="http-service" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="../build-module.xml" />
-
-	<property name="jar.file" value="${ant.project.name}" />
-</project>

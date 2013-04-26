@@ -557,9 +557,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							destdir="test-coverage/${test.type}"
 							format="${junit.cobertura.report.format}"
 						>
-							<fileset dir="${project.dir}/osgi/modules/http-service/src">
-								<include name="**/*.java" />
-							</fileset>
 							<fileset dir="${project.dir}/portal-impl/src">
 								<include name="**/*.java" />
 							</fileset>

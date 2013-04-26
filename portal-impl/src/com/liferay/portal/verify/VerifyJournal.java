@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -64,6 +66,7 @@ public class VerifyJournal extends VerifyProcess {
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
+		verifyURLTitle();
 	}
 
 	protected void updateFolderAssets() throws Exception {
@@ -310,6 +313,42 @@ public class VerifyJournal extends VerifyProcess {
 				String portletId = rs.getString("portletId");
 
 				verifyContentSearch(groupId, portletId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyURLTitle() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select distinct urlTitle from JournalArticle where urlTitle " +
+					"like '%\u2018%' or urlTitle like '%\u2019%' or urlTitle " +
+						"like '%\u201c%' or urlTitle like '%\u201d%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String urlTitle = rs.getString("urlTitle");
+				String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+					urlTitle);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("update JournalArticle set urlTitle = \'");
+				sb.append(normalizedUrlTitle);
+				sb.append("\' where urlTitle = \'");
+				sb.append(urlTitle);
+				sb.append("\'");
+
+				runSQL(sb.toString());
 			}
 		}
 		finally {

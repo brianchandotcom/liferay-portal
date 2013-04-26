@@ -28,6 +28,7 @@ public class SelectAndWaitTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectAndWait1Test.class);
 		testSuite.addTestSuite(SelectAndWait2Test.class);
 		testSuite.addTestSuite(SelectAndWait3Test.class);
+		testSuite.addTestSuite(SelectAndWait4Test.class);
 
 		return testSuite;
 	}

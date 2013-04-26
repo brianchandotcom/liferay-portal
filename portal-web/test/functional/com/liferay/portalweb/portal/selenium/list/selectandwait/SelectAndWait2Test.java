@@ -38,21 +38,32 @@ public class SelectAndWait2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_128_keywords']",
-			RuntimeVariables.replace("Power"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Power User"),
-			selenium.getText("//tr[contains(.,'Power')]/td[1]/a"));
-		selenium.clickAt("//tr[contains(.,'Power')]/td[1]/a",
-			RuntimeVariables.replace("Power User"));
-		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Define Permissions",
-			RuntimeVariables.replace("Define Permissions"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText(
+				"//tr[contains(.,'Guest')]/td/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Guest')]/td/span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
+		selenium.waitForVisible(
+			"//a[@role='menuitem' and contains(.,'Define Permissions')]");
+		assertEquals(RuntimeVariables.replace("Define Permissions"),
+			selenium.getText(
+				"//a[@role='menuitem' and contains(.,'Define Permissions')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//a[@role='menuitem' and contains(.,'Define Permissions')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
-			RuntimeVariables.replace("Catherine"));
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementPresent(
+				"//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//input[@value='15ADD_TO_PAGE']"));
+		selenium.select("//select[@id='_128_add-permissions']",
+			RuntimeVariables.replace(
+				"value=regexp:.*portletResource=15&.*showModelResources=0"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementNotPresent(
+				"//input[@value='com.liferay.portlet.journal.model.JournalArticleADD_DISCUSSION']"));
+		assertTrue(selenium.isElementPresent("//input[@value='15ADD_TO_PAGE']"));
 	}
 }

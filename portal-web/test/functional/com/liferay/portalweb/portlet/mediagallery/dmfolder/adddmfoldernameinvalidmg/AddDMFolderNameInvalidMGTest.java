@@ -35,7 +35,7 @@ public class AddDMFolderNameInvalidMGTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_31_name']",
-			RuntimeVariables.replace("!@#$%^&amp;*"));
+			RuntimeVariables.replace("!@#$%^&*"));
 		selenium.type("//textarea[@id='_31_description']",
 			RuntimeVariables.replace("DM Folder Description"));
 		selenium.clickAt("//input[@value='Save']",

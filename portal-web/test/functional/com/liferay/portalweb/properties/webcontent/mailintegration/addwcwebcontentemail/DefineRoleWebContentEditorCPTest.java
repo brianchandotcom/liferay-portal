@@ -109,7 +109,7 @@ public class DefineRoleWebContentEditorCPTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				selenium.select("//select[@id='_128_add-permissions']",
 					RuntimeVariables.replace(
-						"value=regexp:.*portletResource=15&amp;.*showModelResources=0"));
+						"value=regexp:.*portletResource=15&.*showModelResources=0"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean accessCPChecked = selenium.isChecked(

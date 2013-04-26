@@ -3643,7 +3643,7 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>osgi/lib/common/portal/osgi.core.jar</file-name>
+		<file-name>osgi/lib/common/core/osgi.core.jar</file-name>
 		<version>4.3.1.201210102023</version>
 		<project-name>OSGi Core Specification</project-name>
 		<project-url>http://www.osgi.org</project-url>

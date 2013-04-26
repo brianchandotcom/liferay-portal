@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osgi.bootstrap;
+package com.liferay.portal.module.framework;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -22,8 +22,6 @@ import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.framework.launch.Framework;
 
 /**
  * @author Raymond Augé
@@ -40,7 +38,7 @@ public interface ModuleFramework {
 
 	public List<URL> getExtraPackageURLs();
 
-	public Framework getFramework();
+	public Object getFramework();
 
 	public String getState(long bundleId) throws PortalException;
 

@@ -49,7 +49,7 @@ public class ModuleFrameworkServlet extends HttpServlet
 
 	@Override
 	public void destroy() {
-		Framework framework = ModuleFrameworkUtil.getFramework();
+		Framework framework = (Framework)ModuleFrameworkUtil.getFramework();
 
 		if (framework == null) {
 			return;
@@ -62,7 +62,7 @@ public class ModuleFrameworkServlet extends HttpServlet
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
 
-		Framework framework = ModuleFrameworkUtil.getFramework();
+		Framework framework = (Framework)ModuleFrameworkUtil.getFramework();
 
 		if (framework == null) {
 			return;

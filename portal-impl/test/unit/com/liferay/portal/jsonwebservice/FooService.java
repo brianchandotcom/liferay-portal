@@ -86,6 +86,16 @@ public class FooService {
 		return fooDataList;
 	}
 
+	public static FooData[] getFooDatas2() {
+		FooData[] fooDataArray = new FooData[3];
+
+		fooDataArray[0] = getFooData(1);
+		fooDataArray[1] = getFooData(2);
+		fooDataArray[2] = getFooData(3);
+
+		return fooDataArray;
+	}
+
 	public static String hello() {
 		return "world";
 	}

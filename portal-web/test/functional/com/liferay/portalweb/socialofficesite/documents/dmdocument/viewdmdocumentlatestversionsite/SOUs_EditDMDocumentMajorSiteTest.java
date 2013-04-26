@@ -119,7 +119,7 @@ public class SOUs_EditDMDocumentMajorSiteTest extends BaseTestCase {
 				"xPath=(//fieldset[@class='fieldset add-comment ']/div/span[2])[1]"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("xPath=(//span[@class='user-name'])[3]"));
-		assertEquals(RuntimeVariables.replace("DM Document Comment2"),
+		assertEquals(RuntimeVariables.replace("DM Document Comment2 Edit"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

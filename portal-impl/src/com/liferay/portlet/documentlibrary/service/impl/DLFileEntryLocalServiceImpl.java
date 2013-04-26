@@ -507,12 +507,19 @@ public class DLFileEntryLocalServiceImpl
 
 		long dlFileVersionId = dlFileVersion.getFileVersionId();
 
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			serviceContext.getCompanyId(), DLFileEntry.class.getName(),
-			dlFileVersionId);
+		Map<String, Serializable> serviceContextExpandoValuesMap =
+			serviceContext.getExpandoBridgeAttributes();
 
-		serviceContext.setExpandoBridgeAttributes(
-			expandoBridge.getAttributes());
+		if (serviceContextExpandoValuesMap.isEmpty()) {
+			ExpandoBridge expandoBridge =
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), DLFileEntry.class.getName(),
+					dlFileVersionId);
+
+			serviceContext.setExpandoBridgeAttributes(
+				expandoBridge.getAttributes());
+		}
+
 		serviceContext.setUserId(userId);
 
 		boolean manualCheckinRequired = GetterUtil.getBoolean(
@@ -749,8 +756,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionPersistence.remove(dlFileVersion);
 
 			expandoValueLocalService.deleteValues(
-				DLFileVersion.class.getName(),
-				dlFileVersion.getFileVersionId());
+				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
 
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
@@ -847,8 +853,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionPersistence.remove(dlFileVersion);
 
 			expandoValueLocalService.deleteValues(
-				DLFileVersion.class.getName(),
-				dlFileVersion.getFileVersionId());
+				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
 
 			dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 
@@ -2140,7 +2145,7 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersionPersistence.remove(dlFileVersion);
 
 		expandoValueLocalService.deleteValues(
-			DLFileVersion.class.getName(), dlFileVersion.getFileVersionId());
+			DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
 
 		dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
 			dlFileVersion.getFileVersionId());

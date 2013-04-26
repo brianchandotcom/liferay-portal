@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>CPRolesDefinepermissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPRolesDefinepermissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPRolesDefinepermissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PERMISSIONS_SELECT</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSION_TABLE-->
+<tr>
+	<td>PERMISSION_TABLE_RESOURCE_SET_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_RESOURCE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_ACTION_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_SCOPE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_DELETE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[5]/span/a/span)[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

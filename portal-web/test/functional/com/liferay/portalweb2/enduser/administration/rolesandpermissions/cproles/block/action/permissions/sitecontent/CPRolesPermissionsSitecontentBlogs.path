@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>CPRolesPermissionsSitecontentBlogs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPRolesPermissionsSitecontentBlogs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPRolesPermissionsSitecontentBlogs</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//input[@value='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOGS_TABLE-->
+<tr>
+	<td>BLOGS_TABLE_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_TABLE_ADD_APPLICATION_DISPLAY_TEMPLATE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_PORTLET_DISPLAY_TEMPLATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_TABLE_ADD_ENTRY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_TABLE_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsPERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_TABLE_SUBSCRIBE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsSUBSCRIBE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BLOGS_ENTRY-->
+<tr>
+	<td>BLOGS_ENTRY_TABLE_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_ADD_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_DELETE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_DELETE_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryPERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_UPDATE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_UPDATE_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_TABLE_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

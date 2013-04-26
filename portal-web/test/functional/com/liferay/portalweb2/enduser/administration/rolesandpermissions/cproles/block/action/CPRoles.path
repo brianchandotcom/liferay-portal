@@ -48,20 +48,20 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ADD-->
+<!--ADD_MENU_LIST-->
 <tr>
-	<td>ADD_REGULAR_ROLE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Role')]</td>
+	<td>ADD_MENU_LIST_REGULAR_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SITE_ROLE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Role')]</td>
+	<td>ADD_MENU_LIST_SITE_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_ORGANIZATION_ROLE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Role')]</td>
+	<td>ADD_MENU_LIST_ORGANIZATION_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,25 +90,25 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ROLE_ACTIONS-->
+<!--ROLE_MENU_LIST-->
 <tr>
-	<td>ROLE_ACTIONS_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td>ROLE_MENU_LIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_ACTIONS_DEFINE_PERMISSIONS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]</td>
+	<td>ROLE_MENU_LIST_DEFINE_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_ACTIONS_ASSIGN_MEMBERS</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]</td>
+	<td>ROLE_MENU_LIST_ASSIGN_MEMBERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_ACTIONS_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>ROLE_MENU_LIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -47,14 +47,15 @@ public class ModuleFrameworkAdapterHelper {
 		}
 
 		try {
+			File coreDir = new File(
+				PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
+
 			_initDir(
 				"com/liferay/portal/deploy/dependencies/osgi/core",
-				PropsValues.MODULE_FRAMEWORK_CORE_DIR);
+				coreDir.getAbsolutePath());
 			_initDir(
 				"com/liferay/portal/deploy/dependencies/osgi/portal",
 				PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
-
-			File coreDir = new File(PropsValues.MODULE_FRAMEWORK_CORE_DIR);
 
 			File[] files = coreDir.listFiles();
 

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.CharBufferPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
 import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
@@ -54,6 +55,8 @@ import com.liferay.portlet.PortletContextBagPool;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
 import java.beans.PropertyDescriptor;
+
+import java.io.File;
 
 import java.lang.reflect.Field;
 
@@ -165,6 +168,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		CharBufferPool.cleanUp();
 		PortletContextBagPool.clear();
 		WebAppPool.clear();
+
+		File tempDir = (File)servletContext.getAttribute(
+			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+		PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
+			tempDir.getAbsolutePath();
 
 		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
 			try {

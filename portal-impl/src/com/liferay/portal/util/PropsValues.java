@@ -970,6 +970,8 @@ public class PropsValues {
 
 	public static final String LIFERAY_LIB_PORTAL_DIR = PropsUtil.get(PropsKeys.LIFERAY_LIB_PORTAL_DIR);
 
+	public static String LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR;
+
 	public static final String LIFERAY_WEB_PORTAL_DIR = PropsUtil.get(PropsKeys.LIFERAY_WEB_PORTAL_DIR);
 
 	public static final boolean LIVE_USERS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LIVE_USERS_ENABLED));
@@ -1143,8 +1145,6 @@ public class PropsValues {
 	public static final String MODULE_FRAMEWORK_BASE_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_BASE_DIR);
 
 	public static final int MODULE_FRAMEWORK_BEGINNING_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
-
-	public static final String MODULE_FRAMEWORK_CORE_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_CORE_DIR);
 
 	public static final boolean MODULE_FRAMEWORK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_ENABLED));
 

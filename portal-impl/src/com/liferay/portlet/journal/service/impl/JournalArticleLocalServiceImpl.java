@@ -976,6 +976,11 @@ public class JournalArticleLocalServiceImpl
 		journalArticleImageLocalService.deleteImages(
 			article.getGroupId(), article.getArticleId(), article.getVersion());
 
+		// Expando
+
+		expandoValueLocalService.deleteValues(
+			JournalArticle.class.getName(), article.getId());
+
 		// Workflow
 
 		if (!article.isDraft()) {
@@ -1018,11 +1023,6 @@ public class JournalArticleLocalServiceImpl
 			// Small image
 
 			imageLocalService.deleteImage(article.getSmallImageId());
-
-			// Expando
-
-			expandoValueLocalService.deleteValues(
-				JournalArticle.class.getName(), article.getId());
 
 			// Trash
 

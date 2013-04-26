@@ -100,7 +100,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	static {
 		char[] replaceChars = new char[] {
 			' ', ',', '\\', '\'', '\"', '(', ')', '[', ']', '{', '}', '?', '#',
-			'@', '+', '~', ';', '$', '%', '!', '=', ':', '&'
+			'@', '+', '~', ';', '$', '%', '!', '=', ':', '&', '\u2018',
+			'\u2019', '\u201c', '\u201d'
 		};
 
 		Arrays.sort(replaceChars);

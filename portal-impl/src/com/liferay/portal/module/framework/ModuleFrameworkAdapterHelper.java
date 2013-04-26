@@ -30,6 +30,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -138,23 +139,29 @@ public class ModuleFrameworkAdapterHelper {
 			fileUtil.setFile(new FileImpl());
 		}
 
-		if (FileUtil.exists(destinationPath)) {
-			return;
+		if (!FileUtil.exists(destinationPath)) {
+			FileUtil.mkdirs(destinationPath);
 		}
-
-		FileUtil.mkdirs(destinationPath);
 
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
+		URL jarsListURL = classLoader.getResource(sourcePath + "/jars.txt");
+
+		URLConnection connection = jarsListURL.openConnection();
+
 		String[] jarFileNames = StringUtil.split(
-			StringUtil.read(classLoader, sourcePath + "/jars.txt"));
+			StringUtil.read(connection.getInputStream()));
 
 		for (String jarFileName : jarFileNames) {
-			byte[] bytes = FileUtil.getBytes(
-				classLoader.getResourceAsStream(
-					sourcePath + "/" + jarFileName));
+			File distinationFile = new File(destinationPath, jarFileName);
 
-			FileUtil.write(new File(destinationPath, jarFileName), bytes);
+			if (distinationFile.lastModified() < connection.getLastModified()) {
+				byte[] bytes = FileUtil.getBytes(
+					classLoader.getResourceAsStream(
+						sourcePath + "/" + jarFileName));
+
+				FileUtil.write(distinationFile, bytes);
+			}
 		}
 	}
 

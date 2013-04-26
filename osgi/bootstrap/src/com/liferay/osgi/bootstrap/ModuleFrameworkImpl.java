@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -652,6 +653,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private String _getSystemPackagesExtra() {
+		File coreDir = new File(
+			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
+
+		File cacheFile = new File(coreDir, "system-packages.txt");
+
+		if (cacheFile.exists()) {
+			try {
+				return FileUtil.read(cacheFile);
+			}
+			catch (IOException e) {
+				_log.error(e, e);
+			}
+		}
+
 		_extraPackageMap = new TreeMap<String, List<URL>>();
 
 		StringBundler sb = new StringBundler();
@@ -699,6 +714,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.trace(
 				"The portal's system bundle is exporting the following " +
 					"packages:\n" +s);
+		}
+
+		try {
+			FileUtil.write(cacheFile, sb.toString());
+		}
+		catch (IOException e) {
+			_log.error(e, e);
 		}
 
 		return sb.toString();

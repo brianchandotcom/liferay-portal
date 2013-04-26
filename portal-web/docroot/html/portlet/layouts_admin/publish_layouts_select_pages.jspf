@@ -134,34 +134,28 @@ for (int i = 0; i < results.size(); i++) {
 </aui:button-row>
 
 <aui:script use="aui-io-request">
-	var sessionClickURL = themeDisplay.getPathMain() + '/portal/session_tree_js_click';
-
 	var searchContainer = A.one('#<portlet:namespace /><%= searchContainer.getId(request, renderResponse.getNamespace()) %>');
 
 	if (searchContainer) {
 		searchContainer.delegate(
 			'click',
 			function(event) {
-				var node = this;
+				var node = event.currentTarget;
 
-				var state = node.get('checked') ? 'layoutCheck' : 'layoutUncheck';
-
-				var data =
-					{
-						cmd: state,
-						groupId: <%= themeDisplay.getParentGroupId() %>,
-						plid: node.val(),
-						privateLayout: <%= privateLayout %>,
-						treeId: '<%= treeKey %>' + 'SelectedNode'
-					};
+				var cmd = node.attr('checked') ? 'layoutCheck' : 'layoutUncheck';
 
 				A.io.request(
-					sessionClickURL,
+					themeDisplay.getPathMain() + '/portal/session_tree_js_click',
 					{
-						data: data
+						data: {
+							cmd: cmd,
+							groupId: <%= themeDisplay.getParentGroupId() %>,
+							plid: node.val(),
+							privateLayout: <%= privateLayout %>,
+							treeId: '<%= treeKey %>' + 'SelectedNode'
+						}
 					}
 				);
-
 			},
 			'td.col-rowChecker input'
 		);

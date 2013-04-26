@@ -55,7 +55,7 @@ if (portletName.equals(PortletKeys.WIKI)) {
 	viewPageURL.setParameter("struts_action", "/wiki/view");
 }
 else {
-	viewPageURL.setParameter("struts_action", "/wiki/view_page");
+	viewPageURL.setParameter("struts_action", "/wiki/view_page_activities");
 }
 
 viewPageURL.setParameter("nodeName", node.getName());

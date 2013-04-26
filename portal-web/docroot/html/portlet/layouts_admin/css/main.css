@@ -465,6 +465,14 @@
 		margin: 0.5em 0 1.5em;
 	}
 
+	.modify-link {
+		text-decoration: underline;
+	}
+
+	.options-group {
+		margin-bottom: 1em;
+	}
+
 	.portlet-data-section {
 		legend {
 			font-size: 110%;
@@ -477,7 +485,9 @@
 
 	.selected-labels {
 		color:#999;
+		float:left;
 		font-style: italic;
+		margin-right: 0.5em;
 	}
 }
 

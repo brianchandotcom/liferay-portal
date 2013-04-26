@@ -3,6 +3,75 @@
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
 
+	<command name="AddBlogEntryRegRole">
+		<var name="roleName" value="Roles Regrole Name" />
+		<var name="emailAddress" value="userea@liferay.com" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="firstName" value="userfn" />
+		<var name="lastName" value="userln" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleType" value="Regular" />
+		<var name="screenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="User#cpEditPassword">
+			<var name="password" value="password" />
+		</execute>
+
+		<execute macro="Role#cpAddRegRole" />
+
+		<execute macro="Role#cpAssignRegRole" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgFirstLogin">
+			<var name="password" value="password" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAddNoPermission" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgLogin">
+			<var name="emailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Role#cpDefinePermissionBlogEntry" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgLogin" />
+
+		<execute macro="BlogsEntry#pgAdd" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgLogin">
+			<var name="emailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Role#cpRemovePermission" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgLogin" />
+
+		<execute macro="BlogsEntry#pgAddNoPermission" />
+
+		<execute macro="User#pgLogout" />
+
+		<execute macro="User#pgLogin">
+			<var name="emailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command name="AddOrganizationRole">
 		<var name="roleName" value="Roles Orgrole Name" />
 
@@ -22,7 +91,11 @@
 	</command>
 
 	<tear-down>
+		<execute macro="User#cpTearDown" />
+
 		<execute macro="Role#cpTearDown" />
+
+		<execute macro="BlogsEntry#cpTearDown" />
 
 		<execute macro="User#pgLogout" />
 	</tear-down>

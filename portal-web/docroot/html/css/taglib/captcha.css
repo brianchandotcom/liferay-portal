@@ -2,7 +2,12 @@
 	margin: 1em 0;
 
 	.captcha {
-		display: block;
+		display: inline-block;
 		margin-bottom: 1em;
+	}
+
+	.refresh {
+		display: inline-block;
+		vertical-align: top;
 	}
 }

@@ -120,25 +120,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
-			try {
-				ModuleFrameworkUtilAdapter.stopRuntime();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			ModuleFrameworkUtilAdapter.stopRuntime();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		try {
 			super.contextDestroyed(servletContextEvent);
 
-			if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
-				try {
-					ModuleFrameworkUtilAdapter.stopFramework();
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+			try {
+				ModuleFrameworkUtilAdapter.stopFramework();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 		finally {
@@ -175,13 +171,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
 			tempDir.getAbsolutePath();
 
-		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
-			try {
-				ModuleFrameworkUtilAdapter.startFramework();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			ModuleFrameworkUtilAdapter.startFramework();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
@@ -239,16 +233,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		clearFilteredPropertyDescriptorsCache(autowireCapableBeanFactory);
 
-		if (PropsValues.MODULE_FRAMEWORK_ENABLED) {
-			try {
-				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
-				ModuleFrameworkUtilAdapter.registerContext(servletContext);
+		try {
+			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+			ModuleFrameworkUtilAdapter.registerContext(servletContext);
 
-				ModuleFrameworkUtilAdapter.startRuntime();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			ModuleFrameworkUtilAdapter.startRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

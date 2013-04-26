@@ -14,6 +14,7 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
@@ -28,40 +29,42 @@ import java.io.InputStream;
  */
 public class ModuleFrameworkUtilAdapter {
 
-	public static Object addBundle(String location) {
-		return _moduleFrameworkAdapterHelper.execute("addBundle", location);
+	public static Object addBundle(String location) throws PortalException {
+		return _moduleFramework.addBundle(location);
 	}
 
-	public static Object addBundle(String location, InputStream inputStream) {
-		return _moduleFrameworkAdapterHelper.execute(
-			"addBundle", location, inputStream);
+	public static Object addBundle(String location, InputStream inputStream)
+		throws PortalException {
+
+		return _moduleFramework.addBundle(location, inputStream);
 	}
 
 	public static Object getFramework() {
-		return _moduleFrameworkAdapterHelper.execute("getFramework");
+		return _moduleFramework.getFramework();
 	}
 
-	public static String getState(long bundleId) {
-		return (String)_moduleFrameworkAdapterHelper.execute(
-			"getState", bundleId);
+	public static String getState(long bundleId) throws PortalException {
+		return _moduleFramework.getState(bundleId);
 	}
 
 	public static void registerContext(Object context) {
-		_moduleFrameworkAdapterHelper.exec(
-			"registerContext", new Class<?>[] {Object.class}, context);
+		_moduleFramework.registerContext(context);
 	}
 
-	public static void setBundleStartLevel(long bundleId, int startLevel) {
-		_moduleFrameworkAdapterHelper.execute(
-			"setBundleStartLevel", bundleId, startLevel);
+	public static void setBundleStartLevel(long bundleId, int startLevel)
+		throws PortalException {
+
+		_moduleFramework.setBundleStartLevel(bundleId, startLevel);
 	}
 
-	public static void startBundle(long bundleId) {
-		_moduleFrameworkAdapterHelper.execute("startBundle", bundleId);
+	public static void startBundle(long bundleId) throws PortalException {
+		_moduleFramework.startBundle(bundleId);
 	}
 
-	public static void startBundle(long bundleId, int options) {
-		_moduleFrameworkAdapterHelper.execute("startBundle", bundleId, options);
+	public static void startBundle(long bundleId, int options)
+		throws PortalException {
+
+		_moduleFramework.startBundle(bundleId, options);
 	}
 
 	public static void startFramework() throws Exception {
@@ -71,7 +74,7 @@ public class ModuleFrameworkUtilAdapter {
 			ModuleFrameworkAdapterHelper.getClassLoader());
 
 		try {
-			_moduleFrameworkAdapterHelper.execute("startFramework");
+			_moduleFramework.startFramework();
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(classLoader);
@@ -79,40 +82,50 @@ public class ModuleFrameworkUtilAdapter {
 	}
 
 	public static void startRuntime() throws Exception {
-		_moduleFrameworkAdapterHelper.execute("startRuntime");
+		_moduleFramework.startRuntime();
 	}
 
-	public static void stopBundle(long bundleId) {
-		_moduleFrameworkAdapterHelper.execute("stopBundle", bundleId);
+	public static void stopBundle(long bundleId) throws PortalException {
+		_moduleFramework.stopBundle(bundleId);
 	}
 
-	public static void stopBundle(long bundleId, int options) {
-		_moduleFrameworkAdapterHelper.execute("stopBundle", bundleId, options);
+	public static void stopBundle(long bundleId, int options)
+		throws PortalException {
+
+		_moduleFramework.stopBundle(bundleId, options);
 	}
 
 	public static void stopFramework() throws Exception {
-		_moduleFrameworkAdapterHelper.execute("stopFramework");
+		_moduleFramework.stopFramework();
 	}
 
 	public static void stopRuntime() throws Exception {
-		_moduleFrameworkAdapterHelper.execute("stopRuntime");
+		_moduleFramework.stopRuntime();
 	}
 
-	public static void uninstallBundle(long bundleId) {
-		_moduleFrameworkAdapterHelper.execute("uninstallBundle", bundleId);
+	public static void uninstallBundle(long bundleId) throws PortalException {
+		_moduleFramework.uninstallBundle(bundleId);
 	}
 
-	public static void updateBundle(long bundleId) {
-		_moduleFrameworkAdapterHelper.execute("updateBundle", bundleId);
+	public static void updateBundle(long bundleId) throws PortalException {
+		_moduleFramework.updateBundle(bundleId);
 	}
 
-	public static void updateBundle(long bundleId, InputStream inputStream) {
-		_moduleFrameworkAdapterHelper.execute(
-			"updateBundle", bundleId, inputStream);
+	public static void updateBundle(long bundleId, InputStream inputStream)
+		throws PortalException {
+
+		_moduleFramework.updateBundle(bundleId, inputStream);
 	}
 
+	private static ModuleFramework _moduleFramework;
 	private static ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =
 		new ModuleFrameworkAdapterHelper(
 			"com.liferay.osgi.bootstrap.ModuleFrameworkUtil");
+
+	static {
+		_moduleFramework =
+			(ModuleFramework)_moduleFrameworkAdapterHelper.execute(
+				"getModuleFramework");
+	}
 
 }

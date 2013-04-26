@@ -160,7 +160,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String controlPanelEntryCategory, double controlPanelEntryWeight,
 		String controlPanelClass, List<String> assetRendererFactoryClasses,
 		List<String> atomCollectionAdapterClasses,
-		List<String> customAttributesDisplayClasses,
+		List<String> customAttributesDisplayClasses, String ddmDisplayClass,
 		String permissionPropagatorClass, List<String> trashHandlerClasses,
 		List<String> workflowHandlerClasses, String defaultPreferences,
 		String preferencesValidator, boolean preferencesCompanyWide,
@@ -229,6 +229,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_assetRendererFactoryClasses = assetRendererFactoryClasses;
 		_atomCollectionAdapterClasses = atomCollectionAdapterClasses;
 		_customAttributesDisplayClasses = customAttributesDisplayClasses;
+		_ddmDisplayClass = ddmDisplayClass;
 		_permissionPropagatorClass = permissionPropagatorClass;
 		_trashHandlerClasses = trashHandlerClasses;
 		_workflowHandlerClasses = workflowHandlerClasses;
@@ -364,19 +365,20 @@ public class PortletImpl extends PortletBaseImpl {
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
 			getAtomCollectionAdapterClasses(),
-			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
-			getTrashHandlerClasses(), getWorkflowHandlerClasses(),
-			getDefaultPreferences(), getPreferencesValidator(),
-			isPreferencesCompanyWide(), isPreferencesUniquePerLayout(),
-			isPreferencesOwnedByGroup(), isUseDefaultTemplate(),
-			isShowPortletAccessDenied(), isShowPortletInactive(),
-			isActionURLRedirect(), isRestoreCurrentView(), isMaximizeEdit(),
-			isMaximizeHelp(), isPopUpPrint(), isLayoutCacheable(),
-			isInstanceable(), isRemoteable(), isScopeable(),
-			getUserPrincipalStrategy(), isPrivateRequestAttributes(),
-			isPrivateSessionAttributes(), getAutopropagatedParameters(),
-			getActionTimeout(), getRenderTimeout(), getRenderWeight(),
-			isAjaxable(), getHeaderPortalCss(), getHeaderPortletCss(),
+			getCustomAttributesDisplayClasses(), getDDMDisplayClass(),
+			getPermissionPropagatorClass(), getTrashHandlerClasses(),
+			getWorkflowHandlerClasses(), getDefaultPreferences(),
+			getPreferencesValidator(), isPreferencesCompanyWide(),
+			isPreferencesUniquePerLayout(), isPreferencesOwnedByGroup(),
+			isUseDefaultTemplate(), isShowPortletAccessDenied(),
+			isShowPortletInactive(), isActionURLRedirect(),
+			isRestoreCurrentView(), isMaximizeEdit(), isMaximizeHelp(),
+			isPopUpPrint(), isLayoutCacheable(), isInstanceable(),
+			isRemoteable(), isScopeable(), getUserPrincipalStrategy(),
+			isPrivateRequestAttributes(), isPrivateSessionAttributes(),
+			getAutopropagatedParameters(), getActionTimeout(),
+			getRenderTimeout(), getRenderWeight(), isAjaxable(),
+			getHeaderPortalCss(), getHeaderPortletCss(),
 			getHeaderPortalJavaScript(), getHeaderPortletJavaScript(),
 			getFooterPortalCss(), getFooterPortletCss(),
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
@@ -712,6 +714,15 @@ public class PortletImpl extends PortletBaseImpl {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
 		return portletBag.getCustomAttributesDisplayInstances();
+	}
+
+	/**
+	 * Returns the name of the ddm display class of the portlet.
+	 *
+	 * @return the name of the ddm display class of the portlet
+	 */
+	public String getDDMDisplayClass() {
+		return _ddmDisplayClass;
 	}
 
 	/**
@@ -2511,6 +2522,15 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the name of the ddm display class of the portlet.
+	 *
+	 * @param ddmDisplayClass the name of ddm display class of the portlet
+	 */
+	public void setDDMDisplayClass(String ddmDisplayClass) {
+		_ddmDisplayClass = ddmDisplayClass;
+	}
+
+	/**
 	 * Sets the default plugin settings of the portlet.
 	 *
 	 * @param pluginSetting the plugin setting
@@ -3489,6 +3509,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * associated with the portlet.
 	 */
 	private List<String> _customAttributesDisplayClasses;
+
+	/**
+	 * The name of the ddm display class of the portlet.
+	 */
+	private String _ddmDisplayClass;
 
 	/**
 	 * Plugin settings associated with the portlet.

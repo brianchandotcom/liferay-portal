@@ -78,6 +78,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xmlrpc.XmlRpcServlet;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
@@ -153,6 +155,12 @@ public class PortletBagFactory {
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
+
+		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
+
+		if (ddmDisplayInstance != null) {
+			DDMDisplayRegistryUtil.register(ddmDisplayInstance);
+		}
 
 		TemplateHandler templateHandlerInstance = newTemplateHandler(portlet);
 
@@ -632,6 +640,15 @@ public class PortletBagFactory {
 
 		return (ConfigurationAction)newInstance(
 			ConfigurationAction.class, portlet.getConfigurationActionClass());
+	}
+
+	protected DDMDisplay newDDMDisplay(Portlet portlet) throws Exception {
+		if (Validator.isNull(portlet.getDDMDisplayClass())) {
+			return null;
+		}
+
+		return (DDMDisplay)newInstance(
+			DDMDisplay.class, portlet.getDDMDisplayClass());
 	}
 
 	protected FriendlyURLMapper newFriendlyURLMapper(Portlet portlet)

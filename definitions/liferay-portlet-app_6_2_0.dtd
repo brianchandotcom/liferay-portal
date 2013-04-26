@@ -18,7 +18,7 @@ parent-struts-path?, configuration-path?, configuration-action-class?,
 indexer-class*, open-search-class?, scheduler-entry*, portlet-url-class?,
 friendly-url-mapper-class?, friendly-url-mapping?, friendly-url-routes?,
 url-encoder-class?, portlet-data-handler-class?,
-staged-model-data-handler-class*, template-handler?,
+staged-model-data-handler-class*, ddm-display?, template-handler?,
 portlet-layout-listener-class?, poller-processor-class?,
 pop-message-listener-class?, social-activity-interpreter-class*,
 social-request-interpreter-class?, webdav-storage-token?, webdav-storage-class?,
@@ -397,6 +397,13 @@ See:
 http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
 -->
 <!ELEMENT custom-attributes-display (#PCDATA)>
+
+<!--
+The ddm-display value must be a class that implements
+com.liferay.portlet.dynamicdatamapping.util.DDMDisplay and is called when
+displaying the portlet.
+-->
+<!ELEMENT ddm-display (#PCDATA)>
 
 <!--
 The permission-propagator value must be a class that implements

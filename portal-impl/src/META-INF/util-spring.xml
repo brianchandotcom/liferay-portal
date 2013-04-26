@@ -912,6 +912,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
+		<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil">
+		<property name="DDMDisplayRegistry">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
 		<property name="DDMIndexer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />

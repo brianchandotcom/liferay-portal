@@ -50,10 +50,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			String name = (String)field.getObject(1);
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-			>
-
+			<liferay-ui:search-container-column-text>
 				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
 			</liferay-ui:search-container-column-text>
 
@@ -62,7 +59,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			%>
 
 			<liferay-ui:search-container-column-text
-				name="type"
+				name="field"
 			>
 				<liferay-portlet:resourceURL portletConfiguration="true" var="structureFieldURL">
 					<portlet:param name="<%= Constants.CMD %>" value="getFieldValue" />

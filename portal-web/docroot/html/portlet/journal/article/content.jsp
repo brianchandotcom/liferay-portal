@@ -735,7 +735,7 @@ if (Validator.isNotNull(content)) {
 			function(event) {
 				document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
 
-				submitForm(document.<portlet:namespace />fm1);
+				submitForm(document.<portlet:namespace />fm1, null, false, false);
 			}
 		);
 	}

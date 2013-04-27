@@ -1006,7 +1006,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private void _setupInitialBundles() throws Exception {
-		FrameworkWiring frameworkWiring = getFramework().adapt(
+		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
 
 		List<Bundle> lazyActivationBundles = new ArrayList<Bundle>();

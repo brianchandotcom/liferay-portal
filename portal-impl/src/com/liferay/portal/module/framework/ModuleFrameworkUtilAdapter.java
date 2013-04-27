@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 /**
  * This class is a simple wrapper in order to make the framework module running
- * under its own classlaoder
+ * under its own class loader.
  *
  * @author Miguel Pastor
  * @author Raymond Augé

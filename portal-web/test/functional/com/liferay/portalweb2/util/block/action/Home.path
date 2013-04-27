@@ -65,12 +65,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_NAME</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NEW_PAGE-->
+<tr>
+	<td>NEW_PAGE_FIELD</td>
 	<td>//li[@class='add-page']//input[contains(@class,'input-text')]</td>
-	<td>test</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PAGE_SAVE</td>
+	<td>NEW_PAGE_SAVE</td>
 	<td>//button[contains(@id,'Save')]</td>
 	<td></td>
 </tr>

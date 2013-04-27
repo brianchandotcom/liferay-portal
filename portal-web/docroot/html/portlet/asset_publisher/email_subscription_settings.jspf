@@ -173,18 +173,18 @@ boolean emailAssetEntryAddedEnabled = AssetPublisherUtil.getEmailAssetEntryAdded
 
 	var languageSelector = A.one('#<portlet:namespace />languageId');
 
-	var currentLanguageIndex = languageSelector.get('selectedIndex');
+	var currentLanguageIndex = languageSelector.attr('selectedIndex');
 
 	var subjectInput = A.one('#<portlet:namespace /><%= emailParam + "Subject_" + currentLanguageId %>');
 
-	var originalEmailSubject = subjectInput.get('value');
+	var originalEmailSubject = subjectInput.val();
 
 	languageSelector.on(
 		'change',
 		function(event) {
 			if (CKEDITOR.instances.<portlet:namespace />editor.checkDirty() || originalEmailSubject !== subjectInput.val()) {
 				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-switch-the-languages-view") %>')) {
-					languageSelector.set('selectedIndex', currentLanguageIndex);
+					languageSelector.attr('selectedIndex', currentLanguageIndex);
 
 					return false;
 				}

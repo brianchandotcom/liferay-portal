@@ -18,22 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--USER-->
-<tr>
-	<td>USER_NAME</td>
-	<td>//span[@class='user-full-name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SIGN_OUT</td>
-	<td>//span[@class='sign-out']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADD-->
 <tr>
 	<td>ADD</td>
@@ -46,7 +30,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_PORTLET</td>
+	<td>ADD_CONTENT_AND_APPLICATIONS</td>
 	<td>//a[@id='_145_addPanel']</td>
 	<td></td>
 </tr>
@@ -55,14 +39,14 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CONTENT-->
+<!--ADD_CONTENT-->
 <tr>
-	<td>CONTENT_LINK</td>
+	<td>ADD_CONTENT_LINK</td>
 	<td>//span[@class='aui-tab-content']/a[contains(.,'Content')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_SEARCH</td>
+	<td>ADD_CONTENT_SEARCH_FIELD</td>
 	<td>//input[@id='layout_configuration_content']</td>
 	<td></td>
 </tr>
@@ -71,15 +55,46 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--APPLICATION-->
+<!--ADD_APPLICATION-->
 <tr>
-	<td>APPLICATION_LINK</td>
+	<td>ADD_APPLICATION_LINK</td>
 	<td>//span[@class='aui-tab-content']/a[contains(.,'Applications')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>APPLICATION_SEARCH</td>
+	<td>ADD_APPLICATION_SEARCH_FIELD</td>
 	<td>//input[@id='layout_configuration_content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGE-->
+<tr>
+	<td>MANAGE</td>
+	<td>//li[@id='_145_manageContent']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_PAGE</td>
+	<td>//li[contains(@class,'manage-page')]/a[@title='Manage Page']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_PAGE_LAYOUT</td>
+	<td>//li[contains(@class,'page-layout')]/a[@title='Manage Page']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_PAGE_CUSTOMIZATIONS</td>
+	<td>//a[@id='_145_manageCustomization']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SITE</td>
+	<td>//li[contains(@class,'settings')]/a[@title='Manage Site']</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +111,32 @@
 <tr>
 	<td>GO_TO_CONTROL_PANEL</td>
 	<td>link=Control Panel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_MY_PUBLIC_PAGES</td>
+	<td>link=My Public Pages</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_MY_PRIVATE_PAGES</td>
+	<td>link=My Private Pages</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-full-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SIGN_OUT</td>
+	<td>//span[@class='sign-out']/a</td>
 	<td></td>
 </tr>
 </tbody>

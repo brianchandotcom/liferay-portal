@@ -5,13 +5,9 @@
 		</execute>
 
 		<execute action="Dockbar#mouseOver" locator-key1="ADD" />
-
-		<execute action="Dockbar#click" locator-key1="ADD_PORTLET" />
-
-		<execute action="Dockbar#click" locator-key1="APPLICATION_LINK" />
-
-		<execute action="Dockbar#type" locator-key1="APPLICATION_SEARCH" value1="${portletName}" />
-
+		<execute action="Dockbar#click" locator-key1="ADD_CONTENT_AND_APPLICATIONS" />
+		<execute action="Dockbar#click" locator-key1="ADD_APPLICATION_LINK" />
+		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 		<execute action="Dockbar#click" locator1="//li[@title='${portletName}']/p/a" value1="Add" />
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />

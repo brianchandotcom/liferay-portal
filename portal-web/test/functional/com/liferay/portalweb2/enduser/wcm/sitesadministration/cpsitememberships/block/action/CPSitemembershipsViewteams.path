@@ -29,16 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@name='_174_name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//input[@value='Search']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='portlet-msg-info']</td>
 	<td></td>
@@ -46,6 +36,22 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_174_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,24 +80,24 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TEAM_ACTIONS-->
+<!--TEAM_MENULIST-->
 <tr>
-	<td>TEAM_ACTIONS_EDIT</td>
+	<td>TEAM_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEAM_ACTIONS_PERMISSIONS</td>
+	<td>TEAM_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEAM_ACTIONS_ASSIGN_MEMBERS</td>
+	<td>TEAM_MENULIST_ASSIGN_MEMBERS</td>
 	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEAM_ACTIONS_DELETE</td>
+	<td>TEAM_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>

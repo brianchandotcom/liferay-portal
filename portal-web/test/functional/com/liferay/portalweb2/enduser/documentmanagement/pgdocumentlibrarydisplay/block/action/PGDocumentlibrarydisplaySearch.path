@@ -75,49 +75,49 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FOLDERS_MENULIST-->
+<!--FOLDER_MENULIST-->
 <tr>
-	<td>FOLDERS_MENULIST_EDIT</td>
+	<td>FOLDER_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_MOVE</td>
+	<td>FOLDER_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_PERMISSIONS</td>
+	<td>FOLDER_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>FOLDER_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_ADD_SUBFOLDER</td>
+	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_MULTIPLE_DOCUMENTS</td>
+	<td>FOLDER_MENULIST_MULTIPLE_DOCUMENTS</td>
 	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
 	<td>Multiple Documents</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_ADD_DOCUMENT</td>
+	<td>FOLDER_MENULIST_ADD_DOCUMENT</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Document')]</td>
 	<td>Add Document</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_ADD_SHORTCUT</td>
+	<td>FOLDER_MENULIST_ADD_SHORTCUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
-	<td>FOLDERS_MENULIST_ACCESS_FROM_DESKTOP</td>
+	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
 	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>
@@ -126,38 +126,37 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DOCUMENTS_MENULIST-->
+<!--DOCUMENT_MENULIST-->
 <tr>
-	<td>DOCUMENTS_MENULIST_DOWNLOAD</td>
+	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
 	<td>Download</td>
 </tr>
 <tr>
-	<td>DOCUMENTS_MENULIST_EDIT</td>
+	<td>DOCUMENT_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>DOCUMENTS_MENULIST_MOVE</td>
+	<td>DOCUMENT_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>DOCUMENTS_MENULIST_CHECKOUT</td>
+	<td>DOCUMENT_MENULIST_CHECKOUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
 	<td>Checkout</td>
 </tr>
 <tr>
-	<td>DOCUMENTS_MENULIST_PERMISSIONS</td>
+	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>DOCUMENTS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
-
 </tbody>
 </table>
 </body>

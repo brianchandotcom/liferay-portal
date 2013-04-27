@@ -3,7 +3,7 @@
 		<case locator-key1="ADD_PAGE">
 			<execute function="Click#textClickAt" value1="Page" />
 		</case>
-		<case locator-key1="ADD_PORTLET">
+		<case locator-key1="ADD_CONTENT_AND_APPLICATIONS">
 			<execute function="Click#partialTextClickAt" value1="Content and Applications" />
 		</case>
 		<case locator-key1="GO_TO_CONTROL_PANEL">
@@ -12,7 +12,7 @@
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
-		<case locator-key1="APPLICATION_LINK">
+		<case locator-key1="ADD_APPLICATION_LINK">
 			<execute function="Click#clickAtApplicationSearch" />
 		</case>
 	</command>
@@ -21,13 +21,16 @@
 		<case locator-key1="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
 		</case>
+		<case locator-key1="MANAGE">
+			<execute function="MouseOver#textMouseOverClickDockbar" value1="Manage" />
+		</case>
 		<case locator-key1="GO_TO">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Go to" />
 		</case>
 	</command>
 
 	<command name="type">
-		<case locator-key1="APPLICATION_SEARCH">
+		<case locator-key1="ADD_APPLICATION_SEARCH_FIELD">
 			<execute function="Type#sendKeysApplicationSearch" />
 		</case>
 	</command>

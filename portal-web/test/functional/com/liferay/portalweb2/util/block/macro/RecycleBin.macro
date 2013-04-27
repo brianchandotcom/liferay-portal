@@ -8,7 +8,6 @@
 			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
 			<then>
 				<execute action="CPRecyclebin#click" locator-key1="EMPTY_RECYCLE_BIN" />
-
 				<execute action="CPRecyclebin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to empty the Recycle Bin?" />
 			</then>
 		</if>

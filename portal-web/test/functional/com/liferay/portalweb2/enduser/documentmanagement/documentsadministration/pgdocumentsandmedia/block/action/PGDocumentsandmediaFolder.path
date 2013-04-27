@@ -84,29 +84,29 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ACTIONS_MENULIST-->
+<!--SELECT_ALL_MENULIST-->
 <tr>
-	<td>ACTIONS_MENULIST_CANCEL_CHECKOUT</td>
+	<td>SELECT_ALL_MENULIST_CANCEL_CHECKOUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Cancel Checkout')]</td>
 	<td>Cancel Checkout</td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST_CHECKIN</td>
+	<td>SELECT_ALL_MENULIST_CHECKIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Checkin')]</td>
 	<td>Checkin</td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST_CHECKOUT</td>
+	<td>SELECT_ALL_MENULIST_CHECKOUT</td>
 	<td>xpath=(//a[@role='menuitem' and contains(.,'Checkout')])[2]</td>
 	<td>Checkout</td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST_MOVE</td>
+	<td>SELECT_ALL_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>SELECT_ALL_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
@@ -278,7 +278,7 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>FOLDER_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>FOLDER_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
@@ -360,7 +360,7 @@
 	<td>Select Page</td>
 </tr>
 <tr>
-	<td>DOCUMENT_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>

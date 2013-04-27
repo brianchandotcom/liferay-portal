@@ -45,7 +45,7 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
+	<td>TOOLBAR_RECYCLE_BIN_BUTTON</td>
 	<td>//span[@class='aui-toolbar-content']/button[.='Move to the Recycle Bin']</td>
 	<td>Move to the Recycle Bin</td>
 </tr>

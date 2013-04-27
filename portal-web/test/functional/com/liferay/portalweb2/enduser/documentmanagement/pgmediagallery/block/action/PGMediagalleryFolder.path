@@ -82,7 +82,7 @@
 	<td>Permissions </td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>FOLDER_MENU_RECYCLE_BIN</td>
 	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>

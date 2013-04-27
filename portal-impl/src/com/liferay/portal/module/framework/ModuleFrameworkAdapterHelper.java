@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
@@ -62,7 +63,7 @@ public class ModuleFrameworkAdapterHelper {
 			URL[] urls = new URL[files.length];
 
 			for (int i = 0; i < urls.length; i++) {
-				urls[i] = new URL("file:" + files[i].getAbsolutePath());
+				urls[i] = new URL("file", null, files[i].getAbsolutePath());
 			}
 
 			_classLoader = new ModuleFrameworkClassLoader(
@@ -137,7 +138,7 @@ public class ModuleFrameworkAdapterHelper {
 		if (FileUtil.getFile() == null) {
 			FileUtil fileUtil = new FileUtil();
 
-			fileUtil.setFile(new FileImpl());
+			fileUtil.setFile(DoPrivilegedUtil.wrap(new FileImpl()));
 		}
 
 		if (!FileUtil.exists(destinationPath)) {

@@ -187,9 +187,14 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <aui:script use="<%= modules %>">
 	(function() {
-		function setData() {
+		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && (inlineEditSaveURL != null)) %>">
-				ckEditor.setData(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
+				ckEditor.setData(
+					<%= HtmlUtil.escapeJS(namespace + initMethod) %>(),
+					function() {
+						ckEditor.resetDirty();
+					}
+				);
 			</c:if>
 		}
 
@@ -252,7 +257,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 					customDataProcessorLoaded = true;
 
 					if (instanceReady) {
-						setData();
+						initData();
 					}
 				}
 			);
@@ -272,11 +277,11 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 					instanceReady = true;
 
 					if (customDataProcessorLoaded) {
-						setData();
+						initData();
 					}
 				</c:when>
 				<c:otherwise>
-					setData();
+					initData();
 				</c:otherwise>
 			</c:choose>
 

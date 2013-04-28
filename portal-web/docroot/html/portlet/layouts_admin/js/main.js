@@ -86,32 +86,38 @@ AUI.add(
 							'.content-link'
 						);
 
-						instance.byId('globalConfigurationLink').on(
-							STR_CLICK,
-							function(event) {
-								var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
+						if (instance.byId('globalConfigurationLink')) {
+							instance.byId('globalConfigurationLink').on(
+								STR_CLICK,
+								function(event) {
+									var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
-								globalConfigurationDialog.show();
-							}
-						);
+									globalConfigurationDialog.show();
+								}
+							);
+						}
 
-						instance.byId('globalContentLink').on(
-							STR_CLICK,
-							function(event) {
-								var globalContentDialog = instance._getGlobalContentDialog();
+						if (instance.byId('globalContentLink')) {
+							instance.byId('globalContentLink').on(
+								STR_CLICK,
+								function(event) {
+									var globalContentDialog = instance._getGlobalContentDialog();
 
-								globalContentDialog.show();
-							}
-						);
+									globalContentDialog.show();
+								}
+							);
+						}
 
-						instance.byId('pagesLink').on(
-							STR_CLICK,
-							function(event) {
-								var pagesDialog = instance._getPagesDialog();
+						if (instance.byId('pagesLink')) {
+							instance.byId('pagesLink').on(
+								STR_CLICK,
+								function(event) {
+									var pagesDialog = instance._getPagesDialog();
 
-								pagesDialog.show();
-							}
-						);
+									pagesDialog.show();
+								}
+							);
+						}
 
 						if (instance.byId('rangeLink')) {
 							instance.byId('rangeLink').on(

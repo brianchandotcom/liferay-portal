@@ -60,7 +60,7 @@
 					%>
 
 					<c:if test='<%= tabs2.equals("import") %>'>
-						<aui:input label="data" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+						<aui:input label="content" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 					</c:if>
 
 					<ul class="aui-helper-hidden" id="<portlet:namespace />portletDataControls">
@@ -120,7 +120,7 @@
 													if ((childrenControls != null) && (childrenControls.length > 0)) {
 														request.setAttribute("render_controls.jsp-controls", childrenControls);
 
-														selectedContent += ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
+														selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ", ") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 												%>
 
 														<c:choose>
@@ -145,7 +145,7 @@
 
 									<c:if test='<%= tabs2.equals("import") %>'>
 										<ul class="lfr-tree lfr-component">
-											<aui:fieldset label="data-strategy">
+											<aui:fieldset label="update-data">
 												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(locale, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
 
 												<aui:input data-name='<%= LanguageUtil.get(locale, "mirror-with-overwriting") %>' helpMessage="import-data-strategy-mirror-with-overwriting-help" id="mirrorWithOverwriting" label="mirror-with-overwriting" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>" />
@@ -153,10 +153,10 @@
 												<aui:input data-name='<%= LanguageUtil.get(locale, "copy-as-new") %>' helpMessage="import-data-strategy-copy-as-new-help" id="copyAsNew" label="copy-as-new" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>" />
 											</aui:fieldset>
 
-											<aui:fieldset label="user-id-strategy">
-												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(locale, "if-a-user-id-does-not-exist,-then-use-my-user-id") %>' id="currentUserId" label="if-a-user-id-does-not-exist,-then-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.CURRENT_USER_ID %>" />
+											<aui:fieldset label="authorship-of-the-content">
+												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(locale, "use-the-original-author") %>' helpMessage="use-the-original-author-help"  id="currentUserId" label="use-the-original-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.CURRENT_USER_ID %>" />
 
-												<aui:input data-name='<%= LanguageUtil.get(locale, "always-use-my-user-id") %>' id="alwaysCurrentUserId" label="always-use-my-user-id" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
+												<aui:input data-name='<%= LanguageUtil.get(locale, "always-use-my-user-id") %>' helpMessage="use-the-current-user-as-author-help" id="alwaysCurrentUserId" label="use-the-current-user-as-author" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
 											</aui:fieldset>
 										</ul>
 									</c:if>
@@ -169,7 +169,7 @@
 											<%= selectedContent %>,
 
 											<liferay-ui:message key="mirror"></liferay-ui:message>,
-											<liferay-ui:message key="if-a-user-id-does-not-exist,-then-use-my-user-id"></liferay-ui:message>
+											<liferay-ui:message key="use-the-original-author"></liferay-ui:message>
 										</div>
 
 										<%

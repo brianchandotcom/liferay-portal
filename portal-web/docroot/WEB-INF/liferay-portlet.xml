@@ -2038,6 +2038,7 @@
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.portletdisplaytemplate.lar.PortletDisplayTemplatePortletDataHandler</portlet-data-handler-class>
+		<ddm-display>com.liferay.portlet.portletdisplaytemplate.ddm.PortletDisplayTemplateDDMDisplay</ddm-display>
 		<webdav-storage-token>application_display_template</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.portletdisplaytemplate.webdav.ApplicationDisplayTemplateWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>

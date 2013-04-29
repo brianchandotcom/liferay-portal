@@ -15,9 +15,7 @@
 --%>
 
 <div class="export-dialog-tree">
-	<c:if test='<%= tabs2.equals("export") %>'>
-		<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
-	</c:if>
+	<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
 
 	<ul class="lfr-tree lfr-component">
 		<c:if test="<%= supportsSetup %>">

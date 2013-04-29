@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
@@ -208,6 +210,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			description, type, hidden, friendlyURL, serviceContext);
 	}
 
+	public FileEntry addTempFileEntry(
+			long groupId, String fileName, String tempFolderName,
+			InputStream inputStream, String mimeType)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return TempFileUtil.addTempFile(
+			groupId, getUserId(), fileName, tempFolderName, inputStream,
+			mimeType);
+	}
+
 	/**
 	 * Deletes the layout with the primary key, also deleting the layout's child
 	 * layouts, and associated resources.
@@ -252,6 +267,17 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), plid, ActionKeys.DELETE);
 
 		layoutLocalService.deleteLayout(plid, serviceContext);
+	}
+
+	public void deleteTempFileEntry(
+			long groupId, String fileName, String tempFolderName)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		TempFileUtil.deleteTempFile(
+			groupId, getUserId(), fileName, tempFolderName);
 	}
 
 	/**
@@ -647,6 +673,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 
 		return filterLayouts(layouts);
+	}
+
+	public String[] getTempFileEntryNames(long groupId, String tempFolderName)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return TempFileUtil.getTempFileEntryNames(
+			groupId, getUserId(), tempFolderName);
 	}
 
 	/**

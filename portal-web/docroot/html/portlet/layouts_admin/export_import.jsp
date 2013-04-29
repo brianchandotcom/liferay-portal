@@ -82,9 +82,11 @@ for (Portlet alwaysExportablePortlet : alwaysExportablePortlets) {
 }
 
 portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(application, locale));
+
+String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, ImportLayoutsAction.class.getName());
 %>
 
-<aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
+<aui:form cssClass="lfr-export-dialog" encoding='<%= (cmd.equals(Constants.IMPORT)) ? "multipart/form-data" : StringPool.BLANK %>' method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 
 	<c:choose>
@@ -164,11 +166,48 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
-					<%@ include file="/html/portlet/layouts_admin/import_options.jspf" %>
+					<liferay-ui:message key="import-a-lar-file-to-overwrite-the-selected-data" />
+
+					<div class="lfr-dynamic-uploader">
+						<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
+					</div>
 
 					<aui:button-row>
 						<aui:button type="submit" value="import" />
 					</aui:button-row>
+
+					<%
+					Date expirationDate = new Date(System.currentTimeMillis() + PropsValues.SESSION_TIMEOUT * Time.MINUTE);
+
+					Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, expirationDate, new ServiceContext());
+					%>
+
+					<aui:script use="liferay-upload">
+						var liferayUpload = new Liferay.Upload(
+							{
+								allowedFileTypes: '.lar',
+								boundingBox: '#<portlet:namespace />fileUpload',
+								deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
+								fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
+								maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %> B',
+								metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
+								metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
+								multipleFiles: false,
+								namespace: '<portlet:namespace />',
+								tempFileURL: {
+									method: Liferay.Service.bind('/layout/get-temp-file-entry-names'),
+									params: {
+										groupId: <%= scopeGroupId %>,
+										tempFolderName: 'com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction'
+									}
+								},
+								uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
+							}
+						);
+
+						liferayUpload.set('strings.uploadsCompleteText', '<liferay-ui:message key="the-file-is-ready-to-be-imported" />');
+						liferayUpload.set('strings.pendingFileText', '<liferay-ui:message key="this-file-has-been-previously-uploaded-but-not-actually-imported" />');
+					</aui:script>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:message key="import-from-within-the-target-site-can-cause-conflicts" />
@@ -256,8 +295,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>
-
-					form.attr('encoding', 'multipart/form-data');
 
 					submitForm(form, '<%= importPagesURL %>');
 				</c:otherwise>

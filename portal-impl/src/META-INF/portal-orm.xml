@@ -4007,6 +4007,7 @@
 	<entity class="com.liferay.portal.model.impl.PortletImpl" name="Portlet">
 		<table name="Portlet" />
 		<attributes>
+			<transient name="DDMDisplayClass" />
 			<transient name="URLEncoderClass" />
 			<transient name="actionTimeout" />
 			<transient name="actionURLRedirect" />

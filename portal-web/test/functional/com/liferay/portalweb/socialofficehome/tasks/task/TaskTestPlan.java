@@ -16,11 +16,13 @@ package com.liferay.portalweb.socialofficehome.tasks.task;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtoconnection.AddTasksTaskAssignedToConnectionTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtofollower.AddTasksTaskAssignedToFollowerTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtome.AddTasksTaskAssignedToMeTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomecomment.AddTasksTaskAssignedToMeCommentTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomeduedate.AddTasksTaskAssignedToMeDueDateTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtomemultiple.AddTasksTaskAssignedToMeMultipleTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtometag.AddTasksTaskAssignedToMeTagTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.addtaskstaskassignedtometaginvalid.AddTasksTaskAssignedToMeTagInvalidTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.clicktasksprogressbar100percentcomplete.ClickTasksProgressBar100PercentCompleteTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.clicktasksprogressbar60percentcomplete.ClickTasksProgressBar60PercentCompleteTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.deletetaskstaskassignedtome.DeleteTasksTaskAssignedToMeTests;
@@ -48,11 +50,13 @@ public class TaskTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddTasksTaskAssignedToConnectionTests.suite());
+		testSuite.addTest(AddTasksTaskAssignedToFollowerTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeCommentTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeDueDateTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeMultipleTests.suite());
 		testSuite.addTest(AddTasksTaskAssignedToMeTagTests.suite());
+		testSuite.addTest(AddTasksTaskAssignedToMeTagInvalidTests.suite());
 		testSuite.addTest(ClickTasksProgressBar60PercentCompleteTests.suite());
 		testSuite.addTest(ClickTasksProgressBar100PercentCompleteTests.suite());
 		testSuite.addTest(DeleteTasksTaskAssignedToMeTests.suite());

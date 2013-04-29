@@ -229,6 +229,15 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			jsonObject.put("value", dateFormat.format(fieldValue));
 		}
+		else if (fieldValue instanceof Double) {
+			jsonObject.put("value", (Double)fieldValue);
+		}
+		else if (fieldValue instanceof Float) {
+			jsonObject.put("value", (Float)fieldValue);
+		}
+		else if (fieldValue instanceof Integer) {
+			jsonObject.put("value", (Integer)fieldValue);
+		}
 		else {
 			jsonObject.put("value", (String)fieldValue);
 		}
@@ -275,7 +284,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 	}
 
-	protected String[] getClassTypeIds(
+	protected String getAssetClassName(
 			ActionRequest actionRequest, String[] classNameIds)
 		throws Exception {
 
@@ -320,6 +329,19 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String assetClassName = AssetPublisherUtil.getClassName(
 			assetRendererFactory);
 
+		return assetClassName;
+	}
+
+	protected String[] getClassTypeIds(
+			ActionRequest actionRequest, String[] classNameIds)
+		throws Exception {
+
+		String assetClassName = getAssetClassName(actionRequest, classNameIds);
+
+		if (assetClassName == null) {
+			return null;
+		}
+
 		String anyAssetClassTypeString = getParameter(
 			actionRequest, "anyClassType" + assetClassName);
 
@@ -340,6 +362,21 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			return StringUtil.split(
 				getParameter(actionRequest, "classTypeIds" + assetClassName));
 		}
+	}
+
+	protected boolean getSubtypesFieldsFilterEnabled(
+			ActionRequest actionRequest, String[] classNameIds)
+		throws Exception {
+
+		String assetClassName = getAssetClassName(actionRequest, classNameIds);
+
+		if (assetClassName == null) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			getParameter(
+				actionRequest, "subtypeFieldsFilterEnabled" + assetClassName));
 	}
 
 	protected void moveSelectionDown(
@@ -520,8 +557,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			getParameter(actionRequest, "classNameIds"));
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
 		String[] extensions = actionRequest.getParameterValues("extensions");
-		boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(
-			getParameter(actionRequest, "subtypeFieldsFilterEnabled"));
+		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
+			actionRequest, classNameIds);
 
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "classTypeIds", classTypeIds);

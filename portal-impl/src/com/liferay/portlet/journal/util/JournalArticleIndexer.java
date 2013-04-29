@@ -152,7 +152,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 				ddmStructureFieldValue, structure.getFieldType(fieldName));
 
 			contextQuery.addRequiredTerm(
-				ddmStructureFieldName, (String)ddmStructureFieldValue);
+				ddmStructureFieldName,
+				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
 		long[] folderIds = searchContext.getFolderIds();

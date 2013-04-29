@@ -39,8 +39,10 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -73,6 +75,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
@@ -80,6 +83,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -163,15 +167,32 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		addSearchClassTypeIds(contextQuery, searchContext);
 
-		String structureField = (String)searchContext.getAttribute(
+		String ddmStructureFieldName = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
-		String structureValue = (String)searchContext.getAttribute(
+		Serializable ddmStructureFieldValue = searchContext.getAttribute(
 			"ddmStructureFieldValue");
 
-		if (Validator.isNotNull(structureField) &&
-			Validator.isNotNull(structureValue)) {
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			contextQuery.addRequiredTerm(structureField, structureValue);
+			String[] ddmStructureFieldNameParts = StringUtil.split(
+				ddmStructureFieldName, StringPool.SLASH);
+
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+
+			String fieldName = StringUtil.replaceLast(
+				ddmStructureFieldNameParts[2],
+				StringPool.UNDERLINE.concat(
+					LocaleUtil.toLanguageId(searchContext.getLocale())),
+				StringPool.BLANK);
+
+			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
+				ddmStructureFieldValue, structure.getFieldType(fieldName));
+
+			contextQuery.addRequiredTerm(
+				ddmStructureFieldName,
+				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
 		long[] folderIds = searchContext.getFolderIds();

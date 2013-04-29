@@ -48,6 +48,8 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			<%
 			String label = (String)field.getObject(0);
 			String name = (String)field.getObject(1);
+			String fieldType = (String)field.getObject(2);
+			long ddmStructureId = GetterUtil.getLong(field.getObject(3));
 			%>
 
 			<liferay-ui:search-container-column-text>
@@ -64,7 +66,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				<liferay-portlet:resourceURL portletConfiguration="true" var="structureFieldURL">
 					<portlet:param name="<%= Constants.CMD %>" value="getFieldValue" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(classTypeId) %>" />
+					<portlet:param name="structureId" value="<%= String.valueOf(ddmStructureId) %>" />
 					<portlet:param name="name" value="<%= name %>" />
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</liferay-portlet:resourceURL>
@@ -75,12 +77,10 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();
 
 					ddmField.setDefaultLocale(themeDisplay.getLocale());
-					ddmField.setDDMStructureId(classTypeId);
+					ddmField.setDDMStructureId(ddmStructureId);
 					ddmField.setName(name);
 
-					if ((ddmStructure != null) && name.equals(ddmStructureFieldName)) {
-						String fieldType = ddmStructure.getFieldType(name);
-
+					if (name.equals(ddmStructureFieldName)) {
 						if (fieldType.equals(DDMImpl.TYPE_DDM_DATE)) {
 							ddmStructureFieldValue = GetterUtil.getDate(ddmStructureFieldValue, DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss"));
 						}
@@ -91,7 +91,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 					<liferay-ddm:html-field
 						classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-						classPK="<%= classTypeId %>"
+						classPK="<%= ddmStructureId %>"
 						field="<%= ddmField %>"
 						fieldsNamespace="<%= fieldsNamespace %>"
 					/>
@@ -139,6 +139,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 						success: function(event, id, obj) {
 							var jsonArray = this.get('responseData');
 
+							result['className'] = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
 							result['displayValue'] = jsonArray.displayValue;
 							result['value'] = jsonArray.value;
 

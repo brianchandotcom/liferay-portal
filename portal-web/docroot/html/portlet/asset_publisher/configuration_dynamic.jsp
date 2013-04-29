@@ -166,17 +166,17 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
 
-							<div class="asset-subtypefields-wrapper-enable aui-helper-hidden" id="<portlet:namespace />subtypeFieldsFilterEnableWrapper">
-								<aui:input label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled--" %>' type="checkbox" value="<%= subtypeFieldsFilterEnabled %>" />
+							<div class="asset-subtypefields-wrapper-enable aui-helper-hidden" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
+								<aui:input checked="<%= subtypeFieldsFilterEnabled %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= subtypeFieldsFilterEnabled %>" />
 							</div>
 
-							<span class="asset-subtypefields-message" id="<portlet:namespace />ddmStructureFieldMessage">
-								<c:if test="<%= Validator.isNotNull(ddmStructureFieldLabel) %>">
+							<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
+								<c:if test="<%= (Validator.isNotNull(ddmStructureFieldLabel) && (classNameIds[0] == PortalUtil.getClassNameId(assetRendererFactory.getClassName()))) %>">
 									<%= ddmStructureFieldLabel + ": " + ddmStructureDisplayFieldValue %>
 								</c:if>
 							</span>
 
-							<div class="asset-subtypefields-wrapper aui-helper-hidden" id="<portlet:namespace />subtypeFieldsWrapper">
+							<div class="asset-subtypefields-wrapper aui-helper-hidden" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 								<%
 								for (long assetAvailableClassTypeId : assetAvailableClassTypeIds) {
@@ -223,7 +223,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					}
 					%>
 
-					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />ddmStructureFieldValueContainer">
+					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "aui-helper-hidden" : StringPool.BLANK %>">
 						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= ddmStructureFieldName %>" />
 
 						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= ddmStructureFieldValue %>" />
@@ -453,13 +453,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 	var assetSelector = A.one('#<portlet:namespace />anyAssetType');
 	var assetMultipleSelector = A.one('#<portlet:namespace />currentClassNameIds');
-	var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
 	var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = A.one('#<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = A.one('#<portlet:namespace />orderByColumn2');
 	var sourcePanel = A.one('#assetPublisherSourcePanel');
-
-	var ddmStructureFieldValue = ddmStructureFieldValueContainer.one('#<portlet:namespace />ddmStructureFieldValue');
 
 	<%
 	for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
@@ -495,6 +492,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					orderByColumn2Subtype.remove();
 				}
 			}
+
+			<%= className %>toggleSubclassesFields(true);
 		}
 
 		<%
@@ -554,10 +553,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var <%= className %>SubtypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
 
-		var subtypeFieldsWrapper = A.one('#<portlet:namespace />subtypeFieldsWrapper');
-		var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace />subtypeFieldsFilterEnableWrapper');
-
 		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
+			var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
+			var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+
 			var selectedSubtype = <%= className %>SubtypeSelector.val();
 
 			var structureOptions = A.one('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
@@ -585,7 +584,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				if (structureOptions) {
 					subtypeFieldsWrapper.show();
 					subtypeFieldsFilterEnableWrapper.show();
-					ddmStructureFieldValueContainer.show();
 				}
 				else if (hideSubtypeFilterEnableWrapper) {
 					subtypeFieldsWrapper.hide();
@@ -604,8 +602,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			'change',
 			function(event) {
 				sourcePanel.all('.asset-subtypefields').hide();
-
-				ddmStructureFieldValueContainer.hide();
 
 				<%= className %>toggleSubclassesFields(true);
 			}
@@ -635,7 +631,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	assetSelector.on(
 		'change',
 		function(event) {
-			ddmStructureFieldValueContainer.hide();
+			var ddmStructureFieldValue = A.one('#<portlet:namespace />ddmStructureFieldValue');
 
 			ddmStructureFieldName.val('');
 			ddmStructureFieldValue.val('');
@@ -644,14 +640,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 	);
 
-	subtypeFieldsFilterEnableWrapper.delegate(
+	sourcePanel.delegate(
 		'click',
 		function(event) {
 			var assetSubtypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .aui-button-input');
 
 			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !event.target.attr('checked'));
 		},
-		'.aui-field-input'
+		'.asset-subtypefields-wrapper-enable .aui-field-input'
 	);
 
 	Liferay.after(
@@ -693,13 +689,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					ddmStructureDisplayFieldvalue.val(event.displayValue);
 
-					var ddmStructureFieldValueContainer = A.one('#<portlet:namespace />ddmStructureFieldValueContainer');
-
-					var ddmStructureFieldMessage = A.one('#<portlet:namespace />ddmStructureFieldMessage');
+					var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + event.className + 'ddmStructureFieldMessage');
 
 					ddmStructureFieldMessage.html(event.label + ': ' + event.displayValue);
-
-					ddmStructureFieldValueContainer.show();
 				}
 			);
 		},

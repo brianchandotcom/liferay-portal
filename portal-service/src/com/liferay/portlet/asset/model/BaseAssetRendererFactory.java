@@ -188,7 +188,8 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 			String label = fieldMap.get("label");
 			String name = fieldMap.get("name");
 
-			fields.add(new Tuple(label, name));
+			fields.add(
+				new Tuple(label, name, type, ddmStructure.getStructureId()));
 		}
 
 		return fields;

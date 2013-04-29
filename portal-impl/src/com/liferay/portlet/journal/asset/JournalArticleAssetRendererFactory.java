@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.asset;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -131,7 +132,11 @@ public class JournalArticleAssetRendererFactory
 		List<Tuple> fieldNames = getDDMStructureFieldNames(
 			ddmStructure, locale);
 
-		return ListUtil.subList(fieldNames, start, end);
+		if ((start != QueryUtil.ALL_POS) || (end != QueryUtil.ALL_POS)) {
+			fieldNames = ListUtil.subList(fieldNames, start, end);
+		}
+
+		return fieldNames;
 	}
 
 	@Override

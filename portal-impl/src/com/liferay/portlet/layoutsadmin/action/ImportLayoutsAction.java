@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -61,29 +62,17 @@ public class ImportLayoutsAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		try {
-			UploadPortletRequest uploadPortletRequest =
-				PortalUtil.getUploadPortletRequest(actionRequest);
+			if (cmd.equals(Constants.IMPORT)) {
+				importLayouts(actionRequest, actionResponse);
 
-			checkExceededSizeLimit(uploadPortletRequest);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				uploadPortletRequest, "privateLayout");
-			File file = uploadPortletRequest.getFile("importFileName");
-
-			if (!file.exists()) {
-				throw new LARFileException("Import file does not exist");
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-
-			LayoutServiceUtil.importLayouts(
-				groupId, privateLayout, actionRequest.getParameterMap(), file);
-
-			addSuccessMessage(actionRequest, actionResponse);
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if ((e instanceof LARFileException) ||
@@ -145,6 +134,30 @@ public class ImportLayoutsAction extends PortletAction {
 
 			throw new PortalException(uploadException.getCause());
 		}
+	}
+
+	protected void importLayouts(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		checkExceededSizeLimit(uploadPortletRequest);
+
+		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			uploadPortletRequest, "privateLayout");
+		File file = uploadPortletRequest.getFile("importFileName");
+
+		if (!file.exists()) {
+			throw new LARFileException("Import file does not exist");
+		}
+
+		LayoutServiceUtil.importLayouts(
+			groupId, privateLayout, actionRequest.getParameterMap(), file);
+
+		addSuccessMessage(actionRequest, actionResponse);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);

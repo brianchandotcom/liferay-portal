@@ -34,7 +34,6 @@
 		<var name="entryTitleNew" value="Blogs Entry TitleEdit" />
 
 		<execute macro="BlogsEntry#pgAdd" />
-
 		<execute macro="BlogsEntry#pgEdit" />
 	</command>
 
@@ -43,7 +42,6 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 
 		<execute macro="BlogsEntry#pgAdd" />
-
 		<execute macro="BlogsEntry#pgMoveToRecycleBin" />
 	</command>
 
@@ -51,7 +49,5 @@
 		<execute macro="BlogsEntry#cpTearDown" />
 
 		<execute macro="Page#pgTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

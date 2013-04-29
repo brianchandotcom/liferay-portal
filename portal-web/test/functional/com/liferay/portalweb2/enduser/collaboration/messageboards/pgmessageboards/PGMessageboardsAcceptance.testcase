@@ -35,7 +35,6 @@
 		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="MessageboardsCategory#pgAdd" />
-
 		<execute macro="MessageboardsCategory#pgDelete" />
 	</command>
 
@@ -48,7 +47,6 @@
 		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="MessageboardsThread#pgAdd" />
-
 		<execute macro="MessageboardsThread#pgDelete" />
 	</command>
 
@@ -61,7 +59,6 @@
 		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="MessageboardsCategory#pgAdd" />
-
 		<execute macro="MessageboardsCategory#pgEdit" />
 	</command>
 
@@ -75,7 +72,6 @@
 		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="MessageboardsThread#pgAdd" />
-
 		<execute macro="MessageboardsThread#pgEdit" />
 	</command>
 
@@ -89,7 +85,6 @@
 		<execute macro="Portlet#pgAdd" />
 
 		<execute macro="MessageboardsThread#pgAdd" />
-
 		<execute macro="MessageboardsThread#pgReply" />
 	</command>
 
@@ -99,7 +94,5 @@
 		<execute macro="MessageboardsThread#cpTearDown" />
 
 		<execute macro="Page#pgTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

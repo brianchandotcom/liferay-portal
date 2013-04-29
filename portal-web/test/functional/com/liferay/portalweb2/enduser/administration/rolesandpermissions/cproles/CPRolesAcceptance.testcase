@@ -4,71 +4,74 @@
 	</set-up>
 
 	<command name="AddBlogEntryRegRole">
-		<var name="roleName" value="Roles Regrole Name" />
-		<var name="emailAddress" value="userea@liferay.com" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="firstName" value="userfn" />
-		<var name="lastName" value="userln" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Roles Regrole Name" />
 		<var name="roleType" value="Regular" />
-		<var name="screenName" value="usersn" />
-
-		<execute macro="User#cpAdd" />
-
-		<execute macro="User#cpEditPassword">
-			<var name="password" value="password" />
-		</execute>
-
-		<execute macro="Role#cpAddRegRole" />
-
-		<execute macro="Role#cpAssignRegRole" />
 
 		<execute macro="Page#pgAdd" />
 
 		<execute macro="Portlet#pgAdd" />
 
-		<execute macro="User#pgLogout" />
+		<execute macro="User#cpAdd">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
 
-		<execute macro="User#pgFirstLogin">
-			<var name="password" value="password" />
+		<execute macro="User#cpEditPassword">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Role#cpAddRegRole" />
+		<execute macro="Role#cpAssignRegRole">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#pgLogout" />
+		<execute macro="User#pgLogin">
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="BlogsEntry#pgAddNoPermission" />
 
 		<execute macro="User#pgLogout" />
-
 		<execute macro="User#pgLogin">
-			<var name="emailAddress" value="test@liferay.com" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Role#cpDefinePermissionBlogEntry" />
 
 		<execute macro="User#pgLogout" />
-
-		<execute macro="User#pgLogin" />
+		<execute macro="User#pgLogin">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
 
 		<execute macro="BlogsEntry#pgAdd" />
 
 		<execute macro="User#pgLogout" />
-
 		<execute macro="User#pgLogin">
-			<var name="emailAddress" value="test@liferay.com" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Role#cpRemovePermission" />
+		<execute macro="Role#cpRemovePermissionBlogEntry">
+			<var name="userScreenName" value="usersn" />
+		</execute>
 
 		<execute macro="User#pgLogout" />
-
-		<execute macro="User#pgLogin" />
+		<execute macro="User#pgLogin">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
 
 		<execute macro="BlogsEntry#pgAddNoPermission" />
 
 		<execute macro="User#pgLogout" />
-
 		<execute macro="User#pgLogin">
-			<var name="emailAddress" value="test@liferay.com" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 
@@ -97,6 +100,6 @@
 
 		<execute macro="BlogsEntry#cpTearDown" />
 
-		<execute macro="User#pgLogout" />
+		<execute macro="Page#pgTearDown" />
 	</tear-down>
 </definition>

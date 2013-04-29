@@ -4,14 +4,12 @@
 	</set-up>
 
 	<command name="AddUserGroup">
-		<var name="name" value="UG UserGroup Name" />
+		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="UserGroup#cpAdd" />
 	</command>
 
 	<tear-down>
 		<execute macro="UserGroup#cpTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

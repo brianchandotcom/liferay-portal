@@ -48,19 +48,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ADD_MENU_LIST-->
+<!--ADD_MENULIST-->
 <tr>
-	<td>ADD_MENU_LIST_REGULAR_ROLE</td>
+	<td>ADD_MENULIST_REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MENU_LIST_SITE_ROLE</td>
+	<td>ADD_MENULIST_SITE_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MENU_LIST_ORGANIZATION_ROLE</td>
+	<td>ADD_MENULIST_ORGANIZATION_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
 	<td></td>
 </tr>
@@ -90,24 +90,24 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ROLE_MENU_LIST-->
+<!--ROLE_MENULIST-->
 <tr>
-	<td>ROLE_MENU_LIST_EDIT</td>
+	<td>ROLE_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_MENU_LIST_DEFINE_PERMISSIONS</td>
+	<td>ROLE_MENULIST_DEFINE_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_MENU_LIST_ASSIGN_MEMBERS</td>
+	<td>ROLE_MENULIST_ASSIGN_MEMBERS</td>
 	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_MENU_LIST_DELETE</td>
+	<td>ROLE_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>

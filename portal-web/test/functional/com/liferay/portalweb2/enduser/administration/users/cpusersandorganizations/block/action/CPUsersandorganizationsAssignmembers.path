@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT</td>
 	<td>link=Current</td>
 	<td></td>
@@ -31,16 +41,6 @@
 <tr>
 	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
 	<td>//input[@value='Update Associations']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BACK</td>
-	<td>//a[@id='_125_TabsBack']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
 	<td></td>
 </tr>
 <tr>

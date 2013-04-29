@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
-	<td>//input[@value='Update Associations']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td></td>
@@ -31,6 +26,11 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
+	<td>//input[@value='Update Associations']</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,12 +19,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NAME</td>
+	<td>NAME_FIELD</td>
 	<td>//input[@id='_128_name']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE</td>
+	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
 	<td></td>
 </tr>

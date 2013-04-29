@@ -24,27 +24,27 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NAME</td>
+	<td>NAME_FIELD</td>
 	<td>//input[@id='_128_name']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE</td>
+	<td>TITLE_FIELD</td>
 	<td>//input[@id='_128_title_en_US']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
+	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_128_description_en_US']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE</td>
+	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//input[@value='Cancel']</td>
 	<td></td>
 </tr>

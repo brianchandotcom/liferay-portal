@@ -302,10 +302,10 @@ AUI.add(
 						instance.on('drop:hit', instance._onDragDrop);
 					},
 
-					_addCategory: function(form) {
+					_addCategory: function(form, action) {
 						var instance = this;
 
-						var ioCategory = instance._getIOCategory();
+						var ioCategory = instance._getIOCategory(action);
 
 						ioCategory.set('form', form.getDOM());
 						ioCategory.set(STR_URI, form.attr(STR_ACTION));
@@ -1175,10 +1175,10 @@ AUI.add(
 						return categoryId;
 					},
 
-					_getIOCategory: function() {
+					_getIOCategory: function(action) {
 						var instance = this;
 
-						var ioCategory = instance._ioCategory;
+						var ioCategory = instance._ioCategory[action];
 
 						if (!ioCategory) {
 							ioCategory = A.io.request(
@@ -1190,7 +1190,7 @@ AUI.add(
 										success: function(event, id, obj) {
 											var response = this.get(STR_RESPONSE_DATA);
 
-											instance._onCategoryAddSuccess(response);
+											instance._onCategoryAddSuccess(response, action);
 										},
 										failure: function(event, id, obj) {
 											instance._onCategoryAddFailure(obj);
@@ -1199,7 +1199,7 @@ AUI.add(
 								}
 							);
 
-							instance._ioCategory = ioCategory;
+							instance._ioCategory[action] = ioCategory;
 						}
 
 						return ioCategory;
@@ -1651,7 +1651,7 @@ AUI.add(
 
 						categoryFormEdit.detach(EVENT_SUBMIT);
 
-						categoryFormEdit.on(EVENT_SUBMIT, instance._onCategoryFormSubmit, instance, categoryFormEdit);
+						categoryFormEdit.on(EVENT_SUBMIT, instance._onCategoryFormSubmit, instance, categoryFormEdit, ACTION_EDIT);
 
 						var closeButton = categoryFormEdit.one(SELECTOR_BUTTON_CANCEL);
 
@@ -1844,7 +1844,7 @@ AUI.add(
 						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
 					},
 
-					_onCategoryAddSuccess: function(response) {
+					_onCategoryAddSuccess: function(response, action) {
 						var instance = this;
 
 						var exception = response.exception;
@@ -1852,7 +1852,7 @@ AUI.add(
 						if (!exception && response.categoryId) {
 							var vocabulary = instance._getVocabularyById(instance._selectedVocabularyId);
 
-							if (response.parentCategoryId == 0) {
+							if (action === ACTION_ADD && response.parentCategoryId === 0) {
 								vocabulary.categoriesCount++;
 							}
 
@@ -1951,7 +1951,7 @@ AUI.add(
 								}
 							);
 
-							instance._addCategory(form);
+							instance._addCategory(form, action);
 						}
 					},
 
@@ -2876,6 +2876,7 @@ AUI.add(
 
 					_categoryItemSelectorFlat: '.category-item',
 					_categoryContainerSelector: '.vocabulary-categories',
+					_ioCategory: {},
 					_selectedCategories: null,
 					_selectedVocabularies: null,
 					_selectedVocabulary: null,

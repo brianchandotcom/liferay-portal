@@ -344,11 +344,17 @@ int count = 0;
 
 					PortletURL deletePageURL = PortletURLUtil.clone(editPageURL, PortletRequest.ACTION_PHASE, renderResponse);
 
-					deletePageURL.setParameter(Constants.CMD, Constants.DELETE);
+					if (TrashUtil.isTrashEnabled(scopeGroupId)) {
+						deletePageURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+					}
+					else {
+						deletePageURL.setParameter(Constants.CMD, Constants.DELETE);
+					}
+
 					deletePageURL.setParameter("redirect", frontPageURL.toString());
 					%>
 
-					<liferay-ui:icon-delete label="<%= true %>" url="<%= deletePageURL.toString() %>" />
+					<liferay-ui:icon-delete label="<%= true %>" trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deletePageURL.toString() %>" />
 				</c:if>
 			</liferay-ui:icon-list>
 		</td>

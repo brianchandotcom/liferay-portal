@@ -48,6 +48,8 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
+						instance._dialogTitle = Liferay.Language.get(config.dialogTitle);
+
 						instance._bindUI();
 					},
 
@@ -147,7 +149,7 @@ AUI.add(
 									bodyContent: contentNode,
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400,
 									buttons: [
 										{
@@ -249,7 +251,7 @@ AUI.add(
 									bodyContent: globalContentNode,
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400
 								}
 							).render(instance.rootNode);
@@ -334,7 +336,7 @@ AUI.add(
 									],
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400
 								}
 							).render(instance.rootNode);

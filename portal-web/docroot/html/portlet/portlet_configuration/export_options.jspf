@@ -260,7 +260,7 @@
 				<ul class="lfr-tree lfr-component">
 					<li class="tree-item">
 						<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-		
+
 						<ul id="<portlet:namespace />permissionsUl">
 							<li>
 								<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
@@ -277,6 +277,7 @@
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			dialogTitle: 'content-to-export',
 			namespace: '<portlet:namespace />',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}

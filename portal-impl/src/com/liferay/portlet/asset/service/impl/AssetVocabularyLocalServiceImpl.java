@@ -168,6 +168,28 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.getVocabularyId(), groupPermissions, guestPermissions);
 	}
 
+	public AssetVocabulary createDefaultVocabulary(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+
+		titleMap.put(
+			LocaleUtil.getDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+
+		return assetVocabularyLocalService.addVocabulary(
+			defaultUserId, StringPool.BLANK, titleMap, null, StringPool.BLANK,
+			serviceContext);
+	}
+
 	public void deleteVocabularies(long groupId)
 		throws PortalException, SystemException {
 

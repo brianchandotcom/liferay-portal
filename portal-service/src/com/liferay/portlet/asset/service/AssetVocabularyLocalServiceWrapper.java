@@ -320,6 +320,13 @@ public class AssetVocabularyLocalServiceWrapper
 			groupPermissions, guestPermissions);
 	}
 
+	public com.liferay.portlet.asset.model.AssetVocabulary createDefaultVocabulary(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyLocalService.createDefaultVocabulary(groupId);
+	}
+
 	public void deleteVocabularies(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

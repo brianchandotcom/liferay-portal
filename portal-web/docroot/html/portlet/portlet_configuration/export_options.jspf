@@ -23,7 +23,7 @@
 		<c:if test="<%= supportsSetup %>">
 			<aui:fieldset cssClass="options-group" label="application">
 				<li class="tree-item">
-					<aui:input label="application" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
+					<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 
 					<ul id="<portlet:namespace />showGlobalConfiguration">
 						<li class="tree-item">

@@ -7,6 +7,8 @@ AUI.add(
 
 		var formatSelectorNS = A.Node.formatSelectorNS;
 
+		var STRINGS = 'strings';
+
 		var STR_BLANK = '';
 
 		var STR_PARAM_FALLBACK = 'uploader=fallback';
@@ -124,6 +126,12 @@ AUI.add(
 					render: {
 						value: true
 					},
+					strings: {
+						value: {
+							uploadsCompleteText: Liferay.Language.get('all-files-ready-to-be-saved'),
+							pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed')
+						}
+					},
 					tempFileURL: {
 						value: ''
 					},
@@ -182,7 +190,6 @@ AUI.add(
 
 							instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
 							instance._invalidFileSizeText = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [maxFileSizeKB]);
-							instance._uploadsCompleteText = Liferay.Language.get('all-files-ready-to-be-saved');
 
 							instance._errorMessages = {
 								'490': Liferay.Language.get('please-enter-a-unique-document-name'),
@@ -510,6 +517,8 @@ AUI.add(
 					_onAllUploadsComplete: function(event) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var uploader = instance._uploader;
 
 						instance._filesTotal = 0;
@@ -522,7 +531,7 @@ AUI.add(
 
 						instance._clearUploadsButton.toggle(!!instance._fileListContent.one('.file-saved,.upload-error'));
 
-						instance._updateList(0, instance._uploadsCompleteText);
+						instance._updateList(0, strings['uploadsCompleteText']);
 
 						Liferay.fire('allUploadsComplete');
 					},
@@ -757,6 +766,8 @@ AUI.add(
 					_renderControls: function() {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var templateConfig = {
 							$ns: instance.NS,
 							cancelFileText: instance._cancelFileText,
@@ -765,9 +776,9 @@ AUI.add(
 							deleteFileText: Liferay.Language.get('delete-file'),
 							dropFileText: instance._dropFileText,
 							orText: Liferay.Language.get('or'),
-							pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed'),
+							pendingFileText: strings['pendingFileText'],
 							selectFilesText: instance._selectFileText,
-							uploadsCompleteText: instance._uploadsCompleteText,
+							uploadsCompleteText: strings['uploadsCompleteText'],
 							uploaderType: UPLOADER_TYPE
 						};
 

@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel;
+package com.liferay.portalweb.portlet.mediagallery.dmimage.adddmimagemg;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPageMGTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPortletMGTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowactions.ConfigurePortletMGShowActionsTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowfoldermenu.ConfigurePortletMGShowFolderMenuTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshownavigationlinks.ConfigurePortletMGShowNavigationLinksTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowsearch.ViewPortletMGShowSearchCheckedTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,15 +29,18 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletMGDisplayTemplateCarouselTests
-	extends BaseTestSuite {
+public class AddDMImageMGTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageMGTest.class);
 		testSuite.addTestSuite(AddPortletMGTest.class);
-		testSuite.addTestSuite(ConfigurePortletMGDisplayTemplateCarouselTest.class);
-		testSuite.addTestSuite(ViewPortletMGDisplayTemplateCarouselTest.class);
-		testSuite.addTestSuite(TearDownPortletMGDisplayTemplateTest.class);
+		testSuite.addTestSuite(ConfigurePortletMGShowActionsTest.class);
+		testSuite.addTestSuite(ConfigurePortletMGShowFolderMenuTest.class);
+		testSuite.addTestSuite(ConfigurePortletMGShowNavigationLinksTest.class);
+		testSuite.addTestSuite(ViewPortletMGShowSearchCheckedTest.class);
+		testSuite.addTestSuite(AddDMImageMGTest.class);
+		testSuite.addTestSuite(ViewDMImageMGTest.class);
+		testSuite.addTestSuite(TearDownDMImageMGTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

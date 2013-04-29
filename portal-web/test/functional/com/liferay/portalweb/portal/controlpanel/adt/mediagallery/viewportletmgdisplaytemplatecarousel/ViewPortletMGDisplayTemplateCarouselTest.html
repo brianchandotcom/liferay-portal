@@ -25,16 +25,6 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[@class='search-results']</td>
-	<td>Showing 1 result.</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//span[@class='image-title']</td>
-	<td>DM Folder Name</td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
 	<td>//input[@title='Search Documents']</td>
 	<td>Search Documents</td>
 </tr>
@@ -45,42 +35,57 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
+	<td>//a[@title='DM Image Title - DM Image Description']/span[@class='image-thumbnail']/img</td>
+	<td>DM Image Thumbnail</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DM Image Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@class='search-results']</td>
+	<td>Showing 1 result.</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
 	<td>//div[@class='lfr-asset-name']/h4</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[1]/a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a[contains(.,'Add Folder')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Folder')]</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[3]/a[contains(.,'Add Repository')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Repository')]</td>
 	<td>Add Repository</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a[contains(.,'Multiple Media')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Multiple Media')]</td>
 	<td>Multiple Media</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a[contains(.,'Add Media')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]</td>
 	<td>Add Media</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[6]/a[contains(.,'Add Shortcut')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a[contains(.,'Access from Desktop')]</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>
 <tr>
@@ -92,6 +97,26 @@
 	<td>assertVisible</td>
 	<td>//div[@class='yui3-widget aui-component aui-carousel']/div/menu</td>
 	<td>Carousel Menu</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[@class='aui-carousel-menu-item aui-carousel-menu-pause']</td>
+	<td>Pause</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[@class='aui-carousel-menu-item aui-carousel-menu-prev']</td>
+	<td>Previous</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[@class='aui-carousel-menu-item aui-carousel-menu-item aui-carousel-menu-index aui-carousel-menu-active']</td>
+	<td>1 Item</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[@class='aui-carousel-menu-item aui-carousel-menu-next']</td>
+	<td>Next</td>
 </tr>
 </tbody></table>
 </body>

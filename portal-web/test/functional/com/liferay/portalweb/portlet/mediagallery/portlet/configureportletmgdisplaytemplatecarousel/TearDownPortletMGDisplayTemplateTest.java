@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshownavigationlinks;
+package com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletMGShowNavigationLinksTest extends BaseTestCase {
-	public void testConfigurePortletMGShowNavigationLinks()
+public class TearDownPortletMGDisplayTemplateTest extends BaseTestCase {
+	public void testTearDownPortletMGDisplayTemplate()
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
@@ -47,21 +47,17 @@ public class ConfigurePortletMGShowNavigationLinksTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//input[contains(@id,'showTabsCheckbox')]");
-		assertFalse(selenium.isChecked(
-				"//input[contains(@id,'showTabsCheckbox')]"));
-		selenium.clickAt("//input[contains(@id,'showTabsCheckbox')]",
-			RuntimeVariables.replace("Show Navigation Links"));
-		assertTrue(selenium.isChecked(
-				"//input[contains(@id,'showTabsCheckbox')]"));
+		selenium.waitForVisible("//select[@id='_86_displayStyle']	");
+		selenium.select("//select[@id='_86_displayStyle']	",
+			RuntimeVariables.replace("Default"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked(
-				"//input[contains(@id,'showTabsCheckbox')]"));
+			selenium.getText("//div[@class='portlet-msg-success']	"));
+		assertEquals("Default",
+			selenium.getSelectedLabel("//select[@id='_86_displayStyle']	"));
 		selenium.selectFrame("relative=top");
 	}
 }

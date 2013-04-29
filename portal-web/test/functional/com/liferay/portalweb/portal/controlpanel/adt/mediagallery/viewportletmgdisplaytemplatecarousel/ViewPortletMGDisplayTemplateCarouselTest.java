@@ -31,30 +31,40 @@ public class ViewPortletMGDisplayTemplateCarouselTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='search-results']"));
-		assertTrue(selenium.isElementNotPresent("//span[@class='image-title']"));
-		assertTrue(selenium.isElementNotPresent(
 				"//input[@title='Search Documents']"));
 		assertTrue(selenium.isElementNotPresent("//input[@value='Search']"));
 		assertTrue(selenium.isElementNotPresent(
+				"//a[@title='DM Image Title - DM Image Description']/span[@class='image-thumbnail']/img"));
+		assertFalse(selenium.isTextPresent("DM Image Title"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='search-results']"));
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='lfr-asset-name']/h4"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[1]/a[contains(.,'Permissions')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Permissions')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a[contains(.,'Add Folder')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Folder')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[3]/a[contains(.,'Add Repository')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Repository')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a[contains(.,'Multiple Media')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Multiple Media')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a[contains(.,'Add Media')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Media')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[6]/a[contains(.,'Add Shortcut')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Add Shortcut')]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a[contains(.,'Access from Desktop')]"));
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Access from Desktop')]"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='yui3-widget aui-component aui-carousel']/div/div"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='yui3-widget aui-component aui-carousel']/div/menu"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-carousel-menu-item aui-carousel-menu-pause']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-carousel-menu-item aui-carousel-menu-prev']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-carousel-menu-item aui-carousel-menu-item aui-carousel-menu-index aui-carousel-menu-active']"));
+		assertTrue(selenium.isVisible(
+				"//a[@class='aui-carousel-menu-item aui-carousel-menu-next']"));
 	}
 }

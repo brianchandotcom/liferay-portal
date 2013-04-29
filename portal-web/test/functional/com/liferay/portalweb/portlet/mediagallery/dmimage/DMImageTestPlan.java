@@ -21,6 +21,7 @@ import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmfolderimagemg.Add
 import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmfolderimagemultiplemg.AddDMFolderImageMultipleMGTests;
 import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmfolderimagenameduplicatemg.AddDMFolderImageNameDuplicateMGTests;
 import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmfolderimagenamenullmg.AddDMFolderImageNameNullMGTests;
+import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmimagemg.AddDMImageMGTests;
 import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmsubfolderimagemg.AddDMSubfolderImageMGTests;
 import com.liferay.portalweb.portlet.mediagallery.dmimage.deletedmfolderimagemg.DeleteDMFolderImageMGTests;
 import com.liferay.portalweb.portlet.mediagallery.dmimage.deletedmsubfolderimagemg.DeleteDMSubfolderImageMGTests;
@@ -47,6 +48,7 @@ public class DMImageTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddDMFolderImageNameDuplicateMGTests.suite());
 		testSuite.addTest(AddDMFolderImageNameNullMGTests.suite());
 		testSuite.addTest(AddDMFolderImageMultipleMGTests.suite());
+		testSuite.addTest(AddDMImageMGTests.suite());
 		testSuite.addTest(AddDMSubfolderImageMGTests.suite());
 		testSuite.addTest(DeleteDMFolderImageMGTests.suite());
 		testSuite.addTest(DeleteDMSubfolderImageMGTests.suite());

@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletMGDisplayTemplateDefaultTest extends BaseTestCase {
-	public void testConfigurePortletMGDisplayTemplateDefault()
+public class ViewPortletMGDisplayTemplateCarouselTest extends BaseTestCase {
+	public void testViewPortletMGDisplayTemplateCarousel()
 		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
@@ -48,15 +48,7 @@ public class ConfigurePortletMGDisplayTemplateDefaultTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible("//select[@id='_86_displayStyle']	");
-		selenium.select("//select[@id='_86_displayStyle']	",
-			RuntimeVariables.replace("Default"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']	"));
-		assertEquals("Default",
+		assertEquals("Carousel",
 			selenium.getSelectedLabel("//select[@id='_86_displayStyle']	"));
 		selenium.selectFrame("relative=top");
 	}

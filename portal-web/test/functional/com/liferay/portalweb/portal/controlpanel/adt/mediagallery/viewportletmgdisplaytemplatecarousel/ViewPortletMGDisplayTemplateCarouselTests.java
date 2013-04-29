@@ -16,13 +16,12 @@ package com.liferay.portalweb.portal.controlpanel.adt.mediagallery.viewportletmg
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.mediagallery.dmfolder.adddmfoldermg.AddDMFolderMGTest;
-import com.liferay.portalweb.portlet.mediagallery.dmfolder.adddmfoldermg.TearDownDMFolderMGTest;
-import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmfolderimagemg.AddDMFolderImageMGTest;
+import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmimagemg.AddDMImageMGTest;
+import com.liferay.portalweb.portlet.mediagallery.dmimage.adddmimagemg.TearDownDMImageMGTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPageMGTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPortletMGTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel.ConfigurePortletMGDisplayTemplateCarouselTest;
-import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel.ConfigurePortletMGDisplayTemplateDefaultTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel.TearDownPortletMGDisplayTemplateTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowactions.ConfigurePortletMGShowActionsTest;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowfoldermenu.ConfigurePortletMGShowFolderMenuTest;
 
@@ -39,12 +38,11 @@ public class ViewPortletMGDisplayTemplateCarouselTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletMGTest.class);
 		testSuite.addTestSuite(ConfigurePortletMGShowActionsTest.class);
 		testSuite.addTestSuite(ConfigurePortletMGShowFolderMenuTest.class);
-		testSuite.addTestSuite(AddDMFolderMGTest.class);
-		testSuite.addTestSuite(AddDMFolderImageMGTest.class);
+		testSuite.addTestSuite(AddDMImageMGTest.class);
 		testSuite.addTestSuite(ConfigurePortletMGDisplayTemplateCarouselTest.class);
 		testSuite.addTestSuite(ViewPortletMGDisplayTemplateCarouselTest.class);
-		testSuite.addTestSuite(ConfigurePortletMGDisplayTemplateDefaultTest.class);
-		testSuite.addTestSuite(TearDownDMFolderMGTest.class);
+		testSuite.addTestSuite(TearDownPortletMGDisplayTemplateTest.class);
+		testSuite.addTestSuite(TearDownDMImageMGTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

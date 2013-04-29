@@ -68,6 +68,8 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousviewactivitiessitet
 import com.liferay.portalweb.socialofficeprofile.profile.sousviewaddtagmyaccountprofile.SOUs_ViewAddTagMyAccountProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.unblockccuserprofile.UnblockCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.unfollowccuserprofile.UnfollowCCUserProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiesdashboardactivitiesprofile.ViewActivitiesDashboardActivitiesProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiessitesactivitiesprofile.ViewActivitiesSitesActivitiesProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofileadditionalemailaddress.ViewProfileAdditionalEmailAddressTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofileaddress.ViewProfileAddressTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewprofileexpertise.ViewProfileExpertiseTests;
@@ -144,6 +146,9 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_ViewAddTagMyAccountProfileTests.suite());
 		testSuite.addTest(UnblockCCUserProfileTests.suite());
 		testSuite.addTest(UnfollowCCUserProfileTests.suite());
+		testSuite.addTest(
+			ViewActivitiesDashboardActivitiesProfileTests.suite());
+		testSuite.addTest(ViewActivitiesSitesActivitiesProfileTests.suite());
 		testSuite.addTest(ViewProfileAdditionalEmailAddressTests.suite());
 		testSuite.addTest(ViewProfileAddressTests.suite());
 		testSuite.addTest(ViewProfileExpertiseTests.suite());

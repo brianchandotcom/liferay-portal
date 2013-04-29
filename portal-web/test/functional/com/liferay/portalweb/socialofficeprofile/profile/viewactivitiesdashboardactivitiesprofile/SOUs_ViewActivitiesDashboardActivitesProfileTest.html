@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOUs_ViewActivitiesDashboardActivitesProfileTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOUs_ViewActivitiesDashboardActivitesProfileTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/socialoffice01/so/profile</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Profile</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Profile</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='lfr-contact-name']/a)[2]</td>
+	<td>Social01 Office01 User01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-contact-extra']</td>
+	<td>socialoffice01@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[1]</td>
+	<td>Social01 added a new task for Joe Bloggs.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[1]</td>
+	<td>Task4 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[2]</td>
+	<td>Social01 added a new task.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[2]</td>
+	<td>Task3 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[3]</td>
+	<td>Social01 uploaded a new document, DM Folder Document2 Title.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[3]</td>
+	<td>View Document</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[3]</td>
+	<td>Go to Folder</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[4]</td>
+	<td>#Microblogs Post4</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[4]</td>
+	<td>Social01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[5]</td>
+	<td>Microblogs Post3</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[5]</td>
+	<td>Social01</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='activity-title'])[6]</td>
+	<td>Joe Bloggs added a new task for Social01.</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='activity-body'])[6]</td>
+	<td>Task2 Description</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Microblogs Post1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Microblogs Post2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>DM Folder Document1 Title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Task1 Description</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

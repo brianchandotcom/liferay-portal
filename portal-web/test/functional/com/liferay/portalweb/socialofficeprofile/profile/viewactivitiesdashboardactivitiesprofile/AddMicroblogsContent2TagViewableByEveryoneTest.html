@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddMicroblogsContent2TagViewableByEveryoneTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddMicroblogsContent2TagViewableByEveryoneTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/so/dashboard</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[contains(.,'Microblogs')]/a/span</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
+	<td>Update your status...</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
+	<td>Update your status...</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea</td>
+	<td>Text area</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//textarea</td>
+	<td>Text area</td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>//textarea</td>
+	<td>#Microblogs Post2</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='microblogs-countdown']</td>
+	<td>133</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='microblogs-countdown']</td>
+	<td>133</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_1_WAR_microblogsportlet_socialRelationType']</td>
+	<td>Everyone</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Post']</td>
+	<td>Post</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>xPath=(//div[@class='content'])[1]</td>
+	<td>Microblogs Post2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='content'])[1]</td>
+	<td>Microblogs Post2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='content']/span/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='action comment']/a)[1]</td>
+	<td>Comment</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xPath=(//span[@class='action repost']/a)[1]</td>
+	<td>Repost</td>
+</tr>
+</tbody></table>
+</body>
+</html>
